@@ -43,6 +43,9 @@
 //!     },
 //! }
 
+#![feature(alloc_system)]
+extern crate alloc_system;
+
 extern crate chrono;
 extern crate hyper;
 extern crate hyper_native_tls;

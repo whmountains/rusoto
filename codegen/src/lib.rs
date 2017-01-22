@@ -62,6 +62,7 @@ pub fn generate(service: Service, output_path: &Path) -> i32 {
     return 1;
 }
 
+#[inline(never)]
 fn botocore_generate(input_path: &Path, output_path: &Path) {
     let input_file = File::open(input_path).expect(&format!(
         "{:?} not found",

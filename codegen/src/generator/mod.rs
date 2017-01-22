@@ -35,6 +35,7 @@ pub trait GenerateProtocol {
     fn timestamp_type(&self) -> &'static str;
 }
 
+#[inline(never)]
 pub fn generate_source(service: &Service) -> String {
     match &service.metadata.protocol[..] {
         "json" => generate(service, JsonGenerator, JsonErrorTypes),
