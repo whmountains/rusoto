@@ -29,69 +29,70 @@ fn test_all_the_things() {
 
     let client = S3Client::new(default_tls_client().unwrap(),
                                DefaultCredentialsProvider::new().unwrap(),
-                               Region::UsEast1);
+                               Region::UsWest2);
 
-    let test_bucket = format!("rusoto_test_bucket_{}", get_time().sec);
-    let filename = format!("test_file_{}", get_time().sec);
-    let binary_filename = format!("test_file_b{}", get_time().sec);
-    let multipart_filename = format!("test_multipart_file_{}", get_time().sec);
+    // let test_bucket = format!("rusoto_test_bucket_{}", get_time().sec);
+    let test_bucket = "rusototester";
+    // let filename = format!("test_file_{}", get_time().sec);
+    // let binary_filename = format!("test_file_b{}", get_time().sec);
+    // let multipart_filename = format!("test_multipart_file_{}", get_time().sec);
 
-    // get a list of list_buckets
-    test_list_buckets(&client);
+    // // get a list of list_buckets
+    // test_list_buckets(&client);
 
-    // create a bucket for these tests
-    test_create_bucket(&client, &test_bucket);
+    // // create a bucket for these tests
+    // test_create_bucket(&client, &test_bucket);
 
-    // list items v2
+    // // list items v2
     list_items_in_bucket(&client, &test_bucket);
 
-    // do a multipart upload
-    test_multipart_upload(&client, &test_bucket, &multipart_filename);
+    // // do a multipart upload
+    // test_multipart_upload(&client, &test_bucket, &multipart_filename);
 
-    // modify the bucket's CORS properties
-    test_put_bucket_cors(&client, &test_bucket);
+    // // modify the bucket's CORS properties
+    // test_put_bucket_cors(&client, &test_bucket);
 
-    // PUT an object (no_credentials is an arbitrary choice)
-    test_put_object_with_filename(&client,
-                                  &test_bucket,
-                                  &filename,
-                                  &"tests/sample-data/no_credentials");
+    // // PUT an object (no_credentials is an arbitrary choice)
+    // test_put_object_with_filename(&client,
+    //                               &test_bucket,
+    //                               &filename,
+    //                               &"tests/sample-data/no_credentials");
 
-    // HEAD the object that was PUT
-    test_head_object(&client, &test_bucket, &filename);
+    // // HEAD the object that was PUT
+    // test_head_object(&client, &test_bucket, &filename);
 
     // GET the object
-    test_get_object(&client, &test_bucket, &filename);
-    test_get_object_range(&client, &test_bucket, &filename);
-    // copy the object to change its settings
-    test_copy_object(&client, &test_bucket, &filename);
+    test_get_object(&client, &test_bucket, &"no_credentials2".to_string());
+    // test_get_object_range(&client, &test_bucket, &filename);
+    // // copy the object to change its settings
+    // test_copy_object(&client, &test_bucket, &filename);
 
-    // Binary objects:
-    test_put_object_with_filename(&client,
-                                  &test_bucket,
-                                  &binary_filename,
-                                  &"tests/sample-data/binary-file");
-    test_get_object(&client, &test_bucket, &binary_filename);
+    // // Binary objects:
+    // test_put_object_with_filename(&client,
+    //                               &test_bucket,
+    //                               &binary_filename,
+    //                               &"tests/sample-data/binary-file");
+    // test_get_object(&client, &test_bucket, &binary_filename);
 
-    // paging test requires three items in the bucket, put another item there:
-    // PUT an object (no_credentials is an arbitrary choice)
-    let another_filename = format!("foo{}", filename);
-    test_put_object_with_filename(&client,
-                                  &test_bucket,
-                                  &another_filename,
-                                  &"tests/sample-data/no_credentials");
+    // // paging test requires three items in the bucket, put another item there:
+    // // PUT an object (no_credentials is an arbitrary choice)
+    // let another_filename = format!("foo{}", filename);
+    // test_put_object_with_filename(&client,
+    //                               &test_bucket,
+    //                               &another_filename,
+    //                               &"tests/sample-data/no_credentials");
 
-    // list items with paging
-    list_items_in_bucket_paged(&client, &test_bucket);
+    // // list items with paging
+    // list_items_in_bucket_paged(&client, &test_bucket);
 
-    test_delete_object(&client, &test_bucket, &binary_filename);
-    test_delete_object(&client, &test_bucket, &another_filename);
+    // test_delete_object(&client, &test_bucket, &binary_filename);
+    // test_delete_object(&client, &test_bucket, &another_filename);
 
-    // DELETE the object
-    test_delete_object(&client, &test_bucket, &filename);
+    // // DELETE the object
+    // test_delete_object(&client, &test_bucket, &filename);
 
-    // delete the test bucket
-    test_delete_bucket(&client, &test_bucket);
+    // // delete the test bucket
+    // test_delete_bucket(&client, &test_bucket);
 }
 
 fn test_multipart_upload(client: &TestClient, bucket: &str, filename: &str) {
@@ -205,8 +206,20 @@ fn test_get_object(client: &TestClient, bucket: &str, filename: &str) {
     };
 
     let result = client.get_object(&get_req).unwrap();
-    println!("get object result: {:#?}", result);
-    assert!(result.body.unwrap().len() > 0);
+    // println!("get object result: {:#?}", result);
+
+    let mut contents: Vec<u8> = Vec::new();
+
+    result.streaming_body.expect("streaming body not present").read_to_end(&mut contents).expect("couldn't read streaming body");
+
+    println!("File contents: {}", String::from_utf8(contents).expect("string no worky"));
+
+    // let mut buffer = [0; 10];
+
+    // read 10 bytes
+    // result.streaming_body.expect("streaming body not present").read(&mut buffer[..]).unwrap();
+    // println!("buffer is {:?}", buffer);
+    // assert!(result.body.unwrap().len() > 0);
 }
 
 fn test_get_object_range(client: &TestClient, bucket: &str, filename: &str) {
@@ -218,7 +231,7 @@ fn test_get_object_range(client: &TestClient, bucket: &str, filename: &str) {
     };
 
     let result = client.get_object(&get_req).unwrap();
-    println!("\nget object range result: {:#?}", result);
+    // println!("\nget object range result: {:#?}", result);
     assert_eq!(result.content_length.unwrap(), 2);
 }
 

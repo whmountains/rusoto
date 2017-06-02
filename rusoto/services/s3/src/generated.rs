@@ -5,6 +5,7 @@
         use rusoto_core::region;
 
         use std::fmt;
+        use std::io::Read;
         use std::error::Error;
         use rusoto_core::request::HttpDispatchError;
         use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
@@ -3924,11 +3925,12 @@ pub request_payer: Option<RequestPayer>,
 pub version_id: Option<ObjectVersionId>,
             }
             
-#[derive(Default,Clone,Debug)]
+#[derive(Default,Debug)]
             pub struct GetObjectOutput {
                 pub accept_ranges: Option<AcceptRanges>,
 #[doc="Object data."]
 pub body: Option<Body>,
+pub streaming_body: Option<Box<Read>>,
 #[doc="Specifies caching behavior along the request/reply chain."]
 pub cache_control: Option<CacheControl>,
 #[doc="Specifies presentational information for the object."]
@@ -17554,6 +17556,7 @@ request_uri = request_uri.replace("{Key}", &input.key.to_string());
                             
         let mut result = GetObjectOutput::default();
         result.body = Some(response.body);
+        result.streaming_body = Some(response.streaming_body);
         
                             if let Some(accept_ranges) = response.headers.get("accept-ranges") {
                     let value = accept_ranges.to_owned();

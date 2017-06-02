@@ -35,11 +35,12 @@ lazy_static! {
 }
 
 
-#[derive(Clone)]
+// #[derive(Debug)]
 pub struct HttpResponse {
     pub status: StatusCode,
     pub body: Vec<u8>,
     pub headers: HashMap<String, String>,
+    pub streaming_body: Box<Read>,
 }
 
 #[derive(Debug, PartialEq)]
@@ -119,7 +120,7 @@ impl DispatchSignedRequest for Client {
                 debug!("{}:{}", h.name(), h.value_string());
             }
         }
-        let mut hyper_response = match request.payload {
+        let hyper_response = match request.payload {
             None => {
                 try!(self.request(hyper_method, &final_uri).headers(hyper_headers).body("").send())
             }
@@ -130,9 +131,9 @@ impl DispatchSignedRequest for Client {
                     .send())
             }
         };
-        let mut body: Vec<u8> = Vec::new();
+        let body: Vec<u8> = Vec::new();
 
-        try!(hyper_response.read_to_end(&mut body));
+        // try!(hyper_response.read_to_end(&mut body));
 
         if log_enabled!(Debug) {
             debug!("Response body:\n{:?}", body);
@@ -148,6 +149,7 @@ impl DispatchSignedRequest for Client {
             status: hyper_response.status,
             body: body,
             headers: headers,
+            streaming_body: Box::new(hyper_response),
         })
 
     }
