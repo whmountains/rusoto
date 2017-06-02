@@ -40,8 +40,9 @@ struct AccountLimitDeserializer;
                 -> Result<AccountLimit, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = AccountLimit::default();
-
+        let mut obj = AccountLimit::default(); // needs deserializer: xmlpayloadparser
+        let name = Some(try!(LimitNameDeserializer::deserialize("Name", stack)))
+let value = Some(try!(LimitValueDeserializer::deserialize("Value", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -289,8 +290,9 @@ struct ChangeDeserializer;
                 -> Result<Change, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = Change::default();
-
+        let mut obj = Change::default(); // needs deserializer: xmlpayloadparser
+        let resource_change = Some(try!(ResourceChangeDeserializer::deserialize("ResourceChange", stack)))
+let type_ = Some(try!(ChangeTypeDeserializer::deserialize("Type", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -459,8 +461,16 @@ struct ChangeSetSummaryDeserializer;
                 -> Result<ChangeSetSummary, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ChangeSetSummary::default();
-
+        let mut obj = ChangeSetSummary::default(); // needs deserializer: xmlpayloadparser
+        let change_set_id = Some(try!(ChangeSetIdDeserializer::deserialize("ChangeSetId", stack)))
+let change_set_name = Some(try!(ChangeSetNameDeserializer::deserialize("ChangeSetName", stack)))
+let creation_time = Some(try!(CreationTimeDeserializer::deserialize("CreationTime", stack)))
+let description = Some(try!(DescriptionDeserializer::deserialize("Description", stack)))
+let execution_status = Some(try!(ExecutionStatusDeserializer::deserialize("ExecutionStatus", stack)))
+let stack_id = Some(try!(StackIdDeserializer::deserialize("StackId", stack)))
+let stack_name = Some(try!(StackNameDeserializer::deserialize("StackName", stack)))
+let status = Some(try!(ChangeSetStatusDeserializer::deserialize("Status", stack)))
+let status_reason = Some(try!(ChangeSetStatusReasonDeserializer::deserialize("StatusReason", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -626,7 +636,7 @@ struct ContinueUpdateRollbackOutputDeserializer;
                 -> Result<ContinueUpdateRollbackOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-            let obj = ContinueUpdateRollbackOutput::default();
+            let obj = ContinueUpdateRollbackOutput::default(); // no deserializer needed: xmlpayloadparser
 
             try!(end_element(tag_name, stack));
 
@@ -755,8 +765,9 @@ struct CreateChangeSetOutputDeserializer;
                 -> Result<CreateChangeSetOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CreateChangeSetOutput::default();
-
+        let mut obj = CreateChangeSetOutput::default(); // needs deserializer: xmlpayloadparser
+        let id = Some(try!(ChangeSetIdDeserializer::deserialize("Id", stack)))
+let stack_id = Some(try!(StackIdDeserializer::deserialize("StackId", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -908,8 +919,8 @@ struct CreateStackOutputDeserializer;
                 -> Result<CreateStackOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CreateStackOutput::default();
-
+        let mut obj = CreateStackOutput::default(); // needs deserializer: xmlpayloadparser
+        let stack_id = Some(try!(StackIdDeserializer::deserialize("StackId", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -989,7 +1000,7 @@ struct DeleteChangeSetOutputDeserializer;
                 -> Result<DeleteChangeSetOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-            let obj = DeleteChangeSetOutput::default();
+            let obj = DeleteChangeSetOutput::default(); // no deserializer needed: xmlpayloadparser
 
             try!(end_element(tag_name, stack));
 
@@ -1087,8 +1098,9 @@ struct DescribeAccountLimitsOutputDeserializer;
                 -> Result<DescribeAccountLimitsOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = DescribeAccountLimitsOutput::default();
-
+        let mut obj = DescribeAccountLimitsOutput::default(); // needs deserializer: xmlpayloadparser
+        let account_limits = Some(try!(AccountLimitListDeserializer::deserialize("AccountLimits", stack)))
+let next_token = Some(try!(NextTokenDeserializer::deserialize("NextToken", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1193,8 +1205,22 @@ struct DescribeChangeSetOutputDeserializer;
                 -> Result<DescribeChangeSetOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = DescribeChangeSetOutput::default();
-
+        let mut obj = DescribeChangeSetOutput::default(); // needs deserializer: xmlpayloadparser
+        let capabilities = Some(try!(CapabilitiesDeserializer::deserialize("Capabilities", stack)))
+let change_set_id = Some(try!(ChangeSetIdDeserializer::deserialize("ChangeSetId", stack)))
+let change_set_name = Some(try!(ChangeSetNameDeserializer::deserialize("ChangeSetName", stack)))
+let changes = Some(try!(ChangesDeserializer::deserialize("Changes", stack)))
+let creation_time = Some(try!(CreationTimeDeserializer::deserialize("CreationTime", stack)))
+let description = Some(try!(DescriptionDeserializer::deserialize("Description", stack)))
+let execution_status = Some(try!(ExecutionStatusDeserializer::deserialize("ExecutionStatus", stack)))
+let next_token = Some(try!(NextTokenDeserializer::deserialize("NextToken", stack)))
+let notification_ar_ns = Some(try!(NotificationARNsDeserializer::deserialize("NotificationARNs", stack)))
+let parameters = Some(try!(ParametersDeserializer::deserialize("Parameters", stack)))
+let stack_id = Some(try!(StackIdDeserializer::deserialize("StackId", stack)))
+let stack_name = Some(try!(StackNameDeserializer::deserialize("StackName", stack)))
+let status = Some(try!(ChangeSetStatusDeserializer::deserialize("Status", stack)))
+let status_reason = Some(try!(ChangeSetStatusReasonDeserializer::deserialize("StatusReason", stack)))
+let tags = Some(try!(TagsDeserializer::deserialize("Tags", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1309,8 +1335,9 @@ struct DescribeStackEventsOutputDeserializer;
                 -> Result<DescribeStackEventsOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = DescribeStackEventsOutput::default();
-
+        let mut obj = DescribeStackEventsOutput::default(); // needs deserializer: xmlpayloadparser
+        let next_token = Some(try!(NextTokenDeserializer::deserialize("NextToken", stack)))
+let stack_events = Some(try!(StackEventsDeserializer::deserialize("StackEvents", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1380,8 +1407,8 @@ struct DescribeStackResourceOutputDeserializer;
                 -> Result<DescribeStackResourceOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = DescribeStackResourceOutput::default();
-
+        let mut obj = DescribeStackResourceOutput::default(); // needs deserializer: xmlpayloadparser
+        let stack_resource_detail = Some(try!(StackResourceDetailDeserializer::deserialize("StackResourceDetail", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1457,8 +1484,8 @@ struct DescribeStackResourcesOutputDeserializer;
                 -> Result<DescribeStackResourcesOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = DescribeStackResourcesOutput::default();
-
+        let mut obj = DescribeStackResourcesOutput::default(); // needs deserializer: xmlpayloadparser
+        let stack_resources = Some(try!(StackResourcesDeserializer::deserialize("StackResources", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1531,8 +1558,9 @@ struct DescribeStacksOutputDeserializer;
                 -> Result<DescribeStacksOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = DescribeStacksOutput::default();
-
+        let mut obj = DescribeStacksOutput::default(); // needs deserializer: xmlpayloadparser
+        let next_token = Some(try!(NextTokenDeserializer::deserialize("NextToken", stack)))
+let stacks = Some(try!(StacksDeserializer::deserialize("Stacks", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1643,8 +1671,8 @@ struct EstimateTemplateCostOutputDeserializer;
                 -> Result<EstimateTemplateCostOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = EstimateTemplateCostOutput::default();
-
+        let mut obj = EstimateTemplateCostOutput::default(); // needs deserializer: xmlpayloadparser
+        let url = Some(try!(UrlDeserializer::deserialize("Url", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1738,7 +1766,7 @@ struct ExecuteChangeSetOutputDeserializer;
                 -> Result<ExecuteChangeSetOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-            let obj = ExecuteChangeSetOutput::default();
+            let obj = ExecuteChangeSetOutput::default(); // no deserializer needed: xmlpayloadparser
 
             try!(end_element(tag_name, stack));
 
@@ -1778,8 +1806,10 @@ struct ExportDeserializer;
                 -> Result<Export, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = Export::default();
-
+        let mut obj = Export::default(); // needs deserializer: xmlpayloadparser
+        let exporting_stack_id = Some(try!(StackIdDeserializer::deserialize("ExportingStackId", stack)))
+let name = Some(try!(ExportNameDeserializer::deserialize("Name", stack)))
+let value = Some(try!(ExportValueDeserializer::deserialize("Value", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1914,8 +1944,8 @@ struct GetStackPolicyOutputDeserializer;
                 -> Result<GetStackPolicyOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetStackPolicyOutput::default();
-
+        let mut obj = GetStackPolicyOutput::default(); // needs deserializer: xmlpayloadparser
+        let stack_policy_body = Some(try!(StackPolicyBodyDeserializer::deserialize("StackPolicyBody", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1993,8 +2023,9 @@ struct GetTemplateOutputDeserializer;
                 -> Result<GetTemplateOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetTemplateOutput::default();
-
+        let mut obj = GetTemplateOutput::default(); // needs deserializer: xmlpayloadparser
+        let stages_available = Some(try!(StageListDeserializer::deserialize("StagesAvailable", stack)))
+let template_body = Some(try!(TemplateBodyDeserializer::deserialize("TemplateBody", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2087,8 +2118,15 @@ struct GetTemplateSummaryOutputDeserializer;
                 -> Result<GetTemplateSummaryOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetTemplateSummaryOutput::default();
-
+        let mut obj = GetTemplateSummaryOutput::default(); // needs deserializer: xmlpayloadparser
+        let capabilities = Some(try!(CapabilitiesDeserializer::deserialize("Capabilities", stack)))
+let capabilities_reason = Some(try!(CapabilitiesReasonDeserializer::deserialize("CapabilitiesReason", stack)))
+let declared_transforms = Some(try!(TransformsListDeserializer::deserialize("DeclaredTransforms", stack)))
+let description = Some(try!(DescriptionDeserializer::deserialize("Description", stack)))
+let metadata = Some(try!(MetadataDeserializer::deserialize("Metadata", stack)))
+let parameters = Some(try!(ParameterDeclarationsDeserializer::deserialize("Parameters", stack)))
+let resource_types = Some(try!(ResourceTypesDeserializer::deserialize("ResourceTypes", stack)))
+let version = Some(try!(VersionDeserializer::deserialize("Version", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2259,8 +2297,9 @@ struct ListChangeSetsOutputDeserializer;
                 -> Result<ListChangeSetsOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListChangeSetsOutput::default();
-
+        let mut obj = ListChangeSetsOutput::default(); // needs deserializer: xmlpayloadparser
+        let next_token = Some(try!(NextTokenDeserializer::deserialize("NextToken", stack)))
+let summaries = Some(try!(ChangeSetSummariesDeserializer::deserialize("Summaries", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2329,8 +2368,9 @@ struct ListExportsOutputDeserializer;
                 -> Result<ListExportsOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListExportsOutput::default();
-
+        let mut obj = ListExportsOutput::default(); // needs deserializer: xmlpayloadparser
+        let exports = Some(try!(ExportsDeserializer::deserialize("Exports", stack)))
+let next_token = Some(try!(NextTokenDeserializer::deserialize("NextToken", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2402,8 +2442,9 @@ struct ListImportsOutputDeserializer;
                 -> Result<ListImportsOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListImportsOutput::default();
-
+        let mut obj = ListImportsOutput::default(); // needs deserializer: xmlpayloadparser
+        let imports = Some(try!(ImportsDeserializer::deserialize("Imports", stack)))
+let next_token = Some(try!(NextTokenDeserializer::deserialize("NextToken", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2477,8 +2518,9 @@ struct ListStackResourcesOutputDeserializer;
                 -> Result<ListStackResourcesOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListStackResourcesOutput::default();
-
+        let mut obj = ListStackResourcesOutput::default(); // needs deserializer: xmlpayloadparser
+        let next_token = Some(try!(NextTokenDeserializer::deserialize("NextToken", stack)))
+let stack_resource_summaries = Some(try!(StackResourceSummariesDeserializer::deserialize("StackResourceSummaries", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2558,8 +2600,9 @@ struct ListStacksOutputDeserializer;
                 -> Result<ListStacksOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListStacksOutput::default();
-
+        let mut obj = ListStacksOutput::default(); // needs deserializer: xmlpayloadparser
+        let next_token = Some(try!(NextTokenDeserializer::deserialize("NextToken", stack)))
+let stack_summaries = Some(try!(StackSummariesDeserializer::deserialize("StackSummaries", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2728,8 +2771,10 @@ struct OutputDeserializer;
                 -> Result<Output, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = Output::default();
-
+        let mut obj = Output::default(); // needs deserializer: xmlpayloadparser
+        let description = Some(try!(DescriptionDeserializer::deserialize("Description", stack)))
+let output_key = Some(try!(OutputKeyDeserializer::deserialize("OutputKey", stack)))
+let output_value = Some(try!(OutputValueDeserializer::deserialize("OutputValue", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2846,8 +2891,10 @@ struct ParameterDeserializer;
                 -> Result<Parameter, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = Parameter::default();
-
+        let mut obj = Parameter::default(); // needs deserializer: xmlpayloadparser
+        let parameter_key = Some(try!(ParameterKeyDeserializer::deserialize("ParameterKey", stack)))
+let parameter_value = Some(try!(ParameterValueDeserializer::deserialize("ParameterValue", stack)))
+let use_previous_value = Some(try!(UsePreviousValueDeserializer::deserialize("UsePreviousValue", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2918,8 +2965,8 @@ struct ParameterConstraintsDeserializer;
                 -> Result<ParameterConstraints, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ParameterConstraints::default();
-
+        let mut obj = ParameterConstraints::default(); // needs deserializer: xmlpayloadparser
+        let allowed_values = Some(try!(AllowedValuesDeserializer::deserialize("AllowedValues", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2971,8 +3018,13 @@ struct ParameterDeclarationDeserializer;
                 -> Result<ParameterDeclaration, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ParameterDeclaration::default();
-
+        let mut obj = ParameterDeclaration::default(); // needs deserializer: xmlpayloadparser
+        let default_value = Some(try!(ParameterValueDeserializer::deserialize("DefaultValue", stack)))
+let description = Some(try!(DescriptionDeserializer::deserialize("Description", stack)))
+let no_echo = Some(try!(NoEchoDeserializer::deserialize("NoEcho", stack)))
+let parameter_constraints = Some(try!(ParameterConstraintsDeserializer::deserialize("ParameterConstraints", stack)))
+let parameter_key = Some(try!(ParameterKeyDeserializer::deserialize("ParameterKey", stack)))
+let parameter_type = Some(try!(ParameterTypeDeserializer::deserialize("ParameterType", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3239,8 +3291,14 @@ struct ResourceChangeDeserializer;
                 -> Result<ResourceChange, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ResourceChange::default();
-
+        let mut obj = ResourceChange::default(); // needs deserializer: xmlpayloadparser
+        let action = Some(try!(ChangeActionDeserializer::deserialize("Action", stack)))
+let details = Some(try!(ResourceChangeDetailsDeserializer::deserialize("Details", stack)))
+let logical_resource_id = Some(try!(LogicalResourceIdDeserializer::deserialize("LogicalResourceId", stack)))
+let physical_resource_id = Some(try!(PhysicalResourceIdDeserializer::deserialize("PhysicalResourceId", stack)))
+let replacement = Some(try!(ReplacementDeserializer::deserialize("Replacement", stack)))
+let resource_type = Some(try!(ResourceTypeDeserializer::deserialize("ResourceType", stack)))
+let scope = Some(try!(ScopeDeserializer::deserialize("Scope", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3306,8 +3364,11 @@ struct ResourceChangeDetailDeserializer;
                 -> Result<ResourceChangeDetail, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ResourceChangeDetail::default();
-
+        let mut obj = ResourceChangeDetail::default(); // needs deserializer: xmlpayloadparser
+        let causing_entity = Some(try!(CausingEntityDeserializer::deserialize("CausingEntity", stack)))
+let change_source = Some(try!(ChangeSourceDeserializer::deserialize("ChangeSource", stack)))
+let evaluation = Some(try!(EvaluationTypeDeserializer::deserialize("Evaluation", stack)))
+let target = Some(try!(ResourceTargetDefinitionDeserializer::deserialize("Target", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3443,8 +3504,10 @@ struct ResourceTargetDefinitionDeserializer;
                 -> Result<ResourceTargetDefinition, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ResourceTargetDefinition::default();
-
+        let mut obj = ResourceTargetDefinition::default(); // needs deserializer: xmlpayloadparser
+        let attribute = Some(try!(ResourceAttributeDeserializer::deserialize("Attribute", stack)))
+let name = Some(try!(PropertyNameDeserializer::deserialize("Name", stack)))
+let requires_recreation = Some(try!(RequiresRecreationDeserializer::deserialize("RequiresRecreation", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3726,8 +3789,23 @@ struct StackDeserializer;
                 -> Result<Stack, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = Stack::default();
-
+        let mut obj = Stack::default(); // needs deserializer: xmlpayloadparser
+        let capabilities = Some(try!(CapabilitiesDeserializer::deserialize("Capabilities", stack)))
+let change_set_id = Some(try!(ChangeSetIdDeserializer::deserialize("ChangeSetId", stack)))
+let creation_time = try!(CreationTimeDeserializer::deserialize("CreationTime", stack))
+let description = Some(try!(DescriptionDeserializer::deserialize("Description", stack)))
+let disable_rollback = Some(try!(DisableRollbackDeserializer::deserialize("DisableRollback", stack)))
+let last_updated_time = Some(try!(LastUpdatedTimeDeserializer::deserialize("LastUpdatedTime", stack)))
+let notification_ar_ns = Some(try!(NotificationARNsDeserializer::deserialize("NotificationARNs", stack)))
+let outputs = Some(try!(OutputsDeserializer::deserialize("Outputs", stack)))
+let parameters = Some(try!(ParametersDeserializer::deserialize("Parameters", stack)))
+let role_arn = Some(try!(RoleARNDeserializer::deserialize("RoleARN", stack)))
+let stack_id = Some(try!(StackIdDeserializer::deserialize("StackId", stack)))
+let stack_name = try!(StackNameDeserializer::deserialize("StackName", stack))
+let stack_status = try!(StackStatusDeserializer::deserialize("StackStatus", stack))
+let stack_status_reason = Some(try!(StackStatusReasonDeserializer::deserialize("StackStatusReason", stack)))
+let tags = Some(try!(TagsDeserializer::deserialize("Tags", stack)))
+let timeout_in_minutes = Some(try!(TimeoutMinutesDeserializer::deserialize("TimeoutInMinutes", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3832,8 +3910,17 @@ struct StackEventDeserializer;
                 -> Result<StackEvent, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = StackEvent::default();
-
+        let mut obj = StackEvent::default(); // needs deserializer: xmlpayloadparser
+        let event_id = try!(EventIdDeserializer::deserialize("EventId", stack))
+let logical_resource_id = Some(try!(LogicalResourceIdDeserializer::deserialize("LogicalResourceId", stack)))
+let physical_resource_id = Some(try!(PhysicalResourceIdDeserializer::deserialize("PhysicalResourceId", stack)))
+let resource_properties = Some(try!(ResourcePropertiesDeserializer::deserialize("ResourceProperties", stack)))
+let resource_status = Some(try!(ResourceStatusDeserializer::deserialize("ResourceStatus", stack)))
+let resource_status_reason = Some(try!(ResourceStatusReasonDeserializer::deserialize("ResourceStatusReason", stack)))
+let resource_type = Some(try!(ResourceTypeDeserializer::deserialize("ResourceType", stack)))
+let stack_id = try!(StackIdDeserializer::deserialize("StackId", stack))
+let stack_name = try!(StackNameDeserializer::deserialize("StackName", stack))
+let timestamp = try!(TimestampDeserializer::deserialize("Timestamp", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4001,8 +4088,16 @@ struct StackResourceDeserializer;
                 -> Result<StackResource, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = StackResource::default();
-
+        let mut obj = StackResource::default(); // needs deserializer: xmlpayloadparser
+        let description = Some(try!(DescriptionDeserializer::deserialize("Description", stack)))
+let logical_resource_id = try!(LogicalResourceIdDeserializer::deserialize("LogicalResourceId", stack))
+let physical_resource_id = Some(try!(PhysicalResourceIdDeserializer::deserialize("PhysicalResourceId", stack)))
+let resource_status = try!(ResourceStatusDeserializer::deserialize("ResourceStatus", stack))
+let resource_status_reason = Some(try!(ResourceStatusReasonDeserializer::deserialize("ResourceStatusReason", stack)))
+let resource_type = try!(ResourceTypeDeserializer::deserialize("ResourceType", stack))
+let stack_id = Some(try!(StackIdDeserializer::deserialize("StackId", stack)))
+let stack_name = Some(try!(StackNameDeserializer::deserialize("StackName", stack)))
+let timestamp = try!(TimestampDeserializer::deserialize("Timestamp", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4086,8 +4181,17 @@ struct StackResourceDetailDeserializer;
                 -> Result<StackResourceDetail, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = StackResourceDetail::default();
-
+        let mut obj = StackResourceDetail::default(); // needs deserializer: xmlpayloadparser
+        let description = Some(try!(DescriptionDeserializer::deserialize("Description", stack)))
+let last_updated_timestamp = try!(TimestampDeserializer::deserialize("LastUpdatedTimestamp", stack))
+let logical_resource_id = try!(LogicalResourceIdDeserializer::deserialize("LogicalResourceId", stack))
+let metadata = Some(try!(MetadataDeserializer::deserialize("Metadata", stack)))
+let physical_resource_id = Some(try!(PhysicalResourceIdDeserializer::deserialize("PhysicalResourceId", stack)))
+let resource_status = try!(ResourceStatusDeserializer::deserialize("ResourceStatus", stack))
+let resource_status_reason = Some(try!(ResourceStatusReasonDeserializer::deserialize("ResourceStatusReason", stack)))
+let resource_type = try!(ResourceTypeDeserializer::deserialize("ResourceType", stack))
+let stack_id = Some(try!(StackIdDeserializer::deserialize("StackId", stack)))
+let stack_name = Some(try!(StackNameDeserializer::deserialize("StackName", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4203,8 +4307,13 @@ struct StackResourceSummaryDeserializer;
                 -> Result<StackResourceSummary, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = StackResourceSummary::default();
-
+        let mut obj = StackResourceSummary::default(); // needs deserializer: xmlpayloadparser
+        let last_updated_timestamp = try!(TimestampDeserializer::deserialize("LastUpdatedTimestamp", stack))
+let logical_resource_id = try!(LogicalResourceIdDeserializer::deserialize("LogicalResourceId", stack))
+let physical_resource_id = Some(try!(PhysicalResourceIdDeserializer::deserialize("PhysicalResourceId", stack)))
+let resource_status = try!(ResourceStatusDeserializer::deserialize("ResourceStatus", stack))
+let resource_status_reason = Some(try!(ResourceStatusReasonDeserializer::deserialize("ResourceStatusReason", stack)))
+let resource_type = try!(ResourceTypeDeserializer::deserialize("ResourceType", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4390,8 +4499,15 @@ struct StackSummaryDeserializer;
                 -> Result<StackSummary, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = StackSummary::default();
-
+        let mut obj = StackSummary::default(); // needs deserializer: xmlpayloadparser
+        let creation_time = try!(CreationTimeDeserializer::deserialize("CreationTime", stack))
+let deletion_time = Some(try!(DeletionTimeDeserializer::deserialize("DeletionTime", stack)))
+let last_updated_time = Some(try!(LastUpdatedTimeDeserializer::deserialize("LastUpdatedTime", stack)))
+let stack_id = Some(try!(StackIdDeserializer::deserialize("StackId", stack)))
+let stack_name = try!(StackNameDeserializer::deserialize("StackName", stack))
+let stack_status = try!(StackStatusDeserializer::deserialize("StackStatus", stack))
+let stack_status_reason = Some(try!(StackStatusReasonDeserializer::deserialize("StackStatusReason", stack)))
+let template_description = Some(try!(TemplateDescriptionDeserializer::deserialize("TemplateDescription", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4530,8 +4646,9 @@ struct TagDeserializer;
                 -> Result<Tag, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = Tag::default();
-
+        let mut obj = Tag::default(); // needs deserializer: xmlpayloadparser
+        let key = Some(try!(TagKeyDeserializer::deserialize("Key", stack)))
+let value = Some(try!(TagValueDeserializer::deserialize("Value", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4707,8 +4824,11 @@ struct TemplateParameterDeserializer;
                 -> Result<TemplateParameter, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = TemplateParameter::default();
-
+        let mut obj = TemplateParameter::default(); // needs deserializer: xmlpayloadparser
+        let default_value = Some(try!(ParameterValueDeserializer::deserialize("DefaultValue", stack)))
+let description = Some(try!(DescriptionDeserializer::deserialize("Description", stack)))
+let no_echo = Some(try!(NoEchoDeserializer::deserialize("NoEcho", stack)))
+let parameter_key = Some(try!(ParameterKeyDeserializer::deserialize("ParameterKey", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4997,8 +5117,8 @@ struct UpdateStackOutputDeserializer;
                 -> Result<UpdateStackOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = UpdateStackOutput::default();
-
+        let mut obj = UpdateStackOutput::default(); // needs deserializer: xmlpayloadparser
+        let stack_id = Some(try!(StackIdDeserializer::deserialize("StackId", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5106,8 +5226,12 @@ struct ValidateTemplateOutputDeserializer;
                 -> Result<ValidateTemplateOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ValidateTemplateOutput::default();
-
+        let mut obj = ValidateTemplateOutput::default(); // needs deserializer: xmlpayloadparser
+        let capabilities = Some(try!(CapabilitiesDeserializer::deserialize("Capabilities", stack)))
+let capabilities_reason = Some(try!(CapabilitiesReasonDeserializer::deserialize("CapabilitiesReason", stack)))
+let declared_transforms = Some(try!(TransformsListDeserializer::deserialize("DeclaredTransforms", stack)))
+let description = Some(try!(DescriptionDeserializer::deserialize("Description", stack)))
+let parameters = Some(try!(TemplateParametersDeserializer::deserialize("Parameters", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,

@@ -40,8 +40,9 @@ struct ArtifactDeserializer;
                 -> Result<Artifact, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = Artifact::default();
-
+        let mut obj = Artifact::default(); // needs deserializer: xmlpayloadparser
+        let description = Some(try!(DescriptionDeserializer::deserialize("Description", stack)))
+let url = Some(try!(URLDeserializer::deserialize("URL", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -148,8 +149,8 @@ struct CancelJobOutputDeserializer;
                 -> Result<CancelJobOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CancelJobOutput::default();
-
+        let mut obj = CancelJobOutput::default(); // needs deserializer: xmlpayloadparser
+        let success = Some(try!(SuccessDeserializer::deserialize("Success", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -249,8 +250,13 @@ struct CreateJobOutputDeserializer;
                 -> Result<CreateJobOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CreateJobOutput::default();
-
+        let mut obj = CreateJobOutput::default(); // needs deserializer: xmlpayloadparser
+        let artifact_list = Some(try!(ArtifactListDeserializer::deserialize("ArtifactList", stack)))
+let job_id = Some(try!(JobIdDeserializer::deserialize("JobId", stack)))
+let job_type = Some(try!(JobTypeDeserializer::deserialize("JobType", stack)))
+let signature = Some(try!(SignatureDeserializer::deserialize("Signature", stack)))
+let signature_file_contents = Some(try!(SignatureFileContentsDeserializer::deserialize("SignatureFileContents", stack)))
+let warning_message = Some(try!(WarningMessageDeserializer::deserialize("WarningMessage", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -450,8 +456,9 @@ struct GetShippingLabelOutputDeserializer;
                 -> Result<GetShippingLabelOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetShippingLabelOutput::default();
-
+        let mut obj = GetShippingLabelOutput::default(); // needs deserializer: xmlpayloadparser
+        let shipping_label_url = Some(try!(GenericStringDeserializer::deserialize("ShippingLabelURL", stack)))
+let warning = Some(try!(GenericStringDeserializer::deserialize("Warning", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -535,8 +542,23 @@ struct GetStatusOutputDeserializer;
                 -> Result<GetStatusOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetStatusOutput::default();
-
+        let mut obj = GetStatusOutput::default(); // needs deserializer: xmlpayloadparser
+        let artifact_list = Some(try!(ArtifactListDeserializer::deserialize("ArtifactList", stack)))
+let carrier = Some(try!(CarrierDeserializer::deserialize("Carrier", stack)))
+let creation_date = Some(try!(CreationDateDeserializer::deserialize("CreationDate", stack)))
+let current_manifest = Some(try!(CurrentManifestDeserializer::deserialize("CurrentManifest", stack)))
+let error_count = Some(try!(ErrorCountDeserializer::deserialize("ErrorCount", stack)))
+let job_id = Some(try!(JobIdDeserializer::deserialize("JobId", stack)))
+let job_type = Some(try!(JobTypeDeserializer::deserialize("JobType", stack)))
+let location_code = Some(try!(LocationCodeDeserializer::deserialize("LocationCode", stack)))
+let location_message = Some(try!(LocationMessageDeserializer::deserialize("LocationMessage", stack)))
+let log_bucket = Some(try!(LogBucketDeserializer::deserialize("LogBucket", stack)))
+let log_key = Some(try!(LogKeyDeserializer::deserialize("LogKey", stack)))
+let progress_code = Some(try!(ProgressCodeDeserializer::deserialize("ProgressCode", stack)))
+let progress_message = Some(try!(ProgressMessageDeserializer::deserialize("ProgressMessage", stack)))
+let signature = Some(try!(SignatureDeserializer::deserialize("Signature", stack)))
+let signature_file_contents = Some(try!(SignatureDeserializer::deserialize("SignatureFileContents", stack)))
+let tracking_number = Some(try!(TrackingNumberDeserializer::deserialize("TrackingNumber", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -655,8 +677,11 @@ struct JobDeserializer;
                 -> Result<Job, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = Job::default();
-
+        let mut obj = Job::default(); // needs deserializer: xmlpayloadparser
+        let creation_date = Some(try!(CreationDateDeserializer::deserialize("CreationDate", stack)))
+let is_canceled = Some(try!(IsCanceledDeserializer::deserialize("IsCanceled", stack)))
+let job_id = Some(try!(JobIdDeserializer::deserialize("JobId", stack)))
+let job_type = Some(try!(JobTypeDeserializer::deserialize("JobType", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -819,8 +844,9 @@ struct ListJobsOutputDeserializer;
                 -> Result<ListJobsOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListJobsOutput::default();
-
+        let mut obj = ListJobsOutput::default(); // needs deserializer: xmlpayloadparser
+        let is_truncated = Some(try!(IsTruncatedDeserializer::deserialize("IsTruncated", stack)))
+let jobs = Some(try!(JobsListDeserializer::deserialize("Jobs", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1084,8 +1110,10 @@ struct UpdateJobOutputDeserializer;
                 -> Result<UpdateJobOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = UpdateJobOutput::default();
-
+        let mut obj = UpdateJobOutput::default(); // needs deserializer: xmlpayloadparser
+        let artifact_list = Some(try!(ArtifactListDeserializer::deserialize("ArtifactList", stack)))
+let success = Some(try!(SuccessDeserializer::deserialize("Success", stack)))
+let warning_message = Some(try!(WarningMessageDeserializer::deserialize("WarningMessage", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,

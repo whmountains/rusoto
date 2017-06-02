@@ -46,8 +46,12 @@ struct AccessKeyDeserializer;
                 -> Result<AccessKey, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = AccessKey::default();
-
+        let mut obj = AccessKey::default(); // needs deserializer: xmlpayloadparser
+        let access_key_id = try!(AccessKeyIdTypeDeserializer::deserialize("AccessKeyId", stack))
+let create_date = Some(try!(DateTypeDeserializer::deserialize("CreateDate", stack)))
+let secret_access_key = try!(AccessKeySecretTypeDeserializer::deserialize("SecretAccessKey", stack))
+let status = try!(StatusTypeDeserializer::deserialize("Status", stack))
+let user_name = try!(UserNameTypeDeserializer::deserialize("UserName", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -119,8 +123,10 @@ struct AccessKeyLastUsedDeserializer;
                 -> Result<AccessKeyLastUsed, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = AccessKeyLastUsed::default();
-
+        let mut obj = AccessKeyLastUsed::default(); // needs deserializer: xmlpayloadparser
+        let last_used_date = try!(DateTypeDeserializer::deserialize("LastUsedDate", stack))
+let region = try!(StringTypeDeserializer::deserialize("Region", stack))
+let service_name = try!(StringTypeDeserializer::deserialize("ServiceName", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -174,8 +180,11 @@ struct AccessKeyMetadataDeserializer;
                 -> Result<AccessKeyMetadata, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = AccessKeyMetadata::default();
-
+        let mut obj = AccessKeyMetadata::default(); // needs deserializer: xmlpayloadparser
+        let access_key_id = Some(try!(AccessKeyIdTypeDeserializer::deserialize("AccessKeyId", stack)))
+let create_date = Some(try!(DateTypeDeserializer::deserialize("CreateDate", stack)))
+let status = Some(try!(StatusTypeDeserializer::deserialize("Status", stack)))
+let user_name = Some(try!(UserNameTypeDeserializer::deserialize("UserName", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -554,8 +563,9 @@ struct AttachedPolicyDeserializer;
                 -> Result<AttachedPolicy, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = AttachedPolicy::default();
-
+        let mut obj = AttachedPolicy::default(); // needs deserializer: xmlpayloadparser
+        let policy_arn = Some(try!(ArnTypeDeserializer::deserialize("PolicyArn", stack)))
+let policy_name = Some(try!(PolicyNameTypeDeserializer::deserialize("PolicyName", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -978,8 +988,8 @@ struct CreateAccessKeyResponseDeserializer;
                 -> Result<CreateAccessKeyResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CreateAccessKeyResponse::default();
-
+        let mut obj = CreateAccessKeyResponse::default(); // needs deserializer: xmlpayloadparser
+        let access_key = try!(AccessKeyDeserializer::deserialize("AccessKey", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1068,8 +1078,8 @@ struct CreateGroupResponseDeserializer;
                 -> Result<CreateGroupResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CreateGroupResponse::default();
-
+        let mut obj = CreateGroupResponse::default(); // needs deserializer: xmlpayloadparser
+        let group = try!(GroupDeserializer::deserialize("Group", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1137,8 +1147,8 @@ struct CreateInstanceProfileResponseDeserializer;
                 -> Result<CreateInstanceProfileResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CreateInstanceProfileResponse::default();
-
+        let mut obj = CreateInstanceProfileResponse::default(); // needs deserializer: xmlpayloadparser
+        let instance_profile = try!(InstanceProfileDeserializer::deserialize("InstanceProfile", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1209,8 +1219,8 @@ struct CreateLoginProfileResponseDeserializer;
                 -> Result<CreateLoginProfileResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CreateLoginProfileResponse::default();
-
+        let mut obj = CreateLoginProfileResponse::default(); // needs deserializer: xmlpayloadparser
+        let login_profile = try!(LoginProfileDeserializer::deserialize("LoginProfile", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1289,8 +1299,8 @@ struct CreateOpenIDConnectProviderResponseDeserializer;
                 -> Result<CreateOpenIDConnectProviderResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CreateOpenIDConnectProviderResponse::default();
-
+        let mut obj = CreateOpenIDConnectProviderResponse::default(); // needs deserializer: xmlpayloadparser
+        let open_id_connect_provider_arn = Some(try!(ArnTypeDeserializer::deserialize("OpenIDConnectProviderArn", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1366,8 +1376,8 @@ struct CreatePolicyResponseDeserializer;
                 -> Result<CreatePolicyResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CreatePolicyResponse::default();
-
+        let mut obj = CreatePolicyResponse::default(); // needs deserializer: xmlpayloadparser
+        let policy = Some(try!(PolicyDeserializer::deserialize("Policy", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1438,8 +1448,8 @@ struct CreatePolicyVersionResponseDeserializer;
                 -> Result<CreatePolicyVersionResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CreatePolicyVersionResponse::default();
-
+        let mut obj = CreatePolicyVersionResponse::default(); // needs deserializer: xmlpayloadparser
+        let policy_version = Some(try!(PolicyVersionDeserializer::deserialize("PolicyVersion", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1510,8 +1520,8 @@ struct CreateRoleResponseDeserializer;
                 -> Result<CreateRoleResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CreateRoleResponse::default();
-
+        let mut obj = CreateRoleResponse::default(); // needs deserializer: xmlpayloadparser
+        let role = try!(RoleDeserializer::deserialize("Role", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1577,8 +1587,8 @@ struct CreateSAMLProviderResponseDeserializer;
                 -> Result<CreateSAMLProviderResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CreateSAMLProviderResponse::default();
-
+        let mut obj = CreateSAMLProviderResponse::default(); // needs deserializer: xmlpayloadparser
+        let saml_provider_arn = Some(try!(ArnTypeDeserializer::deserialize("SAMLProviderArn", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1643,8 +1653,8 @@ struct CreateServiceSpecificCredentialResponseDeserializer;
                 -> Result<CreateServiceSpecificCredentialResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CreateServiceSpecificCredentialResponse::default();
-
+        let mut obj = CreateServiceSpecificCredentialResponse::default(); // needs deserializer: xmlpayloadparser
+        let service_specific_credential = Some(try!(ServiceSpecificCredentialDeserializer::deserialize("ServiceSpecificCredential", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1712,8 +1722,8 @@ struct CreateUserResponseDeserializer;
                 -> Result<CreateUserResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CreateUserResponse::default();
-
+        let mut obj = CreateUserResponse::default(); // needs deserializer: xmlpayloadparser
+        let user = Some(try!(UserDeserializer::deserialize("User", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1781,8 +1791,8 @@ struct CreateVirtualMFADeviceResponseDeserializer;
                 -> Result<CreateVirtualMFADeviceResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CreateVirtualMFADeviceResponse::default();
-
+        let mut obj = CreateVirtualMFADeviceResponse::default(); // needs deserializer: xmlpayloadparser
+        let virtual_mfa_device = try!(VirtualMFADeviceDeserializer::deserialize("VirtualMFADevice", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2465,8 +2475,14 @@ struct EvaluationResultDeserializer;
                 -> Result<EvaluationResult, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = EvaluationResult::default();
-
+        let mut obj = EvaluationResult::default(); // needs deserializer: xmlpayloadparser
+        let eval_action_name = try!(ActionNameTypeDeserializer::deserialize("EvalActionName", stack))
+let eval_decision = try!(PolicyEvaluationDecisionTypeDeserializer::deserialize("EvalDecision", stack))
+let eval_decision_details = Some(try!(EvalDecisionDetailsTypeDeserializer::deserialize("EvalDecisionDetails", stack)))
+let eval_resource_name = Some(try!(ResourceNameTypeDeserializer::deserialize("EvalResourceName", stack)))
+let matched_statements = Some(try!(StatementListTypeDeserializer::deserialize("MatchedStatements", stack)))
+let missing_context_values = Some(try!(ContextKeyNamesResultListTypeDeserializer::deserialize("MissingContextValues", stack)))
+let resource_specific_results = Some(try!(ResourceSpecificResultListTypeDeserializer::deserialize("ResourceSpecificResults", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2579,8 +2595,9 @@ struct GenerateCredentialReportResponseDeserializer;
                 -> Result<GenerateCredentialReportResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GenerateCredentialReportResponse::default();
-
+        let mut obj = GenerateCredentialReportResponse::default(); // needs deserializer: xmlpayloadparser
+        let description = Some(try!(ReportStateDescriptionTypeDeserializer::deserialize("Description", stack)))
+let state = Some(try!(ReportStateTypeDeserializer::deserialize("State", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2648,8 +2665,9 @@ struct GetAccessKeyLastUsedResponseDeserializer;
                 -> Result<GetAccessKeyLastUsedResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetAccessKeyLastUsedResponse::default();
-
+        let mut obj = GetAccessKeyLastUsedResponse::default(); // needs deserializer: xmlpayloadparser
+        let access_key_last_used = Some(try!(AccessKeyLastUsedDeserializer::deserialize("AccessKeyLastUsed", stack)))
+let user_name = Some(try!(ExistingUserNameTypeDeserializer::deserialize("UserName", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2741,8 +2759,13 @@ struct GetAccountAuthorizationDetailsResponseDeserializer;
                 -> Result<GetAccountAuthorizationDetailsResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetAccountAuthorizationDetailsResponse::default();
-
+        let mut obj = GetAccountAuthorizationDetailsResponse::default(); // needs deserializer: xmlpayloadparser
+        let group_detail_list = Some(try!(GroupDetailListTypeDeserializer::deserialize("GroupDetailList", stack)))
+let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
+let policies = Some(try!(ManagedPolicyDetailListTypeDeserializer::deserialize("Policies", stack)))
+let role_detail_list = Some(try!(RoleDetailListTypeDeserializer::deserialize("RoleDetailList", stack)))
+let user_detail_list = Some(try!(UserDetailListTypeDeserializer::deserialize("UserDetailList", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2799,8 +2822,8 @@ struct GetAccountPasswordPolicyResponseDeserializer;
                 -> Result<GetAccountPasswordPolicyResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetAccountPasswordPolicyResponse::default();
-
+        let mut obj = GetAccountPasswordPolicyResponse::default(); // needs deserializer: xmlpayloadparser
+        let password_policy = try!(PasswordPolicyDeserializer::deserialize("PasswordPolicy", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2842,8 +2865,8 @@ struct GetAccountSummaryResponseDeserializer;
                 -> Result<GetAccountSummaryResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetAccountSummaryResponse::default();
-
+        let mut obj = GetAccountSummaryResponse::default(); // needs deserializer: xmlpayloadparser
+        let summary_map = Some(try!(SummaryMapTypeDeserializer::deserialize("SummaryMap", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2910,8 +2933,8 @@ struct GetContextKeysForPolicyResponseDeserializer;
                 -> Result<GetContextKeysForPolicyResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetContextKeysForPolicyResponse::default();
-
+        let mut obj = GetContextKeysForPolicyResponse::default(); // needs deserializer: xmlpayloadparser
+        let context_key_names = Some(try!(ContextKeyNamesResultListTypeDeserializer::deserialize("ContextKeyNames", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2987,8 +3010,10 @@ struct GetCredentialReportResponseDeserializer;
                 -> Result<GetCredentialReportResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetCredentialReportResponse::default();
-
+        let mut obj = GetCredentialReportResponse::default(); // needs deserializer: xmlpayloadparser
+        let content = Some(try!(ReportContentTypeDeserializer::deserialize("Content", stack)))
+let generated_time = Some(try!(DateTypeDeserializer::deserialize("GeneratedTime", stack)))
+let report_format = Some(try!(ReportFormatTypeDeserializer::deserialize("ReportFormat", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3064,8 +3089,10 @@ struct GetGroupPolicyResponseDeserializer;
                 -> Result<GetGroupPolicyResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetGroupPolicyResponse::default();
-
+        let mut obj = GetGroupPolicyResponse::default(); // needs deserializer: xmlpayloadparser
+        let group_name = try!(GroupNameTypeDeserializer::deserialize("GroupName", stack))
+let policy_document = try!(PolicyDocumentTypeDeserializer::deserialize("PolicyDocument", stack))
+let policy_name = try!(PolicyNameTypeDeserializer::deserialize("PolicyName", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3150,8 +3177,11 @@ struct GetGroupResponseDeserializer;
                 -> Result<GetGroupResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetGroupResponse::default();
-
+        let mut obj = GetGroupResponse::default(); // needs deserializer: xmlpayloadparser
+        let group = try!(GroupDeserializer::deserialize("Group", stack))
+let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
+let users = try!(UserListTypeDeserializer::deserialize("Users", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3223,8 +3253,8 @@ struct GetInstanceProfileResponseDeserializer;
                 -> Result<GetInstanceProfileResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetInstanceProfileResponse::default();
-
+        let mut obj = GetInstanceProfileResponse::default(); // needs deserializer: xmlpayloadparser
+        let instance_profile = try!(InstanceProfileDeserializer::deserialize("InstanceProfile", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3287,8 +3317,8 @@ struct GetLoginProfileResponseDeserializer;
                 -> Result<GetLoginProfileResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetLoginProfileResponse::default();
-
+        let mut obj = GetLoginProfileResponse::default(); // needs deserializer: xmlpayloadparser
+        let login_profile = try!(LoginProfileDeserializer::deserialize("LoginProfile", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3357,8 +3387,11 @@ struct GetOpenIDConnectProviderResponseDeserializer;
                 -> Result<GetOpenIDConnectProviderResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetOpenIDConnectProviderResponse::default();
-
+        let mut obj = GetOpenIDConnectProviderResponse::default(); // needs deserializer: xmlpayloadparser
+        let client_id_list = Some(try!(ClientIDListTypeDeserializer::deserialize("ClientIDList", stack)))
+let create_date = Some(try!(DateTypeDeserializer::deserialize("CreateDate", stack)))
+let thumbprint_list = Some(try!(ThumbprintListTypeDeserializer::deserialize("ThumbprintList", stack)))
+let url = Some(try!(OpenIDConnectProviderUrlTypeDeserializer::deserialize("Url", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3430,8 +3463,8 @@ struct GetPolicyResponseDeserializer;
                 -> Result<GetPolicyResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetPolicyResponse::default();
-
+        let mut obj = GetPolicyResponse::default(); // needs deserializer: xmlpayloadparser
+        let policy = Some(try!(PolicyDeserializer::deserialize("Policy", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3497,8 +3530,8 @@ struct GetPolicyVersionResponseDeserializer;
                 -> Result<GetPolicyVersionResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetPolicyVersionResponse::default();
-
+        let mut obj = GetPolicyVersionResponse::default(); // needs deserializer: xmlpayloadparser
+        let policy_version = Some(try!(PolicyVersionDeserializer::deserialize("PolicyVersion", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3568,8 +3601,10 @@ struct GetRolePolicyResponseDeserializer;
                 -> Result<GetRolePolicyResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetRolePolicyResponse::default();
-
+        let mut obj = GetRolePolicyResponse::default(); // needs deserializer: xmlpayloadparser
+        let policy_document = try!(PolicyDocumentTypeDeserializer::deserialize("PolicyDocument", stack))
+let policy_name = try!(PolicyNameTypeDeserializer::deserialize("PolicyName", stack))
+let role_name = try!(RoleNameTypeDeserializer::deserialize("RoleName", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3638,8 +3673,8 @@ struct GetRoleResponseDeserializer;
                 -> Result<GetRoleResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetRoleResponse::default();
-
+        let mut obj = GetRoleResponse::default(); // needs deserializer: xmlpayloadparser
+        let role = try!(RoleDeserializer::deserialize("Role", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3706,8 +3741,10 @@ struct GetSAMLProviderResponseDeserializer;
                 -> Result<GetSAMLProviderResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetSAMLProviderResponse::default();
-
+        let mut obj = GetSAMLProviderResponse::default(); // needs deserializer: xmlpayloadparser
+        let create_date = Some(try!(DateTypeDeserializer::deserialize("CreateDate", stack)))
+let saml_metadata_document = Some(try!(SAMLMetadataDocumentTypeDeserializer::deserialize("SAMLMetadataDocument", stack)))
+let valid_until = Some(try!(DateTypeDeserializer::deserialize("ValidUntil", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3782,8 +3819,8 @@ struct GetSSHPublicKeyResponseDeserializer;
                 -> Result<GetSSHPublicKeyResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetSSHPublicKeyResponse::default();
-
+        let mut obj = GetSSHPublicKeyResponse::default(); // needs deserializer: xmlpayloadparser
+        let ssh_public_key = Some(try!(SSHPublicKeyDeserializer::deserialize("SSHPublicKey", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3846,8 +3883,8 @@ struct GetServerCertificateResponseDeserializer;
                 -> Result<GetServerCertificateResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetServerCertificateResponse::default();
-
+        let mut obj = GetServerCertificateResponse::default(); // needs deserializer: xmlpayloadparser
+        let server_certificate = try!(ServerCertificateDeserializer::deserialize("ServerCertificate", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3917,8 +3954,10 @@ struct GetUserPolicyResponseDeserializer;
                 -> Result<GetUserPolicyResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetUserPolicyResponse::default();
-
+        let mut obj = GetUserPolicyResponse::default(); // needs deserializer: xmlpayloadparser
+        let policy_document = try!(PolicyDocumentTypeDeserializer::deserialize("PolicyDocument", stack))
+let policy_name = try!(PolicyNameTypeDeserializer::deserialize("PolicyName", stack))
+let user_name = try!(ExistingUserNameTypeDeserializer::deserialize("UserName", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3989,8 +4028,8 @@ struct GetUserResponseDeserializer;
                 -> Result<GetUserResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetUserResponse::default();
-
+        let mut obj = GetUserResponse::default(); // needs deserializer: xmlpayloadparser
+        let user = try!(UserDeserializer::deserialize("User", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4040,8 +4079,12 @@ struct GroupDeserializer;
                 -> Result<Group, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = Group::default();
-
+        let mut obj = Group::default(); // needs deserializer: xmlpayloadparser
+        let arn = try!(ArnTypeDeserializer::deserialize("Arn", stack))
+let create_date = try!(DateTypeDeserializer::deserialize("CreateDate", stack))
+let group_id = try!(IdTypeDeserializer::deserialize("GroupId", stack))
+let group_name = try!(GroupNameTypeDeserializer::deserialize("GroupName", stack))
+let path = try!(PathTypeDeserializer::deserialize("Path", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4106,8 +4149,14 @@ struct GroupDetailDeserializer;
                 -> Result<GroupDetail, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GroupDetail::default();
-
+        let mut obj = GroupDetail::default(); // needs deserializer: xmlpayloadparser
+        let arn = Some(try!(ArnTypeDeserializer::deserialize("Arn", stack)))
+let attached_managed_policies = Some(try!(AttachedPoliciesListTypeDeserializer::deserialize("AttachedManagedPolicies", stack)))
+let create_date = Some(try!(DateTypeDeserializer::deserialize("CreateDate", stack)))
+let group_id = Some(try!(IdTypeDeserializer::deserialize("GroupId", stack)))
+let group_name = Some(try!(GroupNameTypeDeserializer::deserialize("GroupName", stack)))
+let group_policy_list = Some(try!(PolicyDetailListTypeDeserializer::deserialize("GroupPolicyList", stack)))
+let path = Some(try!(PathTypeDeserializer::deserialize("Path", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4317,8 +4366,13 @@ struct InstanceProfileDeserializer;
                 -> Result<InstanceProfile, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = InstanceProfile::default();
-
+        let mut obj = InstanceProfile::default(); // needs deserializer: xmlpayloadparser
+        let arn = try!(ArnTypeDeserializer::deserialize("Arn", stack))
+let create_date = try!(DateTypeDeserializer::deserialize("CreateDate", stack))
+let instance_profile_id = try!(IdTypeDeserializer::deserialize("InstanceProfileId", stack))
+let instance_profile_name = try!(InstanceProfileNameTypeDeserializer::deserialize("InstanceProfileName", stack))
+let path = try!(PathTypeDeserializer::deserialize("Path", stack))
+let roles = try!(RoleListTypeDeserializer::deserialize("Roles", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4485,8 +4539,10 @@ struct ListAccessKeysResponseDeserializer;
                 -> Result<ListAccessKeysResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListAccessKeysResponse::default();
-
+        let mut obj = ListAccessKeysResponse::default(); // needs deserializer: xmlpayloadparser
+        let access_key_metadata = try!(AccessKeyMetadataListTypeDeserializer::deserialize("AccessKeyMetadata", stack))
+let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4566,8 +4622,10 @@ struct ListAccountAliasesResponseDeserializer;
                 -> Result<ListAccountAliasesResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListAccountAliasesResponse::default();
-
+        let mut obj = ListAccountAliasesResponse::default(); // needs deserializer: xmlpayloadparser
+        let account_aliases = try!(AccountAliasListTypeDeserializer::deserialize("AccountAliases", stack))
+let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4655,8 +4713,10 @@ struct ListAttachedGroupPoliciesResponseDeserializer;
                 -> Result<ListAttachedGroupPoliciesResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListAttachedGroupPoliciesResponse::default();
-
+        let mut obj = ListAttachedGroupPoliciesResponse::default(); // needs deserializer: xmlpayloadparser
+        let attached_policies = Some(try!(AttachedPoliciesListTypeDeserializer::deserialize("AttachedPolicies", stack)))
+let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4744,8 +4804,10 @@ struct ListAttachedRolePoliciesResponseDeserializer;
                 -> Result<ListAttachedRolePoliciesResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListAttachedRolePoliciesResponse::default();
-
+        let mut obj = ListAttachedRolePoliciesResponse::default(); // needs deserializer: xmlpayloadparser
+        let attached_policies = Some(try!(AttachedPoliciesListTypeDeserializer::deserialize("AttachedPolicies", stack)))
+let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4833,8 +4895,10 @@ struct ListAttachedUserPoliciesResponseDeserializer;
                 -> Result<ListAttachedUserPoliciesResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListAttachedUserPoliciesResponse::default();
-
+        let mut obj = ListAttachedUserPoliciesResponse::default(); // needs deserializer: xmlpayloadparser
+        let attached_policies = Some(try!(AttachedPoliciesListTypeDeserializer::deserialize("AttachedPolicies", stack)))
+let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4931,8 +4995,12 @@ struct ListEntitiesForPolicyResponseDeserializer;
                 -> Result<ListEntitiesForPolicyResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListEntitiesForPolicyResponse::default();
-
+        let mut obj = ListEntitiesForPolicyResponse::default(); // needs deserializer: xmlpayloadparser
+        let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
+let policy_groups = Some(try!(PolicyGroupListTypeDeserializer::deserialize("PolicyGroups", stack)))
+let policy_roles = Some(try!(PolicyRoleListTypeDeserializer::deserialize("PolicyRoles", stack)))
+let policy_users = Some(try!(PolicyUserListTypeDeserializer::deserialize("PolicyUsers", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5021,8 +5089,10 @@ struct ListGroupPoliciesResponseDeserializer;
                 -> Result<ListGroupPoliciesResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListGroupPoliciesResponse::default();
-
+        let mut obj = ListGroupPoliciesResponse::default(); // needs deserializer: xmlpayloadparser
+        let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
+let policy_names = try!(PolicyNameListTypeDeserializer::deserialize("PolicyNames", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5105,8 +5175,10 @@ struct ListGroupsForUserResponseDeserializer;
                 -> Result<ListGroupsForUserResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListGroupsForUserResponse::default();
-
+        let mut obj = ListGroupsForUserResponse::default(); // needs deserializer: xmlpayloadparser
+        let groups = try!(GroupListTypeDeserializer::deserialize("Groups", stack))
+let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5191,8 +5263,10 @@ struct ListGroupsResponseDeserializer;
                 -> Result<ListGroupsResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListGroupsResponse::default();
-
+        let mut obj = ListGroupsResponse::default(); // needs deserializer: xmlpayloadparser
+        let groups = try!(GroupListTypeDeserializer::deserialize("Groups", stack))
+let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5275,8 +5349,10 @@ struct ListInstanceProfilesForRoleResponseDeserializer;
                 -> Result<ListInstanceProfilesForRoleResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListInstanceProfilesForRoleResponse::default();
-
+        let mut obj = ListInstanceProfilesForRoleResponse::default(); // needs deserializer: xmlpayloadparser
+        let instance_profiles = try!(InstanceProfileListTypeDeserializer::deserialize("InstanceProfiles", stack))
+let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5361,8 +5437,10 @@ struct ListInstanceProfilesResponseDeserializer;
                 -> Result<ListInstanceProfilesResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListInstanceProfilesResponse::default();
-
+        let mut obj = ListInstanceProfilesResponse::default(); // needs deserializer: xmlpayloadparser
+        let instance_profiles = try!(InstanceProfileListTypeDeserializer::deserialize("InstanceProfiles", stack))
+let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5447,8 +5525,10 @@ struct ListMFADevicesResponseDeserializer;
                 -> Result<ListMFADevicesResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListMFADevicesResponse::default();
-
+        let mut obj = ListMFADevicesResponse::default(); // needs deserializer: xmlpayloadparser
+        let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let mfa_devices = try!(MfaDeviceListTypeDeserializer::deserialize("MFADevices", stack))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5514,8 +5594,8 @@ struct ListOpenIDConnectProvidersResponseDeserializer;
                 -> Result<ListOpenIDConnectProvidersResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListOpenIDConnectProvidersResponse::default();
-
+        let mut obj = ListOpenIDConnectProvidersResponse::default(); // needs deserializer: xmlpayloadparser
+        let open_id_connect_provider_list = Some(try!(OpenIDConnectProviderListTypeDeserializer::deserialize("OpenIDConnectProviderList", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5604,8 +5684,10 @@ struct ListPoliciesResponseDeserializer;
                 -> Result<ListPoliciesResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListPoliciesResponse::default();
-
+        let mut obj = ListPoliciesResponse::default(); // needs deserializer: xmlpayloadparser
+        let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
+let policies = Some(try!(PolicyListTypeDeserializer::deserialize("Policies", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5688,8 +5770,10 @@ struct ListPolicyVersionsResponseDeserializer;
                 -> Result<ListPolicyVersionsResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListPolicyVersionsResponse::default();
-
+        let mut obj = ListPolicyVersionsResponse::default(); // needs deserializer: xmlpayloadparser
+        let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
+let versions = Some(try!(PolicyDocumentVersionListTypeDeserializer::deserialize("Versions", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5772,8 +5856,10 @@ struct ListRolePoliciesResponseDeserializer;
                 -> Result<ListRolePoliciesResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListRolePoliciesResponse::default();
-
+        let mut obj = ListRolePoliciesResponse::default(); // needs deserializer: xmlpayloadparser
+        let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
+let policy_names = try!(PolicyNameListTypeDeserializer::deserialize("PolicyNames", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5858,8 +5944,10 @@ struct ListRolesResponseDeserializer;
                 -> Result<ListRolesResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListRolesResponse::default();
-
+        let mut obj = ListRolesResponse::default(); // needs deserializer: xmlpayloadparser
+        let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
+let roles = try!(RoleListTypeDeserializer::deserialize("Roles", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5925,8 +6013,8 @@ struct ListSAMLProvidersResponseDeserializer;
                 -> Result<ListSAMLProvidersResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListSAMLProvidersResponse::default();
-
+        let mut obj = ListSAMLProvidersResponse::default(); // needs deserializer: xmlpayloadparser
+        let saml_provider_list = Some(try!(SAMLProviderListTypeDeserializer::deserialize("SAMLProviderList", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -6005,8 +6093,10 @@ struct ListSSHPublicKeysResponseDeserializer;
                 -> Result<ListSSHPublicKeysResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListSSHPublicKeysResponse::default();
-
+        let mut obj = ListSSHPublicKeysResponse::default(); // needs deserializer: xmlpayloadparser
+        let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
+let ssh_public_keys = Some(try!(SSHPublicKeyListTypeDeserializer::deserialize("SSHPublicKeys", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -6091,8 +6181,10 @@ struct ListServerCertificatesResponseDeserializer;
                 -> Result<ListServerCertificatesResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListServerCertificatesResponse::default();
-
+        let mut obj = ListServerCertificatesResponse::default(); // needs deserializer: xmlpayloadparser
+        let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
+let server_certificate_metadata_list = try!(ServerCertificateMetadataListTypeDeserializer::deserialize("ServerCertificateMetadataList", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -6167,8 +6259,8 @@ struct ListServiceSpecificCredentialsResponseDeserializer;
                 -> Result<ListServiceSpecificCredentialsResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListServiceSpecificCredentialsResponse::default();
-
+        let mut obj = ListServiceSpecificCredentialsResponse::default(); // needs deserializer: xmlpayloadparser
+        let service_specific_credentials = Some(try!(ServiceSpecificCredentialsListTypeDeserializer::deserialize("ServiceSpecificCredentials", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -6247,8 +6339,10 @@ struct ListSigningCertificatesResponseDeserializer;
                 -> Result<ListSigningCertificatesResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListSigningCertificatesResponse::default();
-
+        let mut obj = ListSigningCertificatesResponse::default(); // needs deserializer: xmlpayloadparser
+        let certificates = try!(CertificateListTypeDeserializer::deserialize("Certificates", stack))
+let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -6331,8 +6425,10 @@ struct ListUserPoliciesResponseDeserializer;
                 -> Result<ListUserPoliciesResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListUserPoliciesResponse::default();
-
+        let mut obj = ListUserPoliciesResponse::default(); // needs deserializer: xmlpayloadparser
+        let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
+let policy_names = try!(PolicyNameListTypeDeserializer::deserialize("PolicyNames", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -6417,8 +6513,10 @@ struct ListUsersResponseDeserializer;
                 -> Result<ListUsersResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListUsersResponse::default();
-
+        let mut obj = ListUsersResponse::default(); // needs deserializer: xmlpayloadparser
+        let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
+let users = try!(UserListTypeDeserializer::deserialize("Users", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -6503,8 +6601,10 @@ struct ListVirtualMFADevicesResponseDeserializer;
                 -> Result<ListVirtualMFADevicesResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListVirtualMFADevicesResponse::default();
-
+        let mut obj = ListVirtualMFADevicesResponse::default(); // needs deserializer: xmlpayloadparser
+        let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
+let virtual_mfa_devices = try!(VirtualMFADeviceListTypeDeserializer::deserialize("VirtualMFADevices", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -6556,8 +6656,10 @@ struct LoginProfileDeserializer;
                 -> Result<LoginProfile, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = LoginProfile::default();
-
+        let mut obj = LoginProfile::default(); // needs deserializer: xmlpayloadparser
+        let create_date = try!(DateTypeDeserializer::deserialize("CreateDate", stack))
+let password_reset_required = Some(try!(BooleanTypeDeserializer::deserialize("PasswordResetRequired", stack)))
+let user_name = try!(UserNameTypeDeserializer::deserialize("UserName", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -6609,8 +6711,10 @@ struct MFADeviceDeserializer;
                 -> Result<MFADevice, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = MFADevice::default();
-
+        let mut obj = MFADevice::default(); // needs deserializer: xmlpayloadparser
+        let enable_date = try!(DateTypeDeserializer::deserialize("EnableDate", stack))
+let serial_number = try!(SerialNumberTypeDeserializer::deserialize("SerialNumber", stack))
+let user_name = try!(UserNameTypeDeserializer::deserialize("UserName", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -6679,8 +6783,18 @@ struct ManagedPolicyDetailDeserializer;
                 -> Result<ManagedPolicyDetail, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ManagedPolicyDetail::default();
-
+        let mut obj = ManagedPolicyDetail::default(); // needs deserializer: xmlpayloadparser
+        let arn = Some(try!(ArnTypeDeserializer::deserialize("Arn", stack)))
+let attachment_count = Some(try!(AttachmentCountTypeDeserializer::deserialize("AttachmentCount", stack)))
+let create_date = Some(try!(DateTypeDeserializer::deserialize("CreateDate", stack)))
+let default_version_id = Some(try!(PolicyVersionIdTypeDeserializer::deserialize("DefaultVersionId", stack)))
+let description = Some(try!(PolicyDescriptionTypeDeserializer::deserialize("Description", stack)))
+let is_attachable = Some(try!(BooleanTypeDeserializer::deserialize("IsAttachable", stack)))
+let path = Some(try!(PolicyPathTypeDeserializer::deserialize("Path", stack)))
+let policy_id = Some(try!(IdTypeDeserializer::deserialize("PolicyId", stack)))
+let policy_name = Some(try!(PolicyNameTypeDeserializer::deserialize("PolicyName", stack)))
+let policy_version_list = Some(try!(PolicyDocumentVersionListTypeDeserializer::deserialize("PolicyVersionList", stack)))
+let update_date = Some(try!(DateTypeDeserializer::deserialize("UpdateDate", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -6870,8 +6984,8 @@ struct OpenIDConnectProviderListEntryDeserializer;
                 -> Result<OpenIDConnectProviderListEntry, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = OpenIDConnectProviderListEntry::default();
-
+        let mut obj = OpenIDConnectProviderListEntry::default(); // needs deserializer: xmlpayloadparser
+        let arn = Some(try!(ArnTypeDeserializer::deserialize("Arn", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -6984,8 +7098,17 @@ struct PasswordPolicyDeserializer;
                 -> Result<PasswordPolicy, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = PasswordPolicy::default();
-
+        let mut obj = PasswordPolicy::default(); // needs deserializer: xmlpayloadparser
+        let allow_users_to_change_password = Some(try!(BooleanTypeDeserializer::deserialize("AllowUsersToChangePassword", stack)))
+let expire_passwords = Some(try!(BooleanTypeDeserializer::deserialize("ExpirePasswords", stack)))
+let hard_expiry = Some(try!(BooleanObjectTypeDeserializer::deserialize("HardExpiry", stack)))
+let max_password_age = Some(try!(MaxPasswordAgeTypeDeserializer::deserialize("MaxPasswordAge", stack)))
+let minimum_password_length = Some(try!(MinimumPasswordLengthTypeDeserializer::deserialize("MinimumPasswordLength", stack)))
+let password_reuse_prevention = Some(try!(PasswordReusePreventionTypeDeserializer::deserialize("PasswordReusePrevention", stack)))
+let require_lowercase_characters = Some(try!(BooleanTypeDeserializer::deserialize("RequireLowercaseCharacters", stack)))
+let require_numbers = Some(try!(BooleanTypeDeserializer::deserialize("RequireNumbers", stack)))
+let require_symbols = Some(try!(BooleanTypeDeserializer::deserialize("RequireSymbols", stack)))
+let require_uppercase_characters = Some(try!(BooleanTypeDeserializer::deserialize("RequireUppercaseCharacters", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -7102,8 +7225,17 @@ struct PolicyDeserializer;
                 -> Result<Policy, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = Policy::default();
-
+        let mut obj = Policy::default(); // needs deserializer: xmlpayloadparser
+        let arn = Some(try!(ArnTypeDeserializer::deserialize("Arn", stack)))
+let attachment_count = Some(try!(AttachmentCountTypeDeserializer::deserialize("AttachmentCount", stack)))
+let create_date = Some(try!(DateTypeDeserializer::deserialize("CreateDate", stack)))
+let default_version_id = Some(try!(PolicyVersionIdTypeDeserializer::deserialize("DefaultVersionId", stack)))
+let description = Some(try!(PolicyDescriptionTypeDeserializer::deserialize("Description", stack)))
+let is_attachable = Some(try!(BooleanTypeDeserializer::deserialize("IsAttachable", stack)))
+let path = Some(try!(PolicyPathTypeDeserializer::deserialize("Path", stack)))
+let policy_id = Some(try!(IdTypeDeserializer::deserialize("PolicyId", stack)))
+let policy_name = Some(try!(PolicyNameTypeDeserializer::deserialize("PolicyName", stack)))
+let update_date = Some(try!(DateTypeDeserializer::deserialize("UpdateDate", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -7188,8 +7320,9 @@ struct PolicyDetailDeserializer;
                 -> Result<PolicyDetail, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = PolicyDetail::default();
-
+        let mut obj = PolicyDetail::default(); // needs deserializer: xmlpayloadparser
+        let policy_document = Some(try!(PolicyDocumentTypeDeserializer::deserialize("PolicyDocument", stack)))
+let policy_name = Some(try!(PolicyNameTypeDeserializer::deserialize("PolicyName", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -7339,8 +7472,9 @@ struct PolicyGroupDeserializer;
                 -> Result<PolicyGroup, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = PolicyGroup::default();
-
+        let mut obj = PolicyGroup::default(); // needs deserializer: xmlpayloadparser
+        let group_id = Some(try!(IdTypeDeserializer::deserialize("GroupId", stack)))
+let group_name = Some(try!(GroupNameTypeDeserializer::deserialize("GroupName", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -7541,8 +7675,9 @@ struct PolicyRoleDeserializer;
                 -> Result<PolicyRole, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = PolicyRole::default();
-
+        let mut obj = PolicyRole::default(); // needs deserializer: xmlpayloadparser
+        let role_id = Some(try!(IdTypeDeserializer::deserialize("RoleId", stack)))
+let role_name = Some(try!(RoleNameTypeDeserializer::deserialize("RoleName", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -7641,8 +7776,9 @@ struct PolicyUserDeserializer;
                 -> Result<PolicyUser, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = PolicyUser::default();
-
+        let mut obj = PolicyUser::default(); // needs deserializer: xmlpayloadparser
+        let user_id = Some(try!(IdTypeDeserializer::deserialize("UserId", stack)))
+let user_name = Some(try!(UserNameTypeDeserializer::deserialize("UserName", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -7730,8 +7866,11 @@ struct PolicyVersionDeserializer;
                 -> Result<PolicyVersion, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = PolicyVersion::default();
-
+        let mut obj = PolicyVersion::default(); // needs deserializer: xmlpayloadparser
+        let create_date = Some(try!(DateTypeDeserializer::deserialize("CreateDate", stack)))
+let document = Some(try!(PolicyDocumentTypeDeserializer::deserialize("Document", stack)))
+let is_default_version = Some(try!(BooleanTypeDeserializer::deserialize("IsDefaultVersion", stack)))
+let version_id = Some(try!(PolicyVersionIdTypeDeserializer::deserialize("VersionId", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -7798,8 +7937,9 @@ struct PositionDeserializer;
                 -> Result<Position, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = Position::default();
-
+        let mut obj = Position::default(); // needs deserializer: xmlpayloadparser
+        let column = Some(try!(ColumnNumberDeserializer::deserialize("Column", stack)))
+let line = Some(try!(LineNumberDeserializer::deserialize("Line", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -8121,8 +8261,8 @@ struct ResetServiceSpecificCredentialResponseDeserializer;
                 -> Result<ResetServiceSpecificCredentialResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ResetServiceSpecificCredentialResponse::default();
-
+        let mut obj = ResetServiceSpecificCredentialResponse::default(); // needs deserializer: xmlpayloadparser
+        let service_specific_credential = Some(try!(ServiceSpecificCredentialDeserializer::deserialize("ServiceSpecificCredential", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -8200,8 +8340,12 @@ struct ResourceSpecificResultDeserializer;
                 -> Result<ResourceSpecificResult, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ResourceSpecificResult::default();
-
+        let mut obj = ResourceSpecificResult::default(); // needs deserializer: xmlpayloadparser
+        let eval_decision_details = Some(try!(EvalDecisionDetailsTypeDeserializer::deserialize("EvalDecisionDetails", stack)))
+let eval_resource_decision = try!(PolicyEvaluationDecisionTypeDeserializer::deserialize("EvalResourceDecision", stack))
+let eval_resource_name = try!(ResourceNameTypeDeserializer::deserialize("EvalResourceName", stack))
+let matched_statements = Some(try!(StatementListTypeDeserializer::deserialize("MatchedStatements", stack)))
+let missing_context_values = Some(try!(ContextKeyNamesResultListTypeDeserializer::deserialize("MissingContextValues", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -8332,8 +8476,13 @@ struct RoleDeserializer;
                 -> Result<Role, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = Role::default();
-
+        let mut obj = Role::default(); // needs deserializer: xmlpayloadparser
+        let arn = try!(ArnTypeDeserializer::deserialize("Arn", stack))
+let assume_role_policy_document = Some(try!(PolicyDocumentTypeDeserializer::deserialize("AssumeRolePolicyDocument", stack)))
+let create_date = try!(DateTypeDeserializer::deserialize("CreateDate", stack))
+let path = try!(PathTypeDeserializer::deserialize("Path", stack))
+let role_id = try!(IdTypeDeserializer::deserialize("RoleId", stack))
+let role_name = try!(RoleNameTypeDeserializer::deserialize("RoleName", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -8405,8 +8554,16 @@ struct RoleDetailDeserializer;
                 -> Result<RoleDetail, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = RoleDetail::default();
-
+        let mut obj = RoleDetail::default(); // needs deserializer: xmlpayloadparser
+        let arn = Some(try!(ArnTypeDeserializer::deserialize("Arn", stack)))
+let assume_role_policy_document = Some(try!(PolicyDocumentTypeDeserializer::deserialize("AssumeRolePolicyDocument", stack)))
+let attached_managed_policies = Some(try!(AttachedPoliciesListTypeDeserializer::deserialize("AttachedManagedPolicies", stack)))
+let create_date = Some(try!(DateTypeDeserializer::deserialize("CreateDate", stack)))
+let instance_profile_list = Some(try!(InstanceProfileListTypeDeserializer::deserialize("InstanceProfileList", stack)))
+let path = Some(try!(PathTypeDeserializer::deserialize("Path", stack)))
+let role_id = Some(try!(IdTypeDeserializer::deserialize("RoleId", stack)))
+let role_name = Some(try!(RoleNameTypeDeserializer::deserialize("RoleName", stack)))
+let role_policy_list = Some(try!(PolicyDetailListTypeDeserializer::deserialize("RolePolicyList", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -8579,8 +8736,10 @@ struct SAMLProviderListEntryDeserializer;
                 -> Result<SAMLProviderListEntry, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = SAMLProviderListEntry::default();
-
+        let mut obj = SAMLProviderListEntry::default(); // needs deserializer: xmlpayloadparser
+        let arn = Some(try!(ArnTypeDeserializer::deserialize("Arn", stack)))
+let create_date = Some(try!(DateTypeDeserializer::deserialize("CreateDate", stack)))
+let valid_until = Some(try!(DateTypeDeserializer::deserialize("ValidUntil", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -8676,8 +8835,13 @@ struct SSHPublicKeyDeserializer;
                 -> Result<SSHPublicKey, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = SSHPublicKey::default();
-
+        let mut obj = SSHPublicKey::default(); // needs deserializer: xmlpayloadparser
+        let fingerprint = try!(PublicKeyFingerprintTypeDeserializer::deserialize("Fingerprint", stack))
+let ssh_public_key_body = try!(PublicKeyMaterialTypeDeserializer::deserialize("SSHPublicKeyBody", stack))
+let ssh_public_key_id = try!(PublicKeyIdTypeDeserializer::deserialize("SSHPublicKeyId", stack))
+let status = try!(StatusTypeDeserializer::deserialize("Status", stack))
+let upload_date = Some(try!(DateTypeDeserializer::deserialize("UploadDate", stack)))
+let user_name = try!(UserNameTypeDeserializer::deserialize("UserName", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -8777,8 +8941,11 @@ struct SSHPublicKeyMetadataDeserializer;
                 -> Result<SSHPublicKeyMetadata, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = SSHPublicKeyMetadata::default();
-
+        let mut obj = SSHPublicKeyMetadata::default(); // needs deserializer: xmlpayloadparser
+        let ssh_public_key_id = try!(PublicKeyIdTypeDeserializer::deserialize("SSHPublicKeyId", stack))
+let status = try!(StatusTypeDeserializer::deserialize("Status", stack))
+let upload_date = try!(DateTypeDeserializer::deserialize("UploadDate", stack))
+let user_name = try!(UserNameTypeDeserializer::deserialize("UserName", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -8847,8 +9014,10 @@ struct ServerCertificateDeserializer;
                 -> Result<ServerCertificate, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ServerCertificate::default();
-
+        let mut obj = ServerCertificate::default(); // needs deserializer: xmlpayloadparser
+        let certificate_body = try!(CertificateBodyTypeDeserializer::deserialize("CertificateBody", stack))
+let certificate_chain = Some(try!(CertificateChainTypeDeserializer::deserialize("CertificateChain", stack)))
+let server_certificate_metadata = try!(ServerCertificateMetadataDeserializer::deserialize("ServerCertificateMetadata", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -8906,8 +9075,13 @@ struct ServerCertificateMetadataDeserializer;
                 -> Result<ServerCertificateMetadata, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ServerCertificateMetadata::default();
-
+        let mut obj = ServerCertificateMetadata::default(); // needs deserializer: xmlpayloadparser
+        let arn = try!(ArnTypeDeserializer::deserialize("Arn", stack))
+let expiration = Some(try!(DateTypeDeserializer::deserialize("Expiration", stack)))
+let path = try!(PathTypeDeserializer::deserialize("Path", stack))
+let server_certificate_id = try!(IdTypeDeserializer::deserialize("ServerCertificateId", stack))
+let server_certificate_name = try!(ServerCertificateNameTypeDeserializer::deserialize("ServerCertificateName", stack))
+let upload_date = Some(try!(DateTypeDeserializer::deserialize("UploadDate", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -9057,8 +9231,14 @@ struct ServiceSpecificCredentialDeserializer;
                 -> Result<ServiceSpecificCredential, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ServiceSpecificCredential::default();
-
+        let mut obj = ServiceSpecificCredential::default(); // needs deserializer: xmlpayloadparser
+        let create_date = try!(DateTypeDeserializer::deserialize("CreateDate", stack))
+let service_name = try!(ServiceNameDeserializer::deserialize("ServiceName", stack))
+let service_password = try!(ServicePasswordDeserializer::deserialize("ServicePassword", stack))
+let service_specific_credential_id = try!(ServiceSpecificCredentialIdDeserializer::deserialize("ServiceSpecificCredentialId", stack))
+let service_user_name = try!(ServiceUserNameDeserializer::deserialize("ServiceUserName", stack))
+let status = try!(StatusTypeDeserializer::deserialize("Status", stack))
+let user_name = try!(UserNameTypeDeserializer::deserialize("UserName", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -9142,8 +9322,13 @@ struct ServiceSpecificCredentialMetadataDeserializer;
                 -> Result<ServiceSpecificCredentialMetadata, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ServiceSpecificCredentialMetadata::default();
-
+        let mut obj = ServiceSpecificCredentialMetadata::default(); // needs deserializer: xmlpayloadparser
+        let create_date = try!(DateTypeDeserializer::deserialize("CreateDate", stack))
+let service_name = try!(ServiceNameDeserializer::deserialize("ServiceName", stack))
+let service_specific_credential_id = try!(ServiceSpecificCredentialIdDeserializer::deserialize("ServiceSpecificCredentialId", stack))
+let service_user_name = try!(ServiceUserNameDeserializer::deserialize("ServiceUserName", stack))
+let status = try!(StatusTypeDeserializer::deserialize("Status", stack))
+let user_name = try!(UserNameTypeDeserializer::deserialize("UserName", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -9283,8 +9468,12 @@ struct SigningCertificateDeserializer;
                 -> Result<SigningCertificate, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = SigningCertificate::default();
-
+        let mut obj = SigningCertificate::default(); // needs deserializer: xmlpayloadparser
+        let certificate_body = try!(CertificateBodyTypeDeserializer::deserialize("CertificateBody", stack))
+let certificate_id = try!(CertificateIdTypeDeserializer::deserialize("CertificateId", stack))
+let status = try!(StatusTypeDeserializer::deserialize("Status", stack))
+let upload_date = Some(try!(DateTypeDeserializer::deserialize("UploadDate", stack)))
+let user_name = try!(UserNameTypeDeserializer::deserialize("UserName", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -9422,8 +9611,10 @@ struct SimulatePolicyResponseDeserializer;
                 -> Result<SimulatePolicyResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = SimulatePolicyResponse::default();
-
+        let mut obj = SimulatePolicyResponse::default(); // needs deserializer: xmlpayloadparser
+        let evaluation_results = Some(try!(EvaluationResultsListTypeDeserializer::deserialize("EvaluationResults", stack)))
+let is_truncated = Some(try!(BooleanTypeDeserializer::deserialize("IsTruncated", stack)))
+let marker = Some(try!(MarkerTypeDeserializer::deserialize("Marker", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -9575,8 +9766,11 @@ struct StatementDeserializer;
                 -> Result<Statement, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = Statement::default();
-
+        let mut obj = Statement::default(); // needs deserializer: xmlpayloadparser
+        let end_position = Some(try!(PositionDeserializer::deserialize("EndPosition", stack)))
+let source_policy_id = Some(try!(PolicyIdentifierTypeDeserializer::deserialize("SourcePolicyId", stack)))
+let source_policy_type = Some(try!(PolicySourceTypeDeserializer::deserialize("SourcePolicyType", stack)))
+let start_position = Some(try!(PositionDeserializer::deserialize("StartPosition", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -10039,8 +10233,8 @@ struct UpdateSAMLProviderResponseDeserializer;
                 -> Result<UpdateSAMLProviderResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = UpdateSAMLProviderResponse::default();
-
+        let mut obj = UpdateSAMLProviderResponse::default(); // needs deserializer: xmlpayloadparser
+        let saml_provider_arn = Some(try!(ArnTypeDeserializer::deserialize("SAMLProviderArn", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -10253,8 +10447,8 @@ struct UploadSSHPublicKeyResponseDeserializer;
                 -> Result<UploadSSHPublicKeyResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = UploadSSHPublicKeyResponse::default();
-
+        let mut obj = UploadSSHPublicKeyResponse::default(); // needs deserializer: xmlpayloadparser
+        let ssh_public_key = Some(try!(SSHPublicKeyDeserializer::deserialize("SSHPublicKey", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -10333,8 +10527,8 @@ struct UploadServerCertificateResponseDeserializer;
                 -> Result<UploadServerCertificateResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = UploadServerCertificateResponse::default();
-
+        let mut obj = UploadServerCertificateResponse::default(); // needs deserializer: xmlpayloadparser
+        let server_certificate_metadata = Some(try!(ServerCertificateMetadataDeserializer::deserialize("ServerCertificateMetadata", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -10402,8 +10596,8 @@ struct UploadSigningCertificateResponseDeserializer;
                 -> Result<UploadSigningCertificateResponse, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = UploadSigningCertificateResponse::default();
-
+        let mut obj = UploadSigningCertificateResponse::default(); // needs deserializer: xmlpayloadparser
+        let certificate = try!(SigningCertificateDeserializer::deserialize("Certificate", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -10455,8 +10649,13 @@ struct UserDeserializer;
                 -> Result<User, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = User::default();
-
+        let mut obj = User::default(); // needs deserializer: xmlpayloadparser
+        let arn = try!(ArnTypeDeserializer::deserialize("Arn", stack))
+let create_date = try!(DateTypeDeserializer::deserialize("CreateDate", stack))
+let password_last_used = Some(try!(DateTypeDeserializer::deserialize("PasswordLastUsed", stack)))
+let path = try!(PathTypeDeserializer::deserialize("Path", stack))
+let user_id = try!(IdTypeDeserializer::deserialize("UserId", stack))
+let user_name = try!(UserNameTypeDeserializer::deserialize("UserName", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -10526,8 +10725,15 @@ struct UserDetailDeserializer;
                 -> Result<UserDetail, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = UserDetail::default();
-
+        let mut obj = UserDetail::default(); // needs deserializer: xmlpayloadparser
+        let arn = Some(try!(ArnTypeDeserializer::deserialize("Arn", stack)))
+let attached_managed_policies = Some(try!(AttachedPoliciesListTypeDeserializer::deserialize("AttachedManagedPolicies", stack)))
+let create_date = Some(try!(DateTypeDeserializer::deserialize("CreateDate", stack)))
+let group_list = Some(try!(GroupNameListTypeDeserializer::deserialize("GroupList", stack)))
+let path = Some(try!(PathTypeDeserializer::deserialize("Path", stack)))
+let user_id = Some(try!(IdTypeDeserializer::deserialize("UserId", stack)))
+let user_name = Some(try!(UserNameTypeDeserializer::deserialize("UserName", stack)))
+let user_policy_list = Some(try!(PolicyDetailListTypeDeserializer::deserialize("UserPolicyList", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -10687,8 +10893,12 @@ struct VirtualMFADeviceDeserializer;
                 -> Result<VirtualMFADevice, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = VirtualMFADevice::default();
-
+        let mut obj = VirtualMFADevice::default(); // needs deserializer: xmlpayloadparser
+        let base_32_string_seed = Some(try!(BootstrapDatumDeserializer::deserialize("Base32StringSeed", stack)))
+let enable_date = Some(try!(DateTypeDeserializer::deserialize("EnableDate", stack)))
+let qr_code_png = Some(try!(BootstrapDatumDeserializer::deserialize("QRCodePNG", stack)))
+let serial_number = try!(SerialNumberTypeDeserializer::deserialize("SerialNumber", stack))
+let user = Some(try!(UserDeserializer::deserialize("User", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,

@@ -89,8 +89,12 @@ struct AlarmHistoryItemDeserializer;
                 -> Result<AlarmHistoryItem, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = AlarmHistoryItem::default();
-
+        let mut obj = AlarmHistoryItem::default(); // needs deserializer: xmlpayloadparser
+        let alarm_name = Some(try!(AlarmNameDeserializer::deserialize("AlarmName", stack)))
+let history_data = Some(try!(HistoryDataDeserializer::deserialize("HistoryData", stack)))
+let history_item_type = Some(try!(HistoryItemTypeDeserializer::deserialize("HistoryItemType", stack)))
+let history_summary = Some(try!(HistorySummaryDeserializer::deserialize("HistorySummary", stack)))
+let timestamp = Some(try!(TimestampDeserializer::deserialize("Timestamp", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -238,8 +242,15 @@ struct DatapointDeserializer;
                 -> Result<Datapoint, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = Datapoint::default();
-
+        let mut obj = Datapoint::default(); // needs deserializer: xmlpayloadparser
+        let average = Some(try!(DatapointValueDeserializer::deserialize("Average", stack)))
+let extended_statistics = Some(try!(DatapointValueMapDeserializer::deserialize("ExtendedStatistics", stack)))
+let maximum = Some(try!(DatapointValueDeserializer::deserialize("Maximum", stack)))
+let minimum = Some(try!(DatapointValueDeserializer::deserialize("Minimum", stack)))
+let sample_count = Some(try!(DatapointValueDeserializer::deserialize("SampleCount", stack)))
+let sum = Some(try!(DatapointValueDeserializer::deserialize("Sum", stack)))
+let timestamp = Some(try!(TimestampDeserializer::deserialize("Timestamp", stack)))
+let unit = Some(try!(StandardUnitDeserializer::deserialize("Unit", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -450,8 +461,9 @@ struct DescribeAlarmHistoryOutputDeserializer;
                 -> Result<DescribeAlarmHistoryOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = DescribeAlarmHistoryOutput::default();
-
+        let mut obj = DescribeAlarmHistoryOutput::default(); // needs deserializer: xmlpayloadparser
+        let alarm_history_items = Some(try!(AlarmHistoryItemsDeserializer::deserialize("AlarmHistoryItems", stack)))
+let next_token = Some(try!(NextTokenDeserializer::deserialize("NextToken", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -548,8 +560,8 @@ struct DescribeAlarmsForMetricOutputDeserializer;
                 -> Result<DescribeAlarmsForMetricOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = DescribeAlarmsForMetricOutput::default();
-
+        let mut obj = DescribeAlarmsForMetricOutput::default(); // needs deserializer: xmlpayloadparser
+        let metric_alarms = Some(try!(MetricAlarmsDeserializer::deserialize("MetricAlarms", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -644,8 +656,9 @@ struct DescribeAlarmsOutputDeserializer;
                 -> Result<DescribeAlarmsOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = DescribeAlarmsOutput::default();
-
+        let mut obj = DescribeAlarmsOutput::default(); // needs deserializer: xmlpayloadparser
+        let metric_alarms = Some(try!(MetricAlarmsDeserializer::deserialize("MetricAlarms", stack)))
+let next_token = Some(try!(NextTokenDeserializer::deserialize("NextToken", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -692,8 +705,9 @@ struct DimensionDeserializer;
                 -> Result<Dimension, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = Dimension::default();
-
+        let mut obj = Dimension::default(); // needs deserializer: xmlpayloadparser
+        let name = try!(DimensionNameDeserializer::deserialize("Name", stack))
+let value = try!(DimensionValueDeserializer::deserialize("Value", stack))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1030,8 +1044,9 @@ struct GetMetricStatisticsOutputDeserializer;
                 -> Result<GetMetricStatisticsOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = GetMetricStatisticsOutput::default();
-
+        let mut obj = GetMetricStatisticsOutput::default(); // needs deserializer: xmlpayloadparser
+        let datapoints = Some(try!(DatapointsDeserializer::deserialize("Datapoints", stack)))
+let label = Some(try!(MetricLabelDeserializer::deserialize("Label", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1161,8 +1176,9 @@ struct ListMetricsOutputDeserializer;
                 -> Result<ListMetricsOutput, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ListMetricsOutput::default();
-
+        let mut obj = ListMetricsOutput::default(); // needs deserializer: xmlpayloadparser
+        let metrics = Some(try!(MetricsDeserializer::deserialize("Metrics", stack)))
+let next_token = Some(try!(NextTokenDeserializer::deserialize("NextToken", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1212,8 +1228,10 @@ struct MetricDeserializer;
                 -> Result<Metric, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = Metric::default();
-
+        let mut obj = Metric::default(); // needs deserializer: xmlpayloadparser
+        let dimensions = Some(try!(DimensionsDeserializer::deserialize("Dimensions", stack)))
+let metric_name = Some(try!(MetricNameDeserializer::deserialize("MetricName", stack)))
+let namespace = Some(try!(NamespaceDeserializer::deserialize("Namespace", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1303,8 +1321,29 @@ struct MetricAlarmDeserializer;
                 -> Result<MetricAlarm, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = MetricAlarm::default();
-
+        let mut obj = MetricAlarm::default(); // needs deserializer: xmlpayloadparser
+        let actions_enabled = Some(try!(ActionsEnabledDeserializer::deserialize("ActionsEnabled", stack)))
+let alarm_actions = Some(try!(ResourceListDeserializer::deserialize("AlarmActions", stack)))
+let alarm_arn = Some(try!(AlarmArnDeserializer::deserialize("AlarmArn", stack)))
+let alarm_configuration_updated_timestamp = Some(try!(TimestampDeserializer::deserialize("AlarmConfigurationUpdatedTimestamp", stack)))
+let alarm_description = Some(try!(AlarmDescriptionDeserializer::deserialize("AlarmDescription", stack)))
+let alarm_name = Some(try!(AlarmNameDeserializer::deserialize("AlarmName", stack)))
+let comparison_operator = Some(try!(ComparisonOperatorDeserializer::deserialize("ComparisonOperator", stack)))
+let dimensions = Some(try!(DimensionsDeserializer::deserialize("Dimensions", stack)))
+let evaluation_periods = Some(try!(EvaluationPeriodsDeserializer::deserialize("EvaluationPeriods", stack)))
+let extended_statistic = Some(try!(ExtendedStatisticDeserializer::deserialize("ExtendedStatistic", stack)))
+let insufficient_data_actions = Some(try!(ResourceListDeserializer::deserialize("InsufficientDataActions", stack)))
+let metric_name = Some(try!(MetricNameDeserializer::deserialize("MetricName", stack)))
+let namespace = Some(try!(NamespaceDeserializer::deserialize("Namespace", stack)))
+let ok_actions = Some(try!(ResourceListDeserializer::deserialize("OKActions", stack)))
+let period = Some(try!(PeriodDeserializer::deserialize("Period", stack)))
+let state_reason = Some(try!(StateReasonDeserializer::deserialize("StateReason", stack)))
+let state_reason_data = Some(try!(StateReasonDataDeserializer::deserialize("StateReasonData", stack)))
+let state_updated_timestamp = Some(try!(TimestampDeserializer::deserialize("StateUpdatedTimestamp", stack)))
+let state_value = Some(try!(StateValueDeserializer::deserialize("StateValue", stack)))
+let statistic = Some(try!(StatisticDeserializer::deserialize("Statistic", stack)))
+let threshold = Some(try!(ThresholdDeserializer::deserialize("Threshold", stack)))
+let unit = Some(try!(StandardUnitDeserializer::deserialize("Unit", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,

@@ -66,8 +66,8 @@ struct AllowedNodeTypeModificationsMessageDeserializer;
                 -> Result<AllowedNodeTypeModificationsMessage, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = AllowedNodeTypeModificationsMessage::default();
-
+        let mut obj = AllowedNodeTypeModificationsMessage::default(); // needs deserializer: xmlpayloadparser
+        let scale_up_modifications = Some(try!(NodeTypeListDeserializer::deserialize("ScaleUpModifications", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -135,8 +135,8 @@ struct AuthorizeCacheSecurityGroupIngressResultDeserializer;
                 -> Result<AuthorizeCacheSecurityGroupIngressResult, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = AuthorizeCacheSecurityGroupIngressResult::default();
-
+        let mut obj = AuthorizeCacheSecurityGroupIngressResult::default(); // needs deserializer: xmlpayloadparser
+        let cache_security_group = Some(try!(CacheSecurityGroupDeserializer::deserialize("CacheSecurityGroup", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -192,8 +192,8 @@ struct AvailabilityZoneDeserializer;
                 -> Result<AvailabilityZone, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = AvailabilityZone::default();
-
+        let mut obj = AvailabilityZone::default(); // needs deserializer: xmlpayloadparser
+        let name = Some(try!(StringDeserializer::deserialize("Name", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -338,8 +338,29 @@ struct CacheClusterDeserializer;
                 -> Result<CacheCluster, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CacheCluster::default();
-
+        let mut obj = CacheCluster::default(); // needs deserializer: xmlpayloadparser
+        let auto_minor_version_upgrade = Some(try!(BooleanDeserializer::deserialize("AutoMinorVersionUpgrade", stack)))
+let cache_cluster_create_time = Some(try!(TStampDeserializer::deserialize("CacheClusterCreateTime", stack)))
+let cache_cluster_id = Some(try!(StringDeserializer::deserialize("CacheClusterId", stack)))
+let cache_cluster_status = Some(try!(StringDeserializer::deserialize("CacheClusterStatus", stack)))
+let cache_node_type = Some(try!(StringDeserializer::deserialize("CacheNodeType", stack)))
+let cache_nodes = Some(try!(CacheNodeListDeserializer::deserialize("CacheNodes", stack)))
+let cache_parameter_group = Some(try!(CacheParameterGroupStatusDeserializer::deserialize("CacheParameterGroup", stack)))
+let cache_security_groups = Some(try!(CacheSecurityGroupMembershipListDeserializer::deserialize("CacheSecurityGroups", stack)))
+let cache_subnet_group_name = Some(try!(StringDeserializer::deserialize("CacheSubnetGroupName", stack)))
+let client_download_landing_page = Some(try!(StringDeserializer::deserialize("ClientDownloadLandingPage", stack)))
+let configuration_endpoint = Some(try!(EndpointDeserializer::deserialize("ConfigurationEndpoint", stack)))
+let engine = Some(try!(StringDeserializer::deserialize("Engine", stack)))
+let engine_version = Some(try!(StringDeserializer::deserialize("EngineVersion", stack)))
+let notification_configuration = Some(try!(NotificationConfigurationDeserializer::deserialize("NotificationConfiguration", stack)))
+let num_cache_nodes = Some(try!(IntegerOptionalDeserializer::deserialize("NumCacheNodes", stack)))
+let pending_modified_values = Some(try!(PendingModifiedValuesDeserializer::deserialize("PendingModifiedValues", stack)))
+let preferred_availability_zone = Some(try!(StringDeserializer::deserialize("PreferredAvailabilityZone", stack)))
+let preferred_maintenance_window = Some(try!(StringDeserializer::deserialize("PreferredMaintenanceWindow", stack)))
+let replication_group_id = Some(try!(StringDeserializer::deserialize("ReplicationGroupId", stack)))
+let security_groups = Some(try!(SecurityGroupMembershipListDeserializer::deserialize("SecurityGroups", stack)))
+let snapshot_retention_limit = Some(try!(IntegerOptionalDeserializer::deserialize("SnapshotRetentionLimit", stack)))
+let snapshot_window = Some(try!(StringDeserializer::deserialize("SnapshotWindow", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -483,8 +504,9 @@ struct CacheClusterMessageDeserializer;
                 -> Result<CacheClusterMessage, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CacheClusterMessage::default();
-
+        let mut obj = CacheClusterMessage::default(); // needs deserializer: xmlpayloadparser
+        let cache_clusters = Some(try!(CacheClusterListDeserializer::deserialize("CacheClusters", stack)))
+let marker = Some(try!(StringDeserializer::deserialize("Marker", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -537,8 +559,12 @@ struct CacheEngineVersionDeserializer;
                 -> Result<CacheEngineVersion, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CacheEngineVersion::default();
-
+        let mut obj = CacheEngineVersion::default(); // needs deserializer: xmlpayloadparser
+        let cache_engine_description = Some(try!(StringDeserializer::deserialize("CacheEngineDescription", stack)))
+let cache_engine_version_description = Some(try!(StringDeserializer::deserialize("CacheEngineVersionDescription", stack)))
+let cache_parameter_group_family = Some(try!(StringDeserializer::deserialize("CacheParameterGroupFamily", stack)))
+let engine = Some(try!(StringDeserializer::deserialize("Engine", stack)))
+let engine_version = Some(try!(StringDeserializer::deserialize("EngineVersion", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -631,8 +657,9 @@ struct CacheEngineVersionMessageDeserializer;
                 -> Result<CacheEngineVersionMessage, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CacheEngineVersionMessage::default();
-
+        let mut obj = CacheEngineVersionMessage::default(); // needs deserializer: xmlpayloadparser
+        let cache_engine_versions = Some(try!(CacheEngineVersionListDeserializer::deserialize("CacheEngineVersions", stack)))
+let marker = Some(try!(StringDeserializer::deserialize("Marker", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -689,8 +716,14 @@ struct CacheNodeDeserializer;
                 -> Result<CacheNode, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CacheNode::default();
-
+        let mut obj = CacheNode::default(); // needs deserializer: xmlpayloadparser
+        let cache_node_create_time = Some(try!(TStampDeserializer::deserialize("CacheNodeCreateTime", stack)))
+let cache_node_id = Some(try!(StringDeserializer::deserialize("CacheNodeId", stack)))
+let cache_node_status = Some(try!(StringDeserializer::deserialize("CacheNodeStatus", stack)))
+let customer_availability_zone = Some(try!(StringDeserializer::deserialize("CustomerAvailabilityZone", stack)))
+let endpoint = Some(try!(EndpointDeserializer::deserialize("Endpoint", stack)))
+let parameter_group_status = Some(try!(StringDeserializer::deserialize("ParameterGroupStatus", stack)))
+let source_cache_node_id = Some(try!(StringDeserializer::deserialize("SourceCacheNodeId", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -852,8 +885,16 @@ struct CacheNodeTypeSpecificParameterDeserializer;
                 -> Result<CacheNodeTypeSpecificParameter, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CacheNodeTypeSpecificParameter::default();
-
+        let mut obj = CacheNodeTypeSpecificParameter::default(); // needs deserializer: xmlpayloadparser
+        let allowed_values = Some(try!(StringDeserializer::deserialize("AllowedValues", stack)))
+let cache_node_type_specific_values = Some(try!(CacheNodeTypeSpecificValueListDeserializer::deserialize("CacheNodeTypeSpecificValues", stack)))
+let change_type = Some(try!(ChangeTypeDeserializer::deserialize("ChangeType", stack)))
+let data_type = Some(try!(StringDeserializer::deserialize("DataType", stack)))
+let description = Some(try!(StringDeserializer::deserialize("Description", stack)))
+let is_modifiable = Some(try!(BooleanDeserializer::deserialize("IsModifiable", stack)))
+let minimum_engine_version = Some(try!(StringDeserializer::deserialize("MinimumEngineVersion", stack)))
+let parameter_name = Some(try!(StringDeserializer::deserialize("ParameterName", stack)))
+let source = Some(try!(StringDeserializer::deserialize("Source", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -958,8 +999,9 @@ struct CacheNodeTypeSpecificValueDeserializer;
                 -> Result<CacheNodeTypeSpecificValue, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CacheNodeTypeSpecificValue::default();
-
+        let mut obj = CacheNodeTypeSpecificValue::default(); // needs deserializer: xmlpayloadparser
+        let cache_node_type = Some(try!(StringDeserializer::deserialize("CacheNodeType", stack)))
+let value = Some(try!(StringDeserializer::deserialize("Value", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1045,8 +1087,10 @@ struct CacheParameterGroupDeserializer;
                 -> Result<CacheParameterGroup, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CacheParameterGroup::default();
-
+        let mut obj = CacheParameterGroup::default(); // needs deserializer: xmlpayloadparser
+        let cache_parameter_group_family = Some(try!(StringDeserializer::deserialize("CacheParameterGroupFamily", stack)))
+let cache_parameter_group_name = Some(try!(StringDeserializer::deserialize("CacheParameterGroupName", stack)))
+let description = Some(try!(StringDeserializer::deserialize("Description", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1098,8 +1142,10 @@ struct CacheParameterGroupDetailsDeserializer;
                 -> Result<CacheParameterGroupDetails, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CacheParameterGroupDetails::default();
-
+        let mut obj = CacheParameterGroupDetails::default(); // needs deserializer: xmlpayloadparser
+        let cache_node_type_specific_parameters = Some(try!(CacheNodeTypeSpecificParametersListDeserializer::deserialize("CacheNodeTypeSpecificParameters", stack)))
+let marker = Some(try!(StringDeserializer::deserialize("Marker", stack)))
+let parameters = Some(try!(ParametersListDeserializer::deserialize("Parameters", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1184,8 +1230,8 @@ struct CacheParameterGroupNameMessageDeserializer;
                 -> Result<CacheParameterGroupNameMessage, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CacheParameterGroupNameMessage::default();
-
+        let mut obj = CacheParameterGroupNameMessage::default(); // needs deserializer: xmlpayloadparser
+        let cache_parameter_group_name = Some(try!(StringDeserializer::deserialize("CacheParameterGroupName", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1231,8 +1277,10 @@ struct CacheParameterGroupStatusDeserializer;
                 -> Result<CacheParameterGroupStatus, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CacheParameterGroupStatus::default();
-
+        let mut obj = CacheParameterGroupStatus::default(); // needs deserializer: xmlpayloadparser
+        let cache_node_ids_to_reboot = Some(try!(CacheNodeIdsListDeserializer::deserialize("CacheNodeIdsToReboot", stack)))
+let cache_parameter_group_name = Some(try!(StringDeserializer::deserialize("CacheParameterGroupName", stack)))
+let parameter_apply_status = Some(try!(StringDeserializer::deserialize("ParameterApplyStatus", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1282,8 +1330,9 @@ struct CacheParameterGroupsMessageDeserializer;
                 -> Result<CacheParameterGroupsMessage, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CacheParameterGroupsMessage::default();
-
+        let mut obj = CacheParameterGroupsMessage::default(); // needs deserializer: xmlpayloadparser
+        let cache_parameter_groups = Some(try!(CacheParameterGroupListDeserializer::deserialize("CacheParameterGroups", stack)))
+let marker = Some(try!(StringDeserializer::deserialize("Marker", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1334,8 +1383,11 @@ struct CacheSecurityGroupDeserializer;
                 -> Result<CacheSecurityGroup, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CacheSecurityGroup::default();
-
+        let mut obj = CacheSecurityGroup::default(); // needs deserializer: xmlpayloadparser
+        let cache_security_group_name = Some(try!(StringDeserializer::deserialize("CacheSecurityGroupName", stack)))
+let description = Some(try!(StringDeserializer::deserialize("Description", stack)))
+let ec2_security_groups = Some(try!(EC2SecurityGroupListDeserializer::deserialize("EC2SecurityGroups", stack)))
+let owner_id = Some(try!(StringDeserializer::deserialize("OwnerId", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1388,8 +1440,9 @@ struct CacheSecurityGroupMembershipDeserializer;
                 -> Result<CacheSecurityGroupMembership, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CacheSecurityGroupMembership::default();
-
+        let mut obj = CacheSecurityGroupMembership::default(); // needs deserializer: xmlpayloadparser
+        let cache_security_group_name = Some(try!(StringDeserializer::deserialize("CacheSecurityGroupName", stack)))
+let status = Some(try!(StringDeserializer::deserialize("Status", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1473,8 +1526,9 @@ struct CacheSecurityGroupMessageDeserializer;
                 -> Result<CacheSecurityGroupMessage, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CacheSecurityGroupMessage::default();
-
+        let mut obj = CacheSecurityGroupMessage::default(); // needs deserializer: xmlpayloadparser
+        let cache_security_groups = Some(try!(CacheSecurityGroupsDeserializer::deserialize("CacheSecurityGroups", stack)))
+let marker = Some(try!(StringDeserializer::deserialize("Marker", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1575,8 +1629,11 @@ struct CacheSubnetGroupDeserializer;
                 -> Result<CacheSubnetGroup, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CacheSubnetGroup::default();
-
+        let mut obj = CacheSubnetGroup::default(); // needs deserializer: xmlpayloadparser
+        let cache_subnet_group_description = Some(try!(StringDeserializer::deserialize("CacheSubnetGroupDescription", stack)))
+let cache_subnet_group_name = Some(try!(StringDeserializer::deserialize("CacheSubnetGroupName", stack)))
+let subnets = Some(try!(SubnetListDeserializer::deserialize("Subnets", stack)))
+let vpc_id = Some(try!(StringDeserializer::deserialize("VpcId", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1629,8 +1686,9 @@ struct CacheSubnetGroupMessageDeserializer;
                 -> Result<CacheSubnetGroupMessage, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CacheSubnetGroupMessage::default();
-
+        let mut obj = CacheSubnetGroupMessage::default(); // needs deserializer: xmlpayloadparser
+        let cache_subnet_groups = Some(try!(CacheSubnetGroupsDeserializer::deserialize("CacheSubnetGroups", stack)))
+let marker = Some(try!(StringDeserializer::deserialize("Marker", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1791,8 +1849,8 @@ struct CopySnapshotResultDeserializer;
                 -> Result<CopySnapshotResult, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CopySnapshotResult::default();
-
+        let mut obj = CopySnapshotResult::default(); // needs deserializer: xmlpayloadparser
+        let snapshot = Some(try!(SnapshotDeserializer::deserialize("Snapshot", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -1984,8 +2042,8 @@ struct CreateCacheClusterResultDeserializer;
                 -> Result<CreateCacheClusterResult, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CreateCacheClusterResult::default();
-
+        let mut obj = CreateCacheClusterResult::default(); // needs deserializer: xmlpayloadparser
+        let cache_cluster = Some(try!(CacheClusterDeserializer::deserialize("CacheCluster", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2053,8 +2111,8 @@ struct CreateCacheParameterGroupResultDeserializer;
                 -> Result<CreateCacheParameterGroupResult, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CreateCacheParameterGroupResult::default();
-
+        let mut obj = CreateCacheParameterGroupResult::default(); // needs deserializer: xmlpayloadparser
+        let cache_parameter_group = Some(try!(CacheParameterGroupDeserializer::deserialize("CacheParameterGroup", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2119,8 +2177,8 @@ struct CreateCacheSecurityGroupResultDeserializer;
                 -> Result<CreateCacheSecurityGroupResult, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CreateCacheSecurityGroupResult::default();
-
+        let mut obj = CreateCacheSecurityGroupResult::default(); // needs deserializer: xmlpayloadparser
+        let cache_security_group = Some(try!(CacheSecurityGroupDeserializer::deserialize("CacheSecurityGroup", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2192,8 +2250,8 @@ struct CreateCacheSubnetGroupResultDeserializer;
                 -> Result<CreateCacheSubnetGroupResult, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CreateCacheSubnetGroupResult::default();
-
+        let mut obj = CreateCacheSubnetGroupResult::default(); // needs deserializer: xmlpayloadparser
+        let cache_subnet_group = Some(try!(CacheSubnetGroupDeserializer::deserialize("CacheSubnetGroup", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2402,8 +2460,8 @@ struct CreateReplicationGroupResultDeserializer;
                 -> Result<CreateReplicationGroupResult, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CreateReplicationGroupResult::default();
-
+        let mut obj = CreateReplicationGroupResult::default(); // needs deserializer: xmlpayloadparser
+        let replication_group = Some(try!(ReplicationGroupDeserializer::deserialize("ReplicationGroup", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2475,8 +2533,8 @@ struct CreateSnapshotResultDeserializer;
                 -> Result<CreateSnapshotResult, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = CreateSnapshotResult::default();
-
+        let mut obj = CreateSnapshotResult::default(); // needs deserializer: xmlpayloadparser
+        let snapshot = Some(try!(SnapshotDeserializer::deserialize("Snapshot", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2543,8 +2601,8 @@ struct DeleteCacheClusterResultDeserializer;
                 -> Result<DeleteCacheClusterResult, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = DeleteCacheClusterResult::default();
-
+        let mut obj = DeleteCacheClusterResult::default(); // needs deserializer: xmlpayloadparser
+        let cache_cluster = Some(try!(CacheClusterDeserializer::deserialize("CacheCluster", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2682,8 +2740,8 @@ struct DeleteReplicationGroupResultDeserializer;
                 -> Result<DeleteReplicationGroupResult, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = DeleteReplicationGroupResult::default();
-
+        let mut obj = DeleteReplicationGroupResult::default(); // needs deserializer: xmlpayloadparser
+        let replication_group = Some(try!(ReplicationGroupDeserializer::deserialize("ReplicationGroup", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -2745,8 +2803,8 @@ struct DeleteSnapshotResultDeserializer;
                 -> Result<DeleteSnapshotResult, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = DeleteSnapshotResult::default();
-
+        let mut obj = DeleteSnapshotResult::default(); // needs deserializer: xmlpayloadparser
+        let snapshot = Some(try!(SnapshotDeserializer::deserialize("Snapshot", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3045,8 +3103,8 @@ struct DescribeEngineDefaultParametersResultDeserializer;
                 -> Result<DescribeEngineDefaultParametersResult, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = DescribeEngineDefaultParametersResult::default();
-
+        let mut obj = DescribeEngineDefaultParametersResult::default(); // needs deserializer: xmlpayloadparser
+        let engine_defaults = Some(try!(EngineDefaultsDeserializer::deserialize("EngineDefaults", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3291,8 +3349,9 @@ struct DescribeSnapshotsListMessageDeserializer;
                 -> Result<DescribeSnapshotsListMessage, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = DescribeSnapshotsListMessage::default();
-
+        let mut obj = DescribeSnapshotsListMessage::default(); // needs deserializer: xmlpayloadparser
+        let marker = Some(try!(StringDeserializer::deserialize("Marker", stack)))
+let snapshots = Some(try!(SnapshotListDeserializer::deserialize("Snapshots", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3409,8 +3468,10 @@ struct EC2SecurityGroupDeserializer;
                 -> Result<EC2SecurityGroup, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = EC2SecurityGroup::default();
-
+        let mut obj = EC2SecurityGroup::default(); // needs deserializer: xmlpayloadparser
+        let ec2_security_group_name = Some(try!(StringDeserializer::deserialize("EC2SecurityGroupName", stack)))
+let ec2_security_group_owner_id = Some(try!(StringDeserializer::deserialize("EC2SecurityGroupOwnerId", stack)))
+let status = Some(try!(StringDeserializer::deserialize("Status", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3497,8 +3558,9 @@ struct EndpointDeserializer;
                 -> Result<Endpoint, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = Endpoint::default();
-
+        let mut obj = Endpoint::default(); // needs deserializer: xmlpayloadparser
+        let address = Some(try!(StringDeserializer::deserialize("Address", stack)))
+let port = Some(try!(IntegerDeserializer::deserialize("Port", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3549,8 +3611,11 @@ struct EngineDefaultsDeserializer;
                 -> Result<EngineDefaults, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = EngineDefaults::default();
-
+        let mut obj = EngineDefaults::default(); // needs deserializer: xmlpayloadparser
+        let cache_node_type_specific_parameters = Some(try!(CacheNodeTypeSpecificParametersListDeserializer::deserialize("CacheNodeTypeSpecificParameters", stack)))
+let cache_parameter_group_family = Some(try!(StringDeserializer::deserialize("CacheParameterGroupFamily", stack)))
+let marker = Some(try!(StringDeserializer::deserialize("Marker", stack)))
+let parameters = Some(try!(ParametersListDeserializer::deserialize("Parameters", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3607,8 +3672,11 @@ struct EventDeserializer;
                 -> Result<Event, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = Event::default();
-
+        let mut obj = Event::default(); // needs deserializer: xmlpayloadparser
+        let date = Some(try!(TStampDeserializer::deserialize("Date", stack)))
+let message = Some(try!(StringDeserializer::deserialize("Message", stack)))
+let source_identifier = Some(try!(StringDeserializer::deserialize("SourceIdentifier", stack)))
+let source_type = Some(try!(SourceTypeDeserializer::deserialize("SourceType", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3698,8 +3766,9 @@ struct EventsMessageDeserializer;
                 -> Result<EventsMessage, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = EventsMessage::default();
-
+        let mut obj = EventsMessage::default(); // needs deserializer: xmlpayloadparser
+        let events = Some(try!(EventListDeserializer::deserialize("Events", stack)))
+let marker = Some(try!(StringDeserializer::deserialize("Marker", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -3952,8 +4021,8 @@ struct ModifyCacheClusterResultDeserializer;
                 -> Result<ModifyCacheClusterResult, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ModifyCacheClusterResult::default();
-
+        let mut obj = ModifyCacheClusterResult::default(); // needs deserializer: xmlpayloadparser
+        let cache_cluster = Some(try!(CacheClusterDeserializer::deserialize("CacheCluster", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4058,8 +4127,8 @@ struct ModifyCacheSubnetGroupResultDeserializer;
                 -> Result<ModifyCacheSubnetGroupResult, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ModifyCacheSubnetGroupResult::default();
-
+        let mut obj = ModifyCacheSubnetGroupResult::default(); // needs deserializer: xmlpayloadparser
+        let cache_subnet_group = Some(try!(CacheSubnetGroupDeserializer::deserialize("CacheSubnetGroup", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4209,8 +4278,8 @@ struct ModifyReplicationGroupResultDeserializer;
                 -> Result<ModifyReplicationGroupResult, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ModifyReplicationGroupResult::default();
-
+        let mut obj = ModifyReplicationGroupResult::default(); // needs deserializer: xmlpayloadparser
+        let replication_group = Some(try!(ReplicationGroupDeserializer::deserialize("ReplicationGroup", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4260,8 +4329,12 @@ struct NodeGroupDeserializer;
                 -> Result<NodeGroup, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = NodeGroup::default();
-
+        let mut obj = NodeGroup::default(); // needs deserializer: xmlpayloadparser
+        let node_group_id = Some(try!(StringDeserializer::deserialize("NodeGroupId", stack)))
+let node_group_members = Some(try!(NodeGroupMemberListDeserializer::deserialize("NodeGroupMembers", stack)))
+let primary_endpoint = Some(try!(EndpointDeserializer::deserialize("PrimaryEndpoint", stack)))
+let slots = Some(try!(StringDeserializer::deserialize("Slots", stack)))
+let status = Some(try!(StringDeserializer::deserialize("Status", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4321,8 +4394,11 @@ struct NodeGroupConfigurationDeserializer;
                 -> Result<NodeGroupConfiguration, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = NodeGroupConfiguration::default();
-
+        let mut obj = NodeGroupConfiguration::default(); // needs deserializer: xmlpayloadparser
+        let primary_availability_zone = Some(try!(StringDeserializer::deserialize("PrimaryAvailabilityZone", stack)))
+let replica_availability_zones = Some(try!(AvailabilityZonesListDeserializer::deserialize("ReplicaAvailabilityZones", stack)))
+let replica_count = Some(try!(IntegerOptionalDeserializer::deserialize("ReplicaCount", stack)))
+let slots = Some(try!(StringDeserializer::deserialize("Slots", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4460,8 +4536,12 @@ struct NodeGroupMemberDeserializer;
                 -> Result<NodeGroupMember, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = NodeGroupMember::default();
-
+        let mut obj = NodeGroupMember::default(); // needs deserializer: xmlpayloadparser
+        let cache_cluster_id = Some(try!(StringDeserializer::deserialize("CacheClusterId", stack)))
+let cache_node_id = Some(try!(StringDeserializer::deserialize("CacheNodeId", stack)))
+let current_role = Some(try!(StringDeserializer::deserialize("CurrentRole", stack)))
+let preferred_availability_zone = Some(try!(StringDeserializer::deserialize("PreferredAvailabilityZone", stack)))
+let read_endpoint = Some(try!(EndpointDeserializer::deserialize("ReadEndpoint", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4564,8 +4644,14 @@ struct NodeSnapshotDeserializer;
                 -> Result<NodeSnapshot, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = NodeSnapshot::default();
-
+        let mut obj = NodeSnapshot::default(); // needs deserializer: xmlpayloadparser
+        let cache_cluster_id = Some(try!(StringDeserializer::deserialize("CacheClusterId", stack)))
+let cache_node_create_time = Some(try!(TStampDeserializer::deserialize("CacheNodeCreateTime", stack)))
+let cache_node_id = Some(try!(StringDeserializer::deserialize("CacheNodeId", stack)))
+let cache_size = Some(try!(StringDeserializer::deserialize("CacheSize", stack)))
+let node_group_configuration = Some(try!(NodeGroupConfigurationDeserializer::deserialize("NodeGroupConfiguration", stack)))
+let node_group_id = Some(try!(StringDeserializer::deserialize("NodeGroupId", stack)))
+let snapshot_create_time = Some(try!(TStampDeserializer::deserialize("SnapshotCreateTime", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4701,8 +4787,9 @@ struct NotificationConfigurationDeserializer;
                 -> Result<NotificationConfiguration, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = NotificationConfiguration::default();
-
+        let mut obj = NotificationConfiguration::default(); // needs deserializer: xmlpayloadparser
+        let topic_arn = Some(try!(StringDeserializer::deserialize("TopicArn", stack)))
+let topic_status = Some(try!(StringDeserializer::deserialize("TopicStatus", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4763,8 +4850,16 @@ struct ParameterDeserializer;
                 -> Result<Parameter, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = Parameter::default();
-
+        let mut obj = Parameter::default(); // needs deserializer: xmlpayloadparser
+        let allowed_values = Some(try!(StringDeserializer::deserialize("AllowedValues", stack)))
+let change_type = Some(try!(ChangeTypeDeserializer::deserialize("ChangeType", stack)))
+let data_type = Some(try!(StringDeserializer::deserialize("DataType", stack)))
+let description = Some(try!(StringDeserializer::deserialize("Description", stack)))
+let is_modifiable = Some(try!(BooleanDeserializer::deserialize("IsModifiable", stack)))
+let minimum_engine_version = Some(try!(StringDeserializer::deserialize("MinimumEngineVersion", stack)))
+let parameter_name = Some(try!(StringDeserializer::deserialize("ParameterName", stack)))
+let parameter_value = Some(try!(StringDeserializer::deserialize("ParameterValue", stack)))
+let source = Some(try!(StringDeserializer::deserialize("Source", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -4929,8 +5024,11 @@ struct PendingModifiedValuesDeserializer;
                 -> Result<PendingModifiedValues, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = PendingModifiedValues::default();
-
+        let mut obj = PendingModifiedValues::default(); // needs deserializer: xmlpayloadparser
+        let cache_node_ids_to_remove = Some(try!(CacheNodeIdsListDeserializer::deserialize("CacheNodeIdsToRemove", stack)))
+let cache_node_type = Some(try!(StringDeserializer::deserialize("CacheNodeType", stack)))
+let engine_version = Some(try!(StringDeserializer::deserialize("EngineVersion", stack)))
+let num_cache_nodes = Some(try!(IntegerOptionalDeserializer::deserialize("NumCacheNodes", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5024,8 +5122,8 @@ struct PurchaseReservedCacheNodesOfferingResultDeserializer;
                 -> Result<PurchaseReservedCacheNodesOfferingResult, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = PurchaseReservedCacheNodesOfferingResult::default();
-
+        let mut obj = PurchaseReservedCacheNodesOfferingResult::default(); // needs deserializer: xmlpayloadparser
+        let reserved_cache_node = Some(try!(ReservedCacheNodeDeserializer::deserialize("ReservedCacheNode", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5094,8 +5192,8 @@ struct RebootCacheClusterResultDeserializer;
                 -> Result<RebootCacheClusterResult, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = RebootCacheClusterResult::default();
-
+        let mut obj = RebootCacheClusterResult::default(); // needs deserializer: xmlpayloadparser
+        let cache_cluster = Some(try!(CacheClusterDeserializer::deserialize("CacheCluster", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5139,8 +5237,9 @@ struct RecurringChargeDeserializer;
                 -> Result<RecurringCharge, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = RecurringCharge::default();
-
+        let mut obj = RecurringCharge::default(); // needs deserializer: xmlpayloadparser
+        let recurring_charge_amount = Some(try!(DoubleDeserializer::deserialize("RecurringChargeAmount", stack)))
+let recurring_charge_frequency = Some(try!(StringDeserializer::deserialize("RecurringChargeFrequency", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5271,8 +5370,18 @@ struct ReplicationGroupDeserializer;
                 -> Result<ReplicationGroup, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ReplicationGroup::default();
-
+        let mut obj = ReplicationGroup::default(); // needs deserializer: xmlpayloadparser
+        let automatic_failover = Some(try!(AutomaticFailoverStatusDeserializer::deserialize("AutomaticFailover", stack)))
+let configuration_endpoint = Some(try!(EndpointDeserializer::deserialize("ConfigurationEndpoint", stack)))
+let description = Some(try!(StringDeserializer::deserialize("Description", stack)))
+let member_clusters = Some(try!(ClusterIdListDeserializer::deserialize("MemberClusters", stack)))
+let node_groups = Some(try!(NodeGroupListDeserializer::deserialize("NodeGroups", stack)))
+let pending_modified_values = Some(try!(ReplicationGroupPendingModifiedValuesDeserializer::deserialize("PendingModifiedValues", stack)))
+let replication_group_id = Some(try!(StringDeserializer::deserialize("ReplicationGroupId", stack)))
+let snapshot_retention_limit = Some(try!(IntegerOptionalDeserializer::deserialize("SnapshotRetentionLimit", stack)))
+let snapshot_window = Some(try!(StringDeserializer::deserialize("SnapshotWindow", stack)))
+let snapshotting_cluster_id = Some(try!(StringDeserializer::deserialize("SnapshottingClusterId", stack)))
+let status = Some(try!(StringDeserializer::deserialize("Status", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5383,8 +5492,9 @@ struct ReplicationGroupMessageDeserializer;
                 -> Result<ReplicationGroupMessage, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ReplicationGroupMessage::default();
-
+        let mut obj = ReplicationGroupMessage::default(); // needs deserializer: xmlpayloadparser
+        let marker = Some(try!(StringDeserializer::deserialize("Marker", stack)))
+let replication_groups = Some(try!(ReplicationGroupListDeserializer::deserialize("ReplicationGroups", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5431,8 +5541,9 @@ struct ReplicationGroupPendingModifiedValuesDeserializer;
                 -> Result<ReplicationGroupPendingModifiedValues, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ReplicationGroupPendingModifiedValues::default();
-
+        let mut obj = ReplicationGroupPendingModifiedValues::default(); // needs deserializer: xmlpayloadparser
+        let automatic_failover_status = Some(try!(PendingAutomaticFailoverStatusDeserializer::deserialize("AutomaticFailoverStatus", stack)))
+let primary_cluster_id = Some(try!(StringDeserializer::deserialize("PrimaryClusterId", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5499,8 +5610,19 @@ struct ReservedCacheNodeDeserializer;
                 -> Result<ReservedCacheNode, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ReservedCacheNode::default();
-
+        let mut obj = ReservedCacheNode::default(); // needs deserializer: xmlpayloadparser
+        let cache_node_count = Some(try!(IntegerDeserializer::deserialize("CacheNodeCount", stack)))
+let cache_node_type = Some(try!(StringDeserializer::deserialize("CacheNodeType", stack)))
+let duration = Some(try!(IntegerDeserializer::deserialize("Duration", stack)))
+let fixed_price = Some(try!(DoubleDeserializer::deserialize("FixedPrice", stack)))
+let offering_type = Some(try!(StringDeserializer::deserialize("OfferingType", stack)))
+let product_description = Some(try!(StringDeserializer::deserialize("ProductDescription", stack)))
+let recurring_charges = Some(try!(RecurringChargeListDeserializer::deserialize("RecurringCharges", stack)))
+let reserved_cache_node_id = Some(try!(StringDeserializer::deserialize("ReservedCacheNodeId", stack)))
+let reserved_cache_nodes_offering_id = Some(try!(StringDeserializer::deserialize("ReservedCacheNodesOfferingId", stack)))
+let start_time = Some(try!(TStampDeserializer::deserialize("StartTime", stack)))
+let state = Some(try!(StringDeserializer::deserialize("State", stack)))
+let usage_price = Some(try!(DoubleDeserializer::deserialize("UsagePrice", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5614,8 +5736,9 @@ struct ReservedCacheNodeMessageDeserializer;
                 -> Result<ReservedCacheNodeMessage, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ReservedCacheNodeMessage::default();
-
+        let mut obj = ReservedCacheNodeMessage::default(); // needs deserializer: xmlpayloadparser
+        let marker = Some(try!(StringDeserializer::deserialize("Marker", stack)))
+let reserved_cache_nodes = Some(try!(ReservedCacheNodeListDeserializer::deserialize("ReservedCacheNodes", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5674,8 +5797,15 @@ struct ReservedCacheNodesOfferingDeserializer;
                 -> Result<ReservedCacheNodesOffering, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ReservedCacheNodesOffering::default();
-
+        let mut obj = ReservedCacheNodesOffering::default(); // needs deserializer: xmlpayloadparser
+        let cache_node_type = Some(try!(StringDeserializer::deserialize("CacheNodeType", stack)))
+let duration = Some(try!(IntegerDeserializer::deserialize("Duration", stack)))
+let fixed_price = Some(try!(DoubleDeserializer::deserialize("FixedPrice", stack)))
+let offering_type = Some(try!(StringDeserializer::deserialize("OfferingType", stack)))
+let product_description = Some(try!(StringDeserializer::deserialize("ProductDescription", stack)))
+let recurring_charges = Some(try!(RecurringChargeListDeserializer::deserialize("RecurringCharges", stack)))
+let reserved_cache_nodes_offering_id = Some(try!(StringDeserializer::deserialize("ReservedCacheNodesOfferingId", stack)))
+let usage_price = Some(try!(DoubleDeserializer::deserialize("UsagePrice", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5777,8 +5907,9 @@ struct ReservedCacheNodesOfferingMessageDeserializer;
                 -> Result<ReservedCacheNodesOfferingMessage, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = ReservedCacheNodesOfferingMessage::default();
-
+        let mut obj = ReservedCacheNodesOfferingMessage::default(); // needs deserializer: xmlpayloadparser
+        let marker = Some(try!(StringDeserializer::deserialize("Marker", stack)))
+let reserved_cache_nodes_offerings = Some(try!(ReservedCacheNodesOfferingListDeserializer::deserialize("ReservedCacheNodesOfferings", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5885,8 +6016,8 @@ struct RevokeCacheSecurityGroupIngressResultDeserializer;
                 -> Result<RevokeCacheSecurityGroupIngressResult, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = RevokeCacheSecurityGroupIngressResult::default();
-
+        let mut obj = RevokeCacheSecurityGroupIngressResult::default(); // needs deserializer: xmlpayloadparser
+        let cache_security_group = Some(try!(CacheSecurityGroupDeserializer::deserialize("CacheSecurityGroup", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -5943,8 +6074,9 @@ struct SecurityGroupMembershipDeserializer;
                 -> Result<SecurityGroupMembership, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = SecurityGroupMembership::default();
-
+        let mut obj = SecurityGroupMembership::default(); // needs deserializer: xmlpayloadparser
+        let security_group_id = Some(try!(StringDeserializer::deserialize("SecurityGroupId", stack)))
+let status = Some(try!(StringDeserializer::deserialize("Status", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -6072,8 +6204,31 @@ struct SnapshotDeserializer;
                 -> Result<Snapshot, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = Snapshot::default();
-
+        let mut obj = Snapshot::default(); // needs deserializer: xmlpayloadparser
+        let auto_minor_version_upgrade = Some(try!(BooleanDeserializer::deserialize("AutoMinorVersionUpgrade", stack)))
+let automatic_failover = Some(try!(AutomaticFailoverStatusDeserializer::deserialize("AutomaticFailover", stack)))
+let cache_cluster_create_time = Some(try!(TStampDeserializer::deserialize("CacheClusterCreateTime", stack)))
+let cache_cluster_id = Some(try!(StringDeserializer::deserialize("CacheClusterId", stack)))
+let cache_node_type = Some(try!(StringDeserializer::deserialize("CacheNodeType", stack)))
+let cache_parameter_group_name = Some(try!(StringDeserializer::deserialize("CacheParameterGroupName", stack)))
+let cache_subnet_group_name = Some(try!(StringDeserializer::deserialize("CacheSubnetGroupName", stack)))
+let engine = Some(try!(StringDeserializer::deserialize("Engine", stack)))
+let engine_version = Some(try!(StringDeserializer::deserialize("EngineVersion", stack)))
+let node_snapshots = Some(try!(NodeSnapshotListDeserializer::deserialize("NodeSnapshots", stack)))
+let num_cache_nodes = Some(try!(IntegerOptionalDeserializer::deserialize("NumCacheNodes", stack)))
+let num_node_groups = Some(try!(IntegerOptionalDeserializer::deserialize("NumNodeGroups", stack)))
+let port = Some(try!(IntegerOptionalDeserializer::deserialize("Port", stack)))
+let preferred_availability_zone = Some(try!(StringDeserializer::deserialize("PreferredAvailabilityZone", stack)))
+let preferred_maintenance_window = Some(try!(StringDeserializer::deserialize("PreferredMaintenanceWindow", stack)))
+let replication_group_description = Some(try!(StringDeserializer::deserialize("ReplicationGroupDescription", stack)))
+let replication_group_id = Some(try!(StringDeserializer::deserialize("ReplicationGroupId", stack)))
+let snapshot_name = Some(try!(StringDeserializer::deserialize("SnapshotName", stack)))
+let snapshot_retention_limit = Some(try!(IntegerOptionalDeserializer::deserialize("SnapshotRetentionLimit", stack)))
+let snapshot_source = Some(try!(StringDeserializer::deserialize("SnapshotSource", stack)))
+let snapshot_status = Some(try!(StringDeserializer::deserialize("SnapshotStatus", stack)))
+let snapshot_window = Some(try!(StringDeserializer::deserialize("SnapshotWindow", stack)))
+let topic_arn = Some(try!(StringDeserializer::deserialize("TopicArn", stack)))
+let vpc_id = Some(try!(StringDeserializer::deserialize("VpcId", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -6263,8 +6418,9 @@ struct SubnetDeserializer;
                 -> Result<Subnet, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = Subnet::default();
-
+        let mut obj = Subnet::default(); // needs deserializer: xmlpayloadparser
+        let subnet_availability_zone = Some(try!(AvailabilityZoneDeserializer::deserialize("SubnetAvailabilityZone", stack)))
+let subnet_identifier = Some(try!(StringDeserializer::deserialize("SubnetIdentifier", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -6375,8 +6531,9 @@ struct TagDeserializer;
                 -> Result<Tag, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = Tag::default();
-
+        let mut obj = Tag::default(); // needs deserializer: xmlpayloadparser
+        let key = Some(try!(StringDeserializer::deserialize("Key", stack)))
+let value = Some(try!(StringDeserializer::deserialize("Value", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
@@ -6490,8 +6647,8 @@ struct TagListMessageDeserializer;
                 -> Result<TagListMessage, XmlParseError> {
                     try!(start_element(tag_name, stack));
 
-        let mut obj = TagListMessage::default();
-
+        let mut obj = TagListMessage::default(); // needs deserializer: xmlpayloadparser
+        let tag_list = Some(try!(TagListDeserializer::deserialize("TagList", stack)))
         loop {
             let next_event = match stack.peek() {
                 Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,

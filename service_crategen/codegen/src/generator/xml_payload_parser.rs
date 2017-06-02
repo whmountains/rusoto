@@ -1,7 +1,7 @@
 use inflector::Inflector;
 
 use botocore::{Member, Operation, Service, Shape, ShapeType};
-use super::{generate_field_name, mutate_type_name};
+use super::{generate_field_name, mutate_type_name, primitive_type};
 
 pub fn generate_struct_attributes(_deserialized: bool) -> String {
     let derived = vec!["Default", "Debug", "Clone"];
@@ -132,7 +132,7 @@ fn generate_deserializer_body(name: &str, shape: &Shape, service: &Service) -> S
                 })
                 .collect::<Vec<String>>()
                 .join("\n");
-            return format!("let mut obj = {name}::default();
+            return format!("let mut obj = {name}::default(); //top level deserializer in xmlpayloadparser
                             {struct_field_deserializers}
                             Ok(obj)",
                            name = name,
@@ -301,7 +301,7 @@ fn generate_struct_deserializer(name: &str, service: &Service, shape: &Shape) ->
         return format!(
             "try!(start_element(tag_name, stack));
 
-            let obj = {name}::default();
+            let obj = {name}::default(); // no deserializer needed: xmlpayloadparser
 
             try!(end_element(tag_name, stack));
 
@@ -314,8 +314,8 @@ fn generate_struct_deserializer(name: &str, service: &Service, shape: &Shape) ->
     format!(
         "try!(start_element(tag_name, stack));
 
-        let mut obj = {name}::default();
-
+        {member_declaration}
+        
         loop {{
             let next_event = match stack.peek() {{
                 Some(&Ok(XmlEvent::EndElement {{ ref name, .. }})) => DeserializerNext::Close,
@@ -336,12 +336,47 @@ fn generate_struct_deserializer(name: &str, service: &Service, shape: &Shape) ->
         }}
 
         try!(end_element(tag_name, stack));
-
+        let mut obj = {name}{{
+            {member_assignment}
+        }}; // needs deserializer: xmlpayloadparser                
         Ok(obj)
         ",
         name = name,
         struct_field_deserializers = generate_struct_field_deserializers(service, shape),
+        member_declaration = member_declaration(service, shape),
+        member_assignment = member_assignment(shape),
     )
+}
+
+fn member_assignment(shape: &Shape) -> String {
+    shape.members
+        .as_ref()
+        .unwrap()
+        .iter()
+        .filter_map(|(member_name, member)| {
+            Some(format!("{}: {},", 
+                generate_field_name(member_name),
+                generate_field_name(member_name)))
+    }).collect::<Vec<String>>().join("\n")
+}
+
+fn member_declaration(service: &Service, shape: &Shape) -> String {
+    shape.members
+        .as_ref()
+        .unwrap()
+        .iter()
+        .filter_map(|(member_name, member)| {
+            let member_shape = &service.shapes[&member.shape];
+            let required = shape.required(member_name);
+            let shape_declaration = primitive_type(member_shape.shape_type);
+            let primitive_type = match required {
+                true => shape_declaration,
+                false => format!("Option<{}>", shape_declaration),
+            };
+            Some(format!("let {}: {};", 
+                generate_field_name(member_name),
+                primitive_type))
+    }).collect::<Vec<String>>().join("\n")
 }
 
 fn generate_struct_field_deserializers(service: &Service, shape: &Shape) -> String {
@@ -373,7 +408,7 @@ fn generate_struct_field_deserializers(service: &Service, shape: &Shape) -> Stri
                 generate_struct_field_parse_expression(shape, member_name, member, location_name);
             Some(format!(
             "\"{location_name}\" => {{
-                obj.{field_name} = {parse_expression};
+                {field_name} = {parse_expression};
             }}",
             field_name = generate_field_name(member_name),
             parse_expression = parse_expression,

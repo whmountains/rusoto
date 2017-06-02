@@ -202,6 +202,20 @@ fn generate_primitive_type(name: &str, shape_type: ShapeType, for_timestamps: &s
     format!("pub type {} = {};", name, primitive_type)
 }
 
+fn primitive_type(shape_type: ShapeType) -> String {
+    let shape_type_as_string = match shape_type {
+        ShapeType::Blob => "Vec<u8>",
+        ShapeType::Boolean => "bool",
+        ShapeType::Double => "f64",
+        ShapeType::Float => "f32",
+        ShapeType::Integer => "i64",
+        ShapeType::Long => "i64",
+        ShapeType::String | ShapeType::Timestamp => "String",
+        _ => panic!("Unknown primitive type for: {:?}", shape_type),
+    };
+    shape_type_as_string.to_string()
+}
+
 // do any type name mutation needed to avoid collisions with Rust types
 fn mutate_type_name(type_name: &str) -> String {
     let capitalized = capitalize_first(type_name.to_owned());
