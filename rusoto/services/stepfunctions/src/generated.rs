@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -39,7 +40,6 @@ pub struct ActivityFailedEventDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub error: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActivityListItem {
     #[doc="<p>The Amazon Resource Name (ARN) that identifies the activity.</p>"]
@@ -52,7 +52,6 @@ pub struct ActivityListItem {
     #[serde(rename="name")]
     pub name: String,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActivityScheduleFailedEventDetails {
     #[doc="<p>A more detailed explanation of the cause of the failure.</p>"]
@@ -64,7 +63,6 @@ pub struct ActivityScheduleFailedEventDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub error: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActivityScheduledEventDetails {
     #[doc="<p>The maximum allowed duration between two heartbeats for the activity task.</p>"]
@@ -83,7 +81,6 @@ pub struct ActivityScheduledEventDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub timeout_in_seconds: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActivityStartedEventDetails {
     #[doc="<p>The name of the worker that the task was assigned to. These names are provided by the workers when calling <a>GetActivityTask</a>.</p>"]
@@ -91,7 +88,6 @@ pub struct ActivityStartedEventDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub worker_name: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActivitySucceededEventDetails {
     #[doc="<p>The JSON data output by the activity task.</p>"]
@@ -99,7 +95,6 @@ pub struct ActivitySucceededEventDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub output: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActivityTimedOutEventDetails {
     #[doc="<p>A more detailed explanation of the cause of the timeout.</p>"]
@@ -111,14 +106,28 @@ pub struct ActivityTimedOutEventDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub error: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateActivityInput {
     #[doc="<p>The name of the activity to create. This name must be unique for your AWS account and region.</p>"]
     #[serde(rename="name")]
     pub name: String,
 }
-
+impl CreateActivityInput {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateActivityInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateActivityInput with optional fields set to `None`.
+    pub fn new<nameType: Into<String>>(name: nameType) -> CreateActivityInput {
+        CreateActivityInput {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateActivityOutput {
     #[doc="<p>The Amazon Resource Name (ARN) that identifies the created activity.</p>"]
@@ -128,7 +137,6 @@ pub struct CreateActivityOutput {
     #[serde(rename="creationDate")]
     pub creation_date: f64,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateStateMachineInput {
     #[doc="<p>The Amazon States Language definition of the state machine.</p>"]
@@ -141,7 +149,42 @@ pub struct CreateStateMachineInput {
     #[serde(rename="roleArn")]
     pub role_arn: String,
 }
-
+impl CreateStateMachineInput {
+    /// Sets `definition`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStateMachineInput.definition = value.into();`.
+    pub fn definition<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.definition = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStateMachineInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStateMachineInput.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Returns a new instance of CreateStateMachineInput with optional fields set to `None`.
+    pub fn new<definitionType: Into<String>, nameType: Into<String>, roleArnType: Into<String>>
+        (definition: definitionType,
+         name: nameType,
+         role_arn: roleArnType)
+         -> CreateStateMachineInput {
+        CreateStateMachineInput {
+            definition: definition.into(),
+            name: name.into(),
+            role_arn: role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateStateMachineOutput {
     #[doc="<p>The date the state machine was created.</p>"]
@@ -151,14 +194,29 @@ pub struct CreateStateMachineOutput {
     #[serde(rename="stateMachineArn")]
     pub state_machine_arn: String,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteActivityInput {
     #[doc="<p>The Amazon Resource Name (ARN) of the activity to delete.</p>"]
     #[serde(rename="activityArn")]
     pub activity_arn: String,
 }
-
+impl DeleteActivityInput {
+    /// Sets `activity_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteActivityInput.activity_arn = value.into();`.
+    pub fn activity_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.activity_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteActivityInput with optional fields set to `None`.
+    pub fn new<activityArnType: Into<String>>(activity_arn: activityArnType)
+                                              -> DeleteActivityInput {
+        DeleteActivityInput {
+            activity_arn: activity_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteActivityOutput;
 
@@ -168,7 +226,23 @@ pub struct DeleteStateMachineInput {
     #[serde(rename="stateMachineArn")]
     pub state_machine_arn: String,
 }
-
+impl DeleteStateMachineInput {
+    /// Sets `state_machine_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteStateMachineInput.state_machine_arn = value.into();`.
+    pub fn state_machine_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.state_machine_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteStateMachineInput with optional fields set to `None`.
+    pub fn new<stateMachineArnType: Into<String>>(state_machine_arn: stateMachineArnType)
+                                                  -> DeleteStateMachineInput {
+        DeleteStateMachineInput {
+            state_machine_arn: state_machine_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteStateMachineOutput;
 
@@ -178,7 +252,23 @@ pub struct DescribeActivityInput {
     #[serde(rename="activityArn")]
     pub activity_arn: String,
 }
-
+impl DescribeActivityInput {
+    /// Sets `activity_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeActivityInput.activity_arn = value.into();`.
+    pub fn activity_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.activity_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeActivityInput with optional fields set to `None`.
+    pub fn new<activityArnType: Into<String>>(activity_arn: activityArnType)
+                                              -> DescribeActivityInput {
+        DescribeActivityInput {
+            activity_arn: activity_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeActivityOutput {
     #[doc="<p>The Amazon Resource Name (ARN) that identifies the activity.</p>"]
@@ -191,14 +281,29 @@ pub struct DescribeActivityOutput {
     #[serde(rename="name")]
     pub name: String,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeExecutionInput {
     #[doc="<p>The Amazon Resource Name (ARN) of the execution to describe.</p>"]
     #[serde(rename="executionArn")]
     pub execution_arn: String,
 }
-
+impl DescribeExecutionInput {
+    /// Sets `execution_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeExecutionInput.execution_arn = value.into();`.
+    pub fn execution_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.execution_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeExecutionInput with optional fields set to `None`.
+    pub fn new<executionArnType: Into<String>>(execution_arn: executionArnType)
+                                               -> DescribeExecutionInput {
+        DescribeExecutionInput {
+            execution_arn: execution_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeExecutionOutput {
     #[doc="<p>The Amazon Resource Name (ARN) that identifies the execution.</p>"]
@@ -229,14 +334,29 @@ pub struct DescribeExecutionOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stop_date: Option<f64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeStateMachineInput {
     #[doc="<p>The Amazon Resource Name (ARN) of the state machine to describe.</p>"]
     #[serde(rename="stateMachineArn")]
     pub state_machine_arn: String,
 }
-
+impl DescribeStateMachineInput {
+    /// Sets `state_machine_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStateMachineInput.state_machine_arn = value.into();`.
+    pub fn state_machine_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.state_machine_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeStateMachineInput with optional fields set to `None`.
+    pub fn new<stateMachineArnType: Into<String>>(state_machine_arn: stateMachineArnType)
+                                                  -> DescribeStateMachineInput {
+        DescribeStateMachineInput {
+            state_machine_arn: state_machine_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeStateMachineOutput {
     #[doc="<p>The date the state machine was created.</p>"]
@@ -259,7 +379,6 @@ pub struct DescribeStateMachineOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ExecutionAbortedEventDetails {
     #[doc="<p>A more detailed explanation of the cause of the failure.</p>"]
@@ -271,7 +390,6 @@ pub struct ExecutionAbortedEventDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub error: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ExecutionFailedEventDetails {
     #[doc="<p>A more detailed explanation of the cause of the failure.</p>"]
@@ -283,7 +401,6 @@ pub struct ExecutionFailedEventDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub error: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ExecutionListItem {
     #[doc="<p>The Amazon Resource Name (ARN) that identifies the execution.</p>"]
@@ -306,7 +423,6 @@ pub struct ExecutionListItem {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stop_date: Option<f64>,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ExecutionStartedEventDetails {
     #[doc="<p>The JSON data input to the execution.</p>"]
@@ -318,7 +434,6 @@ pub struct ExecutionStartedEventDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub role_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ExecutionSucceededEventDetails {
     #[doc="<p>The JSON data output by the execution.</p>"]
@@ -326,7 +441,6 @@ pub struct ExecutionSucceededEventDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub output: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ExecutionTimedOutEventDetails {
     #[doc="<p>A more detailed explanation of the cause of the timeout.</p>"]
@@ -338,7 +452,6 @@ pub struct ExecutionTimedOutEventDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub error: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetActivityTaskInput {
     #[doc="<p>The Amazon Resource Name (ARN) of the activity to retrieve tasks from.</p>"]
@@ -349,7 +462,30 @@ pub struct GetActivityTaskInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub worker_name: Option<String>,
 }
-
+impl GetActivityTaskInput {
+    /// Sets `activity_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetActivityTaskInput.activity_arn = value.into();`.
+    pub fn activity_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.activity_arn = value.into();
+        self
+    }
+    /// Sets `worker_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetActivityTaskInput.worker_name = Some(value.into());`.
+    pub fn worker_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.worker_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetActivityTaskInput with optional fields set to `None`.
+    pub fn new<activityArnType: Into<String>>(activity_arn: activityArnType)
+                                              -> GetActivityTaskInput {
+        GetActivityTaskInput {
+            activity_arn: activity_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetActivityTaskOutput {
     #[doc="<p>The JSON input data for the task.</p>"]
@@ -361,7 +497,6 @@ pub struct GetActivityTaskOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub task_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetExecutionHistoryInput {
     #[doc="<p>The Amazon Resource Name (ARN) of the execution.</p>"]
@@ -380,7 +515,44 @@ pub struct GetExecutionHistoryInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub reverse_order: Option<bool>,
 }
-
+impl GetExecutionHistoryInput {
+    /// Sets `execution_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetExecutionHistoryInput.execution_arn = value.into();`.
+    pub fn execution_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.execution_arn = value.into();
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetExecutionHistoryInput.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetExecutionHistoryInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `reverse_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetExecutionHistoryInput.reverse_order = Some(value.into());`.
+    pub fn reverse_order<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.reverse_order = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetExecutionHistoryInput with optional fields set to `None`.
+    pub fn new<executionArnType: Into<String>>(execution_arn: executionArnType)
+                                               -> GetExecutionHistoryInput {
+        GetExecutionHistoryInput {
+            execution_arn: execution_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetExecutionHistoryOutput {
     #[doc="<p>The list of events that occurred in the execution.</p>"]
@@ -391,7 +563,6 @@ pub struct GetExecutionHistoryOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct HistoryEvent {
     #[serde(rename="activityFailedEventDetails")]
@@ -467,7 +638,6 @@ pub struct HistoryEvent {
     #[serde(rename="type")]
     pub type_: String,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LambdaFunctionFailedEventDetails {
     #[doc="<p>A more detailed explanation of the cause of the failure.</p>"]
@@ -479,7 +649,6 @@ pub struct LambdaFunctionFailedEventDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub error: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LambdaFunctionScheduleFailedEventDetails {
     #[doc="<p>A more detailed explanation of the cause of the failure.</p>"]
@@ -491,7 +660,6 @@ pub struct LambdaFunctionScheduleFailedEventDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub error: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LambdaFunctionScheduledEventDetails {
     #[doc="<p>The JSON data input to the lambda function.</p>"]
@@ -506,7 +674,6 @@ pub struct LambdaFunctionScheduledEventDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub timeout_in_seconds: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LambdaFunctionStartFailedEventDetails {
     #[doc="<p>A more detailed explanation of the cause of the failure.</p>"]
@@ -518,7 +685,6 @@ pub struct LambdaFunctionStartFailedEventDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub error: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LambdaFunctionSucceededEventDetails {
     #[doc="<p>The JSON data output by the lambda function.</p>"]
@@ -526,7 +692,6 @@ pub struct LambdaFunctionSucceededEventDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub output: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LambdaFunctionTimedOutEventDetails {
     #[doc="<p>A more detailed explanation of the cause of the timeout.</p>"]
@@ -538,7 +703,6 @@ pub struct LambdaFunctionTimedOutEventDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub error: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListActivitiesInput {
     #[doc="<p>The maximum number of results that will be returned per call. <code>nextToken</code> can be used to obtain further pages of results. The default is 100 and the maximum allowed page size is 1000.</p> <p>This is an upper limit only; the actual number of results returned per call may be fewer than the specified maximum.</p>"]
@@ -550,7 +714,26 @@ pub struct ListActivitiesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListActivitiesInput {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListActivitiesInput.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListActivitiesInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListActivitiesInput with optional fields set to `None`.
+    pub fn new() -> ListActivitiesInput {
+        ListActivitiesInput { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListActivitiesOutput {
     #[doc="<p>The list of activities.</p>"]
@@ -561,7 +744,6 @@ pub struct ListActivitiesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListExecutionsInput {
     #[doc="<p>The maximum number of results that will be returned per call. <code>nextToken</code> can be used to obtain further pages of results. The default is 100 and the maximum allowed page size is 1000.</p> <p>This is an upper limit only; the actual number of results returned per call may be fewer than the specified maximum.</p>"]
@@ -580,7 +762,44 @@ pub struct ListExecutionsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status_filter: Option<String>,
 }
-
+impl ListExecutionsInput {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListExecutionsInput.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListExecutionsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `state_machine_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListExecutionsInput.state_machine_arn = value.into();`.
+    pub fn state_machine_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.state_machine_arn = value.into();
+        self
+    }
+    /// Sets `status_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListExecutionsInput.status_filter = Some(value.into());`.
+    pub fn status_filter<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status_filter = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListExecutionsInput with optional fields set to `None`.
+    pub fn new<stateMachineArnType: Into<String>>(state_machine_arn: stateMachineArnType)
+                                                  -> ListExecutionsInput {
+        ListExecutionsInput {
+            state_machine_arn: state_machine_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListExecutionsOutput {
     #[doc="<p>The list of matching executions.</p>"]
@@ -591,7 +810,6 @@ pub struct ListExecutionsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListStateMachinesInput {
     #[doc="<p>The maximum number of results that will be returned per call. <code>nextToken</code> can be used to obtain further pages of results. The default is 100 and the maximum allowed page size is 1000.</p> <p>This is an upper limit only; the actual number of results returned per call may be fewer than the specified maximum.</p>"]
@@ -603,7 +821,26 @@ pub struct ListStateMachinesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListStateMachinesInput {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStateMachinesInput.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStateMachinesInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListStateMachinesInput with optional fields set to `None`.
+    pub fn new() -> ListStateMachinesInput {
+        ListStateMachinesInput { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListStateMachinesOutput {
     #[doc="<p>If a <code>nextToken</code> is returned, there are more results available. To retrieve the next page of results, make the call again using the returned token in <code>nextToken</code>. Keep all other arguments unchanged.</p> <p>The configured <code>maxResults</code> determines how many results can be returned in a single call.</p>"]
@@ -613,7 +850,6 @@ pub struct ListStateMachinesOutput {
     #[serde(rename="stateMachines")]
     pub state_machines: Vec<StateMachineListItem>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SendTaskFailureInput {
     #[doc="<p>A more detailed explanation of the cause of the failure.</p>"]
@@ -628,7 +864,36 @@ pub struct SendTaskFailureInput {
     #[serde(rename="taskToken")]
     pub task_token: String,
 }
-
+impl SendTaskFailureInput {
+    /// Sets `cause`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendTaskFailureInput.cause = Some(value.into());`.
+    pub fn cause<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cause = Some(value.into());
+        self
+    }
+    /// Sets `error`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendTaskFailureInput.error = Some(value.into());`.
+    pub fn error<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.error = Some(value.into());
+        self
+    }
+    /// Sets `task_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendTaskFailureInput.task_token = value.into();`.
+    pub fn task_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_token = value.into();
+        self
+    }
+    /// Returns a new instance of SendTaskFailureInput with optional fields set to `None`.
+    pub fn new<taskTokenType: Into<String>>(task_token: taskTokenType) -> SendTaskFailureInput {
+        SendTaskFailureInput {
+            task_token: task_token.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SendTaskFailureOutput;
 
@@ -638,7 +903,22 @@ pub struct SendTaskHeartbeatInput {
     #[serde(rename="taskToken")]
     pub task_token: String,
 }
-
+impl SendTaskHeartbeatInput {
+    /// Sets `task_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendTaskHeartbeatInput.task_token = value.into();`.
+    pub fn task_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_token = value.into();
+        self
+    }
+    /// Returns a new instance of SendTaskHeartbeatInput with optional fields set to `None`.
+    pub fn new<taskTokenType: Into<String>>(task_token: taskTokenType) -> SendTaskHeartbeatInput {
+        SendTaskHeartbeatInput {
+            task_token: task_token.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SendTaskHeartbeatOutput;
 
@@ -651,7 +931,32 @@ pub struct SendTaskSuccessInput {
     #[serde(rename="taskToken")]
     pub task_token: String,
 }
-
+impl SendTaskSuccessInput {
+    /// Sets `output`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendTaskSuccessInput.output = value.into();`.
+    pub fn output<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.output = value.into();
+        self
+    }
+    /// Sets `task_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendTaskSuccessInput.task_token = value.into();`.
+    pub fn task_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_token = value.into();
+        self
+    }
+    /// Returns a new instance of SendTaskSuccessInput with optional fields set to `None`.
+    pub fn new<outputType: Into<String>, taskTokenType: Into<String>>(output: outputType,
+                                                                      task_token: taskTokenType)
+                                                                      -> SendTaskSuccessInput {
+        SendTaskSuccessInput {
+            output: output.into(),
+            task_token: task_token.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SendTaskSuccessOutput;
 
@@ -669,7 +974,37 @@ pub struct StartExecutionInput {
     #[serde(rename="stateMachineArn")]
     pub state_machine_arn: String,
 }
-
+impl StartExecutionInput {
+    /// Sets `input`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartExecutionInput.input = Some(value.into());`.
+    pub fn input<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.input = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartExecutionInput.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `state_machine_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartExecutionInput.state_machine_arn = value.into();`.
+    pub fn state_machine_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.state_machine_arn = value.into();
+        self
+    }
+    /// Returns a new instance of StartExecutionInput with optional fields set to `None`.
+    pub fn new<stateMachineArnType: Into<String>>(state_machine_arn: stateMachineArnType)
+                                                  -> StartExecutionInput {
+        StartExecutionInput {
+            state_machine_arn: state_machine_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartExecutionOutput {
     #[doc="<p>The Amazon Resource Name (ARN) that identifies the execution.</p>"]
@@ -679,7 +1014,6 @@ pub struct StartExecutionOutput {
     #[serde(rename="startDate")]
     pub start_date: f64,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StateEnteredEventDetails {
     #[doc="<p>The JSON input data to the state.</p>"]
@@ -690,7 +1024,6 @@ pub struct StateEnteredEventDetails {
     #[serde(rename="name")]
     pub name: String,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StateExitedEventDetails {
     #[doc="<p>The name of the state.</p>"]
@@ -701,7 +1034,6 @@ pub struct StateExitedEventDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub output: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StateMachineListItem {
     #[doc="<p>The date the state machine was created.</p>"]
@@ -714,7 +1046,6 @@ pub struct StateMachineListItem {
     #[serde(rename="stateMachineArn")]
     pub state_machine_arn: String,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StopExecutionInput {
     #[doc="<p>A more detailed explanation of the cause of the termination.</p>"]
@@ -729,14 +1060,43 @@ pub struct StopExecutionInput {
     #[serde(rename="executionArn")]
     pub execution_arn: String,
 }
-
+impl StopExecutionInput {
+    /// Sets `cause`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopExecutionInput.cause = Some(value.into());`.
+    pub fn cause<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cause = Some(value.into());
+        self
+    }
+    /// Sets `error`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopExecutionInput.error = Some(value.into());`.
+    pub fn error<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.error = Some(value.into());
+        self
+    }
+    /// Sets `execution_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopExecutionInput.execution_arn = value.into();`.
+    pub fn execution_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.execution_arn = value.into();
+        self
+    }
+    /// Returns a new instance of StopExecutionInput with optional fields set to `None`.
+    pub fn new<executionArnType: Into<String>>(execution_arn: executionArnType)
+                                               -> StopExecutionInput {
+        StopExecutionInput {
+            execution_arn: execution_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StopExecutionOutput {
     #[doc="<p>The date the execution was stopped.</p>"]
     #[serde(rename="stopDate")]
     pub stop_date: f64,
 }
-
 /// Errors returned by CreateActivity
 #[derive(Debug, PartialEq)]
 pub enum CreateActivityError {

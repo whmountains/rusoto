@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -38,7 +39,33 @@ pub struct AttributeDefinition {
     #[serde(rename="AttributeType")]
     pub attribute_type: String,
 }
-
+impl AttributeDefinition {
+    /// Sets `attribute_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributeDefinition.attribute_name = value.into();`.
+    pub fn attribute_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute_name = value.into();
+        self
+    }
+    /// Sets `attribute_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributeDefinition.attribute_type = value.into();`.
+    pub fn attribute_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute_type = value.into();
+        self
+    }
+    /// Returns a new instance of AttributeDefinition with optional fields set to `None`.
+    pub fn new<AttributeNameType: Into<String>, AttributeTypeType: Into<String>>
+        (attribute_name: AttributeNameType,
+         attribute_type: AttributeTypeType)
+         -> AttributeDefinition {
+        AttributeDefinition {
+            attribute_name: attribute_name.into(),
+            attribute_type: attribute_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the data for an attribute.</p> <p>Each attribute value is described as a name-value pair. The name is the data type, and the value is the data itself.</p> <p>For more information, see <a href=\"http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.NamingRulesDataTypes.html#HowItWorks.DataTypes\">Data Types</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct AttributeValue {
@@ -87,7 +114,82 @@ pub struct AttributeValue {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ss: Option<Vec<String>>,
 }
-
+impl AttributeValue {
+    /// Sets `b`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributeValue.b = Some(value.into());`.
+    pub fn b<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.b = Some(value.into());
+        self
+    }
+    /// Sets `bool`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributeValue.bool = Some(value.into());`.
+    pub fn bool<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.bool = Some(value.into());
+        self
+    }
+    /// Sets `bs`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributeValue.bs = Some(value.into());`.
+    pub fn bs<ValueType: Into<Vec<Vec<u8>>>>(mut self, value: ValueType) -> Self {
+        self.bs = Some(value.into());
+        self
+    }
+    /// Sets `l`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributeValue.l = Some(value.into());`.
+    pub fn l<ValueType: Into<Vec<AttributeValue>>>(mut self, value: ValueType) -> Self {
+        self.l = Some(value.into());
+        self
+    }
+    /// Sets `m`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributeValue.m = Some(value.into());`.
+pub fn m<ValueType: Into<::std::collections::HashMap<String, AttributeValue>>>(mut self, value: ValueType) -> Self{
+        self.m = Some(value.into());
+        self
+    }
+    /// Sets `n`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributeValue.n = Some(value.into());`.
+    pub fn n<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.n = Some(value.into());
+        self
+    }
+    /// Sets `ns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributeValue.ns = Some(value.into());`.
+    pub fn ns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.ns = Some(value.into());
+        self
+    }
+    /// Sets `null`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributeValue.null = Some(value.into());`.
+    pub fn null<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.null = Some(value.into());
+        self
+    }
+    /// Sets `s`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributeValue.s = Some(value.into());`.
+    pub fn s<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s = Some(value.into());
+        self
+    }
+    /// Sets `ss`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributeValue.ss = Some(value.into());`.
+    pub fn ss<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.ss = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AttributeValue with optional fields set to `None`.
+    pub fn new() -> AttributeValue {
+        AttributeValue { ..Default::default() }
+    }
+}
 #[doc="<p>For the <code>UpdateItem</code> operation, represents the attributes to be modified, the action to perform on each, and the new value for each.</p> <note> <p>You cannot use <code>UpdateItem</code> to update any primary key attributes. Instead, you will need to delete the item, and then use <code>PutItem</code> to create a new item with new attributes.</p> </note> <p>Attribute values cannot be null; string and binary type attributes must have lengths greater than zero; and set type attributes must not be empty. Requests with empty values will be rejected with a <code>ValidationException</code> exception.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AttributeValueUpdate {
@@ -100,7 +202,26 @@ pub struct AttributeValueUpdate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<AttributeValue>,
 }
-
+impl AttributeValueUpdate {
+    /// Sets `action`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributeValueUpdate.action = Some(value.into());`.
+    pub fn action<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.action = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributeValueUpdate.value = Some(value.into());`.
+    pub fn value<ValueType: Into<AttributeValue>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AttributeValueUpdate with optional fields set to `None`.
+    pub fn new() -> AttributeValueUpdate {
+        AttributeValueUpdate { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the input of a <code>BatchGetItem</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct BatchGetItemInput {
@@ -111,7 +232,34 @@ pub struct BatchGetItemInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub return_consumed_capacity: Option<String>,
 }
-
+impl BatchGetItemInput {
+    /// Sets `request_items`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchGetItemInput.request_items = value.into();`.
+    pub fn request_items<ValueType: Into<::std::collections::HashMap<String, KeysAndAttributes>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.request_items = value.into();
+        self
+    }
+    /// Sets `return_consumed_capacity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchGetItemInput.return_consumed_capacity = Some(value.into());`.
+    pub fn return_consumed_capacity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.return_consumed_capacity = Some(value.into());
+        self
+    }
+    /// Returns a new instance of BatchGetItemInput with optional fields set to `None`.
+    pub fn new<RequestItemsType: Into<::std::collections::HashMap<String, KeysAndAttributes>>>
+        (request_items: RequestItemsType)
+         -> BatchGetItemInput {
+        BatchGetItemInput {
+            request_items: request_items.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a <code>BatchGetItem</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BatchGetItemOutput {
@@ -131,7 +279,6 @@ pub struct BatchGetItemOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub unprocessed_keys: Option<::std::collections::HashMap<String, KeysAndAttributes>>,
 }
-
 #[doc="<p>Represents the input of a <code>BatchWriteItem</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct BatchWriteItemInput {
@@ -146,7 +293,43 @@ pub struct BatchWriteItemInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub return_item_collection_metrics: Option<String>,
 }
-
+impl BatchWriteItemInput {
+    /// Sets `request_items`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchWriteItemInput.request_items = value.into();`.
+    pub fn request_items<ValueType: Into<::std::collections::HashMap<String, Vec<WriteRequest>>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.request_items = value.into();
+        self
+    }
+    /// Sets `return_consumed_capacity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchWriteItemInput.return_consumed_capacity = Some(value.into());`.
+    pub fn return_consumed_capacity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.return_consumed_capacity = Some(value.into());
+        self
+    }
+    /// Sets `return_item_collection_metrics`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchWriteItemInput.return_item_collection_metrics = Some(value.into());`.
+    pub fn return_item_collection_metrics<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.return_item_collection_metrics = Some(value.into());
+        self
+    }
+    /// Returns a new instance of BatchWriteItemInput with optional fields set to `None`.
+    pub fn new<RequestItemsType: Into<::std::collections::HashMap<String, Vec<WriteRequest>>>>
+        (request_items: RequestItemsType)
+         -> BatchWriteItemInput {
+        BatchWriteItemInput {
+            request_items: request_items.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a <code>BatchWriteItem</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BatchWriteItemOutput {
@@ -164,7 +347,6 @@ pub struct BatchWriteItemOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub unprocessed_items: Option<::std::collections::HashMap<String, Vec<WriteRequest>>>,
 }
-
 #[doc="<p>Represents the amount of provisioned throughput capacity consumed on a table or an index.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Capacity {
@@ -173,7 +355,6 @@ pub struct Capacity {
     #[serde(skip_serializing_if="Option::is_none")]
     pub capacity_units: Option<f64>,
 }
-
 #[doc="<p>Represents the selection criteria for a <code>Query</code> or <code>Scan</code> operation:</p> <ul> <li> <p>For a <code>Query</code> operation, <code>Condition</code> is used for specifying the <code>KeyConditions</code> to use when querying a table or an index. For <code>KeyConditions</code>, only the following comparison operators are supported:</p> <p> <code>EQ | LE | LT | GE | GT | BEGINS_WITH | BETWEEN</code> </p> <p> <code>Condition</code> is also used in a <code>QueryFilter</code>, which evaluates the query results and returns only the desired values.</p> </li> <li> <p>For a <code>Scan</code> operation, <code>Condition</code> is used in a <code>ScanFilter</code>, which evaluates the scan results and returns only the desired values.</p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct Condition {
@@ -185,7 +366,32 @@ pub struct Condition {
     #[serde(rename="ComparisonOperator")]
     pub comparison_operator: String,
 }
-
+impl Condition {
+    /// Sets `attribute_value_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Condition.attribute_value_list = Some(value.into());`.
+    pub fn attribute_value_list<ValueType: Into<Vec<AttributeValue>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.attribute_value_list = Some(value.into());
+        self
+    }
+    /// Sets `comparison_operator`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Condition.comparison_operator = value.into();`.
+    pub fn comparison_operator<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.comparison_operator = value.into();
+        self
+    }
+    /// Returns a new instance of Condition with optional fields set to `None`.
+    pub fn new<ComparisonOperatorType: Into<String>>(comparison_operator: ComparisonOperatorType)
+                                                     -> Condition {
+        Condition {
+            comparison_operator: comparison_operator.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The capacity units consumed by an operation. The data returned includes the total provisioned throughput consumed, along with statistics for the table and any indexes involved in the operation. <code>ConsumedCapacity</code> is only returned if the request asked for it. For more information, see <a href=\"http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ProvisionedThroughputIntro.html\">Provisioned Throughput</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ConsumedCapacity {
@@ -210,7 +416,6 @@ pub struct ConsumedCapacity {
     #[serde(skip_serializing_if="Option::is_none")]
     pub table_name: Option<String>,
 }
-
 #[doc="<p>Represents a new global secondary index to be added to an existing table.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateGlobalSecondaryIndexAction {
@@ -227,7 +432,56 @@ pub struct CreateGlobalSecondaryIndexAction {
     #[serde(rename="ProvisionedThroughput")]
     pub provisioned_throughput: ProvisionedThroughput,
 }
-
+impl CreateGlobalSecondaryIndexAction {
+    /// Sets `index_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGlobalSecondaryIndexAction.index_name = value.into();`.
+    pub fn index_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.index_name = value.into();
+        self
+    }
+    /// Sets `key_schema`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGlobalSecondaryIndexAction.key_schema = value.into();`.
+    pub fn key_schema<ValueType: Into<Vec<KeySchemaElement>>>(mut self, value: ValueType) -> Self {
+        self.key_schema = value.into();
+        self
+    }
+    /// Sets `projection`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGlobalSecondaryIndexAction.projection = value.into();`.
+    pub fn projection<ValueType: Into<Projection>>(mut self, value: ValueType) -> Self {
+        self.projection = value.into();
+        self
+    }
+    /// Sets `provisioned_throughput`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGlobalSecondaryIndexAction.provisioned_throughput = value.into();`.
+    pub fn provisioned_throughput<ValueType: Into<ProvisionedThroughput>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.provisioned_throughput = value.into();
+        self
+    }
+    /// Returns a new instance of CreateGlobalSecondaryIndexAction with optional fields set to `None`.
+    pub fn new<IndexNameType: Into<String>,
+               KeySchemaType: Into<Vec<KeySchemaElement>>,
+               ProjectionType: Into<Projection>,
+               ProvisionedThroughputType: Into<ProvisionedThroughput>>
+        (index_name: IndexNameType,
+         key_schema: KeySchemaType,
+         projection: ProjectionType,
+         provisioned_throughput: ProvisionedThroughputType)
+         -> CreateGlobalSecondaryIndexAction {
+        CreateGlobalSecondaryIndexAction {
+            index_name: index_name.into(),
+            key_schema: key_schema.into(),
+            projection: projection.into(),
+            provisioned_throughput: provisioned_throughput.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of a <code>CreateTable</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateTableInput {
@@ -256,7 +510,85 @@ pub struct CreateTableInput {
     #[serde(rename="TableName")]
     pub table_name: String,
 }
-
+impl CreateTableInput {
+    /// Sets `attribute_definitions`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTableInput.attribute_definitions = value.into();`.
+    pub fn attribute_definitions<ValueType: Into<Vec<AttributeDefinition>>>(mut self,
+                                                                            value: ValueType)
+                                                                            -> Self {
+        self.attribute_definitions = value.into();
+        self
+    }
+    /// Sets `global_secondary_indexes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTableInput.global_secondary_indexes = Some(value.into());`.
+    pub fn global_secondary_indexes<ValueType: Into<Vec<GlobalSecondaryIndex>>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.global_secondary_indexes = Some(value.into());
+        self
+    }
+    /// Sets `key_schema`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTableInput.key_schema = value.into();`.
+    pub fn key_schema<ValueType: Into<Vec<KeySchemaElement>>>(mut self, value: ValueType) -> Self {
+        self.key_schema = value.into();
+        self
+    }
+    /// Sets `local_secondary_indexes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTableInput.local_secondary_indexes = Some(value.into());`.
+    pub fn local_secondary_indexes<ValueType: Into<Vec<LocalSecondaryIndex>>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.local_secondary_indexes = Some(value.into());
+        self
+    }
+    /// Sets `provisioned_throughput`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTableInput.provisioned_throughput = value.into();`.
+    pub fn provisioned_throughput<ValueType: Into<ProvisionedThroughput>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.provisioned_throughput = value.into();
+        self
+    }
+    /// Sets `stream_specification`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTableInput.stream_specification = Some(value.into());`.
+    pub fn stream_specification<ValueType: Into<StreamSpecification>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.stream_specification = Some(value.into());
+        self
+    }
+    /// Sets `table_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTableInput.table_name = value.into();`.
+    pub fn table_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.table_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateTableInput with optional fields set to `None`.
+    pub fn new<AttributeDefinitionsType: Into<Vec<AttributeDefinition>>,
+               KeySchemaType: Into<Vec<KeySchemaElement>>,
+               ProvisionedThroughputType: Into<ProvisionedThroughput>,
+               TableNameType: Into<String>>
+        (attribute_definitions: AttributeDefinitionsType,
+         key_schema: KeySchemaType,
+         provisioned_throughput: ProvisionedThroughputType,
+         table_name: TableNameType)
+         -> CreateTableInput {
+        CreateTableInput {
+            attribute_definitions: attribute_definitions.into(),
+            key_schema: key_schema.into(),
+            provisioned_throughput: provisioned_throughput.into(),
+            table_name: table_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a <code>CreateTable</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateTableOutput {
@@ -265,7 +597,6 @@ pub struct CreateTableOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub table_description: Option<TableDescription>,
 }
-
 #[doc="<p>Represents a global secondary index to be deleted from an existing table.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteGlobalSecondaryIndexAction {
@@ -273,7 +604,23 @@ pub struct DeleteGlobalSecondaryIndexAction {
     #[serde(rename="IndexName")]
     pub index_name: String,
 }
-
+impl DeleteGlobalSecondaryIndexAction {
+    /// Sets `index_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteGlobalSecondaryIndexAction.index_name = value.into();`.
+    pub fn index_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.index_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteGlobalSecondaryIndexAction with optional fields set to `None`.
+    pub fn new<IndexNameType: Into<String>>(index_name: IndexNameType)
+                                            -> DeleteGlobalSecondaryIndexAction {
+        DeleteGlobalSecondaryIndexAction {
+            index_name: index_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of a <code>DeleteItem</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteItemInput {
@@ -316,7 +663,98 @@ pub struct DeleteItemInput {
     #[serde(rename="TableName")]
     pub table_name: String,
 }
-
+impl DeleteItemInput {
+    /// Sets `condition_expression`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteItemInput.condition_expression = Some(value.into());`.
+    pub fn condition_expression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.condition_expression = Some(value.into());
+        self
+    }
+    /// Sets `conditional_operator`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteItemInput.conditional_operator = Some(value.into());`.
+    pub fn conditional_operator<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.conditional_operator = Some(value.into());
+        self
+    }
+    /// Sets `expected`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteItemInput.expected = Some(value.into());`.
+    pub fn expected<ValueType: Into<::std::collections::HashMap<String, ExpectedAttributeValue>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.expected = Some(value.into());
+        self
+    }
+    /// Sets `expression_attribute_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteItemInput.expression_attribute_names = Some(value.into());`.
+    pub fn expression_attribute_names<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.expression_attribute_names = Some(value.into());
+        self
+    }
+    /// Sets `expression_attribute_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteItemInput.expression_attribute_values = Some(value.into());`.
+pub fn expression_attribute_values<ValueType: Into<::std::collections::HashMap<String, AttributeValue>>>(mut self, value: ValueType) -> Self{
+        self.expression_attribute_values = Some(value.into());
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteItemInput.key = value.into();`.
+pub fn key<ValueType: Into<::std::collections::HashMap<String, AttributeValue>>>(mut self, value: ValueType) -> Self{
+        self.key = value.into();
+        self
+    }
+    /// Sets `return_consumed_capacity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteItemInput.return_consumed_capacity = Some(value.into());`.
+    pub fn return_consumed_capacity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.return_consumed_capacity = Some(value.into());
+        self
+    }
+    /// Sets `return_item_collection_metrics`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteItemInput.return_item_collection_metrics = Some(value.into());`.
+    pub fn return_item_collection_metrics<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.return_item_collection_metrics = Some(value.into());
+        self
+    }
+    /// Sets `return_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteItemInput.return_values = Some(value.into());`.
+    pub fn return_values<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.return_values = Some(value.into());
+        self
+    }
+    /// Sets `table_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteItemInput.table_name = value.into();`.
+    pub fn table_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.table_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteItemInput with optional fields set to `None`.
+    pub fn new<KeyType: Into<::std::collections::HashMap<String, AttributeValue>>,
+               TableNameType: Into<String>>
+        (key: KeyType,
+         table_name: TableNameType)
+         -> DeleteItemInput {
+        DeleteItemInput {
+            key: key.into(),
+            table_name: table_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a <code>DeleteItem</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteItemOutput {
@@ -333,7 +771,6 @@ pub struct DeleteItemOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub item_collection_metrics: Option<ItemCollectionMetrics>,
 }
-
 #[doc="<p>Represents a request to perform a <code>DeleteItem</code> operation on an item.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct DeleteRequest {
@@ -341,7 +778,24 @@ pub struct DeleteRequest {
     #[serde(rename="Key")]
     pub key: ::std::collections::HashMap<String, AttributeValue>,
 }
-
+impl DeleteRequest {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRequest.key = value.into();`.
+pub fn key<ValueType: Into<::std::collections::HashMap<String, AttributeValue>>>(mut self, value: ValueType) -> Self{
+        self.key = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteRequest with optional fields set to `None`.
+    pub fn new<KeyType: Into<::std::collections::HashMap<String, AttributeValue>>>
+        (key: KeyType)
+         -> DeleteRequest {
+        DeleteRequest {
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of a <code>DeleteTable</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteTableInput {
@@ -349,7 +803,22 @@ pub struct DeleteTableInput {
     #[serde(rename="TableName")]
     pub table_name: String,
 }
-
+impl DeleteTableInput {
+    /// Sets `table_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTableInput.table_name = value.into();`.
+    pub fn table_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.table_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteTableInput with optional fields set to `None`.
+    pub fn new<TableNameType: Into<String>>(table_name: TableNameType) -> DeleteTableInput {
+        DeleteTableInput {
+            table_name: table_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a <code>DeleteTable</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteTableOutput {
@@ -358,7 +827,6 @@ pub struct DeleteTableOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub table_description: Option<TableDescription>,
 }
-
 #[doc="<p>Represents the input of a <code>DescribeLimits</code> operation. Has no content.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeLimitsInput;
@@ -383,7 +851,6 @@ pub struct DescribeLimitsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub table_max_write_capacity_units: Option<i64>,
 }
-
 #[doc="<p>Represents the input of a <code>DescribeTable</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeTableInput {
@@ -391,7 +858,22 @@ pub struct DescribeTableInput {
     #[serde(rename="TableName")]
     pub table_name: String,
 }
-
+impl DescribeTableInput {
+    /// Sets `table_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTableInput.table_name = value.into();`.
+    pub fn table_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.table_name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeTableInput with optional fields set to `None`.
+    pub fn new<TableNameType: Into<String>>(table_name: TableNameType) -> DescribeTableInput {
+        DescribeTableInput {
+            table_name: table_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a <code>DescribeTable</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeTableOutput {
@@ -400,14 +882,28 @@ pub struct DescribeTableOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub table: Option<TableDescription>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeTimeToLiveInput {
     #[doc="<p>The name of the table to be described.</p>"]
     #[serde(rename="TableName")]
     pub table_name: String,
 }
-
+impl DescribeTimeToLiveInput {
+    /// Sets `table_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTimeToLiveInput.table_name = value.into();`.
+    pub fn table_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.table_name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeTimeToLiveInput with optional fields set to `None`.
+    pub fn new<TableNameType: Into<String>>(table_name: TableNameType) -> DescribeTimeToLiveInput {
+        DescribeTimeToLiveInput {
+            table_name: table_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeTimeToLiveOutput {
     #[doc="<p/>"]
@@ -415,7 +911,6 @@ pub struct DescribeTimeToLiveOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub time_to_live_description: Option<TimeToLiveDescription>,
 }
-
 #[doc="<p>Represents a condition to be compared with an attribute value. This condition can be used with <code>DeleteItem</code>, <code>PutItem</code> or <code>UpdateItem</code> operations; if the comparison evaluates to true, the operation succeeds; if not, the operation fails. You can use <code>ExpectedAttributeValue</code> in one of two different ways:</p> <ul> <li> <p>Use <code>AttributeValueList</code> to specify one or more values to compare against an attribute. Use <code>ComparisonOperator</code> to specify how you want to perform the comparison. If the comparison evaluates to true, then the conditional operation succeeds.</p> </li> <li> <p>Use <code>Value</code> to specify a value that DynamoDB will compare against an attribute. If the values match, then <code>ExpectedAttributeValue</code> evaluates to true and the conditional operation succeeds. Optionally, you can also set <code>Exists</code> to false, indicating that you <i>do not</i> expect to find the attribute value in the table. In this case, the conditional operation succeeds only if the comparison evaluates to false.</p> </li> </ul> <p> <code>Value</code> and <code>Exists</code> are incompatible with <code>AttributeValueList</code> and <code>ComparisonOperator</code>. Note that if you use both sets of parameters at once, DynamoDB will return a <code>ValidationException</code> exception.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ExpectedAttributeValue {
@@ -436,7 +931,42 @@ pub struct ExpectedAttributeValue {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<AttributeValue>,
 }
-
+impl ExpectedAttributeValue {
+    /// Sets `attribute_value_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExpectedAttributeValue.attribute_value_list = Some(value.into());`.
+    pub fn attribute_value_list<ValueType: Into<Vec<AttributeValue>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.attribute_value_list = Some(value.into());
+        self
+    }
+    /// Sets `comparison_operator`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExpectedAttributeValue.comparison_operator = Some(value.into());`.
+    pub fn comparison_operator<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.comparison_operator = Some(value.into());
+        self
+    }
+    /// Sets `exists`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExpectedAttributeValue.exists = Some(value.into());`.
+    pub fn exists<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.exists = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExpectedAttributeValue.value = Some(value.into());`.
+    pub fn value<ValueType: Into<AttributeValue>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ExpectedAttributeValue with optional fields set to `None`.
+    pub fn new() -> ExpectedAttributeValue {
+        ExpectedAttributeValue { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the input of a <code>GetItem</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetItemInput {
@@ -466,7 +996,72 @@ pub struct GetItemInput {
     #[serde(rename="TableName")]
     pub table_name: String,
 }
-
+impl GetItemInput {
+    /// Sets `attributes_to_get`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetItemInput.attributes_to_get = Some(value.into());`.
+    pub fn attributes_to_get<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.attributes_to_get = Some(value.into());
+        self
+    }
+    /// Sets `consistent_read`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetItemInput.consistent_read = Some(value.into());`.
+    pub fn consistent_read<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.consistent_read = Some(value.into());
+        self
+    }
+    /// Sets `expression_attribute_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetItemInput.expression_attribute_names = Some(value.into());`.
+    pub fn expression_attribute_names<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.expression_attribute_names = Some(value.into());
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetItemInput.key = value.into();`.
+pub fn key<ValueType: Into<::std::collections::HashMap<String, AttributeValue>>>(mut self, value: ValueType) -> Self{
+        self.key = value.into();
+        self
+    }
+    /// Sets `projection_expression`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetItemInput.projection_expression = Some(value.into());`.
+    pub fn projection_expression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.projection_expression = Some(value.into());
+        self
+    }
+    /// Sets `return_consumed_capacity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetItemInput.return_consumed_capacity = Some(value.into());`.
+    pub fn return_consumed_capacity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.return_consumed_capacity = Some(value.into());
+        self
+    }
+    /// Sets `table_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetItemInput.table_name = value.into();`.
+    pub fn table_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.table_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetItemInput with optional fields set to `None`.
+    pub fn new<KeyType: Into<::std::collections::HashMap<String, AttributeValue>>,
+               TableNameType: Into<String>>
+        (key: KeyType,
+         table_name: TableNameType)
+         -> GetItemInput {
+        GetItemInput {
+            key: key.into(),
+            table_name: table_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a <code>GetItem</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetItemOutput {
@@ -479,7 +1074,6 @@ pub struct GetItemOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub item: Option<::std::collections::HashMap<String, AttributeValue>>,
 }
-
 #[doc="<p>Represents the properties of a global secondary index.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GlobalSecondaryIndex {
@@ -496,7 +1090,56 @@ pub struct GlobalSecondaryIndex {
     #[serde(rename="ProvisionedThroughput")]
     pub provisioned_throughput: ProvisionedThroughput,
 }
-
+impl GlobalSecondaryIndex {
+    /// Sets `index_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GlobalSecondaryIndex.index_name = value.into();`.
+    pub fn index_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.index_name = value.into();
+        self
+    }
+    /// Sets `key_schema`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GlobalSecondaryIndex.key_schema = value.into();`.
+    pub fn key_schema<ValueType: Into<Vec<KeySchemaElement>>>(mut self, value: ValueType) -> Self {
+        self.key_schema = value.into();
+        self
+    }
+    /// Sets `projection`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GlobalSecondaryIndex.projection = value.into();`.
+    pub fn projection<ValueType: Into<Projection>>(mut self, value: ValueType) -> Self {
+        self.projection = value.into();
+        self
+    }
+    /// Sets `provisioned_throughput`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GlobalSecondaryIndex.provisioned_throughput = value.into();`.
+    pub fn provisioned_throughput<ValueType: Into<ProvisionedThroughput>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.provisioned_throughput = value.into();
+        self
+    }
+    /// Returns a new instance of GlobalSecondaryIndex with optional fields set to `None`.
+    pub fn new<IndexNameType: Into<String>,
+               KeySchemaType: Into<Vec<KeySchemaElement>>,
+               ProjectionType: Into<Projection>,
+               ProvisionedThroughputType: Into<ProvisionedThroughput>>
+        (index_name: IndexNameType,
+         key_schema: KeySchemaType,
+         projection: ProjectionType,
+         provisioned_throughput: ProvisionedThroughputType)
+         -> GlobalSecondaryIndex {
+        GlobalSecondaryIndex {
+            index_name: index_name.into(),
+            key_schema: key_schema.into(),
+            projection: projection.into(),
+            provisioned_throughput: provisioned_throughput.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the properties of a global secondary index.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GlobalSecondaryIndexDescription {
@@ -537,7 +1180,6 @@ pub struct GlobalSecondaryIndexDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub provisioned_throughput: Option<ProvisionedThroughputDescription>,
 }
-
 #[doc="<p>Represents one of the following:</p> <ul> <li> <p>A new global secondary index to be added to an existing table.</p> </li> <li> <p>New provisioned throughput parameters for an existing global secondary index.</p> </li> <li> <p>An existing global secondary index to be removed from an existing table.</p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GlobalSecondaryIndexUpdate {
@@ -554,7 +1196,39 @@ pub struct GlobalSecondaryIndexUpdate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub update: Option<UpdateGlobalSecondaryIndexAction>,
 }
-
+impl GlobalSecondaryIndexUpdate {
+    /// Sets `create`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GlobalSecondaryIndexUpdate.create = Some(value.into());`.
+    pub fn create<ValueType: Into<CreateGlobalSecondaryIndexAction>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.create = Some(value.into());
+        self
+    }
+    /// Sets `delete`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GlobalSecondaryIndexUpdate.delete = Some(value.into());`.
+    pub fn delete<ValueType: Into<DeleteGlobalSecondaryIndexAction>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.delete = Some(value.into());
+        self
+    }
+    /// Sets `update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GlobalSecondaryIndexUpdate.update = Some(value.into());`.
+    pub fn update<ValueType: Into<UpdateGlobalSecondaryIndexAction>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.update = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GlobalSecondaryIndexUpdate with optional fields set to `None`.
+    pub fn new() -> GlobalSecondaryIndexUpdate {
+        GlobalSecondaryIndexUpdate { ..Default::default() }
+    }
+}
 #[doc="<p>Information about item collections, if any, that were affected by the operation. <code>ItemCollectionMetrics</code> is only returned if the request asked for it. If the table does not have any local secondary indexes, this information is not returned in the response.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ItemCollectionMetrics {
@@ -567,7 +1241,6 @@ pub struct ItemCollectionMetrics {
     #[serde(skip_serializing_if="Option::is_none")]
     pub size_estimate_range_gb: Option<Vec<f64>>,
 }
-
 #[doc="<p>Represents <i>a single element</i> of a key schema. A key schema specifies the attributes that make up the primary key of a table, or the key attributes of an index.</p> <p>A <code>KeySchemaElement</code> represents exactly one attribute of the primary key. For example, a simple primary key would be represented by one <code>KeySchemaElement</code> (for the partition key). A composite primary key would require one <code>KeySchemaElement</code> for the partition key, and another <code>KeySchemaElement</code> for the sort key.</p> <p>A <code>KeySchemaElement</code> must be a scalar, top-level attribute (not a nested attribute). The data type must be one of String, Number, or Binary. The attribute cannot be nested within a List or a Map.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct KeySchemaElement {
@@ -578,7 +1251,30 @@ pub struct KeySchemaElement {
     #[serde(rename="KeyType")]
     pub key_type: String,
 }
-
+impl KeySchemaElement {
+    /// Sets `attribute_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KeySchemaElement.attribute_name = value.into();`.
+    pub fn attribute_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute_name = value.into();
+        self
+    }
+    /// Sets `key_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KeySchemaElement.key_type = value.into();`.
+    pub fn key_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_type = value.into();
+        self
+    }
+    /// Returns a new instance of KeySchemaElement with optional fields set to `None`.
+pub fn new<AttributeNameType: Into<String>, KeyTypeType: Into<String>>(attribute_name: AttributeNameType, key_type: KeyTypeType) -> KeySchemaElement{
+        KeySchemaElement {
+            attribute_name: attribute_name.into(),
+            key_type: key_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents a set of primary keys and, for each key, the attributes to retrieve from the table.</p> <p>For each primary key, you must provide <i>all</i> of the key attributes. For example, with a simple primary key, you only need to provide the partition key. For a composite primary key, you must provide <i>both</i> the partition key and the sort key.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct KeysAndAttributes {
@@ -602,7 +1298,58 @@ pub struct KeysAndAttributes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub projection_expression: Option<String>,
 }
-
+impl KeysAndAttributes {
+    /// Sets `attributes_to_get`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KeysAndAttributes.attributes_to_get = Some(value.into());`.
+    pub fn attributes_to_get<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.attributes_to_get = Some(value.into());
+        self
+    }
+    /// Sets `consistent_read`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KeysAndAttributes.consistent_read = Some(value.into());`.
+    pub fn consistent_read<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.consistent_read = Some(value.into());
+        self
+    }
+    /// Sets `expression_attribute_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KeysAndAttributes.expression_attribute_names = Some(value.into());`.
+    pub fn expression_attribute_names<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.expression_attribute_names = Some(value.into());
+        self
+    }
+    /// Sets `keys`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KeysAndAttributes.keys = value.into();`.
+    pub fn keys<ValueType: Into<Vec<::std::collections::HashMap<String, AttributeValue>>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.keys = value.into();
+        self
+    }
+    /// Sets `projection_expression`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KeysAndAttributes.projection_expression = Some(value.into());`.
+    pub fn projection_expression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.projection_expression = Some(value.into());
+        self
+    }
+    /// Returns a new instance of KeysAndAttributes with optional fields set to `None`.
+    pub fn new<KeysType: Into<Vec<::std::collections::HashMap<String, AttributeValue>>>>
+        (keys: KeysType)
+         -> KeysAndAttributes {
+        KeysAndAttributes {
+            keys: keys.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of a <code>ListTables</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTablesInput {
@@ -615,7 +1362,26 @@ pub struct ListTablesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub limit: Option<i64>,
 }
-
+impl ListTablesInput {
+    /// Sets `exclusive_start_table_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTablesInput.exclusive_start_table_name = Some(value.into());`.
+    pub fn exclusive_start_table_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.exclusive_start_table_name = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTablesInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListTablesInput with optional fields set to `None`.
+    pub fn new() -> ListTablesInput {
+        ListTablesInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the output of a <code>ListTables</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTablesOutput {
@@ -628,7 +1394,6 @@ pub struct ListTablesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub table_names: Option<Vec<String>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTagsOfResourceInput {
     #[doc="<p>An optional string that, if supplied, must be copied from the output of a previous call to ListTagOfResource. When provided in this manner, this API fetches the next page of results.</p>"]
@@ -639,7 +1404,30 @@ pub struct ListTagsOfResourceInput {
     #[serde(rename="ResourceArn")]
     pub resource_arn: String,
 }
-
+impl ListTagsOfResourceInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsOfResourceInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsOfResourceInput.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Returns a new instance of ListTagsOfResourceInput with optional fields set to `None`.
+    pub fn new<ResourceArnType: Into<String>>(resource_arn: ResourceArnType)
+                                              -> ListTagsOfResourceInput {
+        ListTagsOfResourceInput {
+            resource_arn: resource_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTagsOfResourceOutput {
     #[doc="<p>If this value is returned, there are additional results to be displayed. To retrieve them, call ListTagsOfResource again, with NextToken set to this value.</p>"]
@@ -651,7 +1439,6 @@ pub struct ListTagsOfResourceOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
 #[doc="<p>Represents the properties of a local secondary index.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct LocalSecondaryIndex {
@@ -665,7 +1452,44 @@ pub struct LocalSecondaryIndex {
     #[serde(rename="Projection")]
     pub projection: Projection,
 }
-
+impl LocalSecondaryIndex {
+    /// Sets `index_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LocalSecondaryIndex.index_name = value.into();`.
+    pub fn index_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.index_name = value.into();
+        self
+    }
+    /// Sets `key_schema`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LocalSecondaryIndex.key_schema = value.into();`.
+    pub fn key_schema<ValueType: Into<Vec<KeySchemaElement>>>(mut self, value: ValueType) -> Self {
+        self.key_schema = value.into();
+        self
+    }
+    /// Sets `projection`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LocalSecondaryIndex.projection = value.into();`.
+    pub fn projection<ValueType: Into<Projection>>(mut self, value: ValueType) -> Self {
+        self.projection = value.into();
+        self
+    }
+    /// Returns a new instance of LocalSecondaryIndex with optional fields set to `None`.
+    pub fn new<IndexNameType: Into<String>,
+               KeySchemaType: Into<Vec<KeySchemaElement>>,
+               ProjectionType: Into<Projection>>
+        (index_name: IndexNameType,
+         key_schema: KeySchemaType,
+         projection: ProjectionType)
+         -> LocalSecondaryIndex {
+        LocalSecondaryIndex {
+            index_name: index_name.into(),
+            key_schema: key_schema.into(),
+            projection: projection.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the properties of a local secondary index.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LocalSecondaryIndexDescription {
@@ -694,7 +1518,6 @@ pub struct LocalSecondaryIndexDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub projection: Option<Projection>,
 }
-
 #[doc="<p>Represents attributes that are copied (projected) from the table into an index. These are in addition to the primary key attributes and index key attributes, which are automatically projected.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Projection {
@@ -707,7 +1530,26 @@ pub struct Projection {
     #[serde(skip_serializing_if="Option::is_none")]
     pub projection_type: Option<String>,
 }
-
+impl Projection {
+    /// Sets `non_key_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Projection.non_key_attributes = Some(value.into());`.
+    pub fn non_key_attributes<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.non_key_attributes = Some(value.into());
+        self
+    }
+    /// Sets `projection_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Projection.projection_type = Some(value.into());`.
+    pub fn projection_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.projection_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Projection with optional fields set to `None`.
+    pub fn new() -> Projection {
+        Projection { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the provisioned throughput settings for a specified table or index. The settings can be modified using the <code>UpdateTable</code> operation.</p> <p>For current minimum and maximum provisioned throughput values, see <a href=\"http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html\">Limits</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ProvisionedThroughput {
@@ -718,7 +1560,33 @@ pub struct ProvisionedThroughput {
     #[serde(rename="WriteCapacityUnits")]
     pub write_capacity_units: i64,
 }
-
+impl ProvisionedThroughput {
+    /// Sets `read_capacity_units`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProvisionedThroughput.read_capacity_units = value.into();`.
+    pub fn read_capacity_units<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.read_capacity_units = value.into();
+        self
+    }
+    /// Sets `write_capacity_units`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProvisionedThroughput.write_capacity_units = value.into();`.
+    pub fn write_capacity_units<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.write_capacity_units = value.into();
+        self
+    }
+    /// Returns a new instance of ProvisionedThroughput with optional fields set to `None`.
+    pub fn new<ReadCapacityUnitsType: Into<i64>, WriteCapacityUnitsType: Into<i64>>
+        (read_capacity_units: ReadCapacityUnitsType,
+         write_capacity_units: WriteCapacityUnitsType)
+         -> ProvisionedThroughput {
+        ProvisionedThroughput {
+            read_capacity_units: read_capacity_units.into(),
+            write_capacity_units: write_capacity_units.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the provisioned throughput settings for the table, consisting of read and write capacity units, along with data about increases and decreases.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ProvisionedThroughputDescription {
@@ -743,7 +1611,6 @@ pub struct ProvisionedThroughputDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub write_capacity_units: Option<i64>,
 }
-
 #[doc="<p>Represents the input of a <code>PutItem</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutItemInput {
@@ -786,7 +1653,98 @@ pub struct PutItemInput {
     #[serde(rename="TableName")]
     pub table_name: String,
 }
-
+impl PutItemInput {
+    /// Sets `condition_expression`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutItemInput.condition_expression = Some(value.into());`.
+    pub fn condition_expression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.condition_expression = Some(value.into());
+        self
+    }
+    /// Sets `conditional_operator`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutItemInput.conditional_operator = Some(value.into());`.
+    pub fn conditional_operator<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.conditional_operator = Some(value.into());
+        self
+    }
+    /// Sets `expected`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutItemInput.expected = Some(value.into());`.
+    pub fn expected<ValueType: Into<::std::collections::HashMap<String, ExpectedAttributeValue>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.expected = Some(value.into());
+        self
+    }
+    /// Sets `expression_attribute_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutItemInput.expression_attribute_names = Some(value.into());`.
+    pub fn expression_attribute_names<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.expression_attribute_names = Some(value.into());
+        self
+    }
+    /// Sets `expression_attribute_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutItemInput.expression_attribute_values = Some(value.into());`.
+pub fn expression_attribute_values<ValueType: Into<::std::collections::HashMap<String, AttributeValue>>>(mut self, value: ValueType) -> Self{
+        self.expression_attribute_values = Some(value.into());
+        self
+    }
+    /// Sets `item`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutItemInput.item = value.into();`.
+pub fn item<ValueType: Into<::std::collections::HashMap<String, AttributeValue>>>(mut self, value: ValueType) -> Self{
+        self.item = value.into();
+        self
+    }
+    /// Sets `return_consumed_capacity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutItemInput.return_consumed_capacity = Some(value.into());`.
+    pub fn return_consumed_capacity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.return_consumed_capacity = Some(value.into());
+        self
+    }
+    /// Sets `return_item_collection_metrics`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutItemInput.return_item_collection_metrics = Some(value.into());`.
+    pub fn return_item_collection_metrics<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.return_item_collection_metrics = Some(value.into());
+        self
+    }
+    /// Sets `return_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutItemInput.return_values = Some(value.into());`.
+    pub fn return_values<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.return_values = Some(value.into());
+        self
+    }
+    /// Sets `table_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutItemInput.table_name = value.into();`.
+    pub fn table_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.table_name = value.into();
+        self
+    }
+    /// Returns a new instance of PutItemInput with optional fields set to `None`.
+    pub fn new<ItemType: Into<::std::collections::HashMap<String, AttributeValue>>,
+               TableNameType: Into<String>>
+        (item: ItemType,
+         table_name: TableNameType)
+         -> PutItemInput {
+        PutItemInput {
+            item: item.into(),
+            table_name: table_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a <code>PutItem</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutItemOutput {
@@ -803,7 +1761,6 @@ pub struct PutItemOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub item_collection_metrics: Option<ItemCollectionMetrics>,
 }
-
 #[doc="<p>Represents a request to perform a <code>PutItem</code> operation on an item.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct PutRequest {
@@ -811,7 +1768,24 @@ pub struct PutRequest {
     #[serde(rename="Item")]
     pub item: ::std::collections::HashMap<String, AttributeValue>,
 }
-
+impl PutRequest {
+    /// Sets `item`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRequest.item = value.into();`.
+pub fn item<ValueType: Into<::std::collections::HashMap<String, AttributeValue>>>(mut self, value: ValueType) -> Self{
+        self.item = value.into();
+        self
+    }
+    /// Returns a new instance of PutRequest with optional fields set to `None`.
+    pub fn new<ItemType: Into<::std::collections::HashMap<String, AttributeValue>>>
+        (item: ItemType)
+         -> PutRequest {
+        PutRequest {
+            item: item.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of a <code>Query</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct QueryInput {
@@ -883,7 +1857,146 @@ pub struct QueryInput {
     #[serde(rename="TableName")]
     pub table_name: String,
 }
-
+impl QueryInput {
+    /// Sets `attributes_to_get`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryInput.attributes_to_get = Some(value.into());`.
+    pub fn attributes_to_get<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.attributes_to_get = Some(value.into());
+        self
+    }
+    /// Sets `conditional_operator`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryInput.conditional_operator = Some(value.into());`.
+    pub fn conditional_operator<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.conditional_operator = Some(value.into());
+        self
+    }
+    /// Sets `consistent_read`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryInput.consistent_read = Some(value.into());`.
+    pub fn consistent_read<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.consistent_read = Some(value.into());
+        self
+    }
+    /// Sets `exclusive_start_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryInput.exclusive_start_key = Some(value.into());`.
+    pub fn exclusive_start_key<ValueType: Into<::std::collections::HashMap<String, AttributeValue>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.exclusive_start_key = Some(value.into());
+        self
+    }
+    /// Sets `expression_attribute_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryInput.expression_attribute_names = Some(value.into());`.
+    pub fn expression_attribute_names<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.expression_attribute_names = Some(value.into());
+        self
+    }
+    /// Sets `expression_attribute_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryInput.expression_attribute_values = Some(value.into());`.
+pub fn expression_attribute_values<ValueType: Into<::std::collections::HashMap<String, AttributeValue>>>(mut self, value: ValueType) -> Self{
+        self.expression_attribute_values = Some(value.into());
+        self
+    }
+    /// Sets `filter_expression`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryInput.filter_expression = Some(value.into());`.
+    pub fn filter_expression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter_expression = Some(value.into());
+        self
+    }
+    /// Sets `index_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryInput.index_name = Some(value.into());`.
+    pub fn index_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.index_name = Some(value.into());
+        self
+    }
+    /// Sets `key_condition_expression`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryInput.key_condition_expression = Some(value.into());`.
+    pub fn key_condition_expression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_condition_expression = Some(value.into());
+        self
+    }
+    /// Sets `key_conditions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryInput.key_conditions = Some(value.into());`.
+    pub fn key_conditions<ValueType: Into<::std::collections::HashMap<String, Condition>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.key_conditions = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `projection_expression`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryInput.projection_expression = Some(value.into());`.
+    pub fn projection_expression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.projection_expression = Some(value.into());
+        self
+    }
+    /// Sets `query_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryInput.query_filter = Some(value.into());`.
+    pub fn query_filter<ValueType: Into<::std::collections::HashMap<String, Condition>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.query_filter = Some(value.into());
+        self
+    }
+    /// Sets `return_consumed_capacity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryInput.return_consumed_capacity = Some(value.into());`.
+    pub fn return_consumed_capacity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.return_consumed_capacity = Some(value.into());
+        self
+    }
+    /// Sets `scan_index_forward`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryInput.scan_index_forward = Some(value.into());`.
+    pub fn scan_index_forward<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.scan_index_forward = Some(value.into());
+        self
+    }
+    /// Sets `select`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryInput.select = Some(value.into());`.
+    pub fn select<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.select = Some(value.into());
+        self
+    }
+    /// Sets `table_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryInput.table_name = value.into();`.
+    pub fn table_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.table_name = value.into();
+        self
+    }
+    /// Returns a new instance of QueryInput with optional fields set to `None`.
+    pub fn new<TableNameType: Into<String>>(table_name: TableNameType) -> QueryInput {
+        QueryInput {
+            table_name: table_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a <code>Query</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct QueryOutput {
@@ -908,7 +2021,6 @@ pub struct QueryOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub scanned_count: Option<i64>,
 }
-
 #[doc="<p>Represents the input of a <code>Scan</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ScanInput {
@@ -976,7 +2088,133 @@ pub struct ScanInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub total_segments: Option<i64>,
 }
-
+impl ScanInput {
+    /// Sets `attributes_to_get`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScanInput.attributes_to_get = Some(value.into());`.
+    pub fn attributes_to_get<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.attributes_to_get = Some(value.into());
+        self
+    }
+    /// Sets `conditional_operator`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScanInput.conditional_operator = Some(value.into());`.
+    pub fn conditional_operator<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.conditional_operator = Some(value.into());
+        self
+    }
+    /// Sets `consistent_read`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScanInput.consistent_read = Some(value.into());`.
+    pub fn consistent_read<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.consistent_read = Some(value.into());
+        self
+    }
+    /// Sets `exclusive_start_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScanInput.exclusive_start_key = Some(value.into());`.
+    pub fn exclusive_start_key<ValueType: Into<::std::collections::HashMap<String, AttributeValue>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.exclusive_start_key = Some(value.into());
+        self
+    }
+    /// Sets `expression_attribute_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScanInput.expression_attribute_names = Some(value.into());`.
+    pub fn expression_attribute_names<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.expression_attribute_names = Some(value.into());
+        self
+    }
+    /// Sets `expression_attribute_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScanInput.expression_attribute_values = Some(value.into());`.
+pub fn expression_attribute_values<ValueType: Into<::std::collections::HashMap<String, AttributeValue>>>(mut self, value: ValueType) -> Self{
+        self.expression_attribute_values = Some(value.into());
+        self
+    }
+    /// Sets `filter_expression`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScanInput.filter_expression = Some(value.into());`.
+    pub fn filter_expression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter_expression = Some(value.into());
+        self
+    }
+    /// Sets `index_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScanInput.index_name = Some(value.into());`.
+    pub fn index_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.index_name = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScanInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `projection_expression`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScanInput.projection_expression = Some(value.into());`.
+    pub fn projection_expression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.projection_expression = Some(value.into());
+        self
+    }
+    /// Sets `return_consumed_capacity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScanInput.return_consumed_capacity = Some(value.into());`.
+    pub fn return_consumed_capacity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.return_consumed_capacity = Some(value.into());
+        self
+    }
+    /// Sets `scan_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScanInput.scan_filter = Some(value.into());`.
+pub fn scan_filter<ValueType: Into<::std::collections::HashMap<String, Condition>>>(mut self, value: ValueType) -> Self{
+        self.scan_filter = Some(value.into());
+        self
+    }
+    /// Sets `segment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScanInput.segment = Some(value.into());`.
+    pub fn segment<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.segment = Some(value.into());
+        self
+    }
+    /// Sets `select`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScanInput.select = Some(value.into());`.
+    pub fn select<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.select = Some(value.into());
+        self
+    }
+    /// Sets `table_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScanInput.table_name = value.into();`.
+    pub fn table_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.table_name = value.into();
+        self
+    }
+    /// Sets `total_segments`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScanInput.total_segments = Some(value.into());`.
+    pub fn total_segments<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.total_segments = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ScanInput with optional fields set to `None`.
+    pub fn new<TableNameType: Into<String>>(table_name: TableNameType) -> ScanInput {
+        ScanInput {
+            table_name: table_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a <code>Scan</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ScanOutput {
@@ -1001,7 +2239,6 @@ pub struct ScanOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub scanned_count: Option<i64>,
 }
-
 #[doc="<p>Represents the DynamoDB Streams configuration for a table in DynamoDB.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct StreamSpecification {
@@ -1014,7 +2251,26 @@ pub struct StreamSpecification {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stream_view_type: Option<String>,
 }
-
+impl StreamSpecification {
+    /// Sets `stream_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StreamSpecification.stream_enabled = Some(value.into());`.
+    pub fn stream_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.stream_enabled = Some(value.into());
+        self
+    }
+    /// Sets `stream_view_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StreamSpecification.stream_view_type = Some(value.into());`.
+    pub fn stream_view_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stream_view_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of StreamSpecification with optional fields set to `None`.
+    pub fn new() -> StreamSpecification {
+        StreamSpecification { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the properties of a table.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TableDescription {
@@ -1075,7 +2331,6 @@ pub struct TableDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub table_status: Option<String>,
 }
-
 #[doc="<p>Describes a tag. A tag is a key-value pair. You can add up to 50 tags to a single DynamoDB table. </p> <p> AWS-assigned tag names and values are automatically assigned the aws: prefix, which the user cannot assign. AWS-assigned tag names do not count towards the tag limit of 50. User-assigned tag names have the prefix user: in the Cost Allocation Report. You cannot backdate the application of a tag. </p> <p>For an overview on tagging DynamoDB resources, see <a href=\"http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tagging.html\">Tagging for DynamoDB</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Tag {
@@ -1086,7 +2341,32 @@ pub struct Tag {
     #[serde(rename="Value")]
     pub value: String,
 }
-
+impl Tag {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>, ValueType: Into<String>>(key: KeyType,
+                                                               value: ValueType)
+                                                               -> Tag {
+        Tag {
+            key: key.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TagResourceInput {
     #[doc="<p>Identifies the Amazon DynamoDB resource to which tags should be added. This value is an Amazon Resource Name (ARN).</p>"]
@@ -1096,7 +2376,30 @@ pub struct TagResourceInput {
     #[serde(rename="Tags")]
     pub tags: Vec<Tag>,
 }
-
+impl TagResourceInput {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TagResourceInput.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TagResourceInput.tags = value.into();`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of TagResourceInput with optional fields set to `None`.
+pub fn new<ResourceArnType: Into<String>, TagsType: Into<Vec<Tag>>>(resource_arn: ResourceArnType, tags: TagsType) -> TagResourceInput{
+        TagResourceInput {
+            resource_arn: resource_arn.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The description of the Time to Live (TTL) status on the specified table. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TimeToLiveDescription {
@@ -1109,7 +2412,6 @@ pub struct TimeToLiveDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub time_to_live_status: Option<String>,
 }
-
 #[doc="<p>Represents the settings used to enable or disable Time to Live for the specified table.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct TimeToLiveSpecification {
@@ -1120,7 +2422,33 @@ pub struct TimeToLiveSpecification {
     #[serde(rename="Enabled")]
     pub enabled: bool,
 }
-
+impl TimeToLiveSpecification {
+    /// Sets `attribute_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TimeToLiveSpecification.attribute_name = value.into();`.
+    pub fn attribute_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute_name = value.into();
+        self
+    }
+    /// Sets `enabled`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TimeToLiveSpecification.enabled = value.into();`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = value.into();
+        self
+    }
+    /// Returns a new instance of TimeToLiveSpecification with optional fields set to `None`.
+    pub fn new<AttributeNameType: Into<String>, EnabledType: Into<bool>>
+        (attribute_name: AttributeNameType,
+         enabled: EnabledType)
+         -> TimeToLiveSpecification {
+        TimeToLiveSpecification {
+            attribute_name: attribute_name.into(),
+            enabled: enabled.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UntagResourceInput {
     #[doc="<p>The Amazon DyanamoDB resource the tags will be removed from. This value is an Amazon Resource Name (ARN).</p>"]
@@ -1130,7 +2458,33 @@ pub struct UntagResourceInput {
     #[serde(rename="TagKeys")]
     pub tag_keys: Vec<String>,
 }
-
+impl UntagResourceInput {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UntagResourceInput.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Sets `tag_keys`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UntagResourceInput.tag_keys = value.into();`.
+    pub fn tag_keys<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tag_keys = value.into();
+        self
+    }
+    /// Returns a new instance of UntagResourceInput with optional fields set to `None`.
+    pub fn new<ResourceArnType: Into<String>, TagKeysType: Into<Vec<String>>>
+        (resource_arn: ResourceArnType,
+         tag_keys: TagKeysType)
+         -> UntagResourceInput {
+        UntagResourceInput {
+            resource_arn: resource_arn.into(),
+            tag_keys: tag_keys.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the new provisioned throughput settings to be applied to a global secondary index.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateGlobalSecondaryIndexAction {
@@ -1141,7 +2495,35 @@ pub struct UpdateGlobalSecondaryIndexAction {
     #[serde(rename="ProvisionedThroughput")]
     pub provisioned_throughput: ProvisionedThroughput,
 }
-
+impl UpdateGlobalSecondaryIndexAction {
+    /// Sets `index_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGlobalSecondaryIndexAction.index_name = value.into();`.
+    pub fn index_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.index_name = value.into();
+        self
+    }
+    /// Sets `provisioned_throughput`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGlobalSecondaryIndexAction.provisioned_throughput = value.into();`.
+    pub fn provisioned_throughput<ValueType: Into<ProvisionedThroughput>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.provisioned_throughput = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateGlobalSecondaryIndexAction with optional fields set to `None`.
+    pub fn new<IndexNameType: Into<String>, ProvisionedThroughputType: Into<ProvisionedThroughput>>
+        (index_name: IndexNameType,
+         provisioned_throughput: ProvisionedThroughputType)
+         -> UpdateGlobalSecondaryIndexAction {
+        UpdateGlobalSecondaryIndexAction {
+            index_name: index_name.into(),
+            provisioned_throughput: provisioned_throughput.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of an <code>UpdateItem</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateItemInput {
@@ -1192,7 +2574,112 @@ pub struct UpdateItemInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub update_expression: Option<String>,
 }
-
+impl UpdateItemInput {
+    /// Sets `attribute_updates`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateItemInput.attribute_updates = Some(value.into());`.
+pub fn attribute_updates<ValueType: Into<::std::collections::HashMap<String, AttributeValueUpdate>>>(mut self, value: ValueType) -> Self{
+        self.attribute_updates = Some(value.into());
+        self
+    }
+    /// Sets `condition_expression`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateItemInput.condition_expression = Some(value.into());`.
+    pub fn condition_expression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.condition_expression = Some(value.into());
+        self
+    }
+    /// Sets `conditional_operator`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateItemInput.conditional_operator = Some(value.into());`.
+    pub fn conditional_operator<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.conditional_operator = Some(value.into());
+        self
+    }
+    /// Sets `expected`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateItemInput.expected = Some(value.into());`.
+    pub fn expected<ValueType: Into<::std::collections::HashMap<String, ExpectedAttributeValue>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.expected = Some(value.into());
+        self
+    }
+    /// Sets `expression_attribute_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateItemInput.expression_attribute_names = Some(value.into());`.
+    pub fn expression_attribute_names<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.expression_attribute_names = Some(value.into());
+        self
+    }
+    /// Sets `expression_attribute_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateItemInput.expression_attribute_values = Some(value.into());`.
+pub fn expression_attribute_values<ValueType: Into<::std::collections::HashMap<String, AttributeValue>>>(mut self, value: ValueType) -> Self{
+        self.expression_attribute_values = Some(value.into());
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateItemInput.key = value.into();`.
+pub fn key<ValueType: Into<::std::collections::HashMap<String, AttributeValue>>>(mut self, value: ValueType) -> Self{
+        self.key = value.into();
+        self
+    }
+    /// Sets `return_consumed_capacity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateItemInput.return_consumed_capacity = Some(value.into());`.
+    pub fn return_consumed_capacity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.return_consumed_capacity = Some(value.into());
+        self
+    }
+    /// Sets `return_item_collection_metrics`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateItemInput.return_item_collection_metrics = Some(value.into());`.
+    pub fn return_item_collection_metrics<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.return_item_collection_metrics = Some(value.into());
+        self
+    }
+    /// Sets `return_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateItemInput.return_values = Some(value.into());`.
+    pub fn return_values<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.return_values = Some(value.into());
+        self
+    }
+    /// Sets `table_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateItemInput.table_name = value.into();`.
+    pub fn table_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.table_name = value.into();
+        self
+    }
+    /// Sets `update_expression`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateItemInput.update_expression = Some(value.into());`.
+    pub fn update_expression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.update_expression = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateItemInput with optional fields set to `None`.
+    pub fn new<KeyType: Into<::std::collections::HashMap<String, AttributeValue>>,
+               TableNameType: Into<String>>
+        (key: KeyType,
+         table_name: TableNameType)
+         -> UpdateItemInput {
+        UpdateItemInput {
+            key: key.into(),
+            table_name: table_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of an <code>UpdateItem</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateItemOutput {
@@ -1209,7 +2696,6 @@ pub struct UpdateItemOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub item_collection_metrics: Option<ItemCollectionMetrics>,
 }
-
 #[doc="<p>Represents the input of an <code>UpdateTable</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateTableInput {
@@ -1233,7 +2719,59 @@ pub struct UpdateTableInput {
     #[serde(rename="TableName")]
     pub table_name: String,
 }
-
+impl UpdateTableInput {
+    /// Sets `attribute_definitions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTableInput.attribute_definitions = Some(value.into());`.
+    pub fn attribute_definitions<ValueType: Into<Vec<AttributeDefinition>>>(mut self,
+                                                                            value: ValueType)
+                                                                            -> Self {
+        self.attribute_definitions = Some(value.into());
+        self
+    }
+    /// Sets `global_secondary_index_updates`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTableInput.global_secondary_index_updates = Some(value.into());`.
+    pub fn global_secondary_index_updates<ValueType: Into<Vec<GlobalSecondaryIndexUpdate>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.global_secondary_index_updates = Some(value.into());
+        self
+    }
+    /// Sets `provisioned_throughput`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTableInput.provisioned_throughput = Some(value.into());`.
+    pub fn provisioned_throughput<ValueType: Into<ProvisionedThroughput>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.provisioned_throughput = Some(value.into());
+        self
+    }
+    /// Sets `stream_specification`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTableInput.stream_specification = Some(value.into());`.
+    pub fn stream_specification<ValueType: Into<StreamSpecification>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.stream_specification = Some(value.into());
+        self
+    }
+    /// Sets `table_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTableInput.table_name = value.into();`.
+    pub fn table_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.table_name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateTableInput with optional fields set to `None`.
+    pub fn new<TableNameType: Into<String>>(table_name: TableNameType) -> UpdateTableInput {
+        UpdateTableInput {
+            table_name: table_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of an <code>UpdateTable</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateTableOutput {
@@ -1242,7 +2780,6 @@ pub struct UpdateTableOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub table_description: Option<TableDescription>,
 }
-
 #[doc="<p>Represents the input of an <code>UpdateTimeToLive</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateTimeToLiveInput {
@@ -1253,7 +2790,36 @@ pub struct UpdateTimeToLiveInput {
     #[serde(rename="TimeToLiveSpecification")]
     pub time_to_live_specification: TimeToLiveSpecification,
 }
-
+impl UpdateTimeToLiveInput {
+    /// Sets `table_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTimeToLiveInput.table_name = value.into();`.
+    pub fn table_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.table_name = value.into();
+        self
+    }
+    /// Sets `time_to_live_specification`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTimeToLiveInput.time_to_live_specification = value.into();`.
+    pub fn time_to_live_specification<ValueType: Into<TimeToLiveSpecification>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.time_to_live_specification = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateTimeToLiveInput with optional fields set to `None`.
+    pub fn new<TableNameType: Into<String>,
+               TimeToLiveSpecificationType: Into<TimeToLiveSpecification>>
+        (table_name: TableNameType,
+         time_to_live_specification: TimeToLiveSpecificationType)
+         -> UpdateTimeToLiveInput {
+        UpdateTimeToLiveInput {
+            table_name: table_name.into(),
+            time_to_live_specification: time_to_live_specification.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateTimeToLiveOutput {
     #[doc="<p>Represents the output of an <code>UpdateTimeToLive</code> operation.</p>"]
@@ -1261,7 +2827,6 @@ pub struct UpdateTimeToLiveOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub time_to_live_specification: Option<TimeToLiveSpecification>,
 }
-
 #[doc="<p>Represents an operation to perform - either <code>DeleteItem</code> or <code>PutItem</code>. You can only request one of these operations, not both, in a single <code>WriteRequest</code>. If you do need to perform both of these operations, you will need to provide two separate <code>WriteRequest</code> objects.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct WriteRequest {
@@ -1274,7 +2839,26 @@ pub struct WriteRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub put_request: Option<PutRequest>,
 }
-
+impl WriteRequest {
+    /// Sets `delete_request`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WriteRequest.delete_request = Some(value.into());`.
+    pub fn delete_request<ValueType: Into<DeleteRequest>>(mut self, value: ValueType) -> Self {
+        self.delete_request = Some(value.into());
+        self
+    }
+    /// Sets `put_request`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WriteRequest.put_request = Some(value.into());`.
+    pub fn put_request<ValueType: Into<PutRequest>>(mut self, value: ValueType) -> Self {
+        self.put_request = Some(value.into());
+        self
+    }
+    /// Returns a new instance of WriteRequest with optional fields set to `None`.
+    pub fn new() -> WriteRequest {
+        WriteRequest { ..Default::default() }
+    }
+}
 /// Errors returned by BatchGetItem
 #[derive(Debug, PartialEq)]
 pub enum BatchGetItemError {

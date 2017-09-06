@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -47,7 +48,19 @@ pub struct AbortIncompleteMultipartUpload {
     #[doc="Indicates the number of days that must pass since initiation for Lifecycle to abort an Incomplete Multipart Upload."]
     pub days_after_initiation: Option<i64>,
 }
-
+impl AbortIncompleteMultipartUpload {
+    /// Sets `days_after_initiation`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AbortIncompleteMultipartUpload.days_after_initiation = Some(value.into());`.
+    pub fn days_after_initiation<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.days_after_initiation = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AbortIncompleteMultipartUpload with optional fields set to `None`.
+    pub fn new() -> AbortIncompleteMultipartUpload {
+        AbortIncompleteMultipartUpload { ..Default::default() }
+    }
+}
 struct AbortIncompleteMultipartUploadDeserializer;
 impl AbortIncompleteMultipartUploadDeserializer {
     #[allow(unused_variables)]
@@ -110,7 +123,6 @@ impl AbortIncompleteMultipartUploadSerializer {
 pub struct AbortMultipartUploadOutput {
     pub request_charged: Option<String>,
 }
-
 struct AbortMultipartUploadOutputDeserializer;
 impl AbortMultipartUploadOutputDeserializer {
     #[allow(unused_variables)]
@@ -134,13 +146,67 @@ pub struct AbortMultipartUploadRequest {
     pub request_payer: Option<String>,
     pub upload_id: String,
 }
-
+impl AbortMultipartUploadRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AbortMultipartUploadRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AbortMultipartUploadRequest.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `request_payer`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AbortMultipartUploadRequest.request_payer = Some(value.into());`.
+    pub fn request_payer<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_payer = Some(value.into());
+        self
+    }
+    /// Sets `upload_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AbortMultipartUploadRequest.upload_id = value.into();`.
+    pub fn upload_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.upload_id = value.into();
+        self
+    }
+    /// Returns a new instance of AbortMultipartUploadRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, KeyType: Into<String>, UploadIdType: Into<String>>
+        (bucket: BucketType,
+         key: KeyType,
+         upload_id: UploadIdType)
+         -> AbortMultipartUploadRequest {
+        AbortMultipartUploadRequest {
+            bucket: bucket.into(),
+            key: key.into(),
+            upload_id: upload_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct AccelerateConfiguration {
     #[doc="The accelerate configuration of the bucket."]
     pub status: Option<String>,
 }
-
+impl AccelerateConfiguration {
+    /// Sets `status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AccelerateConfiguration.status = Some(value.into());`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AccelerateConfiguration with optional fields set to `None`.
+    pub fn new() -> AccelerateConfiguration {
+        AccelerateConfiguration { ..Default::default() }
+    }
+}
 
 pub struct AccelerateConfigurationSerializer;
 impl AccelerateConfigurationSerializer {
@@ -161,7 +227,26 @@ pub struct AccessControlPolicy {
     pub grants: Option<Vec<Grant>>,
     pub owner: Option<Owner>,
 }
-
+impl AccessControlPolicy {
+    /// Sets `grants`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AccessControlPolicy.grants = Some(value.into());`.
+    pub fn grants<ValueType: Into<Vec<Grant>>>(mut self, value: ValueType) -> Self {
+        self.grants = Some(value.into());
+        self
+    }
+    /// Sets `owner`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AccessControlPolicy.owner = Some(value.into());`.
+    pub fn owner<ValueType: Into<Owner>>(mut self, value: ValueType) -> Self {
+        self.owner = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AccessControlPolicy with optional fields set to `None`.
+    pub fn new() -> AccessControlPolicy {
+        AccessControlPolicy { ..Default::default() }
+    }
+}
 
 pub struct AccessControlPolicySerializer;
 impl AccessControlPolicySerializer {
@@ -409,7 +494,26 @@ pub struct AnalyticsAndOperator {
     #[doc="The list of tags to use when evaluating an AND predicate."]
     pub tags: Option<Vec<Tag>>,
 }
-
+impl AnalyticsAndOperator {
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AnalyticsAndOperator.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AnalyticsAndOperator.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AnalyticsAndOperator with optional fields set to `None`.
+    pub fn new() -> AnalyticsAndOperator {
+        AnalyticsAndOperator { ..Default::default() }
+    }
+}
 struct AnalyticsAndOperatorDeserializer;
 impl AnalyticsAndOperatorDeserializer {
     #[allow(unused_variables)]
@@ -481,7 +585,42 @@ pub struct AnalyticsConfiguration {
     #[doc="If present, it indicates that data related to access patterns will be collected and made available to analyze the tradeoffs between different storage classes."]
     pub storage_class_analysis: StorageClassAnalysis,
 }
-
+impl AnalyticsConfiguration {
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AnalyticsConfiguration.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<AnalyticsFilter>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AnalyticsConfiguration.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `storage_class_analysis`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AnalyticsConfiguration.storage_class_analysis = value.into();`.
+    pub fn storage_class_analysis<ValueType: Into<StorageClassAnalysis>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.storage_class_analysis = value.into();
+        self
+    }
+    /// Returns a new instance of AnalyticsConfiguration with optional fields set to `None`.
+    pub fn new<IdType: Into<String>, StorageClassAnalysisType: Into<StorageClassAnalysis>>
+        (id: IdType,
+         storage_class_analysis: StorageClassAnalysisType)
+         -> AnalyticsConfiguration {
+        AnalyticsConfiguration {
+            id: id.into(),
+            storage_class_analysis: storage_class_analysis.into(),
+            ..Default::default()
+        }
+    }
+}
 struct AnalyticsConfigurationDeserializer;
 impl AnalyticsConfigurationDeserializer {
     #[allow(unused_variables)]
@@ -583,7 +722,26 @@ pub struct AnalyticsExportDestination {
     #[doc="A destination signifying output to an S3 bucket."]
     pub s3_bucket_destination: AnalyticsS3BucketDestination,
 }
-
+impl AnalyticsExportDestination {
+    /// Sets `s3_bucket_destination`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AnalyticsExportDestination.s3_bucket_destination = value.into();`.
+    pub fn s3_bucket_destination<ValueType: Into<AnalyticsS3BucketDestination>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.s3_bucket_destination = value.into();
+        self
+    }
+    /// Returns a new instance of AnalyticsExportDestination with optional fields set to `None`.
+    pub fn new<S3BucketDestinationType: Into<AnalyticsS3BucketDestination>>
+        (s3_bucket_destination: S3BucketDestinationType)
+         -> AnalyticsExportDestination {
+        AnalyticsExportDestination {
+            s3_bucket_destination: s3_bucket_destination.into(),
+            ..Default::default()
+        }
+    }
+}
 struct AnalyticsExportDestinationDeserializer;
 impl AnalyticsExportDestinationDeserializer {
     #[allow(unused_variables)]
@@ -650,7 +808,33 @@ pub struct AnalyticsFilter {
     #[doc="The tag to use when evaluating an analytics filter."]
     pub tag: Option<Tag>,
 }
-
+impl AnalyticsFilter {
+    /// Sets `and`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AnalyticsFilter.and = Some(value.into());`.
+    pub fn and<ValueType: Into<AnalyticsAndOperator>>(mut self, value: ValueType) -> Self {
+        self.and = Some(value.into());
+        self
+    }
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AnalyticsFilter.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Sets `tag`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AnalyticsFilter.tag = Some(value.into());`.
+    pub fn tag<ValueType: Into<Tag>>(mut self, value: ValueType) -> Self {
+        self.tag = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AnalyticsFilter with optional fields set to `None`.
+    pub fn new() -> AnalyticsFilter {
+        AnalyticsFilter { ..Default::default() }
+    }
+}
 struct AnalyticsFilterDeserializer;
 impl AnalyticsFilterDeserializer {
     #[allow(unused_variables)]
@@ -757,7 +941,47 @@ pub struct AnalyticsS3BucketDestination {
     #[doc="The prefix to use when exporting data. The exported data begins with this prefix."]
     pub prefix: Option<String>,
 }
-
+impl AnalyticsS3BucketDestination {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AnalyticsS3BucketDestination.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `bucket_account_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AnalyticsS3BucketDestination.bucket_account_id = Some(value.into());`.
+    pub fn bucket_account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket_account_id = Some(value.into());
+        self
+    }
+    /// Sets `format`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AnalyticsS3BucketDestination.format = value.into();`.
+    pub fn format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.format = value.into();
+        self
+    }
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AnalyticsS3BucketDestination.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AnalyticsS3BucketDestination with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, FormatType: Into<String>>
+        (bucket: BucketType,
+         format: FormatType)
+         -> AnalyticsS3BucketDestination {
+        AnalyticsS3BucketDestination {
+            bucket: bucket.into(),
+            format: format.into(),
+            ..Default::default()
+        }
+    }
+}
 struct AnalyticsS3BucketDestinationDeserializer;
 impl AnalyticsS3BucketDestinationDeserializer {
     #[allow(unused_variables)]
@@ -896,7 +1120,6 @@ pub struct Bucket {
     #[doc="The name of the bucket."]
     pub name: Option<String>,
 }
-
 struct BucketDeserializer;
 impl BucketDeserializer {
     #[allow(unused_variables)]
@@ -973,7 +1196,23 @@ impl BucketAccelerateStatusSerializer {
 pub struct BucketLifecycleConfiguration {
     pub rules: Vec<LifecycleRule>,
 }
-
+impl BucketLifecycleConfiguration {
+    /// Sets `rules`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BucketLifecycleConfiguration.rules = value.into();`.
+    pub fn rules<ValueType: Into<Vec<LifecycleRule>>>(mut self, value: ValueType) -> Self {
+        self.rules = value.into();
+        self
+    }
+    /// Returns a new instance of BucketLifecycleConfiguration with optional fields set to `None`.
+    pub fn new<RulesType: Into<Vec<LifecycleRule>>>(rules: RulesType)
+                                                    -> BucketLifecycleConfiguration {
+        BucketLifecycleConfiguration {
+            rules: rules.into(),
+            ..Default::default()
+        }
+    }
+}
 
 pub struct BucketLifecycleConfigurationSerializer;
 impl BucketLifecycleConfigurationSerializer {
@@ -1015,7 +1254,19 @@ impl BucketLocationConstraintSerializer {
 pub struct BucketLoggingStatus {
     pub logging_enabled: Option<LoggingEnabled>,
 }
-
+impl BucketLoggingStatus {
+    /// Sets `logging_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BucketLoggingStatus.logging_enabled = Some(value.into());`.
+    pub fn logging_enabled<ValueType: Into<LoggingEnabled>>(mut self, value: ValueType) -> Self {
+        self.logging_enabled = Some(value.into());
+        self
+    }
+    /// Returns a new instance of BucketLoggingStatus with optional fields set to `None`.
+    pub fn new() -> BucketLoggingStatus {
+        BucketLoggingStatus { ..Default::default() }
+    }
+}
 
 pub struct BucketLoggingStatusSerializer;
 impl BucketLoggingStatusSerializer {
@@ -1150,7 +1401,22 @@ impl BucketsDeserializer {
 pub struct CORSConfiguration {
     pub cors_rules: Vec<CORSRule>,
 }
-
+impl CORSConfiguration {
+    /// Sets `cors_rules`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CORSConfiguration.cors_rules = value.into();`.
+    pub fn cors_rules<ValueType: Into<Vec<CORSRule>>>(mut self, value: ValueType) -> Self {
+        self.cors_rules = value.into();
+        self
+    }
+    /// Returns a new instance of CORSConfiguration with optional fields set to `None`.
+    pub fn new<CORSRulesType: Into<Vec<CORSRule>>>(cors_rules: CORSRulesType) -> CORSConfiguration {
+        CORSConfiguration {
+            cors_rules: cors_rules.into(),
+            ..Default::default()
+        }
+    }
+}
 
 pub struct CORSConfigurationSerializer;
 impl CORSConfigurationSerializer {
@@ -1176,7 +1442,54 @@ pub struct CORSRule {
     #[doc="The time in seconds that your browser is to cache the preflight response for the specified resource."]
     pub max_age_seconds: Option<i64>,
 }
-
+impl CORSRule {
+    /// Sets `allowed_headers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CORSRule.allowed_headers = Some(value.into());`.
+    pub fn allowed_headers<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.allowed_headers = Some(value.into());
+        self
+    }
+    /// Sets `allowed_methods`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CORSRule.allowed_methods = value.into();`.
+    pub fn allowed_methods<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.allowed_methods = value.into();
+        self
+    }
+    /// Sets `allowed_origins`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CORSRule.allowed_origins = value.into();`.
+    pub fn allowed_origins<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.allowed_origins = value.into();
+        self
+    }
+    /// Sets `expose_headers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CORSRule.expose_headers = Some(value.into());`.
+    pub fn expose_headers<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.expose_headers = Some(value.into());
+        self
+    }
+    /// Sets `max_age_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CORSRule.max_age_seconds = Some(value.into());`.
+    pub fn max_age_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_age_seconds = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CORSRule with optional fields set to `None`.
+    pub fn new<AllowedMethodsType: Into<Vec<String>>, AllowedOriginsType: Into<Vec<String>>>
+        (allowed_methods: AllowedMethodsType,
+         allowed_origins: AllowedOriginsType)
+         -> CORSRule {
+        CORSRule {
+            allowed_methods: allowed_methods.into(),
+            allowed_origins: allowed_origins.into(),
+            ..Default::default()
+        }
+    }
+}
 struct CORSRuleDeserializer;
 impl CORSRuleDeserializer {
     #[allow(unused_variables)]
@@ -1335,7 +1648,40 @@ pub struct CloudFunctionConfiguration {
     pub id: Option<String>,
     pub invocation_role: Option<String>,
 }
-
+impl CloudFunctionConfiguration {
+    /// Sets `cloud_function`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudFunctionConfiguration.cloud_function = Some(value.into());`.
+    pub fn cloud_function<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cloud_function = Some(value.into());
+        self
+    }
+    /// Sets `events`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudFunctionConfiguration.events = Some(value.into());`.
+    pub fn events<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.events = Some(value.into());
+        self
+    }
+    /// Sets `id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudFunctionConfiguration.id = Some(value.into());`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = Some(value.into());
+        self
+    }
+    /// Sets `invocation_role`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudFunctionConfiguration.invocation_role = Some(value.into());`.
+    pub fn invocation_role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.invocation_role = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CloudFunctionConfiguration with optional fields set to `None`.
+    pub fn new() -> CloudFunctionConfiguration {
+        CloudFunctionConfiguration { ..Default::default() }
+    }
+}
 struct CloudFunctionConfigurationDeserializer;
 impl CloudFunctionConfigurationDeserializer {
     #[allow(unused_variables)]
@@ -1456,7 +1802,6 @@ impl CodeDeserializer {
 pub struct CommonPrefix {
     pub prefix: Option<String>,
 }
-
 struct CommonPrefixDeserializer;
 impl CommonPrefixDeserializer {
     #[allow(unused_variables)]
@@ -1544,7 +1889,6 @@ pub struct CompleteMultipartUploadOutput {
     #[doc="Version of the object."]
     pub version_id: Option<String>,
 }
-
 struct CompleteMultipartUploadOutputDeserializer;
 impl CompleteMultipartUploadOutputDeserializer {
     #[allow(unused_variables)]
@@ -1605,12 +1949,75 @@ pub struct CompleteMultipartUploadRequest {
     pub request_payer: Option<String>,
     pub upload_id: String,
 }
-
+impl CompleteMultipartUploadRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteMultipartUploadRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteMultipartUploadRequest.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `multipart_upload`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteMultipartUploadRequest.multipart_upload = Some(value.into());`.
+    pub fn multipart_upload<ValueType: Into<CompletedMultipartUpload>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.multipart_upload = Some(value.into());
+        self
+    }
+    /// Sets `request_payer`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteMultipartUploadRequest.request_payer = Some(value.into());`.
+    pub fn request_payer<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_payer = Some(value.into());
+        self
+    }
+    /// Sets `upload_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteMultipartUploadRequest.upload_id = value.into();`.
+    pub fn upload_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.upload_id = value.into();
+        self
+    }
+    /// Returns a new instance of CompleteMultipartUploadRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, KeyType: Into<String>, UploadIdType: Into<String>>
+        (bucket: BucketType,
+         key: KeyType,
+         upload_id: UploadIdType)
+         -> CompleteMultipartUploadRequest {
+        CompleteMultipartUploadRequest {
+            bucket: bucket.into(),
+            key: key.into(),
+            upload_id: upload_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct CompletedMultipartUpload {
     pub parts: Option<Vec<CompletedPart>>,
 }
-
+impl CompletedMultipartUpload {
+    /// Sets `parts`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompletedMultipartUpload.parts = Some(value.into());`.
+    pub fn parts<ValueType: Into<Vec<CompletedPart>>>(mut self, value: ValueType) -> Self {
+        self.parts = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CompletedMultipartUpload with optional fields set to `None`.
+    pub fn new() -> CompletedMultipartUpload {
+        CompletedMultipartUpload { ..Default::default() }
+    }
+}
 
 pub struct CompletedMultipartUploadSerializer;
 impl CompletedMultipartUploadSerializer {
@@ -1632,7 +2039,26 @@ pub struct CompletedPart {
     #[doc="Part number that identifies the part. This is a positive integer between 1 and 10,000."]
     pub part_number: Option<i64>,
 }
-
+impl CompletedPart {
+    /// Sets `e_tag`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompletedPart.e_tag = Some(value.into());`.
+    pub fn e_tag<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.e_tag = Some(value.into());
+        self
+    }
+    /// Sets `part_number`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompletedPart.part_number = Some(value.into());`.
+    pub fn part_number<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.part_number = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CompletedPart with optional fields set to `None`.
+    pub fn new() -> CompletedPart {
+        CompletedPart { ..Default::default() }
+    }
+}
 
 pub struct CompletedPartSerializer;
 impl CompletedPartSerializer {
@@ -1670,7 +2096,28 @@ pub struct Condition {
     #[doc="The object key name prefix when the redirect is applied. For example, to redirect requests for ExamplePage.html, the key prefix will be ExamplePage.html. To redirect request for all pages with the prefix docs/, the key prefix will be /docs, which identifies all objects in the docs/ folder. Required when the parent element Condition is specified and sibling HttpErrorCodeReturnedEquals is not specified. If both conditions are specified, both must be true for the redirect to be applied."]
     pub key_prefix_equals: Option<String>,
 }
-
+impl Condition {
+    /// Sets `http_error_code_returned_equals`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Condition.http_error_code_returned_equals = Some(value.into());`.
+    pub fn http_error_code_returned_equals<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.http_error_code_returned_equals = Some(value.into());
+        self
+    }
+    /// Sets `key_prefix_equals`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Condition.key_prefix_equals = Some(value.into());`.
+    pub fn key_prefix_equals<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_prefix_equals = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Condition with optional fields set to `None`.
+    pub fn new() -> Condition {
+        Condition { ..Default::default() }
+    }
+}
 struct ConditionDeserializer;
 impl ConditionDeserializer {
     #[allow(unused_variables)]
@@ -1753,7 +2200,6 @@ pub struct CopyObjectOutput {
     #[doc="Version ID of the newly created copy."]
     pub version_id: Option<String>,
 }
-
 struct CopyObjectOutputDeserializer;
 impl CopyObjectOutputDeserializer {
     #[allow(unused_variables)]
@@ -1863,13 +2309,267 @@ pub struct CopyObjectRequest {
     #[doc="If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata."]
     pub website_redirect_location: Option<String>,
 }
-
+impl CopyObjectRequest {
+    /// Sets `acl`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.acl = Some(value.into());`.
+    pub fn acl<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.acl = Some(value.into());
+        self
+    }
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `cache_control`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.cache_control = Some(value.into());`.
+    pub fn cache_control<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_control = Some(value.into());
+        self
+    }
+    /// Sets `content_disposition`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.content_disposition = Some(value.into());`.
+    pub fn content_disposition<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_disposition = Some(value.into());
+        self
+    }
+    /// Sets `content_encoding`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.content_encoding = Some(value.into());`.
+    pub fn content_encoding<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_encoding = Some(value.into());
+        self
+    }
+    /// Sets `content_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.content_language = Some(value.into());`.
+    pub fn content_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_language = Some(value.into());
+        self
+    }
+    /// Sets `content_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.content_type = Some(value.into());`.
+    pub fn content_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_type = Some(value.into());
+        self
+    }
+    /// Sets `copy_source`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.copy_source = value.into();`.
+    pub fn copy_source<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.copy_source = value.into();
+        self
+    }
+    /// Sets `copy_source_if_match`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.copy_source_if_match = Some(value.into());`.
+    pub fn copy_source_if_match<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.copy_source_if_match = Some(value.into());
+        self
+    }
+    /// Sets `copy_source_if_modified_since`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.copy_source_if_modified_since = Some(value.into());`.
+    pub fn copy_source_if_modified_since<ValueType: Into<String>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.copy_source_if_modified_since = Some(value.into());
+        self
+    }
+    /// Sets `copy_source_if_none_match`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.copy_source_if_none_match = Some(value.into());`.
+    pub fn copy_source_if_none_match<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.copy_source_if_none_match = Some(value.into());
+        self
+    }
+    /// Sets `copy_source_if_unmodified_since`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.copy_source_if_unmodified_since = Some(value.into());`.
+    pub fn copy_source_if_unmodified_since<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.copy_source_if_unmodified_since = Some(value.into());
+        self
+    }
+    /// Sets `copy_source_sse_customer_algorithm`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.copy_source_sse_customer_algorithm = Some(value.into());`.
+    pub fn copy_source_sse_customer_algorithm<ValueType: Into<String>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.copy_source_sse_customer_algorithm = Some(value.into());
+        self
+    }
+    /// Sets `copy_source_sse_customer_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.copy_source_sse_customer_key = Some(value.into());`.
+    pub fn copy_source_sse_customer_key<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.copy_source_sse_customer_key = Some(value.into());
+        self
+    }
+    /// Sets `copy_source_sse_customer_key_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.copy_source_sse_customer_key_md5 = Some(value.into());`.
+    pub fn copy_source_sse_customer_key_md5<ValueType: Into<String>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.copy_source_sse_customer_key_md5 = Some(value.into());
+        self
+    }
+    /// Sets `expires`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.expires = Some(value.into());`.
+    pub fn expires<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.expires = Some(value.into());
+        self
+    }
+    /// Sets `grant_full_control`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.grant_full_control = Some(value.into());`.
+    pub fn grant_full_control<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_full_control = Some(value.into());
+        self
+    }
+    /// Sets `grant_read`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.grant_read = Some(value.into());`.
+    pub fn grant_read<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_read = Some(value.into());
+        self
+    }
+    /// Sets `grant_read_acp`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.grant_read_acp = Some(value.into());`.
+    pub fn grant_read_acp<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_read_acp = Some(value.into());
+        self
+    }
+    /// Sets `grant_write_acp`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.grant_write_acp = Some(value.into());`.
+    pub fn grant_write_acp<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_write_acp = Some(value.into());
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `metadata`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.metadata = Some(value.into());`.
+pub fn metadata<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.metadata = Some(value.into());
+        self
+    }
+    /// Sets `metadata_directive`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.metadata_directive = Some(value.into());`.
+    pub fn metadata_directive<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metadata_directive = Some(value.into());
+        self
+    }
+    /// Sets `request_payer`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.request_payer = Some(value.into());`.
+    pub fn request_payer<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_payer = Some(value.into());
+        self
+    }
+    /// Sets `sse_customer_algorithm`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.sse_customer_algorithm = Some(value.into());`.
+    pub fn sse_customer_algorithm<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sse_customer_algorithm = Some(value.into());
+        self
+    }
+    /// Sets `sse_customer_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.sse_customer_key = Some(value.into());`.
+    pub fn sse_customer_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sse_customer_key = Some(value.into());
+        self
+    }
+    /// Sets `sse_customer_key_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.sse_customer_key_md5 = Some(value.into());`.
+    pub fn sse_customer_key_md5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sse_customer_key_md5 = Some(value.into());
+        self
+    }
+    /// Sets `ssekms_key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.ssekms_key_id = Some(value.into());`.
+    pub fn ssekms_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ssekms_key_id = Some(value.into());
+        self
+    }
+    /// Sets `server_side_encryption`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.server_side_encryption = Some(value.into());`.
+    pub fn server_side_encryption<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_side_encryption = Some(value.into());
+        self
+    }
+    /// Sets `storage_class`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.storage_class = Some(value.into());`.
+    pub fn storage_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.storage_class = Some(value.into());
+        self
+    }
+    /// Sets `tagging`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.tagging = Some(value.into());`.
+    pub fn tagging<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tagging = Some(value.into());
+        self
+    }
+    /// Sets `tagging_directive`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.tagging_directive = Some(value.into());`.
+    pub fn tagging_directive<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tagging_directive = Some(value.into());
+        self
+    }
+    /// Sets `website_redirect_location`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyObjectRequest.website_redirect_location = Some(value.into());`.
+    pub fn website_redirect_location<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.website_redirect_location = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CopyObjectRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, CopySourceType: Into<String>, KeyType: Into<String>>
+        (bucket: BucketType,
+         copy_source: CopySourceType,
+         key: KeyType)
+         -> CopyObjectRequest {
+        CopyObjectRequest {
+            bucket: bucket.into(),
+            copy_source: copy_source.into(),
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct CopyObjectResult {
     pub e_tag: Option<String>,
     pub last_modified: Option<String>,
 }
-
 struct CopyObjectResultDeserializer;
 impl CopyObjectResultDeserializer {
     #[allow(unused_variables)]
@@ -1923,7 +2623,6 @@ pub struct CopyPartResult {
     #[doc="Date and time at which the object was uploaded."]
     pub last_modified: Option<String>,
 }
-
 struct CopyPartResultDeserializer;
 impl CopyPartResultDeserializer {
     #[allow(unused_variables)]
@@ -1975,7 +2674,19 @@ pub struct CreateBucketConfiguration {
     #[doc="Specifies the region where the bucket will be created. If you don't specify a region, the bucket will be created in US Standard."]
     pub location_constraint: Option<String>,
 }
-
+impl CreateBucketConfiguration {
+    /// Sets `location_constraint`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBucketConfiguration.location_constraint = Some(value.into());`.
+    pub fn location_constraint<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.location_constraint = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateBucketConfiguration with optional fields set to `None`.
+    pub fn new() -> CreateBucketConfiguration {
+        CreateBucketConfiguration { ..Default::default() }
+    }
+}
 
 pub struct CreateBucketConfigurationSerializer;
 impl CreateBucketConfigurationSerializer {
@@ -1995,7 +2706,6 @@ impl CreateBucketConfigurationSerializer {
 pub struct CreateBucketOutput {
     pub location: Option<String>,
 }
-
 struct CreateBucketOutputDeserializer;
 impl CreateBucketOutputDeserializer {
     #[allow(unused_variables)]
@@ -2029,7 +2739,71 @@ pub struct CreateBucketRequest {
     #[doc="Allows grantee to write the ACL for the applicable bucket."]
     pub grant_write_acp: Option<String>,
 }
-
+impl CreateBucketRequest {
+    /// Sets `acl`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBucketRequest.acl = Some(value.into());`.
+    pub fn acl<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.acl = Some(value.into());
+        self
+    }
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBucketRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `create_bucket_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBucketRequest.create_bucket_configuration = Some(value.into());`.
+pub fn create_bucket_configuration<ValueType: Into<CreateBucketConfiguration>>(mut self, value: ValueType) -> Self{
+        self.create_bucket_configuration = Some(value.into());
+        self
+    }
+    /// Sets `grant_full_control`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBucketRequest.grant_full_control = Some(value.into());`.
+    pub fn grant_full_control<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_full_control = Some(value.into());
+        self
+    }
+    /// Sets `grant_read`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBucketRequest.grant_read = Some(value.into());`.
+    pub fn grant_read<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_read = Some(value.into());
+        self
+    }
+    /// Sets `grant_read_acp`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBucketRequest.grant_read_acp = Some(value.into());`.
+    pub fn grant_read_acp<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_read_acp = Some(value.into());
+        self
+    }
+    /// Sets `grant_write`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBucketRequest.grant_write = Some(value.into());`.
+    pub fn grant_write<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_write = Some(value.into());
+        self
+    }
+    /// Sets `grant_write_acp`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBucketRequest.grant_write_acp = Some(value.into());`.
+    pub fn grant_write_acp<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_write_acp = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateBucketRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> CreateBucketRequest {
+        CreateBucketRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct CreateMultipartUploadOutput {
     #[doc="Date when multipart upload will become eligible for abort operation by lifecycle."]
@@ -2052,7 +2826,6 @@ pub struct CreateMultipartUploadOutput {
     #[doc="ID for the initiated multipart upload."]
     pub upload_id: Option<String>,
 }
-
 struct CreateMultipartUploadOutputDeserializer;
 impl CreateMultipartUploadOutputDeserializer {
     #[allow(unused_variables)]
@@ -2149,7 +2922,179 @@ pub struct CreateMultipartUploadRequest {
     #[doc="If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata."]
     pub website_redirect_location: Option<String>,
 }
-
+impl CreateMultipartUploadRequest {
+    /// Sets `acl`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.acl = Some(value.into());`.
+    pub fn acl<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.acl = Some(value.into());
+        self
+    }
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `cache_control`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.cache_control = Some(value.into());`.
+    pub fn cache_control<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_control = Some(value.into());
+        self
+    }
+    /// Sets `content_disposition`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.content_disposition = Some(value.into());`.
+    pub fn content_disposition<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_disposition = Some(value.into());
+        self
+    }
+    /// Sets `content_encoding`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.content_encoding = Some(value.into());`.
+    pub fn content_encoding<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_encoding = Some(value.into());
+        self
+    }
+    /// Sets `content_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.content_language = Some(value.into());`.
+    pub fn content_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_language = Some(value.into());
+        self
+    }
+    /// Sets `content_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.content_type = Some(value.into());`.
+    pub fn content_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_type = Some(value.into());
+        self
+    }
+    /// Sets `expires`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.expires = Some(value.into());`.
+    pub fn expires<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.expires = Some(value.into());
+        self
+    }
+    /// Sets `grant_full_control`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.grant_full_control = Some(value.into());`.
+    pub fn grant_full_control<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_full_control = Some(value.into());
+        self
+    }
+    /// Sets `grant_read`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.grant_read = Some(value.into());`.
+    pub fn grant_read<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_read = Some(value.into());
+        self
+    }
+    /// Sets `grant_read_acp`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.grant_read_acp = Some(value.into());`.
+    pub fn grant_read_acp<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_read_acp = Some(value.into());
+        self
+    }
+    /// Sets `grant_write_acp`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.grant_write_acp = Some(value.into());`.
+    pub fn grant_write_acp<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_write_acp = Some(value.into());
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `metadata`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.metadata = Some(value.into());`.
+pub fn metadata<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.metadata = Some(value.into());
+        self
+    }
+    /// Sets `request_payer`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.request_payer = Some(value.into());`.
+    pub fn request_payer<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_payer = Some(value.into());
+        self
+    }
+    /// Sets `sse_customer_algorithm`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.sse_customer_algorithm = Some(value.into());`.
+    pub fn sse_customer_algorithm<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sse_customer_algorithm = Some(value.into());
+        self
+    }
+    /// Sets `sse_customer_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.sse_customer_key = Some(value.into());`.
+    pub fn sse_customer_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sse_customer_key = Some(value.into());
+        self
+    }
+    /// Sets `sse_customer_key_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.sse_customer_key_md5 = Some(value.into());`.
+    pub fn sse_customer_key_md5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sse_customer_key_md5 = Some(value.into());
+        self
+    }
+    /// Sets `ssekms_key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.ssekms_key_id = Some(value.into());`.
+    pub fn ssekms_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ssekms_key_id = Some(value.into());
+        self
+    }
+    /// Sets `server_side_encryption`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.server_side_encryption = Some(value.into());`.
+    pub fn server_side_encryption<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_side_encryption = Some(value.into());
+        self
+    }
+    /// Sets `storage_class`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.storage_class = Some(value.into());`.
+    pub fn storage_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.storage_class = Some(value.into());
+        self
+    }
+    /// Sets `tagging`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.tagging = Some(value.into());`.
+    pub fn tagging<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tagging = Some(value.into());
+        self
+    }
+    /// Sets `website_redirect_location`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMultipartUploadRequest.website_redirect_location = Some(value.into());`.
+    pub fn website_redirect_location<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.website_redirect_location = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateMultipartUploadRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, KeyType: Into<String>>(bucket: BucketType,
+                                                                key: KeyType)
+                                                                -> CreateMultipartUploadRequest {
+        CreateMultipartUploadRequest {
+            bucket: bucket.into(),
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 struct CreationDateDeserializer;
 impl CreationDateDeserializer {
     #[allow(unused_variables)]
@@ -2245,7 +3190,29 @@ pub struct Delete {
     #[doc="Element to enable quiet mode for the request. When you add this element, you must set its value to true."]
     pub quiet: Option<bool>,
 }
-
+impl Delete {
+    /// Sets `objects`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Delete.objects = value.into();`.
+    pub fn objects<ValueType: Into<Vec<ObjectIdentifier>>>(mut self, value: ValueType) -> Self {
+        self.objects = value.into();
+        self
+    }
+    /// Sets `quiet`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Delete.quiet = Some(value.into());`.
+    pub fn quiet<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.quiet = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Delete with optional fields set to `None`.
+    pub fn new<ObjectsType: Into<Vec<ObjectIdentifier>>>(objects: ObjectsType) -> Delete {
+        Delete {
+            objects: objects.into(),
+            ..Default::default()
+        }
+    }
+}
 
 pub struct DeleteSerializer;
 impl DeleteSerializer {
@@ -2268,12 +3235,53 @@ pub struct DeleteBucketAnalyticsConfigurationRequest {
     #[doc="The identifier used to represent an analytics configuration."]
     pub id: String,
 }
-
+impl DeleteBucketAnalyticsConfigurationRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBucketAnalyticsConfigurationRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBucketAnalyticsConfigurationRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteBucketAnalyticsConfigurationRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, IdType: Into<String>>
+        (bucket: BucketType,
+         id: IdType)
+         -> DeleteBucketAnalyticsConfigurationRequest {
+        DeleteBucketAnalyticsConfigurationRequest {
+            bucket: bucket.into(),
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct DeleteBucketCorsRequest {
     pub bucket: String,
 }
-
+impl DeleteBucketCorsRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBucketCorsRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteBucketCorsRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> DeleteBucketCorsRequest {
+        DeleteBucketCorsRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct DeleteBucketInventoryConfigurationRequest {
     #[doc="The name of the bucket containing the inventory configuration to delete."]
@@ -2281,12 +3289,53 @@ pub struct DeleteBucketInventoryConfigurationRequest {
     #[doc="The ID used to identify the inventory configuration."]
     pub id: String,
 }
-
+impl DeleteBucketInventoryConfigurationRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBucketInventoryConfigurationRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBucketInventoryConfigurationRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteBucketInventoryConfigurationRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, IdType: Into<String>>
+        (bucket: BucketType,
+         id: IdType)
+         -> DeleteBucketInventoryConfigurationRequest {
+        DeleteBucketInventoryConfigurationRequest {
+            bucket: bucket.into(),
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct DeleteBucketLifecycleRequest {
     pub bucket: String,
 }
-
+impl DeleteBucketLifecycleRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBucketLifecycleRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteBucketLifecycleRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> DeleteBucketLifecycleRequest {
+        DeleteBucketLifecycleRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct DeleteBucketMetricsConfigurationRequest {
     #[doc="The name of the bucket containing the metrics configuration to delete."]
@@ -2294,32 +3343,133 @@ pub struct DeleteBucketMetricsConfigurationRequest {
     #[doc="The ID used to identify the metrics configuration."]
     pub id: String,
 }
-
+impl DeleteBucketMetricsConfigurationRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBucketMetricsConfigurationRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBucketMetricsConfigurationRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteBucketMetricsConfigurationRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, IdType: Into<String>>
+        (bucket: BucketType,
+         id: IdType)
+         -> DeleteBucketMetricsConfigurationRequest {
+        DeleteBucketMetricsConfigurationRequest {
+            bucket: bucket.into(),
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct DeleteBucketPolicyRequest {
     pub bucket: String,
 }
-
+impl DeleteBucketPolicyRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBucketPolicyRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteBucketPolicyRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> DeleteBucketPolicyRequest {
+        DeleteBucketPolicyRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct DeleteBucketReplicationRequest {
     pub bucket: String,
 }
-
+impl DeleteBucketReplicationRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBucketReplicationRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteBucketReplicationRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> DeleteBucketReplicationRequest {
+        DeleteBucketReplicationRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct DeleteBucketRequest {
     pub bucket: String,
 }
-
+impl DeleteBucketRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBucketRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteBucketRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> DeleteBucketRequest {
+        DeleteBucketRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct DeleteBucketTaggingRequest {
     pub bucket: String,
 }
-
+impl DeleteBucketTaggingRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBucketTaggingRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteBucketTaggingRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> DeleteBucketTaggingRequest {
+        DeleteBucketTaggingRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct DeleteBucketWebsiteRequest {
     pub bucket: String,
 }
-
+impl DeleteBucketWebsiteRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBucketWebsiteRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteBucketWebsiteRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> DeleteBucketWebsiteRequest {
+        DeleteBucketWebsiteRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 struct DeleteMarkerDeserializer;
 impl DeleteMarkerDeserializer {
     #[allow(unused_variables)]
@@ -2346,7 +3496,6 @@ pub struct DeleteMarkerEntry {
     #[doc="Version ID of an object."]
     pub version_id: Option<String>,
 }
-
 struct DeleteMarkerEntryDeserializer;
 impl DeleteMarkerEntryDeserializer {
     #[allow(unused_variables)]
@@ -2455,7 +3604,6 @@ pub struct DeleteObjectOutput {
     #[doc="Returns the version ID of the delete marker created as a result of the DELETE operation."]
     pub version_id: Option<String>,
 }
-
 struct DeleteObjectOutputDeserializer;
 impl DeleteObjectOutputDeserializer {
     #[allow(unused_variables)]
@@ -2482,13 +3630,58 @@ pub struct DeleteObjectRequest {
     #[doc="VersionId used to reference a specific version of the object."]
     pub version_id: Option<String>,
 }
-
+impl DeleteObjectRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteObjectRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteObjectRequest.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `mfa`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteObjectRequest.mfa = Some(value.into());`.
+    pub fn mfa<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.mfa = Some(value.into());
+        self
+    }
+    /// Sets `request_payer`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteObjectRequest.request_payer = Some(value.into());`.
+    pub fn request_payer<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_payer = Some(value.into());
+        self
+    }
+    /// Sets `version_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteObjectRequest.version_id = Some(value.into());`.
+    pub fn version_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteObjectRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, KeyType: Into<String>>(bucket: BucketType,
+                                                                key: KeyType)
+                                                                -> DeleteObjectRequest {
+        DeleteObjectRequest {
+            bucket: bucket.into(),
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct DeleteObjectTaggingOutput {
     #[doc="The versionId of the object the tag-set was removed from."]
     pub version_id: Option<String>,
 }
-
 struct DeleteObjectTaggingOutputDeserializer;
 impl DeleteObjectTaggingOutputDeserializer {
     #[allow(unused_variables)]
@@ -2512,14 +3705,45 @@ pub struct DeleteObjectTaggingRequest {
     #[doc="The versionId of the object that the tag-set will be removed from."]
     pub version_id: Option<String>,
 }
-
+impl DeleteObjectTaggingRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteObjectTaggingRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteObjectTaggingRequest.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `version_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteObjectTaggingRequest.version_id = Some(value.into());`.
+    pub fn version_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteObjectTaggingRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, KeyType: Into<String>>(bucket: BucketType,
+                                                                key: KeyType)
+                                                                -> DeleteObjectTaggingRequest {
+        DeleteObjectTaggingRequest {
+            bucket: bucket.into(),
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct DeleteObjectsOutput {
     pub deleted: Option<Vec<DeletedObject>>,
     pub errors: Option<Vec<S3Error>>,
     pub request_charged: Option<String>,
 }
-
 struct DeleteObjectsOutputDeserializer;
 impl DeleteObjectsOutputDeserializer {
     #[allow(unused_variables)]
@@ -2575,7 +3799,46 @@ pub struct DeleteObjectsRequest {
     pub mfa: Option<String>,
     pub request_payer: Option<String>,
 }
-
+impl DeleteObjectsRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteObjectsRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `delete`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteObjectsRequest.delete = value.into();`.
+    pub fn delete<ValueType: Into<Delete>>(mut self, value: ValueType) -> Self {
+        self.delete = value.into();
+        self
+    }
+    /// Sets `mfa`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteObjectsRequest.mfa = Some(value.into());`.
+    pub fn mfa<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.mfa = Some(value.into());
+        self
+    }
+    /// Sets `request_payer`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteObjectsRequest.request_payer = Some(value.into());`.
+    pub fn request_payer<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_payer = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteObjectsRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, DeleteType: Into<Delete>>(bucket: BucketType,
+                                                                   delete: DeleteType)
+                                                                   -> DeleteObjectsRequest {
+        DeleteObjectsRequest {
+            bucket: bucket.into(),
+            delete: delete.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct DeletedObject {
     pub delete_marker: Option<bool>,
@@ -2583,7 +3846,6 @@ pub struct DeletedObject {
     pub key: Option<String>,
     pub version_id: Option<String>,
 }
-
 struct DeletedObjectDeserializer;
 impl DeletedObjectDeserializer {
     #[allow(unused_variables)]
@@ -2700,7 +3962,29 @@ pub struct Destination {
     #[doc="The class of storage used to store the object."]
     pub storage_class: Option<String>,
 }
-
+impl Destination {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Destination.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `storage_class`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Destination.storage_class = Some(value.into());`.
+    pub fn storage_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.storage_class = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Destination with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> Destination {
+        Destination {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 struct DestinationDeserializer;
 impl DestinationDeserializer {
     #[allow(unused_variables)]
@@ -2869,7 +4153,6 @@ pub struct S3Error {
     pub message: Option<String>,
     pub version_id: Option<String>,
 }
-
 struct S3ErrorDeserializer;
 impl S3ErrorDeserializer {
     #[allow(unused_variables)]
@@ -2928,7 +4211,22 @@ pub struct ErrorDocument {
     #[doc="The object key name to use when a 4XX class error occurs."]
     pub key: String,
 }
-
+impl ErrorDocument {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ErrorDocument.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Returns a new instance of ErrorDocument with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>>(key: KeyType) -> ErrorDocument {
+        ErrorDocument {
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 struct ErrorDocumentDeserializer;
 impl ErrorDocumentDeserializer {
     #[allow(unused_variables)]
@@ -3210,7 +4508,26 @@ pub struct FilterRule {
     pub name: Option<String>,
     pub value: Option<String>,
 }
-
+impl FilterRule {
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FilterRule.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FilterRule.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of FilterRule with optional fields set to `None`.
+    pub fn new() -> FilterRule {
+        FilterRule { ..Default::default() }
+    }
+}
 struct FilterRuleDeserializer;
 impl FilterRuleDeserializer {
     #[allow(unused_variables)]
@@ -3370,7 +4687,6 @@ pub struct GetBucketAccelerateConfigurationOutput {
     #[doc="The accelerate configuration of the bucket."]
     pub status: Option<String>,
 }
-
 struct GetBucketAccelerateConfigurationOutputDeserializer;
 impl GetBucketAccelerateConfigurationOutputDeserializer {
     #[allow(unused_variables)]
@@ -3420,14 +4736,29 @@ pub struct GetBucketAccelerateConfigurationRequest {
     #[doc="Name of the bucket for which the accelerate configuration is retrieved."]
     pub bucket: String,
 }
-
+impl GetBucketAccelerateConfigurationRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBucketAccelerateConfigurationRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of GetBucketAccelerateConfigurationRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType)
+                                         -> GetBucketAccelerateConfigurationRequest {
+        GetBucketAccelerateConfigurationRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct GetBucketAclOutput {
     #[doc="A list of grants."]
     pub grants: Option<Vec<Grant>>,
     pub owner: Option<Owner>,
 }
-
 struct GetBucketAclOutputDeserializer;
 impl GetBucketAclOutputDeserializer {
     #[allow(unused_variables)]
@@ -3477,13 +4808,27 @@ impl GetBucketAclOutputDeserializer {
 pub struct GetBucketAclRequest {
     pub bucket: String,
 }
-
+impl GetBucketAclRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBucketAclRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of GetBucketAclRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> GetBucketAclRequest {
+        GetBucketAclRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct GetBucketAnalyticsConfigurationOutput {
     #[doc="The configuration and any analyses for the analytics filter."]
     pub analytics_configuration: Option<AnalyticsConfiguration>,
 }
-
 struct GetBucketAnalyticsConfigurationOutputDeserializer;
 impl GetBucketAnalyticsConfigurationOutputDeserializer {
     #[allow(unused_variables)]
@@ -3535,12 +4880,37 @@ pub struct GetBucketAnalyticsConfigurationRequest {
     #[doc="The identifier used to represent an analytics configuration."]
     pub id: String,
 }
-
+impl GetBucketAnalyticsConfigurationRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBucketAnalyticsConfigurationRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBucketAnalyticsConfigurationRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of GetBucketAnalyticsConfigurationRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, IdType: Into<String>>
+        (bucket: BucketType,
+         id: IdType)
+         -> GetBucketAnalyticsConfigurationRequest {
+        GetBucketAnalyticsConfigurationRequest {
+            bucket: bucket.into(),
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct GetBucketCorsOutput {
     pub cors_rules: Option<Vec<CORSRule>>,
 }
-
 struct GetBucketCorsOutputDeserializer;
 impl GetBucketCorsOutputDeserializer {
     #[allow(unused_variables)]
@@ -3587,13 +4957,27 @@ impl GetBucketCorsOutputDeserializer {
 pub struct GetBucketCorsRequest {
     pub bucket: String,
 }
-
+impl GetBucketCorsRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBucketCorsRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of GetBucketCorsRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> GetBucketCorsRequest {
+        GetBucketCorsRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct GetBucketInventoryConfigurationOutput {
     #[doc="Specifies the inventory configuration."]
     pub inventory_configuration: Option<InventoryConfiguration>,
 }
-
 struct GetBucketInventoryConfigurationOutputDeserializer;
 impl GetBucketInventoryConfigurationOutputDeserializer {
     #[allow(unused_variables)]
@@ -3645,12 +5029,37 @@ pub struct GetBucketInventoryConfigurationRequest {
     #[doc="The ID used to identify the inventory configuration."]
     pub id: String,
 }
-
+impl GetBucketInventoryConfigurationRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBucketInventoryConfigurationRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBucketInventoryConfigurationRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of GetBucketInventoryConfigurationRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, IdType: Into<String>>
+        (bucket: BucketType,
+         id: IdType)
+         -> GetBucketInventoryConfigurationRequest {
+        GetBucketInventoryConfigurationRequest {
+            bucket: bucket.into(),
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct GetBucketLifecycleConfigurationOutput {
     pub rules: Option<Vec<LifecycleRule>>,
 }
-
 struct GetBucketLifecycleConfigurationOutputDeserializer;
 impl GetBucketLifecycleConfigurationOutputDeserializer {
     #[allow(unused_variables)]
@@ -3698,12 +5107,27 @@ impl GetBucketLifecycleConfigurationOutputDeserializer {
 pub struct GetBucketLifecycleConfigurationRequest {
     pub bucket: String,
 }
-
+impl GetBucketLifecycleConfigurationRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBucketLifecycleConfigurationRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of GetBucketLifecycleConfigurationRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType)
+                                         -> GetBucketLifecycleConfigurationRequest {
+        GetBucketLifecycleConfigurationRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct GetBucketLifecycleOutput {
     pub rules: Option<Vec<Rule>>,
 }
-
 struct GetBucketLifecycleOutputDeserializer;
 impl GetBucketLifecycleOutputDeserializer {
     #[allow(unused_variables)]
@@ -3749,12 +5173,26 @@ impl GetBucketLifecycleOutputDeserializer {
 pub struct GetBucketLifecycleRequest {
     pub bucket: String,
 }
-
+impl GetBucketLifecycleRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBucketLifecycleRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of GetBucketLifecycleRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> GetBucketLifecycleRequest {
+        GetBucketLifecycleRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct GetBucketLocationOutput {
     pub location_constraint: Option<String>,
 }
-
 struct GetBucketLocationOutputDeserializer;
 impl GetBucketLocationOutputDeserializer {
     #[allow(unused_variables)]
@@ -3772,12 +5210,26 @@ impl GetBucketLocationOutputDeserializer {
 pub struct GetBucketLocationRequest {
     pub bucket: String,
 }
-
+impl GetBucketLocationRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBucketLocationRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of GetBucketLocationRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> GetBucketLocationRequest {
+        GetBucketLocationRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct GetBucketLoggingOutput {
     pub logging_enabled: Option<LoggingEnabled>,
 }
-
 struct GetBucketLoggingOutputDeserializer;
 impl GetBucketLoggingOutputDeserializer {
     #[allow(unused_variables)]
@@ -3825,13 +5277,27 @@ impl GetBucketLoggingOutputDeserializer {
 pub struct GetBucketLoggingRequest {
     pub bucket: String,
 }
-
+impl GetBucketLoggingRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBucketLoggingRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of GetBucketLoggingRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> GetBucketLoggingRequest {
+        GetBucketLoggingRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct GetBucketMetricsConfigurationOutput {
     #[doc="Specifies the metrics configuration."]
     pub metrics_configuration: Option<MetricsConfiguration>,
 }
-
 struct GetBucketMetricsConfigurationOutputDeserializer;
 impl GetBucketMetricsConfigurationOutputDeserializer {
     #[allow(unused_variables)]
@@ -3883,29 +5349,84 @@ pub struct GetBucketMetricsConfigurationRequest {
     #[doc="The ID used to identify the metrics configuration."]
     pub id: String,
 }
-
+impl GetBucketMetricsConfigurationRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBucketMetricsConfigurationRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBucketMetricsConfigurationRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of GetBucketMetricsConfigurationRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, IdType: Into<String>>
+        (bucket: BucketType,
+         id: IdType)
+         -> GetBucketMetricsConfigurationRequest {
+        GetBucketMetricsConfigurationRequest {
+            bucket: bucket.into(),
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct GetBucketNotificationConfigurationRequest {
     #[doc="Name of the bucket to get the notification configuration for."]
     pub bucket: String,
 }
-
+impl GetBucketNotificationConfigurationRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBucketNotificationConfigurationRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of GetBucketNotificationConfigurationRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType)
+                                         -> GetBucketNotificationConfigurationRequest {
+        GetBucketNotificationConfigurationRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct GetBucketPolicyOutput {
     #[doc="The bucket policy as a JSON document."]
     pub policy: Option<String>,
 }
-
 #[derive(Default,Debug)]
 pub struct GetBucketPolicyRequest {
     pub bucket: String,
 }
-
+impl GetBucketPolicyRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBucketPolicyRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of GetBucketPolicyRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> GetBucketPolicyRequest {
+        GetBucketPolicyRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct GetBucketReplicationOutput {
     pub replication_configuration: Option<ReplicationConfiguration>,
 }
-
 struct GetBucketReplicationOutputDeserializer;
 impl GetBucketReplicationOutputDeserializer {
     #[allow(unused_variables)]
@@ -3951,13 +5472,27 @@ impl GetBucketReplicationOutputDeserializer {
 pub struct GetBucketReplicationRequest {
     pub bucket: String,
 }
-
+impl GetBucketReplicationRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBucketReplicationRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of GetBucketReplicationRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> GetBucketReplicationRequest {
+        GetBucketReplicationRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct GetBucketRequestPaymentOutput {
     #[doc="Specifies who pays for the download and request fees."]
     pub payer: Option<String>,
 }
-
 struct GetBucketRequestPaymentOutputDeserializer;
 impl GetBucketRequestPaymentOutputDeserializer {
     #[allow(unused_variables)]
@@ -4003,12 +5538,26 @@ impl GetBucketRequestPaymentOutputDeserializer {
 pub struct GetBucketRequestPaymentRequest {
     pub bucket: String,
 }
-
+impl GetBucketRequestPaymentRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBucketRequestPaymentRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of GetBucketRequestPaymentRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> GetBucketRequestPaymentRequest {
+        GetBucketRequestPaymentRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct GetBucketTaggingOutput {
     pub tag_set: Vec<Tag>,
 }
-
 struct GetBucketTaggingOutputDeserializer;
 impl GetBucketTaggingOutputDeserializer {
     #[allow(unused_variables)]
@@ -4054,7 +5603,22 @@ impl GetBucketTaggingOutputDeserializer {
 pub struct GetBucketTaggingRequest {
     pub bucket: String,
 }
-
+impl GetBucketTaggingRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBucketTaggingRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of GetBucketTaggingRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> GetBucketTaggingRequest {
+        GetBucketTaggingRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct GetBucketVersioningOutput {
     #[doc="Specifies whether MFA delete is enabled in the bucket versioning configuration. This element is only returned if the bucket has been configured with MFA delete. If the bucket has never been so configured, this element is not returned."]
@@ -4062,7 +5626,6 @@ pub struct GetBucketVersioningOutput {
     #[doc="The versioning state of the bucket."]
     pub status: Option<String>,
 }
-
 struct GetBucketVersioningOutputDeserializer;
 impl GetBucketVersioningOutputDeserializer {
     #[allow(unused_variables)]
@@ -4115,7 +5678,22 @@ impl GetBucketVersioningOutputDeserializer {
 pub struct GetBucketVersioningRequest {
     pub bucket: String,
 }
-
+impl GetBucketVersioningRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBucketVersioningRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of GetBucketVersioningRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> GetBucketVersioningRequest {
+        GetBucketVersioningRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct GetBucketWebsiteOutput {
     pub error_document: Option<ErrorDocument>,
@@ -4123,7 +5701,6 @@ pub struct GetBucketWebsiteOutput {
     pub redirect_all_requests_to: Option<RedirectAllRequestsTo>,
     pub routing_rules: Option<Vec<RoutingRule>>,
 }
-
 struct GetBucketWebsiteOutputDeserializer;
 impl GetBucketWebsiteOutputDeserializer {
     #[allow(unused_variables)]
@@ -4186,7 +5763,22 @@ impl GetBucketWebsiteOutputDeserializer {
 pub struct GetBucketWebsiteRequest {
     pub bucket: String,
 }
-
+impl GetBucketWebsiteRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBucketWebsiteRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of GetBucketWebsiteRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> GetBucketWebsiteRequest {
+        GetBucketWebsiteRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct GetObjectAclOutput {
     #[doc="A list of grants."]
@@ -4194,7 +5786,6 @@ pub struct GetObjectAclOutput {
     pub owner: Option<Owner>,
     pub request_charged: Option<String>,
 }
-
 struct GetObjectAclOutputDeserializer;
 impl GetObjectAclOutputDeserializer {
     #[allow(unused_variables)]
@@ -4248,7 +5839,46 @@ pub struct GetObjectAclRequest {
     #[doc="VersionId used to reference a specific version of the object."]
     pub version_id: Option<String>,
 }
-
+impl GetObjectAclRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectAclRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectAclRequest.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `request_payer`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectAclRequest.request_payer = Some(value.into());`.
+    pub fn request_payer<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_payer = Some(value.into());
+        self
+    }
+    /// Sets `version_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectAclRequest.version_id = Some(value.into());`.
+    pub fn version_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetObjectAclRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, KeyType: Into<String>>(bucket: BucketType,
+                                                                key: KeyType)
+                                                                -> GetObjectAclRequest {
+        GetObjectAclRequest {
+            bucket: bucket.into(),
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct GetObjectOutput {
     pub accept_ranges: Option<String>,
@@ -4304,7 +5934,6 @@ pub struct GetObjectOutput {
     #[doc="If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata."]
     pub website_redirect_location: Option<String>,
 }
-
 #[derive(Default,Debug)]
 pub struct GetObjectRequest {
     pub bucket: String,
@@ -4343,13 +5972,158 @@ pub struct GetObjectRequest {
     #[doc="VersionId used to reference a specific version of the object."]
     pub version_id: Option<String>,
 }
-
+impl GetObjectRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `if_match`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectRequest.if_match = Some(value.into());`.
+    pub fn if_match<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.if_match = Some(value.into());
+        self
+    }
+    /// Sets `if_modified_since`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectRequest.if_modified_since = Some(value.into());`.
+    pub fn if_modified_since<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.if_modified_since = Some(value.into());
+        self
+    }
+    /// Sets `if_none_match`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectRequest.if_none_match = Some(value.into());`.
+    pub fn if_none_match<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.if_none_match = Some(value.into());
+        self
+    }
+    /// Sets `if_unmodified_since`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectRequest.if_unmodified_since = Some(value.into());`.
+    pub fn if_unmodified_since<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.if_unmodified_since = Some(value.into());
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectRequest.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `part_number`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectRequest.part_number = Some(value.into());`.
+    pub fn part_number<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.part_number = Some(value.into());
+        self
+    }
+    /// Sets `range`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectRequest.range = Some(value.into());`.
+    pub fn range<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.range = Some(value.into());
+        self
+    }
+    /// Sets `request_payer`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectRequest.request_payer = Some(value.into());`.
+    pub fn request_payer<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_payer = Some(value.into());
+        self
+    }
+    /// Sets `response_cache_control`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectRequest.response_cache_control = Some(value.into());`.
+    pub fn response_cache_control<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.response_cache_control = Some(value.into());
+        self
+    }
+    /// Sets `response_content_disposition`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectRequest.response_content_disposition = Some(value.into());`.
+    pub fn response_content_disposition<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.response_content_disposition = Some(value.into());
+        self
+    }
+    /// Sets `response_content_encoding`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectRequest.response_content_encoding = Some(value.into());`.
+    pub fn response_content_encoding<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.response_content_encoding = Some(value.into());
+        self
+    }
+    /// Sets `response_content_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectRequest.response_content_language = Some(value.into());`.
+    pub fn response_content_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.response_content_language = Some(value.into());
+        self
+    }
+    /// Sets `response_content_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectRequest.response_content_type = Some(value.into());`.
+    pub fn response_content_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.response_content_type = Some(value.into());
+        self
+    }
+    /// Sets `response_expires`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectRequest.response_expires = Some(value.into());`.
+    pub fn response_expires<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.response_expires = Some(value.into());
+        self
+    }
+    /// Sets `sse_customer_algorithm`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectRequest.sse_customer_algorithm = Some(value.into());`.
+    pub fn sse_customer_algorithm<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sse_customer_algorithm = Some(value.into());
+        self
+    }
+    /// Sets `sse_customer_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectRequest.sse_customer_key = Some(value.into());`.
+    pub fn sse_customer_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sse_customer_key = Some(value.into());
+        self
+    }
+    /// Sets `sse_customer_key_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectRequest.sse_customer_key_md5 = Some(value.into());`.
+    pub fn sse_customer_key_md5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sse_customer_key_md5 = Some(value.into());
+        self
+    }
+    /// Sets `version_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectRequest.version_id = Some(value.into());`.
+    pub fn version_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetObjectRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, KeyType: Into<String>>(bucket: BucketType,
+                                                                key: KeyType)
+                                                                -> GetObjectRequest {
+        GetObjectRequest {
+            bucket: bucket.into(),
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct GetObjectTaggingOutput {
     pub tag_set: Vec<Tag>,
     pub version_id: Option<String>,
 }
-
 struct GetObjectTaggingOutputDeserializer;
 impl GetObjectTaggingOutputDeserializer {
     #[allow(unused_variables)]
@@ -4397,26 +6171,104 @@ pub struct GetObjectTaggingRequest {
     pub key: String,
     pub version_id: Option<String>,
 }
-
+impl GetObjectTaggingRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectTaggingRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectTaggingRequest.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `version_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectTaggingRequest.version_id = Some(value.into());`.
+    pub fn version_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetObjectTaggingRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, KeyType: Into<String>>(bucket: BucketType,
+                                                                key: KeyType)
+                                                                -> GetObjectTaggingRequest {
+        GetObjectTaggingRequest {
+            bucket: bucket.into(),
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct GetObjectTorrentOutput {
     pub body: Option<StreamingBody>,
     pub request_charged: Option<String>,
 }
-
 #[derive(Default,Debug)]
 pub struct GetObjectTorrentRequest {
     pub bucket: String,
     pub key: String,
     pub request_payer: Option<String>,
 }
-
+impl GetObjectTorrentRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectTorrentRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectTorrentRequest.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `request_payer`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetObjectTorrentRequest.request_payer = Some(value.into());`.
+    pub fn request_payer<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_payer = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetObjectTorrentRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, KeyType: Into<String>>(bucket: BucketType,
+                                                                key: KeyType)
+                                                                -> GetObjectTorrentRequest {
+        GetObjectTorrentRequest {
+            bucket: bucket.into(),
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct GlacierJobParameters {
     #[doc="Glacier retrieval tier at which the restore will be processed."]
     pub tier: String,
 }
-
+impl GlacierJobParameters {
+    /// Sets `tier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GlacierJobParameters.tier = value.into();`.
+    pub fn tier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tier = value.into();
+        self
+    }
+    /// Returns a new instance of GlacierJobParameters with optional fields set to `None`.
+    pub fn new<TierType: Into<String>>(tier: TierType) -> GlacierJobParameters {
+        GlacierJobParameters {
+            tier: tier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 pub struct GlacierJobParametersSerializer;
 impl GlacierJobParametersSerializer {
@@ -4435,7 +6287,26 @@ pub struct Grant {
     #[doc="Specifies the permission given to the grantee."]
     pub permission: Option<String>,
 }
-
+impl Grant {
+    /// Sets `grantee`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Grant.grantee = Some(value.into());`.
+    pub fn grantee<ValueType: Into<Grantee>>(mut self, value: ValueType) -> Self {
+        self.grantee = Some(value.into());
+        self
+    }
+    /// Sets `permission`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Grant.permission = Some(value.into());`.
+    pub fn permission<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.permission = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Grant with optional fields set to `None`.
+    pub fn new() -> Grant {
+        Grant { ..Default::default() }
+    }
+}
 struct GrantDeserializer;
 impl GrantDeserializer {
     #[allow(unused_variables)]
@@ -4512,7 +6383,50 @@ pub struct Grantee {
     #[doc="URI of the grantee group."]
     pub uri: Option<String>,
 }
-
+impl Grantee {
+    /// Sets `display_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Grantee.display_name = Some(value.into());`.
+    pub fn display_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.display_name = Some(value.into());
+        self
+    }
+    /// Sets `email_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Grantee.email_address = Some(value.into());`.
+    pub fn email_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.email_address = Some(value.into());
+        self
+    }
+    /// Sets `id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Grantee.id = Some(value.into());`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = Some(value.into());
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Grantee.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Sets `uri`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Grantee.uri = Some(value.into());`.
+    pub fn uri<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.uri = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Grantee with optional fields set to `None`.
+    pub fn new<TypeType: Into<String>>(type_: TypeType) -> Grantee {
+        Grantee {
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 struct GranteeDeserializer;
 impl GranteeDeserializer {
     #[allow(unused_variables)]
@@ -4654,7 +6568,22 @@ impl GrantsSerializer {
 pub struct HeadBucketRequest {
     pub bucket: String,
 }
-
+impl HeadBucketRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HeadBucketRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of HeadBucketRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> HeadBucketRequest {
+        HeadBucketRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct HeadObjectOutput {
     pub accept_ranges: Option<String>,
@@ -4704,7 +6633,6 @@ pub struct HeadObjectOutput {
     #[doc="If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata."]
     pub website_redirect_location: Option<String>,
 }
-
 struct HeadObjectOutputDeserializer;
 impl HeadObjectOutputDeserializer {
     #[allow(unused_variables)]
@@ -4747,7 +6675,109 @@ pub struct HeadObjectRequest {
     #[doc="VersionId used to reference a specific version of the object."]
     pub version_id: Option<String>,
 }
-
+impl HeadObjectRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HeadObjectRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `if_match`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HeadObjectRequest.if_match = Some(value.into());`.
+    pub fn if_match<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.if_match = Some(value.into());
+        self
+    }
+    /// Sets `if_modified_since`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HeadObjectRequest.if_modified_since = Some(value.into());`.
+    pub fn if_modified_since<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.if_modified_since = Some(value.into());
+        self
+    }
+    /// Sets `if_none_match`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HeadObjectRequest.if_none_match = Some(value.into());`.
+    pub fn if_none_match<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.if_none_match = Some(value.into());
+        self
+    }
+    /// Sets `if_unmodified_since`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HeadObjectRequest.if_unmodified_since = Some(value.into());`.
+    pub fn if_unmodified_since<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.if_unmodified_since = Some(value.into());
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HeadObjectRequest.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `part_number`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HeadObjectRequest.part_number = Some(value.into());`.
+    pub fn part_number<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.part_number = Some(value.into());
+        self
+    }
+    /// Sets `range`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HeadObjectRequest.range = Some(value.into());`.
+    pub fn range<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.range = Some(value.into());
+        self
+    }
+    /// Sets `request_payer`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HeadObjectRequest.request_payer = Some(value.into());`.
+    pub fn request_payer<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_payer = Some(value.into());
+        self
+    }
+    /// Sets `sse_customer_algorithm`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HeadObjectRequest.sse_customer_algorithm = Some(value.into());`.
+    pub fn sse_customer_algorithm<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sse_customer_algorithm = Some(value.into());
+        self
+    }
+    /// Sets `sse_customer_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HeadObjectRequest.sse_customer_key = Some(value.into());`.
+    pub fn sse_customer_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sse_customer_key = Some(value.into());
+        self
+    }
+    /// Sets `sse_customer_key_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HeadObjectRequest.sse_customer_key_md5 = Some(value.into());`.
+    pub fn sse_customer_key_md5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sse_customer_key_md5 = Some(value.into());
+        self
+    }
+    /// Sets `version_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HeadObjectRequest.version_id = Some(value.into());`.
+    pub fn version_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of HeadObjectRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, KeyType: Into<String>>(bucket: BucketType,
+                                                                key: KeyType)
+                                                                -> HeadObjectRequest {
+        HeadObjectRequest {
+            bucket: bucket.into(),
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 struct HostNameDeserializer;
 impl HostNameDeserializer {
     #[allow(unused_variables)]
@@ -4853,7 +6883,22 @@ pub struct IndexDocument {
     #[doc="A suffix that is appended to a request that is for a directory on the website endpoint (e.g. if the suffix is index.html and you make a request to samplebucket/images/ the data that is returned will be for the object with the key name images/index.html) The suffix must not be empty and must not include a slash character."]
     pub suffix: String,
 }
-
+impl IndexDocument {
+    /// Sets `suffix`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IndexDocument.suffix = value.into();`.
+    pub fn suffix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.suffix = value.into();
+        self
+    }
+    /// Returns a new instance of IndexDocument with optional fields set to `None`.
+    pub fn new<SuffixType: Into<String>>(suffix: SuffixType) -> IndexDocument {
+        IndexDocument {
+            suffix: suffix.into(),
+            ..Default::default()
+        }
+    }
+}
 struct IndexDocumentDeserializer;
 impl IndexDocumentDeserializer {
     #[allow(unused_variables)]
@@ -4928,7 +6973,6 @@ pub struct Initiator {
     #[doc="If the principal is an AWS account, it provides the Canonical User ID. If the principal is an IAM User, it provides a user ARN value."]
     pub id: Option<String>,
 }
-
 struct InitiatorDeserializer;
 impl InitiatorDeserializer {
     #[allow(unused_variables)]
@@ -4992,7 +7036,78 @@ pub struct InventoryConfiguration {
     #[doc="Specifies the schedule for generating inventory results."]
     pub schedule: InventorySchedule,
 }
-
+impl InventoryConfiguration {
+    /// Sets `destination`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryConfiguration.destination = value.into();`.
+    pub fn destination<ValueType: Into<InventoryDestination>>(mut self, value: ValueType) -> Self {
+        self.destination = value.into();
+        self
+    }
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryConfiguration.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<InventoryFilter>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryConfiguration.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `included_object_versions`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryConfiguration.included_object_versions = value.into();`.
+    pub fn included_object_versions<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.included_object_versions = value.into();
+        self
+    }
+    /// Sets `is_enabled`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryConfiguration.is_enabled = value.into();`.
+    pub fn is_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.is_enabled = value.into();
+        self
+    }
+    /// Sets `optional_fields`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryConfiguration.optional_fields = Some(value.into());`.
+    pub fn optional_fields<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.optional_fields = Some(value.into());
+        self
+    }
+    /// Sets `schedule`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryConfiguration.schedule = value.into();`.
+    pub fn schedule<ValueType: Into<InventorySchedule>>(mut self, value: ValueType) -> Self {
+        self.schedule = value.into();
+        self
+    }
+    /// Returns a new instance of InventoryConfiguration with optional fields set to `None`.
+    pub fn new<DestinationType: Into<InventoryDestination>,
+               IdType: Into<String>,
+               IncludedObjectVersionsType: Into<String>,
+               IsEnabledType: Into<bool>,
+               ScheduleType: Into<InventorySchedule>>
+        (destination: DestinationType,
+         id: IdType,
+         included_object_versions: IncludedObjectVersionsType,
+         is_enabled: IsEnabledType,
+         schedule: ScheduleType)
+         -> InventoryConfiguration {
+        InventoryConfiguration {
+            destination: destination.into(),
+            id: id.into(),
+            included_object_versions: included_object_versions.into(),
+            is_enabled: is_enabled.into(),
+            schedule: schedule.into(),
+            ..Default::default()
+        }
+    }
+}
 struct InventoryConfigurationDeserializer;
 impl InventoryConfigurationDeserializer {
     #[allow(unused_variables)]
@@ -5116,7 +7231,26 @@ pub struct InventoryDestination {
     #[doc="Contains the bucket name, file format, bucket owner (optional), and prefix (optional) where inventory results are published."]
     pub s3_bucket_destination: InventoryS3BucketDestination,
 }
-
+impl InventoryDestination {
+    /// Sets `s3_bucket_destination`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryDestination.s3_bucket_destination = value.into();`.
+    pub fn s3_bucket_destination<ValueType: Into<InventoryS3BucketDestination>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.s3_bucket_destination = value.into();
+        self
+    }
+    /// Returns a new instance of InventoryDestination with optional fields set to `None`.
+    pub fn new<S3BucketDestinationType: Into<InventoryS3BucketDestination>>
+        (s3_bucket_destination: S3BucketDestinationType)
+         -> InventoryDestination {
+        InventoryDestination {
+            s3_bucket_destination: s3_bucket_destination.into(),
+            ..Default::default()
+        }
+    }
+}
 struct InventoryDestinationDeserializer;
 impl InventoryDestinationDeserializer {
     #[allow(unused_variables)]
@@ -5179,7 +7313,22 @@ pub struct InventoryFilter {
     #[doc="The prefix that an object must have to be included in the inventory results."]
     pub prefix: String,
 }
-
+impl InventoryFilter {
+    /// Sets `prefix`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryFilter.prefix = value.into();`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = value.into();
+        self
+    }
+    /// Returns a new instance of InventoryFilter with optional fields set to `None`.
+    pub fn new<PrefixType: Into<String>>(prefix: PrefixType) -> InventoryFilter {
+        InventoryFilter {
+            prefix: prefix.into(),
+            ..Default::default()
+        }
+    }
+}
 struct InventoryFilterDeserializer;
 impl InventoryFilterDeserializer {
     #[allow(unused_variables)]
@@ -5426,7 +7575,47 @@ pub struct InventoryS3BucketDestination {
     #[doc="The prefix that is prepended to all inventory results."]
     pub prefix: Option<String>,
 }
-
+impl InventoryS3BucketDestination {
+    /// Sets `account_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryS3BucketDestination.account_id = Some(value.into());`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = Some(value.into());
+        self
+    }
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryS3BucketDestination.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `format`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryS3BucketDestination.format = value.into();`.
+    pub fn format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.format = value.into();
+        self
+    }
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryS3BucketDestination.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InventoryS3BucketDestination with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, FormatType: Into<String>>
+        (bucket: BucketType,
+         format: FormatType)
+         -> InventoryS3BucketDestination {
+        InventoryS3BucketDestination {
+            bucket: bucket.into(),
+            format: format.into(),
+            ..Default::default()
+        }
+    }
+}
 struct InventoryS3BucketDestinationDeserializer;
 impl InventoryS3BucketDestinationDeserializer {
     #[allow(unused_variables)]
@@ -5504,7 +7693,22 @@ pub struct InventorySchedule {
     #[doc="Specifies how frequently inventory results are produced."]
     pub frequency: String,
 }
-
+impl InventorySchedule {
+    /// Sets `frequency`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventorySchedule.frequency = value.into();`.
+    pub fn frequency<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.frequency = value.into();
+        self
+    }
+    /// Returns a new instance of InventorySchedule with optional fields set to `None`.
+    pub fn new<FrequencyType: Into<String>>(frequency: FrequencyType) -> InventorySchedule {
+        InventorySchedule {
+            frequency: frequency.into(),
+            ..Default::default()
+        }
+    }
+}
 struct InventoryScheduleDeserializer;
 impl InventoryScheduleDeserializer {
     #[allow(unused_variables)]
@@ -5711,7 +7915,49 @@ pub struct LambdaFunctionConfiguration {
     #[doc="Lambda cloud function ARN that Amazon S3 can invoke when it detects events of the specified type."]
     pub lambda_function_arn: String,
 }
-
+impl LambdaFunctionConfiguration {
+    /// Sets `events`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LambdaFunctionConfiguration.events = value.into();`.
+    pub fn events<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.events = value.into();
+        self
+    }
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LambdaFunctionConfiguration.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<NotificationConfigurationFilter>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LambdaFunctionConfiguration.id = Some(value.into());`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = Some(value.into());
+        self
+    }
+    /// Sets `lambda_function_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LambdaFunctionConfiguration.lambda_function_arn = value.into();`.
+    pub fn lambda_function_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lambda_function_arn = value.into();
+        self
+    }
+    /// Returns a new instance of LambdaFunctionConfiguration with optional fields set to `None`.
+    pub fn new<EventsType: Into<Vec<String>>, LambdaFunctionArnType: Into<String>>
+        (events: EventsType,
+         lambda_function_arn: LambdaFunctionArnType)
+         -> LambdaFunctionConfiguration {
+        LambdaFunctionConfiguration {
+            events: events.into(),
+            lambda_function_arn: lambda_function_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 struct LambdaFunctionConfigurationDeserializer;
 impl LambdaFunctionConfigurationDeserializer {
     #[allow(unused_variables)]
@@ -5846,7 +8092,22 @@ impl LastModifiedDeserializer {
 pub struct LifecycleConfiguration {
     pub rules: Vec<Rule>,
 }
-
+impl LifecycleConfiguration {
+    /// Sets `rules`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LifecycleConfiguration.rules = value.into();`.
+    pub fn rules<ValueType: Into<Vec<Rule>>>(mut self, value: ValueType) -> Self {
+        self.rules = value.into();
+        self
+    }
+    /// Returns a new instance of LifecycleConfiguration with optional fields set to `None`.
+    pub fn new<RulesType: Into<Vec<Rule>>>(rules: RulesType) -> LifecycleConfiguration {
+        LifecycleConfiguration {
+            rules: rules.into(),
+            ..Default::default()
+        }
+    }
+}
 
 pub struct LifecycleConfigurationSerializer;
 impl LifecycleConfigurationSerializer {
@@ -5868,7 +8129,33 @@ pub struct LifecycleExpiration {
     #[doc="Indicates whether Amazon S3 will remove a delete marker with no noncurrent versions. If set to true, the delete marker will be expired; if set to false the policy takes no action. This cannot be specified with Days or Date in a Lifecycle Expiration Policy."]
     pub expired_object_delete_marker: Option<bool>,
 }
-
+impl LifecycleExpiration {
+    /// Sets `date`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LifecycleExpiration.date = Some(value.into());`.
+    pub fn date<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.date = Some(value.into());
+        self
+    }
+    /// Sets `days`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LifecycleExpiration.days = Some(value.into());`.
+    pub fn days<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.days = Some(value.into());
+        self
+    }
+    /// Sets `expired_object_delete_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LifecycleExpiration.expired_object_delete_marker = Some(value.into());`.
+    pub fn expired_object_delete_marker<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.expired_object_delete_marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of LifecycleExpiration with optional fields set to `None`.
+    pub fn new() -> LifecycleExpiration {
+        LifecycleExpiration { ..Default::default() }
+    }
+}
 struct LifecycleExpirationDeserializer;
 impl LifecycleExpirationDeserializer {
     #[allow(unused_variables)]
@@ -5950,7 +8237,77 @@ pub struct LifecycleRule {
     pub status: String,
     pub transitions: Option<Vec<Transition>>,
 }
-
+impl LifecycleRule {
+    /// Sets `abort_incomplete_multipart_upload`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LifecycleRule.abort_incomplete_multipart_upload = Some(value.into());`.
+    pub fn abort_incomplete_multipart_upload<ValueType: Into<AbortIncompleteMultipartUpload>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.abort_incomplete_multipart_upload = Some(value.into());
+        self
+    }
+    /// Sets `expiration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LifecycleRule.expiration = Some(value.into());`.
+    pub fn expiration<ValueType: Into<LifecycleExpiration>>(mut self, value: ValueType) -> Self {
+        self.expiration = Some(value.into());
+        self
+    }
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LifecycleRule.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<LifecycleRuleFilter>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LifecycleRule.id = Some(value.into());`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = Some(value.into());
+        self
+    }
+    /// Sets `noncurrent_version_expiration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LifecycleRule.noncurrent_version_expiration = Some(value.into());`.
+pub fn noncurrent_version_expiration<ValueType: Into<NoncurrentVersionExpiration>>(mut self, value: ValueType) -> Self{
+        self.noncurrent_version_expiration = Some(value.into());
+        self
+    }
+    /// Sets `noncurrent_version_transitions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LifecycleRule.noncurrent_version_transitions = Some(value.into());`.
+    pub fn noncurrent_version_transitions<ValueType: Into<Vec<NoncurrentVersionTransition>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.noncurrent_version_transitions = Some(value.into());
+        self
+    }
+    /// Sets `status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LifecycleRule.status = value.into();`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = value.into();
+        self
+    }
+    /// Sets `transitions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LifecycleRule.transitions = Some(value.into());`.
+    pub fn transitions<ValueType: Into<Vec<Transition>>>(mut self, value: ValueType) -> Self {
+        self.transitions = Some(value.into());
+        self
+    }
+    /// Returns a new instance of LifecycleRule with optional fields set to `None`.
+    pub fn new<StatusType: Into<String>>(status: StatusType) -> LifecycleRule {
+        LifecycleRule {
+            status: status.into(),
+            ..Default::default()
+        }
+    }
+}
 struct LifecycleRuleDeserializer;
 impl LifecycleRuleDeserializer {
     #[allow(unused_variables)]
@@ -6063,7 +8420,26 @@ pub struct LifecycleRuleAndOperator {
     #[doc="All of these tags must exist in the object's tag set in order for the rule to apply."]
     pub tags: Option<Vec<Tag>>,
 }
-
+impl LifecycleRuleAndOperator {
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LifecycleRuleAndOperator.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LifecycleRuleAndOperator.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of LifecycleRuleAndOperator with optional fields set to `None`.
+    pub fn new() -> LifecycleRuleAndOperator {
+        LifecycleRuleAndOperator { ..Default::default() }
+    }
+}
 struct LifecycleRuleAndOperatorDeserializer;
 impl LifecycleRuleAndOperatorDeserializer {
     #[allow(unused_variables)]
@@ -6135,7 +8511,33 @@ pub struct LifecycleRuleFilter {
     #[doc="This tag must exist in the object's tag set in order for the rule to apply."]
     pub tag: Option<Tag>,
 }
-
+impl LifecycleRuleFilter {
+    /// Sets `and`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LifecycleRuleFilter.and = Some(value.into());`.
+    pub fn and<ValueType: Into<LifecycleRuleAndOperator>>(mut self, value: ValueType) -> Self {
+        self.and = Some(value.into());
+        self
+    }
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LifecycleRuleFilter.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Sets `tag`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LifecycleRuleFilter.tag = Some(value.into());`.
+    pub fn tag<ValueType: Into<Tag>>(mut self, value: ValueType) -> Self {
+        self.tag = Some(value.into());
+        self
+    }
+    /// Returns a new instance of LifecycleRuleFilter with optional fields set to `None`.
+    pub fn new() -> LifecycleRuleFilter {
+        LifecycleRuleFilter { ..Default::default() }
+    }
+}
 struct LifecycleRuleFilterDeserializer;
 impl LifecycleRuleFilterDeserializer {
     #[allow(unused_variables)]
@@ -6256,7 +8658,6 @@ pub struct ListBucketAnalyticsConfigurationsOutput {
     #[doc="NextContinuationToken is sent when isTruncated is true, which indicates that there are more analytics configurations to list. The next request must include this NextContinuationToken. The token is obfuscated and is not a usable value."]
     pub next_continuation_token: Option<String>,
 }
-
 struct ListBucketAnalyticsConfigurationsOutputDeserializer;
 impl ListBucketAnalyticsConfigurationsOutputDeserializer {
     #[allow(unused_variables)]
@@ -6321,7 +8722,30 @@ pub struct ListBucketAnalyticsConfigurationsRequest {
     #[doc="The ContinuationToken that represents a placeholder from where this request should begin."]
     pub continuation_token: Option<String>,
 }
-
+impl ListBucketAnalyticsConfigurationsRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListBucketAnalyticsConfigurationsRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `continuation_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListBucketAnalyticsConfigurationsRequest.continuation_token = Some(value.into());`.
+    pub fn continuation_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.continuation_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListBucketAnalyticsConfigurationsRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType)
+                                         -> ListBucketAnalyticsConfigurationsRequest {
+        ListBucketAnalyticsConfigurationsRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct ListBucketInventoryConfigurationsOutput {
     #[doc="If sent in the request, the marker that is used as a starting point for this inventory configuration list response."]
@@ -6333,7 +8757,6 @@ pub struct ListBucketInventoryConfigurationsOutput {
     #[doc="The marker used to continue this inventory configuration listing. Use the NextContinuationToken from this response to continue the listing in a subsequent request. The continuation token is an opaque value that Amazon S3 understands."]
     pub next_continuation_token: Option<String>,
 }
-
 struct ListBucketInventoryConfigurationsOutputDeserializer;
 impl ListBucketInventoryConfigurationsOutputDeserializer {
     #[allow(unused_variables)]
@@ -6398,7 +8821,30 @@ pub struct ListBucketInventoryConfigurationsRequest {
     #[doc="The marker used to continue an inventory configuration listing that has been truncated. Use the NextContinuationToken from a previously truncated list response to continue the listing. The continuation token is an opaque value that Amazon S3 understands."]
     pub continuation_token: Option<String>,
 }
-
+impl ListBucketInventoryConfigurationsRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListBucketInventoryConfigurationsRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `continuation_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListBucketInventoryConfigurationsRequest.continuation_token = Some(value.into());`.
+    pub fn continuation_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.continuation_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListBucketInventoryConfigurationsRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType)
+                                         -> ListBucketInventoryConfigurationsRequest {
+        ListBucketInventoryConfigurationsRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct ListBucketMetricsConfigurationsOutput {
     #[doc="The marker that is used as a starting point for this metrics configuration list response. This value is present if it was sent in the request."]
@@ -6410,7 +8856,6 @@ pub struct ListBucketMetricsConfigurationsOutput {
     #[doc="The marker used to continue a metrics configuration listing that has been truncated. Use the NextContinuationToken from a previously truncated list response to continue the listing. The continuation token is an opaque value that Amazon S3 understands."]
     pub next_continuation_token: Option<String>,
 }
-
 struct ListBucketMetricsConfigurationsOutputDeserializer;
 impl ListBucketMetricsConfigurationsOutputDeserializer {
     #[allow(unused_variables)]
@@ -6475,13 +8920,35 @@ pub struct ListBucketMetricsConfigurationsRequest {
     #[doc="The marker that is used to continue a metrics configuration listing that has been truncated. Use the NextContinuationToken from a previously truncated list response to continue the listing. The continuation token is an opaque value that Amazon S3 understands."]
     pub continuation_token: Option<String>,
 }
-
+impl ListBucketMetricsConfigurationsRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListBucketMetricsConfigurationsRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `continuation_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListBucketMetricsConfigurationsRequest.continuation_token = Some(value.into());`.
+    pub fn continuation_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.continuation_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListBucketMetricsConfigurationsRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType)
+                                         -> ListBucketMetricsConfigurationsRequest {
+        ListBucketMetricsConfigurationsRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct ListBucketsOutput {
     pub buckets: Option<Vec<Bucket>>,
     pub owner: Option<Owner>,
 }
-
 struct ListBucketsOutputDeserializer;
 impl ListBucketsOutputDeserializer {
     #[allow(unused_variables)]
@@ -6551,7 +9018,6 @@ pub struct ListMultipartUploadsOutput {
     pub upload_id_marker: Option<String>,
     pub uploads: Option<Vec<MultipartUpload>>,
 }
-
 struct ListMultipartUploadsOutputDeserializer;
 impl ListMultipartUploadsOutputDeserializer {
     #[allow(unused_variables)]
@@ -6661,7 +9127,64 @@ pub struct ListMultipartUploadsRequest {
     #[doc="Together with key-marker, specifies the multipart upload after which listing should begin. If key-marker is not specified, the upload-id-marker parameter is ignored."]
     pub upload_id_marker: Option<String>,
 }
-
+impl ListMultipartUploadsRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListMultipartUploadsRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `delimiter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListMultipartUploadsRequest.delimiter = Some(value.into());`.
+    pub fn delimiter<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.delimiter = Some(value.into());
+        self
+    }
+    /// Sets `encoding_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListMultipartUploadsRequest.encoding_type = Some(value.into());`.
+    pub fn encoding_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.encoding_type = Some(value.into());
+        self
+    }
+    /// Sets `key_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListMultipartUploadsRequest.key_marker = Some(value.into());`.
+    pub fn key_marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_marker = Some(value.into());
+        self
+    }
+    /// Sets `max_uploads`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListMultipartUploadsRequest.max_uploads = Some(value.into());`.
+    pub fn max_uploads<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_uploads = Some(value.into());
+        self
+    }
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListMultipartUploadsRequest.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Sets `upload_id_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListMultipartUploadsRequest.upload_id_marker = Some(value.into());`.
+    pub fn upload_id_marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.upload_id_marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListMultipartUploadsRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> ListMultipartUploadsRequest {
+        ListMultipartUploadsRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct ListObjectVersionsOutput {
     pub common_prefixes: Option<Vec<CommonPrefix>>,
@@ -6683,7 +9206,6 @@ pub struct ListObjectVersionsOutput {
     pub version_id_marker: Option<String>,
     pub versions: Option<Vec<ObjectVersion>>,
 }
-
 struct ListObjectVersionsOutputDeserializer;
 impl ListObjectVersionsOutputDeserializer {
     #[allow(unused_variables)]
@@ -6797,7 +9319,64 @@ pub struct ListObjectVersionsRequest {
     #[doc="Specifies the object version you want to start listing from."]
     pub version_id_marker: Option<String>,
 }
-
+impl ListObjectVersionsRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectVersionsRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `delimiter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectVersionsRequest.delimiter = Some(value.into());`.
+    pub fn delimiter<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.delimiter = Some(value.into());
+        self
+    }
+    /// Sets `encoding_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectVersionsRequest.encoding_type = Some(value.into());`.
+    pub fn encoding_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.encoding_type = Some(value.into());
+        self
+    }
+    /// Sets `key_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectVersionsRequest.key_marker = Some(value.into());`.
+    pub fn key_marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_marker = Some(value.into());
+        self
+    }
+    /// Sets `max_keys`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectVersionsRequest.max_keys = Some(value.into());`.
+    pub fn max_keys<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_keys = Some(value.into());
+        self
+    }
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectVersionsRequest.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Sets `version_id_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectVersionsRequest.version_id_marker = Some(value.into());`.
+    pub fn version_id_marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version_id_marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListObjectVersionsRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> ListObjectVersionsRequest {
+        ListObjectVersionsRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct ListObjectsOutput {
     pub common_prefixes: Option<Vec<CommonPrefix>>,
@@ -6814,7 +9393,6 @@ pub struct ListObjectsOutput {
     pub next_marker: Option<String>,
     pub prefix: Option<String>,
 }
-
 struct ListObjectsOutputDeserializer;
 impl ListObjectsOutputDeserializer {
     #[allow(unused_variables)]
@@ -6912,7 +9490,64 @@ pub struct ListObjectsRequest {
     #[doc="Confirms that the requester knows that she or he will be charged for the list objects request. Bucket owners need not specify this parameter in their requests."]
     pub request_payer: Option<String>,
 }
-
+impl ListObjectsRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectsRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `delimiter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectsRequest.delimiter = Some(value.into());`.
+    pub fn delimiter<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.delimiter = Some(value.into());
+        self
+    }
+    /// Sets `encoding_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectsRequest.encoding_type = Some(value.into());`.
+    pub fn encoding_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.encoding_type = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectsRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_keys`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectsRequest.max_keys = Some(value.into());`.
+    pub fn max_keys<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_keys = Some(value.into());
+        self
+    }
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectsRequest.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Sets `request_payer`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectsRequest.request_payer = Some(value.into());`.
+    pub fn request_payer<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_payer = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListObjectsRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> ListObjectsRequest {
+        ListObjectsRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct ListObjectsV2Output {
     #[doc="CommonPrefixes contains all (if there are any) keys between Prefix and the next occurrence of the string specified by delimiter"]
@@ -6940,7 +9575,6 @@ pub struct ListObjectsV2Output {
     #[doc="StartAfter is where you want Amazon S3 to start listing from. Amazon S3 starts listing after this specified key. StartAfter can be any key in the bucket"]
     pub start_after: Option<String>,
 }
-
 struct ListObjectsV2OutputDeserializer;
 impl ListObjectsV2OutputDeserializer {
     #[allow(unused_variables)]
@@ -7054,7 +9688,78 @@ pub struct ListObjectsV2Request {
     #[doc="StartAfter is where you want Amazon S3 to start listing from. Amazon S3 starts listing after this specified key. StartAfter can be any key in the bucket"]
     pub start_after: Option<String>,
 }
-
+impl ListObjectsV2Request {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectsV2Request.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `continuation_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectsV2Request.continuation_token = Some(value.into());`.
+    pub fn continuation_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.continuation_token = Some(value.into());
+        self
+    }
+    /// Sets `delimiter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectsV2Request.delimiter = Some(value.into());`.
+    pub fn delimiter<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.delimiter = Some(value.into());
+        self
+    }
+    /// Sets `encoding_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectsV2Request.encoding_type = Some(value.into());`.
+    pub fn encoding_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.encoding_type = Some(value.into());
+        self
+    }
+    /// Sets `fetch_owner`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectsV2Request.fetch_owner = Some(value.into());`.
+    pub fn fetch_owner<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.fetch_owner = Some(value.into());
+        self
+    }
+    /// Sets `max_keys`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectsV2Request.max_keys = Some(value.into());`.
+    pub fn max_keys<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_keys = Some(value.into());
+        self
+    }
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectsV2Request.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Sets `request_payer`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectsV2Request.request_payer = Some(value.into());`.
+    pub fn request_payer<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_payer = Some(value.into());
+        self
+    }
+    /// Sets `start_after`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListObjectsV2Request.start_after = Some(value.into());`.
+    pub fn start_after<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_after = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListObjectsV2Request with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> ListObjectsV2Request {
+        ListObjectsV2Request {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct ListPartsOutput {
     #[doc="Date when multipart upload will become eligible for abort operation by lifecycle."]
@@ -7083,7 +9788,6 @@ pub struct ListPartsOutput {
     #[doc="Upload ID identifying the multipart upload whose parts are being listed."]
     pub upload_id: Option<String>,
 }
-
 struct ListPartsOutputDeserializer;
 impl ListPartsOutputDeserializer {
     #[allow(unused_variables)]
@@ -7180,7 +9884,63 @@ pub struct ListPartsRequest {
     #[doc="Upload ID identifying the multipart upload whose parts are being listed."]
     pub upload_id: String,
 }
-
+impl ListPartsRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPartsRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPartsRequest.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `max_parts`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPartsRequest.max_parts = Some(value.into());`.
+    pub fn max_parts<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_parts = Some(value.into());
+        self
+    }
+    /// Sets `part_number_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPartsRequest.part_number_marker = Some(value.into());`.
+    pub fn part_number_marker<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.part_number_marker = Some(value.into());
+        self
+    }
+    /// Sets `request_payer`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPartsRequest.request_payer = Some(value.into());`.
+    pub fn request_payer<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_payer = Some(value.into());
+        self
+    }
+    /// Sets `upload_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPartsRequest.upload_id = value.into();`.
+    pub fn upload_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.upload_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListPartsRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, KeyType: Into<String>, UploadIdType: Into<String>>
+        (bucket: BucketType,
+         key: KeyType,
+         upload_id: UploadIdType)
+         -> ListPartsRequest {
+        ListPartsRequest {
+            bucket: bucket.into(),
+            key: key.into(),
+            upload_id: upload_id.into(),
+            ..Default::default()
+        }
+    }
+}
 struct LocationDeserializer;
 impl LocationDeserializer {
     #[allow(unused_variables)]
@@ -7203,7 +9963,33 @@ pub struct LoggingEnabled {
     #[doc="This element lets you specify a prefix for the keys that the log files will be stored under."]
     pub target_prefix: Option<String>,
 }
-
+impl LoggingEnabled {
+    /// Sets `target_bucket`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LoggingEnabled.target_bucket = Some(value.into());`.
+    pub fn target_bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_bucket = Some(value.into());
+        self
+    }
+    /// Sets `target_grants`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LoggingEnabled.target_grants = Some(value.into());`.
+    pub fn target_grants<ValueType: Into<Vec<TargetGrant>>>(mut self, value: ValueType) -> Self {
+        self.target_grants = Some(value.into());
+        self
+    }
+    /// Sets `target_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LoggingEnabled.target_prefix = Some(value.into());`.
+    pub fn target_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_prefix = Some(value.into());
+        self
+    }
+    /// Returns a new instance of LoggingEnabled with optional fields set to `None`.
+    pub fn new() -> LoggingEnabled {
+        LoggingEnabled { ..Default::default() }
+    }
+}
 struct LoggingEnabledDeserializer;
 impl LoggingEnabledDeserializer {
     #[allow(unused_variables)]
@@ -7448,7 +10234,26 @@ pub struct MetricsAndOperator {
     #[doc="The list of tags used when evaluating an AND predicate."]
     pub tags: Option<Vec<Tag>>,
 }
-
+impl MetricsAndOperator {
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MetricsAndOperator.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MetricsAndOperator.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of MetricsAndOperator with optional fields set to `None`.
+    pub fn new() -> MetricsAndOperator {
+        MetricsAndOperator { ..Default::default() }
+    }
+}
 struct MetricsAndOperatorDeserializer;
 impl MetricsAndOperatorDeserializer {
     #[allow(unused_variables)]
@@ -7518,7 +10323,29 @@ pub struct MetricsConfiguration {
     #[doc="The ID used to identify the metrics configuration."]
     pub id: String,
 }
-
+impl MetricsConfiguration {
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MetricsConfiguration.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<MetricsFilter>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MetricsConfiguration.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of MetricsConfiguration with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> MetricsConfiguration {
+        MetricsConfiguration {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 struct MetricsConfigurationDeserializer;
 impl MetricsConfigurationDeserializer {
     #[allow(unused_variables)]
@@ -7616,7 +10443,33 @@ pub struct MetricsFilter {
     #[doc="The tag used when evaluating a metrics filter."]
     pub tag: Option<Tag>,
 }
-
+impl MetricsFilter {
+    /// Sets `and`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MetricsFilter.and = Some(value.into());`.
+    pub fn and<ValueType: Into<MetricsAndOperator>>(mut self, value: ValueType) -> Self {
+        self.and = Some(value.into());
+        self
+    }
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MetricsFilter.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Sets `tag`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MetricsFilter.tag = Some(value.into());`.
+    pub fn tag<ValueType: Into<Tag>>(mut self, value: ValueType) -> Self {
+        self.tag = Some(value.into());
+        self
+    }
+    /// Returns a new instance of MetricsFilter with optional fields set to `None`.
+    pub fn new() -> MetricsFilter {
+        MetricsFilter { ..Default::default() }
+    }
+}
 struct MetricsFilterDeserializer;
 impl MetricsFilterDeserializer {
     #[allow(unused_variables)]
@@ -7726,7 +10579,6 @@ pub struct MultipartUpload {
     #[doc="Upload ID that identifies the multipart upload."]
     pub upload_id: Option<String>,
 }
-
 struct MultipartUploadDeserializer;
 impl MultipartUploadDeserializer {
     #[allow(unused_variables)]
@@ -7932,7 +10784,19 @@ pub struct NoncurrentVersionExpiration {
     #[doc="Specifies the number of days an object is noncurrent before Amazon S3 can perform the associated action. For information about the noncurrent days calculations, see <a href=\"http://docs.aws.amazon.com/AmazonS3/latest/dev/s3-access-control.html\">How Amazon S3 Calculates When an Object Became Noncurrent</a> in the Amazon Simple Storage Service Developer Guide."]
     pub noncurrent_days: Option<i64>,
 }
-
+impl NoncurrentVersionExpiration {
+    /// Sets `noncurrent_days`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NoncurrentVersionExpiration.noncurrent_days = Some(value.into());`.
+    pub fn noncurrent_days<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.noncurrent_days = Some(value.into());
+        self
+    }
+    /// Returns a new instance of NoncurrentVersionExpiration with optional fields set to `None`.
+    pub fn new() -> NoncurrentVersionExpiration {
+        NoncurrentVersionExpiration { ..Default::default() }
+    }
+}
 struct NoncurrentVersionExpirationDeserializer;
 impl NoncurrentVersionExpirationDeserializer {
     #[allow(unused_variables)]
@@ -7997,7 +10861,26 @@ pub struct NoncurrentVersionTransition {
     #[doc="The class of storage used to store the object."]
     pub storage_class: Option<String>,
 }
-
+impl NoncurrentVersionTransition {
+    /// Sets `noncurrent_days`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NoncurrentVersionTransition.noncurrent_days = Some(value.into());`.
+    pub fn noncurrent_days<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.noncurrent_days = Some(value.into());
+        self
+    }
+    /// Sets `storage_class`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NoncurrentVersionTransition.storage_class = Some(value.into());`.
+    pub fn storage_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.storage_class = Some(value.into());
+        self
+    }
+    /// Returns a new instance of NoncurrentVersionTransition with optional fields set to `None`.
+    pub fn new() -> NoncurrentVersionTransition {
+        NoncurrentVersionTransition { ..Default::default() }
+    }
+}
 struct NoncurrentVersionTransitionDeserializer;
 impl NoncurrentVersionTransitionDeserializer {
     #[allow(unused_variables)]
@@ -8112,7 +10995,40 @@ pub struct NotificationConfiguration {
     pub queue_configurations: Option<Vec<QueueConfiguration>>,
     pub topic_configurations: Option<Vec<TopicConfiguration>>,
 }
-
+impl NotificationConfiguration {
+    /// Sets `lambda_function_configurations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NotificationConfiguration.lambda_function_configurations = Some(value.into());`.
+    pub fn lambda_function_configurations<ValueType: Into<Vec<LambdaFunctionConfiguration>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.lambda_function_configurations = Some(value.into());
+        self
+    }
+    /// Sets `queue_configurations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NotificationConfiguration.queue_configurations = Some(value.into());`.
+    pub fn queue_configurations<ValueType: Into<Vec<QueueConfiguration>>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.queue_configurations = Some(value.into());
+        self
+    }
+    /// Sets `topic_configurations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NotificationConfiguration.topic_configurations = Some(value.into());`.
+    pub fn topic_configurations<ValueType: Into<Vec<TopicConfiguration>>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.topic_configurations = Some(value.into());
+        self
+    }
+    /// Returns a new instance of NotificationConfiguration with optional fields set to `None`.
+    pub fn new() -> NotificationConfiguration {
+        NotificationConfiguration { ..Default::default() }
+    }
+}
 struct NotificationConfigurationDeserializer;
 impl NotificationConfigurationDeserializer {
     #[allow(unused_variables)]
@@ -8191,7 +11107,37 @@ pub struct NotificationConfigurationDeprecated {
     pub queue_configuration: Option<QueueConfigurationDeprecated>,
     pub topic_configuration: Option<TopicConfigurationDeprecated>,
 }
-
+impl NotificationConfigurationDeprecated {
+    /// Sets `cloud_function_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NotificationConfigurationDeprecated.cloud_function_configuration = Some(value.into());`.
+pub fn cloud_function_configuration<ValueType: Into<CloudFunctionConfiguration>>(mut self, value: ValueType) -> Self{
+        self.cloud_function_configuration = Some(value.into());
+        self
+    }
+    /// Sets `queue_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NotificationConfigurationDeprecated.queue_configuration = Some(value.into());`.
+    pub fn queue_configuration<ValueType: Into<QueueConfigurationDeprecated>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.queue_configuration = Some(value.into());
+        self
+    }
+    /// Sets `topic_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NotificationConfigurationDeprecated.topic_configuration = Some(value.into());`.
+    pub fn topic_configuration<ValueType: Into<TopicConfigurationDeprecated>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.topic_configuration = Some(value.into());
+        self
+    }
+    /// Returns a new instance of NotificationConfigurationDeprecated with optional fields set to `None`.
+    pub fn new() -> NotificationConfigurationDeprecated {
+        NotificationConfigurationDeprecated { ..Default::default() }
+    }
+}
 struct NotificationConfigurationDeprecatedDeserializer;
 impl NotificationConfigurationDeprecatedDeserializer {
     #[allow(unused_variables)]
@@ -8268,7 +11214,19 @@ impl NotificationConfigurationDeprecatedSerializer {
 pub struct NotificationConfigurationFilter {
     pub key: Option<S3KeyFilter>,
 }
-
+impl NotificationConfigurationFilter {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NotificationConfigurationFilter.key = Some(value.into());`.
+    pub fn key<ValueType: Into<S3KeyFilter>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Returns a new instance of NotificationConfigurationFilter with optional fields set to `None`.
+    pub fn new() -> NotificationConfigurationFilter {
+        NotificationConfigurationFilter { ..Default::default() }
+    }
+}
 struct NotificationConfigurationFilterDeserializer;
 impl NotificationConfigurationFilterDeserializer {
     #[allow(unused_variables)]
@@ -8361,7 +11319,6 @@ pub struct Object {
     #[doc="The class of storage used to store the object."]
     pub storage_class: Option<String>,
 }
-
 struct ObjectDeserializer;
 impl ObjectDeserializer {
     #[allow(unused_variables)]
@@ -8429,7 +11386,29 @@ pub struct ObjectIdentifier {
     #[doc="VersionId for the specific version of the object to delete."]
     pub version_id: Option<String>,
 }
-
+impl ObjectIdentifier {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ObjectIdentifier.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `version_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ObjectIdentifier.version_id = Some(value.into());`.
+    pub fn version_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ObjectIdentifier with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>>(key: KeyType) -> ObjectIdentifier {
+        ObjectIdentifier {
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 
 pub struct ObjectIdentifierSerializer;
 impl ObjectIdentifierSerializer {
@@ -8542,7 +11521,6 @@ pub struct ObjectVersion {
     #[doc="Version ID of an object."]
     pub version_id: Option<String>,
 }
-
 struct ObjectVersionDeserializer;
 impl ObjectVersionDeserializer {
     #[allow(unused_variables)]
@@ -8682,7 +11660,26 @@ pub struct Owner {
     pub display_name: Option<String>,
     pub id: Option<String>,
 }
-
+impl Owner {
+    /// Sets `display_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Owner.display_name = Some(value.into());`.
+    pub fn display_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.display_name = Some(value.into());
+        self
+    }
+    /// Sets `id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Owner.id = Some(value.into());`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Owner with optional fields set to `None`.
+    pub fn new() -> Owner {
+        Owner { ..Default::default() }
+    }
+}
 struct OwnerDeserializer;
 impl OwnerDeserializer {
     #[allow(unused_variables)]
@@ -8757,7 +11754,6 @@ pub struct Part {
     #[doc="Size of the uploaded part data."]
     pub size: Option<i64>,
 }
-
 struct PartDeserializer;
 impl PartDeserializer {
     #[allow(unused_variables)]
@@ -9008,7 +12004,35 @@ pub struct PutBucketAccelerateConfigurationRequest {
     #[doc="Name of the bucket for which the accelerate configuration is set."]
     pub bucket: String,
 }
-
+impl PutBucketAccelerateConfigurationRequest {
+    /// Sets `accelerate_configuration`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketAccelerateConfigurationRequest.accelerate_configuration = value.into();`.
+    pub fn accelerate_configuration<ValueType: Into<AccelerateConfiguration>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.accelerate_configuration = value.into();
+        self
+    }
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketAccelerateConfigurationRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Returns a new instance of PutBucketAccelerateConfigurationRequest with optional fields set to `None`.
+    pub fn new<AccelerateConfigurationType: Into<AccelerateConfiguration>, BucketType: Into<String>>
+        (accelerate_configuration: AccelerateConfigurationType,
+         bucket: BucketType)
+         -> PutBucketAccelerateConfigurationRequest {
+        PutBucketAccelerateConfigurationRequest {
+            accelerate_configuration: accelerate_configuration.into(),
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct PutBucketAclRequest {
     #[doc="The canned ACL to apply to the bucket."]
@@ -9027,7 +12051,80 @@ pub struct PutBucketAclRequest {
     #[doc="Allows grantee to write the ACL for the applicable bucket."]
     pub grant_write_acp: Option<String>,
 }
-
+impl PutBucketAclRequest {
+    /// Sets `acl`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketAclRequest.acl = Some(value.into());`.
+    pub fn acl<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.acl = Some(value.into());
+        self
+    }
+    /// Sets `access_control_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketAclRequest.access_control_policy = Some(value.into());`.
+    pub fn access_control_policy<ValueType: Into<AccessControlPolicy>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.access_control_policy = Some(value.into());
+        self
+    }
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketAclRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `content_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketAclRequest.content_md5 = Some(value.into());`.
+    pub fn content_md5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_md5 = Some(value.into());
+        self
+    }
+    /// Sets `grant_full_control`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketAclRequest.grant_full_control = Some(value.into());`.
+    pub fn grant_full_control<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_full_control = Some(value.into());
+        self
+    }
+    /// Sets `grant_read`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketAclRequest.grant_read = Some(value.into());`.
+    pub fn grant_read<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_read = Some(value.into());
+        self
+    }
+    /// Sets `grant_read_acp`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketAclRequest.grant_read_acp = Some(value.into());`.
+    pub fn grant_read_acp<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_read_acp = Some(value.into());
+        self
+    }
+    /// Sets `grant_write`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketAclRequest.grant_write = Some(value.into());`.
+    pub fn grant_write<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_write = Some(value.into());
+        self
+    }
+    /// Sets `grant_write_acp`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketAclRequest.grant_write_acp = Some(value.into());`.
+    pub fn grant_write_acp<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_write_acp = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PutBucketAclRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> PutBucketAclRequest {
+        PutBucketAclRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct PutBucketAnalyticsConfigurationRequest {
     #[doc="The configuration and any analyses for the analytics filter."]
@@ -9037,14 +12134,88 @@ pub struct PutBucketAnalyticsConfigurationRequest {
     #[doc="The identifier used to represent an analytics configuration."]
     pub id: String,
 }
-
+impl PutBucketAnalyticsConfigurationRequest {
+    /// Sets `analytics_configuration`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketAnalyticsConfigurationRequest.analytics_configuration = value.into();`.
+    pub fn analytics_configuration<ValueType: Into<AnalyticsConfiguration>>(mut self,
+                                                                            value: ValueType)
+                                                                            -> Self {
+        self.analytics_configuration = value.into();
+        self
+    }
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketAnalyticsConfigurationRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketAnalyticsConfigurationRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of PutBucketAnalyticsConfigurationRequest with optional fields set to `None`.
+    pub fn new<AnalyticsConfigurationType: Into<AnalyticsConfiguration>,
+               BucketType: Into<String>,
+               IdType: Into<String>>
+        (analytics_configuration: AnalyticsConfigurationType,
+         bucket: BucketType,
+         id: IdType)
+         -> PutBucketAnalyticsConfigurationRequest {
+        PutBucketAnalyticsConfigurationRequest {
+            analytics_configuration: analytics_configuration.into(),
+            bucket: bucket.into(),
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct PutBucketCorsRequest {
     pub bucket: String,
     pub cors_configuration: CORSConfiguration,
     pub content_md5: Option<String>,
 }
-
+impl PutBucketCorsRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketCorsRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `cors_configuration`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketCorsRequest.cors_configuration = value.into();`.
+    pub fn cors_configuration<ValueType: Into<CORSConfiguration>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.cors_configuration = value.into();
+        self
+    }
+    /// Sets `content_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketCorsRequest.content_md5 = Some(value.into());`.
+    pub fn content_md5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_md5 = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PutBucketCorsRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, CORSConfigurationType: Into<CORSConfiguration>>
+        (bucket: BucketType,
+         cors_configuration: CORSConfigurationType)
+         -> PutBucketCorsRequest {
+        PutBucketCorsRequest {
+            bucket: bucket.into(),
+            cors_configuration: cors_configuration.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct PutBucketInventoryConfigurationRequest {
     #[doc="The name of the bucket where the inventory configuration will be stored."]
@@ -9054,27 +12225,155 @@ pub struct PutBucketInventoryConfigurationRequest {
     #[doc="Specifies the inventory configuration."]
     pub inventory_configuration: InventoryConfiguration,
 }
-
+impl PutBucketInventoryConfigurationRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketInventoryConfigurationRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketInventoryConfigurationRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `inventory_configuration`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketInventoryConfigurationRequest.inventory_configuration = value.into();`.
+    pub fn inventory_configuration<ValueType: Into<InventoryConfiguration>>(mut self,
+                                                                            value: ValueType)
+                                                                            -> Self {
+        self.inventory_configuration = value.into();
+        self
+    }
+    /// Returns a new instance of PutBucketInventoryConfigurationRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>,
+               IdType: Into<String>,
+               InventoryConfigurationType: Into<InventoryConfiguration>>
+        (bucket: BucketType,
+         id: IdType,
+         inventory_configuration: InventoryConfigurationType)
+         -> PutBucketInventoryConfigurationRequest {
+        PutBucketInventoryConfigurationRequest {
+            bucket: bucket.into(),
+            id: id.into(),
+            inventory_configuration: inventory_configuration.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct PutBucketLifecycleConfigurationRequest {
     pub bucket: String,
     pub lifecycle_configuration: Option<BucketLifecycleConfiguration>,
 }
-
+impl PutBucketLifecycleConfigurationRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketLifecycleConfigurationRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `lifecycle_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketLifecycleConfigurationRequest.lifecycle_configuration = Some(value.into());`.
+pub fn lifecycle_configuration<ValueType: Into<BucketLifecycleConfiguration>>(mut self, value: ValueType) -> Self{
+        self.lifecycle_configuration = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PutBucketLifecycleConfigurationRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType)
+                                         -> PutBucketLifecycleConfigurationRequest {
+        PutBucketLifecycleConfigurationRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct PutBucketLifecycleRequest {
     pub bucket: String,
     pub content_md5: Option<String>,
     pub lifecycle_configuration: Option<LifecycleConfiguration>,
 }
-
+impl PutBucketLifecycleRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketLifecycleRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `content_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketLifecycleRequest.content_md5 = Some(value.into());`.
+    pub fn content_md5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_md5 = Some(value.into());
+        self
+    }
+    /// Sets `lifecycle_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketLifecycleRequest.lifecycle_configuration = Some(value.into());`.
+    pub fn lifecycle_configuration<ValueType: Into<LifecycleConfiguration>>(mut self,
+                                                                            value: ValueType)
+                                                                            -> Self {
+        self.lifecycle_configuration = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PutBucketLifecycleRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType) -> PutBucketLifecycleRequest {
+        PutBucketLifecycleRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct PutBucketLoggingRequest {
     pub bucket: String,
     pub bucket_logging_status: BucketLoggingStatus,
     pub content_md5: Option<String>,
 }
-
+impl PutBucketLoggingRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketLoggingRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `bucket_logging_status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketLoggingRequest.bucket_logging_status = value.into();`.
+    pub fn bucket_logging_status<ValueType: Into<BucketLoggingStatus>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.bucket_logging_status = value.into();
+        self
+    }
+    /// Sets `content_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketLoggingRequest.content_md5 = Some(value.into());`.
+    pub fn content_md5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_md5 = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PutBucketLoggingRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, BucketLoggingStatusType: Into<BucketLoggingStatus>>
+        (bucket: BucketType,
+         bucket_logging_status: BucketLoggingStatusType)
+         -> PutBucketLoggingRequest {
+        PutBucketLoggingRequest {
+            bucket: bucket.into(),
+            bucket_logging_status: bucket_logging_status.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct PutBucketMetricsConfigurationRequest {
     #[doc="The name of the bucket for which the metrics configuration is set."]
@@ -9084,20 +12383,123 @@ pub struct PutBucketMetricsConfigurationRequest {
     #[doc="Specifies the metrics configuration."]
     pub metrics_configuration: MetricsConfiguration,
 }
-
+impl PutBucketMetricsConfigurationRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketMetricsConfigurationRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketMetricsConfigurationRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `metrics_configuration`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketMetricsConfigurationRequest.metrics_configuration = value.into();`.
+    pub fn metrics_configuration<ValueType: Into<MetricsConfiguration>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.metrics_configuration = value.into();
+        self
+    }
+    /// Returns a new instance of PutBucketMetricsConfigurationRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>,
+               IdType: Into<String>,
+               MetricsConfigurationType: Into<MetricsConfiguration>>
+        (bucket: BucketType,
+         id: IdType,
+         metrics_configuration: MetricsConfigurationType)
+         -> PutBucketMetricsConfigurationRequest {
+        PutBucketMetricsConfigurationRequest {
+            bucket: bucket.into(),
+            id: id.into(),
+            metrics_configuration: metrics_configuration.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct PutBucketNotificationConfigurationRequest {
     pub bucket: String,
     pub notification_configuration: NotificationConfiguration,
 }
-
+impl PutBucketNotificationConfigurationRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketNotificationConfigurationRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `notification_configuration`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketNotificationConfigurationRequest.notification_configuration = value.into();`.
+pub fn notification_configuration<ValueType: Into<NotificationConfiguration>>(mut self, value: ValueType) -> Self{
+        self.notification_configuration = value.into();
+        self
+    }
+    /// Returns a new instance of PutBucketNotificationConfigurationRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>,
+               NotificationConfigurationType: Into<NotificationConfiguration>>
+        (bucket: BucketType,
+         notification_configuration: NotificationConfigurationType)
+         -> PutBucketNotificationConfigurationRequest {
+        PutBucketNotificationConfigurationRequest {
+            bucket: bucket.into(),
+            notification_configuration: notification_configuration.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct PutBucketNotificationRequest {
     pub bucket: String,
     pub content_md5: Option<String>,
     pub notification_configuration: NotificationConfigurationDeprecated,
 }
-
+impl PutBucketNotificationRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketNotificationRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `content_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketNotificationRequest.content_md5 = Some(value.into());`.
+    pub fn content_md5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_md5 = Some(value.into());
+        self
+    }
+    /// Sets `notification_configuration`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketNotificationRequest.notification_configuration = value.into();`.
+    pub fn notification_configuration<ValueType: Into<NotificationConfigurationDeprecated>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.notification_configuration = value.into();
+        self
+    }
+    /// Returns a new instance of PutBucketNotificationRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>,
+               NotificationConfigurationType: Into<NotificationConfigurationDeprecated>>
+        (bucket: BucketType,
+         notification_configuration: NotificationConfigurationType)
+         -> PutBucketNotificationRequest {
+        PutBucketNotificationRequest {
+            bucket: bucket.into(),
+            notification_configuration: notification_configuration.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct PutBucketPolicyRequest {
     pub bucket: String,
@@ -9105,28 +12507,162 @@ pub struct PutBucketPolicyRequest {
     #[doc="The bucket policy as a JSON document."]
     pub policy: String,
 }
-
+impl PutBucketPolicyRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketPolicyRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `content_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketPolicyRequest.content_md5 = Some(value.into());`.
+    pub fn content_md5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_md5 = Some(value.into());
+        self
+    }
+    /// Sets `policy`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketPolicyRequest.policy = value.into();`.
+    pub fn policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy = value.into();
+        self
+    }
+    /// Returns a new instance of PutBucketPolicyRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, PolicyType: Into<String>>(bucket: BucketType,
+                                                                   policy: PolicyType)
+                                                                   -> PutBucketPolicyRequest {
+        PutBucketPolicyRequest {
+            bucket: bucket.into(),
+            policy: policy.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct PutBucketReplicationRequest {
     pub bucket: String,
     pub content_md5: Option<String>,
     pub replication_configuration: ReplicationConfiguration,
 }
-
+impl PutBucketReplicationRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketReplicationRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `content_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketReplicationRequest.content_md5 = Some(value.into());`.
+    pub fn content_md5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_md5 = Some(value.into());
+        self
+    }
+    /// Sets `replication_configuration`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketReplicationRequest.replication_configuration = value.into();`.
+    pub fn replication_configuration<ValueType: Into<ReplicationConfiguration>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.replication_configuration = value.into();
+        self
+    }
+    /// Returns a new instance of PutBucketReplicationRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>,
+               ReplicationConfigurationType: Into<ReplicationConfiguration>>
+        (bucket: BucketType,
+         replication_configuration: ReplicationConfigurationType)
+         -> PutBucketReplicationRequest {
+        PutBucketReplicationRequest {
+            bucket: bucket.into(),
+            replication_configuration: replication_configuration.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct PutBucketRequestPaymentRequest {
     pub bucket: String,
     pub content_md5: Option<String>,
     pub request_payment_configuration: RequestPaymentConfiguration,
 }
-
+impl PutBucketRequestPaymentRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketRequestPaymentRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `content_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketRequestPaymentRequest.content_md5 = Some(value.into());`.
+    pub fn content_md5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_md5 = Some(value.into());
+        self
+    }
+    /// Sets `request_payment_configuration`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketRequestPaymentRequest.request_payment_configuration = value.into();`.
+pub fn request_payment_configuration<ValueType: Into<RequestPaymentConfiguration>>(mut self, value: ValueType) -> Self{
+        self.request_payment_configuration = value.into();
+        self
+    }
+    /// Returns a new instance of PutBucketRequestPaymentRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>,
+               RequestPaymentConfigurationType: Into<RequestPaymentConfiguration>>
+        (bucket: BucketType,
+         request_payment_configuration: RequestPaymentConfigurationType)
+         -> PutBucketRequestPaymentRequest {
+        PutBucketRequestPaymentRequest {
+            bucket: bucket.into(),
+            request_payment_configuration: request_payment_configuration.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct PutBucketTaggingRequest {
     pub bucket: String,
     pub content_md5: Option<String>,
     pub tagging: Tagging,
 }
-
+impl PutBucketTaggingRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketTaggingRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `content_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketTaggingRequest.content_md5 = Some(value.into());`.
+    pub fn content_md5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_md5 = Some(value.into());
+        self
+    }
+    /// Sets `tagging`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketTaggingRequest.tagging = value.into();`.
+    pub fn tagging<ValueType: Into<Tagging>>(mut self, value: ValueType) -> Self {
+        self.tagging = value.into();
+        self
+    }
+    /// Returns a new instance of PutBucketTaggingRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, TaggingType: Into<Tagging>>(bucket: BucketType,
+                                                                     tagging: TaggingType)
+                                                                     -> PutBucketTaggingRequest {
+        PutBucketTaggingRequest {
+            bucket: bucket.into(),
+            tagging: tagging.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct PutBucketVersioningRequest {
     pub bucket: String,
@@ -9135,19 +12671,95 @@ pub struct PutBucketVersioningRequest {
     pub mfa: Option<String>,
     pub versioning_configuration: VersioningConfiguration,
 }
-
+impl PutBucketVersioningRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketVersioningRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `content_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketVersioningRequest.content_md5 = Some(value.into());`.
+    pub fn content_md5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_md5 = Some(value.into());
+        self
+    }
+    /// Sets `mfa`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketVersioningRequest.mfa = Some(value.into());`.
+    pub fn mfa<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.mfa = Some(value.into());
+        self
+    }
+    /// Sets `versioning_configuration`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketVersioningRequest.versioning_configuration = value.into();`.
+    pub fn versioning_configuration<ValueType: Into<VersioningConfiguration>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.versioning_configuration = value.into();
+        self
+    }
+    /// Returns a new instance of PutBucketVersioningRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, VersioningConfigurationType: Into<VersioningConfiguration>>
+        (bucket: BucketType,
+         versioning_configuration: VersioningConfigurationType)
+         -> PutBucketVersioningRequest {
+        PutBucketVersioningRequest {
+            bucket: bucket.into(),
+            versioning_configuration: versioning_configuration.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct PutBucketWebsiteRequest {
     pub bucket: String,
     pub content_md5: Option<String>,
     pub website_configuration: WebsiteConfiguration,
 }
-
+impl PutBucketWebsiteRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketWebsiteRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `content_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketWebsiteRequest.content_md5 = Some(value.into());`.
+    pub fn content_md5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_md5 = Some(value.into());
+        self
+    }
+    /// Sets `website_configuration`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutBucketWebsiteRequest.website_configuration = value.into();`.
+    pub fn website_configuration<ValueType: Into<WebsiteConfiguration>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.website_configuration = value.into();
+        self
+    }
+    /// Returns a new instance of PutBucketWebsiteRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, WebsiteConfigurationType: Into<WebsiteConfiguration>>
+        (bucket: BucketType,
+         website_configuration: WebsiteConfigurationType)
+         -> PutBucketWebsiteRequest {
+        PutBucketWebsiteRequest {
+            bucket: bucket.into(),
+            website_configuration: website_configuration.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct PutObjectAclOutput {
     pub request_charged: Option<String>,
 }
-
 struct PutObjectAclOutputDeserializer;
 impl PutObjectAclOutputDeserializer {
     #[allow(unused_variables)]
@@ -9186,7 +12798,104 @@ pub struct PutObjectAclRequest {
     #[doc="VersionId used to reference a specific version of the object."]
     pub version_id: Option<String>,
 }
-
+impl PutObjectAclRequest {
+    /// Sets `acl`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectAclRequest.acl = Some(value.into());`.
+    pub fn acl<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.acl = Some(value.into());
+        self
+    }
+    /// Sets `access_control_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectAclRequest.access_control_policy = Some(value.into());`.
+    pub fn access_control_policy<ValueType: Into<AccessControlPolicy>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.access_control_policy = Some(value.into());
+        self
+    }
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectAclRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `content_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectAclRequest.content_md5 = Some(value.into());`.
+    pub fn content_md5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_md5 = Some(value.into());
+        self
+    }
+    /// Sets `grant_full_control`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectAclRequest.grant_full_control = Some(value.into());`.
+    pub fn grant_full_control<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_full_control = Some(value.into());
+        self
+    }
+    /// Sets `grant_read`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectAclRequest.grant_read = Some(value.into());`.
+    pub fn grant_read<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_read = Some(value.into());
+        self
+    }
+    /// Sets `grant_read_acp`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectAclRequest.grant_read_acp = Some(value.into());`.
+    pub fn grant_read_acp<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_read_acp = Some(value.into());
+        self
+    }
+    /// Sets `grant_write`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectAclRequest.grant_write = Some(value.into());`.
+    pub fn grant_write<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_write = Some(value.into());
+        self
+    }
+    /// Sets `grant_write_acp`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectAclRequest.grant_write_acp = Some(value.into());`.
+    pub fn grant_write_acp<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_write_acp = Some(value.into());
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectAclRequest.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `request_payer`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectAclRequest.request_payer = Some(value.into());`.
+    pub fn request_payer<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_payer = Some(value.into());
+        self
+    }
+    /// Sets `version_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectAclRequest.version_id = Some(value.into());`.
+    pub fn version_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PutObjectAclRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, KeyType: Into<String>>(bucket: BucketType,
+                                                                key: KeyType)
+                                                                -> PutObjectAclRequest {
+        PutObjectAclRequest {
+            bucket: bucket.into(),
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct PutObjectOutput {
     #[doc="Entity tag for the uploaded object."]
@@ -9205,7 +12914,6 @@ pub struct PutObjectOutput {
     #[doc="Version of the object."]
     pub version_id: Option<String>,
 }
-
 struct PutObjectOutputDeserializer;
 impl PutObjectOutputDeserializer {
     #[allow(unused_variables)]
@@ -9276,12 +12984,204 @@ pub struct PutObjectRequest {
     #[doc="If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata."]
     pub website_redirect_location: Option<String>,
 }
-
+impl PutObjectRequest {
+    /// Sets `acl`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.acl = Some(value.into());`.
+    pub fn acl<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.acl = Some(value.into());
+        self
+    }
+    /// Sets `body`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.body = Some(value.into());`.
+    pub fn body<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.body = Some(value.into());
+        self
+    }
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `cache_control`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.cache_control = Some(value.into());`.
+    pub fn cache_control<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_control = Some(value.into());
+        self
+    }
+    /// Sets `content_disposition`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.content_disposition = Some(value.into());`.
+    pub fn content_disposition<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_disposition = Some(value.into());
+        self
+    }
+    /// Sets `content_encoding`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.content_encoding = Some(value.into());`.
+    pub fn content_encoding<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_encoding = Some(value.into());
+        self
+    }
+    /// Sets `content_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.content_language = Some(value.into());`.
+    pub fn content_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_language = Some(value.into());
+        self
+    }
+    /// Sets `content_length`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.content_length = Some(value.into());`.
+    pub fn content_length<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.content_length = Some(value.into());
+        self
+    }
+    /// Sets `content_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.content_md5 = Some(value.into());`.
+    pub fn content_md5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_md5 = Some(value.into());
+        self
+    }
+    /// Sets `content_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.content_type = Some(value.into());`.
+    pub fn content_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_type = Some(value.into());
+        self
+    }
+    /// Sets `expires`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.expires = Some(value.into());`.
+    pub fn expires<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.expires = Some(value.into());
+        self
+    }
+    /// Sets `grant_full_control`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.grant_full_control = Some(value.into());`.
+    pub fn grant_full_control<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_full_control = Some(value.into());
+        self
+    }
+    /// Sets `grant_read`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.grant_read = Some(value.into());`.
+    pub fn grant_read<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_read = Some(value.into());
+        self
+    }
+    /// Sets `grant_read_acp`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.grant_read_acp = Some(value.into());`.
+    pub fn grant_read_acp<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_read_acp = Some(value.into());
+        self
+    }
+    /// Sets `grant_write_acp`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.grant_write_acp = Some(value.into());`.
+    pub fn grant_write_acp<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_write_acp = Some(value.into());
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `metadata`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.metadata = Some(value.into());`.
+pub fn metadata<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.metadata = Some(value.into());
+        self
+    }
+    /// Sets `request_payer`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.request_payer = Some(value.into());`.
+    pub fn request_payer<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_payer = Some(value.into());
+        self
+    }
+    /// Sets `sse_customer_algorithm`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.sse_customer_algorithm = Some(value.into());`.
+    pub fn sse_customer_algorithm<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sse_customer_algorithm = Some(value.into());
+        self
+    }
+    /// Sets `sse_customer_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.sse_customer_key = Some(value.into());`.
+    pub fn sse_customer_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sse_customer_key = Some(value.into());
+        self
+    }
+    /// Sets `sse_customer_key_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.sse_customer_key_md5 = Some(value.into());`.
+    pub fn sse_customer_key_md5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sse_customer_key_md5 = Some(value.into());
+        self
+    }
+    /// Sets `ssekms_key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.ssekms_key_id = Some(value.into());`.
+    pub fn ssekms_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ssekms_key_id = Some(value.into());
+        self
+    }
+    /// Sets `server_side_encryption`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.server_side_encryption = Some(value.into());`.
+    pub fn server_side_encryption<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_side_encryption = Some(value.into());
+        self
+    }
+    /// Sets `storage_class`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.storage_class = Some(value.into());`.
+    pub fn storage_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.storage_class = Some(value.into());
+        self
+    }
+    /// Sets `tagging`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.tagging = Some(value.into());`.
+    pub fn tagging<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tagging = Some(value.into());
+        self
+    }
+    /// Sets `website_redirect_location`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectRequest.website_redirect_location = Some(value.into());`.
+    pub fn website_redirect_location<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.website_redirect_location = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PutObjectRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, KeyType: Into<String>>(bucket: BucketType,
+                                                                key: KeyType)
+                                                                -> PutObjectRequest {
+        PutObjectRequest {
+            bucket: bucket.into(),
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct PutObjectTaggingOutput {
     pub version_id: Option<String>,
 }
-
 struct PutObjectTaggingOutputDeserializer;
 impl PutObjectTaggingOutputDeserializer {
     #[allow(unused_variables)]
@@ -9306,7 +13206,56 @@ pub struct PutObjectTaggingRequest {
     pub tagging: Tagging,
     pub version_id: Option<String>,
 }
-
+impl PutObjectTaggingRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectTaggingRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `content_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectTaggingRequest.content_md5 = Some(value.into());`.
+    pub fn content_md5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_md5 = Some(value.into());
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectTaggingRequest.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `tagging`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectTaggingRequest.tagging = value.into();`.
+    pub fn tagging<ValueType: Into<Tagging>>(mut self, value: ValueType) -> Self {
+        self.tagging = value.into();
+        self
+    }
+    /// Sets `version_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutObjectTaggingRequest.version_id = Some(value.into());`.
+    pub fn version_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PutObjectTaggingRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, KeyType: Into<String>, TaggingType: Into<Tagging>>
+        (bucket: BucketType,
+         key: KeyType,
+         tagging: TaggingType)
+         -> PutObjectTaggingRequest {
+        PutObjectTaggingRequest {
+            bucket: bucket.into(),
+            key: key.into(),
+            tagging: tagging.into(),
+            ..Default::default()
+        }
+    }
+}
 struct QueueArnDeserializer;
 impl QueueArnDeserializer {
     #[allow(unused_variables)]
@@ -9341,7 +13290,48 @@ pub struct QueueConfiguration {
     #[doc="Amazon SQS queue ARN to which Amazon S3 will publish a message when it detects events of specified type."]
     pub queue_arn: String,
 }
-
+impl QueueConfiguration {
+    /// Sets `events`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueueConfiguration.events = value.into();`.
+    pub fn events<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.events = value.into();
+        self
+    }
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueueConfiguration.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<NotificationConfigurationFilter>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueueConfiguration.id = Some(value.into());`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = Some(value.into());
+        self
+    }
+    /// Sets `queue_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueueConfiguration.queue_arn = value.into();`.
+    pub fn queue_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.queue_arn = value.into();
+        self
+    }
+    /// Returns a new instance of QueueConfiguration with optional fields set to `None`.
+    pub fn new<EventsType: Into<Vec<String>>, QueueArnType: Into<String>>(events: EventsType,
+                                                                          queue_arn: QueueArnType)
+                                                                          -> QueueConfiguration {
+        QueueConfiguration {
+            events: events.into(),
+            queue_arn: queue_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 struct QueueConfigurationDeserializer;
 impl QueueConfigurationDeserializer {
     #[allow(unused_variables)]
@@ -9418,7 +13408,33 @@ pub struct QueueConfigurationDeprecated {
     pub id: Option<String>,
     pub queue: Option<String>,
 }
-
+impl QueueConfigurationDeprecated {
+    /// Sets `events`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueueConfigurationDeprecated.events = Some(value.into());`.
+    pub fn events<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.events = Some(value.into());
+        self
+    }
+    /// Sets `id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueueConfigurationDeprecated.id = Some(value.into());`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = Some(value.into());
+        self
+    }
+    /// Sets `queue`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueueConfigurationDeprecated.queue = Some(value.into());`.
+    pub fn queue<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.queue = Some(value.into());
+        self
+    }
+    /// Returns a new instance of QueueConfigurationDeprecated with optional fields set to `None`.
+    pub fn new() -> QueueConfigurationDeprecated {
+        QueueConfigurationDeprecated { ..Default::default() }
+    }
+}
 struct QueueConfigurationDeprecatedDeserializer;
 impl QueueConfigurationDeprecatedDeserializer {
     #[allow(unused_variables)]
@@ -9554,7 +13570,47 @@ pub struct Redirect {
     #[doc="The specific object key to use in the redirect request. For example, redirect request to error.html. Not required if one of the sibling is present. Can be present only if ReplaceKeyPrefixWith is not provided."]
     pub replace_key_with: Option<String>,
 }
-
+impl Redirect {
+    /// Sets `host_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Redirect.host_name = Some(value.into());`.
+    pub fn host_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.host_name = Some(value.into());
+        self
+    }
+    /// Sets `http_redirect_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Redirect.http_redirect_code = Some(value.into());`.
+    pub fn http_redirect_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.http_redirect_code = Some(value.into());
+        self
+    }
+    /// Sets `protocol`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Redirect.protocol = Some(value.into());`.
+    pub fn protocol<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.protocol = Some(value.into());
+        self
+    }
+    /// Sets `replace_key_prefix_with`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Redirect.replace_key_prefix_with = Some(value.into());`.
+    pub fn replace_key_prefix_with<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replace_key_prefix_with = Some(value.into());
+        self
+    }
+    /// Sets `replace_key_with`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Redirect.replace_key_with = Some(value.into());`.
+    pub fn replace_key_with<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replace_key_with = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Redirect with optional fields set to `None`.
+    pub fn new() -> Redirect {
+        Redirect { ..Default::default() }
+    }
+}
 struct RedirectDeserializer;
 impl RedirectDeserializer {
     #[allow(unused_variables)]
@@ -9651,7 +13707,29 @@ pub struct RedirectAllRequestsTo {
     #[doc="Protocol to use (http, https) when redirecting requests. The default is the protocol that is used in the original request."]
     pub protocol: Option<String>,
 }
-
+impl RedirectAllRequestsTo {
+    /// Sets `host_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedirectAllRequestsTo.host_name = value.into();`.
+    pub fn host_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.host_name = value.into();
+        self
+    }
+    /// Sets `protocol`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedirectAllRequestsTo.protocol = Some(value.into());`.
+    pub fn protocol<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.protocol = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RedirectAllRequestsTo with optional fields set to `None`.
+    pub fn new<HostNameType: Into<String>>(host_name: HostNameType) -> RedirectAllRequestsTo {
+        RedirectAllRequestsTo {
+            host_name: host_name.into(),
+            ..Default::default()
+        }
+    }
+}
 struct RedirectAllRequestsToDeserializer;
 impl RedirectAllRequestsToDeserializer {
     #[allow(unused_variables)]
@@ -9771,7 +13849,33 @@ pub struct ReplicationConfiguration {
     #[doc="Container for information about a particular replication rule. Replication configuration must have at least one rule and can contain up to 1,000 rules."]
     pub rules: Vec<ReplicationRule>,
 }
-
+impl ReplicationConfiguration {
+    /// Sets `role`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplicationConfiguration.role = value.into();`.
+    pub fn role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role = value.into();
+        self
+    }
+    /// Sets `rules`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplicationConfiguration.rules = value.into();`.
+    pub fn rules<ValueType: Into<Vec<ReplicationRule>>>(mut self, value: ValueType) -> Self {
+        self.rules = value.into();
+        self
+    }
+    /// Returns a new instance of ReplicationConfiguration with optional fields set to `None`.
+    pub fn new<RoleType: Into<String>, RulesType: Into<Vec<ReplicationRule>>>
+        (role: RoleType,
+         rules: RulesType)
+         -> ReplicationConfiguration {
+        ReplicationConfiguration {
+            role: role.into(),
+            rules: rules.into(),
+            ..Default::default()
+        }
+    }
+}
 struct ReplicationConfigurationDeserializer;
 impl ReplicationConfigurationDeserializer {
     #[allow(unused_variables)]
@@ -9840,7 +13944,51 @@ pub struct ReplicationRule {
     #[doc="The rule is ignored if status is not Enabled."]
     pub status: String,
 }
-
+impl ReplicationRule {
+    /// Sets `destination`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplicationRule.destination = value.into();`.
+    pub fn destination<ValueType: Into<Destination>>(mut self, value: ValueType) -> Self {
+        self.destination = value.into();
+        self
+    }
+    /// Sets `id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplicationRule.id = Some(value.into());`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = Some(value.into());
+        self
+    }
+    /// Sets `prefix`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplicationRule.prefix = value.into();`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = value.into();
+        self
+    }
+    /// Sets `status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplicationRule.status = value.into();`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = value.into();
+        self
+    }
+    /// Returns a new instance of ReplicationRule with optional fields set to `None`.
+    pub fn new<DestinationType: Into<Destination>,
+               PrefixType: Into<String>,
+               StatusType: Into<String>>
+        (destination: DestinationType,
+         prefix: PrefixType,
+         status: StatusType)
+         -> ReplicationRule {
+        ReplicationRule {
+            destination: destination.into(),
+            prefix: prefix.into(),
+            status: status.into(),
+            ..Default::default()
+        }
+    }
+}
 struct ReplicationRuleDeserializer;
 impl ReplicationRuleDeserializer {
     #[allow(unused_variables)]
@@ -9982,7 +14130,22 @@ pub struct RequestPaymentConfiguration {
     #[doc="Specifies who pays for the download and request fees."]
     pub payer: String,
 }
-
+impl RequestPaymentConfiguration {
+    /// Sets `payer`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestPaymentConfiguration.payer = value.into();`.
+    pub fn payer<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.payer = value.into();
+        self
+    }
+    /// Returns a new instance of RequestPaymentConfiguration with optional fields set to `None`.
+    pub fn new<PayerType: Into<String>>(payer: PayerType) -> RequestPaymentConfiguration {
+        RequestPaymentConfiguration {
+            payer: payer.into(),
+            ..Default::default()
+        }
+    }
+}
 
 pub struct RequestPaymentConfigurationSerializer;
 impl RequestPaymentConfigurationSerializer {
@@ -10065,7 +14228,6 @@ impl ResponseExpiresSerializer {
 pub struct RestoreObjectOutput {
     pub request_charged: Option<String>,
 }
-
 struct RestoreObjectOutputDeserializer;
 impl RestoreObjectOutputDeserializer {
     #[allow(unused_variables)]
@@ -10090,7 +14252,53 @@ pub struct RestoreObjectRequest {
     pub restore_request: Option<RestoreRequest>,
     pub version_id: Option<String>,
 }
-
+impl RestoreObjectRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreObjectRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreObjectRequest.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `request_payer`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreObjectRequest.request_payer = Some(value.into());`.
+    pub fn request_payer<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_payer = Some(value.into());
+        self
+    }
+    /// Sets `restore_request`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreObjectRequest.restore_request = Some(value.into());`.
+    pub fn restore_request<ValueType: Into<RestoreRequest>>(mut self, value: ValueType) -> Self {
+        self.restore_request = Some(value.into());
+        self
+    }
+    /// Sets `version_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreObjectRequest.version_id = Some(value.into());`.
+    pub fn version_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RestoreObjectRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, KeyType: Into<String>>(bucket: BucketType,
+                                                                key: KeyType)
+                                                                -> RestoreObjectRequest {
+        RestoreObjectRequest {
+            bucket: bucket.into(),
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct RestoreRequest {
     #[doc="Lifetime of the active copy in days"]
@@ -10098,7 +14306,31 @@ pub struct RestoreRequest {
     #[doc="Glacier related prameters pertaining to this job."]
     pub glacier_job_parameters: Option<GlacierJobParameters>,
 }
-
+impl RestoreRequest {
+    /// Sets `days`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreRequest.days = value.into();`.
+    pub fn days<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.days = value.into();
+        self
+    }
+    /// Sets `glacier_job_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreRequest.glacier_job_parameters = Some(value.into());`.
+    pub fn glacier_job_parameters<ValueType: Into<GlacierJobParameters>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.glacier_job_parameters = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RestoreRequest with optional fields set to `None`.
+    pub fn new<DaysType: Into<i64>>(days: DaysType) -> RestoreRequest {
+        RestoreRequest {
+            days: days.into(),
+            ..Default::default()
+        }
+    }
+}
 
 pub struct RestoreRequestSerializer;
 impl RestoreRequestSerializer {
@@ -10146,7 +14378,29 @@ pub struct RoutingRule {
     #[doc="Container for redirect information. You can redirect requests to another host, to another page, or with another protocol. In the event of an error, you can can specify a different error code to return."]
     pub redirect: Redirect,
 }
-
+impl RoutingRule {
+    /// Sets `condition`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RoutingRule.condition = Some(value.into());`.
+    pub fn condition<ValueType: Into<Condition>>(mut self, value: ValueType) -> Self {
+        self.condition = Some(value.into());
+        self
+    }
+    /// Sets `redirect`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RoutingRule.redirect = value.into();`.
+    pub fn redirect<ValueType: Into<Redirect>>(mut self, value: ValueType) -> Self {
+        self.redirect = value.into();
+        self
+    }
+    /// Returns a new instance of RoutingRule with optional fields set to `None`.
+    pub fn new<RedirectType: Into<Redirect>>(redirect: RedirectType) -> RoutingRule {
+        RoutingRule {
+            redirect: redirect.into(),
+            ..Default::default()
+        }
+    }
+}
 struct RoutingRuleDeserializer;
 impl RoutingRuleDeserializer {
     #[allow(unused_variables)]
@@ -10278,7 +14532,77 @@ pub struct Rule {
     pub status: String,
     pub transition: Option<Transition>,
 }
-
+impl Rule {
+    /// Sets `abort_incomplete_multipart_upload`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Rule.abort_incomplete_multipart_upload = Some(value.into());`.
+    pub fn abort_incomplete_multipart_upload<ValueType: Into<AbortIncompleteMultipartUpload>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.abort_incomplete_multipart_upload = Some(value.into());
+        self
+    }
+    /// Sets `expiration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Rule.expiration = Some(value.into());`.
+    pub fn expiration<ValueType: Into<LifecycleExpiration>>(mut self, value: ValueType) -> Self {
+        self.expiration = Some(value.into());
+        self
+    }
+    /// Sets `id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Rule.id = Some(value.into());`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = Some(value.into());
+        self
+    }
+    /// Sets `noncurrent_version_expiration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Rule.noncurrent_version_expiration = Some(value.into());`.
+pub fn noncurrent_version_expiration<ValueType: Into<NoncurrentVersionExpiration>>(mut self, value: ValueType) -> Self{
+        self.noncurrent_version_expiration = Some(value.into());
+        self
+    }
+    /// Sets `noncurrent_version_transition`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Rule.noncurrent_version_transition = Some(value.into());`.
+pub fn noncurrent_version_transition<ValueType: Into<NoncurrentVersionTransition>>(mut self, value: ValueType) -> Self{
+        self.noncurrent_version_transition = Some(value.into());
+        self
+    }
+    /// Sets `prefix`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Rule.prefix = value.into();`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = value.into();
+        self
+    }
+    /// Sets `status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Rule.status = value.into();`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = value.into();
+        self
+    }
+    /// Sets `transition`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Rule.transition = Some(value.into());`.
+    pub fn transition<ValueType: Into<Transition>>(mut self, value: ValueType) -> Self {
+        self.transition = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Rule with optional fields set to `None`.
+    pub fn new<PrefixType: Into<String>, StatusType: Into<String>>(prefix: PrefixType,
+                                                                   status: StatusType)
+                                                                   -> Rule {
+        Rule {
+            prefix: prefix.into(),
+            status: status.into(),
+            ..Default::default()
+        }
+    }
+}
 struct RuleDeserializer;
 impl RuleDeserializer {
     #[allow(unused_variables)]
@@ -10425,7 +14749,19 @@ impl RulesSerializer {
 pub struct S3KeyFilter {
     pub filter_rules: Option<Vec<FilterRule>>,
 }
-
+impl S3KeyFilter {
+    /// Sets `filter_rules`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3KeyFilter.filter_rules = Some(value.into());`.
+    pub fn filter_rules<ValueType: Into<Vec<FilterRule>>>(mut self, value: ValueType) -> Self {
+        self.filter_rules = Some(value.into());
+        self
+    }
+    /// Returns a new instance of S3KeyFilter with optional fields set to `None`.
+    pub fn new() -> S3KeyFilter {
+        S3KeyFilter { ..Default::default() }
+    }
+}
 struct S3KeyFilterDeserializer;
 impl S3KeyFilterDeserializer {
     #[allow(unused_variables)]
@@ -10552,7 +14888,21 @@ pub struct StorageClassAnalysis {
     #[doc="A container used to describe how data related to the storage class analysis should be exported."]
     pub data_export: Option<StorageClassAnalysisDataExport>,
 }
-
+impl StorageClassAnalysis {
+    /// Sets `data_export`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StorageClassAnalysis.data_export = Some(value.into());`.
+    pub fn data_export<ValueType: Into<StorageClassAnalysisDataExport>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.data_export = Some(value.into());
+        self
+    }
+    /// Returns a new instance of StorageClassAnalysis with optional fields set to `None`.
+    pub fn new() -> StorageClassAnalysis {
+        StorageClassAnalysis { ..Default::default() }
+    }
+}
 struct StorageClassAnalysisDeserializer;
 impl StorageClassAnalysisDeserializer {
     #[allow(unused_variables)]
@@ -10615,7 +14965,36 @@ pub struct StorageClassAnalysisDataExport {
     #[doc="The version of the output schema to use when exporting data. Must be V_1."]
     pub output_schema_version: String,
 }
-
+impl StorageClassAnalysisDataExport {
+    /// Sets `destination`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StorageClassAnalysisDataExport.destination = value.into();`.
+    pub fn destination<ValueType: Into<AnalyticsExportDestination>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.destination = value.into();
+        self
+    }
+    /// Sets `output_schema_version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StorageClassAnalysisDataExport.output_schema_version = value.into();`.
+    pub fn output_schema_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.output_schema_version = value.into();
+        self
+    }
+    /// Returns a new instance of StorageClassAnalysisDataExport with optional fields set to `None`.
+    pub fn new<DestinationType: Into<AnalyticsExportDestination>,
+               OutputSchemaVersionType: Into<String>>
+        (destination: DestinationType,
+         output_schema_version: OutputSchemaVersionType)
+         -> StorageClassAnalysisDataExport {
+        StorageClassAnalysisDataExport {
+            destination: destination.into(),
+            output_schema_version: output_schema_version.into(),
+            ..Default::default()
+        }
+    }
+}
 struct StorageClassAnalysisDataExportDeserializer;
 impl StorageClassAnalysisDataExportDeserializer {
     #[allow(unused_variables)]
@@ -10734,7 +15113,32 @@ pub struct Tag {
     #[doc="Value of the tag."]
     pub value: String,
 }
-
+impl Tag {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>, ValueType: Into<String>>(key: KeyType,
+                                                               value: ValueType)
+                                                               -> Tag {
+        Tag {
+            key: key.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 struct TagDeserializer;
 impl TagDeserializer {
     #[allow(unused_variables)]
@@ -10852,7 +15256,22 @@ impl TagSetSerializer {
 pub struct Tagging {
     pub tag_set: Vec<Tag>,
 }
-
+impl Tagging {
+    /// Sets `tag_set`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tagging.tag_set = value.into();`.
+    pub fn tag_set<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tag_set = value.into();
+        self
+    }
+    /// Returns a new instance of Tagging with optional fields set to `None`.
+    pub fn new<TagSetType: Into<Vec<Tag>>>(tag_set: TagSetType) -> Tagging {
+        Tagging {
+            tag_set: tag_set.into(),
+            ..Default::default()
+        }
+    }
+}
 
 pub struct TaggingSerializer;
 impl TaggingSerializer {
@@ -10896,7 +15315,26 @@ pub struct TargetGrant {
     #[doc="Logging permissions assigned to the Grantee for the bucket."]
     pub permission: Option<String>,
 }
-
+impl TargetGrant {
+    /// Sets `grantee`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TargetGrant.grantee = Some(value.into());`.
+    pub fn grantee<ValueType: Into<Grantee>>(mut self, value: ValueType) -> Self {
+        self.grantee = Some(value.into());
+        self
+    }
+    /// Sets `permission`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TargetGrant.permission = Some(value.into());`.
+    pub fn permission<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.permission = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TargetGrant with optional fields set to `None`.
+    pub fn new() -> TargetGrant {
+        TargetGrant { ..Default::default() }
+    }
+}
 struct TargetGrantDeserializer;
 impl TargetGrantDeserializer {
     #[allow(unused_variables)]
@@ -11112,7 +15550,48 @@ pub struct TopicConfiguration {
     #[doc="Amazon SNS topic ARN to which Amazon S3 will publish a message when it detects events of specified type."]
     pub topic_arn: String,
 }
-
+impl TopicConfiguration {
+    /// Sets `events`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TopicConfiguration.events = value.into();`.
+    pub fn events<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.events = value.into();
+        self
+    }
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TopicConfiguration.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<NotificationConfigurationFilter>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TopicConfiguration.id = Some(value.into());`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = Some(value.into());
+        self
+    }
+    /// Sets `topic_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TopicConfiguration.topic_arn = value.into();`.
+    pub fn topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_arn = value.into();
+        self
+    }
+    /// Returns a new instance of TopicConfiguration with optional fields set to `None`.
+    pub fn new<EventsType: Into<Vec<String>>, TopicArnType: Into<String>>(events: EventsType,
+                                                                          topic_arn: TopicArnType)
+                                                                          -> TopicConfiguration {
+        TopicConfiguration {
+            events: events.into(),
+            topic_arn: topic_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 struct TopicConfigurationDeserializer;
 impl TopicConfigurationDeserializer {
     #[allow(unused_variables)]
@@ -11190,7 +15669,33 @@ pub struct TopicConfigurationDeprecated {
     #[doc="Amazon SNS topic to which Amazon S3 will publish a message to report the specified events for the bucket."]
     pub topic: Option<String>,
 }
-
+impl TopicConfigurationDeprecated {
+    /// Sets `events`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TopicConfigurationDeprecated.events = Some(value.into());`.
+    pub fn events<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.events = Some(value.into());
+        self
+    }
+    /// Sets `id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TopicConfigurationDeprecated.id = Some(value.into());`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = Some(value.into());
+        self
+    }
+    /// Sets `topic`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TopicConfigurationDeprecated.topic = Some(value.into());`.
+    pub fn topic<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TopicConfigurationDeprecated with optional fields set to `None`.
+    pub fn new() -> TopicConfigurationDeprecated {
+        TopicConfigurationDeprecated { ..Default::default() }
+    }
+}
 struct TopicConfigurationDeprecatedDeserializer;
 impl TopicConfigurationDeprecatedDeserializer {
     #[allow(unused_variables)]
@@ -11311,7 +15816,33 @@ pub struct Transition {
     #[doc="The class of storage used to store the object."]
     pub storage_class: Option<String>,
 }
-
+impl Transition {
+    /// Sets `date`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Transition.date = Some(value.into());`.
+    pub fn date<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.date = Some(value.into());
+        self
+    }
+    /// Sets `days`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Transition.days = Some(value.into());`.
+    pub fn days<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.days = Some(value.into());
+        self
+    }
+    /// Sets `storage_class`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Transition.storage_class = Some(value.into());`.
+    pub fn storage_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.storage_class = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Transition with optional fields set to `None`.
+    pub fn new() -> Transition {
+        Transition { ..Default::default() }
+    }
+}
 struct TransitionDeserializer;
 impl TransitionDeserializer {
     #[allow(unused_variables)]
@@ -11537,7 +16068,6 @@ pub struct UploadPartCopyOutput {
     #[doc="The Server-side encryption algorithm used when storing this object in S3 (e.g., AES256, aws:kms)."]
     pub server_side_encryption: Option<String>,
 }
-
 struct UploadPartCopyOutputDeserializer;
 impl UploadPartCopyOutputDeserializer {
     #[allow(unused_variables)]
@@ -11615,7 +16145,158 @@ pub struct UploadPartCopyRequest {
     #[doc="Upload ID identifying the multipart upload whose part is being copied."]
     pub upload_id: String,
 }
-
+impl UploadPartCopyRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartCopyRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `copy_source`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartCopyRequest.copy_source = value.into();`.
+    pub fn copy_source<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.copy_source = value.into();
+        self
+    }
+    /// Sets `copy_source_if_match`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartCopyRequest.copy_source_if_match = Some(value.into());`.
+    pub fn copy_source_if_match<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.copy_source_if_match = Some(value.into());
+        self
+    }
+    /// Sets `copy_source_if_modified_since`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartCopyRequest.copy_source_if_modified_since = Some(value.into());`.
+    pub fn copy_source_if_modified_since<ValueType: Into<String>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.copy_source_if_modified_since = Some(value.into());
+        self
+    }
+    /// Sets `copy_source_if_none_match`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartCopyRequest.copy_source_if_none_match = Some(value.into());`.
+    pub fn copy_source_if_none_match<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.copy_source_if_none_match = Some(value.into());
+        self
+    }
+    /// Sets `copy_source_if_unmodified_since`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartCopyRequest.copy_source_if_unmodified_since = Some(value.into());`.
+    pub fn copy_source_if_unmodified_since<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.copy_source_if_unmodified_since = Some(value.into());
+        self
+    }
+    /// Sets `copy_source_range`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartCopyRequest.copy_source_range = Some(value.into());`.
+    pub fn copy_source_range<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.copy_source_range = Some(value.into());
+        self
+    }
+    /// Sets `copy_source_sse_customer_algorithm`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartCopyRequest.copy_source_sse_customer_algorithm = Some(value.into());`.
+    pub fn copy_source_sse_customer_algorithm<ValueType: Into<String>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.copy_source_sse_customer_algorithm = Some(value.into());
+        self
+    }
+    /// Sets `copy_source_sse_customer_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartCopyRequest.copy_source_sse_customer_key = Some(value.into());`.
+    pub fn copy_source_sse_customer_key<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.copy_source_sse_customer_key = Some(value.into());
+        self
+    }
+    /// Sets `copy_source_sse_customer_key_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartCopyRequest.copy_source_sse_customer_key_md5 = Some(value.into());`.
+    pub fn copy_source_sse_customer_key_md5<ValueType: Into<String>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.copy_source_sse_customer_key_md5 = Some(value.into());
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartCopyRequest.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `part_number`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartCopyRequest.part_number = value.into();`.
+    pub fn part_number<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.part_number = value.into();
+        self
+    }
+    /// Sets `request_payer`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartCopyRequest.request_payer = Some(value.into());`.
+    pub fn request_payer<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_payer = Some(value.into());
+        self
+    }
+    /// Sets `sse_customer_algorithm`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartCopyRequest.sse_customer_algorithm = Some(value.into());`.
+    pub fn sse_customer_algorithm<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sse_customer_algorithm = Some(value.into());
+        self
+    }
+    /// Sets `sse_customer_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartCopyRequest.sse_customer_key = Some(value.into());`.
+    pub fn sse_customer_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sse_customer_key = Some(value.into());
+        self
+    }
+    /// Sets `sse_customer_key_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartCopyRequest.sse_customer_key_md5 = Some(value.into());`.
+    pub fn sse_customer_key_md5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sse_customer_key_md5 = Some(value.into());
+        self
+    }
+    /// Sets `upload_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartCopyRequest.upload_id = value.into();`.
+    pub fn upload_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.upload_id = value.into();
+        self
+    }
+    /// Returns a new instance of UploadPartCopyRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>,
+               CopySourceType: Into<String>,
+               KeyType: Into<String>,
+               PartNumberType: Into<i64>,
+               UploadIdType: Into<String>>
+        (bucket: BucketType,
+         copy_source: CopySourceType,
+         key: KeyType,
+         part_number: PartNumberType,
+         upload_id: UploadIdType)
+         -> UploadPartCopyRequest {
+        UploadPartCopyRequest {
+            bucket: bucket.into(),
+            copy_source: copy_source.into(),
+            key: key.into(),
+            part_number: part_number.into(),
+            upload_id: upload_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct UploadPartOutput {
     #[doc="Entity tag for the uploaded object."]
@@ -11630,7 +16311,6 @@ pub struct UploadPartOutput {
     #[doc="The Server-side encryption algorithm used when storing this object in S3 (e.g., AES256, aws:kms)."]
     pub server_side_encryption: Option<String>,
 }
-
 struct UploadPartOutputDeserializer;
 impl UploadPartOutputDeserializer {
     #[allow(unused_variables)]
@@ -11671,7 +16351,103 @@ pub struct UploadPartRequest {
     #[doc="Upload ID identifying the multipart upload whose part is being uploaded."]
     pub upload_id: String,
 }
-
+impl UploadPartRequest {
+    /// Sets `body`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartRequest.body = Some(value.into());`.
+    pub fn body<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.body = Some(value.into());
+        self
+    }
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `content_length`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartRequest.content_length = Some(value.into());`.
+    pub fn content_length<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.content_length = Some(value.into());
+        self
+    }
+    /// Sets `content_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartRequest.content_md5 = Some(value.into());`.
+    pub fn content_md5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_md5 = Some(value.into());
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartRequest.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `part_number`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartRequest.part_number = value.into();`.
+    pub fn part_number<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.part_number = value.into();
+        self
+    }
+    /// Sets `request_payer`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartRequest.request_payer = Some(value.into());`.
+    pub fn request_payer<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_payer = Some(value.into());
+        self
+    }
+    /// Sets `sse_customer_algorithm`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartRequest.sse_customer_algorithm = Some(value.into());`.
+    pub fn sse_customer_algorithm<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sse_customer_algorithm = Some(value.into());
+        self
+    }
+    /// Sets `sse_customer_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartRequest.sse_customer_key = Some(value.into());`.
+    pub fn sse_customer_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sse_customer_key = Some(value.into());
+        self
+    }
+    /// Sets `sse_customer_key_md5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartRequest.sse_customer_key_md5 = Some(value.into());`.
+    pub fn sse_customer_key_md5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sse_customer_key_md5 = Some(value.into());
+        self
+    }
+    /// Sets `upload_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadPartRequest.upload_id = value.into();`.
+    pub fn upload_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.upload_id = value.into();
+        self
+    }
+    /// Returns a new instance of UploadPartRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>,
+               KeyType: Into<String>,
+               PartNumberType: Into<i64>,
+               UploadIdType: Into<String>>
+        (bucket: BucketType,
+         key: KeyType,
+         part_number: PartNumberType,
+         upload_id: UploadIdType)
+         -> UploadPartRequest {
+        UploadPartRequest {
+            bucket: bucket.into(),
+            key: key.into(),
+            part_number: part_number.into(),
+            upload_id: upload_id.into(),
+            ..Default::default()
+        }
+    }
+}
 struct ValueDeserializer;
 impl ValueDeserializer {
     #[allow(unused_variables)]
@@ -11729,7 +16505,26 @@ pub struct VersioningConfiguration {
     #[doc="The versioning state of the bucket."]
     pub status: Option<String>,
 }
-
+impl VersioningConfiguration {
+    /// Sets `mfa_delete`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VersioningConfiguration.mfa_delete = Some(value.into());`.
+    pub fn mfa_delete<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.mfa_delete = Some(value.into());
+        self
+    }
+    /// Sets `status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VersioningConfiguration.status = Some(value.into());`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = Some(value.into());
+        self
+    }
+    /// Returns a new instance of VersioningConfiguration with optional fields set to `None`.
+    pub fn new() -> VersioningConfiguration {
+        VersioningConfiguration { ..Default::default() }
+    }
+}
 
 pub struct VersioningConfigurationSerializer;
 impl VersioningConfigurationSerializer {
@@ -11754,7 +16549,42 @@ pub struct WebsiteConfiguration {
     pub redirect_all_requests_to: Option<RedirectAllRequestsTo>,
     pub routing_rules: Option<Vec<RoutingRule>>,
 }
-
+impl WebsiteConfiguration {
+    /// Sets `error_document`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WebsiteConfiguration.error_document = Some(value.into());`.
+    pub fn error_document<ValueType: Into<ErrorDocument>>(mut self, value: ValueType) -> Self {
+        self.error_document = Some(value.into());
+        self
+    }
+    /// Sets `index_document`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WebsiteConfiguration.index_document = Some(value.into());`.
+    pub fn index_document<ValueType: Into<IndexDocument>>(mut self, value: ValueType) -> Self {
+        self.index_document = Some(value.into());
+        self
+    }
+    /// Sets `redirect_all_requests_to`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WebsiteConfiguration.redirect_all_requests_to = Some(value.into());`.
+    pub fn redirect_all_requests_to<ValueType: Into<RedirectAllRequestsTo>>(mut self,
+                                                                            value: ValueType)
+                                                                            -> Self {
+        self.redirect_all_requests_to = Some(value.into());
+        self
+    }
+    /// Sets `routing_rules`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WebsiteConfiguration.routing_rules = Some(value.into());`.
+    pub fn routing_rules<ValueType: Into<Vec<RoutingRule>>>(mut self, value: ValueType) -> Self {
+        self.routing_rules = Some(value.into());
+        self
+    }
+    /// Returns a new instance of WebsiteConfiguration with optional fields set to `None`.
+    pub fn new() -> WebsiteConfiguration {
+        WebsiteConfiguration { ..Default::default() }
+    }
+}
 
 pub struct WebsiteConfigurationSerializer;
 impl WebsiteConfigurationSerializer {

@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -36,7 +37,6 @@ pub struct ComputeType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p>The request of the <a>CreateTags</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateTagsRequest {
@@ -47,7 +47,30 @@ pub struct CreateTagsRequest {
     #[serde(rename="Tags")]
     pub tags: Vec<Tag>,
 }
-
+impl CreateTagsRequest {
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTagsRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTagsRequest.tags = value.into();`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of CreateTagsRequest with optional fields set to `None`.
+pub fn new<ResourceIdType: Into<String>, TagsType: Into<Vec<Tag>>>(resource_id: ResourceIdType, tags: TagsType) -> CreateTagsRequest{
+        CreateTagsRequest {
+            resource_id: resource_id.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The result of the <a>CreateTags</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateTagsResult;
@@ -59,7 +82,23 @@ pub struct CreateWorkspacesRequest {
     #[serde(rename="Workspaces")]
     pub workspaces: Vec<WorkspaceRequest>,
 }
-
+impl CreateWorkspacesRequest {
+    /// Sets `workspaces`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateWorkspacesRequest.workspaces = value.into();`.
+    pub fn workspaces<ValueType: Into<Vec<WorkspaceRequest>>>(mut self, value: ValueType) -> Self {
+        self.workspaces = value.into();
+        self
+    }
+    /// Returns a new instance of CreateWorkspacesRequest with optional fields set to `None`.
+    pub fn new<WorkspacesType: Into<Vec<WorkspaceRequest>>>(workspaces: WorkspacesType)
+                                                            -> CreateWorkspacesRequest {
+        CreateWorkspacesRequest {
+            workspaces: workspaces.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the result of the <a>CreateWorkspaces</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateWorkspacesResult {
@@ -72,7 +111,6 @@ pub struct CreateWorkspacesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pending_requests: Option<Vec<Workspace>>,
 }
-
 #[doc="<p>Contains default WorkSpace creation information.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DefaultWorkspaceCreationProperties {
@@ -97,7 +135,6 @@ pub struct DefaultWorkspaceCreationProperties {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_enabled_as_local_administrator: Option<bool>,
 }
-
 #[doc="<p>The request of the <a>DeleteTags</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteTagsRequest {
@@ -108,7 +145,33 @@ pub struct DeleteTagsRequest {
     #[serde(rename="TagKeys")]
     pub tag_keys: Vec<String>,
 }
-
+impl DeleteTagsRequest {
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTagsRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `tag_keys`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTagsRequest.tag_keys = value.into();`.
+    pub fn tag_keys<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tag_keys = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteTagsRequest with optional fields set to `None`.
+    pub fn new<ResourceIdType: Into<String>, TagKeysType: Into<Vec<String>>>
+        (resource_id: ResourceIdType,
+         tag_keys: TagKeysType)
+         -> DeleteTagsRequest {
+        DeleteTagsRequest {
+            resource_id: resource_id.into(),
+            tag_keys: tag_keys.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The result of the <a>DeleteTags</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteTagsResult;
@@ -120,7 +183,22 @@ pub struct DescribeTagsRequest {
     #[serde(rename="ResourceId")]
     pub resource_id: String,
 }
-
+impl DescribeTagsRequest {
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTagsRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeTagsRequest with optional fields set to `None`.
+    pub fn new<ResourceIdType: Into<String>>(resource_id: ResourceIdType) -> DescribeTagsRequest {
+        DescribeTagsRequest {
+            resource_id: resource_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The result of the <a>DescribeTags</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeTagsResult {
@@ -129,7 +207,6 @@ pub struct DescribeTagsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tag_list: Option<Vec<Tag>>,
 }
-
 #[doc="<p>Contains the inputs for the <a>DescribeWorkspaceBundles</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeWorkspaceBundlesRequest {
@@ -146,7 +223,33 @@ pub struct DescribeWorkspaceBundlesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub owner: Option<String>,
 }
-
+impl DescribeWorkspaceBundlesRequest {
+    /// Sets `bundle_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeWorkspaceBundlesRequest.bundle_ids = Some(value.into());`.
+    pub fn bundle_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.bundle_ids = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeWorkspaceBundlesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `owner`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeWorkspaceBundlesRequest.owner = Some(value.into());`.
+    pub fn owner<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.owner = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeWorkspaceBundlesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeWorkspaceBundlesRequest {
+        DescribeWorkspaceBundlesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the results of the <a>DescribeWorkspaceBundles</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeWorkspaceBundlesResult {
@@ -159,7 +262,6 @@ pub struct DescribeWorkspaceBundlesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Contains the inputs for the <a>DescribeWorkspaceDirectories</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeWorkspaceDirectoriesRequest {
@@ -172,7 +274,26 @@ pub struct DescribeWorkspaceDirectoriesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeWorkspaceDirectoriesRequest {
+    /// Sets `directory_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeWorkspaceDirectoriesRequest.directory_ids = Some(value.into());`.
+    pub fn directory_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.directory_ids = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeWorkspaceDirectoriesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeWorkspaceDirectoriesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeWorkspaceDirectoriesRequest {
+        DescribeWorkspaceDirectoriesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the results of the <a>DescribeWorkspaceDirectories</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeWorkspaceDirectoriesResult {
@@ -185,7 +306,6 @@ pub struct DescribeWorkspaceDirectoriesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeWorkspacesConnectionStatusRequest {
     #[doc="<p>The next token of the request.</p>"]
@@ -197,7 +317,26 @@ pub struct DescribeWorkspacesConnectionStatusRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub workspace_ids: Option<Vec<String>>,
 }
-
+impl DescribeWorkspacesConnectionStatusRequest {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeWorkspacesConnectionStatusRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `workspace_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeWorkspacesConnectionStatusRequest.workspace_ids = Some(value.into());`.
+    pub fn workspace_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.workspace_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeWorkspacesConnectionStatusRequest with optional fields set to `None`.
+    pub fn new() -> DescribeWorkspacesConnectionStatusRequest {
+        DescribeWorkspacesConnectionStatusRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeWorkspacesConnectionStatusResult {
     #[doc="<p>The next token of the result.</p>"]
@@ -209,7 +348,6 @@ pub struct DescribeWorkspacesConnectionStatusResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub workspaces_connection_status: Option<Vec<WorkspaceConnectionStatus>>,
 }
-
 #[doc="<p>Contains the inputs for the <a>DescribeWorkspaces</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeWorkspacesRequest {
@@ -238,7 +376,54 @@ pub struct DescribeWorkspacesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub workspace_ids: Option<Vec<String>>,
 }
-
+impl DescribeWorkspacesRequest {
+    /// Sets `bundle_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeWorkspacesRequest.bundle_id = Some(value.into());`.
+    pub fn bundle_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bundle_id = Some(value.into());
+        self
+    }
+    /// Sets `directory_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeWorkspacesRequest.directory_id = Some(value.into());`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeWorkspacesRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeWorkspacesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `user_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeWorkspacesRequest.user_name = Some(value.into());`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = Some(value.into());
+        self
+    }
+    /// Sets `workspace_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeWorkspacesRequest.workspace_ids = Some(value.into());`.
+    pub fn workspace_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.workspace_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeWorkspacesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeWorkspacesRequest {
+        DescribeWorkspacesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the results for the <a>DescribeWorkspaces</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeWorkspacesResult {
@@ -251,7 +436,6 @@ pub struct DescribeWorkspacesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub workspaces: Option<Vec<Workspace>>,
 }
-
 #[doc="<p>Contains information about a WorkSpace that could not be created.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct FailedCreateWorkspaceRequest {
@@ -268,7 +452,6 @@ pub struct FailedCreateWorkspaceRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub workspace_request: Option<WorkspaceRequest>,
 }
-
 #[doc="<p>Contains information about a WorkSpace that could not be rebooted (<a>RebootWorkspaces</a>), rebuilt (<a>RebuildWorkspaces</a>), terminated (<a>TerminateWorkspaces</a>), started (<a>StartWorkspaces</a>), or stopped (<a>StopWorkspaces</a>).</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct FailedWorkspaceChangeRequest {
@@ -285,7 +468,6 @@ pub struct FailedWorkspaceChangeRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub workspace_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ModifyWorkspacePropertiesRequest {
     #[doc="<p>The ID of the WorkSpace.</p>"]
@@ -295,7 +477,35 @@ pub struct ModifyWorkspacePropertiesRequest {
     #[serde(rename="WorkspaceProperties")]
     pub workspace_properties: WorkspaceProperties,
 }
-
+impl ModifyWorkspacePropertiesRequest {
+    /// Sets `workspace_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyWorkspacePropertiesRequest.workspace_id = value.into();`.
+    pub fn workspace_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.workspace_id = value.into();
+        self
+    }
+    /// Sets `workspace_properties`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyWorkspacePropertiesRequest.workspace_properties = value.into();`.
+    pub fn workspace_properties<ValueType: Into<WorkspaceProperties>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.workspace_properties = value.into();
+        self
+    }
+    /// Returns a new instance of ModifyWorkspacePropertiesRequest with optional fields set to `None`.
+    pub fn new<WorkspaceIdType: Into<String>, WorkspacePropertiesType: Into<WorkspaceProperties>>
+        (workspace_id: WorkspaceIdType,
+         workspace_properties: WorkspacePropertiesType)
+         -> ModifyWorkspacePropertiesRequest {
+        ModifyWorkspacePropertiesRequest {
+            workspace_id: workspace_id.into(),
+            workspace_properties: workspace_properties.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ModifyWorkspacePropertiesResult;
 
@@ -306,7 +516,22 @@ pub struct RebootRequest {
     #[serde(rename="WorkspaceId")]
     pub workspace_id: String,
 }
-
+impl RebootRequest {
+    /// Sets `workspace_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RebootRequest.workspace_id = value.into();`.
+    pub fn workspace_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.workspace_id = value.into();
+        self
+    }
+    /// Returns a new instance of RebootRequest with optional fields set to `None`.
+    pub fn new<WorkspaceIdType: Into<String>>(workspace_id: WorkspaceIdType) -> RebootRequest {
+        RebootRequest {
+            workspace_id: workspace_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the inputs for the <a>RebootWorkspaces</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RebootWorkspacesRequest {
@@ -314,7 +539,26 @@ pub struct RebootWorkspacesRequest {
     #[serde(rename="RebootWorkspaceRequests")]
     pub reboot_workspace_requests: Vec<RebootRequest>,
 }
-
+impl RebootWorkspacesRequest {
+    /// Sets `reboot_workspace_requests`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RebootWorkspacesRequest.reboot_workspace_requests = value.into();`.
+    pub fn reboot_workspace_requests<ValueType: Into<Vec<RebootRequest>>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.reboot_workspace_requests = value.into();
+        self
+    }
+    /// Returns a new instance of RebootWorkspacesRequest with optional fields set to `None`.
+    pub fn new<RebootWorkspaceRequestsType: Into<Vec<RebootRequest>>>
+        (reboot_workspace_requests: RebootWorkspaceRequestsType)
+         -> RebootWorkspacesRequest {
+        RebootWorkspacesRequest {
+            reboot_workspace_requests: reboot_workspace_requests.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the results of the <a>RebootWorkspaces</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RebootWorkspacesResult {
@@ -323,7 +567,6 @@ pub struct RebootWorkspacesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub failed_requests: Option<Vec<FailedWorkspaceChangeRequest>>,
 }
-
 #[doc="<p>Contains information used with the <a>RebuildWorkspaces</a> operation to rebuild a WorkSpace.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RebuildRequest {
@@ -331,7 +574,22 @@ pub struct RebuildRequest {
     #[serde(rename="WorkspaceId")]
     pub workspace_id: String,
 }
-
+impl RebuildRequest {
+    /// Sets `workspace_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RebuildRequest.workspace_id = value.into();`.
+    pub fn workspace_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.workspace_id = value.into();
+        self
+    }
+    /// Returns a new instance of RebuildRequest with optional fields set to `None`.
+    pub fn new<WorkspaceIdType: Into<String>>(workspace_id: WorkspaceIdType) -> RebuildRequest {
+        RebuildRequest {
+            workspace_id: workspace_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the inputs for the <a>RebuildWorkspaces</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RebuildWorkspacesRequest {
@@ -339,7 +597,26 @@ pub struct RebuildWorkspacesRequest {
     #[serde(rename="RebuildWorkspaceRequests")]
     pub rebuild_workspace_requests: Vec<RebuildRequest>,
 }
-
+impl RebuildWorkspacesRequest {
+    /// Sets `rebuild_workspace_requests`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RebuildWorkspacesRequest.rebuild_workspace_requests = value.into();`.
+    pub fn rebuild_workspace_requests<ValueType: Into<Vec<RebuildRequest>>>(mut self,
+                                                                            value: ValueType)
+                                                                            -> Self {
+        self.rebuild_workspace_requests = value.into();
+        self
+    }
+    /// Returns a new instance of RebuildWorkspacesRequest with optional fields set to `None`.
+    pub fn new<RebuildWorkspaceRequestsType: Into<Vec<RebuildRequest>>>
+        (rebuild_workspace_requests: RebuildWorkspaceRequestsType)
+         -> RebuildWorkspacesRequest {
+        RebuildWorkspacesRequest {
+            rebuild_workspace_requests: rebuild_workspace_requests.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the results of the <a>RebuildWorkspaces</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RebuildWorkspacesResult {
@@ -348,7 +625,6 @@ pub struct RebuildWorkspacesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub failed_requests: Option<Vec<FailedWorkspaceChangeRequest>>,
 }
-
 #[doc="<p>Describes the start request.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartRequest {
@@ -357,14 +633,43 @@ pub struct StartRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub workspace_id: Option<String>,
 }
-
+impl StartRequest {
+    /// Sets `workspace_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartRequest.workspace_id = Some(value.into());`.
+    pub fn workspace_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.workspace_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of StartRequest with optional fields set to `None`.
+    pub fn new() -> StartRequest {
+        StartRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartWorkspacesRequest {
     #[doc="<p>The requests.</p>"]
     #[serde(rename="StartWorkspaceRequests")]
     pub start_workspace_requests: Vec<StartRequest>,
 }
-
+impl StartWorkspacesRequest {
+    /// Sets `start_workspace_requests`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartWorkspacesRequest.start_workspace_requests = value.into();`.
+    pub fn start_workspace_requests<ValueType: Into<Vec<StartRequest>>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.start_workspace_requests = value.into();
+        self
+    }
+    /// Returns a new instance of StartWorkspacesRequest with optional fields set to `None`.
+pub fn new<StartWorkspaceRequestsType: Into<Vec<StartRequest>>>(start_workspace_requests: StartWorkspaceRequestsType) -> StartWorkspacesRequest{
+        StartWorkspacesRequest {
+            start_workspace_requests: start_workspace_requests.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartWorkspacesResult {
     #[doc="<p>The failed requests.</p>"]
@@ -372,7 +677,6 @@ pub struct StartWorkspacesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub failed_requests: Option<Vec<FailedWorkspaceChangeRequest>>,
 }
-
 #[doc="<p>Describes the stop request.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StopRequest {
@@ -381,14 +685,43 @@ pub struct StopRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub workspace_id: Option<String>,
 }
-
+impl StopRequest {
+    /// Sets `workspace_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopRequest.workspace_id = Some(value.into());`.
+    pub fn workspace_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.workspace_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of StopRequest with optional fields set to `None`.
+    pub fn new() -> StopRequest {
+        StopRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StopWorkspacesRequest {
     #[doc="<p>The requests.</p>"]
     #[serde(rename="StopWorkspaceRequests")]
     pub stop_workspace_requests: Vec<StopRequest>,
 }
-
+impl StopWorkspacesRequest {
+    /// Sets `stop_workspace_requests`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopWorkspacesRequest.stop_workspace_requests = value.into();`.
+    pub fn stop_workspace_requests<ValueType: Into<Vec<StopRequest>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.stop_workspace_requests = value.into();
+        self
+    }
+    /// Returns a new instance of StopWorkspacesRequest with optional fields set to `None`.
+pub fn new<StopWorkspaceRequestsType: Into<Vec<StopRequest>>>(stop_workspace_requests: StopWorkspaceRequestsType) -> StopWorkspacesRequest{
+        StopWorkspacesRequest {
+            stop_workspace_requests: stop_workspace_requests.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StopWorkspacesResult {
     #[doc="<p>The failed requests.</p>"]
@@ -396,7 +729,6 @@ pub struct StopWorkspacesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub failed_requests: Option<Vec<FailedWorkspaceChangeRequest>>,
 }
-
 #[doc="<p>Describes the tag of the WorkSpace.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Tag {
@@ -408,7 +740,29 @@ pub struct Tag {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl Tag {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>>(key: KeyType) -> Tag {
+        Tag {
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains information used with the <a>TerminateWorkspaces</a> operation to terminate a WorkSpace.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TerminateRequest {
@@ -416,7 +770,22 @@ pub struct TerminateRequest {
     #[serde(rename="WorkspaceId")]
     pub workspace_id: String,
 }
-
+impl TerminateRequest {
+    /// Sets `workspace_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateRequest.workspace_id = value.into();`.
+    pub fn workspace_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.workspace_id = value.into();
+        self
+    }
+    /// Returns a new instance of TerminateRequest with optional fields set to `None`.
+    pub fn new<WorkspaceIdType: Into<String>>(workspace_id: WorkspaceIdType) -> TerminateRequest {
+        TerminateRequest {
+            workspace_id: workspace_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the inputs for the <a>TerminateWorkspaces</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TerminateWorkspacesRequest {
@@ -424,7 +793,26 @@ pub struct TerminateWorkspacesRequest {
     #[serde(rename="TerminateWorkspaceRequests")]
     pub terminate_workspace_requests: Vec<TerminateRequest>,
 }
-
+impl TerminateWorkspacesRequest {
+    /// Sets `terminate_workspace_requests`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateWorkspacesRequest.terminate_workspace_requests = value.into();`.
+    pub fn terminate_workspace_requests<ValueType: Into<Vec<TerminateRequest>>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.terminate_workspace_requests = value.into();
+        self
+    }
+    /// Returns a new instance of TerminateWorkspacesRequest with optional fields set to `None`.
+    pub fn new<TerminateWorkspaceRequestsType: Into<Vec<TerminateRequest>>>
+        (terminate_workspace_requests: TerminateWorkspaceRequestsType)
+         -> TerminateWorkspacesRequest {
+        TerminateWorkspacesRequest {
+            terminate_workspace_requests: terminate_workspace_requests.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the results of the <a>TerminateWorkspaces</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TerminateWorkspacesResult {
@@ -433,7 +821,6 @@ pub struct TerminateWorkspacesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub failed_requests: Option<Vec<FailedWorkspaceChangeRequest>>,
 }
-
 #[doc="<p>Contains information about the user storage for a WorkSpace bundle.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UserStorage {
@@ -442,7 +829,6 @@ pub struct UserStorage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub capacity: Option<String>,
 }
-
 #[doc="<p>Contains information about a WorkSpace.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Workspace {
@@ -502,7 +888,6 @@ pub struct Workspace {
     #[serde(skip_serializing_if="Option::is_none")]
     pub workspace_properties: Option<WorkspaceProperties>,
 }
-
 #[doc="<p>Contains information about a WorkSpace bundle.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkspaceBundle {
@@ -531,7 +916,6 @@ pub struct WorkspaceBundle {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_storage: Option<UserStorage>,
 }
-
 #[doc="<p>Describes the connection status of a WorkSpace.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkspaceConnectionStatus {
@@ -552,7 +936,6 @@ pub struct WorkspaceConnectionStatus {
     #[serde(skip_serializing_if="Option::is_none")]
     pub workspace_id: Option<String>,
 }
-
 #[doc="<p>Contains information about an AWS Directory Service directory for use with Amazon WorkSpaces.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkspaceDirectory {
@@ -605,7 +988,6 @@ pub struct WorkspaceDirectory {
     #[serde(skip_serializing_if="Option::is_none")]
     pub workspace_security_group_id: Option<String>,
 }
-
 #[doc="<p>Describes the properties of a WorkSpace.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct WorkspaceProperties {
@@ -618,7 +1000,28 @@ pub struct WorkspaceProperties {
     #[serde(skip_serializing_if="Option::is_none")]
     pub running_mode_auto_stop_timeout_in_minutes: Option<i64>,
 }
-
+impl WorkspaceProperties {
+    /// Sets `running_mode`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WorkspaceProperties.running_mode = Some(value.into());`.
+    pub fn running_mode<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.running_mode = Some(value.into());
+        self
+    }
+    /// Sets `running_mode_auto_stop_timeout_in_minutes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WorkspaceProperties.running_mode_auto_stop_timeout_in_minutes = Some(value.into());`.
+    pub fn running_mode_auto_stop_timeout_in_minutes<ValueType: Into<i64>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.running_mode_auto_stop_timeout_in_minutes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of WorkspaceProperties with optional fields set to `None`.
+    pub fn new() -> WorkspaceProperties {
+        WorkspaceProperties { ..Default::default() }
+    }
+}
 #[doc="<p>Contains information about a WorkSpace creation request.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct WorkspaceRequest {
@@ -651,7 +1054,85 @@ pub struct WorkspaceRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub workspace_properties: Option<WorkspaceProperties>,
 }
-
+impl WorkspaceRequest {
+    /// Sets `bundle_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WorkspaceRequest.bundle_id = value.into();`.
+    pub fn bundle_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bundle_id = value.into();
+        self
+    }
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WorkspaceRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Sets `root_volume_encryption_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WorkspaceRequest.root_volume_encryption_enabled = Some(value.into());`.
+    pub fn root_volume_encryption_enabled<ValueType: Into<bool>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.root_volume_encryption_enabled = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WorkspaceRequest.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WorkspaceRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Sets `user_volume_encryption_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WorkspaceRequest.user_volume_encryption_enabled = Some(value.into());`.
+    pub fn user_volume_encryption_enabled<ValueType: Into<bool>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.user_volume_encryption_enabled = Some(value.into());
+        self
+    }
+    /// Sets `volume_encryption_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WorkspaceRequest.volume_encryption_key = Some(value.into());`.
+    pub fn volume_encryption_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_encryption_key = Some(value.into());
+        self
+    }
+    /// Sets `workspace_properties`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WorkspaceRequest.workspace_properties = Some(value.into());`.
+    pub fn workspace_properties<ValueType: Into<WorkspaceProperties>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.workspace_properties = Some(value.into());
+        self
+    }
+    /// Returns a new instance of WorkspaceRequest with optional fields set to `None`.
+    pub fn new<BundleIdType: Into<String>,
+               DirectoryIdType: Into<String>,
+               UserNameType: Into<String>>
+        (bundle_id: BundleIdType,
+         directory_id: DirectoryIdType,
+         user_name: UserNameType)
+         -> WorkspaceRequest {
+        WorkspaceRequest {
+            bundle_id: bundle_id.into(),
+            directory_id: directory_id.into(),
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 /// Errors returned by CreateTags
 #[derive(Debug, PartialEq)]
 pub enum CreateTagsError {

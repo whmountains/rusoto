@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -76,7 +77,6 @@ pub struct AttributeValue {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ss: Option<Vec<String>>,
 }
-
 #[doc="<p>Represents the input of a <code>DescribeStream</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeStreamInput {
@@ -92,7 +92,36 @@ pub struct DescribeStreamInput {
     #[serde(rename="StreamArn")]
     pub stream_arn: String,
 }
-
+impl DescribeStreamInput {
+    /// Sets `exclusive_start_shard_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStreamInput.exclusive_start_shard_id = Some(value.into());`.
+    pub fn exclusive_start_shard_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.exclusive_start_shard_id = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStreamInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `stream_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStreamInput.stream_arn = value.into();`.
+    pub fn stream_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stream_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeStreamInput with optional fields set to `None`.
+    pub fn new<StreamArnType: Into<String>>(stream_arn: StreamArnType) -> DescribeStreamInput {
+        DescribeStreamInput {
+            stream_arn: stream_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a <code>DescribeStream</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeStreamOutput {
@@ -101,7 +130,6 @@ pub struct DescribeStreamOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stream_description: Option<StreamDescription>,
 }
-
 #[doc="<p>Represents the input of a <code>GetRecords</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetRecordsInput {
@@ -113,7 +141,30 @@ pub struct GetRecordsInput {
     #[serde(rename="ShardIterator")]
     pub shard_iterator: String,
 }
-
+impl GetRecordsInput {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRecordsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `shard_iterator`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRecordsInput.shard_iterator = value.into();`.
+    pub fn shard_iterator<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.shard_iterator = value.into();
+        self
+    }
+    /// Returns a new instance of GetRecordsInput with optional fields set to `None`.
+    pub fn new<ShardIteratorType: Into<String>>(shard_iterator: ShardIteratorType)
+                                                -> GetRecordsInput {
+        GetRecordsInput {
+            shard_iterator: shard_iterator.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a <code>GetRecords</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetRecordsOutput {
@@ -126,7 +177,6 @@ pub struct GetRecordsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub records: Option<Vec<Record>>,
 }
-
 #[doc="<p>Represents the input of a <code>GetShardIterator</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetShardIteratorInput {
@@ -144,7 +194,51 @@ pub struct GetShardIteratorInput {
     #[serde(rename="StreamArn")]
     pub stream_arn: String,
 }
-
+impl GetShardIteratorInput {
+    /// Sets `sequence_number`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetShardIteratorInput.sequence_number = Some(value.into());`.
+    pub fn sequence_number<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sequence_number = Some(value.into());
+        self
+    }
+    /// Sets `shard_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetShardIteratorInput.shard_id = value.into();`.
+    pub fn shard_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.shard_id = value.into();
+        self
+    }
+    /// Sets `shard_iterator_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetShardIteratorInput.shard_iterator_type = value.into();`.
+    pub fn shard_iterator_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.shard_iterator_type = value.into();
+        self
+    }
+    /// Sets `stream_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetShardIteratorInput.stream_arn = value.into();`.
+    pub fn stream_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stream_arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetShardIteratorInput with optional fields set to `None`.
+    pub fn new<ShardIdType: Into<String>,
+               ShardIteratorTypeType: Into<String>,
+               StreamArnType: Into<String>>
+        (shard_id: ShardIdType,
+         shard_iterator_type: ShardIteratorTypeType,
+         stream_arn: StreamArnType)
+         -> GetShardIteratorInput {
+        GetShardIteratorInput {
+            shard_id: shard_id.into(),
+            shard_iterator_type: shard_iterator_type.into(),
+            stream_arn: stream_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a <code>GetShardIterator</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetShardIteratorOutput {
@@ -153,7 +247,6 @@ pub struct GetShardIteratorOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub shard_iterator: Option<String>,
 }
-
 #[doc="<p>Contains details about the type of identity that made the request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Identity {
@@ -166,7 +259,6 @@ pub struct Identity {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>Represents <i>a single element</i> of a key schema. A key schema specifies the attributes that make up the primary key of a table, or the key attributes of an index.</p> <p>A <code>KeySchemaElement</code> represents exactly one attribute of the primary key. For example, a simple primary key (partition key) would be represented by one <code>KeySchemaElement</code>. A composite primary key (partition key and sort key) would require one <code>KeySchemaElement</code> for the partition key, and another <code>KeySchemaElement</code> for the sort key.</p> <note> <p>The partition key of an item is also known as its <i>hash attribute</i>. The term \"hash attribute\" derives from DynamoDB's usage of an internal hash function to evenly distribute data items across partitions, based on their partition key values.</p> <p>The sort key of an item is also known as its <i>range attribute</i>. The term \"range attribute\" derives from the way DynamoDB stores items with the same partition key physically close together, in sorted order by the sort key value.</p> </note>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct KeySchemaElement {
@@ -177,7 +269,6 @@ pub struct KeySchemaElement {
     #[serde(rename="KeyType")]
     pub key_type: String,
 }
-
 #[doc="<p>Represents the input of a <code>ListStreams</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListStreamsInput {
@@ -194,7 +285,33 @@ pub struct ListStreamsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub table_name: Option<String>,
 }
-
+impl ListStreamsInput {
+    /// Sets `exclusive_start_stream_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStreamsInput.exclusive_start_stream_arn = Some(value.into());`.
+    pub fn exclusive_start_stream_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.exclusive_start_stream_arn = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStreamsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `table_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStreamsInput.table_name = Some(value.into());`.
+    pub fn table_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.table_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListStreamsInput with optional fields set to `None`.
+    pub fn new() -> ListStreamsInput {
+        ListStreamsInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the output of a <code>ListStreams</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListStreamsOutput {
@@ -207,7 +324,6 @@ pub struct ListStreamsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub streams: Option<Vec<Stream>>,
 }
-
 #[doc="<p>A description of a unique event within a stream.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Record {
@@ -240,7 +356,6 @@ pub struct Record {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_identity: Option<Identity>,
 }
-
 #[doc="<p>The beginning and ending sequence numbers for the stream records contained within a shard.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SequenceNumberRange {
@@ -253,7 +368,6 @@ pub struct SequenceNumberRange {
     #[serde(skip_serializing_if="Option::is_none")]
     pub starting_sequence_number: Option<String>,
 }
-
 #[doc="<p>A uniquely identified group of stream records within a stream.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Shard {
@@ -270,7 +384,6 @@ pub struct Shard {
     #[serde(skip_serializing_if="Option::is_none")]
     pub shard_id: Option<String>,
 }
-
 #[doc="<p>Represents all of the data describing a particular stream.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Stream {
@@ -287,7 +400,6 @@ pub struct Stream {
     #[serde(skip_serializing_if="Option::is_none")]
     pub table_name: Option<String>,
 }
-
 #[doc="<p>Represents all of the data describing a particular stream.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StreamDescription {
@@ -328,7 +440,6 @@ pub struct StreamDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub table_name: Option<String>,
 }
-
 #[doc="<p>A description of a single data modification that was performed on an item in a DynamoDB table.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StreamRecord {
@@ -361,7 +472,6 @@ pub struct StreamRecord {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stream_view_type: Option<String>,
 }
-
 /// Errors returned by DescribeStream
 #[derive(Debug, PartialEq)]
 pub enum DescribeStreamError {

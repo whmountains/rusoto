@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -39,7 +40,29 @@ pub struct AddTagsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags_list: Option<Vec<Tag>>,
 }
-
+impl AddTagsRequest {
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `tags_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsRequest.tags_list = Some(value.into());`.
+    pub fn tags_list<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags_list = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AddTagsRequest with optional fields set to `None`.
+    pub fn new<ResourceIdType: Into<String>>(resource_id: ResourceIdType) -> AddTagsRequest {
+        AddTagsRequest {
+            resource_id: resource_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Returns the objects or data listed below if successful. Otherwise, returns an error.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddTagsResponse;
@@ -86,7 +109,90 @@ pub struct CreateTrailRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sns_topic_name: Option<String>,
 }
-
+impl CreateTrailRequest {
+    /// Sets `cloud_watch_logs_log_group_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrailRequest.cloud_watch_logs_log_group_arn = Some(value.into());`.
+    pub fn cloud_watch_logs_log_group_arn<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.cloud_watch_logs_log_group_arn = Some(value.into());
+        self
+    }
+    /// Sets `cloud_watch_logs_role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrailRequest.cloud_watch_logs_role_arn = Some(value.into());`.
+    pub fn cloud_watch_logs_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cloud_watch_logs_role_arn = Some(value.into());
+        self
+    }
+    /// Sets `enable_log_file_validation`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrailRequest.enable_log_file_validation = Some(value.into());`.
+    pub fn enable_log_file_validation<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enable_log_file_validation = Some(value.into());
+        self
+    }
+    /// Sets `include_global_service_events`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrailRequest.include_global_service_events = Some(value.into());`.
+    pub fn include_global_service_events<ValueType: Into<bool>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.include_global_service_events = Some(value.into());
+        self
+    }
+    /// Sets `is_multi_region_trail`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrailRequest.is_multi_region_trail = Some(value.into());`.
+    pub fn is_multi_region_trail<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.is_multi_region_trail = Some(value.into());
+        self
+    }
+    /// Sets `kms_key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrailRequest.kms_key_id = Some(value.into());`.
+    pub fn kms_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kms_key_id = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrailRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `s3_bucket_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrailRequest.s3_bucket_name = value.into();`.
+    pub fn s3_bucket_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_bucket_name = value.into();
+        self
+    }
+    /// Sets `s3_key_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrailRequest.s3_key_prefix = Some(value.into());`.
+    pub fn s3_key_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_key_prefix = Some(value.into());
+        self
+    }
+    /// Sets `sns_topic_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrailRequest.sns_topic_name = Some(value.into());`.
+    pub fn sns_topic_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sns_topic_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateTrailRequest with optional fields set to `None`.
+pub fn new<NameType: Into<String>, S3BucketNameType: Into<String>>(name: NameType, s3_bucket_name: S3BucketNameType) -> CreateTrailRequest{
+        CreateTrailRequest {
+            name: name.into(),
+            s3_bucket_name: s3_bucket_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Returns the objects or data listed below if successful. Otherwise, returns an error.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateTrailResponse {
@@ -135,7 +241,6 @@ pub struct CreateTrailResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub trail_arn: Option<String>,
 }
-
 #[doc="<p>The Amazon S3 objects that you specify in your event selectors for your trail to log data events. Data events are object-level API operations that access S3 objects, such as <code>GetObject</code>, <code>DeleteObject</code>, and <code>PutObject</code>. You can specify up to 250 S3 buckets and object prefixes for a trail. </p> <p>Example</p> <ol> <li> <p>You create an event selector for a trail and specify an S3 bucket and an empty prefix, such as <code>arn:aws:s3:::bucket-1/</code>.</p> </li> <li> <p>You upload an image file to <code>bucket-1</code>.</p> </li> <li> <p>The <code>PutObject</code> API operation occurs on an object in the S3 bucket that you specified in the event selector. The trail processes and logs the event.</p> </li> <li> <p>You upload another image file to a different S3 bucket named <code>arn:aws:s3:::bucket-2</code>.</p> </li> <li> <p>The event occurs on an object in an S3 bucket that you didn't specify in the event selector. The trail doesn’t log the event.</p> </li> </ol>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct DataResource {
@@ -148,7 +253,26 @@ pub struct DataResource {
     #[serde(skip_serializing_if="Option::is_none")]
     pub values: Option<Vec<String>>,
 }
-
+impl DataResource {
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DataResource.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Sets `values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DataResource.values = Some(value.into());`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DataResource with optional fields set to `None`.
+    pub fn new() -> DataResource {
+        DataResource { ..Default::default() }
+    }
+}
 #[doc="<p>The request that specifies the name of a trail to delete.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteTrailRequest {
@@ -156,7 +280,22 @@ pub struct DeleteTrailRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl DeleteTrailRequest {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTrailRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteTrailRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> DeleteTrailRequest {
+        DeleteTrailRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Returns the objects or data listed below if successful. Otherwise, returns an error.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteTrailResponse;
@@ -173,7 +312,26 @@ pub struct DescribeTrailsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub trail_name_list: Option<Vec<String>>,
 }
-
+impl DescribeTrailsRequest {
+    /// Sets `include_shadow_trails`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTrailsRequest.include_shadow_trails = Some(value.into());`.
+    pub fn include_shadow_trails<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.include_shadow_trails = Some(value.into());
+        self
+    }
+    /// Sets `trail_name_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTrailsRequest.trail_name_list = Some(value.into());`.
+    pub fn trail_name_list<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.trail_name_list = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeTrailsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeTrailsRequest {
+        DescribeTrailsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Returns the objects or data listed below if successful. Otherwise, returns an error.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeTrailsResponse {
@@ -182,7 +340,6 @@ pub struct DescribeTrailsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub trail_list: Option<Vec<Trail>>,
 }
-
 #[doc="<p>Contains information about an event that was returned by a lookup request. The result includes a representation of a CloudTrail event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Event {
@@ -215,7 +372,6 @@ pub struct Event {
     #[serde(skip_serializing_if="Option::is_none")]
     pub username: Option<String>,
 }
-
 #[doc="<p>Use event selectors to specify whether you want your trail to log management and/or data events. When an event occurs in your account, CloudTrail evaluates the event selector for all trails. For each trail, if the event matches any event selector, the trail processes and logs the event. If the event doesn't match any event selector, the trail doesn't log the event.</p> <p>You can configure up to five event selectors for a trail.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct EventSelector {
@@ -232,14 +388,55 @@ pub struct EventSelector {
     #[serde(skip_serializing_if="Option::is_none")]
     pub read_write_type: Option<String>,
 }
-
+impl EventSelector {
+    /// Sets `data_resources`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventSelector.data_resources = Some(value.into());`.
+    pub fn data_resources<ValueType: Into<Vec<DataResource>>>(mut self, value: ValueType) -> Self {
+        self.data_resources = Some(value.into());
+        self
+    }
+    /// Sets `include_management_events`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventSelector.include_management_events = Some(value.into());`.
+    pub fn include_management_events<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.include_management_events = Some(value.into());
+        self
+    }
+    /// Sets `read_write_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventSelector.read_write_type = Some(value.into());`.
+    pub fn read_write_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.read_write_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of EventSelector with optional fields set to `None`.
+    pub fn new() -> EventSelector {
+        EventSelector { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetEventSelectorsRequest {
     #[doc="<p>Specifies the name of the trail or trail ARN. If you specify a trail name, the string must meet the following requirements:</p> <ul> <li> <p>Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods (.), underscores (_), or dashes (-)</p> </li> <li> <p>Start with a letter or number, and end with a letter or number</p> </li> <li> <p>Be between 3 and 128 characters</p> </li> <li> <p>Have no adjacent periods, underscores or dashes. Names like <code>my-_namespace</code> and <code>my--namespace</code> are invalid.</p> </li> <li> <p>Not be in IP address format (for example, 192.168.5.4)</p> </li> </ul> <p>If you specify a trail ARN, it must be in the format:</p> <p> <code>arn:aws:cloudtrail:us-east-1:123456789012:trail/MyTrail</code> </p>"]
     #[serde(rename="TrailName")]
     pub trail_name: String,
 }
-
+impl GetEventSelectorsRequest {
+    /// Sets `trail_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetEventSelectorsRequest.trail_name = value.into();`.
+    pub fn trail_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.trail_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetEventSelectorsRequest with optional fields set to `None`.
+    pub fn new<TrailNameType: Into<String>>(trail_name: TrailNameType) -> GetEventSelectorsRequest {
+        GetEventSelectorsRequest {
+            trail_name: trail_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetEventSelectorsResponse {
     #[doc="<p>The event selectors that are configured for the trail.</p>"]
@@ -251,7 +448,6 @@ pub struct GetEventSelectorsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub trail_arn: Option<String>,
 }
-
 #[doc="<p>The name of a trail about which you want the current status.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetTrailStatusRequest {
@@ -259,7 +455,22 @@ pub struct GetTrailStatusRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl GetTrailStatusRequest {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetTrailStatusRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of GetTrailStatusRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> GetTrailStatusRequest {
+        GetTrailStatusRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Returns the objects or data listed below if successful. Otherwise, returns an error.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetTrailStatusResponse {
@@ -332,7 +543,6 @@ pub struct GetTrailStatusResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub time_logging_stopped: Option<String>,
 }
-
 #[doc="<p>Requests the public keys for a specified time range.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListPublicKeysRequest {
@@ -349,7 +559,33 @@ pub struct ListPublicKeysRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub start_time: Option<f64>,
 }
-
+impl ListPublicKeysRequest {
+    /// Sets `end_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPublicKeysRequest.end_time = Some(value.into());`.
+    pub fn end_time<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.end_time = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPublicKeysRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `start_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPublicKeysRequest.start_time = Some(value.into());`.
+    pub fn start_time<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.start_time = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListPublicKeysRequest with optional fields set to `None`.
+    pub fn new() -> ListPublicKeysRequest {
+        ListPublicKeysRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Returns the objects or data listed below if successful. Otherwise, returns an error.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListPublicKeysResponse {
@@ -362,7 +598,6 @@ pub struct ListPublicKeysResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub public_key_list: Option<Vec<PublicKey>>,
 }
-
 #[doc="<p>Specifies a list of trail tags to return.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTagsRequest {
@@ -374,7 +609,30 @@ pub struct ListTagsRequest {
     #[serde(rename="ResourceIdList")]
     pub resource_id_list: Vec<String>,
 }
-
+impl ListTagsRequest {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `resource_id_list`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsRequest.resource_id_list = value.into();`.
+    pub fn resource_id_list<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resource_id_list = value.into();
+        self
+    }
+    /// Returns a new instance of ListTagsRequest with optional fields set to `None`.
+    pub fn new<ResourceIdListType: Into<Vec<String>>>(resource_id_list: ResourceIdListType)
+                                                      -> ListTagsRequest {
+        ListTagsRequest {
+            resource_id_list: resource_id_list.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Returns the objects or data listed below if successful. Otherwise, returns an error.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTagsResponse {
@@ -387,7 +645,6 @@ pub struct ListTagsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_tag_list: Option<Vec<ResourceTag>>,
 }
-
 #[doc="<p>Specifies an attribute and value that filter the events returned.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct LookupAttribute {
@@ -398,7 +655,33 @@ pub struct LookupAttribute {
     #[serde(rename="AttributeValue")]
     pub attribute_value: String,
 }
-
+impl LookupAttribute {
+    /// Sets `attribute_key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LookupAttribute.attribute_key = value.into();`.
+    pub fn attribute_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute_key = value.into();
+        self
+    }
+    /// Sets `attribute_value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LookupAttribute.attribute_value = value.into();`.
+    pub fn attribute_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute_value = value.into();
+        self
+    }
+    /// Returns a new instance of LookupAttribute with optional fields set to `None`.
+    pub fn new<AttributeKeyType: Into<String>, AttributeValueType: Into<String>>
+        (attribute_key: AttributeKeyType,
+         attribute_value: AttributeValueType)
+         -> LookupAttribute {
+        LookupAttribute {
+            attribute_key: attribute_key.into(),
+            attribute_value: attribute_value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains a request for LookupEvents.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct LookupEventsRequest {
@@ -423,7 +706,49 @@ pub struct LookupEventsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub start_time: Option<f64>,
 }
-
+impl LookupEventsRequest {
+    /// Sets `end_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LookupEventsRequest.end_time = Some(value.into());`.
+    pub fn end_time<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.end_time = Some(value.into());
+        self
+    }
+    /// Sets `lookup_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LookupEventsRequest.lookup_attributes = Some(value.into());`.
+    pub fn lookup_attributes<ValueType: Into<Vec<LookupAttribute>>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.lookup_attributes = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LookupEventsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LookupEventsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `start_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LookupEventsRequest.start_time = Some(value.into());`.
+    pub fn start_time<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.start_time = Some(value.into());
+        self
+    }
+    /// Returns a new instance of LookupEventsRequest with optional fields set to `None`.
+    pub fn new() -> LookupEventsRequest {
+        LookupEventsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains a response to a LookupEvents action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LookupEventsResponse {
@@ -436,7 +761,6 @@ pub struct LookupEventsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Contains information about a returned public key.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PublicKey {
@@ -461,7 +785,6 @@ pub struct PublicKey {
                         )]
     pub value: Option<Vec<u8>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutEventSelectorsRequest {
     #[doc="<p>Specifies the settings for your event selectors. You can configure up to five event selectors for a trail.</p>"]
@@ -471,7 +794,35 @@ pub struct PutEventSelectorsRequest {
     #[serde(rename="TrailName")]
     pub trail_name: String,
 }
-
+impl PutEventSelectorsRequest {
+    /// Sets `event_selectors`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutEventSelectorsRequest.event_selectors = value.into();`.
+    pub fn event_selectors<ValueType: Into<Vec<EventSelector>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.event_selectors = value.into();
+        self
+    }
+    /// Sets `trail_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutEventSelectorsRequest.trail_name = value.into();`.
+    pub fn trail_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.trail_name = value.into();
+        self
+    }
+    /// Returns a new instance of PutEventSelectorsRequest with optional fields set to `None`.
+    pub fn new<EventSelectorsType: Into<Vec<EventSelector>>, TrailNameType: Into<String>>
+        (event_selectors: EventSelectorsType,
+         trail_name: TrailNameType)
+         -> PutEventSelectorsRequest {
+        PutEventSelectorsRequest {
+            event_selectors: event_selectors.into(),
+            trail_name: trail_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutEventSelectorsResponse {
     #[doc="<p>Specifies the event selectors configured for your trail.</p>"]
@@ -483,7 +834,6 @@ pub struct PutEventSelectorsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub trail_arn: Option<String>,
 }
-
 #[doc="<p>Specifies the tags to remove from a trail.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RemoveTagsRequest {
@@ -495,7 +845,29 @@ pub struct RemoveTagsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags_list: Option<Vec<Tag>>,
 }
-
+impl RemoveTagsRequest {
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `tags_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsRequest.tags_list = Some(value.into());`.
+    pub fn tags_list<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags_list = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RemoveTagsRequest with optional fields set to `None`.
+    pub fn new<ResourceIdType: Into<String>>(resource_id: ResourceIdType) -> RemoveTagsRequest {
+        RemoveTagsRequest {
+            resource_id: resource_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Returns the objects or data listed below if successful. Otherwise, returns an error.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RemoveTagsResponse;
@@ -512,7 +884,6 @@ pub struct Resource {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_type: Option<String>,
 }
-
 #[doc="<p>A resource tag.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ResourceTag {
@@ -525,7 +896,6 @@ pub struct ResourceTag {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags_list: Option<Vec<Tag>>,
 }
-
 #[doc="<p>The request to CloudTrail to start logging AWS API calls for an account.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartLoggingRequest {
@@ -533,7 +903,22 @@ pub struct StartLoggingRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl StartLoggingRequest {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartLoggingRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of StartLoggingRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> StartLoggingRequest {
+        StartLoggingRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Returns the objects or data listed below if successful. Otherwise, returns an error.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartLoggingResponse;
@@ -545,7 +930,22 @@ pub struct StopLoggingRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl StopLoggingRequest {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopLoggingRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of StopLoggingRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> StopLoggingRequest {
+        StopLoggingRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Returns the objects or data listed below if successful. Otherwise, returns an error.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StopLoggingResponse;
@@ -561,7 +961,29 @@ pub struct Tag {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl Tag {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>>(key: KeyType) -> Tag {
+        Tag {
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The settings for a trail.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Trail {
@@ -618,7 +1040,6 @@ pub struct Trail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub trail_arn: Option<String>,
 }
-
 #[doc="<p>Specifies settings to update for the trail.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateTrailRequest {
@@ -662,7 +1083,89 @@ pub struct UpdateTrailRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sns_topic_name: Option<String>,
 }
-
+impl UpdateTrailRequest {
+    /// Sets `cloud_watch_logs_log_group_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTrailRequest.cloud_watch_logs_log_group_arn = Some(value.into());`.
+    pub fn cloud_watch_logs_log_group_arn<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.cloud_watch_logs_log_group_arn = Some(value.into());
+        self
+    }
+    /// Sets `cloud_watch_logs_role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTrailRequest.cloud_watch_logs_role_arn = Some(value.into());`.
+    pub fn cloud_watch_logs_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cloud_watch_logs_role_arn = Some(value.into());
+        self
+    }
+    /// Sets `enable_log_file_validation`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTrailRequest.enable_log_file_validation = Some(value.into());`.
+    pub fn enable_log_file_validation<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enable_log_file_validation = Some(value.into());
+        self
+    }
+    /// Sets `include_global_service_events`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTrailRequest.include_global_service_events = Some(value.into());`.
+    pub fn include_global_service_events<ValueType: Into<bool>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.include_global_service_events = Some(value.into());
+        self
+    }
+    /// Sets `is_multi_region_trail`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTrailRequest.is_multi_region_trail = Some(value.into());`.
+    pub fn is_multi_region_trail<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.is_multi_region_trail = Some(value.into());
+        self
+    }
+    /// Sets `kms_key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTrailRequest.kms_key_id = Some(value.into());`.
+    pub fn kms_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kms_key_id = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTrailRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `s3_bucket_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTrailRequest.s3_bucket_name = Some(value.into());`.
+    pub fn s3_bucket_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_bucket_name = Some(value.into());
+        self
+    }
+    /// Sets `s3_key_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTrailRequest.s3_key_prefix = Some(value.into());`.
+    pub fn s3_key_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_key_prefix = Some(value.into());
+        self
+    }
+    /// Sets `sns_topic_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTrailRequest.sns_topic_name = Some(value.into());`.
+    pub fn sns_topic_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sns_topic_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateTrailRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> UpdateTrailRequest {
+        UpdateTrailRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Returns the objects or data listed below if successful. Otherwise, returns an error.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateTrailResponse {
@@ -711,7 +1214,6 @@ pub struct UpdateTrailResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub trail_arn: Option<String>,
 }
-
 /// Errors returned by AddTags
 #[derive(Debug, PartialEq)]
 pub enum AddTagsError {

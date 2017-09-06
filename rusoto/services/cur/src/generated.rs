@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -35,7 +36,19 @@ pub struct DeleteReportDefinitionRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub report_name: Option<String>,
 }
-
+impl DeleteReportDefinitionRequest {
+    /// Sets `report_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteReportDefinitionRequest.report_name = Some(value.into());`.
+    pub fn report_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.report_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteReportDefinitionRequest with optional fields set to `None`.
+    pub fn new() -> DeleteReportDefinitionRequest {
+        DeleteReportDefinitionRequest { ..Default::default() }
+    }
+}
 #[doc="Response of DeleteReportDefinition"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteReportDefinitionResponse {
@@ -43,7 +56,6 @@ pub struct DeleteReportDefinitionResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub response_message: Option<String>,
 }
-
 #[doc="Request of DescribeReportDefinitions"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeReportDefinitionsRequest {
@@ -54,7 +66,26 @@ pub struct DescribeReportDefinitionsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeReportDefinitionsRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReportDefinitionsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReportDefinitionsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeReportDefinitionsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeReportDefinitionsRequest {
+        DescribeReportDefinitionsRequest { ..Default::default() }
+    }
+}
 #[doc="Response of DescribeReportDefinitions"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeReportDefinitionsResponse {
@@ -65,14 +96,30 @@ pub struct DescribeReportDefinitionsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub report_definitions: Option<Vec<ReportDefinition>>,
 }
-
 #[doc="Request of PutReportDefinition"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutReportDefinitionRequest {
     #[serde(rename="ReportDefinition")]
     pub report_definition: ReportDefinition,
 }
-
+impl PutReportDefinitionRequest {
+    /// Sets `report_definition`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutReportDefinitionRequest.report_definition = value.into();`.
+    pub fn report_definition<ValueType: Into<ReportDefinition>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.report_definition = value.into();
+        self
+    }
+    /// Returns a new instance of PutReportDefinitionRequest with optional fields set to `None`.
+pub fn new<ReportDefinitionType: Into<ReportDefinition>>(report_definition: ReportDefinitionType) -> PutReportDefinitionRequest{
+        PutReportDefinitionRequest {
+            report_definition: report_definition.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="Response of PutReportDefinition"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutReportDefinitionResponse;
@@ -100,7 +147,103 @@ pub struct ReportDefinition {
     #[serde(rename="TimeUnit")]
     pub time_unit: String,
 }
-
+impl ReportDefinition {
+    /// Sets `additional_artifacts`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReportDefinition.additional_artifacts = Some(value.into());`.
+    pub fn additional_artifacts<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.additional_artifacts = Some(value.into());
+        self
+    }
+    /// Sets `additional_schema_elements`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReportDefinition.additional_schema_elements = value.into();`.
+    pub fn additional_schema_elements<ValueType: Into<Vec<String>>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.additional_schema_elements = value.into();
+        self
+    }
+    /// Sets `compression`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReportDefinition.compression = value.into();`.
+    pub fn compression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.compression = value.into();
+        self
+    }
+    /// Sets `format`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReportDefinition.format = value.into();`.
+    pub fn format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.format = value.into();
+        self
+    }
+    /// Sets `report_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReportDefinition.report_name = value.into();`.
+    pub fn report_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.report_name = value.into();
+        self
+    }
+    /// Sets `s3_bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReportDefinition.s3_bucket = value.into();`.
+    pub fn s3_bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_bucket = value.into();
+        self
+    }
+    /// Sets `s3_prefix`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReportDefinition.s3_prefix = value.into();`.
+    pub fn s3_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_prefix = value.into();
+        self
+    }
+    /// Sets `s3_region`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReportDefinition.s3_region = value.into();`.
+    pub fn s3_region<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_region = value.into();
+        self
+    }
+    /// Sets `time_unit`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReportDefinition.time_unit = value.into();`.
+    pub fn time_unit<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.time_unit = value.into();
+        self
+    }
+    /// Returns a new instance of ReportDefinition with optional fields set to `None`.
+    pub fn new<AdditionalSchemaElementsType: Into<Vec<String>>,
+               CompressionType: Into<String>,
+               FormatType: Into<String>,
+               ReportNameType: Into<String>,
+               S3BucketType: Into<String>,
+               S3PrefixType: Into<String>,
+               S3RegionType: Into<String>,
+               TimeUnitType: Into<String>>
+        (additional_schema_elements: AdditionalSchemaElementsType,
+         compression: CompressionType,
+         format: FormatType,
+         report_name: ReportNameType,
+         s3_bucket: S3BucketType,
+         s3_prefix: S3PrefixType,
+         s3_region: S3RegionType,
+         time_unit: TimeUnitType)
+         -> ReportDefinition {
+        ReportDefinition {
+            additional_schema_elements: additional_schema_elements.into(),
+            compression: compression.into(),
+            format: format.into(),
+            report_name: report_name.into(),
+            s3_bucket: s3_bucket.into(),
+            s3_prefix: s3_prefix.into(),
+            s3_region: s3_region.into(),
+            time_unit: time_unit.into(),
+            ..Default::default()
+        }
+    }
+}
 /// Errors returned by DeleteReportDefinition
 #[derive(Debug, PartialEq)]
 pub enum DeleteReportDefinitionError {

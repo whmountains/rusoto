@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -37,14 +38,39 @@ pub struct AddTagsToResourceRequest {
     #[serde(rename="TagList")]
     pub tag_list: Vec<Tag>,
 }
-
+impl AddTagsToResourceRequest {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToResourceRequest.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Sets `tag_list`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToResourceRequest.tag_list = value.into();`.
+    pub fn tag_list<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tag_list = value.into();
+        self
+    }
+    /// Returns a new instance of AddTagsToResourceRequest with optional fields set to `None`.
+    pub fn new<ResourceArnType: Into<String>, TagListType: Into<Vec<Tag>>>
+        (resource_arn: ResourceArnType,
+         tag_list: TagListType)
+         -> AddTagsToResourceRequest {
+        AddTagsToResourceRequest {
+            resource_arn: resource_arn.into(),
+            tag_list: tag_list.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddTagsToResourceResponse {
     #[doc="<p>The status of the operation.</p>"]
     #[serde(rename="Status")]
     pub status: String,
 }
-
 #[doc="<p>Contains the inputs for the <a>CreateHapgRequest</a> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateHapgRequest {
@@ -52,7 +78,22 @@ pub struct CreateHapgRequest {
     #[serde(rename="Label")]
     pub label: String,
 }
-
+impl CreateHapgRequest {
+    /// Sets `label`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHapgRequest.label = value.into();`.
+    pub fn label<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.label = value.into();
+        self
+    }
+    /// Returns a new instance of CreateHapgRequest with optional fields set to `None`.
+    pub fn new<LabelType: Into<String>>(label: LabelType) -> CreateHapgRequest {
+        CreateHapgRequest {
+            label: label.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of the <a>CreateHAPartitionGroup</a> action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateHapgResponse {
@@ -61,7 +102,6 @@ pub struct CreateHapgResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub hapg_arn: Option<String>,
 }
-
 #[doc="<p>Contains the inputs for the <a>CreateHsm</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateHsmRequest {
@@ -93,7 +133,82 @@ pub struct CreateHsmRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub syslog_ip: Option<String>,
 }
-
+impl CreateHsmRequest {
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHsmRequest.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `eni_ip`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHsmRequest.eni_ip = Some(value.into());`.
+    pub fn eni_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.eni_ip = Some(value.into());
+        self
+    }
+    /// Sets `external_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHsmRequest.external_id = Some(value.into());`.
+    pub fn external_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.external_id = Some(value.into());
+        self
+    }
+    /// Sets `iam_role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHsmRequest.iam_role_arn = value.into();`.
+    pub fn iam_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.iam_role_arn = value.into();
+        self
+    }
+    /// Sets `ssh_key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHsmRequest.ssh_key = value.into();`.
+    pub fn ssh_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ssh_key = value.into();
+        self
+    }
+    /// Sets `subnet_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHsmRequest.subnet_id = value.into();`.
+    pub fn subnet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subnet_id = value.into();
+        self
+    }
+    /// Sets `subscription_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHsmRequest.subscription_type = value.into();`.
+    pub fn subscription_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subscription_type = value.into();
+        self
+    }
+    /// Sets `syslog_ip`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHsmRequest.syslog_ip = Some(value.into());`.
+    pub fn syslog_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.syslog_ip = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateHsmRequest with optional fields set to `None`.
+    pub fn new<IamRoleArnType: Into<String>,
+               SshKeyType: Into<String>,
+               SubnetIdType: Into<String>,
+               SubscriptionTypeType: Into<String>>
+        (iam_role_arn: IamRoleArnType,
+         ssh_key: SshKeyType,
+         subnet_id: SubnetIdType,
+         subscription_type: SubscriptionTypeType)
+         -> CreateHsmRequest {
+        CreateHsmRequest {
+            iam_role_arn: iam_role_arn.into(),
+            ssh_key: ssh_key.into(),
+            subnet_id: subnet_id.into(),
+            subscription_type: subscription_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of the <a>CreateHsm</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateHsmResponse {
@@ -102,7 +217,6 @@ pub struct CreateHsmResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub hsm_arn: Option<String>,
 }
-
 #[doc="<p>Contains the inputs for the <a>CreateLunaClient</a> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateLunaClientRequest {
@@ -114,7 +228,30 @@ pub struct CreateLunaClientRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub label: Option<String>,
 }
-
+impl CreateLunaClientRequest {
+    /// Sets `certificate`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLunaClientRequest.certificate = value.into();`.
+    pub fn certificate<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate = value.into();
+        self
+    }
+    /// Sets `label`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLunaClientRequest.label = Some(value.into());`.
+    pub fn label<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.label = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateLunaClientRequest with optional fields set to `None`.
+    pub fn new<CertificateType: Into<String>>(certificate: CertificateType)
+                                              -> CreateLunaClientRequest {
+        CreateLunaClientRequest {
+            certificate: certificate.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of the <a>CreateLunaClient</a> action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateLunaClientResponse {
@@ -123,7 +260,6 @@ pub struct CreateLunaClientResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub client_arn: Option<String>,
 }
-
 #[doc="<p>Contains the inputs for the <a>DeleteHapg</a> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteHapgRequest {
@@ -131,7 +267,22 @@ pub struct DeleteHapgRequest {
     #[serde(rename="HapgArn")]
     pub hapg_arn: String,
 }
-
+impl DeleteHapgRequest {
+    /// Sets `hapg_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteHapgRequest.hapg_arn = value.into();`.
+    pub fn hapg_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hapg_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteHapgRequest with optional fields set to `None`.
+    pub fn new<HapgArnType: Into<String>>(hapg_arn: HapgArnType) -> DeleteHapgRequest {
+        DeleteHapgRequest {
+            hapg_arn: hapg_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of the <a>DeleteHapg</a> action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteHapgResponse {
@@ -139,7 +290,6 @@ pub struct DeleteHapgResponse {
     #[serde(rename="Status")]
     pub status: String,
 }
-
 #[doc="<p>Contains the inputs for the <a>DeleteHsm</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteHsmRequest {
@@ -147,7 +297,22 @@ pub struct DeleteHsmRequest {
     #[serde(rename="HsmArn")]
     pub hsm_arn: String,
 }
-
+impl DeleteHsmRequest {
+    /// Sets `hsm_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteHsmRequest.hsm_arn = value.into();`.
+    pub fn hsm_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hsm_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteHsmRequest with optional fields set to `None`.
+    pub fn new<HsmArnType: Into<String>>(hsm_arn: HsmArnType) -> DeleteHsmRequest {
+        DeleteHsmRequest {
+            hsm_arn: hsm_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of the <a>DeleteHsm</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteHsmResponse {
@@ -155,21 +320,34 @@ pub struct DeleteHsmResponse {
     #[serde(rename="Status")]
     pub status: String,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteLunaClientRequest {
     #[doc="<p>The ARN of the client to delete.</p>"]
     #[serde(rename="ClientArn")]
     pub client_arn: String,
 }
-
+impl DeleteLunaClientRequest {
+    /// Sets `client_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteLunaClientRequest.client_arn = value.into();`.
+    pub fn client_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteLunaClientRequest with optional fields set to `None`.
+    pub fn new<ClientArnType: Into<String>>(client_arn: ClientArnType) -> DeleteLunaClientRequest {
+        DeleteLunaClientRequest {
+            client_arn: client_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteLunaClientResponse {
     #[doc="<p>The status of the action.</p>"]
     #[serde(rename="Status")]
     pub status: String,
 }
-
 #[doc="<p>Contains the inputs for the <a>DescribeHapg</a> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeHapgRequest {
@@ -177,7 +355,22 @@ pub struct DescribeHapgRequest {
     #[serde(rename="HapgArn")]
     pub hapg_arn: String,
 }
-
+impl DescribeHapgRequest {
+    /// Sets `hapg_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeHapgRequest.hapg_arn = value.into();`.
+    pub fn hapg_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hapg_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeHapgRequest with optional fields set to `None`.
+    pub fn new<HapgArnType: Into<String>>(hapg_arn: HapgArnType) -> DescribeHapgRequest {
+        DescribeHapgRequest {
+            hapg_arn: hapg_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of the <a>DescribeHapg</a> action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeHapgResponse {
@@ -215,7 +408,6 @@ pub struct DescribeHapgResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub state: Option<String>,
 }
-
 #[doc="<p>Contains the inputs for the <a>DescribeHsm</a> operation. </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeHsmRequest {
@@ -228,7 +420,26 @@ pub struct DescribeHsmRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub hsm_serial_number: Option<String>,
 }
-
+impl DescribeHsmRequest {
+    /// Sets `hsm_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeHsmRequest.hsm_arn = Some(value.into());`.
+    pub fn hsm_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hsm_arn = Some(value.into());
+        self
+    }
+    /// Sets `hsm_serial_number`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeHsmRequest.hsm_serial_number = Some(value.into());`.
+    pub fn hsm_serial_number<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hsm_serial_number = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeHsmRequest with optional fields set to `None`.
+    pub fn new() -> DescribeHsmRequest {
+        DescribeHsmRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the output of the <a>DescribeHsm</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeHsmResponse {
@@ -316,7 +527,6 @@ pub struct DescribeHsmResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vpc_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeLunaClientRequest {
     #[doc="<p>The certificate fingerprint.</p>"]
@@ -328,7 +538,26 @@ pub struct DescribeLunaClientRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub client_arn: Option<String>,
 }
-
+impl DescribeLunaClientRequest {
+    /// Sets `certificate_fingerprint`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLunaClientRequest.certificate_fingerprint = Some(value.into());`.
+    pub fn certificate_fingerprint<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_fingerprint = Some(value.into());
+        self
+    }
+    /// Sets `client_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLunaClientRequest.client_arn = Some(value.into());`.
+    pub fn client_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeLunaClientRequest with optional fields set to `None`.
+    pub fn new() -> DescribeLunaClientRequest {
+        DescribeLunaClientRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeLunaClientResponse {
     #[doc="<p>The certificate installed on the HSMs used by this client.</p>"]
@@ -352,7 +581,6 @@ pub struct DescribeLunaClientResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub last_modified_timestamp: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetConfigRequest {
     #[doc="<p>The ARN of the client.</p>"]
@@ -365,7 +593,44 @@ pub struct GetConfigRequest {
     #[serde(rename="HapgList")]
     pub hapg_list: Vec<String>,
 }
-
+impl GetConfigRequest {
+    /// Sets `client_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetConfigRequest.client_arn = value.into();`.
+    pub fn client_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_arn = value.into();
+        self
+    }
+    /// Sets `client_version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetConfigRequest.client_version = value.into();`.
+    pub fn client_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_version = value.into();
+        self
+    }
+    /// Sets `hapg_list`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetConfigRequest.hapg_list = value.into();`.
+    pub fn hapg_list<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.hapg_list = value.into();
+        self
+    }
+    /// Returns a new instance of GetConfigRequest with optional fields set to `None`.
+    pub fn new<ClientArnType: Into<String>,
+               ClientVersionType: Into<String>,
+               HapgListType: Into<Vec<String>>>
+        (client_arn: ClientArnType,
+         client_version: ClientVersionType,
+         hapg_list: HapgListType)
+         -> GetConfigRequest {
+        GetConfigRequest {
+            client_arn: client_arn.into(),
+            client_version: client_version.into(),
+            hapg_list: hapg_list.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetConfigResponse {
     #[doc="<p>The certificate file containing the server.pem files of the HSMs.</p>"]
@@ -381,7 +646,6 @@ pub struct GetConfigResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub config_type: Option<String>,
 }
-
 #[doc="<p>Contains the inputs for the <a>ListAvailableZones</a> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListAvailableZonesRequest;
@@ -393,7 +657,6 @@ pub struct ListAvailableZonesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub az_list: Option<Vec<String>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListHapgsRequest {
     #[doc="<p>The <i>NextToken</i> value from a previous call to <a>ListHapgs</a>. Pass null if this is the first call.</p>"]
@@ -401,7 +664,19 @@ pub struct ListHapgsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListHapgsRequest {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListHapgsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListHapgsRequest with optional fields set to `None`.
+    pub fn new() -> ListHapgsRequest {
+        ListHapgsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListHapgsResponse {
     #[doc="<p>The list of high-availability partition groups.</p>"]
@@ -412,7 +687,6 @@ pub struct ListHapgsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListHsmsRequest {
     #[doc="<p>The <i>NextToken</i> value from a previous call to <a>ListHsms</a>. Pass null if this is the first call.</p>"]
@@ -420,7 +694,19 @@ pub struct ListHsmsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListHsmsRequest {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListHsmsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListHsmsRequest with optional fields set to `None`.
+    pub fn new() -> ListHsmsRequest {
+        ListHsmsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the output of the <a>ListHsms</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListHsmsResponse {
@@ -433,7 +719,6 @@ pub struct ListHsmsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListLunaClientsRequest {
     #[doc="<p>The <i>NextToken</i> value from a previous call to <a>ListLunaClients</a>. Pass null if this is the first call.</p>"]
@@ -441,7 +726,19 @@ pub struct ListLunaClientsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListLunaClientsRequest {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListLunaClientsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListLunaClientsRequest with optional fields set to `None`.
+    pub fn new() -> ListLunaClientsRequest {
+        ListLunaClientsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListLunaClientsResponse {
     #[doc="<p>The list of clients.</p>"]
@@ -452,21 +749,35 @@ pub struct ListLunaClientsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTagsForResourceRequest {
     #[doc="<p>The Amazon Resource Name (ARN) of the AWS CloudHSM resource.</p>"]
     #[serde(rename="ResourceArn")]
     pub resource_arn: String,
 }
-
+impl ListTagsForResourceRequest {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForResourceRequest.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Returns a new instance of ListTagsForResourceRequest with optional fields set to `None`.
+    pub fn new<ResourceArnType: Into<String>>(resource_arn: ResourceArnType)
+                                              -> ListTagsForResourceRequest {
+        ListTagsForResourceRequest {
+            resource_arn: resource_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTagsForResourceResponse {
     #[doc="<p>One or more tags.</p>"]
     #[serde(rename="TagList")]
     pub tag_list: Vec<Tag>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ModifyHapgRequest {
     #[doc="<p>The ARN of the high-availability partition group to modify.</p>"]
@@ -481,7 +792,36 @@ pub struct ModifyHapgRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub partition_serial_list: Option<Vec<String>>,
 }
-
+impl ModifyHapgRequest {
+    /// Sets `hapg_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyHapgRequest.hapg_arn = value.into();`.
+    pub fn hapg_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hapg_arn = value.into();
+        self
+    }
+    /// Sets `label`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyHapgRequest.label = Some(value.into());`.
+    pub fn label<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.label = Some(value.into());
+        self
+    }
+    /// Sets `partition_serial_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyHapgRequest.partition_serial_list = Some(value.into());`.
+    pub fn partition_serial_list<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.partition_serial_list = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifyHapgRequest with optional fields set to `None`.
+    pub fn new<HapgArnType: Into<String>>(hapg_arn: HapgArnType) -> ModifyHapgRequest {
+        ModifyHapgRequest {
+            hapg_arn: hapg_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ModifyHapgResponse {
     #[doc="<p>The ARN of the high-availability partition group.</p>"]
@@ -489,7 +829,6 @@ pub struct ModifyHapgResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub hapg_arn: Option<String>,
 }
-
 #[doc="<p>Contains the inputs for the <a>ModifyHsm</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ModifyHsmRequest {
@@ -517,7 +856,57 @@ pub struct ModifyHsmRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub syslog_ip: Option<String>,
 }
-
+impl ModifyHsmRequest {
+    /// Sets `eni_ip`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyHsmRequest.eni_ip = Some(value.into());`.
+    pub fn eni_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.eni_ip = Some(value.into());
+        self
+    }
+    /// Sets `external_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyHsmRequest.external_id = Some(value.into());`.
+    pub fn external_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.external_id = Some(value.into());
+        self
+    }
+    /// Sets `hsm_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyHsmRequest.hsm_arn = value.into();`.
+    pub fn hsm_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hsm_arn = value.into();
+        self
+    }
+    /// Sets `iam_role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyHsmRequest.iam_role_arn = Some(value.into());`.
+    pub fn iam_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.iam_role_arn = Some(value.into());
+        self
+    }
+    /// Sets `subnet_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyHsmRequest.subnet_id = Some(value.into());`.
+    pub fn subnet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subnet_id = Some(value.into());
+        self
+    }
+    /// Sets `syslog_ip`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyHsmRequest.syslog_ip = Some(value.into());`.
+    pub fn syslog_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.syslog_ip = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifyHsmRequest with optional fields set to `None`.
+    pub fn new<HsmArnType: Into<String>>(hsm_arn: HsmArnType) -> ModifyHsmRequest {
+        ModifyHsmRequest {
+            hsm_arn: hsm_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of the <a>ModifyHsm</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ModifyHsmResponse {
@@ -526,7 +915,6 @@ pub struct ModifyHsmResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub hsm_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ModifyLunaClientRequest {
     #[doc="<p>The new certificate for the client.</p>"]
@@ -536,7 +924,33 @@ pub struct ModifyLunaClientRequest {
     #[serde(rename="ClientArn")]
     pub client_arn: String,
 }
-
+impl ModifyLunaClientRequest {
+    /// Sets `certificate`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyLunaClientRequest.certificate = value.into();`.
+    pub fn certificate<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate = value.into();
+        self
+    }
+    /// Sets `client_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyLunaClientRequest.client_arn = value.into();`.
+    pub fn client_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_arn = value.into();
+        self
+    }
+    /// Returns a new instance of ModifyLunaClientRequest with optional fields set to `None`.
+    pub fn new<CertificateType: Into<String>, ClientArnType: Into<String>>
+        (certificate: CertificateType,
+         client_arn: ClientArnType)
+         -> ModifyLunaClientRequest {
+        ModifyLunaClientRequest {
+            certificate: certificate.into(),
+            client_arn: client_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ModifyLunaClientResponse {
     #[doc="<p>The ARN of the client.</p>"]
@@ -544,7 +958,6 @@ pub struct ModifyLunaClientResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub client_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RemoveTagsFromResourceRequest {
     #[doc="<p>The Amazon Resource Name (ARN) of the AWS CloudHSM resource.</p>"]
@@ -554,14 +967,39 @@ pub struct RemoveTagsFromResourceRequest {
     #[serde(rename="TagKeyList")]
     pub tag_key_list: Vec<String>,
 }
-
+impl RemoveTagsFromResourceRequest {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromResourceRequest.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Sets `tag_key_list`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromResourceRequest.tag_key_list = value.into();`.
+    pub fn tag_key_list<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tag_key_list = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveTagsFromResourceRequest with optional fields set to `None`.
+    pub fn new<ResourceArnType: Into<String>, TagKeyListType: Into<Vec<String>>>
+        (resource_arn: ResourceArnType,
+         tag_key_list: TagKeyListType)
+         -> RemoveTagsFromResourceRequest {
+        RemoveTagsFromResourceRequest {
+            resource_arn: resource_arn.into(),
+            tag_key_list: tag_key_list.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RemoveTagsFromResourceResponse {
     #[doc="<p>The status of the operation.</p>"]
     #[serde(rename="Status")]
     pub status: String,
 }
-
 #[doc="<p>A key-value pair that identifies or specifies metadata about an AWS CloudHSM resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Tag {
@@ -572,7 +1010,32 @@ pub struct Tag {
     #[serde(rename="Value")]
     pub value: String,
 }
-
+impl Tag {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>, ValueType: Into<String>>(key: KeyType,
+                                                               value: ValueType)
+                                                               -> Tag {
+        Tag {
+            key: key.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 /// Errors returned by AddTagsToResource
 #[derive(Debug, PartialEq)]
 pub enum AddTagsToResourceError {

@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -44,7 +45,6 @@ pub struct AccountQuota {
     #[serde(skip_serializing_if="Option::is_none")]
     pub used: Option<i64>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AddTagsToResourceMessage {
@@ -55,7 +55,33 @@ pub struct AddTagsToResourceMessage {
     #[serde(rename="Tags")]
     pub tags: Vec<Tag>,
 }
-
+impl AddTagsToResourceMessage {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToResourceMessage.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToResourceMessage.tags = value.into();`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of AddTagsToResourceMessage with optional fields set to `None`.
+    pub fn new<ResourceArnType: Into<String>, TagsType: Into<Vec<Tag>>>
+        (resource_arn: ResourceArnType,
+         tags: TagsType)
+         -> AddTagsToResourceMessage {
+        AddTagsToResourceMessage {
+            resource_arn: resource_arn.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddTagsToResourceResponse;
@@ -68,7 +94,6 @@ pub struct AvailabilityZone {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p>The SSL certificate that can be used to encrypt connections between the endpoints and the replication instance.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Certificate {
@@ -117,7 +142,6 @@ pub struct Certificate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub valid_to_date: Option<f64>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Connection {
@@ -146,7 +170,6 @@ pub struct Connection {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateEndpointMessage {
@@ -212,7 +235,139 @@ pub struct CreateEndpointMessage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub username: Option<String>,
 }
-
+impl CreateEndpointMessage {
+    /// Sets `certificate_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEndpointMessage.certificate_arn = Some(value.into());`.
+    pub fn certificate_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_arn = Some(value.into());
+        self
+    }
+    /// Sets `database_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEndpointMessage.database_name = Some(value.into());`.
+    pub fn database_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.database_name = Some(value.into());
+        self
+    }
+    /// Sets `dynamo_db_settings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEndpointMessage.dynamo_db_settings = Some(value.into());`.
+    pub fn dynamo_db_settings<ValueType: Into<DynamoDbSettings>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.dynamo_db_settings = Some(value.into());
+        self
+    }
+    /// Sets `endpoint_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEndpointMessage.endpoint_identifier = value.into();`.
+    pub fn endpoint_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.endpoint_identifier = value.into();
+        self
+    }
+    /// Sets `endpoint_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEndpointMessage.endpoint_type = value.into();`.
+    pub fn endpoint_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.endpoint_type = value.into();
+        self
+    }
+    /// Sets `engine_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEndpointMessage.engine_name = value.into();`.
+    pub fn engine_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine_name = value.into();
+        self
+    }
+    /// Sets `extra_connection_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEndpointMessage.extra_connection_attributes = Some(value.into());`.
+    pub fn extra_connection_attributes<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.extra_connection_attributes = Some(value.into());
+        self
+    }
+    /// Sets `kms_key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEndpointMessage.kms_key_id = Some(value.into());`.
+    pub fn kms_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kms_key_id = Some(value.into());
+        self
+    }
+    /// Sets `mongo_db_settings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEndpointMessage.mongo_db_settings = Some(value.into());`.
+    pub fn mongo_db_settings<ValueType: Into<MongoDbSettings>>(mut self, value: ValueType) -> Self {
+        self.mongo_db_settings = Some(value.into());
+        self
+    }
+    /// Sets `password`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEndpointMessage.password = Some(value.into());`.
+    pub fn password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.password = Some(value.into());
+        self
+    }
+    /// Sets `port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEndpointMessage.port = Some(value.into());`.
+    pub fn port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.port = Some(value.into());
+        self
+    }
+    /// Sets `s3_settings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEndpointMessage.s3_settings = Some(value.into());`.
+    pub fn s3_settings<ValueType: Into<S3Settings>>(mut self, value: ValueType) -> Self {
+        self.s3_settings = Some(value.into());
+        self
+    }
+    /// Sets `server_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEndpointMessage.server_name = Some(value.into());`.
+    pub fn server_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_name = Some(value.into());
+        self
+    }
+    /// Sets `ssl_mode`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEndpointMessage.ssl_mode = Some(value.into());`.
+    pub fn ssl_mode<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ssl_mode = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEndpointMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `username`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEndpointMessage.username = Some(value.into());`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateEndpointMessage with optional fields set to `None`.
+    pub fn new<EndpointIdentifierType: Into<String>,
+               EndpointTypeType: Into<String>,
+               EngineNameType: Into<String>>
+        (endpoint_identifier: EndpointIdentifierType,
+         endpoint_type: EndpointTypeType,
+         engine_name: EngineNameType)
+         -> CreateEndpointMessage {
+        CreateEndpointMessage {
+            endpoint_identifier: endpoint_identifier.into(),
+            endpoint_type: endpoint_type.into(),
+            engine_name: engine_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateEndpointResponse {
@@ -221,7 +376,6 @@ pub struct CreateEndpointResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub endpoint: Option<Endpoint>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateEventSubscriptionMessage {
@@ -252,7 +406,68 @@ pub struct CreateEventSubscriptionMessage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
+impl CreateEventSubscriptionMessage {
+    /// Sets `enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEventSubscriptionMessage.enabled = Some(value.into());`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = Some(value.into());
+        self
+    }
+    /// Sets `event_categories`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEventSubscriptionMessage.event_categories = Some(value.into());`.
+    pub fn event_categories<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.event_categories = Some(value.into());
+        self
+    }
+    /// Sets `sns_topic_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEventSubscriptionMessage.sns_topic_arn = value.into();`.
+    pub fn sns_topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sns_topic_arn = value.into();
+        self
+    }
+    /// Sets `source_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEventSubscriptionMessage.source_ids = Some(value.into());`.
+    pub fn source_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.source_ids = Some(value.into());
+        self
+    }
+    /// Sets `source_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEventSubscriptionMessage.source_type = Some(value.into());`.
+    pub fn source_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_type = Some(value.into());
+        self
+    }
+    /// Sets `subscription_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEventSubscriptionMessage.subscription_name = value.into();`.
+    pub fn subscription_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subscription_name = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEventSubscriptionMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateEventSubscriptionMessage with optional fields set to `None`.
+    pub fn new<SnsTopicArnType: Into<String>, SubscriptionNameType: Into<String>>
+        (sns_topic_arn: SnsTopicArnType,
+         subscription_name: SubscriptionNameType)
+         -> CreateEventSubscriptionMessage {
+        CreateEventSubscriptionMessage {
+            sns_topic_arn: sns_topic_arn.into(),
+            subscription_name: subscription_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateEventSubscriptionResponse {
@@ -261,7 +476,6 @@ pub struct CreateEventSubscriptionResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub event_subscription: Option<EventSubscription>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateReplicationInstanceMessage {
@@ -316,7 +530,119 @@ pub struct CreateReplicationInstanceMessage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vpc_security_group_ids: Option<Vec<String>>,
 }
-
+impl CreateReplicationInstanceMessage {
+    /// Sets `allocated_storage`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationInstanceMessage.allocated_storage = Some(value.into());`.
+    pub fn allocated_storage<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.allocated_storage = Some(value.into());
+        self
+    }
+    /// Sets `auto_minor_version_upgrade`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationInstanceMessage.auto_minor_version_upgrade = Some(value.into());`.
+    pub fn auto_minor_version_upgrade<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.auto_minor_version_upgrade = Some(value.into());
+        self
+    }
+    /// Sets `availability_zone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationInstanceMessage.availability_zone = Some(value.into());`.
+    pub fn availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.availability_zone = Some(value.into());
+        self
+    }
+    /// Sets `engine_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationInstanceMessage.engine_version = Some(value.into());`.
+    pub fn engine_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine_version = Some(value.into());
+        self
+    }
+    /// Sets `kms_key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationInstanceMessage.kms_key_id = Some(value.into());`.
+    pub fn kms_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kms_key_id = Some(value.into());
+        self
+    }
+    /// Sets `multi_az`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationInstanceMessage.multi_az = Some(value.into());`.
+    pub fn multi_az<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.multi_az = Some(value.into());
+        self
+    }
+    /// Sets `preferred_maintenance_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationInstanceMessage.preferred_maintenance_window = Some(value.into());`.
+    pub fn preferred_maintenance_window<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.preferred_maintenance_window = Some(value.into());
+        self
+    }
+    /// Sets `publicly_accessible`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationInstanceMessage.publicly_accessible = Some(value.into());`.
+    pub fn publicly_accessible<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.publicly_accessible = Some(value.into());
+        self
+    }
+    /// Sets `replication_instance_class`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationInstanceMessage.replication_instance_class = value.into();`.
+    pub fn replication_instance_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_instance_class = value.into();
+        self
+    }
+    /// Sets `replication_instance_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationInstanceMessage.replication_instance_identifier = value.into();`.
+    pub fn replication_instance_identifier<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.replication_instance_identifier = value.into();
+        self
+    }
+    /// Sets `replication_subnet_group_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationInstanceMessage.replication_subnet_group_identifier = Some(value.into());`.
+    pub fn replication_subnet_group_identifier<ValueType: Into<String>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.replication_subnet_group_identifier = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationInstanceMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `vpc_security_group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationInstanceMessage.vpc_security_group_ids = Some(value.into());`.
+    pub fn vpc_security_group_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.vpc_security_group_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateReplicationInstanceMessage with optional fields set to `None`.
+    pub fn new<ReplicationInstanceClassType: Into<String>,
+               ReplicationInstanceIdentifierType: Into<String>>
+        (replication_instance_class: ReplicationInstanceClassType,
+         replication_instance_identifier: ReplicationInstanceIdentifierType)
+         -> CreateReplicationInstanceMessage {
+        CreateReplicationInstanceMessage {
+            replication_instance_class: replication_instance_class.into(),
+            replication_instance_identifier: replication_instance_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateReplicationInstanceResponse {
@@ -325,7 +651,6 @@ pub struct CreateReplicationInstanceResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub replication_instance: Option<ReplicationInstance>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateReplicationSubnetGroupMessage {
@@ -343,7 +668,55 @@ pub struct CreateReplicationSubnetGroupMessage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
+impl CreateReplicationSubnetGroupMessage {
+    /// Sets `replication_subnet_group_description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationSubnetGroupMessage.replication_subnet_group_description = value.into();`.
+    pub fn replication_subnet_group_description<ValueType: Into<String>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.replication_subnet_group_description = value.into();
+        self
+    }
+    /// Sets `replication_subnet_group_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationSubnetGroupMessage.replication_subnet_group_identifier = value.into();`.
+    pub fn replication_subnet_group_identifier<ValueType: Into<String>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.replication_subnet_group_identifier = value.into();
+        self
+    }
+    /// Sets `subnet_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationSubnetGroupMessage.subnet_ids = value.into();`.
+    pub fn subnet_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.subnet_ids = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationSubnetGroupMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateReplicationSubnetGroupMessage with optional fields set to `None`.
+    pub fn new<ReplicationSubnetGroupDescriptionType: Into<String>,
+               ReplicationSubnetGroupIdentifierType: Into<String>,
+               SubnetIdsType: Into<Vec<String>>>
+        (replication_subnet_group_description: ReplicationSubnetGroupDescriptionType,
+         replication_subnet_group_identifier: ReplicationSubnetGroupIdentifierType,
+         subnet_ids: SubnetIdsType)
+         -> CreateReplicationSubnetGroupMessage {
+        CreateReplicationSubnetGroupMessage {
+            replication_subnet_group_description: replication_subnet_group_description.into(),
+            replication_subnet_group_identifier: replication_subnet_group_identifier.into(),
+            subnet_ids: subnet_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateReplicationSubnetGroupResponse {
@@ -352,7 +725,6 @@ pub struct CreateReplicationSubnetGroupResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub replication_subnet_group: Option<ReplicationSubnetGroup>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateReplicationTaskMessage {
@@ -387,7 +759,97 @@ pub struct CreateReplicationTaskMessage {
     #[serde(rename="TargetEndpointArn")]
     pub target_endpoint_arn: String,
 }
-
+impl CreateReplicationTaskMessage {
+    /// Sets `cdc_start_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationTaskMessage.cdc_start_time = Some(value.into());`.
+    pub fn cdc_start_time<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.cdc_start_time = Some(value.into());
+        self
+    }
+    /// Sets `migration_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationTaskMessage.migration_type = value.into();`.
+    pub fn migration_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.migration_type = value.into();
+        self
+    }
+    /// Sets `replication_instance_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationTaskMessage.replication_instance_arn = value.into();`.
+    pub fn replication_instance_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_instance_arn = value.into();
+        self
+    }
+    /// Sets `replication_task_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationTaskMessage.replication_task_identifier = value.into();`.
+    pub fn replication_task_identifier<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.replication_task_identifier = value.into();
+        self
+    }
+    /// Sets `replication_task_settings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationTaskMessage.replication_task_settings = Some(value.into());`.
+    pub fn replication_task_settings<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_task_settings = Some(value.into());
+        self
+    }
+    /// Sets `source_endpoint_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationTaskMessage.source_endpoint_arn = value.into();`.
+    pub fn source_endpoint_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_endpoint_arn = value.into();
+        self
+    }
+    /// Sets `table_mappings`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationTaskMessage.table_mappings = value.into();`.
+    pub fn table_mappings<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.table_mappings = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationTaskMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `target_endpoint_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationTaskMessage.target_endpoint_arn = value.into();`.
+    pub fn target_endpoint_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_endpoint_arn = value.into();
+        self
+    }
+    /// Returns a new instance of CreateReplicationTaskMessage with optional fields set to `None`.
+    pub fn new<MigrationTypeType: Into<String>,
+               ReplicationInstanceArnType: Into<String>,
+               ReplicationTaskIdentifierType: Into<String>,
+               SourceEndpointArnType: Into<String>,
+               TableMappingsType: Into<String>,
+               TargetEndpointArnType: Into<String>>
+        (migration_type: MigrationTypeType,
+         replication_instance_arn: ReplicationInstanceArnType,
+         replication_task_identifier: ReplicationTaskIdentifierType,
+         source_endpoint_arn: SourceEndpointArnType,
+         table_mappings: TableMappingsType,
+         target_endpoint_arn: TargetEndpointArnType)
+         -> CreateReplicationTaskMessage {
+        CreateReplicationTaskMessage {
+            migration_type: migration_type.into(),
+            replication_instance_arn: replication_instance_arn.into(),
+            replication_task_identifier: replication_task_identifier.into(),
+            source_endpoint_arn: source_endpoint_arn.into(),
+            table_mappings: table_mappings.into(),
+            target_endpoint_arn: target_endpoint_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateReplicationTaskResponse {
@@ -396,14 +858,29 @@ pub struct CreateReplicationTaskResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub replication_task: Option<ReplicationTask>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteCertificateMessage {
     #[doc="<p>The Amazon Resource Name (ARN) of the deleted certificate.</p>"]
     #[serde(rename="CertificateArn")]
     pub certificate_arn: String,
 }
-
+impl DeleteCertificateMessage {
+    /// Sets `certificate_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteCertificateMessage.certificate_arn = value.into();`.
+    pub fn certificate_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteCertificateMessage with optional fields set to `None`.
+    pub fn new<CertificateArnType: Into<String>>(certificate_arn: CertificateArnType)
+                                                 -> DeleteCertificateMessage {
+        DeleteCertificateMessage {
+            certificate_arn: certificate_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteCertificateResponse {
     #[doc="<p>The Secure Sockets Layer (SSL) certificate.</p>"]
@@ -411,7 +888,6 @@ pub struct DeleteCertificateResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub certificate: Option<Certificate>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteEndpointMessage {
@@ -419,7 +895,23 @@ pub struct DeleteEndpointMessage {
     #[serde(rename="EndpointArn")]
     pub endpoint_arn: String,
 }
-
+impl DeleteEndpointMessage {
+    /// Sets `endpoint_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteEndpointMessage.endpoint_arn = value.into();`.
+    pub fn endpoint_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.endpoint_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteEndpointMessage with optional fields set to `None`.
+    pub fn new<EndpointArnType: Into<String>>(endpoint_arn: EndpointArnType)
+                                              -> DeleteEndpointMessage {
+        DeleteEndpointMessage {
+            endpoint_arn: endpoint_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteEndpointResponse {
@@ -428,7 +920,6 @@ pub struct DeleteEndpointResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub endpoint: Option<Endpoint>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteEventSubscriptionMessage {
@@ -436,7 +927,23 @@ pub struct DeleteEventSubscriptionMessage {
     #[serde(rename="SubscriptionName")]
     pub subscription_name: String,
 }
-
+impl DeleteEventSubscriptionMessage {
+    /// Sets `subscription_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteEventSubscriptionMessage.subscription_name = value.into();`.
+    pub fn subscription_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subscription_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteEventSubscriptionMessage with optional fields set to `None`.
+    pub fn new<SubscriptionNameType: Into<String>>(subscription_name: SubscriptionNameType)
+                                                   -> DeleteEventSubscriptionMessage {
+        DeleteEventSubscriptionMessage {
+            subscription_name: subscription_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteEventSubscriptionResponse {
@@ -445,7 +952,6 @@ pub struct DeleteEventSubscriptionResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub event_subscription: Option<EventSubscription>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteReplicationInstanceMessage {
@@ -453,7 +959,22 @@ pub struct DeleteReplicationInstanceMessage {
     #[serde(rename="ReplicationInstanceArn")]
     pub replication_instance_arn: String,
 }
-
+impl DeleteReplicationInstanceMessage {
+    /// Sets `replication_instance_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteReplicationInstanceMessage.replication_instance_arn = value.into();`.
+    pub fn replication_instance_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_instance_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteReplicationInstanceMessage with optional fields set to `None`.
+pub fn new<ReplicationInstanceArnType: Into<String>>(replication_instance_arn: ReplicationInstanceArnType) -> DeleteReplicationInstanceMessage{
+        DeleteReplicationInstanceMessage {
+            replication_instance_arn: replication_instance_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteReplicationInstanceResponse {
@@ -462,7 +983,6 @@ pub struct DeleteReplicationInstanceResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub replication_instance: Option<ReplicationInstance>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteReplicationSubnetGroupMessage {
@@ -470,7 +990,26 @@ pub struct DeleteReplicationSubnetGroupMessage {
     #[serde(rename="ReplicationSubnetGroupIdentifier")]
     pub replication_subnet_group_identifier: String,
 }
-
+impl DeleteReplicationSubnetGroupMessage {
+    /// Sets `replication_subnet_group_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteReplicationSubnetGroupMessage.replication_subnet_group_identifier = value.into();`.
+    pub fn replication_subnet_group_identifier<ValueType: Into<String>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.replication_subnet_group_identifier = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteReplicationSubnetGroupMessage with optional fields set to `None`.
+    pub fn new<ReplicationSubnetGroupIdentifierType: Into<String>>
+        (replication_subnet_group_identifier: ReplicationSubnetGroupIdentifierType)
+         -> DeleteReplicationSubnetGroupMessage {
+        DeleteReplicationSubnetGroupMessage {
+            replication_subnet_group_identifier: replication_subnet_group_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteReplicationSubnetGroupResponse;
@@ -482,7 +1021,23 @@ pub struct DeleteReplicationTaskMessage {
     #[serde(rename="ReplicationTaskArn")]
     pub replication_task_arn: String,
 }
-
+impl DeleteReplicationTaskMessage {
+    /// Sets `replication_task_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteReplicationTaskMessage.replication_task_arn = value.into();`.
+    pub fn replication_task_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_task_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteReplicationTaskMessage with optional fields set to `None`.
+    pub fn new<ReplicationTaskArnType: Into<String>>(replication_task_arn: ReplicationTaskArnType)
+                                                     -> DeleteReplicationTaskMessage {
+        DeleteReplicationTaskMessage {
+            replication_task_arn: replication_task_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteReplicationTaskResponse {
@@ -491,7 +1046,6 @@ pub struct DeleteReplicationTaskResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub replication_task: Option<ReplicationTask>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeAccountAttributesMessage;
@@ -504,7 +1058,6 @@ pub struct DescribeAccountAttributesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub account_quotas: Option<Vec<AccountQuota>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeCertificatesMessage {
     #[doc="<p>Filters applied to the certificate described in the form of key-value pairs.</p>"]
@@ -520,7 +1073,33 @@ pub struct DescribeCertificatesMessage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub max_records: Option<i64>,
 }
-
+impl DescribeCertificatesMessage {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCertificatesMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCertificatesMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCertificatesMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeCertificatesMessage with optional fields set to `None`.
+    pub fn new() -> DescribeCertificatesMessage {
+        DescribeCertificatesMessage { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeCertificatesResponse {
     #[doc="<p>The Secure Sockets Layer (SSL) certificates associated with the replication instance.</p>"]
@@ -532,7 +1111,6 @@ pub struct DescribeCertificatesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeConnectionsMessage {
@@ -549,7 +1127,33 @@ pub struct DescribeConnectionsMessage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub max_records: Option<i64>,
 }
-
+impl DescribeConnectionsMessage {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConnectionsMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConnectionsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConnectionsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeConnectionsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeConnectionsMessage {
+        DescribeConnectionsMessage { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeConnectionsResponse {
@@ -562,7 +1166,6 @@ pub struct DescribeConnectionsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeEndpointTypesMessage {
@@ -579,7 +1182,33 @@ pub struct DescribeEndpointTypesMessage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub max_records: Option<i64>,
 }
-
+impl DescribeEndpointTypesMessage {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEndpointTypesMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEndpointTypesMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEndpointTypesMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEndpointTypesMessage with optional fields set to `None`.
+    pub fn new() -> DescribeEndpointTypesMessage {
+        DescribeEndpointTypesMessage { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeEndpointTypesResponse {
@@ -592,7 +1221,6 @@ pub struct DescribeEndpointTypesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub supported_endpoint_types: Option<Vec<SupportedEndpointType>>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeEndpointsMessage {
@@ -609,7 +1237,33 @@ pub struct DescribeEndpointsMessage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub max_records: Option<i64>,
 }
-
+impl DescribeEndpointsMessage {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEndpointsMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEndpointsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEndpointsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEndpointsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeEndpointsMessage {
+        DescribeEndpointsMessage { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeEndpointsResponse {
@@ -622,7 +1276,6 @@ pub struct DescribeEndpointsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeEventCategoriesMessage {
@@ -635,7 +1288,26 @@ pub struct DescribeEventCategoriesMessage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub source_type: Option<String>,
 }
-
+impl DescribeEventCategoriesMessage {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventCategoriesMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `source_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventCategoriesMessage.source_type = Some(value.into());`.
+    pub fn source_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEventCategoriesMessage with optional fields set to `None`.
+    pub fn new() -> DescribeEventCategoriesMessage {
+        DescribeEventCategoriesMessage { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeEventCategoriesResponse {
@@ -644,7 +1316,6 @@ pub struct DescribeEventCategoriesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub event_category_group_list: Option<Vec<EventCategoryGroup>>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeEventSubscriptionsMessage {
@@ -665,7 +1336,40 @@ pub struct DescribeEventSubscriptionsMessage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub subscription_name: Option<String>,
 }
-
+impl DescribeEventSubscriptionsMessage {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventSubscriptionsMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventSubscriptionsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventSubscriptionsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `subscription_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventSubscriptionsMessage.subscription_name = Some(value.into());`.
+    pub fn subscription_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subscription_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEventSubscriptionsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeEventSubscriptionsMessage {
+        DescribeEventSubscriptionsMessage { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeEventSubscriptionsResponse {
@@ -678,7 +1382,6 @@ pub struct DescribeEventSubscriptionsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeEventsMessage {
@@ -719,7 +1422,75 @@ pub struct DescribeEventsMessage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub start_time: Option<f64>,
 }
-
+impl DescribeEventsMessage {
+    /// Sets `duration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.duration = Some(value.into());`.
+    pub fn duration<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.duration = Some(value.into());
+        self
+    }
+    /// Sets `end_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.end_time = Some(value.into());`.
+    pub fn end_time<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.end_time = Some(value.into());
+        self
+    }
+    /// Sets `event_categories`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.event_categories = Some(value.into());`.
+    pub fn event_categories<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.event_categories = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `source_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.source_identifier = Some(value.into());`.
+    pub fn source_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_identifier = Some(value.into());
+        self
+    }
+    /// Sets `source_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.source_type = Some(value.into());`.
+    pub fn source_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_type = Some(value.into());
+        self
+    }
+    /// Sets `start_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.start_time = Some(value.into());`.
+    pub fn start_time<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.start_time = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEventsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeEventsMessage {
+        DescribeEventsMessage { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeEventsResponse {
@@ -732,7 +1503,6 @@ pub struct DescribeEventsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeOrderableReplicationInstancesMessage {
@@ -745,7 +1515,26 @@ pub struct DescribeOrderableReplicationInstancesMessage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub max_records: Option<i64>,
 }
-
+impl DescribeOrderableReplicationInstancesMessage {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeOrderableReplicationInstancesMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeOrderableReplicationInstancesMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeOrderableReplicationInstancesMessage with optional fields set to `None`.
+    pub fn new() -> DescribeOrderableReplicationInstancesMessage {
+        DescribeOrderableReplicationInstancesMessage { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeOrderableReplicationInstancesResponse {
@@ -758,7 +1547,6 @@ pub struct DescribeOrderableReplicationInstancesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub orderable_replication_instances: Option<Vec<OrderableReplicationInstance>>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeRefreshSchemasStatusMessage {
@@ -766,7 +1554,23 @@ pub struct DescribeRefreshSchemasStatusMessage {
     #[serde(rename="EndpointArn")]
     pub endpoint_arn: String,
 }
-
+impl DescribeRefreshSchemasStatusMessage {
+    /// Sets `endpoint_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRefreshSchemasStatusMessage.endpoint_arn = value.into();`.
+    pub fn endpoint_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.endpoint_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeRefreshSchemasStatusMessage with optional fields set to `None`.
+    pub fn new<EndpointArnType: Into<String>>(endpoint_arn: EndpointArnType)
+                                              -> DescribeRefreshSchemasStatusMessage {
+        DescribeRefreshSchemasStatusMessage {
+            endpoint_arn: endpoint_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeRefreshSchemasStatusResponse {
@@ -775,7 +1579,6 @@ pub struct DescribeRefreshSchemasStatusResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub refresh_schemas_status: Option<RefreshSchemasStatus>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeReplicationInstancesMessage {
@@ -792,7 +1595,33 @@ pub struct DescribeReplicationInstancesMessage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub max_records: Option<i64>,
 }
-
+impl DescribeReplicationInstancesMessage {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReplicationInstancesMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReplicationInstancesMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReplicationInstancesMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeReplicationInstancesMessage with optional fields set to `None`.
+    pub fn new() -> DescribeReplicationInstancesMessage {
+        DescribeReplicationInstancesMessage { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeReplicationInstancesResponse {
@@ -805,7 +1634,6 @@ pub struct DescribeReplicationInstancesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub replication_instances: Option<Vec<ReplicationInstance>>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeReplicationSubnetGroupsMessage {
@@ -822,7 +1650,33 @@ pub struct DescribeReplicationSubnetGroupsMessage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub max_records: Option<i64>,
 }
-
+impl DescribeReplicationSubnetGroupsMessage {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReplicationSubnetGroupsMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReplicationSubnetGroupsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReplicationSubnetGroupsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeReplicationSubnetGroupsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeReplicationSubnetGroupsMessage {
+        DescribeReplicationSubnetGroupsMessage { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeReplicationSubnetGroupsResponse {
@@ -835,7 +1689,6 @@ pub struct DescribeReplicationSubnetGroupsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub replication_subnet_groups: Option<Vec<ReplicationSubnetGroup>>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeReplicationTasksMessage {
@@ -852,7 +1705,33 @@ pub struct DescribeReplicationTasksMessage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub max_records: Option<i64>,
 }
-
+impl DescribeReplicationTasksMessage {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReplicationTasksMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReplicationTasksMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReplicationTasksMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeReplicationTasksMessage with optional fields set to `None`.
+    pub fn new() -> DescribeReplicationTasksMessage {
+        DescribeReplicationTasksMessage { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeReplicationTasksResponse {
@@ -865,7 +1744,6 @@ pub struct DescribeReplicationTasksResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub replication_tasks: Option<Vec<ReplicationTask>>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeSchemasMessage {
@@ -881,7 +1759,37 @@ pub struct DescribeSchemasMessage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub max_records: Option<i64>,
 }
-
+impl DescribeSchemasMessage {
+    /// Sets `endpoint_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSchemasMessage.endpoint_arn = value.into();`.
+    pub fn endpoint_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.endpoint_arn = value.into();
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSchemasMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSchemasMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeSchemasMessage with optional fields set to `None`.
+    pub fn new<EndpointArnType: Into<String>>(endpoint_arn: EndpointArnType)
+                                              -> DescribeSchemasMessage {
+        DescribeSchemasMessage {
+            endpoint_arn: endpoint_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeSchemasResponse {
@@ -894,7 +1802,6 @@ pub struct DescribeSchemasResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub schemas: Option<Vec<String>>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeTableStatisticsMessage {
@@ -910,7 +1817,37 @@ pub struct DescribeTableStatisticsMessage {
     #[serde(rename="ReplicationTaskArn")]
     pub replication_task_arn: String,
 }
-
+impl DescribeTableStatisticsMessage {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTableStatisticsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTableStatisticsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `replication_task_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTableStatisticsMessage.replication_task_arn = value.into();`.
+    pub fn replication_task_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_task_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeTableStatisticsMessage with optional fields set to `None`.
+    pub fn new<ReplicationTaskArnType: Into<String>>(replication_task_arn: ReplicationTaskArnType)
+                                                     -> DescribeTableStatisticsMessage {
+        DescribeTableStatisticsMessage {
+            replication_task_arn: replication_task_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeTableStatisticsResponse {
@@ -927,7 +1864,6 @@ pub struct DescribeTableStatisticsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub table_statistics: Option<Vec<TableStatistics>>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct DynamoDbSettings {
@@ -935,7 +1871,22 @@ pub struct DynamoDbSettings {
     #[serde(rename="ServiceAccessRoleArn")]
     pub service_access_role_arn: String,
 }
-
+impl DynamoDbSettings {
+    /// Sets `service_access_role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DynamoDbSettings.service_access_role_arn = value.into();`.
+    pub fn service_access_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_access_role_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DynamoDbSettings with optional fields set to `None`.
+pub fn new<ServiceAccessRoleArnType: Into<String>>(service_access_role_arn: ServiceAccessRoleArnType) -> DynamoDbSettings{
+        DynamoDbSettings {
+            service_access_role_arn: service_access_role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Endpoint {
@@ -1008,7 +1959,6 @@ pub struct Endpoint {
     #[serde(skip_serializing_if="Option::is_none")]
     pub username: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Event {
@@ -1033,7 +1983,6 @@ pub struct Event {
     #[serde(skip_serializing_if="Option::is_none")]
     pub source_type: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EventCategoryGroup {
@@ -1046,7 +1995,6 @@ pub struct EventCategoryGroup {
     #[serde(skip_serializing_if="Option::is_none")]
     pub source_type: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EventSubscription {
@@ -1087,7 +2035,6 @@ pub struct EventSubscription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub subscription_creation_time: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct Filter {
@@ -1098,7 +2045,32 @@ pub struct Filter {
     #[serde(rename="Values")]
     pub values: Vec<String>,
 }
-
+impl Filter {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Filter.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `values`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Filter.values = value.into();`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = value.into();
+        self
+    }
+    /// Returns a new instance of Filter with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, ValuesType: Into<Vec<String>>>(name: NameType,
+                                                                      values: ValuesType)
+                                                                      -> Filter {
+        Filter {
+            name: name.into(),
+            values: values.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ImportCertificateMessage {
     #[doc="<p>The customer-assigned name of the certificate. Valid characters are A-z and 0-9.</p>"]
@@ -1121,7 +2093,43 @@ pub struct ImportCertificateMessage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
+impl ImportCertificateMessage {
+    /// Sets `certificate_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportCertificateMessage.certificate_identifier = value.into();`.
+    pub fn certificate_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_identifier = value.into();
+        self
+    }
+    /// Sets `certificate_pem`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportCertificateMessage.certificate_pem = Some(value.into());`.
+    pub fn certificate_pem<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_pem = Some(value.into());
+        self
+    }
+    /// Sets `certificate_wallet`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportCertificateMessage.certificate_wallet = Some(value.into());`.
+    pub fn certificate_wallet<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.certificate_wallet = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportCertificateMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ImportCertificateMessage with optional fields set to `None`.
+pub fn new<CertificateIdentifierType: Into<String>>(certificate_identifier: CertificateIdentifierType) -> ImportCertificateMessage{
+        ImportCertificateMessage {
+            certificate_identifier: certificate_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ImportCertificateResponse {
     #[doc="<p>The certificate to be uploaded.</p>"]
@@ -1129,7 +2137,6 @@ pub struct ImportCertificateResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub certificate: Option<Certificate>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTagsForResourceMessage {
@@ -1137,7 +2144,23 @@ pub struct ListTagsForResourceMessage {
     #[serde(rename="ResourceArn")]
     pub resource_arn: String,
 }
-
+impl ListTagsForResourceMessage {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForResourceMessage.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Returns a new instance of ListTagsForResourceMessage with optional fields set to `None`.
+    pub fn new<ResourceArnType: Into<String>>(resource_arn: ResourceArnType)
+                                              -> ListTagsForResourceMessage {
+        ListTagsForResourceMessage {
+            resource_arn: resource_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTagsForResourceResponse {
@@ -1146,7 +2169,6 @@ pub struct ListTagsForResourceResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tag_list: Option<Vec<Tag>>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ModifyEndpointMessage {
@@ -1210,7 +2232,125 @@ pub struct ModifyEndpointMessage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub username: Option<String>,
 }
-
+impl ModifyEndpointMessage {
+    /// Sets `certificate_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEndpointMessage.certificate_arn = Some(value.into());`.
+    pub fn certificate_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_arn = Some(value.into());
+        self
+    }
+    /// Sets `database_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEndpointMessage.database_name = Some(value.into());`.
+    pub fn database_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.database_name = Some(value.into());
+        self
+    }
+    /// Sets `dynamo_db_settings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEndpointMessage.dynamo_db_settings = Some(value.into());`.
+    pub fn dynamo_db_settings<ValueType: Into<DynamoDbSettings>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.dynamo_db_settings = Some(value.into());
+        self
+    }
+    /// Sets `endpoint_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEndpointMessage.endpoint_arn = value.into();`.
+    pub fn endpoint_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.endpoint_arn = value.into();
+        self
+    }
+    /// Sets `endpoint_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEndpointMessage.endpoint_identifier = Some(value.into());`.
+    pub fn endpoint_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.endpoint_identifier = Some(value.into());
+        self
+    }
+    /// Sets `endpoint_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEndpointMessage.endpoint_type = Some(value.into());`.
+    pub fn endpoint_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.endpoint_type = Some(value.into());
+        self
+    }
+    /// Sets `engine_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEndpointMessage.engine_name = Some(value.into());`.
+    pub fn engine_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine_name = Some(value.into());
+        self
+    }
+    /// Sets `extra_connection_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEndpointMessage.extra_connection_attributes = Some(value.into());`.
+    pub fn extra_connection_attributes<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.extra_connection_attributes = Some(value.into());
+        self
+    }
+    /// Sets `mongo_db_settings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEndpointMessage.mongo_db_settings = Some(value.into());`.
+    pub fn mongo_db_settings<ValueType: Into<MongoDbSettings>>(mut self, value: ValueType) -> Self {
+        self.mongo_db_settings = Some(value.into());
+        self
+    }
+    /// Sets `password`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEndpointMessage.password = Some(value.into());`.
+    pub fn password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.password = Some(value.into());
+        self
+    }
+    /// Sets `port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEndpointMessage.port = Some(value.into());`.
+    pub fn port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.port = Some(value.into());
+        self
+    }
+    /// Sets `s3_settings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEndpointMessage.s3_settings = Some(value.into());`.
+    pub fn s3_settings<ValueType: Into<S3Settings>>(mut self, value: ValueType) -> Self {
+        self.s3_settings = Some(value.into());
+        self
+    }
+    /// Sets `server_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEndpointMessage.server_name = Some(value.into());`.
+    pub fn server_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_name = Some(value.into());
+        self
+    }
+    /// Sets `ssl_mode`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEndpointMessage.ssl_mode = Some(value.into());`.
+    pub fn ssl_mode<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ssl_mode = Some(value.into());
+        self
+    }
+    /// Sets `username`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEndpointMessage.username = Some(value.into());`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifyEndpointMessage with optional fields set to `None`.
+    pub fn new<EndpointArnType: Into<String>>(endpoint_arn: EndpointArnType)
+                                              -> ModifyEndpointMessage {
+        ModifyEndpointMessage {
+            endpoint_arn: endpoint_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ModifyEndpointResponse {
@@ -1219,7 +2359,6 @@ pub struct ModifyEndpointResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub endpoint: Option<Endpoint>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ModifyEventSubscriptionMessage {
@@ -1243,7 +2382,51 @@ pub struct ModifyEventSubscriptionMessage {
     #[serde(rename="SubscriptionName")]
     pub subscription_name: String,
 }
-
+impl ModifyEventSubscriptionMessage {
+    /// Sets `enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEventSubscriptionMessage.enabled = Some(value.into());`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = Some(value.into());
+        self
+    }
+    /// Sets `event_categories`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEventSubscriptionMessage.event_categories = Some(value.into());`.
+    pub fn event_categories<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.event_categories = Some(value.into());
+        self
+    }
+    /// Sets `sns_topic_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEventSubscriptionMessage.sns_topic_arn = Some(value.into());`.
+    pub fn sns_topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sns_topic_arn = Some(value.into());
+        self
+    }
+    /// Sets `source_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEventSubscriptionMessage.source_type = Some(value.into());`.
+    pub fn source_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_type = Some(value.into());
+        self
+    }
+    /// Sets `subscription_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEventSubscriptionMessage.subscription_name = value.into();`.
+    pub fn subscription_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subscription_name = value.into();
+        self
+    }
+    /// Returns a new instance of ModifyEventSubscriptionMessage with optional fields set to `None`.
+    pub fn new<SubscriptionNameType: Into<String>>(subscription_name: SubscriptionNameType)
+                                                   -> ModifyEventSubscriptionMessage {
+        ModifyEventSubscriptionMessage {
+            subscription_name: subscription_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ModifyEventSubscriptionResponse {
@@ -1252,7 +2435,6 @@ pub struct ModifyEventSubscriptionResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub event_subscription: Option<EventSubscription>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ModifyReplicationInstanceMessage {
@@ -1300,7 +2482,98 @@ pub struct ModifyReplicationInstanceMessage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vpc_security_group_ids: Option<Vec<String>>,
 }
-
+impl ModifyReplicationInstanceMessage {
+    /// Sets `allocated_storage`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationInstanceMessage.allocated_storage = Some(value.into());`.
+    pub fn allocated_storage<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.allocated_storage = Some(value.into());
+        self
+    }
+    /// Sets `allow_major_version_upgrade`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationInstanceMessage.allow_major_version_upgrade = Some(value.into());`.
+    pub fn allow_major_version_upgrade<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.allow_major_version_upgrade = Some(value.into());
+        self
+    }
+    /// Sets `apply_immediately`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationInstanceMessage.apply_immediately = Some(value.into());`.
+    pub fn apply_immediately<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.apply_immediately = Some(value.into());
+        self
+    }
+    /// Sets `auto_minor_version_upgrade`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationInstanceMessage.auto_minor_version_upgrade = Some(value.into());`.
+    pub fn auto_minor_version_upgrade<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.auto_minor_version_upgrade = Some(value.into());
+        self
+    }
+    /// Sets `engine_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationInstanceMessage.engine_version = Some(value.into());`.
+    pub fn engine_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine_version = Some(value.into());
+        self
+    }
+    /// Sets `multi_az`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationInstanceMessage.multi_az = Some(value.into());`.
+    pub fn multi_az<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.multi_az = Some(value.into());
+        self
+    }
+    /// Sets `preferred_maintenance_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationInstanceMessage.preferred_maintenance_window = Some(value.into());`.
+    pub fn preferred_maintenance_window<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.preferred_maintenance_window = Some(value.into());
+        self
+    }
+    /// Sets `replication_instance_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationInstanceMessage.replication_instance_arn = value.into();`.
+    pub fn replication_instance_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_instance_arn = value.into();
+        self
+    }
+    /// Sets `replication_instance_class`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationInstanceMessage.replication_instance_class = Some(value.into());`.
+    pub fn replication_instance_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_instance_class = Some(value.into());
+        self
+    }
+    /// Sets `replication_instance_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationInstanceMessage.replication_instance_identifier = Some(value.into());`.
+    pub fn replication_instance_identifier<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.replication_instance_identifier = Some(value.into());
+        self
+    }
+    /// Sets `vpc_security_group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationInstanceMessage.vpc_security_group_ids = Some(value.into());`.
+    pub fn vpc_security_group_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.vpc_security_group_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifyReplicationInstanceMessage with optional fields set to `None`.
+pub fn new<ReplicationInstanceArnType: Into<String>>(replication_instance_arn: ReplicationInstanceArnType) -> ModifyReplicationInstanceMessage{
+        ModifyReplicationInstanceMessage {
+            replication_instance_arn: replication_instance_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ModifyReplicationInstanceResponse {
@@ -1309,7 +2582,6 @@ pub struct ModifyReplicationInstanceResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub replication_instance: Option<ReplicationInstance>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ModifyReplicationSubnetGroupMessage {
@@ -1324,7 +2596,44 @@ pub struct ModifyReplicationSubnetGroupMessage {
     #[serde(rename="SubnetIds")]
     pub subnet_ids: Vec<String>,
 }
-
+impl ModifyReplicationSubnetGroupMessage {
+    /// Sets `replication_subnet_group_description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationSubnetGroupMessage.replication_subnet_group_description = Some(value.into());`.
+    pub fn replication_subnet_group_description<ValueType: Into<String>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.replication_subnet_group_description = Some(value.into());
+        self
+    }
+    /// Sets `replication_subnet_group_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationSubnetGroupMessage.replication_subnet_group_identifier = value.into();`.
+    pub fn replication_subnet_group_identifier<ValueType: Into<String>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.replication_subnet_group_identifier = value.into();
+        self
+    }
+    /// Sets `subnet_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationSubnetGroupMessage.subnet_ids = value.into();`.
+    pub fn subnet_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.subnet_ids = value.into();
+        self
+    }
+    /// Returns a new instance of ModifyReplicationSubnetGroupMessage with optional fields set to `None`.
+    pub fn new<ReplicationSubnetGroupIdentifierType: Into<String>, SubnetIdsType: Into<Vec<String>>>
+        (replication_subnet_group_identifier: ReplicationSubnetGroupIdentifierType,
+         subnet_ids: SubnetIdsType)
+         -> ModifyReplicationSubnetGroupMessage {
+        ModifyReplicationSubnetGroupMessage {
+            replication_subnet_group_identifier: replication_subnet_group_identifier.into(),
+            subnet_ids: subnet_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ModifyReplicationSubnetGroupResponse {
@@ -1333,7 +2642,6 @@ pub struct ModifyReplicationSubnetGroupResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub replication_subnet_group: Option<ReplicationSubnetGroup>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ModifyReplicationTaskMessage {
@@ -1361,7 +2669,60 @@ pub struct ModifyReplicationTaskMessage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub table_mappings: Option<String>,
 }
-
+impl ModifyReplicationTaskMessage {
+    /// Sets `cdc_start_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationTaskMessage.cdc_start_time = Some(value.into());`.
+    pub fn cdc_start_time<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.cdc_start_time = Some(value.into());
+        self
+    }
+    /// Sets `migration_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationTaskMessage.migration_type = Some(value.into());`.
+    pub fn migration_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.migration_type = Some(value.into());
+        self
+    }
+    /// Sets `replication_task_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationTaskMessage.replication_task_arn = value.into();`.
+    pub fn replication_task_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_task_arn = value.into();
+        self
+    }
+    /// Sets `replication_task_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationTaskMessage.replication_task_identifier = Some(value.into());`.
+    pub fn replication_task_identifier<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.replication_task_identifier = Some(value.into());
+        self
+    }
+    /// Sets `replication_task_settings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationTaskMessage.replication_task_settings = Some(value.into());`.
+    pub fn replication_task_settings<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_task_settings = Some(value.into());
+        self
+    }
+    /// Sets `table_mappings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationTaskMessage.table_mappings = Some(value.into());`.
+    pub fn table_mappings<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.table_mappings = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifyReplicationTaskMessage with optional fields set to `None`.
+    pub fn new<ReplicationTaskArnType: Into<String>>(replication_task_arn: ReplicationTaskArnType)
+                                                     -> ModifyReplicationTaskMessage {
+        ModifyReplicationTaskMessage {
+            replication_task_arn: replication_task_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ModifyReplicationTaskResponse {
@@ -1370,7 +2731,6 @@ pub struct ModifyReplicationTaskResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub replication_task: Option<ReplicationTask>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct MongoDbSettings {
@@ -1419,7 +2779,89 @@ pub struct MongoDbSettings {
     #[serde(skip_serializing_if="Option::is_none")]
     pub username: Option<String>,
 }
-
+impl MongoDbSettings {
+    /// Sets `auth_mechanism`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MongoDbSettings.auth_mechanism = Some(value.into());`.
+    pub fn auth_mechanism<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auth_mechanism = Some(value.into());
+        self
+    }
+    /// Sets `auth_source`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MongoDbSettings.auth_source = Some(value.into());`.
+    pub fn auth_source<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auth_source = Some(value.into());
+        self
+    }
+    /// Sets `auth_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MongoDbSettings.auth_type = Some(value.into());`.
+    pub fn auth_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auth_type = Some(value.into());
+        self
+    }
+    /// Sets `database_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MongoDbSettings.database_name = Some(value.into());`.
+    pub fn database_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.database_name = Some(value.into());
+        self
+    }
+    /// Sets `docs_to_investigate`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MongoDbSettings.docs_to_investigate = Some(value.into());`.
+    pub fn docs_to_investigate<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.docs_to_investigate = Some(value.into());
+        self
+    }
+    /// Sets `extract_doc_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MongoDbSettings.extract_doc_id = Some(value.into());`.
+    pub fn extract_doc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.extract_doc_id = Some(value.into());
+        self
+    }
+    /// Sets `nesting_level`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MongoDbSettings.nesting_level = Some(value.into());`.
+    pub fn nesting_level<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.nesting_level = Some(value.into());
+        self
+    }
+    /// Sets `password`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MongoDbSettings.password = Some(value.into());`.
+    pub fn password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.password = Some(value.into());
+        self
+    }
+    /// Sets `port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MongoDbSettings.port = Some(value.into());`.
+    pub fn port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.port = Some(value.into());
+        self
+    }
+    /// Sets `server_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MongoDbSettings.server_name = Some(value.into());`.
+    pub fn server_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_name = Some(value.into());
+        self
+    }
+    /// Sets `username`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MongoDbSettings.username = Some(value.into());`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = Some(value.into());
+        self
+    }
+    /// Returns a new instance of MongoDbSettings with optional fields set to `None`.
+    pub fn new() -> MongoDbSettings {
+        MongoDbSettings { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct OrderableReplicationInstance {
@@ -1452,7 +2894,6 @@ pub struct OrderableReplicationInstance {
     #[serde(skip_serializing_if="Option::is_none")]
     pub storage_type: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RefreshSchemasMessage {
@@ -1463,7 +2904,33 @@ pub struct RefreshSchemasMessage {
     #[serde(rename="ReplicationInstanceArn")]
     pub replication_instance_arn: String,
 }
-
+impl RefreshSchemasMessage {
+    /// Sets `endpoint_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RefreshSchemasMessage.endpoint_arn = value.into();`.
+    pub fn endpoint_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.endpoint_arn = value.into();
+        self
+    }
+    /// Sets `replication_instance_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RefreshSchemasMessage.replication_instance_arn = value.into();`.
+    pub fn replication_instance_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_instance_arn = value.into();
+        self
+    }
+    /// Returns a new instance of RefreshSchemasMessage with optional fields set to `None`.
+    pub fn new<EndpointArnType: Into<String>, ReplicationInstanceArnType: Into<String>>
+        (endpoint_arn: EndpointArnType,
+         replication_instance_arn: ReplicationInstanceArnType)
+         -> RefreshSchemasMessage {
+        RefreshSchemasMessage {
+            endpoint_arn: endpoint_arn.into(),
+            replication_instance_arn: replication_instance_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RefreshSchemasResponse {
@@ -1472,7 +2939,6 @@ pub struct RefreshSchemasResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub refresh_schemas_status: Option<RefreshSchemasStatus>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RefreshSchemasStatus {
@@ -1497,7 +2963,6 @@ pub struct RefreshSchemasStatus {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ReloadTablesMessage {
     #[doc="<p>The Amazon Resource Name (ARN) of the replication instance. </p>"]
@@ -1507,7 +2972,35 @@ pub struct ReloadTablesMessage {
     #[serde(rename="TablesToReload")]
     pub tables_to_reload: Vec<TableToReload>,
 }
-
+impl ReloadTablesMessage {
+    /// Sets `replication_task_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReloadTablesMessage.replication_task_arn = value.into();`.
+    pub fn replication_task_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_task_arn = value.into();
+        self
+    }
+    /// Sets `tables_to_reload`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReloadTablesMessage.tables_to_reload = value.into();`.
+    pub fn tables_to_reload<ValueType: Into<Vec<TableToReload>>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.tables_to_reload = value.into();
+        self
+    }
+    /// Returns a new instance of ReloadTablesMessage with optional fields set to `None`.
+    pub fn new<ReplicationTaskArnType: Into<String>, TablesToReloadType: Into<Vec<TableToReload>>>
+        (replication_task_arn: ReplicationTaskArnType,
+         tables_to_reload: TablesToReloadType)
+         -> ReloadTablesMessage {
+        ReloadTablesMessage {
+            replication_task_arn: replication_task_arn.into(),
+            tables_to_reload: tables_to_reload.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ReloadTablesResponse {
     #[doc="<p>The Amazon Resource Name (ARN) of the replication task. </p>"]
@@ -1515,7 +3008,6 @@ pub struct ReloadTablesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub replication_task_arn: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RemoveTagsFromResourceMessage {
@@ -1526,7 +3018,33 @@ pub struct RemoveTagsFromResourceMessage {
     #[serde(rename="TagKeys")]
     pub tag_keys: Vec<String>,
 }
-
+impl RemoveTagsFromResourceMessage {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromResourceMessage.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Sets `tag_keys`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromResourceMessage.tag_keys = value.into();`.
+    pub fn tag_keys<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tag_keys = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveTagsFromResourceMessage with optional fields set to `None`.
+    pub fn new<ResourceArnType: Into<String>, TagKeysType: Into<Vec<String>>>
+        (resource_arn: ResourceArnType,
+         tag_keys: TagKeysType)
+         -> RemoveTagsFromResourceMessage {
+        RemoveTagsFromResourceMessage {
+            resource_arn: resource_arn.into(),
+            tag_keys: tag_keys.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RemoveTagsFromResourceResponse;
@@ -1611,7 +3129,6 @@ pub struct ReplicationInstance {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vpc_security_groups: Option<Vec<VpcSecurityGroupMembership>>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ReplicationPendingModifiedValues {
@@ -1632,7 +3149,6 @@ pub struct ReplicationPendingModifiedValues {
     #[serde(skip_serializing_if="Option::is_none")]
     pub replication_instance_class: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ReplicationSubnetGroup {
@@ -1657,7 +3173,6 @@ pub struct ReplicationSubnetGroup {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vpc_id: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ReplicationTask {
@@ -1718,7 +3233,6 @@ pub struct ReplicationTask {
     #[serde(skip_serializing_if="Option::is_none")]
     pub target_endpoint_arn: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ReplicationTaskStats {
@@ -1747,7 +3261,6 @@ pub struct ReplicationTaskStats {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tables_queued: Option<i64>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct S3Settings {
@@ -1780,7 +3293,61 @@ pub struct S3Settings {
     #[serde(skip_serializing_if="Option::is_none")]
     pub service_access_role_arn: Option<String>,
 }
-
+impl S3Settings {
+    /// Sets `bucket_folder`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Settings.bucket_folder = Some(value.into());`.
+    pub fn bucket_folder<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket_folder = Some(value.into());
+        self
+    }
+    /// Sets `bucket_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Settings.bucket_name = Some(value.into());`.
+    pub fn bucket_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket_name = Some(value.into());
+        self
+    }
+    /// Sets `compression_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Settings.compression_type = Some(value.into());`.
+    pub fn compression_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.compression_type = Some(value.into());
+        self
+    }
+    /// Sets `csv_delimiter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Settings.csv_delimiter = Some(value.into());`.
+    pub fn csv_delimiter<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.csv_delimiter = Some(value.into());
+        self
+    }
+    /// Sets `csv_row_delimiter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Settings.csv_row_delimiter = Some(value.into());`.
+    pub fn csv_row_delimiter<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.csv_row_delimiter = Some(value.into());
+        self
+    }
+    /// Sets `external_table_definition`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Settings.external_table_definition = Some(value.into());`.
+    pub fn external_table_definition<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.external_table_definition = Some(value.into());
+        self
+    }
+    /// Sets `service_access_role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Settings.service_access_role_arn = Some(value.into());`.
+    pub fn service_access_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_access_role_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of S3Settings with optional fields set to `None`.
+    pub fn new() -> S3Settings {
+        S3Settings { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartReplicationTaskMessage {
@@ -1795,7 +3362,42 @@ pub struct StartReplicationTaskMessage {
     #[serde(rename="StartReplicationTaskType")]
     pub start_replication_task_type: String,
 }
-
+impl StartReplicationTaskMessage {
+    /// Sets `cdc_start_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartReplicationTaskMessage.cdc_start_time = Some(value.into());`.
+    pub fn cdc_start_time<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.cdc_start_time = Some(value.into());
+        self
+    }
+    /// Sets `replication_task_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartReplicationTaskMessage.replication_task_arn = value.into();`.
+    pub fn replication_task_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_task_arn = value.into();
+        self
+    }
+    /// Sets `start_replication_task_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartReplicationTaskMessage.start_replication_task_type = value.into();`.
+    pub fn start_replication_task_type<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.start_replication_task_type = value.into();
+        self
+    }
+    /// Returns a new instance of StartReplicationTaskMessage with optional fields set to `None`.
+    pub fn new<ReplicationTaskArnType: Into<String>, StartReplicationTaskTypeType: Into<String>>
+        (replication_task_arn: ReplicationTaskArnType,
+         start_replication_task_type: StartReplicationTaskTypeType)
+         -> StartReplicationTaskMessage {
+        StartReplicationTaskMessage {
+            replication_task_arn: replication_task_arn.into(),
+            start_replication_task_type: start_replication_task_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartReplicationTaskResponse {
@@ -1804,7 +3406,6 @@ pub struct StartReplicationTaskResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub replication_task: Option<ReplicationTask>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StopReplicationTaskMessage {
@@ -1812,7 +3413,23 @@ pub struct StopReplicationTaskMessage {
     #[serde(rename="ReplicationTaskArn")]
     pub replication_task_arn: String,
 }
-
+impl StopReplicationTaskMessage {
+    /// Sets `replication_task_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopReplicationTaskMessage.replication_task_arn = value.into();`.
+    pub fn replication_task_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_task_arn = value.into();
+        self
+    }
+    /// Returns a new instance of StopReplicationTaskMessage with optional fields set to `None`.
+    pub fn new<ReplicationTaskArnType: Into<String>>(replication_task_arn: ReplicationTaskArnType)
+                                                     -> StopReplicationTaskMessage {
+        StopReplicationTaskMessage {
+            replication_task_arn: replication_task_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StopReplicationTaskResponse {
@@ -1821,7 +3438,6 @@ pub struct StopReplicationTaskResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub replication_task: Option<ReplicationTask>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Subnet {
@@ -1838,7 +3454,6 @@ pub struct Subnet {
     #[serde(skip_serializing_if="Option::is_none")]
     pub subnet_status: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SupportedEndpointType {
@@ -1855,7 +3470,6 @@ pub struct SupportedEndpointType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub supports_cdc: Option<bool>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TableStatistics {
@@ -1904,7 +3518,6 @@ pub struct TableStatistics {
     #[serde(skip_serializing_if="Option::is_none")]
     pub updates: Option<i64>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TableToReload {
@@ -1917,7 +3530,26 @@ pub struct TableToReload {
     #[serde(skip_serializing_if="Option::is_none")]
     pub table_name: Option<String>,
 }
-
+impl TableToReload {
+    /// Sets `schema_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TableToReload.schema_name = Some(value.into());`.
+    pub fn schema_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.schema_name = Some(value.into());
+        self
+    }
+    /// Sets `table_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TableToReload.table_name = Some(value.into());`.
+    pub fn table_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.table_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TableToReload with optional fields set to `None`.
+    pub fn new() -> TableToReload {
+        TableToReload { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Tag {
@@ -1930,7 +3562,26 @@ pub struct Tag {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl Tag {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new() -> Tag {
+        Tag { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TestConnectionMessage {
@@ -1941,7 +3592,33 @@ pub struct TestConnectionMessage {
     #[serde(rename="ReplicationInstanceArn")]
     pub replication_instance_arn: String,
 }
-
+impl TestConnectionMessage {
+    /// Sets `endpoint_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestConnectionMessage.endpoint_arn = value.into();`.
+    pub fn endpoint_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.endpoint_arn = value.into();
+        self
+    }
+    /// Sets `replication_instance_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestConnectionMessage.replication_instance_arn = value.into();`.
+    pub fn replication_instance_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_instance_arn = value.into();
+        self
+    }
+    /// Returns a new instance of TestConnectionMessage with optional fields set to `None`.
+    pub fn new<EndpointArnType: Into<String>, ReplicationInstanceArnType: Into<String>>
+        (endpoint_arn: EndpointArnType,
+         replication_instance_arn: ReplicationInstanceArnType)
+         -> TestConnectionMessage {
+        TestConnectionMessage {
+            endpoint_arn: endpoint_arn.into(),
+            replication_instance_arn: replication_instance_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TestConnectionResponse {
@@ -1950,7 +3627,6 @@ pub struct TestConnectionResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub connection: Option<Connection>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct VpcSecurityGroupMembership {
@@ -1963,7 +3639,6 @@ pub struct VpcSecurityGroupMembership {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vpc_security_group_id: Option<String>,
 }
-
 /// Errors returned by AddTagsToResource
 #[derive(Debug, PartialEq)]
 pub enum AddTagsToResourceError {

@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -34,7 +35,23 @@ pub struct AllocateStaticIpRequest {
     #[serde(rename="staticIpName")]
     pub static_ip_name: String,
 }
-
+impl AllocateStaticIpRequest {
+    /// Sets `static_ip_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocateStaticIpRequest.static_ip_name = value.into();`.
+    pub fn static_ip_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.static_ip_name = value.into();
+        self
+    }
+    /// Returns a new instance of AllocateStaticIpRequest with optional fields set to `None`.
+    pub fn new<staticIpNameType: Into<String>>(static_ip_name: staticIpNameType)
+                                               -> AllocateStaticIpRequest {
+        AllocateStaticIpRequest {
+            static_ip_name: static_ip_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AllocateStaticIpResult {
     #[doc="<p>An array of key-value pairs containing information about the static IP address you allocated.</p>"]
@@ -42,7 +59,6 @@ pub struct AllocateStaticIpResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operations: Option<Vec<Operation>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AttachStaticIpRequest {
     #[doc="<p>The instance name to which you want to attach the static IP address.</p>"]
@@ -52,7 +68,33 @@ pub struct AttachStaticIpRequest {
     #[serde(rename="staticIpName")]
     pub static_ip_name: String,
 }
-
+impl AttachStaticIpRequest {
+    /// Sets `instance_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachStaticIpRequest.instance_name = value.into();`.
+    pub fn instance_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_name = value.into();
+        self
+    }
+    /// Sets `static_ip_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachStaticIpRequest.static_ip_name = value.into();`.
+    pub fn static_ip_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.static_ip_name = value.into();
+        self
+    }
+    /// Returns a new instance of AttachStaticIpRequest with optional fields set to `None`.
+    pub fn new<instanceNameType: Into<String>, staticIpNameType: Into<String>>
+        (instance_name: instanceNameType,
+         static_ip_name: staticIpNameType)
+         -> AttachStaticIpRequest {
+        AttachStaticIpRequest {
+            instance_name: instance_name.into(),
+            static_ip_name: static_ip_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AttachStaticIpResult {
     #[doc="<p>An array of key-value pairs containing information about your API operations.</p>"]
@@ -60,7 +102,6 @@ pub struct AttachStaticIpResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operations: Option<Vec<Operation>>,
 }
-
 #[doc="<p>Describes an Availability Zone.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AvailabilityZone {
@@ -73,7 +114,6 @@ pub struct AvailabilityZone {
     #[serde(skip_serializing_if="Option::is_none")]
     pub zone_name: Option<String>,
 }
-
 #[doc="<p>Describes a blueprint (a virtual private server image).</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Blueprint {
@@ -122,7 +162,6 @@ pub struct Blueprint {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version_code: Option<String>,
 }
-
 #[doc="<p>Describes a bundle, which is a set of specs describing your virtual private server (or <i>instance</i>).</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Bundle {
@@ -167,7 +206,6 @@ pub struct Bundle {
     #[serde(skip_serializing_if="Option::is_none")]
     pub transfer_per_month_in_gb: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CloseInstancePublicPortsRequest {
     #[doc="<p>The name of the instance on which you're attempting to close the public ports.</p>"]
@@ -177,7 +215,33 @@ pub struct CloseInstancePublicPortsRequest {
     #[serde(rename="portInfo")]
     pub port_info: PortInfo,
 }
-
+impl CloseInstancePublicPortsRequest {
+    /// Sets `instance_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloseInstancePublicPortsRequest.instance_name = value.into();`.
+    pub fn instance_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_name = value.into();
+        self
+    }
+    /// Sets `port_info`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloseInstancePublicPortsRequest.port_info = value.into();`.
+    pub fn port_info<ValueType: Into<PortInfo>>(mut self, value: ValueType) -> Self {
+        self.port_info = value.into();
+        self
+    }
+    /// Returns a new instance of CloseInstancePublicPortsRequest with optional fields set to `None`.
+    pub fn new<instanceNameType: Into<String>, portInfoType: Into<PortInfo>>
+        (instance_name: instanceNameType,
+         port_info: portInfoType)
+         -> CloseInstancePublicPortsRequest {
+        CloseInstancePublicPortsRequest {
+            instance_name: instance_name.into(),
+            port_info: port_info.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CloseInstancePublicPortsResult {
     #[doc="<p>An array of key-value pairs that contains information about the operation.</p>"]
@@ -185,7 +249,6 @@ pub struct CloseInstancePublicPortsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operation: Option<Operation>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateDomainEntryRequest {
     #[doc="<p>An array of key-value pairs containing information about the domain entry request.</p>"]
@@ -195,7 +258,33 @@ pub struct CreateDomainEntryRequest {
     #[serde(rename="domainName")]
     pub domain_name: String,
 }
-
+impl CreateDomainEntryRequest {
+    /// Sets `domain_entry`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDomainEntryRequest.domain_entry = value.into();`.
+    pub fn domain_entry<ValueType: Into<DomainEntry>>(mut self, value: ValueType) -> Self {
+        self.domain_entry = value.into();
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDomainEntryRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateDomainEntryRequest with optional fields set to `None`.
+    pub fn new<domainEntryType: Into<DomainEntry>, domainNameType: Into<String>>
+        (domain_entry: domainEntryType,
+         domain_name: domainNameType)
+         -> CreateDomainEntryRequest {
+        CreateDomainEntryRequest {
+            domain_entry: domain_entry.into(),
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateDomainEntryResult {
     #[doc="<p>An array of key-value pairs containing information about the operation.</p>"]
@@ -203,14 +292,28 @@ pub struct CreateDomainEntryResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operation: Option<Operation>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateDomainRequest {
     #[doc="<p>The domain name to manage (e.g., <code>example.com</code>).</p> <note> <p>You cannot register a new domain name using Lightsail. You must register a domain name using Amazon Route 53 or another domain name registrar. If you have already registered your domain, you can enter its name in this parameter to manage the DNS records for that domain.</p> </note>"]
     #[serde(rename="domainName")]
     pub domain_name: String,
 }
-
+impl CreateDomainRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDomainRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateDomainRequest with optional fields set to `None`.
+    pub fn new<domainNameType: Into<String>>(domain_name: domainNameType) -> CreateDomainRequest {
+        CreateDomainRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateDomainResult {
     #[doc="<p>An array of key-value pairs containing information about the domain resource you created.</p>"]
@@ -218,7 +321,6 @@ pub struct CreateDomainResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operation: Option<Operation>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateInstanceSnapshotRequest {
     #[doc="<p>The Lightsail instance on which to base your snapshot.</p>"]
@@ -228,7 +330,33 @@ pub struct CreateInstanceSnapshotRequest {
     #[serde(rename="instanceSnapshotName")]
     pub instance_snapshot_name: String,
 }
-
+impl CreateInstanceSnapshotRequest {
+    /// Sets `instance_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceSnapshotRequest.instance_name = value.into();`.
+    pub fn instance_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_name = value.into();
+        self
+    }
+    /// Sets `instance_snapshot_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceSnapshotRequest.instance_snapshot_name = value.into();`.
+    pub fn instance_snapshot_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_snapshot_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateInstanceSnapshotRequest with optional fields set to `None`.
+    pub fn new<instanceNameType: Into<String>, instanceSnapshotNameType: Into<String>>
+        (instance_name: instanceNameType,
+         instance_snapshot_name: instanceSnapshotNameType)
+         -> CreateInstanceSnapshotRequest {
+        CreateInstanceSnapshotRequest {
+            instance_name: instance_name.into(),
+            instance_snapshot_name: instance_snapshot_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateInstanceSnapshotResult {
     #[doc="<p>An array of key-value pairs containing information about the results of your create instances snapshot request.</p>"]
@@ -236,7 +364,6 @@ pub struct CreateInstanceSnapshotResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operations: Option<Vec<Operation>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateInstancesFromSnapshotRequest {
     #[doc="<p>The Availability Zone where you want to create your instances. Use the following formatting: <code>us-east-1a</code> (case sensitive). You can get a list of availability zones by using the <a href=\"http://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetRegions.html\">get regions</a> operation. Be sure to add the <code>include availability zones</code> parameter to your request.</p>"]
@@ -260,7 +387,68 @@ pub struct CreateInstancesFromSnapshotRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_data: Option<String>,
 }
-
+impl CreateInstancesFromSnapshotRequest {
+    /// Sets `availability_zone`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstancesFromSnapshotRequest.availability_zone = value.into();`.
+    pub fn availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.availability_zone = value.into();
+        self
+    }
+    /// Sets `bundle_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstancesFromSnapshotRequest.bundle_id = value.into();`.
+    pub fn bundle_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bundle_id = value.into();
+        self
+    }
+    /// Sets `instance_names`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstancesFromSnapshotRequest.instance_names = value.into();`.
+    pub fn instance_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_names = value.into();
+        self
+    }
+    /// Sets `instance_snapshot_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstancesFromSnapshotRequest.instance_snapshot_name = value.into();`.
+    pub fn instance_snapshot_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_snapshot_name = value.into();
+        self
+    }
+    /// Sets `key_pair_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstancesFromSnapshotRequest.key_pair_name = Some(value.into());`.
+    pub fn key_pair_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_pair_name = Some(value.into());
+        self
+    }
+    /// Sets `user_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstancesFromSnapshotRequest.user_data = Some(value.into());`.
+    pub fn user_data<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_data = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateInstancesFromSnapshotRequest with optional fields set to `None`.
+    pub fn new<availabilityZoneType: Into<String>,
+               bundleIdType: Into<String>,
+               instanceNamesType: Into<Vec<String>>,
+               instanceSnapshotNameType: Into<String>>
+        (availability_zone: availabilityZoneType,
+         bundle_id: bundleIdType,
+         instance_names: instanceNamesType,
+         instance_snapshot_name: instanceSnapshotNameType)
+         -> CreateInstancesFromSnapshotRequest {
+        CreateInstancesFromSnapshotRequest {
+            availability_zone: availability_zone.into(),
+            bundle_id: bundle_id.into(),
+            instance_names: instance_names.into(),
+            instance_snapshot_name: instance_snapshot_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateInstancesFromSnapshotResult {
     #[doc="<p>An array of key-value pairs containing information about the results of your create instances from snapshot request.</p>"]
@@ -268,7 +456,6 @@ pub struct CreateInstancesFromSnapshotResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operations: Option<Vec<Operation>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateInstancesRequest {
     #[doc="<p>The Availability Zone in which to create your instance. Use the following format: <code>us-east-1a</code> (case sensitive). You can get a list of availability zones by using the <a href=\"http://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetRegions.html\">get regions</a> operation. Be sure to add the <code>include availability zones</code> parameter to your request.</p>"]
@@ -292,7 +479,68 @@ pub struct CreateInstancesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_data: Option<String>,
 }
-
+impl CreateInstancesRequest {
+    /// Sets `availability_zone`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstancesRequest.availability_zone = value.into();`.
+    pub fn availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.availability_zone = value.into();
+        self
+    }
+    /// Sets `blueprint_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstancesRequest.blueprint_id = value.into();`.
+    pub fn blueprint_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.blueprint_id = value.into();
+        self
+    }
+    /// Sets `bundle_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstancesRequest.bundle_id = value.into();`.
+    pub fn bundle_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bundle_id = value.into();
+        self
+    }
+    /// Sets `instance_names`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstancesRequest.instance_names = value.into();`.
+    pub fn instance_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_names = value.into();
+        self
+    }
+    /// Sets `key_pair_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstancesRequest.key_pair_name = Some(value.into());`.
+    pub fn key_pair_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_pair_name = Some(value.into());
+        self
+    }
+    /// Sets `user_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstancesRequest.user_data = Some(value.into());`.
+    pub fn user_data<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_data = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateInstancesRequest with optional fields set to `None`.
+    pub fn new<availabilityZoneType: Into<String>,
+               blueprintIdType: Into<String>,
+               bundleIdType: Into<String>,
+               instanceNamesType: Into<Vec<String>>>
+        (availability_zone: availabilityZoneType,
+         blueprint_id: blueprintIdType,
+         bundle_id: bundleIdType,
+         instance_names: instanceNamesType)
+         -> CreateInstancesRequest {
+        CreateInstancesRequest {
+            availability_zone: availability_zone.into(),
+            blueprint_id: blueprint_id.into(),
+            bundle_id: bundle_id.into(),
+            instance_names: instance_names.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateInstancesResult {
     #[doc="<p>An array of key-value pairs containing information about the results of your create instances request.</p>"]
@@ -300,14 +548,29 @@ pub struct CreateInstancesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operations: Option<Vec<Operation>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateKeyPairRequest {
     #[doc="<p>The name for your new key pair.</p>"]
     #[serde(rename="keyPairName")]
     pub key_pair_name: String,
 }
-
+impl CreateKeyPairRequest {
+    /// Sets `key_pair_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateKeyPairRequest.key_pair_name = value.into();`.
+    pub fn key_pair_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_pair_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateKeyPairRequest with optional fields set to `None`.
+    pub fn new<keyPairNameType: Into<String>>(key_pair_name: keyPairNameType)
+                                              -> CreateKeyPairRequest {
+        CreateKeyPairRequest {
+            key_pair_name: key_pair_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateKeyPairResult {
     #[doc="<p>An array of key-value pairs containing information about the new key pair you just created.</p>"]
@@ -327,7 +590,6 @@ pub struct CreateKeyPairResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub public_key_base_64: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteDomainEntryRequest {
     #[doc="<p>An array of key-value pairs containing information about your domain entries.</p>"]
@@ -337,7 +599,33 @@ pub struct DeleteDomainEntryRequest {
     #[serde(rename="domainName")]
     pub domain_name: String,
 }
-
+impl DeleteDomainEntryRequest {
+    /// Sets `domain_entry`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDomainEntryRequest.domain_entry = value.into();`.
+    pub fn domain_entry<ValueType: Into<DomainEntry>>(mut self, value: ValueType) -> Self {
+        self.domain_entry = value.into();
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDomainEntryRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDomainEntryRequest with optional fields set to `None`.
+    pub fn new<domainEntryType: Into<DomainEntry>, domainNameType: Into<String>>
+        (domain_entry: domainEntryType,
+         domain_name: domainNameType)
+         -> DeleteDomainEntryRequest {
+        DeleteDomainEntryRequest {
+            domain_entry: domain_entry.into(),
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteDomainEntryResult {
     #[doc="<p>An array of key-value pairs containing information about the results of your delete domain entry request.</p>"]
@@ -345,14 +633,28 @@ pub struct DeleteDomainEntryResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operation: Option<Operation>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteDomainRequest {
     #[doc="<p>The specific domain name to delete.</p>"]
     #[serde(rename="domainName")]
     pub domain_name: String,
 }
-
+impl DeleteDomainRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDomainRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDomainRequest with optional fields set to `None`.
+    pub fn new<domainNameType: Into<String>>(domain_name: domainNameType) -> DeleteDomainRequest {
+        DeleteDomainRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteDomainResult {
     #[doc="<p>An array of key-value pairs containing information about the results of your delete domain request.</p>"]
@@ -360,14 +662,29 @@ pub struct DeleteDomainResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operation: Option<Operation>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteInstanceRequest {
     #[doc="<p>The name of the instance to delete.</p>"]
     #[serde(rename="instanceName")]
     pub instance_name: String,
 }
-
+impl DeleteInstanceRequest {
+    /// Sets `instance_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteInstanceRequest.instance_name = value.into();`.
+    pub fn instance_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteInstanceRequest with optional fields set to `None`.
+    pub fn new<instanceNameType: Into<String>>(instance_name: instanceNameType)
+                                               -> DeleteInstanceRequest {
+        DeleteInstanceRequest {
+            instance_name: instance_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteInstanceResult {
     #[doc="<p>An array of key-value pairs containing information about the results of your delete instance request.</p>"]
@@ -375,14 +692,28 @@ pub struct DeleteInstanceResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operations: Option<Vec<Operation>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteInstanceSnapshotRequest {
     #[doc="<p>The name of the snapshot to delete.</p>"]
     #[serde(rename="instanceSnapshotName")]
     pub instance_snapshot_name: String,
 }
-
+impl DeleteInstanceSnapshotRequest {
+    /// Sets `instance_snapshot_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteInstanceSnapshotRequest.instance_snapshot_name = value.into();`.
+    pub fn instance_snapshot_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_snapshot_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteInstanceSnapshotRequest with optional fields set to `None`.
+pub fn new<instanceSnapshotNameType: Into<String>>(instance_snapshot_name: instanceSnapshotNameType) -> DeleteInstanceSnapshotRequest{
+        DeleteInstanceSnapshotRequest {
+            instance_snapshot_name: instance_snapshot_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteInstanceSnapshotResult {
     #[doc="<p>An array of key-value pairs containing information about the results of your delete instance snapshot request.</p>"]
@@ -390,14 +721,29 @@ pub struct DeleteInstanceSnapshotResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operations: Option<Vec<Operation>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteKeyPairRequest {
     #[doc="<p>The name of the key pair to delete.</p>"]
     #[serde(rename="keyPairName")]
     pub key_pair_name: String,
 }
-
+impl DeleteKeyPairRequest {
+    /// Sets `key_pair_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteKeyPairRequest.key_pair_name = value.into();`.
+    pub fn key_pair_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_pair_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteKeyPairRequest with optional fields set to `None`.
+    pub fn new<keyPairNameType: Into<String>>(key_pair_name: keyPairNameType)
+                                              -> DeleteKeyPairRequest {
+        DeleteKeyPairRequest {
+            key_pair_name: key_pair_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteKeyPairResult {
     #[doc="<p>An array of key-value pairs containing information about the results of your delete key pair request.</p>"]
@@ -405,14 +751,29 @@ pub struct DeleteKeyPairResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operation: Option<Operation>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DetachStaticIpRequest {
     #[doc="<p>The name of the static IP to detach from the instance.</p>"]
     #[serde(rename="staticIpName")]
     pub static_ip_name: String,
 }
-
+impl DetachStaticIpRequest {
+    /// Sets `static_ip_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachStaticIpRequest.static_ip_name = value.into();`.
+    pub fn static_ip_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.static_ip_name = value.into();
+        self
+    }
+    /// Returns a new instance of DetachStaticIpRequest with optional fields set to `None`.
+    pub fn new<staticIpNameType: Into<String>>(static_ip_name: staticIpNameType)
+                                               -> DetachStaticIpRequest {
+        DetachStaticIpRequest {
+            static_ip_name: static_ip_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DetachStaticIpResult {
     #[doc="<p>An array of key-value pairs containing information about the results of your detach static IP request.</p>"]
@@ -420,7 +781,6 @@ pub struct DetachStaticIpResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operations: Option<Vec<Operation>>,
 }
-
 #[doc="<p>Describes the hard disk (an SSD).</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Disk {
@@ -481,7 +841,6 @@ pub struct Disk {
     #[serde(skip_serializing_if="Option::is_none")]
     pub support_code: Option<String>,
 }
-
 #[doc="<p>Describes a domain where you are storing recordsets in Lightsail.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Domain {
@@ -514,7 +873,6 @@ pub struct Domain {
     #[serde(skip_serializing_if="Option::is_none")]
     pub support_code: Option<String>,
 }
-
 #[doc="<p>Describes a domain recordset entry.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct DomainEntry {
@@ -539,7 +897,49 @@ pub struct DomainEntry {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
+impl DomainEntry {
+    /// Sets `id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DomainEntry.id = Some(value.into());`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DomainEntry.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DomainEntry.options = Some(value.into());`.
+    pub fn options<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                                 value: ValueType)
+                                                                                 -> Self {
+        self.options = Some(value.into());
+        self
+    }
+    /// Sets `target`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DomainEntry.target = Some(value.into());`.
+    pub fn target<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target = Some(value.into());
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DomainEntry.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DomainEntry with optional fields set to `None`.
+    pub fn new() -> DomainEntry {
+        DomainEntry { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DownloadDefaultKeyPairRequest;
 
@@ -554,7 +954,6 @@ pub struct DownloadDefaultKeyPairResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub public_key_base_64: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetActiveNamesRequest {
     #[doc="<p>A token used for paginating results from your get active names request.</p>"]
@@ -562,7 +961,19 @@ pub struct GetActiveNamesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub page_token: Option<String>,
 }
-
+impl GetActiveNamesRequest {
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetActiveNamesRequest.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetActiveNamesRequest with optional fields set to `None`.
+    pub fn new() -> GetActiveNamesRequest {
+        GetActiveNamesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetActiveNamesResult {
     #[doc="<p>The list of active names returned by the get active names request.</p>"]
@@ -574,7 +985,6 @@ pub struct GetActiveNamesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_page_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetBlueprintsRequest {
     #[doc="<p>A Boolean value indicating whether to include inactive results in your request.</p>"]
@@ -586,7 +996,26 @@ pub struct GetBlueprintsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub page_token: Option<String>,
 }
-
+impl GetBlueprintsRequest {
+    /// Sets `include_inactive`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBlueprintsRequest.include_inactive = Some(value.into());`.
+    pub fn include_inactive<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.include_inactive = Some(value.into());
+        self
+    }
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBlueprintsRequest.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetBlueprintsRequest with optional fields set to `None`.
+    pub fn new() -> GetBlueprintsRequest {
+        GetBlueprintsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetBlueprintsResult {
     #[doc="<p>An array of key-value pairs that contains information about the available blueprints.</p>"]
@@ -598,7 +1027,6 @@ pub struct GetBlueprintsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_page_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetBundlesRequest {
     #[doc="<p>A Boolean value that indicates whether to include inactive bundle results in your request.</p>"]
@@ -610,7 +1038,26 @@ pub struct GetBundlesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub page_token: Option<String>,
 }
-
+impl GetBundlesRequest {
+    /// Sets `include_inactive`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBundlesRequest.include_inactive = Some(value.into());`.
+    pub fn include_inactive<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.include_inactive = Some(value.into());
+        self
+    }
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBundlesRequest.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetBundlesRequest with optional fields set to `None`.
+    pub fn new() -> GetBundlesRequest {
+        GetBundlesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetBundlesResult {
     #[doc="<p>An array of key-value pairs that contains information about the available bundles.</p>"]
@@ -622,14 +1069,28 @@ pub struct GetBundlesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_page_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDomainRequest {
     #[doc="<p>The domain name for which your want to return information about.</p>"]
     #[serde(rename="domainName")]
     pub domain_name: String,
 }
-
+impl GetDomainRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDomainRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetDomainRequest with optional fields set to `None`.
+    pub fn new<domainNameType: Into<String>>(domain_name: domainNameType) -> GetDomainRequest {
+        GetDomainRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetDomainResult {
     #[doc="<p>An array of key-value pairs containing information about your get domain request.</p>"]
@@ -637,7 +1098,6 @@ pub struct GetDomainResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub domain: Option<Domain>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDomainsRequest {
     #[doc="<p>A token used for advancing to the next page of results from your get domains request.</p>"]
@@ -645,7 +1105,19 @@ pub struct GetDomainsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub page_token: Option<String>,
 }
-
+impl GetDomainsRequest {
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDomainsRequest.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetDomainsRequest with optional fields set to `None`.
+    pub fn new() -> GetDomainsRequest {
+        GetDomainsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetDomainsResult {
     #[doc="<p>An array of key-value pairs containing information about each of the domain entries in the user's account.</p>"]
@@ -657,7 +1129,6 @@ pub struct GetDomainsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_page_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetInstanceAccessDetailsRequest {
     #[doc="<p>The name of the instance to access.</p>"]
@@ -668,7 +1139,30 @@ pub struct GetInstanceAccessDetailsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub protocol: Option<String>,
 }
-
+impl GetInstanceAccessDetailsRequest {
+    /// Sets `instance_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInstanceAccessDetailsRequest.instance_name = value.into();`.
+    pub fn instance_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_name = value.into();
+        self
+    }
+    /// Sets `protocol`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInstanceAccessDetailsRequest.protocol = Some(value.into());`.
+    pub fn protocol<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.protocol = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetInstanceAccessDetailsRequest with optional fields set to `None`.
+    pub fn new<instanceNameType: Into<String>>(instance_name: instanceNameType)
+                                               -> GetInstanceAccessDetailsRequest {
+        GetInstanceAccessDetailsRequest {
+            instance_name: instance_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetInstanceAccessDetailsResult {
     #[doc="<p>An array of key-value pairs containing information about a get instance access request.</p>"]
@@ -676,7 +1170,6 @@ pub struct GetInstanceAccessDetailsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub access_details: Option<InstanceAccessDetails>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetInstanceMetricDataRequest {
     #[doc="<p>The end time of the time period.</p>"]
@@ -701,7 +1194,84 @@ pub struct GetInstanceMetricDataRequest {
     #[serde(rename="unit")]
     pub unit: String,
 }
-
+impl GetInstanceMetricDataRequest {
+    /// Sets `end_time`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInstanceMetricDataRequest.end_time = value.into();`.
+    pub fn end_time<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.end_time = value.into();
+        self
+    }
+    /// Sets `instance_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInstanceMetricDataRequest.instance_name = value.into();`.
+    pub fn instance_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_name = value.into();
+        self
+    }
+    /// Sets `metric_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInstanceMetricDataRequest.metric_name = value.into();`.
+    pub fn metric_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_name = value.into();
+        self
+    }
+    /// Sets `period`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInstanceMetricDataRequest.period = value.into();`.
+    pub fn period<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.period = value.into();
+        self
+    }
+    /// Sets `start_time`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInstanceMetricDataRequest.start_time = value.into();`.
+    pub fn start_time<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.start_time = value.into();
+        self
+    }
+    /// Sets `statistics`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInstanceMetricDataRequest.statistics = value.into();`.
+    pub fn statistics<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.statistics = value.into();
+        self
+    }
+    /// Sets `unit`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInstanceMetricDataRequest.unit = value.into();`.
+    pub fn unit<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.unit = value.into();
+        self
+    }
+    /// Returns a new instance of GetInstanceMetricDataRequest with optional fields set to `None`.
+    pub fn new<endTimeType: Into<f64>,
+               instanceNameType: Into<String>,
+               metricNameType: Into<String>,
+               periodType: Into<i64>,
+               startTimeType: Into<f64>,
+               statisticsType: Into<Vec<String>>,
+               unitType: Into<String>>
+        (end_time: endTimeType,
+         instance_name: instanceNameType,
+         metric_name: metricNameType,
+         period: periodType,
+         start_time: startTimeType,
+         statistics: statisticsType,
+         unit: unitType)
+         -> GetInstanceMetricDataRequest {
+        GetInstanceMetricDataRequest {
+            end_time: end_time.into(),
+            instance_name: instance_name.into(),
+            metric_name: metric_name.into(),
+            period: period.into(),
+            start_time: start_time.into(),
+            statistics: statistics.into(),
+            unit: unit.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetInstanceMetricDataResult {
     #[doc="<p>An array of key-value pairs containing information about the results of your get instance metric data request.</p>"]
@@ -713,14 +1283,29 @@ pub struct GetInstanceMetricDataResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub metric_name: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetInstancePortStatesRequest {
     #[doc="<p>The name of the instance.</p>"]
     #[serde(rename="instanceName")]
     pub instance_name: String,
 }
-
+impl GetInstancePortStatesRequest {
+    /// Sets `instance_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInstancePortStatesRequest.instance_name = value.into();`.
+    pub fn instance_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetInstancePortStatesRequest with optional fields set to `None`.
+    pub fn new<instanceNameType: Into<String>>(instance_name: instanceNameType)
+                                               -> GetInstancePortStatesRequest {
+        GetInstancePortStatesRequest {
+            instance_name: instance_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetInstancePortStatesResult {
     #[doc="<p>Information about the port states resulting from your request.</p>"]
@@ -728,14 +1313,29 @@ pub struct GetInstancePortStatesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub port_states: Option<Vec<InstancePortState>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetInstanceRequest {
     #[doc="<p>The name of the instance.</p>"]
     #[serde(rename="instanceName")]
     pub instance_name: String,
 }
-
+impl GetInstanceRequest {
+    /// Sets `instance_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInstanceRequest.instance_name = value.into();`.
+    pub fn instance_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetInstanceRequest with optional fields set to `None`.
+    pub fn new<instanceNameType: Into<String>>(instance_name: instanceNameType)
+                                               -> GetInstanceRequest {
+        GetInstanceRequest {
+            instance_name: instance_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetInstanceResult {
     #[doc="<p>An array of key-value pairs containing information about the specified instance.</p>"]
@@ -743,14 +1343,28 @@ pub struct GetInstanceResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instance: Option<Instance>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetInstanceSnapshotRequest {
     #[doc="<p>The name of the snapshot for which you are requesting information.</p>"]
     #[serde(rename="instanceSnapshotName")]
     pub instance_snapshot_name: String,
 }
-
+impl GetInstanceSnapshotRequest {
+    /// Sets `instance_snapshot_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInstanceSnapshotRequest.instance_snapshot_name = value.into();`.
+    pub fn instance_snapshot_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_snapshot_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetInstanceSnapshotRequest with optional fields set to `None`.
+pub fn new<instanceSnapshotNameType: Into<String>>(instance_snapshot_name: instanceSnapshotNameType) -> GetInstanceSnapshotRequest{
+        GetInstanceSnapshotRequest {
+            instance_snapshot_name: instance_snapshot_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetInstanceSnapshotResult {
     #[doc="<p>An array of key-value pairs containing information about the results of your get instance snapshot request.</p>"]
@@ -758,7 +1372,6 @@ pub struct GetInstanceSnapshotResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instance_snapshot: Option<InstanceSnapshot>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetInstanceSnapshotsRequest {
     #[doc="<p>A token used for advancing to the next page of results from your get instance snapshots request.</p>"]
@@ -766,7 +1379,19 @@ pub struct GetInstanceSnapshotsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub page_token: Option<String>,
 }
-
+impl GetInstanceSnapshotsRequest {
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInstanceSnapshotsRequest.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetInstanceSnapshotsRequest with optional fields set to `None`.
+    pub fn new() -> GetInstanceSnapshotsRequest {
+        GetInstanceSnapshotsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetInstanceSnapshotsResult {
     #[doc="<p>An array of key-value pairs containing information about the results of your get instance snapshots request.</p>"]
@@ -778,14 +1403,29 @@ pub struct GetInstanceSnapshotsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_page_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetInstanceStateRequest {
     #[doc="<p>The name of the instance to get state information about.</p>"]
     #[serde(rename="instanceName")]
     pub instance_name: String,
 }
-
+impl GetInstanceStateRequest {
+    /// Sets `instance_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInstanceStateRequest.instance_name = value.into();`.
+    pub fn instance_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetInstanceStateRequest with optional fields set to `None`.
+    pub fn new<instanceNameType: Into<String>>(instance_name: instanceNameType)
+                                               -> GetInstanceStateRequest {
+        GetInstanceStateRequest {
+            instance_name: instance_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetInstanceStateResult {
     #[doc="<p>The state of the instance.</p>"]
@@ -793,7 +1433,6 @@ pub struct GetInstanceStateResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub state: Option<InstanceState>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetInstancesRequest {
     #[doc="<p>A token used for advancing to the next page of results from your get instances request.</p>"]
@@ -801,7 +1440,19 @@ pub struct GetInstancesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub page_token: Option<String>,
 }
-
+impl GetInstancesRequest {
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInstancesRequest.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetInstancesRequest with optional fields set to `None`.
+    pub fn new() -> GetInstancesRequest {
+        GetInstancesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetInstancesResult {
     #[doc="<p>An array of key-value pairs containing information about your instances.</p>"]
@@ -813,14 +1464,28 @@ pub struct GetInstancesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_page_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetKeyPairRequest {
     #[doc="<p>The name of the key pair for which you are requesting information.</p>"]
     #[serde(rename="keyPairName")]
     pub key_pair_name: String,
 }
-
+impl GetKeyPairRequest {
+    /// Sets `key_pair_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetKeyPairRequest.key_pair_name = value.into();`.
+    pub fn key_pair_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_pair_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetKeyPairRequest with optional fields set to `None`.
+    pub fn new<keyPairNameType: Into<String>>(key_pair_name: keyPairNameType) -> GetKeyPairRequest {
+        GetKeyPairRequest {
+            key_pair_name: key_pair_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetKeyPairResult {
     #[doc="<p>An array of key-value pairs containing information about the key pair.</p>"]
@@ -828,7 +1493,6 @@ pub struct GetKeyPairResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub key_pair: Option<KeyPair>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetKeyPairsRequest {
     #[doc="<p>A token used for advancing to the next page of results from your get key pairs request.</p>"]
@@ -836,7 +1500,19 @@ pub struct GetKeyPairsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub page_token: Option<String>,
 }
-
+impl GetKeyPairsRequest {
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetKeyPairsRequest.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetKeyPairsRequest with optional fields set to `None`.
+    pub fn new() -> GetKeyPairsRequest {
+        GetKeyPairsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetKeyPairsResult {
     #[doc="<p>An array of key-value pairs containing information about the key pairs.</p>"]
@@ -848,14 +1524,29 @@ pub struct GetKeyPairsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_page_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetOperationRequest {
     #[doc="<p>A GUID used to identify the operation.</p>"]
     #[serde(rename="operationId")]
     pub operation_id: String,
 }
-
+impl GetOperationRequest {
+    /// Sets `operation_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetOperationRequest.operation_id = value.into();`.
+    pub fn operation_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.operation_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetOperationRequest with optional fields set to `None`.
+    pub fn new<operationIdType: Into<String>>(operation_id: operationIdType)
+                                              -> GetOperationRequest {
+        GetOperationRequest {
+            operation_id: operation_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetOperationResult {
     #[doc="<p>An array of key-value pairs containing information about the results of your get operation request.</p>"]
@@ -863,7 +1554,6 @@ pub struct GetOperationResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operation: Option<Operation>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetOperationsForResourceRequest {
     #[doc="<p>A token used for advancing to the next page of results from your get operations for resource request.</p>"]
@@ -874,7 +1564,30 @@ pub struct GetOperationsForResourceRequest {
     #[serde(rename="resourceName")]
     pub resource_name: String,
 }
-
+impl GetOperationsForResourceRequest {
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetOperationsForResourceRequest.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Sets `resource_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetOperationsForResourceRequest.resource_name = value.into();`.
+    pub fn resource_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetOperationsForResourceRequest with optional fields set to `None`.
+    pub fn new<resourceNameType: Into<String>>(resource_name: resourceNameType)
+                                               -> GetOperationsForResourceRequest {
+        GetOperationsForResourceRequest {
+            resource_name: resource_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetOperationsForResourceResult {
     #[doc="<p>An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list.</p>"]
@@ -886,7 +1599,6 @@ pub struct GetOperationsForResourceResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operations: Option<Vec<Operation>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetOperationsRequest {
     #[doc="<p>A token used for advancing to the next page of results from your get operations request.</p>"]
@@ -894,7 +1606,19 @@ pub struct GetOperationsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub page_token: Option<String>,
 }
-
+impl GetOperationsRequest {
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetOperationsRequest.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetOperationsRequest with optional fields set to `None`.
+    pub fn new() -> GetOperationsRequest {
+        GetOperationsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetOperationsResult {
     #[doc="<p>A token used for advancing to the next page of results from your get operations request.</p>"]
@@ -906,7 +1630,6 @@ pub struct GetOperationsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operations: Option<Vec<Operation>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetRegionsRequest {
     #[doc="<p>A Boolean value indicating whether to also include Availability Zones in your get regions request. Availability Zones are indicated with a letter: e.g., <code>us-east-1a</code>.</p>"]
@@ -914,7 +1637,19 @@ pub struct GetRegionsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub include_availability_zones: Option<bool>,
 }
-
+impl GetRegionsRequest {
+    /// Sets `include_availability_zones`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRegionsRequest.include_availability_zones = Some(value.into());`.
+    pub fn include_availability_zones<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.include_availability_zones = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetRegionsRequest with optional fields set to `None`.
+    pub fn new() -> GetRegionsRequest {
+        GetRegionsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetRegionsResult {
     #[doc="<p>An array of key-value pairs containing information about your get regions request.</p>"]
@@ -922,14 +1657,29 @@ pub struct GetRegionsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub regions: Option<Vec<Region>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetStaticIpRequest {
     #[doc="<p>The name of the static IP in Lightsail.</p>"]
     #[serde(rename="staticIpName")]
     pub static_ip_name: String,
 }
-
+impl GetStaticIpRequest {
+    /// Sets `static_ip_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetStaticIpRequest.static_ip_name = value.into();`.
+    pub fn static_ip_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.static_ip_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetStaticIpRequest with optional fields set to `None`.
+    pub fn new<staticIpNameType: Into<String>>(static_ip_name: staticIpNameType)
+                                               -> GetStaticIpRequest {
+        GetStaticIpRequest {
+            static_ip_name: static_ip_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetStaticIpResult {
     #[doc="<p>An array of key-value pairs containing information about the requested static IP.</p>"]
@@ -937,7 +1687,6 @@ pub struct GetStaticIpResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub static_ip: Option<StaticIp>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetStaticIpsRequest {
     #[doc="<p>A token used for advancing to the next page of results from your get static IPs request.</p>"]
@@ -945,7 +1694,19 @@ pub struct GetStaticIpsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub page_token: Option<String>,
 }
-
+impl GetStaticIpsRequest {
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetStaticIpsRequest.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetStaticIpsRequest with optional fields set to `None`.
+    pub fn new() -> GetStaticIpsRequest {
+        GetStaticIpsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetStaticIpsResult {
     #[doc="<p>A token used for advancing to the next page of results from your get static IPs request.</p>"]
@@ -957,7 +1718,6 @@ pub struct GetStaticIpsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub static_ips: Option<Vec<StaticIp>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ImportKeyPairRequest {
     #[doc="<p>The name of the key pair for which you want to import the public key.</p>"]
@@ -967,7 +1727,33 @@ pub struct ImportKeyPairRequest {
     #[serde(rename="publicKeyBase64")]
     pub public_key_base_64: String,
 }
-
+impl ImportKeyPairRequest {
+    /// Sets `key_pair_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportKeyPairRequest.key_pair_name = value.into();`.
+    pub fn key_pair_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_pair_name = value.into();
+        self
+    }
+    /// Sets `public_key_base_64`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportKeyPairRequest.public_key_base_64 = value.into();`.
+    pub fn public_key_base_64<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.public_key_base_64 = value.into();
+        self
+    }
+    /// Returns a new instance of ImportKeyPairRequest with optional fields set to `None`.
+    pub fn new<keyPairNameType: Into<String>, publicKeyBase64Type: Into<String>>
+        (key_pair_name: keyPairNameType,
+         public_key_base_64: publicKeyBase64Type)
+         -> ImportKeyPairRequest {
+        ImportKeyPairRequest {
+            key_pair_name: key_pair_name.into(),
+            public_key_base_64: public_key_base_64.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ImportKeyPairResult {
     #[doc="<p>An array of key-value pairs containing information about the request operation.</p>"]
@@ -975,7 +1761,6 @@ pub struct ImportKeyPairResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operation: Option<Operation>,
 }
-
 #[doc="<p>Describes an instance (a virtual private server).</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Instance {
@@ -1052,7 +1837,6 @@ pub struct Instance {
     #[serde(skip_serializing_if="Option::is_none")]
     pub username: Option<String>,
 }
-
 #[doc="<p>The parameters for gaining temporary access to one of your Amazon Lightsail instances.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceAccessDetails {
@@ -1089,7 +1873,6 @@ pub struct InstanceAccessDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub username: Option<String>,
 }
-
 #[doc="<p>Describes the hardware for the instance.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceHardware {
@@ -1106,7 +1889,6 @@ pub struct InstanceHardware {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ram_size_in_gb: Option<f32>,
 }
-
 #[doc="<p>Describes monthly data transfer rates and port information for an instance.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceNetworking {
@@ -1119,7 +1901,6 @@ pub struct InstanceNetworking {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ports: Option<Vec<InstancePortInfo>>,
 }
-
 #[doc="<p>Describes information about the instance ports.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstancePortInfo {
@@ -1152,7 +1933,6 @@ pub struct InstancePortInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub to_port: Option<i64>,
 }
-
 #[doc="<p>Describes the port state.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstancePortState {
@@ -1173,7 +1953,6 @@ pub struct InstancePortState {
     #[serde(skip_serializing_if="Option::is_none")]
     pub to_port: Option<i64>,
 }
-
 #[doc="<p>Describes the snapshot of the virtual private server, or <i>instance</i>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceSnapshot {
@@ -1230,7 +2009,6 @@ pub struct InstanceSnapshot {
     #[serde(skip_serializing_if="Option::is_none")]
     pub support_code: Option<String>,
 }
-
 #[doc="<p>Describes the virtual private server (or <i>instance</i>) status.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceState {
@@ -1243,7 +2021,6 @@ pub struct InstanceState {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct IsVpcPeeredRequest;
 
@@ -1254,7 +2031,6 @@ pub struct IsVpcPeeredResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub is_peered: Option<bool>,
 }
-
 #[doc="<p>Describes the SSH key pair.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct KeyPair {
@@ -1287,7 +2063,6 @@ pub struct KeyPair {
     #[serde(skip_serializing_if="Option::is_none")]
     pub support_code: Option<String>,
 }
-
 #[doc="<p>Describes the metric data point.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MetricDatapoint {
@@ -1320,7 +2095,6 @@ pub struct MetricDatapoint {
     #[serde(skip_serializing_if="Option::is_none")]
     pub unit: Option<String>,
 }
-
 #[doc="<p>Describes the monthly data transfer in and out of your virtual private server (or <i>instance</i>).</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MonthlyTransfer {
@@ -1329,7 +2103,6 @@ pub struct MonthlyTransfer {
     #[serde(skip_serializing_if="Option::is_none")]
     pub gb_per_month_allocated: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct OpenInstancePublicPortsRequest {
     #[doc="<p>The name of the instance for which you want to open the public ports.</p>"]
@@ -1339,7 +2112,33 @@ pub struct OpenInstancePublicPortsRequest {
     #[serde(rename="portInfo")]
     pub port_info: PortInfo,
 }
-
+impl OpenInstancePublicPortsRequest {
+    /// Sets `instance_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OpenInstancePublicPortsRequest.instance_name = value.into();`.
+    pub fn instance_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_name = value.into();
+        self
+    }
+    /// Sets `port_info`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OpenInstancePublicPortsRequest.port_info = value.into();`.
+    pub fn port_info<ValueType: Into<PortInfo>>(mut self, value: ValueType) -> Self {
+        self.port_info = value.into();
+        self
+    }
+    /// Returns a new instance of OpenInstancePublicPortsRequest with optional fields set to `None`.
+    pub fn new<instanceNameType: Into<String>, portInfoType: Into<PortInfo>>
+        (instance_name: instanceNameType,
+         port_info: portInfoType)
+         -> OpenInstancePublicPortsRequest {
+        OpenInstancePublicPortsRequest {
+            instance_name: instance_name.into(),
+            port_info: port_info.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct OpenInstancePublicPortsResult {
     #[doc="<p>An array of key-value pairs containing information about the request operation.</p>"]
@@ -1347,7 +2146,6 @@ pub struct OpenInstancePublicPortsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operation: Option<Operation>,
 }
-
 #[doc="<p>Describes the API operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Operation {
@@ -1400,7 +2198,6 @@ pub struct Operation {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status_changed_at: Option<f64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PeerVpcRequest;
 
@@ -1411,7 +2208,6 @@ pub struct PeerVpcResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operation: Option<Operation>,
 }
-
 #[doc="<p>Describes information about the ports on your virtual private server (or <i>instance</i>).</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PortInfo {
@@ -1428,7 +2224,33 @@ pub struct PortInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub to_port: Option<i64>,
 }
-
+impl PortInfo {
+    /// Sets `from_port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PortInfo.from_port = Some(value.into());`.
+    pub fn from_port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.from_port = Some(value.into());
+        self
+    }
+    /// Sets `protocol`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PortInfo.protocol = Some(value.into());`.
+    pub fn protocol<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.protocol = Some(value.into());
+        self
+    }
+    /// Sets `to_port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PortInfo.to_port = Some(value.into());`.
+    pub fn to_port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.to_port = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PortInfo with optional fields set to `None`.
+    pub fn new() -> PortInfo {
+        PortInfo { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutInstancePublicPortsRequest {
     #[doc="<p>The Lightsail instance name of the public port(s) you are setting.</p>"]
@@ -1438,7 +2260,33 @@ pub struct PutInstancePublicPortsRequest {
     #[serde(rename="portInfos")]
     pub port_infos: Vec<PortInfo>,
 }
-
+impl PutInstancePublicPortsRequest {
+    /// Sets `instance_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutInstancePublicPortsRequest.instance_name = value.into();`.
+    pub fn instance_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_name = value.into();
+        self
+    }
+    /// Sets `port_infos`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutInstancePublicPortsRequest.port_infos = value.into();`.
+    pub fn port_infos<ValueType: Into<Vec<PortInfo>>>(mut self, value: ValueType) -> Self {
+        self.port_infos = value.into();
+        self
+    }
+    /// Returns a new instance of PutInstancePublicPortsRequest with optional fields set to `None`.
+    pub fn new<instanceNameType: Into<String>, portInfosType: Into<Vec<PortInfo>>>
+        (instance_name: instanceNameType,
+         port_infos: portInfosType)
+         -> PutInstancePublicPortsRequest {
+        PutInstancePublicPortsRequest {
+            instance_name: instance_name.into(),
+            port_infos: port_infos.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutInstancePublicPortsResult {
     #[doc="<p>Describes metadata about the operation you just executed.</p>"]
@@ -1446,14 +2294,29 @@ pub struct PutInstancePublicPortsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operation: Option<Operation>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RebootInstanceRequest {
     #[doc="<p>The name of the instance to reboot.</p>"]
     #[serde(rename="instanceName")]
     pub instance_name: String,
 }
-
+impl RebootInstanceRequest {
+    /// Sets `instance_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RebootInstanceRequest.instance_name = value.into();`.
+    pub fn instance_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_name = value.into();
+        self
+    }
+    /// Returns a new instance of RebootInstanceRequest with optional fields set to `None`.
+    pub fn new<instanceNameType: Into<String>>(instance_name: instanceNameType)
+                                               -> RebootInstanceRequest {
+        RebootInstanceRequest {
+            instance_name: instance_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RebootInstanceResult {
     #[doc="<p>An array of key-value pairs containing information about the request operation.</p>"]
@@ -1461,7 +2324,6 @@ pub struct RebootInstanceResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operations: Option<Vec<Operation>>,
 }
-
 #[doc="<p>Describes the AWS Region.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Region {
@@ -1486,14 +2348,29 @@ pub struct Region {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ReleaseStaticIpRequest {
     #[doc="<p>The name of the static IP to delete.</p>"]
     #[serde(rename="staticIpName")]
     pub static_ip_name: String,
 }
-
+impl ReleaseStaticIpRequest {
+    /// Sets `static_ip_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReleaseStaticIpRequest.static_ip_name = value.into();`.
+    pub fn static_ip_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.static_ip_name = value.into();
+        self
+    }
+    /// Returns a new instance of ReleaseStaticIpRequest with optional fields set to `None`.
+    pub fn new<staticIpNameType: Into<String>>(static_ip_name: staticIpNameType)
+                                               -> ReleaseStaticIpRequest {
+        ReleaseStaticIpRequest {
+            static_ip_name: static_ip_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ReleaseStaticIpResult {
     #[doc="<p>An array of key-value pairs containing information about the request operation.</p>"]
@@ -1501,7 +2378,6 @@ pub struct ReleaseStaticIpResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operations: Option<Vec<Operation>>,
 }
-
 #[doc="<p>Describes the resource location.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ResourceLocation {
@@ -1514,14 +2390,29 @@ pub struct ResourceLocation {
     #[serde(skip_serializing_if="Option::is_none")]
     pub region_name: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartInstanceRequest {
     #[doc="<p>The name of the instance (a virtual private server) to start.</p>"]
     #[serde(rename="instanceName")]
     pub instance_name: String,
 }
-
+impl StartInstanceRequest {
+    /// Sets `instance_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartInstanceRequest.instance_name = value.into();`.
+    pub fn instance_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_name = value.into();
+        self
+    }
+    /// Returns a new instance of StartInstanceRequest with optional fields set to `None`.
+    pub fn new<instanceNameType: Into<String>>(instance_name: instanceNameType)
+                                               -> StartInstanceRequest {
+        StartInstanceRequest {
+            instance_name: instance_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartInstanceResult {
     #[doc="<p>An array of key-value pairs containing information about the request operation.</p>"]
@@ -1529,7 +2420,6 @@ pub struct StartInstanceResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operations: Option<Vec<Operation>>,
 }
-
 #[doc="<p>Describes the static IP.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StaticIp {
@@ -1570,14 +2460,29 @@ pub struct StaticIp {
     #[serde(skip_serializing_if="Option::is_none")]
     pub support_code: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StopInstanceRequest {
     #[doc="<p>The name of the instance (a virtual private server) to stop.</p>"]
     #[serde(rename="instanceName")]
     pub instance_name: String,
 }
-
+impl StopInstanceRequest {
+    /// Sets `instance_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopInstanceRequest.instance_name = value.into();`.
+    pub fn instance_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_name = value.into();
+        self
+    }
+    /// Returns a new instance of StopInstanceRequest with optional fields set to `None`.
+    pub fn new<instanceNameType: Into<String>>(instance_name: instanceNameType)
+                                               -> StopInstanceRequest {
+        StopInstanceRequest {
+            instance_name: instance_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StopInstanceResult {
     #[doc="<p>An array of key-value pairs containing information about the request operation.</p>"]
@@ -1585,7 +2490,6 @@ pub struct StopInstanceResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operations: Option<Vec<Operation>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UnpeerVpcRequest;
 
@@ -1596,7 +2500,6 @@ pub struct UnpeerVpcResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operation: Option<Operation>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateDomainEntryRequest {
     #[doc="<p>An array of key-value pairs containing information about the domain entry.</p>"]
@@ -1606,7 +2509,33 @@ pub struct UpdateDomainEntryRequest {
     #[serde(rename="domainName")]
     pub domain_name: String,
 }
-
+impl UpdateDomainEntryRequest {
+    /// Sets `domain_entry`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDomainEntryRequest.domain_entry = value.into();`.
+    pub fn domain_entry<ValueType: Into<DomainEntry>>(mut self, value: ValueType) -> Self {
+        self.domain_entry = value.into();
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDomainEntryRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateDomainEntryRequest with optional fields set to `None`.
+    pub fn new<domainEntryType: Into<DomainEntry>, domainNameType: Into<String>>
+        (domain_entry: domainEntryType,
+         domain_name: domainNameType)
+         -> UpdateDomainEntryRequest {
+        UpdateDomainEntryRequest {
+            domain_entry: domain_entry.into(),
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateDomainEntryResult {
     #[doc="<p>An array of key-value pairs containing information about the request operation.</p>"]
@@ -1614,7 +2543,6 @@ pub struct UpdateDomainEntryResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operations: Option<Vec<Operation>>,
 }
-
 /// Errors returned by AllocateStaticIp
 #[derive(Debug, PartialEq)]
 pub enum AllocateStaticIpError {

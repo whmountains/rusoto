@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -38,7 +39,36 @@ pub struct AddTagsToStreamInput {
     #[serde(rename="Tags")]
     pub tags: ::std::collections::HashMap<String, String>,
 }
-
+impl AddTagsToStreamInput {
+    /// Sets `stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToStreamInput.stream_name = value.into();`.
+    pub fn stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stream_name = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToStreamInput.tags = value.into();`.
+    pub fn tags<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of AddTagsToStreamInput with optional fields set to `None`.
+    pub fn new<StreamNameType: Into<String>,
+               TagsType: Into<::std::collections::HashMap<String, String>>>
+        (stream_name: StreamNameType,
+         tags: TagsType)
+         -> AddTagsToStreamInput {
+        AddTagsToStreamInput {
+            stream_name: stream_name.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input for <code>CreateStream</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateStreamInput {
@@ -49,7 +79,30 @@ pub struct CreateStreamInput {
     #[serde(rename="StreamName")]
     pub stream_name: String,
 }
-
+impl CreateStreamInput {
+    /// Sets `shard_count`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStreamInput.shard_count = value.into();`.
+    pub fn shard_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.shard_count = value.into();
+        self
+    }
+    /// Sets `stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStreamInput.stream_name = value.into();`.
+    pub fn stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stream_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateStreamInput with optional fields set to `None`.
+pub fn new<ShardCountType: Into<i64>, StreamNameType: Into<String>>(shard_count: ShardCountType, stream_name: StreamNameType) -> CreateStreamInput{
+        CreateStreamInput {
+            shard_count: shard_count.into(),
+            stream_name: stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input for <a>DecreaseStreamRetentionPeriod</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DecreaseStreamRetentionPeriodInput {
@@ -60,7 +113,33 @@ pub struct DecreaseStreamRetentionPeriodInput {
     #[serde(rename="StreamName")]
     pub stream_name: String,
 }
-
+impl DecreaseStreamRetentionPeriodInput {
+    /// Sets `retention_period_hours`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DecreaseStreamRetentionPeriodInput.retention_period_hours = value.into();`.
+    pub fn retention_period_hours<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.retention_period_hours = value.into();
+        self
+    }
+    /// Sets `stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DecreaseStreamRetentionPeriodInput.stream_name = value.into();`.
+    pub fn stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stream_name = value.into();
+        self
+    }
+    /// Returns a new instance of DecreaseStreamRetentionPeriodInput with optional fields set to `None`.
+    pub fn new<RetentionPeriodHoursType: Into<i64>, StreamNameType: Into<String>>
+        (retention_period_hours: RetentionPeriodHoursType,
+         stream_name: StreamNameType)
+         -> DecreaseStreamRetentionPeriodInput {
+        DecreaseStreamRetentionPeriodInput {
+            retention_period_hours: retention_period_hours.into(),
+            stream_name: stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input for <a>DeleteStream</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteStreamInput {
@@ -68,7 +147,22 @@ pub struct DeleteStreamInput {
     #[serde(rename="StreamName")]
     pub stream_name: String,
 }
-
+impl DeleteStreamInput {
+    /// Sets `stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteStreamInput.stream_name = value.into();`.
+    pub fn stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stream_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteStreamInput with optional fields set to `None`.
+    pub fn new<StreamNameType: Into<String>>(stream_name: StreamNameType) -> DeleteStreamInput {
+        DeleteStreamInput {
+            stream_name: stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeLimitsInput;
 
@@ -81,7 +175,6 @@ pub struct DescribeLimitsOutput {
     #[serde(rename="ShardLimit")]
     pub shard_limit: i64,
 }
-
 #[doc="<p>Represents the input for <code>DescribeStream</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeStreamInput {
@@ -97,7 +190,36 @@ pub struct DescribeStreamInput {
     #[serde(rename="StreamName")]
     pub stream_name: String,
 }
-
+impl DescribeStreamInput {
+    /// Sets `exclusive_start_shard_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStreamInput.exclusive_start_shard_id = Some(value.into());`.
+    pub fn exclusive_start_shard_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.exclusive_start_shard_id = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStreamInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStreamInput.stream_name = value.into();`.
+    pub fn stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stream_name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeStreamInput with optional fields set to `None`.
+    pub fn new<StreamNameType: Into<String>>(stream_name: StreamNameType) -> DescribeStreamInput {
+        DescribeStreamInput {
+            stream_name: stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output for <code>DescribeStream</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeStreamOutput {
@@ -105,7 +227,6 @@ pub struct DescribeStreamOutput {
     #[serde(rename="StreamDescription")]
     pub stream_description: StreamDescription,
 }
-
 #[doc="<p>Represents the input for <a>DisableEnhancedMonitoring</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DisableEnhancedMonitoringInput {
@@ -116,7 +237,33 @@ pub struct DisableEnhancedMonitoringInput {
     #[serde(rename="StreamName")]
     pub stream_name: String,
 }
-
+impl DisableEnhancedMonitoringInput {
+    /// Sets `shard_level_metrics`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableEnhancedMonitoringInput.shard_level_metrics = value.into();`.
+    pub fn shard_level_metrics<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.shard_level_metrics = value.into();
+        self
+    }
+    /// Sets `stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableEnhancedMonitoringInput.stream_name = value.into();`.
+    pub fn stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stream_name = value.into();
+        self
+    }
+    /// Returns a new instance of DisableEnhancedMonitoringInput with optional fields set to `None`.
+    pub fn new<ShardLevelMetricsType: Into<Vec<String>>, StreamNameType: Into<String>>
+        (shard_level_metrics: ShardLevelMetricsType,
+         stream_name: StreamNameType)
+         -> DisableEnhancedMonitoringInput {
+        DisableEnhancedMonitoringInput {
+            shard_level_metrics: shard_level_metrics.into(),
+            stream_name: stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input for <a>EnableEnhancedMonitoring</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct EnableEnhancedMonitoringInput {
@@ -127,7 +274,33 @@ pub struct EnableEnhancedMonitoringInput {
     #[serde(rename="StreamName")]
     pub stream_name: String,
 }
-
+impl EnableEnhancedMonitoringInput {
+    /// Sets `shard_level_metrics`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableEnhancedMonitoringInput.shard_level_metrics = value.into();`.
+    pub fn shard_level_metrics<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.shard_level_metrics = value.into();
+        self
+    }
+    /// Sets `stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableEnhancedMonitoringInput.stream_name = value.into();`.
+    pub fn stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stream_name = value.into();
+        self
+    }
+    /// Returns a new instance of EnableEnhancedMonitoringInput with optional fields set to `None`.
+    pub fn new<ShardLevelMetricsType: Into<Vec<String>>, StreamNameType: Into<String>>
+        (shard_level_metrics: ShardLevelMetricsType,
+         stream_name: StreamNameType)
+         -> EnableEnhancedMonitoringInput {
+        EnableEnhancedMonitoringInput {
+            shard_level_metrics: shard_level_metrics.into(),
+            stream_name: stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents enhanced metrics types.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EnhancedMetrics {
@@ -136,7 +309,6 @@ pub struct EnhancedMetrics {
     #[serde(skip_serializing_if="Option::is_none")]
     pub shard_level_metrics: Option<Vec<String>>,
 }
-
 #[doc="<p>Represents the output for <a>EnableEnhancedMonitoring</a> and <a>DisableEnhancedMonitoring</a>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EnhancedMonitoringOutput {
@@ -153,7 +325,6 @@ pub struct EnhancedMonitoringOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stream_name: Option<String>,
 }
-
 #[doc="<p>Represents the input for <a>GetRecords</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetRecordsInput {
@@ -165,7 +336,30 @@ pub struct GetRecordsInput {
     #[serde(rename="ShardIterator")]
     pub shard_iterator: String,
 }
-
+impl GetRecordsInput {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRecordsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `shard_iterator`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRecordsInput.shard_iterator = value.into();`.
+    pub fn shard_iterator<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.shard_iterator = value.into();
+        self
+    }
+    /// Returns a new instance of GetRecordsInput with optional fields set to `None`.
+    pub fn new<ShardIteratorType: Into<String>>(shard_iterator: ShardIteratorType)
+                                                -> GetRecordsInput {
+        GetRecordsInput {
+            shard_iterator: shard_iterator.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output for <a>GetRecords</a>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetRecordsOutput {
@@ -181,7 +375,6 @@ pub struct GetRecordsOutput {
     #[serde(rename="Records")]
     pub records: Vec<Record>,
 }
-
 #[doc="<p>Represents the input for <code>GetShardIterator</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetShardIteratorInput {
@@ -203,7 +396,58 @@ pub struct GetShardIteratorInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub timestamp: Option<f64>,
 }
-
+impl GetShardIteratorInput {
+    /// Sets `shard_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetShardIteratorInput.shard_id = value.into();`.
+    pub fn shard_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.shard_id = value.into();
+        self
+    }
+    /// Sets `shard_iterator_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetShardIteratorInput.shard_iterator_type = value.into();`.
+    pub fn shard_iterator_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.shard_iterator_type = value.into();
+        self
+    }
+    /// Sets `starting_sequence_number`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetShardIteratorInput.starting_sequence_number = Some(value.into());`.
+    pub fn starting_sequence_number<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.starting_sequence_number = Some(value.into());
+        self
+    }
+    /// Sets `stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetShardIteratorInput.stream_name = value.into();`.
+    pub fn stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stream_name = value.into();
+        self
+    }
+    /// Sets `timestamp`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetShardIteratorInput.timestamp = Some(value.into());`.
+    pub fn timestamp<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.timestamp = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetShardIteratorInput with optional fields set to `None`.
+    pub fn new<ShardIdType: Into<String>,
+               ShardIteratorTypeType: Into<String>,
+               StreamNameType: Into<String>>
+        (shard_id: ShardIdType,
+         shard_iterator_type: ShardIteratorTypeType,
+         stream_name: StreamNameType)
+         -> GetShardIteratorInput {
+        GetShardIteratorInput {
+            shard_id: shard_id.into(),
+            shard_iterator_type: shard_iterator_type.into(),
+            stream_name: stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output for <code>GetShardIterator</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetShardIteratorOutput {
@@ -212,7 +456,6 @@ pub struct GetShardIteratorOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub shard_iterator: Option<String>,
 }
-
 #[doc="<p>The range of possible hash key values for the shard, which is a set of ordered contiguous positive integers.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct HashKeyRange {
@@ -223,7 +466,6 @@ pub struct HashKeyRange {
     #[serde(rename="StartingHashKey")]
     pub starting_hash_key: String,
 }
-
 #[doc="<p>Represents the input for <a>IncreaseStreamRetentionPeriod</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct IncreaseStreamRetentionPeriodInput {
@@ -234,7 +476,33 @@ pub struct IncreaseStreamRetentionPeriodInput {
     #[serde(rename="StreamName")]
     pub stream_name: String,
 }
-
+impl IncreaseStreamRetentionPeriodInput {
+    /// Sets `retention_period_hours`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IncreaseStreamRetentionPeriodInput.retention_period_hours = value.into();`.
+    pub fn retention_period_hours<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.retention_period_hours = value.into();
+        self
+    }
+    /// Sets `stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IncreaseStreamRetentionPeriodInput.stream_name = value.into();`.
+    pub fn stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stream_name = value.into();
+        self
+    }
+    /// Returns a new instance of IncreaseStreamRetentionPeriodInput with optional fields set to `None`.
+    pub fn new<RetentionPeriodHoursType: Into<i64>, StreamNameType: Into<String>>
+        (retention_period_hours: RetentionPeriodHoursType,
+         stream_name: StreamNameType)
+         -> IncreaseStreamRetentionPeriodInput {
+        IncreaseStreamRetentionPeriodInput {
+            retention_period_hours: retention_period_hours.into(),
+            stream_name: stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input for <code>ListStreams</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListStreamsInput {
@@ -247,7 +515,28 @@ pub struct ListStreamsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub limit: Option<i64>,
 }
-
+impl ListStreamsInput {
+    /// Sets `exclusive_start_stream_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStreamsInput.exclusive_start_stream_name = Some(value.into());`.
+    pub fn exclusive_start_stream_name<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.exclusive_start_stream_name = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStreamsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListStreamsInput with optional fields set to `None`.
+    pub fn new() -> ListStreamsInput {
+        ListStreamsInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the output for <code>ListStreams</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListStreamsOutput {
@@ -258,7 +547,6 @@ pub struct ListStreamsOutput {
     #[serde(rename="StreamNames")]
     pub stream_names: Vec<String>,
 }
-
 #[doc="<p>Represents the input for <code>ListTagsForStream</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTagsForStreamInput {
@@ -274,7 +562,37 @@ pub struct ListTagsForStreamInput {
     #[serde(rename="StreamName")]
     pub stream_name: String,
 }
-
+impl ListTagsForStreamInput {
+    /// Sets `exclusive_start_tag_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForStreamInput.exclusive_start_tag_key = Some(value.into());`.
+    pub fn exclusive_start_tag_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.exclusive_start_tag_key = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForStreamInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForStreamInput.stream_name = value.into();`.
+    pub fn stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stream_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListTagsForStreamInput with optional fields set to `None`.
+    pub fn new<StreamNameType: Into<String>>(stream_name: StreamNameType)
+                                             -> ListTagsForStreamInput {
+        ListTagsForStreamInput {
+            stream_name: stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output for <code>ListTagsForStream</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTagsForStreamOutput {
@@ -285,7 +603,6 @@ pub struct ListTagsForStreamOutput {
     #[serde(rename="Tags")]
     pub tags: Vec<Tag>,
 }
-
 #[doc="<p>Represents the input for <code>MergeShards</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct MergeShardsInput {
@@ -299,7 +616,44 @@ pub struct MergeShardsInput {
     #[serde(rename="StreamName")]
     pub stream_name: String,
 }
-
+impl MergeShardsInput {
+    /// Sets `adjacent_shard_to_merge`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MergeShardsInput.adjacent_shard_to_merge = value.into();`.
+    pub fn adjacent_shard_to_merge<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.adjacent_shard_to_merge = value.into();
+        self
+    }
+    /// Sets `shard_to_merge`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MergeShardsInput.shard_to_merge = value.into();`.
+    pub fn shard_to_merge<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.shard_to_merge = value.into();
+        self
+    }
+    /// Sets `stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MergeShardsInput.stream_name = value.into();`.
+    pub fn stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stream_name = value.into();
+        self
+    }
+    /// Returns a new instance of MergeShardsInput with optional fields set to `None`.
+    pub fn new<AdjacentShardToMergeType: Into<String>,
+               ShardToMergeType: Into<String>,
+               StreamNameType: Into<String>>
+        (adjacent_shard_to_merge: AdjacentShardToMergeType,
+         shard_to_merge: ShardToMergeType,
+         stream_name: StreamNameType)
+         -> MergeShardsInput {
+        MergeShardsInput {
+            adjacent_shard_to_merge: adjacent_shard_to_merge.into(),
+            shard_to_merge: shard_to_merge.into(),
+            stream_name: stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input for <code>PutRecord</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutRecordInput {
@@ -326,7 +680,60 @@ pub struct PutRecordInput {
     #[serde(rename="StreamName")]
     pub stream_name: String,
 }
-
+impl PutRecordInput {
+    /// Sets `data`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRecordInput.data = value.into();`.
+    pub fn data<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.data = value.into();
+        self
+    }
+    /// Sets `explicit_hash_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRecordInput.explicit_hash_key = Some(value.into());`.
+    pub fn explicit_hash_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.explicit_hash_key = Some(value.into());
+        self
+    }
+    /// Sets `partition_key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRecordInput.partition_key = value.into();`.
+    pub fn partition_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.partition_key = value.into();
+        self
+    }
+    /// Sets `sequence_number_for_ordering`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRecordInput.sequence_number_for_ordering = Some(value.into());`.
+    pub fn sequence_number_for_ordering<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.sequence_number_for_ordering = Some(value.into());
+        self
+    }
+    /// Sets `stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRecordInput.stream_name = value.into();`.
+    pub fn stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stream_name = value.into();
+        self
+    }
+    /// Returns a new instance of PutRecordInput with optional fields set to `None`.
+    pub fn new<DataType: Into<Vec<u8>>,
+               PartitionKeyType: Into<String>,
+               StreamNameType: Into<String>>
+        (data: DataType,
+         partition_key: PartitionKeyType,
+         stream_name: StreamNameType)
+         -> PutRecordInput {
+        PutRecordInput {
+            data: data.into(),
+            partition_key: partition_key.into(),
+            stream_name: stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output for <code>PutRecord</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutRecordOutput {
@@ -341,7 +748,6 @@ pub struct PutRecordOutput {
     #[serde(rename="ShardId")]
     pub shard_id: String,
 }
-
 #[doc="<p>A <code>PutRecords</code> request.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutRecordsInput {
@@ -352,7 +758,35 @@ pub struct PutRecordsInput {
     #[serde(rename="StreamName")]
     pub stream_name: String,
 }
-
+impl PutRecordsInput {
+    /// Sets `records`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRecordsInput.records = value.into();`.
+    pub fn records<ValueType: Into<Vec<PutRecordsRequestEntry>>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.records = value.into();
+        self
+    }
+    /// Sets `stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRecordsInput.stream_name = value.into();`.
+    pub fn stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stream_name = value.into();
+        self
+    }
+    /// Returns a new instance of PutRecordsInput with optional fields set to `None`.
+    pub fn new<RecordsType: Into<Vec<PutRecordsRequestEntry>>, StreamNameType: Into<String>>
+        (records: RecordsType,
+         stream_name: StreamNameType)
+         -> PutRecordsInput {
+        PutRecordsInput {
+            records: records.into(),
+            stream_name: stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> <code>PutRecords</code> results.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutRecordsOutput {
@@ -368,7 +802,6 @@ pub struct PutRecordsOutput {
     #[serde(rename="Records")]
     pub records: Vec<PutRecordsResultEntry>,
 }
-
 #[doc="<p>Represents the output for <code>PutRecords</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutRecordsRequestEntry {
@@ -388,7 +821,40 @@ pub struct PutRecordsRequestEntry {
     #[serde(rename="PartitionKey")]
     pub partition_key: String,
 }
-
+impl PutRecordsRequestEntry {
+    /// Sets `data`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRecordsRequestEntry.data = value.into();`.
+    pub fn data<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.data = value.into();
+        self
+    }
+    /// Sets `explicit_hash_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRecordsRequestEntry.explicit_hash_key = Some(value.into());`.
+    pub fn explicit_hash_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.explicit_hash_key = Some(value.into());
+        self
+    }
+    /// Sets `partition_key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRecordsRequestEntry.partition_key = value.into();`.
+    pub fn partition_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.partition_key = value.into();
+        self
+    }
+    /// Returns a new instance of PutRecordsRequestEntry with optional fields set to `None`.
+    pub fn new<DataType: Into<Vec<u8>>, PartitionKeyType: Into<String>>
+        (data: DataType,
+         partition_key: PartitionKeyType)
+         -> PutRecordsRequestEntry {
+        PutRecordsRequestEntry {
+            data: data.into(),
+            partition_key: partition_key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of an individual record from a <code>PutRecords</code> request. A record that is successfully added to a stream includes <code>SequenceNumber</code> and <code>ShardId</code> in the result. A record that fails to be added to the stream includes <code>ErrorCode</code> and <code>ErrorMessage</code> in the result.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutRecordsResultEntry {
@@ -409,7 +875,6 @@ pub struct PutRecordsResultEntry {
     #[serde(skip_serializing_if="Option::is_none")]
     pub shard_id: Option<String>,
 }
-
 #[doc="<p>The unit of data of the Amazon Kinesis stream, which is composed of a sequence number, a partition key, and a data blob.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Record {
@@ -436,7 +901,6 @@ pub struct Record {
     #[serde(rename="SequenceNumber")]
     pub sequence_number: String,
 }
-
 #[doc="<p>Represents the input for <code>RemoveTagsFromStream</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RemoveTagsFromStreamInput {
@@ -447,7 +911,33 @@ pub struct RemoveTagsFromStreamInput {
     #[serde(rename="TagKeys")]
     pub tag_keys: Vec<String>,
 }
-
+impl RemoveTagsFromStreamInput {
+    /// Sets `stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromStreamInput.stream_name = value.into();`.
+    pub fn stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stream_name = value.into();
+        self
+    }
+    /// Sets `tag_keys`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromStreamInput.tag_keys = value.into();`.
+    pub fn tag_keys<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tag_keys = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveTagsFromStreamInput with optional fields set to `None`.
+    pub fn new<StreamNameType: Into<String>, TagKeysType: Into<Vec<String>>>
+        (stream_name: StreamNameType,
+         tag_keys: TagKeysType)
+         -> RemoveTagsFromStreamInput {
+        RemoveTagsFromStreamInput {
+            stream_name: stream_name.into(),
+            tag_keys: tag_keys.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The range of possible sequence numbers for the shard.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SequenceNumberRange {
@@ -459,7 +949,6 @@ pub struct SequenceNumberRange {
     #[serde(rename="StartingSequenceNumber")]
     pub starting_sequence_number: String,
 }
-
 #[doc="<p>A uniquely identified group of data records in an Amazon Kinesis stream.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Shard {
@@ -481,7 +970,6 @@ pub struct Shard {
     #[serde(rename="ShardId")]
     pub shard_id: String,
 }
-
 #[doc="<p>Represents the input for <code>SplitShard</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SplitShardInput {
@@ -495,7 +983,44 @@ pub struct SplitShardInput {
     #[serde(rename="StreamName")]
     pub stream_name: String,
 }
-
+impl SplitShardInput {
+    /// Sets `new_starting_hash_key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SplitShardInput.new_starting_hash_key = value.into();`.
+    pub fn new_starting_hash_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.new_starting_hash_key = value.into();
+        self
+    }
+    /// Sets `shard_to_split`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SplitShardInput.shard_to_split = value.into();`.
+    pub fn shard_to_split<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.shard_to_split = value.into();
+        self
+    }
+    /// Sets `stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SplitShardInput.stream_name = value.into();`.
+    pub fn stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stream_name = value.into();
+        self
+    }
+    /// Returns a new instance of SplitShardInput with optional fields set to `None`.
+    pub fn new<NewStartingHashKeyType: Into<String>,
+               ShardToSplitType: Into<String>,
+               StreamNameType: Into<String>>
+        (new_starting_hash_key: NewStartingHashKeyType,
+         shard_to_split: ShardToSplitType,
+         stream_name: StreamNameType)
+         -> SplitShardInput {
+        SplitShardInput {
+            new_starting_hash_key: new_starting_hash_key.into(),
+            shard_to_split: shard_to_split.into(),
+            stream_name: stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartStreamEncryptionInput {
     #[doc="<p>The encryption type to use. This parameter can be one of the following values:</p> <ul> <li> <p> <code>NONE</code>: Not valid for this operation. An <code>InvalidOperationException</code> will be thrown.</p> </li> <li> <p> <code>KMS</code>: Use server-side encryption on the records in the stream using a customer-managed KMS key.</p> </li> </ul>"]
@@ -508,7 +1033,44 @@ pub struct StartStreamEncryptionInput {
     #[serde(rename="StreamName")]
     pub stream_name: String,
 }
-
+impl StartStreamEncryptionInput {
+    /// Sets `encryption_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartStreamEncryptionInput.encryption_type = value.into();`.
+    pub fn encryption_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.encryption_type = value.into();
+        self
+    }
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartStreamEncryptionInput.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Sets `stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartStreamEncryptionInput.stream_name = value.into();`.
+    pub fn stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stream_name = value.into();
+        self
+    }
+    /// Returns a new instance of StartStreamEncryptionInput with optional fields set to `None`.
+    pub fn new<EncryptionTypeType: Into<String>,
+               KeyIdType: Into<String>,
+               StreamNameType: Into<String>>
+        (encryption_type: EncryptionTypeType,
+         key_id: KeyIdType,
+         stream_name: StreamNameType)
+         -> StartStreamEncryptionInput {
+        StartStreamEncryptionInput {
+            encryption_type: encryption_type.into(),
+            key_id: key_id.into(),
+            stream_name: stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StopStreamEncryptionInput {
     #[doc="<p>The encryption type. This parameter can be one of the following values:</p> <ul> <li> <p> <code>NONE</code>: Not valid for this operation. An <code>InvalidOperationException</code> will be thrown.</p> </li> <li> <p> <code>KMS</code>: Use server-side encryption on the records in the stream using a customer-managed KMS key.</p> </li> </ul>"]
@@ -521,7 +1083,44 @@ pub struct StopStreamEncryptionInput {
     #[serde(rename="StreamName")]
     pub stream_name: String,
 }
-
+impl StopStreamEncryptionInput {
+    /// Sets `encryption_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopStreamEncryptionInput.encryption_type = value.into();`.
+    pub fn encryption_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.encryption_type = value.into();
+        self
+    }
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopStreamEncryptionInput.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Sets `stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopStreamEncryptionInput.stream_name = value.into();`.
+    pub fn stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stream_name = value.into();
+        self
+    }
+    /// Returns a new instance of StopStreamEncryptionInput with optional fields set to `None`.
+    pub fn new<EncryptionTypeType: Into<String>,
+               KeyIdType: Into<String>,
+               StreamNameType: Into<String>>
+        (encryption_type: EncryptionTypeType,
+         key_id: KeyIdType,
+         stream_name: StreamNameType)
+         -> StopStreamEncryptionInput {
+        StopStreamEncryptionInput {
+            encryption_type: encryption_type.into(),
+            key_id: key_id.into(),
+            stream_name: stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output for <a>DescribeStream</a>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StreamDescription {
@@ -558,7 +1157,6 @@ pub struct StreamDescription {
     #[serde(rename="StreamStatus")]
     pub stream_status: String,
 }
-
 #[doc="<p>Metadata assigned to the stream, consisting of a key-value pair.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Tag {
@@ -570,7 +1168,6 @@ pub struct Tag {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateShardCountInput {
     #[doc="<p>The scaling type. Uniform scaling creates shards of equal size.</p>"]
@@ -583,7 +1180,44 @@ pub struct UpdateShardCountInput {
     #[serde(rename="TargetShardCount")]
     pub target_shard_count: i64,
 }
-
+impl UpdateShardCountInput {
+    /// Sets `scaling_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateShardCountInput.scaling_type = value.into();`.
+    pub fn scaling_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.scaling_type = value.into();
+        self
+    }
+    /// Sets `stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateShardCountInput.stream_name = value.into();`.
+    pub fn stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stream_name = value.into();
+        self
+    }
+    /// Sets `target_shard_count`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateShardCountInput.target_shard_count = value.into();`.
+    pub fn target_shard_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.target_shard_count = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateShardCountInput with optional fields set to `None`.
+    pub fn new<ScalingTypeType: Into<String>,
+               StreamNameType: Into<String>,
+               TargetShardCountType: Into<i64>>
+        (scaling_type: ScalingTypeType,
+         stream_name: StreamNameType,
+         target_shard_count: TargetShardCountType)
+         -> UpdateShardCountInput {
+        UpdateShardCountInput {
+            scaling_type: scaling_type.into(),
+            stream_name: stream_name.into(),
+            target_shard_count: target_shard_count.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateShardCountOutput {
     #[doc="<p>The current number of shards.</p>"]
@@ -599,7 +1233,6 @@ pub struct UpdateShardCountOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub target_shard_count: Option<i64>,
 }
-
 /// Errors returned by AddTagsToStream
 #[derive(Debug, PartialEq)]
 pub enum AddTagsToStreamError {

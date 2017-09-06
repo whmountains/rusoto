@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -49,7 +50,38 @@ pub struct AcceptReservedInstancesExchangeQuoteRequest {
     #[doc="<p>The configurations of the Convertible Reserved Instance offerings that you are purchasing in this exchange.</p>"]
     pub target_configurations: Option<Vec<TargetConfigurationRequest>>,
 }
-
+impl AcceptReservedInstancesExchangeQuoteRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AcceptReservedInstancesExchangeQuoteRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `reserved_instance_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AcceptReservedInstancesExchangeQuoteRequest.reserved_instance_ids = value.into();`.
+    pub fn reserved_instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.reserved_instance_ids = value.into();
+        self
+    }
+    /// Sets `target_configurations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AcceptReservedInstancesExchangeQuoteRequest.target_configurations = Some(value.into());`.
+pub fn target_configurations<ValueType: Into<Vec<TargetConfigurationRequest>>>(mut self, value: ValueType) -> Self{
+        self.target_configurations = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AcceptReservedInstancesExchangeQuoteRequest with optional fields set to `None`.
+    pub fn new<ReservedInstanceIdsType: Into<Vec<String>>>
+        (reserved_instance_ids: ReservedInstanceIdsType)
+         -> AcceptReservedInstancesExchangeQuoteRequest {
+        AcceptReservedInstancesExchangeQuoteRequest {
+            reserved_instance_ids: reserved_instance_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AcceptReservedInstancesExchangeQuoteRequest` contents to a `SignedRequest`.
 struct AcceptReservedInstancesExchangeQuoteRequestSerializer;
@@ -85,7 +117,6 @@ pub struct AcceptReservedInstancesExchangeQuoteResult {
     #[doc="<p>The ID of the successful exchange.</p>"]
     pub exchange_id: Option<String>,
 }
-
 struct AcceptReservedInstancesExchangeQuoteResultDeserializer;
 impl AcceptReservedInstancesExchangeQuoteResultDeserializer {
     #[allow(unused_variables)]
@@ -137,7 +168,26 @@ pub struct AcceptVpcPeeringConnectionRequest {
     #[doc="<p>The ID of the VPC peering connection.</p>"]
     pub vpc_peering_connection_id: Option<String>,
 }
-
+impl AcceptVpcPeeringConnectionRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AcceptVpcPeeringConnectionRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `vpc_peering_connection_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AcceptVpcPeeringConnectionRequest.vpc_peering_connection_id = Some(value.into());`.
+    pub fn vpc_peering_connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_peering_connection_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AcceptVpcPeeringConnectionRequest with optional fields set to `None`.
+    pub fn new() -> AcceptVpcPeeringConnectionRequest {
+        AcceptVpcPeeringConnectionRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `AcceptVpcPeeringConnectionRequest` contents to a `SignedRequest`.
 struct AcceptVpcPeeringConnectionRequestSerializer;
@@ -165,7 +215,6 @@ pub struct AcceptVpcPeeringConnectionResult {
     #[doc="<p>Information about the VPC peering connection.</p>"]
     pub vpc_peering_connection: Option<VpcPeeringConnection>,
 }
-
 struct AcceptVpcPeeringConnectionResultDeserializer;
 impl AcceptVpcPeeringConnectionResultDeserializer {
     #[allow(unused_variables)]
@@ -218,7 +267,6 @@ pub struct AccountAttribute {
     #[doc="<p>One or more values for the account attribute.</p>"]
     pub attribute_values: Option<Vec<AccountAttributeValue>>,
 }
-
 struct AccountAttributeDeserializer;
 impl AccountAttributeDeserializer {
     #[allow(unused_variables)]
@@ -323,7 +371,6 @@ pub struct AccountAttributeValue {
     #[doc="<p>The value of the attribute.</p>"]
     pub attribute_value: Option<String>,
 }
-
 struct AccountAttributeValueDeserializer;
 impl AccountAttributeValueDeserializer {
     #[allow(unused_variables)]
@@ -421,7 +468,6 @@ pub struct ActiveInstance {
     #[doc="<p>The ID of the Spot instance request.</p>"]
     pub spot_instance_request_id: Option<String>,
 }
-
 struct ActiveInstanceDeserializer;
 impl ActiveInstanceDeserializer {
     #[allow(unused_variables)]
@@ -553,7 +599,6 @@ pub struct Address {
     #[doc="<p>The Elastic IP address.</p>"]
     pub public_ip: Option<String>,
 }
-
 struct AddressDeserializer;
 impl AddressDeserializer {
     #[allow(unused_variables)]
@@ -678,7 +723,33 @@ pub struct AllocateAddressRequest {
     #[doc="<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>"]
     pub dry_run: Option<bool>,
 }
-
+impl AllocateAddressRequest {
+    /// Sets `address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocateAddressRequest.address = Some(value.into());`.
+    pub fn address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.address = Some(value.into());
+        self
+    }
+    /// Sets `domain`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocateAddressRequest.domain = Some(value.into());`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocateAddressRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AllocateAddressRequest with optional fields set to `None`.
+    pub fn new() -> AllocateAddressRequest {
+        AllocateAddressRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `AllocateAddressRequest` contents to a `SignedRequest`.
 struct AllocateAddressRequestSerializer;
@@ -712,7 +783,6 @@ pub struct AllocateAddressResult {
     #[doc="<p>The Elastic IP address.</p>"]
     pub public_ip: Option<String>,
 }
-
 struct AllocateAddressResultDeserializer;
 impl AllocateAddressResultDeserializer {
     #[allow(unused_variables)]
@@ -777,7 +847,58 @@ pub struct AllocateHostsRequest {
     #[doc="<p>The number of Dedicated Hosts you want to allocate to your account with these parameters.</p>"]
     pub quantity: i64,
 }
-
+impl AllocateHostsRequest {
+    /// Sets `auto_placement`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocateHostsRequest.auto_placement = Some(value.into());`.
+    pub fn auto_placement<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_placement = Some(value.into());
+        self
+    }
+    /// Sets `availability_zone`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocateHostsRequest.availability_zone = value.into();`.
+    pub fn availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.availability_zone = value.into();
+        self
+    }
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocateHostsRequest.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `instance_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocateHostsRequest.instance_type = value.into();`.
+    pub fn instance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_type = value.into();
+        self
+    }
+    /// Sets `quantity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocateHostsRequest.quantity = value.into();`.
+    pub fn quantity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.quantity = value.into();
+        self
+    }
+    /// Returns a new instance of AllocateHostsRequest with optional fields set to `None`.
+    pub fn new<AvailabilityZoneType: Into<String>,
+               InstanceTypeType: Into<String>,
+               QuantityType: Into<i64>>
+        (availability_zone: AvailabilityZoneType,
+         instance_type: InstanceTypeType,
+         quantity: QuantityType)
+         -> AllocateHostsRequest {
+        AllocateHostsRequest {
+            availability_zone: availability_zone.into(),
+            instance_type: instance_type.into(),
+            quantity: quantity.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AllocateHostsRequest` contents to a `SignedRequest`.
 struct AllocateHostsRequestSerializer;
@@ -809,7 +930,6 @@ pub struct AllocateHostsResult {
     #[doc="<p>The ID of the allocated Dedicated Host. This is used when you want to launch an instance onto a specific host.</p>"]
     pub host_ids: Option<Vec<String>>,
 }
-
 struct AllocateHostsResultDeserializer;
 impl AllocateHostsResultDeserializer {
     #[allow(unused_variables)]
@@ -916,7 +1036,37 @@ pub struct AssignIpv6AddressesRequest {
     #[doc="<p>The ID of the network interface.</p>"]
     pub network_interface_id: String,
 }
-
+impl AssignIpv6AddressesRequest {
+    /// Sets `ipv_6_address_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssignIpv6AddressesRequest.ipv_6_address_count = Some(value.into());`.
+    pub fn ipv_6_address_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.ipv_6_address_count = Some(value.into());
+        self
+    }
+    /// Sets `ipv_6_addresses`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssignIpv6AddressesRequest.ipv_6_addresses = Some(value.into());`.
+    pub fn ipv_6_addresses<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.ipv_6_addresses = Some(value.into());
+        self
+    }
+    /// Sets `network_interface_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssignIpv6AddressesRequest.network_interface_id = value.into();`.
+    pub fn network_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_interface_id = value.into();
+        self
+    }
+    /// Returns a new instance of AssignIpv6AddressesRequest with optional fields set to `None`.
+    pub fn new<NetworkInterfaceIdType: Into<String>>(network_interface_id: NetworkInterfaceIdType)
+                                                     -> AssignIpv6AddressesRequest {
+        AssignIpv6AddressesRequest {
+            network_interface_id: network_interface_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AssignIpv6AddressesRequest` contents to a `SignedRequest`.
 struct AssignIpv6AddressesRequestSerializer;
@@ -949,7 +1099,6 @@ pub struct AssignIpv6AddressesResult {
     #[doc="<p>The ID of the network interface.</p>"]
     pub network_interface_id: Option<String>,
 }
-
 struct AssignIpv6AddressesResultDeserializer;
 impl AssignIpv6AddressesResultDeserializer {
     #[allow(unused_variables)]
@@ -1010,7 +1159,46 @@ pub struct AssignPrivateIpAddressesRequest {
     #[doc="<p>The number of secondary IP addresses to assign to the network interface. You can't specify this parameter when also specifying private IP addresses.</p>"]
     pub secondary_private_ip_address_count: Option<i64>,
 }
-
+impl AssignPrivateIpAddressesRequest {
+    /// Sets `allow_reassignment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssignPrivateIpAddressesRequest.allow_reassignment = Some(value.into());`.
+    pub fn allow_reassignment<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.allow_reassignment = Some(value.into());
+        self
+    }
+    /// Sets `network_interface_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssignPrivateIpAddressesRequest.network_interface_id = value.into();`.
+    pub fn network_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_interface_id = value.into();
+        self
+    }
+    /// Sets `private_ip_addresses`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssignPrivateIpAddressesRequest.private_ip_addresses = Some(value.into());`.
+    pub fn private_ip_addresses<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.private_ip_addresses = Some(value.into());
+        self
+    }
+    /// Sets `secondary_private_ip_address_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssignPrivateIpAddressesRequest.secondary_private_ip_address_count = Some(value.into());`.
+    pub fn secondary_private_ip_address_count<ValueType: Into<i64>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.secondary_private_ip_address_count = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AssignPrivateIpAddressesRequest with optional fields set to `None`.
+    pub fn new<NetworkInterfaceIdType: Into<String>>(network_interface_id: NetworkInterfaceIdType)
+                                                     -> AssignPrivateIpAddressesRequest {
+        AssignPrivateIpAddressesRequest {
+            network_interface_id: network_interface_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AssignPrivateIpAddressesRequest` contents to a `SignedRequest`.
 struct AssignPrivateIpAddressesRequestSerializer;
@@ -1060,7 +1248,61 @@ pub struct AssociateAddressRequest {
     #[doc="<p>The Elastic IP address. This is required for EC2-Classic.</p>"]
     pub public_ip: Option<String>,
 }
-
+impl AssociateAddressRequest {
+    /// Sets `allocation_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateAddressRequest.allocation_id = Some(value.into());`.
+    pub fn allocation_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.allocation_id = Some(value.into());
+        self
+    }
+    /// Sets `allow_reassociation`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateAddressRequest.allow_reassociation = Some(value.into());`.
+    pub fn allow_reassociation<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.allow_reassociation = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateAddressRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateAddressRequest.instance_id = Some(value.into());`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = Some(value.into());
+        self
+    }
+    /// Sets `network_interface_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateAddressRequest.network_interface_id = Some(value.into());`.
+    pub fn network_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_interface_id = Some(value.into());
+        self
+    }
+    /// Sets `private_ip_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateAddressRequest.private_ip_address = Some(value.into());`.
+    pub fn private_ip_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.private_ip_address = Some(value.into());
+        self
+    }
+    /// Sets `public_ip`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateAddressRequest.public_ip = Some(value.into());`.
+    pub fn public_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.public_ip = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AssociateAddressRequest with optional fields set to `None`.
+    pub fn new() -> AssociateAddressRequest {
+        AssociateAddressRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `AssociateAddressRequest` contents to a `SignedRequest`.
 struct AssociateAddressRequestSerializer;
@@ -1103,7 +1345,6 @@ pub struct AssociateAddressResult {
     #[doc="<p>[EC2-VPC] The ID that represents the association of the Elastic IP address with an instance.</p>"]
     pub association_id: Option<String>,
 }
-
 struct AssociateAddressResultDeserializer;
 impl AssociateAddressResultDeserializer {
     #[allow(unused_variables)]
@@ -1156,7 +1397,40 @@ pub struct AssociateDhcpOptionsRequest {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: String,
 }
-
+impl AssociateDhcpOptionsRequest {
+    /// Sets `dhcp_options_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateDhcpOptionsRequest.dhcp_options_id = value.into();`.
+    pub fn dhcp_options_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.dhcp_options_id = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateDhcpOptionsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `vpc_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateDhcpOptionsRequest.vpc_id = value.into();`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = value.into();
+        self
+    }
+    /// Returns a new instance of AssociateDhcpOptionsRequest with optional fields set to `None`.
+    pub fn new<DhcpOptionsIdType: Into<String>, VpcIdType: Into<String>>
+        (dhcp_options_id: DhcpOptionsIdType,
+         vpc_id: VpcIdType)
+         -> AssociateDhcpOptionsRequest {
+        AssociateDhcpOptionsRequest {
+            dhcp_options_id: dhcp_options_id.into(),
+            vpc_id: vpc_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AssociateDhcpOptionsRequest` contents to a `SignedRequest`.
 struct AssociateDhcpOptionsRequestSerializer;
@@ -1184,7 +1458,34 @@ pub struct AssociateIamInstanceProfileRequest {
     #[doc="<p>The ID of the instance.</p>"]
     pub instance_id: String,
 }
-
+impl AssociateIamInstanceProfileRequest {
+    /// Sets `iam_instance_profile`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateIamInstanceProfileRequest.iam_instance_profile = value.into();`.
+pub fn iam_instance_profile<ValueType: Into<IamInstanceProfileSpecification>>(mut self, value: ValueType) -> Self{
+        self.iam_instance_profile = value.into();
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateIamInstanceProfileRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Returns a new instance of AssociateIamInstanceProfileRequest with optional fields set to `None`.
+    pub fn new<IamInstanceProfileType: Into<IamInstanceProfileSpecification>,
+               InstanceIdType: Into<String>>
+        (iam_instance_profile: IamInstanceProfileType,
+         instance_id: InstanceIdType)
+         -> AssociateIamInstanceProfileRequest {
+        AssociateIamInstanceProfileRequest {
+            iam_instance_profile: iam_instance_profile.into(),
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AssociateIamInstanceProfileRequest` contents to a `SignedRequest`.
 struct AssociateIamInstanceProfileRequestSerializer;
@@ -1210,7 +1511,6 @@ pub struct AssociateIamInstanceProfileResult {
     #[doc="<p>Information about the IAM instance profile association.</p>"]
     pub iam_instance_profile_association: Option<IamInstanceProfileAssociation>,
 }
-
 struct AssociateIamInstanceProfileResultDeserializer;
 impl AssociateIamInstanceProfileResultDeserializer {
     #[allow(unused_variables)]
@@ -1263,7 +1563,40 @@ pub struct AssociateRouteTableRequest {
     #[doc="<p>The ID of the subnet.</p>"]
     pub subnet_id: String,
 }
-
+impl AssociateRouteTableRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateRouteTableRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `route_table_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateRouteTableRequest.route_table_id = value.into();`.
+    pub fn route_table_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.route_table_id = value.into();
+        self
+    }
+    /// Sets `subnet_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateRouteTableRequest.subnet_id = value.into();`.
+    pub fn subnet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subnet_id = value.into();
+        self
+    }
+    /// Returns a new instance of AssociateRouteTableRequest with optional fields set to `None`.
+    pub fn new<RouteTableIdType: Into<String>, SubnetIdType: Into<String>>
+        (route_table_id: RouteTableIdType,
+         subnet_id: SubnetIdType)
+         -> AssociateRouteTableRequest {
+        AssociateRouteTableRequest {
+            route_table_id: route_table_id.into(),
+            subnet_id: subnet_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AssociateRouteTableRequest` contents to a `SignedRequest`.
 struct AssociateRouteTableRequestSerializer;
@@ -1290,7 +1623,6 @@ pub struct AssociateRouteTableResult {
     #[doc="<p>The route table association ID (needed to disassociate the route table).</p>"]
     pub association_id: Option<String>,
 }
-
 struct AssociateRouteTableResultDeserializer;
 impl AssociateRouteTableResultDeserializer {
     #[allow(unused_variables)]
@@ -1340,7 +1672,33 @@ pub struct AssociateSubnetCidrBlockRequest {
     #[doc="<p>The ID of your subnet.</p>"]
     pub subnet_id: String,
 }
-
+impl AssociateSubnetCidrBlockRequest {
+    /// Sets `ipv_6_cidr_block`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateSubnetCidrBlockRequest.ipv_6_cidr_block = value.into();`.
+    pub fn ipv_6_cidr_block<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ipv_6_cidr_block = value.into();
+        self
+    }
+    /// Sets `subnet_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateSubnetCidrBlockRequest.subnet_id = value.into();`.
+    pub fn subnet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subnet_id = value.into();
+        self
+    }
+    /// Returns a new instance of AssociateSubnetCidrBlockRequest with optional fields set to `None`.
+    pub fn new<Ipv6CidrBlockType: Into<String>, SubnetIdType: Into<String>>
+        (ipv_6_cidr_block: Ipv6CidrBlockType,
+         subnet_id: SubnetIdType)
+         -> AssociateSubnetCidrBlockRequest {
+        AssociateSubnetCidrBlockRequest {
+            ipv_6_cidr_block: ipv_6_cidr_block.into(),
+            subnet_id: subnet_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AssociateSubnetCidrBlockRequest` contents to a `SignedRequest`.
 struct AssociateSubnetCidrBlockRequestSerializer;
@@ -1365,7 +1723,6 @@ pub struct AssociateSubnetCidrBlockResult {
     #[doc="<p>The ID of the subnet.</p>"]
     pub subnet_id: Option<String>,
 }
-
 struct AssociateSubnetCidrBlockResultDeserializer;
 impl AssociateSubnetCidrBlockResultDeserializer {
     #[allow(unused_variables)]
@@ -1418,7 +1775,31 @@ pub struct AssociateVpcCidrBlockRequest {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: String,
 }
-
+impl AssociateVpcCidrBlockRequest {
+    /// Sets `amazon_provided_ipv_6_cidr_block`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateVpcCidrBlockRequest.amazon_provided_ipv_6_cidr_block = Some(value.into());`.
+    pub fn amazon_provided_ipv_6_cidr_block<ValueType: Into<bool>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.amazon_provided_ipv_6_cidr_block = Some(value.into());
+        self
+    }
+    /// Sets `vpc_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateVpcCidrBlockRequest.vpc_id = value.into();`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = value.into();
+        self
+    }
+    /// Returns a new instance of AssociateVpcCidrBlockRequest with optional fields set to `None`.
+    pub fn new<VpcIdType: Into<String>>(vpc_id: VpcIdType) -> AssociateVpcCidrBlockRequest {
+        AssociateVpcCidrBlockRequest {
+            vpc_id: vpc_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AssociateVpcCidrBlockRequest` contents to a `SignedRequest`.
 struct AssociateVpcCidrBlockRequestSerializer;
@@ -1445,7 +1826,6 @@ pub struct AssociateVpcCidrBlockResult {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct AssociateVpcCidrBlockResultDeserializer;
 impl AssociateVpcCidrBlockResultDeserializer {
     #[allow(unused_variables)]
@@ -1515,7 +1895,49 @@ pub struct AttachClassicLinkVpcRequest {
     #[doc="<p>The ID of a ClassicLink-enabled VPC.</p>"]
     pub vpc_id: String,
 }
-
+impl AttachClassicLinkVpcRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachClassicLinkVpcRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `groups`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachClassicLinkVpcRequest.groups = value.into();`.
+    pub fn groups<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.groups = value.into();
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachClassicLinkVpcRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `vpc_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachClassicLinkVpcRequest.vpc_id = value.into();`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = value.into();
+        self
+    }
+    /// Returns a new instance of AttachClassicLinkVpcRequest with optional fields set to `None`.
+    pub fn new<GroupsType: Into<Vec<String>>, InstanceIdType: Into<String>, VpcIdType: Into<String>>
+        (groups: GroupsType,
+         instance_id: InstanceIdType,
+         vpc_id: VpcIdType)
+         -> AttachClassicLinkVpcRequest {
+        AttachClassicLinkVpcRequest {
+            groups: groups.into(),
+            instance_id: instance_id.into(),
+            vpc_id: vpc_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AttachClassicLinkVpcRequest` contents to a `SignedRequest`.
 struct AttachClassicLinkVpcRequestSerializer;
@@ -1544,7 +1966,6 @@ pub struct AttachClassicLinkVpcResult {
     #[doc="<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>"]
     pub return_: Option<bool>,
 }
-
 struct AttachClassicLinkVpcResultDeserializer;
 impl AttachClassicLinkVpcResultDeserializer {
     #[allow(unused_variables)]
@@ -1597,7 +2018,40 @@ pub struct AttachInternetGatewayRequest {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: String,
 }
-
+impl AttachInternetGatewayRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachInternetGatewayRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `internet_gateway_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachInternetGatewayRequest.internet_gateway_id = value.into();`.
+    pub fn internet_gateway_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.internet_gateway_id = value.into();
+        self
+    }
+    /// Sets `vpc_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachInternetGatewayRequest.vpc_id = value.into();`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = value.into();
+        self
+    }
+    /// Returns a new instance of AttachInternetGatewayRequest with optional fields set to `None`.
+    pub fn new<InternetGatewayIdType: Into<String>, VpcIdType: Into<String>>
+        (internet_gateway_id: InternetGatewayIdType,
+         vpc_id: VpcIdType)
+         -> AttachInternetGatewayRequest {
+        AttachInternetGatewayRequest {
+            internet_gateway_id: internet_gateway_id.into(),
+            vpc_id: vpc_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AttachInternetGatewayRequest` contents to a `SignedRequest`.
 struct AttachInternetGatewayRequestSerializer;
@@ -1630,7 +2084,51 @@ pub struct AttachNetworkInterfaceRequest {
     #[doc="<p>The ID of the network interface.</p>"]
     pub network_interface_id: String,
 }
-
+impl AttachNetworkInterfaceRequest {
+    /// Sets `device_index`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachNetworkInterfaceRequest.device_index = value.into();`.
+    pub fn device_index<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.device_index = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachNetworkInterfaceRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachNetworkInterfaceRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `network_interface_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachNetworkInterfaceRequest.network_interface_id = value.into();`.
+    pub fn network_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_interface_id = value.into();
+        self
+    }
+    /// Returns a new instance of AttachNetworkInterfaceRequest with optional fields set to `None`.
+    pub fn new<DeviceIndexType: Into<i64>,
+               InstanceIdType: Into<String>,
+               NetworkInterfaceIdType: Into<String>>
+        (device_index: DeviceIndexType,
+         instance_id: InstanceIdType,
+         network_interface_id: NetworkInterfaceIdType)
+         -> AttachNetworkInterfaceRequest {
+        AttachNetworkInterfaceRequest {
+            device_index: device_index.into(),
+            instance_id: instance_id.into(),
+            network_interface_id: network_interface_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AttachNetworkInterfaceRequest` contents to a `SignedRequest`.
 struct AttachNetworkInterfaceRequestSerializer;
@@ -1659,7 +2157,6 @@ pub struct AttachNetworkInterfaceResult {
     #[doc="<p>The ID of the network interface attachment.</p>"]
     pub attachment_id: Option<String>,
 }
-
 struct AttachNetworkInterfaceResultDeserializer;
 impl AttachNetworkInterfaceResultDeserializer {
     #[allow(unused_variables)]
@@ -1714,7 +2211,49 @@ pub struct AttachVolumeRequest {
     #[doc="<p>The ID of the EBS volume. The volume and instance must be within the same Availability Zone.</p>"]
     pub volume_id: String,
 }
-
+impl AttachVolumeRequest {
+    /// Sets `device`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachVolumeRequest.device = value.into();`.
+    pub fn device<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.device = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachVolumeRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachVolumeRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `volume_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachVolumeRequest.volume_id = value.into();`.
+    pub fn volume_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_id = value.into();
+        self
+    }
+    /// Returns a new instance of AttachVolumeRequest with optional fields set to `None`.
+    pub fn new<DeviceType: Into<String>, InstanceIdType: Into<String>, VolumeIdType: Into<String>>
+        (device: DeviceType,
+         instance_id: InstanceIdType,
+         volume_id: VolumeIdType)
+         -> AttachVolumeRequest {
+        AttachVolumeRequest {
+            device: device.into(),
+            instance_id: instance_id.into(),
+            volume_id: volume_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AttachVolumeRequest` contents to a `SignedRequest`.
 struct AttachVolumeRequestSerializer;
@@ -1745,7 +2284,40 @@ pub struct AttachVpnGatewayRequest {
     #[doc="<p>The ID of the virtual private gateway.</p>"]
     pub vpn_gateway_id: String,
 }
-
+impl AttachVpnGatewayRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachVpnGatewayRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `vpc_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachVpnGatewayRequest.vpc_id = value.into();`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = value.into();
+        self
+    }
+    /// Sets `vpn_gateway_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachVpnGatewayRequest.vpn_gateway_id = value.into();`.
+    pub fn vpn_gateway_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpn_gateway_id = value.into();
+        self
+    }
+    /// Returns a new instance of AttachVpnGatewayRequest with optional fields set to `None`.
+    pub fn new<VpcIdType: Into<String>, VpnGatewayIdType: Into<String>>
+        (vpc_id: VpcIdType,
+         vpn_gateway_id: VpnGatewayIdType)
+         -> AttachVpnGatewayRequest {
+        AttachVpnGatewayRequest {
+            vpc_id: vpc_id.into(),
+            vpn_gateway_id: vpn_gateway_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AttachVpnGatewayRequest` contents to a `SignedRequest`.
 struct AttachVpnGatewayRequestSerializer;
@@ -1772,7 +2344,6 @@ pub struct AttachVpnGatewayResult {
     #[doc="<p>Information about the attachment.</p>"]
     pub vpc_attachment: Option<VpcAttachment>,
 }
-
 struct AttachVpnGatewayResultDeserializer;
 impl AttachVpnGatewayResultDeserializer {
     #[allow(unused_variables)]
@@ -1836,7 +2407,19 @@ pub struct AttributeBooleanValue {
     #[doc="<p>The attribute value. The valid values are <code>true</code> or <code>false</code>.</p>"]
     pub value: Option<bool>,
 }
-
+impl AttributeBooleanValue {
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributeBooleanValue.value = Some(value.into());`.
+    pub fn value<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AttributeBooleanValue with optional fields set to `None`.
+    pub fn new() -> AttributeBooleanValue {
+        AttributeBooleanValue { ..Default::default() }
+    }
+}
 struct AttributeBooleanValueDeserializer;
 impl AttributeBooleanValueDeserializer {
     #[allow(unused_variables)]
@@ -1902,7 +2485,19 @@ pub struct AttributeValue {
     #[doc="<p>The attribute value. Note that the value is case-sensitive.</p>"]
     pub value: Option<String>,
 }
-
+impl AttributeValue {
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributeValue.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AttributeValue with optional fields set to `None`.
+    pub fn new() -> AttributeValue {
+        AttributeValue { ..Default::default() }
+    }
+}
 struct AttributeValueDeserializer;
 impl AttributeValueDeserializer {
     #[allow(unused_variables)]
@@ -1983,7 +2578,81 @@ pub struct AuthorizeSecurityGroupEgressRequest {
     #[doc="<p>The end of port range for the TCP and UDP protocols, or an ICMP type number. We recommend that you specify the port range in a set of IP permissions instead.</p>"]
     pub to_port: Option<i64>,
 }
-
+impl AuthorizeSecurityGroupEgressRequest {
+    /// Sets `cidr_ip`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeSecurityGroupEgressRequest.cidr_ip = Some(value.into());`.
+    pub fn cidr_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cidr_ip = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeSecurityGroupEgressRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `from_port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeSecurityGroupEgressRequest.from_port = Some(value.into());`.
+    pub fn from_port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.from_port = Some(value.into());
+        self
+    }
+    /// Sets `group_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeSecurityGroupEgressRequest.group_id = value.into();`.
+    pub fn group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_id = value.into();
+        self
+    }
+    /// Sets `ip_permissions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeSecurityGroupEgressRequest.ip_permissions = Some(value.into());`.
+    pub fn ip_permissions<ValueType: Into<Vec<IpPermission>>>(mut self, value: ValueType) -> Self {
+        self.ip_permissions = Some(value.into());
+        self
+    }
+    /// Sets `ip_protocol`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeSecurityGroupEgressRequest.ip_protocol = Some(value.into());`.
+    pub fn ip_protocol<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ip_protocol = Some(value.into());
+        self
+    }
+    /// Sets `source_security_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeSecurityGroupEgressRequest.source_security_group_name = Some(value.into());`.
+    pub fn source_security_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_security_group_name = Some(value.into());
+        self
+    }
+    /// Sets `source_security_group_owner_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeSecurityGroupEgressRequest.source_security_group_owner_id = Some(value.into());`.
+    pub fn source_security_group_owner_id<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.source_security_group_owner_id = Some(value.into());
+        self
+    }
+    /// Sets `to_port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeSecurityGroupEgressRequest.to_port = Some(value.into());`.
+    pub fn to_port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.to_port = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AuthorizeSecurityGroupEgressRequest with optional fields set to `None`.
+    pub fn new<GroupIdType: Into<String>>(group_id: GroupIdType)
+                                          -> AuthorizeSecurityGroupEgressRequest {
+        AuthorizeSecurityGroupEgressRequest {
+            group_id: group_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AuthorizeSecurityGroupEgressRequest` contents to a `SignedRequest`.
 struct AuthorizeSecurityGroupEgressRequestSerializer;
@@ -2052,7 +2721,84 @@ pub struct AuthorizeSecurityGroupIngressRequest {
     #[doc="<p>The end of port range for the TCP and UDP protocols, or an ICMP/ICMPv6 code number. For the ICMP/ICMPv6 code number, use <code>-1</code> to specify all codes.</p>"]
     pub to_port: Option<i64>,
 }
-
+impl AuthorizeSecurityGroupIngressRequest {
+    /// Sets `cidr_ip`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeSecurityGroupIngressRequest.cidr_ip = Some(value.into());`.
+    pub fn cidr_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cidr_ip = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeSecurityGroupIngressRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `from_port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeSecurityGroupIngressRequest.from_port = Some(value.into());`.
+    pub fn from_port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.from_port = Some(value.into());
+        self
+    }
+    /// Sets `group_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeSecurityGroupIngressRequest.group_id = Some(value.into());`.
+    pub fn group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_id = Some(value.into());
+        self
+    }
+    /// Sets `group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeSecurityGroupIngressRequest.group_name = Some(value.into());`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = Some(value.into());
+        self
+    }
+    /// Sets `ip_permissions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeSecurityGroupIngressRequest.ip_permissions = Some(value.into());`.
+    pub fn ip_permissions<ValueType: Into<Vec<IpPermission>>>(mut self, value: ValueType) -> Self {
+        self.ip_permissions = Some(value.into());
+        self
+    }
+    /// Sets `ip_protocol`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeSecurityGroupIngressRequest.ip_protocol = Some(value.into());`.
+    pub fn ip_protocol<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ip_protocol = Some(value.into());
+        self
+    }
+    /// Sets `source_security_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeSecurityGroupIngressRequest.source_security_group_name = Some(value.into());`.
+    pub fn source_security_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_security_group_name = Some(value.into());
+        self
+    }
+    /// Sets `source_security_group_owner_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeSecurityGroupIngressRequest.source_security_group_owner_id = Some(value.into());`.
+    pub fn source_security_group_owner_id<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.source_security_group_owner_id = Some(value.into());
+        self
+    }
+    /// Sets `to_port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeSecurityGroupIngressRequest.to_port = Some(value.into());`.
+    pub fn to_port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.to_port = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AuthorizeSecurityGroupIngressRequest with optional fields set to `None`.
+    pub fn new() -> AuthorizeSecurityGroupIngressRequest {
+        AuthorizeSecurityGroupIngressRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `AuthorizeSecurityGroupIngressRequest` contents to a `SignedRequest`.
 struct AuthorizeSecurityGroupIngressRequestSerializer;
@@ -2128,7 +2874,6 @@ pub struct AvailabilityZone {
     #[doc="<p>The name of the Availability Zone.</p>"]
     pub zone_name: Option<String>,
 }
-
 struct AvailabilityZoneDeserializer;
 impl AvailabilityZoneDeserializer {
     #[allow(unused_variables)]
@@ -2230,7 +2975,6 @@ pub struct AvailabilityZoneMessage {
     #[doc="<p>The message about the Availability Zone.</p>"]
     pub message: Option<String>,
 }
-
 struct AvailabilityZoneMessageDeserializer;
 impl AvailabilityZoneMessageDeserializer {
     #[allow(unused_variables)]
@@ -2337,7 +3081,6 @@ pub struct AvailableCapacity {
     #[doc="<p>The number of vCPUs available on the Dedicated Host.</p>"]
     pub available_v_cpus: Option<i64>,
 }
-
 struct AvailableCapacityDeserializer;
 impl AvailableCapacityDeserializer {
     #[allow(unused_variables)]
@@ -2469,7 +3212,19 @@ impl BlobDeserializer {
 pub struct BlobAttributeValue {
     pub value: Option<Vec<u8>>,
 }
-
+impl BlobAttributeValue {
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BlobAttributeValue.value = Some(value.into());`.
+    pub fn value<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of BlobAttributeValue with optional fields set to `None`.
+    pub fn new() -> BlobAttributeValue {
+        BlobAttributeValue { ..Default::default() }
+    }
+}
 
 /// Serialize `BlobAttributeValue` contents to a `SignedRequest`.
 struct BlobAttributeValueSerializer;
@@ -2500,7 +3255,40 @@ pub struct BlockDeviceMapping {
     #[doc="<p>The virtual device name (<code>ephemeral</code>N). Instance store volumes are numbered starting from 0. An instance type with 2 available instance store volumes can specify mappings for <code>ephemeral0</code> and <code>ephemeral1</code>.The number of available instance store volumes depends on the instance type. After you connect to the instance, you must mount the volume.</p> <p>Constraints: For M3 instances, you must specify instance store volumes in the block device mapping for the instance. When you launch an M3 instance, we ignore any instance store volumes specified in the block device mapping for the AMI.</p>"]
     pub virtual_name: Option<String>,
 }
-
+impl BlockDeviceMapping {
+    /// Sets `device_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BlockDeviceMapping.device_name = Some(value.into());`.
+    pub fn device_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.device_name = Some(value.into());
+        self
+    }
+    /// Sets `ebs`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BlockDeviceMapping.ebs = Some(value.into());`.
+    pub fn ebs<ValueType: Into<EbsBlockDevice>>(mut self, value: ValueType) -> Self {
+        self.ebs = Some(value.into());
+        self
+    }
+    /// Sets `no_device`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BlockDeviceMapping.no_device = Some(value.into());`.
+    pub fn no_device<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.no_device = Some(value.into());
+        self
+    }
+    /// Sets `virtual_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BlockDeviceMapping.virtual_name = Some(value.into());`.
+    pub fn virtual_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.virtual_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of BlockDeviceMapping with optional fields set to `None`.
+    pub fn new() -> BlockDeviceMapping {
+        BlockDeviceMapping { ..Default::default() }
+    }
+}
 struct BlockDeviceMappingDeserializer;
 impl BlockDeviceMappingDeserializer {
     #[allow(unused_variables)]
@@ -2684,7 +3472,40 @@ pub struct BundleInstanceRequest {
     #[doc="<p>The bucket in which to store the AMI. You can specify a bucket that you already own or a new bucket that Amazon EC2 creates on your behalf. If you specify a bucket that belongs to someone else, Amazon EC2 returns an error.</p>"]
     pub storage: Storage,
 }
-
+impl BundleInstanceRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BundleInstanceRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BundleInstanceRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `storage`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BundleInstanceRequest.storage = value.into();`.
+    pub fn storage<ValueType: Into<Storage>>(mut self, value: ValueType) -> Self {
+        self.storage = value.into();
+        self
+    }
+    /// Returns a new instance of BundleInstanceRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>, StorageType: Into<Storage>>
+        (instance_id: InstanceIdType,
+         storage: StorageType)
+         -> BundleInstanceRequest {
+        BundleInstanceRequest {
+            instance_id: instance_id.into(),
+            storage: storage.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `BundleInstanceRequest` contents to a `SignedRequest`.
 struct BundleInstanceRequestSerializer;
@@ -2710,7 +3531,6 @@ pub struct BundleInstanceResult {
     #[doc="<p>Information about the bundle task.</p>"]
     pub bundle_task: Option<BundleTask>,
 }
-
 struct BundleInstanceResultDeserializer;
 impl BundleInstanceResultDeserializer {
     #[allow(unused_variables)]
@@ -2774,7 +3594,6 @@ pub struct BundleTask {
     #[doc="<p>The time of the most recent update for the task.</p>"]
     pub update_time: Option<String>,
 }
-
 struct BundleTaskDeserializer;
 impl BundleTaskDeserializer {
     #[allow(unused_variables)]
@@ -2854,7 +3673,6 @@ pub struct BundleTaskError {
     #[doc="<p>The error message.</p>"]
     pub message: Option<String>,
 }
-
 struct BundleTaskErrorDeserializer;
 impl BundleTaskErrorDeserializer {
     #[allow(unused_variables)]
@@ -2977,7 +3795,29 @@ pub struct CancelBundleTaskRequest {
     #[doc="<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>"]
     pub dry_run: Option<bool>,
 }
-
+impl CancelBundleTaskRequest {
+    /// Sets `bundle_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelBundleTaskRequest.bundle_id = value.into();`.
+    pub fn bundle_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bundle_id = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelBundleTaskRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CancelBundleTaskRequest with optional fields set to `None`.
+    pub fn new<BundleIdType: Into<String>>(bundle_id: BundleIdType) -> CancelBundleTaskRequest {
+        CancelBundleTaskRequest {
+            bundle_id: bundle_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CancelBundleTaskRequest` contents to a `SignedRequest`.
 struct CancelBundleTaskRequestSerializer;
@@ -3002,7 +3842,6 @@ pub struct CancelBundleTaskResult {
     #[doc="<p>Information about the bundle task.</p>"]
     pub bundle_task: Option<BundleTask>,
 }
-
 struct CancelBundleTaskResultDeserializer;
 impl CancelBundleTaskResultDeserializer {
     #[allow(unused_variables)]
@@ -3056,7 +3895,37 @@ pub struct CancelConversionRequest {
     #[doc="<p>The reason for canceling the conversion task.</p>"]
     pub reason_message: Option<String>,
 }
-
+impl CancelConversionRequest {
+    /// Sets `conversion_task_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelConversionRequest.conversion_task_id = value.into();`.
+    pub fn conversion_task_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.conversion_task_id = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelConversionRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `reason_message`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelConversionRequest.reason_message = Some(value.into());`.
+    pub fn reason_message<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reason_message = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CancelConversionRequest with optional fields set to `None`.
+    pub fn new<ConversionTaskIdType: Into<String>>(conversion_task_id: ConversionTaskIdType)
+                                                   -> CancelConversionRequest {
+        CancelConversionRequest {
+            conversion_task_id: conversion_task_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CancelConversionRequest` contents to a `SignedRequest`.
 struct CancelConversionRequestSerializer;
@@ -3085,7 +3954,23 @@ pub struct CancelExportTaskRequest {
     #[doc="<p>The ID of the export task. This is the ID returned by <code>CreateInstanceExportTask</code>.</p>"]
     pub export_task_id: String,
 }
-
+impl CancelExportTaskRequest {
+    /// Sets `export_task_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelExportTaskRequest.export_task_id = value.into();`.
+    pub fn export_task_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.export_task_id = value.into();
+        self
+    }
+    /// Returns a new instance of CancelExportTaskRequest with optional fields set to `None`.
+    pub fn new<ExportTaskIdType: Into<String>>(export_task_id: ExportTaskIdType)
+                                               -> CancelExportTaskRequest {
+        CancelExportTaskRequest {
+            export_task_id: export_task_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CancelExportTaskRequest` contents to a `SignedRequest`.
 struct CancelExportTaskRequestSerializer;
@@ -3112,7 +3997,33 @@ pub struct CancelImportTaskRequest {
     #[doc="<p>The ID of the import image or import snapshot task to be canceled.</p>"]
     pub import_task_id: Option<String>,
 }
-
+impl CancelImportTaskRequest {
+    /// Sets `cancel_reason`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelImportTaskRequest.cancel_reason = Some(value.into());`.
+    pub fn cancel_reason<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cancel_reason = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelImportTaskRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `import_task_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelImportTaskRequest.import_task_id = Some(value.into());`.
+    pub fn import_task_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.import_task_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CancelImportTaskRequest with optional fields set to `None`.
+    pub fn new() -> CancelImportTaskRequest {
+        CancelImportTaskRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `CancelImportTaskRequest` contents to a `SignedRequest`.
 struct CancelImportTaskRequestSerializer;
@@ -3146,7 +4057,6 @@ pub struct CancelImportTaskResult {
     #[doc="<p>The current state of the task being canceled.</p>"]
     pub state: Option<String>,
 }
-
 struct CancelImportTaskResultDeserializer;
 impl CancelImportTaskResultDeserializer {
     #[allow(unused_variables)]
@@ -3202,7 +4112,26 @@ pub struct CancelReservedInstancesListingRequest {
     #[doc="<p>The ID of the Reserved Instance listing.</p>"]
     pub reserved_instances_listing_id: String,
 }
-
+impl CancelReservedInstancesListingRequest {
+    /// Sets `reserved_instances_listing_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelReservedInstancesListingRequest.reserved_instances_listing_id = value.into();`.
+    pub fn reserved_instances_listing_id<ValueType: Into<String>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.reserved_instances_listing_id = value.into();
+        self
+    }
+    /// Returns a new instance of CancelReservedInstancesListingRequest with optional fields set to `None`.
+    pub fn new<ReservedInstancesListingIdType: Into<String>>
+        (reserved_instances_listing_id: ReservedInstancesListingIdType)
+         -> CancelReservedInstancesListingRequest {
+        CancelReservedInstancesListingRequest {
+            reserved_instances_listing_id: reserved_instances_listing_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CancelReservedInstancesListingRequest` contents to a `SignedRequest`.
 struct CancelReservedInstancesListingRequestSerializer;
@@ -3225,7 +4154,6 @@ pub struct CancelReservedInstancesListingResult {
     #[doc="<p>The Reserved Instance listing.</p>"]
     pub reserved_instances_listings: Option<Vec<ReservedInstancesListing>>,
 }
-
 struct CancelReservedInstancesListingResultDeserializer;
 impl CancelReservedInstancesListingResultDeserializer {
     #[allow(unused_variables)]
@@ -3276,7 +4204,6 @@ pub struct CancelSpotFleetRequestsError {
     #[doc="<p>The description for the error code.</p>"]
     pub message: String,
 }
-
 struct CancelSpotFleetRequestsErrorDeserializer;
 impl CancelSpotFleetRequestsErrorDeserializer {
     #[allow(unused_variables)]
@@ -3330,7 +4257,6 @@ pub struct CancelSpotFleetRequestsErrorItem {
     #[doc="<p>The ID of the Spot fleet request.</p>"]
     pub spot_fleet_request_id: String,
 }
-
 struct CancelSpotFleetRequestsErrorItemDeserializer;
 impl CancelSpotFleetRequestsErrorItemDeserializer {
     #[allow(unused_variables)]
@@ -3431,7 +4357,42 @@ pub struct CancelSpotFleetRequestsRequest {
     #[doc="<p>Indicates whether to terminate instances for a Spot fleet request if it is canceled successfully.</p>"]
     pub terminate_instances: bool,
 }
-
+impl CancelSpotFleetRequestsRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelSpotFleetRequestsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `spot_fleet_request_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelSpotFleetRequestsRequest.spot_fleet_request_ids = value.into();`.
+    pub fn spot_fleet_request_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.spot_fleet_request_ids = value.into();
+        self
+    }
+    /// Sets `terminate_instances`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelSpotFleetRequestsRequest.terminate_instances = value.into();`.
+    pub fn terminate_instances<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.terminate_instances = value.into();
+        self
+    }
+    /// Returns a new instance of CancelSpotFleetRequestsRequest with optional fields set to `None`.
+    pub fn new<SpotFleetRequestIdsType: Into<Vec<String>>, TerminateInstancesType: Into<bool>>
+        (spot_fleet_request_ids: SpotFleetRequestIdsType,
+         terminate_instances: TerminateInstancesType)
+         -> CancelSpotFleetRequestsRequest {
+        CancelSpotFleetRequestsRequest {
+            spot_fleet_request_ids: spot_fleet_request_ids.into(),
+            terminate_instances: terminate_instances.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CancelSpotFleetRequestsRequest` contents to a `SignedRequest`.
 struct CancelSpotFleetRequestsRequestSerializer;
@@ -3462,7 +4423,6 @@ pub struct CancelSpotFleetRequestsResponse {
     #[doc="<p>Information about the Spot fleet requests that are not successfully canceled.</p>"]
     pub unsuccessful_fleet_requests: Option<Vec<CancelSpotFleetRequestsErrorItem>>,
 }
-
 struct CancelSpotFleetRequestsResponseDeserializer;
 impl CancelSpotFleetRequestsResponseDeserializer {
     #[allow(unused_variables)]
@@ -3518,7 +4478,6 @@ pub struct CancelSpotFleetRequestsSuccessItem {
     #[doc="<p>The ID of the Spot fleet request.</p>"]
     pub spot_fleet_request_id: String,
 }
-
 struct CancelSpotFleetRequestsSuccessItemDeserializer;
 impl CancelSpotFleetRequestsSuccessItemDeserializer {
     #[allow(unused_variables)]
@@ -3636,7 +4595,33 @@ pub struct CancelSpotInstanceRequestsRequest {
     #[doc="<p>One or more Spot instance request IDs.</p>"]
     pub spot_instance_request_ids: Vec<String>,
 }
-
+impl CancelSpotInstanceRequestsRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelSpotInstanceRequestsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `spot_instance_request_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelSpotInstanceRequestsRequest.spot_instance_request_ids = value.into();`.
+    pub fn spot_instance_request_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.spot_instance_request_ids = value.into();
+        self
+    }
+    /// Returns a new instance of CancelSpotInstanceRequestsRequest with optional fields set to `None`.
+    pub fn new<SpotInstanceRequestIdsType: Into<Vec<String>>>
+        (spot_instance_request_ids: SpotInstanceRequestIdsType)
+         -> CancelSpotInstanceRequestsRequest {
+        CancelSpotInstanceRequestsRequest {
+            spot_instance_request_ids: spot_instance_request_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CancelSpotInstanceRequestsRequest` contents to a `SignedRequest`.
 struct CancelSpotInstanceRequestsRequestSerializer;
@@ -3665,7 +4650,6 @@ pub struct CancelSpotInstanceRequestsResult {
     #[doc="<p>One or more Spot instance requests.</p>"]
     pub cancelled_spot_instance_requests: Option<Vec<CancelledSpotInstanceRequest>>,
 }
-
 struct CancelSpotInstanceRequestsResultDeserializer;
 impl CancelSpotInstanceRequestsResultDeserializer {
     #[allow(unused_variables)]
@@ -3716,7 +4700,6 @@ pub struct CancelledSpotInstanceRequest {
     #[doc="<p>The state of the Spot instance request.</p>"]
     pub state: Option<String>,
 }
-
 struct CancelledSpotInstanceRequestDeserializer;
 impl CancelledSpotInstanceRequestDeserializer {
     #[allow(unused_variables)]
@@ -3813,7 +4796,6 @@ pub struct ClassicLinkDnsSupport {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct ClassicLinkDnsSupportDeserializer;
 impl ClassicLinkDnsSupportDeserializer {
     #[allow(unused_variables)]
@@ -3915,7 +4897,6 @@ pub struct ClassicLinkInstance {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct ClassicLinkInstanceDeserializer;
 impl ClassicLinkInstanceDeserializer {
     #[allow(unused_variables)]
@@ -4024,7 +5005,40 @@ pub struct ClientData {
     #[doc="<p>The time that the disk upload starts.</p>"]
     pub upload_start: Option<String>,
 }
-
+impl ClientData {
+    /// Sets `comment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ClientData.comment = Some(value.into());`.
+    pub fn comment<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.comment = Some(value.into());
+        self
+    }
+    /// Sets `upload_end`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ClientData.upload_end = Some(value.into());`.
+    pub fn upload_end<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.upload_end = Some(value.into());
+        self
+    }
+    /// Sets `upload_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ClientData.upload_size = Some(value.into());`.
+    pub fn upload_size<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.upload_size = Some(value.into());
+        self
+    }
+    /// Sets `upload_start`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ClientData.upload_start = Some(value.into());`.
+    pub fn upload_start<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.upload_start = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ClientData with optional fields set to `None`.
+    pub fn new() -> ClientData {
+        ClientData { ..Default::default() }
+    }
+}
 
 /// Serialize `ClientData` contents to a `SignedRequest`.
 struct ClientDataSerializer;
@@ -4062,7 +5076,40 @@ pub struct ConfirmProductInstanceRequest {
     #[doc="<p>The product code. This must be a product code that you own.</p>"]
     pub product_code: String,
 }
-
+impl ConfirmProductInstanceRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmProductInstanceRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmProductInstanceRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `product_code`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmProductInstanceRequest.product_code = value.into();`.
+    pub fn product_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_code = value.into();
+        self
+    }
+    /// Returns a new instance of ConfirmProductInstanceRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>, ProductCodeType: Into<String>>
+        (instance_id: InstanceIdType,
+         product_code: ProductCodeType)
+         -> ConfirmProductInstanceRequest {
+        ConfirmProductInstanceRequest {
+            instance_id: instance_id.into(),
+            product_code: product_code.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ConfirmProductInstanceRequest` contents to a `SignedRequest`.
 struct ConfirmProductInstanceRequestSerializer;
@@ -4090,7 +5137,6 @@ pub struct ConfirmProductInstanceResult {
     #[doc="<p>The return value of the request. Returns <code>true</code> if the specified product code is owned by the requester and associated with the specified instance.</p>"]
     pub return_: Option<bool>,
 }
-
 struct ConfirmProductInstanceResultDeserializer;
 impl ConfirmProductInstanceResultDeserializer {
     #[allow(unused_variables)]
@@ -4181,7 +5227,6 @@ pub struct ConversionTask {
     #[doc="<p>Any tags assigned to the task.</p>"]
     pub tags: Option<Vec<Tag>>,
 }
-
 struct ConversionTaskDeserializer;
 impl ConversionTaskDeserializer {
     #[allow(unused_variables)]
@@ -4283,7 +5328,79 @@ pub struct CopyImageRequest {
     #[doc="<p>The name of the region that contains the AMI to copy.</p>"]
     pub source_region: String,
 }
-
+impl CopyImageRequest {
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyImageRequest.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyImageRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyImageRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `encrypted`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyImageRequest.encrypted = Some(value.into());`.
+    pub fn encrypted<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.encrypted = Some(value.into());
+        self
+    }
+    /// Sets `kms_key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyImageRequest.kms_key_id = Some(value.into());`.
+    pub fn kms_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kms_key_id = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyImageRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `source_image_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyImageRequest.source_image_id = value.into();`.
+    pub fn source_image_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_image_id = value.into();
+        self
+    }
+    /// Sets `source_region`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyImageRequest.source_region = value.into();`.
+    pub fn source_region<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_region = value.into();
+        self
+    }
+    /// Returns a new instance of CopyImageRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>,
+               SourceImageIdType: Into<String>,
+               SourceRegionType: Into<String>>
+        (name: NameType,
+         source_image_id: SourceImageIdType,
+         source_region: SourceRegionType)
+         -> CopyImageRequest {
+        CopyImageRequest {
+            name: name.into(),
+            source_image_id: source_image_id.into(),
+            source_region: source_region.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CopyImageRequest` contents to a `SignedRequest`.
 struct CopyImageRequestSerializer;
@@ -4324,7 +5441,6 @@ pub struct CopyImageResult {
     #[doc="<p>The ID of the new AMI.</p>"]
     pub image_id: Option<String>,
 }
-
 struct CopyImageResultDeserializer;
 impl CopyImageResultDeserializer {
     #[allow(unused_variables)]
@@ -4387,7 +5503,75 @@ pub struct CopySnapshotRequest {
     #[doc="<p>The ID of the EBS snapshot to copy.</p>"]
     pub source_snapshot_id: String,
 }
-
+impl CopySnapshotRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopySnapshotRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `destination_region`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopySnapshotRequest.destination_region = Some(value.into());`.
+    pub fn destination_region<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination_region = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopySnapshotRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `encrypted`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopySnapshotRequest.encrypted = Some(value.into());`.
+    pub fn encrypted<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.encrypted = Some(value.into());
+        self
+    }
+    /// Sets `kms_key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopySnapshotRequest.kms_key_id = Some(value.into());`.
+    pub fn kms_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kms_key_id = Some(value.into());
+        self
+    }
+    /// Sets `presigned_url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopySnapshotRequest.presigned_url = Some(value.into());`.
+    pub fn presigned_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.presigned_url = Some(value.into());
+        self
+    }
+    /// Sets `source_region`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopySnapshotRequest.source_region = value.into();`.
+    pub fn source_region<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_region = value.into();
+        self
+    }
+    /// Sets `source_snapshot_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopySnapshotRequest.source_snapshot_id = value.into();`.
+    pub fn source_snapshot_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_snapshot_id = value.into();
+        self
+    }
+    /// Returns a new instance of CopySnapshotRequest with optional fields set to `None`.
+    pub fn new<SourceRegionType: Into<String>, SourceSnapshotIdType: Into<String>>
+        (source_region: SourceRegionType,
+         source_snapshot_id: SourceSnapshotIdType)
+         -> CopySnapshotRequest {
+        CopySnapshotRequest {
+            source_region: source_region.into(),
+            source_snapshot_id: source_snapshot_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CopySnapshotRequest` contents to a `SignedRequest`.
 struct CopySnapshotRequestSerializer;
@@ -4430,7 +5614,6 @@ pub struct CopySnapshotResult {
     #[doc="<p>The ID of the new snapshot.</p>"]
     pub snapshot_id: Option<String>,
 }
-
 struct CopySnapshotResultDeserializer;
 impl CopySnapshotResultDeserializer {
     #[allow(unused_variables)]
@@ -4485,7 +5668,49 @@ pub struct CreateCustomerGatewayRequest {
     #[doc="<p>The type of VPN connection that this customer gateway supports (<code>ipsec.1</code>).</p>"]
     pub type_: String,
 }
-
+impl CreateCustomerGatewayRequest {
+    /// Sets `bgp_asn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCustomerGatewayRequest.bgp_asn = value.into();`.
+    pub fn bgp_asn<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.bgp_asn = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCustomerGatewayRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `public_ip`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCustomerGatewayRequest.public_ip = value.into();`.
+    pub fn public_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.public_ip = value.into();
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCustomerGatewayRequest.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of CreateCustomerGatewayRequest with optional fields set to `None`.
+    pub fn new<BgpAsnType: Into<i64>, PublicIpType: Into<String>, TypeType: Into<String>>
+        (bgp_asn: BgpAsnType,
+         public_ip: PublicIpType,
+         type_: TypeType)
+         -> CreateCustomerGatewayRequest {
+        CreateCustomerGatewayRequest {
+            bgp_asn: bgp_asn.into(),
+            public_ip: public_ip.into(),
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateCustomerGatewayRequest` contents to a `SignedRequest`.
 struct CreateCustomerGatewayRequestSerializer;
@@ -4512,7 +5737,6 @@ pub struct CreateCustomerGatewayResult {
     #[doc="<p>Information about the customer gateway.</p>"]
     pub customer_gateway: Option<CustomerGateway>,
 }
-
 struct CreateCustomerGatewayResultDeserializer;
 impl CreateCustomerGatewayResultDeserializer {
     #[allow(unused_variables)]
@@ -4562,7 +5786,19 @@ pub struct CreateDefaultVpcRequest {
     #[doc="<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>"]
     pub dry_run: Option<bool>,
 }
-
+impl CreateDefaultVpcRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDefaultVpcRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateDefaultVpcRequest with optional fields set to `None`.
+    pub fn new() -> CreateDefaultVpcRequest {
+        CreateDefaultVpcRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `CreateDefaultVpcRequest` contents to a `SignedRequest`.
 struct CreateDefaultVpcRequestSerializer;
@@ -4586,7 +5822,6 @@ pub struct CreateDefaultVpcResult {
     #[doc="<p>Information about the VPC.</p>"]
     pub vpc: Option<Vpc>,
 }
-
 struct CreateDefaultVpcResultDeserializer;
 impl CreateDefaultVpcResultDeserializer {
     #[allow(unused_variables)]
@@ -4636,7 +5871,33 @@ pub struct CreateDhcpOptionsRequest {
     #[doc="<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>"]
     pub dry_run: Option<bool>,
 }
-
+impl CreateDhcpOptionsRequest {
+    /// Sets `dhcp_configurations`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDhcpOptionsRequest.dhcp_configurations = value.into();`.
+    pub fn dhcp_configurations<ValueType: Into<Vec<NewDhcpConfiguration>>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.dhcp_configurations = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDhcpOptionsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateDhcpOptionsRequest with optional fields set to `None`.
+    pub fn new<DhcpConfigurationsType: Into<Vec<NewDhcpConfiguration>>>
+        (dhcp_configurations: DhcpConfigurationsType)
+         -> CreateDhcpOptionsRequest {
+        CreateDhcpOptionsRequest {
+            dhcp_configurations: dhcp_configurations.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateDhcpOptionsRequest` contents to a `SignedRequest`.
 struct CreateDhcpOptionsRequestSerializer;
@@ -4665,7 +5926,6 @@ pub struct CreateDhcpOptionsResult {
     #[doc="<p>A set of DHCP options.</p>"]
     pub dhcp_options: Option<DhcpOptions>,
 }
-
 struct CreateDhcpOptionsResultDeserializer;
 impl CreateDhcpOptionsResultDeserializer {
     #[allow(unused_variables)]
@@ -4718,7 +5978,37 @@ pub struct CreateEgressOnlyInternetGatewayRequest {
     #[doc="<p>The ID of the VPC for which to create the egress-only Internet gateway.</p>"]
     pub vpc_id: String,
 }
-
+impl CreateEgressOnlyInternetGatewayRequest {
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEgressOnlyInternetGatewayRequest.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEgressOnlyInternetGatewayRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `vpc_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEgressOnlyInternetGatewayRequest.vpc_id = value.into();`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateEgressOnlyInternetGatewayRequest with optional fields set to `None`.
+    pub fn new<VpcIdType: Into<String>>(vpc_id: VpcIdType)
+                                        -> CreateEgressOnlyInternetGatewayRequest {
+        CreateEgressOnlyInternetGatewayRequest {
+            vpc_id: vpc_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateEgressOnlyInternetGatewayRequest` contents to a `SignedRequest`.
 struct CreateEgressOnlyInternetGatewayRequestSerializer;
@@ -4747,7 +6037,6 @@ pub struct CreateEgressOnlyInternetGatewayResult {
     #[doc="<p>Information about the egress-only Internet gateway.</p>"]
     pub egress_only_internet_gateway: Option<EgressOnlyInternetGateway>,
 }
-
 struct CreateEgressOnlyInternetGatewayResultDeserializer;
 impl CreateEgressOnlyInternetGatewayResultDeserializer {
     #[allow(unused_variables)]
@@ -4810,7 +6099,73 @@ pub struct CreateFlowLogsRequest {
     #[doc="<p>The type of traffic to log.</p>"]
     pub traffic_type: String,
 }
-
+impl CreateFlowLogsRequest {
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFlowLogsRequest.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `deliver_logs_permission_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFlowLogsRequest.deliver_logs_permission_arn = value.into();`.
+    pub fn deliver_logs_permission_arn<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.deliver_logs_permission_arn = value.into();
+        self
+    }
+    /// Sets `log_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFlowLogsRequest.log_group_name = value.into();`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = value.into();
+        self
+    }
+    /// Sets `resource_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFlowLogsRequest.resource_ids = value.into();`.
+    pub fn resource_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resource_ids = value.into();
+        self
+    }
+    /// Sets `resource_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFlowLogsRequest.resource_type = value.into();`.
+    pub fn resource_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_type = value.into();
+        self
+    }
+    /// Sets `traffic_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFlowLogsRequest.traffic_type = value.into();`.
+    pub fn traffic_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.traffic_type = value.into();
+        self
+    }
+    /// Returns a new instance of CreateFlowLogsRequest with optional fields set to `None`.
+    pub fn new<DeliverLogsPermissionArnType: Into<String>,
+               LogGroupNameType: Into<String>,
+               ResourceIdsType: Into<Vec<String>>,
+               ResourceTypeType: Into<String>,
+               TrafficTypeType: Into<String>>
+        (deliver_logs_permission_arn: DeliverLogsPermissionArnType,
+         log_group_name: LogGroupNameType,
+         resource_ids: ResourceIdsType,
+         resource_type: ResourceTypeType,
+         traffic_type: TrafficTypeType)
+         -> CreateFlowLogsRequest {
+        CreateFlowLogsRequest {
+            deliver_logs_permission_arn: deliver_logs_permission_arn.into(),
+            log_group_name: log_group_name.into(),
+            resource_ids: resource_ids.into(),
+            resource_type: resource_type.into(),
+            traffic_type: traffic_type.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateFlowLogsRequest` contents to a `SignedRequest`.
 struct CreateFlowLogsRequestSerializer;
@@ -4847,7 +6202,6 @@ pub struct CreateFlowLogsResult {
     #[doc="<p>Information about the flow logs that could not be created successfully.</p>"]
     pub unsuccessful: Option<Vec<UnsuccessfulItem>>,
 }
-
 struct CreateFlowLogsResultDeserializer;
 impl CreateFlowLogsResultDeserializer {
     #[allow(unused_variables)]
@@ -4915,7 +6269,61 @@ pub struct CreateFpgaImageRequest {
     #[doc="<p>A name for the AFI.</p>"]
     pub name: Option<String>,
 }
-
+impl CreateFpgaImageRequest {
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFpgaImageRequest.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFpgaImageRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFpgaImageRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `input_storage_location`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFpgaImageRequest.input_storage_location = value.into();`.
+    pub fn input_storage_location<ValueType: Into<StorageLocation>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.input_storage_location = value.into();
+        self
+    }
+    /// Sets `logs_storage_location`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFpgaImageRequest.logs_storage_location = Some(value.into());`.
+    pub fn logs_storage_location<ValueType: Into<StorageLocation>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.logs_storage_location = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFpgaImageRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateFpgaImageRequest with optional fields set to `None`.
+pub fn new<InputStorageLocationType: Into<StorageLocation>>(input_storage_location: InputStorageLocationType) -> CreateFpgaImageRequest{
+        CreateFpgaImageRequest {
+            input_storage_location: input_storage_location.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateFpgaImageRequest` contents to a `SignedRequest`.
 struct CreateFpgaImageRequestSerializer;
@@ -4957,7 +6365,6 @@ pub struct CreateFpgaImageResult {
     #[doc="<p>The FPGA image identifier (AFI ID).</p>"]
     pub fpga_image_id: Option<String>,
 }
-
 struct CreateFpgaImageResultDeserializer;
 impl CreateFpgaImageResultDeserializer {
     #[allow(unused_variables)]
@@ -5021,7 +6428,62 @@ pub struct CreateImageRequest {
     #[doc="<p>By default, Amazon EC2 attempts to shut down and reboot the instance before creating the image. If the 'No Reboot' option is set, Amazon EC2 doesn't shut down the instance before creating the image. When this option is used, file system integrity on the created image can't be guaranteed.</p>"]
     pub no_reboot: Option<bool>,
 }
-
+impl CreateImageRequest {
+    /// Sets `block_device_mappings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateImageRequest.block_device_mappings = Some(value.into());`.
+    pub fn block_device_mappings<ValueType: Into<Vec<BlockDeviceMapping>>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.block_device_mappings = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateImageRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateImageRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateImageRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateImageRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `no_reboot`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateImageRequest.no_reboot = Some(value.into());`.
+    pub fn no_reboot<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.no_reboot = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateImageRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>, NameType: Into<String>>(instance_id: InstanceIdType,
+                                                                     name: NameType)
+                                                                     -> CreateImageRequest {
+        CreateImageRequest {
+            instance_id: instance_id.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateImageRequest` contents to a `SignedRequest`.
 struct CreateImageRequestSerializer;
@@ -5061,7 +6523,6 @@ pub struct CreateImageResult {
     #[doc="<p>The ID of the new AMI.</p>"]
     pub image_id: Option<String>,
 }
-
 struct CreateImageResultDeserializer;
 impl CreateImageResultDeserializer {
     #[allow(unused_variables)]
@@ -5116,7 +6577,46 @@ pub struct CreateInstanceExportTaskRequest {
     #[doc="<p>The target virtualization environment.</p>"]
     pub target_environment: Option<String>,
 }
-
+impl CreateInstanceExportTaskRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceExportTaskRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `export_to_s3_task`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceExportTaskRequest.export_to_s3_task = Some(value.into());`.
+    pub fn export_to_s3_task<ValueType: Into<ExportToS3TaskSpecification>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.export_to_s3_task = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceExportTaskRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `target_environment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceExportTaskRequest.target_environment = Some(value.into());`.
+    pub fn target_environment<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_environment = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateInstanceExportTaskRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>>(instance_id: InstanceIdType)
+                                             -> CreateInstanceExportTaskRequest {
+        CreateInstanceExportTaskRequest {
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateInstanceExportTaskRequest` contents to a `SignedRequest`.
 struct CreateInstanceExportTaskRequestSerializer;
@@ -5151,7 +6651,6 @@ pub struct CreateInstanceExportTaskResult {
     #[doc="<p>Information about the instance export task.</p>"]
     pub export_task: Option<ExportTask>,
 }
-
 struct CreateInstanceExportTaskResultDeserializer;
 impl CreateInstanceExportTaskResultDeserializer {
     #[allow(unused_variables)]
@@ -5201,7 +6700,19 @@ pub struct CreateInternetGatewayRequest {
     #[doc="<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>"]
     pub dry_run: Option<bool>,
 }
-
+impl CreateInternetGatewayRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInternetGatewayRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateInternetGatewayRequest with optional fields set to `None`.
+    pub fn new() -> CreateInternetGatewayRequest {
+        CreateInternetGatewayRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `CreateInternetGatewayRequest` contents to a `SignedRequest`.
 struct CreateInternetGatewayRequestSerializer;
@@ -5225,7 +6736,6 @@ pub struct CreateInternetGatewayResult {
     #[doc="<p>Information about the Internet gateway.</p>"]
     pub internet_gateway: Option<InternetGateway>,
 }
-
 struct CreateInternetGatewayResultDeserializer;
 impl CreateInternetGatewayResultDeserializer {
     #[allow(unused_variables)]
@@ -5277,7 +6787,29 @@ pub struct CreateKeyPairRequest {
     #[doc="<p>A unique name for the key pair.</p> <p>Constraints: Up to 255 ASCII characters</p>"]
     pub key_name: String,
 }
-
+impl CreateKeyPairRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateKeyPairRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `key_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateKeyPairRequest.key_name = value.into();`.
+    pub fn key_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateKeyPairRequest with optional fields set to `None`.
+    pub fn new<KeyNameType: Into<String>>(key_name: KeyNameType) -> CreateKeyPairRequest {
+        CreateKeyPairRequest {
+            key_name: key_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateKeyPairRequest` contents to a `SignedRequest`.
 struct CreateKeyPairRequestSerializer;
@@ -5306,7 +6838,40 @@ pub struct CreateNatGatewayRequest {
     #[doc="<p>The subnet in which to create the NAT gateway.</p>"]
     pub subnet_id: String,
 }
-
+impl CreateNatGatewayRequest {
+    /// Sets `allocation_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNatGatewayRequest.allocation_id = value.into();`.
+    pub fn allocation_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.allocation_id = value.into();
+        self
+    }
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNatGatewayRequest.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `subnet_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNatGatewayRequest.subnet_id = value.into();`.
+    pub fn subnet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subnet_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateNatGatewayRequest with optional fields set to `None`.
+    pub fn new<AllocationIdType: Into<String>, SubnetIdType: Into<String>>
+        (allocation_id: AllocationIdType,
+         subnet_id: SubnetIdType)
+         -> CreateNatGatewayRequest {
+        CreateNatGatewayRequest {
+            allocation_id: allocation_id.into(),
+            subnet_id: subnet_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateNatGatewayRequest` contents to a `SignedRequest`.
 struct CreateNatGatewayRequestSerializer;
@@ -5334,7 +6899,6 @@ pub struct CreateNatGatewayResult {
     #[doc="<p>Information about the NAT gateway.</p>"]
     pub nat_gateway: Option<NatGateway>,
 }
-
 struct CreateNatGatewayResultDeserializer;
 impl CreateNatGatewayResultDeserializer {
     #[allow(unused_variables)]
@@ -5406,7 +6970,99 @@ pub struct CreateNetworkAclEntryRequest {
     #[doc="<p>The rule number for the entry (for example, 100). ACL entries are processed in ascending order by rule number.</p> <p>Constraints: Positive integer from 1 to 32766. The range 32767 to 65535 is reserved for internal use.</p>"]
     pub rule_number: i64,
 }
-
+impl CreateNetworkAclEntryRequest {
+    /// Sets `cidr_block`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkAclEntryRequest.cidr_block = Some(value.into());`.
+    pub fn cidr_block<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cidr_block = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkAclEntryRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `egress`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkAclEntryRequest.egress = value.into();`.
+    pub fn egress<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.egress = value.into();
+        self
+    }
+    /// Sets `icmp_type_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkAclEntryRequest.icmp_type_code = Some(value.into());`.
+    pub fn icmp_type_code<ValueType: Into<IcmpTypeCode>>(mut self, value: ValueType) -> Self {
+        self.icmp_type_code = Some(value.into());
+        self
+    }
+    /// Sets `ipv_6_cidr_block`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkAclEntryRequest.ipv_6_cidr_block = Some(value.into());`.
+    pub fn ipv_6_cidr_block<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ipv_6_cidr_block = Some(value.into());
+        self
+    }
+    /// Sets `network_acl_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkAclEntryRequest.network_acl_id = value.into();`.
+    pub fn network_acl_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_acl_id = value.into();
+        self
+    }
+    /// Sets `port_range`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkAclEntryRequest.port_range = Some(value.into());`.
+    pub fn port_range<ValueType: Into<PortRange>>(mut self, value: ValueType) -> Self {
+        self.port_range = Some(value.into());
+        self
+    }
+    /// Sets `protocol`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkAclEntryRequest.protocol = value.into();`.
+    pub fn protocol<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.protocol = value.into();
+        self
+    }
+    /// Sets `rule_action`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkAclEntryRequest.rule_action = value.into();`.
+    pub fn rule_action<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_action = value.into();
+        self
+    }
+    /// Sets `rule_number`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkAclEntryRequest.rule_number = value.into();`.
+    pub fn rule_number<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.rule_number = value.into();
+        self
+    }
+    /// Returns a new instance of CreateNetworkAclEntryRequest with optional fields set to `None`.
+    pub fn new<EgressType: Into<bool>,
+               NetworkAclIdType: Into<String>,
+               ProtocolType: Into<String>,
+               RuleActionType: Into<String>,
+               RuleNumberType: Into<i64>>
+        (egress: EgressType,
+         network_acl_id: NetworkAclIdType,
+         protocol: ProtocolType,
+         rule_action: RuleActionType,
+         rule_number: RuleNumberType)
+         -> CreateNetworkAclEntryRequest {
+        CreateNetworkAclEntryRequest {
+            egress: egress.into(),
+            network_acl_id: network_acl_id.into(),
+            protocol: protocol.into(),
+            rule_action: rule_action.into(),
+            rule_number: rule_number.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateNetworkAclEntryRequest` contents to a `SignedRequest`.
 struct CreateNetworkAclEntryRequestSerializer;
@@ -5455,7 +7111,29 @@ pub struct CreateNetworkAclRequest {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: String,
 }
-
+impl CreateNetworkAclRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkAclRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `vpc_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkAclRequest.vpc_id = value.into();`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateNetworkAclRequest with optional fields set to `None`.
+    pub fn new<VpcIdType: Into<String>>(vpc_id: VpcIdType) -> CreateNetworkAclRequest {
+        CreateNetworkAclRequest {
+            vpc_id: vpc_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateNetworkAclRequest` contents to a `SignedRequest`.
 struct CreateNetworkAclRequestSerializer;
@@ -5480,7 +7158,6 @@ pub struct CreateNetworkAclResult {
     #[doc="<p>Information about the network ACL.</p>"]
     pub network_acl: Option<NetworkAcl>,
 }
-
 struct CreateNetworkAclResultDeserializer;
 impl CreateNetworkAclResultDeserializer {
     #[allow(unused_variables)]
@@ -5538,7 +7215,54 @@ pub struct CreateNetworkInterfacePermissionRequest {
     #[doc="<p>The type of permission to grant.</p>"]
     pub permission: String,
 }
-
+impl CreateNetworkInterfacePermissionRequest {
+    /// Sets `aws_account_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkInterfacePermissionRequest.aws_account_id = Some(value.into());`.
+    pub fn aws_account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.aws_account_id = Some(value.into());
+        self
+    }
+    /// Sets `aws_service`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkInterfacePermissionRequest.aws_service = Some(value.into());`.
+    pub fn aws_service<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.aws_service = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkInterfacePermissionRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `network_interface_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkInterfacePermissionRequest.network_interface_id = value.into();`.
+    pub fn network_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_interface_id = value.into();
+        self
+    }
+    /// Sets `permission`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkInterfacePermissionRequest.permission = value.into();`.
+    pub fn permission<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.permission = value.into();
+        self
+    }
+    /// Returns a new instance of CreateNetworkInterfacePermissionRequest with optional fields set to `None`.
+    pub fn new<NetworkInterfaceIdType: Into<String>, PermissionType: Into<String>>
+        (network_interface_id: NetworkInterfaceIdType,
+         permission: PermissionType)
+         -> CreateNetworkInterfacePermissionRequest {
+        CreateNetworkInterfacePermissionRequest {
+            network_interface_id: network_interface_id.into(),
+            permission: permission.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateNetworkInterfacePermissionRequest` contents to a `SignedRequest`.
 struct CreateNetworkInterfacePermissionRequestSerializer;
@@ -5571,7 +7295,6 @@ pub struct CreateNetworkInterfacePermissionResult {
     #[doc="<p>Information about the permission for the network interface.</p>"]
     pub interface_permission: Option<NetworkInterfacePermission>,
 }
-
 struct CreateNetworkInterfacePermissionResultDeserializer;
 impl CreateNetworkInterfacePermissionResultDeserializer {
     #[allow(unused_variables)]
@@ -5636,7 +7359,83 @@ pub struct CreateNetworkInterfaceRequest {
     #[doc="<p>The ID of the subnet to associate with the network interface.</p>"]
     pub subnet_id: String,
 }
-
+impl CreateNetworkInterfaceRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkInterfaceRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkInterfaceRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkInterfaceRequest.groups = Some(value.into());`.
+    pub fn groups<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.groups = Some(value.into());
+        self
+    }
+    /// Sets `ipv_6_address_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkInterfaceRequest.ipv_6_address_count = Some(value.into());`.
+    pub fn ipv_6_address_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.ipv_6_address_count = Some(value.into());
+        self
+    }
+    /// Sets `ipv_6_addresses`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkInterfaceRequest.ipv_6_addresses = Some(value.into());`.
+    pub fn ipv_6_addresses<ValueType: Into<Vec<InstanceIpv6Address>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.ipv_6_addresses = Some(value.into());
+        self
+    }
+    /// Sets `private_ip_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkInterfaceRequest.private_ip_address = Some(value.into());`.
+    pub fn private_ip_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.private_ip_address = Some(value.into());
+        self
+    }
+    /// Sets `private_ip_addresses`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkInterfaceRequest.private_ip_addresses = Some(value.into());`.
+pub fn private_ip_addresses<ValueType: Into<Vec<PrivateIpAddressSpecification>>>(mut self, value: ValueType) -> Self{
+        self.private_ip_addresses = Some(value.into());
+        self
+    }
+    /// Sets `secondary_private_ip_address_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkInterfaceRequest.secondary_private_ip_address_count = Some(value.into());`.
+    pub fn secondary_private_ip_address_count<ValueType: Into<i64>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.secondary_private_ip_address_count = Some(value.into());
+        self
+    }
+    /// Sets `subnet_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkInterfaceRequest.subnet_id = value.into();`.
+    pub fn subnet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subnet_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateNetworkInterfaceRequest with optional fields set to `None`.
+    pub fn new<SubnetIdType: Into<String>>(subnet_id: SubnetIdType)
+                                           -> CreateNetworkInterfaceRequest {
+        CreateNetworkInterfaceRequest {
+            subnet_id: subnet_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateNetworkInterfaceRequest` contents to a `SignedRequest`.
 struct CreateNetworkInterfaceRequestSerializer;
@@ -5694,7 +7493,6 @@ pub struct CreateNetworkInterfaceResult {
     #[doc="<p>Information about the network interface.</p>"]
     pub network_interface: Option<NetworkInterface>,
 }
-
 struct CreateNetworkInterfaceResultDeserializer;
 impl CreateNetworkInterfaceResultDeserializer {
     #[allow(unused_variables)]
@@ -5748,7 +7546,40 @@ pub struct CreatePlacementGroupRequest {
     #[doc="<p>The placement strategy.</p>"]
     pub strategy: String,
 }
-
+impl CreatePlacementGroupRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePlacementGroupRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePlacementGroupRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Sets `strategy`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePlacementGroupRequest.strategy = value.into();`.
+    pub fn strategy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.strategy = value.into();
+        self
+    }
+    /// Returns a new instance of CreatePlacementGroupRequest with optional fields set to `None`.
+    pub fn new<GroupNameType: Into<String>, StrategyType: Into<String>>
+        (group_name: GroupNameType,
+         strategy: StrategyType)
+         -> CreatePlacementGroupRequest {
+        CreatePlacementGroupRequest {
+            group_name: group_name.into(),
+            strategy: strategy.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreatePlacementGroupRequest` contents to a `SignedRequest`.
 struct CreatePlacementGroupRequestSerializer;
@@ -5780,7 +7611,56 @@ pub struct CreateReservedInstancesListingRequest {
     #[doc="<p>The ID of the active Standard Reserved Instance.</p>"]
     pub reserved_instances_id: String,
 }
-
+impl CreateReservedInstancesListingRequest {
+    /// Sets `client_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReservedInstancesListingRequest.client_token = value.into();`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = value.into();
+        self
+    }
+    /// Sets `instance_count`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReservedInstancesListingRequest.instance_count = value.into();`.
+    pub fn instance_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.instance_count = value.into();
+        self
+    }
+    /// Sets `price_schedules`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReservedInstancesListingRequest.price_schedules = value.into();`.
+    pub fn price_schedules<ValueType: Into<Vec<PriceScheduleSpecification>>>(mut self,
+                                                                             value: ValueType)
+                                                                             -> Self {
+        self.price_schedules = value.into();
+        self
+    }
+    /// Sets `reserved_instances_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReservedInstancesListingRequest.reserved_instances_id = value.into();`.
+    pub fn reserved_instances_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reserved_instances_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateReservedInstancesListingRequest with optional fields set to `None`.
+    pub fn new<ClientTokenType: Into<String>,
+               InstanceCountType: Into<i64>,
+               PriceSchedulesType: Into<Vec<PriceScheduleSpecification>>,
+               ReservedInstancesIdType: Into<String>>
+        (client_token: ClientTokenType,
+         instance_count: InstanceCountType,
+         price_schedules: PriceSchedulesType,
+         reserved_instances_id: ReservedInstancesIdType)
+         -> CreateReservedInstancesListingRequest {
+        CreateReservedInstancesListingRequest {
+            client_token: client_token.into(),
+            instance_count: instance_count.into(),
+            price_schedules: price_schedules.into(),
+            reserved_instances_id: reserved_instances_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateReservedInstancesListingRequest` contents to a `SignedRequest`.
 struct CreateReservedInstancesListingRequestSerializer;
@@ -5811,7 +7691,6 @@ pub struct CreateReservedInstancesListingResult {
     #[doc="<p>Information about the Standard Reserved Instance listing.</p>"]
     pub reserved_instances_listings: Option<Vec<ReservedInstancesListing>>,
 }
-
 struct CreateReservedInstancesListingResultDeserializer;
 impl CreateReservedInstancesListingResultDeserializer {
     #[allow(unused_variables)]
@@ -5878,7 +7757,90 @@ pub struct CreateRouteRequest {
     #[doc="<p>The ID of a VPC peering connection.</p>"]
     pub vpc_peering_connection_id: Option<String>,
 }
-
+impl CreateRouteRequest {
+    /// Sets `destination_cidr_block`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRouteRequest.destination_cidr_block = Some(value.into());`.
+    pub fn destination_cidr_block<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination_cidr_block = Some(value.into());
+        self
+    }
+    /// Sets `destination_ipv_6_cidr_block`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRouteRequest.destination_ipv_6_cidr_block = Some(value.into());`.
+    pub fn destination_ipv_6_cidr_block<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.destination_ipv_6_cidr_block = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRouteRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `egress_only_internet_gateway_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRouteRequest.egress_only_internet_gateway_id = Some(value.into());`.
+    pub fn egress_only_internet_gateway_id<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.egress_only_internet_gateway_id = Some(value.into());
+        self
+    }
+    /// Sets `gateway_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRouteRequest.gateway_id = Some(value.into());`.
+    pub fn gateway_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_id = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRouteRequest.instance_id = Some(value.into());`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = Some(value.into());
+        self
+    }
+    /// Sets `nat_gateway_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRouteRequest.nat_gateway_id = Some(value.into());`.
+    pub fn nat_gateway_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.nat_gateway_id = Some(value.into());
+        self
+    }
+    /// Sets `network_interface_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRouteRequest.network_interface_id = Some(value.into());`.
+    pub fn network_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_interface_id = Some(value.into());
+        self
+    }
+    /// Sets `route_table_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRouteRequest.route_table_id = value.into();`.
+    pub fn route_table_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.route_table_id = value.into();
+        self
+    }
+    /// Sets `vpc_peering_connection_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRouteRequest.vpc_peering_connection_id = Some(value.into());`.
+    pub fn vpc_peering_connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_peering_connection_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateRouteRequest with optional fields set to `None`.
+    pub fn new<RouteTableIdType: Into<String>>(route_table_id: RouteTableIdType)
+                                               -> CreateRouteRequest {
+        CreateRouteRequest {
+            route_table_id: route_table_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateRouteRequest` contents to a `SignedRequest`.
 struct CreateRouteRequestSerializer;
@@ -5932,7 +7894,6 @@ pub struct CreateRouteResult {
     #[doc="<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>"]
     pub return_: Option<bool>,
 }
-
 struct CreateRouteResultDeserializer;
 impl CreateRouteResultDeserializer {
     #[allow(unused_variables)]
@@ -5983,7 +7944,29 @@ pub struct CreateRouteTableRequest {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: String,
 }
-
+impl CreateRouteTableRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRouteTableRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `vpc_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRouteTableRequest.vpc_id = value.into();`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateRouteTableRequest with optional fields set to `None`.
+    pub fn new<VpcIdType: Into<String>>(vpc_id: VpcIdType) -> CreateRouteTableRequest {
+        CreateRouteTableRequest {
+            vpc_id: vpc_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateRouteTableRequest` contents to a `SignedRequest`.
 struct CreateRouteTableRequestSerializer;
@@ -6008,7 +7991,6 @@ pub struct CreateRouteTableResult {
     #[doc="<p>Information about the route table.</p>"]
     pub route_table: Option<RouteTable>,
 }
-
 struct CreateRouteTableResultDeserializer;
 impl CreateRouteTableResultDeserializer {
     #[allow(unused_variables)]
@@ -6064,7 +8046,47 @@ pub struct CreateSecurityGroupRequest {
     #[doc="<p>[EC2-VPC] The ID of the VPC. Required for EC2-VPC.</p>"]
     pub vpc_id: Option<String>,
 }
-
+impl CreateSecurityGroupRequest {
+    /// Sets `description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSecurityGroupRequest.description = value.into();`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSecurityGroupRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSecurityGroupRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Sets `vpc_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSecurityGroupRequest.vpc_id = Some(value.into());`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateSecurityGroupRequest with optional fields set to `None`.
+    pub fn new<DescriptionType: Into<String>, GroupNameType: Into<String>>
+        (description: DescriptionType,
+         group_name: GroupNameType)
+         -> CreateSecurityGroupRequest {
+        CreateSecurityGroupRequest {
+            description: description.into(),
+            group_name: group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateSecurityGroupRequest` contents to a `SignedRequest`.
 struct CreateSecurityGroupRequestSerializer;
@@ -6094,7 +8116,6 @@ pub struct CreateSecurityGroupResult {
     #[doc="<p>The ID of the security group.</p>"]
     pub group_id: Option<String>,
 }
-
 struct CreateSecurityGroupResultDeserializer;
 impl CreateSecurityGroupResultDeserializer {
     #[allow(unused_variables)]
@@ -6147,7 +8168,36 @@ pub struct CreateSnapshotRequest {
     #[doc="<p>The ID of the EBS volume.</p>"]
     pub volume_id: String,
 }
-
+impl CreateSnapshotRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSnapshotRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSnapshotRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `volume_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSnapshotRequest.volume_id = value.into();`.
+    pub fn volume_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateSnapshotRequest with optional fields set to `None`.
+    pub fn new<VolumeIdType: Into<String>>(volume_id: VolumeIdType) -> CreateSnapshotRequest {
+        CreateSnapshotRequest {
+            volume_id: volume_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateSnapshotRequest` contents to a `SignedRequest`.
 struct CreateSnapshotRequestSerializer;
@@ -6179,7 +8229,37 @@ pub struct CreateSpotDatafeedSubscriptionRequest {
     #[doc="<p>A prefix for the data feed file names.</p>"]
     pub prefix: Option<String>,
 }
-
+impl CreateSpotDatafeedSubscriptionRequest {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSpotDatafeedSubscriptionRequest.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSpotDatafeedSubscriptionRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSpotDatafeedSubscriptionRequest.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateSpotDatafeedSubscriptionRequest with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>>(bucket: BucketType)
+                                         -> CreateSpotDatafeedSubscriptionRequest {
+        CreateSpotDatafeedSubscriptionRequest {
+            bucket: bucket.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateSpotDatafeedSubscriptionRequest` contents to a `SignedRequest`.
 struct CreateSpotDatafeedSubscriptionRequestSerializer;
@@ -6207,7 +8287,6 @@ pub struct CreateSpotDatafeedSubscriptionResult {
     #[doc="<p>The Spot instance data feed subscription.</p>"]
     pub spot_datafeed_subscription: Option<SpotDatafeedSubscription>,
 }
-
 struct CreateSpotDatafeedSubscriptionResultDeserializer;
 impl CreateSpotDatafeedSubscriptionResultDeserializer {
     #[allow(unused_variables)]
@@ -6264,7 +8343,53 @@ pub struct CreateSubnetRequest {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: String,
 }
-
+impl CreateSubnetRequest {
+    /// Sets `availability_zone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSubnetRequest.availability_zone = Some(value.into());`.
+    pub fn availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.availability_zone = Some(value.into());
+        self
+    }
+    /// Sets `cidr_block`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSubnetRequest.cidr_block = value.into();`.
+    pub fn cidr_block<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cidr_block = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSubnetRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `ipv_6_cidr_block`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSubnetRequest.ipv_6_cidr_block = Some(value.into());`.
+    pub fn ipv_6_cidr_block<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ipv_6_cidr_block = Some(value.into());
+        self
+    }
+    /// Sets `vpc_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSubnetRequest.vpc_id = value.into();`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateSubnetRequest with optional fields set to `None`.
+    pub fn new<CidrBlockType: Into<String>, VpcIdType: Into<String>>(cidr_block: CidrBlockType,
+                                                                     vpc_id: VpcIdType)
+                                                                     -> CreateSubnetRequest {
+        CreateSubnetRequest {
+            cidr_block: cidr_block.into(),
+            vpc_id: vpc_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateSubnetRequest` contents to a `SignedRequest`.
 struct CreateSubnetRequestSerializer;
@@ -6296,7 +8421,6 @@ pub struct CreateSubnetResult {
     #[doc="<p>Information about the subnet.</p>"]
     pub subnet: Option<Subnet>,
 }
-
 struct CreateSubnetResultDeserializer;
 impl CreateSubnetResultDeserializer {
     #[allow(unused_variables)]
@@ -6349,7 +8473,37 @@ pub struct CreateTagsRequest {
     #[doc="<p>One or more tags. The <code>value</code> parameter is required, but if you don't want the tag to have a value, specify the parameter with no value, and we set the value to an empty string. </p>"]
     pub tags: Vec<Tag>,
 }
-
+impl CreateTagsRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTagsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `resources`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTagsRequest.resources = value.into();`.
+    pub fn resources<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resources = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTagsRequest.tags = value.into();`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of CreateTagsRequest with optional fields set to `None`.
+pub fn new<ResourcesType: Into<Vec<String>>, TagsType: Into<Vec<Tag>>>(resources: ResourcesType, tags: TagsType) -> CreateTagsRequest{
+        CreateTagsRequest {
+            resources: resources.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateTagsRequest` contents to a `SignedRequest`.
 struct CreateTagsRequestSerializer;
@@ -6379,7 +8533,26 @@ pub struct CreateVolumePermission {
     #[doc="<p>The specific AWS account ID that is to be added or removed from a volume's list of create volume permissions.</p>"]
     pub user_id: Option<String>,
 }
-
+impl CreateVolumePermission {
+    /// Sets `group`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVolumePermission.group = Some(value.into());`.
+    pub fn group<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group = Some(value.into());
+        self
+    }
+    /// Sets `user_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVolumePermission.user_id = Some(value.into());`.
+    pub fn user_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateVolumePermission with optional fields set to `None`.
+    pub fn new() -> CreateVolumePermission {
+        CreateVolumePermission { ..Default::default() }
+    }
+}
 struct CreateVolumePermissionDeserializer;
 impl CreateVolumePermissionDeserializer {
     #[allow(unused_variables)]
@@ -6508,7 +8681,28 @@ pub struct CreateVolumePermissionModifications {
     #[doc="<p>Removes a specific AWS account ID or group from a volume's list of create volume permissions.</p>"]
     pub remove: Option<Vec<CreateVolumePermission>>,
 }
-
+impl CreateVolumePermissionModifications {
+    /// Sets `add`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVolumePermissionModifications.add = Some(value.into());`.
+    pub fn add<ValueType: Into<Vec<CreateVolumePermission>>>(mut self, value: ValueType) -> Self {
+        self.add = Some(value.into());
+        self
+    }
+    /// Sets `remove`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVolumePermissionModifications.remove = Some(value.into());`.
+    pub fn remove<ValueType: Into<Vec<CreateVolumePermission>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.remove = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateVolumePermissionModifications with optional fields set to `None`.
+    pub fn new() -> CreateVolumePermissionModifications {
+        CreateVolumePermissionModifications { ..Default::default() }
+    }
+}
 
 /// Serialize `CreateVolumePermissionModifications` contents to a `SignedRequest`.
 struct CreateVolumePermissionModificationsSerializer;
@@ -6555,7 +8749,81 @@ pub struct CreateVolumeRequest {
     #[doc="<p>The volume type. This can be <code>gp2</code> for General Purpose SSD, <code>io1</code> for Provisioned IOPS SSD, <code>st1</code> for Throughput Optimized HDD, <code>sc1</code> for Cold HDD, or <code>standard</code> for Magnetic volumes.</p> <p>Default: <code>standard</code> </p>"]
     pub volume_type: Option<String>,
 }
-
+impl CreateVolumeRequest {
+    /// Sets `availability_zone`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVolumeRequest.availability_zone = value.into();`.
+    pub fn availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.availability_zone = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVolumeRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `encrypted`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVolumeRequest.encrypted = Some(value.into());`.
+    pub fn encrypted<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.encrypted = Some(value.into());
+        self
+    }
+    /// Sets `iops`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVolumeRequest.iops = Some(value.into());`.
+    pub fn iops<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.iops = Some(value.into());
+        self
+    }
+    /// Sets `kms_key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVolumeRequest.kms_key_id = Some(value.into());`.
+    pub fn kms_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kms_key_id = Some(value.into());
+        self
+    }
+    /// Sets `size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVolumeRequest.size = Some(value.into());`.
+    pub fn size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.size = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVolumeRequest.snapshot_id = Some(value.into());`.
+    pub fn snapshot_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_id = Some(value.into());
+        self
+    }
+    /// Sets `tag_specifications`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVolumeRequest.tag_specifications = Some(value.into());`.
+    pub fn tag_specifications<ValueType: Into<Vec<TagSpecification>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.tag_specifications = Some(value.into());
+        self
+    }
+    /// Sets `volume_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVolumeRequest.volume_type = Some(value.into());`.
+    pub fn volume_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateVolumeRequest with optional fields set to `None`.
+    pub fn new<AvailabilityZoneType: Into<String>>(availability_zone: AvailabilityZoneType)
+                                                   -> CreateVolumeRequest {
+        CreateVolumeRequest {
+            availability_zone: availability_zone.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateVolumeRequest` contents to a `SignedRequest`.
 struct CreateVolumeRequestSerializer;
@@ -6615,7 +8883,61 @@ pub struct CreateVpcEndpointRequest {
     #[doc="<p>The ID of the VPC in which the endpoint will be used.</p>"]
     pub vpc_id: String,
 }
-
+impl CreateVpcEndpointRequest {
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpcEndpointRequest.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpcEndpointRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `policy_document`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpcEndpointRequest.policy_document = Some(value.into());`.
+    pub fn policy_document<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_document = Some(value.into());
+        self
+    }
+    /// Sets `route_table_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpcEndpointRequest.route_table_ids = Some(value.into());`.
+    pub fn route_table_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.route_table_ids = Some(value.into());
+        self
+    }
+    /// Sets `service_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpcEndpointRequest.service_name = value.into();`.
+    pub fn service_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_name = value.into();
+        self
+    }
+    /// Sets `vpc_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpcEndpointRequest.vpc_id = value.into();`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateVpcEndpointRequest with optional fields set to `None`.
+    pub fn new<ServiceNameType: Into<String>, VpcIdType: Into<String>>
+        (service_name: ServiceNameType,
+         vpc_id: VpcIdType)
+         -> CreateVpcEndpointRequest {
+        CreateVpcEndpointRequest {
+            service_name: service_name.into(),
+            vpc_id: vpc_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateVpcEndpointRequest` contents to a `SignedRequest`.
 struct CreateVpcEndpointRequestSerializer;
@@ -6654,7 +8976,6 @@ pub struct CreateVpcEndpointResult {
     #[doc="<p>Information about the endpoint.</p>"]
     pub vpc_endpoint: Option<VpcEndpoint>,
 }
-
 struct CreateVpcEndpointResultDeserializer;
 impl CreateVpcEndpointResultDeserializer {
     #[allow(unused_variables)]
@@ -6714,7 +9035,40 @@ pub struct CreateVpcPeeringConnectionRequest {
     #[doc="<p>The ID of the requester VPC.</p>"]
     pub vpc_id: Option<String>,
 }
-
+impl CreateVpcPeeringConnectionRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpcPeeringConnectionRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `peer_owner_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpcPeeringConnectionRequest.peer_owner_id = Some(value.into());`.
+    pub fn peer_owner_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.peer_owner_id = Some(value.into());
+        self
+    }
+    /// Sets `peer_vpc_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpcPeeringConnectionRequest.peer_vpc_id = Some(value.into());`.
+    pub fn peer_vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.peer_vpc_id = Some(value.into());
+        self
+    }
+    /// Sets `vpc_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpcPeeringConnectionRequest.vpc_id = Some(value.into());`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateVpcPeeringConnectionRequest with optional fields set to `None`.
+    pub fn new() -> CreateVpcPeeringConnectionRequest {
+        CreateVpcPeeringConnectionRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `CreateVpcPeeringConnectionRequest` contents to a `SignedRequest`.
 struct CreateVpcPeeringConnectionRequestSerializer;
@@ -6747,7 +9101,6 @@ pub struct CreateVpcPeeringConnectionResult {
     #[doc="<p>Information about the VPC peering connection.</p>"]
     pub vpc_peering_connection: Option<VpcPeeringConnection>,
 }
-
 struct CreateVpcPeeringConnectionResultDeserializer;
 impl CreateVpcPeeringConnectionResultDeserializer {
     #[allow(unused_variables)]
@@ -6804,7 +9157,45 @@ pub struct CreateVpcRequest {
     #[doc="<p>The tenancy options for instances launched into the VPC. For <code>default</code>, instances are launched with shared tenancy by default. You can launch instances with any tenancy into a shared tenancy VPC. For <code>dedicated</code>, instances are launched as dedicated tenancy instances by default. You can only launch instances with a tenancy of <code>dedicated</code> or <code>host</code> into a dedicated tenancy VPC. </p> <p> <b>Important:</b> The <code>host</code> value cannot be used with this parameter. Use the <code>default</code> or <code>dedicated</code> values only.</p> <p>Default: <code>default</code> </p>"]
     pub instance_tenancy: Option<String>,
 }
-
+impl CreateVpcRequest {
+    /// Sets `amazon_provided_ipv_6_cidr_block`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpcRequest.amazon_provided_ipv_6_cidr_block = Some(value.into());`.
+    pub fn amazon_provided_ipv_6_cidr_block<ValueType: Into<bool>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.amazon_provided_ipv_6_cidr_block = Some(value.into());
+        self
+    }
+    /// Sets `cidr_block`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpcRequest.cidr_block = value.into();`.
+    pub fn cidr_block<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cidr_block = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpcRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `instance_tenancy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpcRequest.instance_tenancy = Some(value.into());`.
+    pub fn instance_tenancy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_tenancy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateVpcRequest with optional fields set to `None`.
+    pub fn new<CidrBlockType: Into<String>>(cidr_block: CidrBlockType) -> CreateVpcRequest {
+        CreateVpcRequest {
+            cidr_block: cidr_block.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateVpcRequest` contents to a `SignedRequest`.
 struct CreateVpcRequestSerializer;
@@ -6836,7 +9227,6 @@ pub struct CreateVpcResult {
     #[doc="<p>Information about the VPC.</p>"]
     pub vpc: Option<Vpc>,
 }
-
 struct CreateVpcResultDeserializer;
 impl CreateVpcResultDeserializer {
     #[allow(unused_variables)]
@@ -6892,7 +9282,60 @@ pub struct CreateVpnConnectionRequest {
     #[doc="<p>The ID of the virtual private gateway.</p>"]
     pub vpn_gateway_id: String,
 }
-
+impl CreateVpnConnectionRequest {
+    /// Sets `customer_gateway_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpnConnectionRequest.customer_gateway_id = value.into();`.
+    pub fn customer_gateway_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.customer_gateway_id = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpnConnectionRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpnConnectionRequest.options = Some(value.into());`.
+    pub fn options<ValueType: Into<VpnConnectionOptionsSpecification>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.options = Some(value.into());
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpnConnectionRequest.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Sets `vpn_gateway_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpnConnectionRequest.vpn_gateway_id = value.into();`.
+    pub fn vpn_gateway_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpn_gateway_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateVpnConnectionRequest with optional fields set to `None`.
+    pub fn new<CustomerGatewayIdType: Into<String>,
+               TypeType: Into<String>,
+               VpnGatewayIdType: Into<String>>
+        (customer_gateway_id: CustomerGatewayIdType,
+         type_: TypeType,
+         vpn_gateway_id: VpnGatewayIdType)
+         -> CreateVpnConnectionRequest {
+        CreateVpnConnectionRequest {
+            customer_gateway_id: customer_gateway_id.into(),
+            type_: type_.into(),
+            vpn_gateway_id: vpn_gateway_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateVpnConnectionRequest` contents to a `SignedRequest`.
 struct CreateVpnConnectionRequestSerializer;
@@ -6928,7 +9371,6 @@ pub struct CreateVpnConnectionResult {
     #[doc="<p>Information about the VPN connection.</p>"]
     pub vpn_connection: Option<VpnConnection>,
 }
-
 struct CreateVpnConnectionResultDeserializer;
 impl CreateVpnConnectionResultDeserializer {
     #[allow(unused_variables)]
@@ -6980,7 +9422,33 @@ pub struct CreateVpnConnectionRouteRequest {
     #[doc="<p>The ID of the VPN connection.</p>"]
     pub vpn_connection_id: String,
 }
-
+impl CreateVpnConnectionRouteRequest {
+    /// Sets `destination_cidr_block`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpnConnectionRouteRequest.destination_cidr_block = value.into();`.
+    pub fn destination_cidr_block<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination_cidr_block = value.into();
+        self
+    }
+    /// Sets `vpn_connection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpnConnectionRouteRequest.vpn_connection_id = value.into();`.
+    pub fn vpn_connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpn_connection_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateVpnConnectionRouteRequest with optional fields set to `None`.
+    pub fn new<DestinationCidrBlockType: Into<String>, VpnConnectionIdType: Into<String>>
+        (destination_cidr_block: DestinationCidrBlockType,
+         vpn_connection_id: VpnConnectionIdType)
+         -> CreateVpnConnectionRouteRequest {
+        CreateVpnConnectionRouteRequest {
+            destination_cidr_block: destination_cidr_block.into(),
+            vpn_connection_id: vpn_connection_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateVpnConnectionRouteRequest` contents to a `SignedRequest`.
 struct CreateVpnConnectionRouteRequestSerializer;
@@ -7009,7 +9477,36 @@ pub struct CreateVpnGatewayRequest {
     #[doc="<p>The type of VPN connection this virtual private gateway supports.</p>"]
     pub type_: String,
 }
-
+impl CreateVpnGatewayRequest {
+    /// Sets `availability_zone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpnGatewayRequest.availability_zone = Some(value.into());`.
+    pub fn availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.availability_zone = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpnGatewayRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVpnGatewayRequest.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of CreateVpnGatewayRequest with optional fields set to `None`.
+    pub fn new<TypeType: Into<String>>(type_: TypeType) -> CreateVpnGatewayRequest {
+        CreateVpnGatewayRequest {
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateVpnGatewayRequest` contents to a `SignedRequest`.
 struct CreateVpnGatewayRequestSerializer;
@@ -7037,7 +9534,6 @@ pub struct CreateVpnGatewayResult {
     #[doc="<p>Information about the virtual private gateway.</p>"]
     pub vpn_gateway: Option<VpnGateway>,
 }
-
 struct CreateVpnGatewayResultDeserializer;
 impl CreateVpnGatewayResultDeserializer {
     #[allow(unused_variables)]
@@ -7111,7 +9607,6 @@ pub struct CustomerGateway {
     #[doc="<p>The type of VPN connection the customer gateway supports (<code>ipsec.1</code>).</p>"]
     pub type_: Option<String>,
 }
-
 struct CustomerGatewayDeserializer;
 impl CustomerGatewayDeserializer {
     #[allow(unused_variables)]
@@ -7262,7 +9757,30 @@ pub struct DeleteCustomerGatewayRequest {
     #[doc="<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>"]
     pub dry_run: Option<bool>,
 }
-
+impl DeleteCustomerGatewayRequest {
+    /// Sets `customer_gateway_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteCustomerGatewayRequest.customer_gateway_id = value.into();`.
+    pub fn customer_gateway_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.customer_gateway_id = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteCustomerGatewayRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteCustomerGatewayRequest with optional fields set to `None`.
+    pub fn new<CustomerGatewayIdType: Into<String>>(customer_gateway_id: CustomerGatewayIdType)
+                                                    -> DeleteCustomerGatewayRequest {
+        DeleteCustomerGatewayRequest {
+            customer_gateway_id: customer_gateway_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteCustomerGatewayRequest` contents to a `SignedRequest`.
 struct DeleteCustomerGatewayRequestSerializer;
@@ -7290,7 +9808,30 @@ pub struct DeleteDhcpOptionsRequest {
     #[doc="<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>"]
     pub dry_run: Option<bool>,
 }
-
+impl DeleteDhcpOptionsRequest {
+    /// Sets `dhcp_options_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDhcpOptionsRequest.dhcp_options_id = value.into();`.
+    pub fn dhcp_options_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.dhcp_options_id = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDhcpOptionsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteDhcpOptionsRequest with optional fields set to `None`.
+    pub fn new<DhcpOptionsIdType: Into<String>>(dhcp_options_id: DhcpOptionsIdType)
+                                                -> DeleteDhcpOptionsRequest {
+        DeleteDhcpOptionsRequest {
+            dhcp_options_id: dhcp_options_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteDhcpOptionsRequest` contents to a `SignedRequest`.
 struct DeleteDhcpOptionsRequestSerializer;
@@ -7317,7 +9858,33 @@ pub struct DeleteEgressOnlyInternetGatewayRequest {
     #[doc="<p>The ID of the egress-only Internet gateway.</p>"]
     pub egress_only_internet_gateway_id: String,
 }
-
+impl DeleteEgressOnlyInternetGatewayRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteEgressOnlyInternetGatewayRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `egress_only_internet_gateway_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteEgressOnlyInternetGatewayRequest.egress_only_internet_gateway_id = value.into();`.
+    pub fn egress_only_internet_gateway_id<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.egress_only_internet_gateway_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteEgressOnlyInternetGatewayRequest with optional fields set to `None`.
+    pub fn new<EgressOnlyInternetGatewayIdType: Into<String>>
+        (egress_only_internet_gateway_id: EgressOnlyInternetGatewayIdType)
+         -> DeleteEgressOnlyInternetGatewayRequest {
+        DeleteEgressOnlyInternetGatewayRequest {
+            egress_only_internet_gateway_id: egress_only_internet_gateway_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteEgressOnlyInternetGatewayRequest` contents to a `SignedRequest`.
 struct DeleteEgressOnlyInternetGatewayRequestSerializer;
@@ -7342,7 +9909,6 @@ pub struct DeleteEgressOnlyInternetGatewayResult {
     #[doc="<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>"]
     pub return_code: Option<bool>,
 }
-
 struct DeleteEgressOnlyInternetGatewayResultDeserializer;
 impl DeleteEgressOnlyInternetGatewayResultDeserializer {
     #[allow(unused_variables)]
@@ -7392,7 +9958,23 @@ pub struct DeleteFlowLogsRequest {
     #[doc="<p>One or more flow log IDs.</p>"]
     pub flow_log_ids: Vec<String>,
 }
-
+impl DeleteFlowLogsRequest {
+    /// Sets `flow_log_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteFlowLogsRequest.flow_log_ids = value.into();`.
+    pub fn flow_log_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.flow_log_ids = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteFlowLogsRequest with optional fields set to `None`.
+    pub fn new<FlowLogIdsType: Into<Vec<String>>>(flow_log_ids: FlowLogIdsType)
+                                                  -> DeleteFlowLogsRequest {
+        DeleteFlowLogsRequest {
+            flow_log_ids: flow_log_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteFlowLogsRequest` contents to a `SignedRequest`.
 struct DeleteFlowLogsRequestSerializer;
@@ -7416,7 +9998,6 @@ pub struct DeleteFlowLogsResult {
     #[doc="<p>Information about the flow logs that could not be deleted successfully.</p>"]
     pub unsuccessful: Option<Vec<UnsuccessfulItem>>,
 }
-
 struct DeleteFlowLogsResultDeserializer;
 impl DeleteFlowLogsResultDeserializer {
     #[allow(unused_variables)]
@@ -7468,7 +10049,30 @@ pub struct DeleteInternetGatewayRequest {
     #[doc="<p>The ID of the Internet gateway.</p>"]
     pub internet_gateway_id: String,
 }
-
+impl DeleteInternetGatewayRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteInternetGatewayRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `internet_gateway_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteInternetGatewayRequest.internet_gateway_id = value.into();`.
+    pub fn internet_gateway_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.internet_gateway_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteInternetGatewayRequest with optional fields set to `None`.
+    pub fn new<InternetGatewayIdType: Into<String>>(internet_gateway_id: InternetGatewayIdType)
+                                                    -> DeleteInternetGatewayRequest {
+        DeleteInternetGatewayRequest {
+            internet_gateway_id: internet_gateway_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteInternetGatewayRequest` contents to a `SignedRequest`.
 struct DeleteInternetGatewayRequestSerializer;
@@ -7496,7 +10100,29 @@ pub struct DeleteKeyPairRequest {
     #[doc="<p>The name of the key pair.</p>"]
     pub key_name: String,
 }
-
+impl DeleteKeyPairRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteKeyPairRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `key_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteKeyPairRequest.key_name = value.into();`.
+    pub fn key_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteKeyPairRequest with optional fields set to `None`.
+    pub fn new<KeyNameType: Into<String>>(key_name: KeyNameType) -> DeleteKeyPairRequest {
+        DeleteKeyPairRequest {
+            key_name: key_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteKeyPairRequest` contents to a `SignedRequest`.
 struct DeleteKeyPairRequestSerializer;
@@ -7521,7 +10147,23 @@ pub struct DeleteNatGatewayRequest {
     #[doc="<p>The ID of the NAT gateway.</p>"]
     pub nat_gateway_id: String,
 }
-
+impl DeleteNatGatewayRequest {
+    /// Sets `nat_gateway_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteNatGatewayRequest.nat_gateway_id = value.into();`.
+    pub fn nat_gateway_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.nat_gateway_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteNatGatewayRequest with optional fields set to `None`.
+    pub fn new<NatGatewayIdType: Into<String>>(nat_gateway_id: NatGatewayIdType)
+                                               -> DeleteNatGatewayRequest {
+        DeleteNatGatewayRequest {
+            nat_gateway_id: nat_gateway_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteNatGatewayRequest` contents to a `SignedRequest`.
 struct DeleteNatGatewayRequestSerializer;
@@ -7544,7 +10186,6 @@ pub struct DeleteNatGatewayResult {
     #[doc="<p>The ID of the NAT gateway.</p>"]
     pub nat_gateway_id: Option<String>,
 }
-
 struct DeleteNatGatewayResultDeserializer;
 impl DeleteNatGatewayResultDeserializer {
     #[allow(unused_variables)]
@@ -7599,7 +10240,49 @@ pub struct DeleteNetworkAclEntryRequest {
     #[doc="<p>The rule number of the entry to delete.</p>"]
     pub rule_number: i64,
 }
-
+impl DeleteNetworkAclEntryRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteNetworkAclEntryRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `egress`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteNetworkAclEntryRequest.egress = value.into();`.
+    pub fn egress<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.egress = value.into();
+        self
+    }
+    /// Sets `network_acl_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteNetworkAclEntryRequest.network_acl_id = value.into();`.
+    pub fn network_acl_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_acl_id = value.into();
+        self
+    }
+    /// Sets `rule_number`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteNetworkAclEntryRequest.rule_number = value.into();`.
+    pub fn rule_number<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.rule_number = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteNetworkAclEntryRequest with optional fields set to `None`.
+    pub fn new<EgressType: Into<bool>, NetworkAclIdType: Into<String>, RuleNumberType: Into<i64>>
+        (egress: EgressType,
+         network_acl_id: NetworkAclIdType,
+         rule_number: RuleNumberType)
+         -> DeleteNetworkAclEntryRequest {
+        DeleteNetworkAclEntryRequest {
+            egress: egress.into(),
+            network_acl_id: network_acl_id.into(),
+            rule_number: rule_number.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteNetworkAclEntryRequest` contents to a `SignedRequest`.
 struct DeleteNetworkAclEntryRequestSerializer;
@@ -7630,7 +10313,30 @@ pub struct DeleteNetworkAclRequest {
     #[doc="<p>The ID of the network ACL.</p>"]
     pub network_acl_id: String,
 }
-
+impl DeleteNetworkAclRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteNetworkAclRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `network_acl_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteNetworkAclRequest.network_acl_id = value.into();`.
+    pub fn network_acl_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_acl_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteNetworkAclRequest with optional fields set to `None`.
+    pub fn new<NetworkAclIdType: Into<String>>(network_acl_id: NetworkAclIdType)
+                                               -> DeleteNetworkAclRequest {
+        DeleteNetworkAclRequest {
+            network_acl_id: network_acl_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteNetworkAclRequest` contents to a `SignedRequest`.
 struct DeleteNetworkAclRequestSerializer;
@@ -7660,7 +10366,40 @@ pub struct DeleteNetworkInterfacePermissionRequest {
     #[doc="<p>The ID of the network interface permission.</p>"]
     pub network_interface_permission_id: String,
 }
-
+impl DeleteNetworkInterfacePermissionRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteNetworkInterfacePermissionRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `force`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteNetworkInterfacePermissionRequest.force = Some(value.into());`.
+    pub fn force<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.force = Some(value.into());
+        self
+    }
+    /// Sets `network_interface_permission_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteNetworkInterfacePermissionRequest.network_interface_permission_id = value.into();`.
+    pub fn network_interface_permission_id<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.network_interface_permission_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteNetworkInterfacePermissionRequest with optional fields set to `None`.
+    pub fn new<NetworkInterfacePermissionIdType: Into<String>>
+        (network_interface_permission_id: NetworkInterfacePermissionIdType)
+         -> DeleteNetworkInterfacePermissionRequest {
+        DeleteNetworkInterfacePermissionRequest {
+            network_interface_permission_id: network_interface_permission_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteNetworkInterfacePermissionRequest` contents to a `SignedRequest`.
 struct DeleteNetworkInterfacePermissionRequestSerializer;
@@ -7689,7 +10428,6 @@ pub struct DeleteNetworkInterfacePermissionResult {
     #[doc="<p>Returns <code>true</code> if the request succeeds, otherwise returns an error.</p>"]
     pub return_: Option<bool>,
 }
-
 struct DeleteNetworkInterfacePermissionResultDeserializer;
 impl DeleteNetworkInterfacePermissionResultDeserializer {
     #[allow(unused_variables)]
@@ -7741,7 +10479,30 @@ pub struct DeleteNetworkInterfaceRequest {
     #[doc="<p>The ID of the network interface.</p>"]
     pub network_interface_id: String,
 }
-
+impl DeleteNetworkInterfaceRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteNetworkInterfaceRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `network_interface_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteNetworkInterfaceRequest.network_interface_id = value.into();`.
+    pub fn network_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_interface_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteNetworkInterfaceRequest with optional fields set to `None`.
+    pub fn new<NetworkInterfaceIdType: Into<String>>(network_interface_id: NetworkInterfaceIdType)
+                                                     -> DeleteNetworkInterfaceRequest {
+        DeleteNetworkInterfaceRequest {
+            network_interface_id: network_interface_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteNetworkInterfaceRequest` contents to a `SignedRequest`.
 struct DeleteNetworkInterfaceRequestSerializer;
@@ -7769,7 +10530,30 @@ pub struct DeletePlacementGroupRequest {
     #[doc="<p>The name of the placement group.</p>"]
     pub group_name: String,
 }
-
+impl DeletePlacementGroupRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePlacementGroupRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePlacementGroupRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeletePlacementGroupRequest with optional fields set to `None`.
+    pub fn new<GroupNameType: Into<String>>(group_name: GroupNameType)
+                                            -> DeletePlacementGroupRequest {
+        DeletePlacementGroupRequest {
+            group_name: group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeletePlacementGroupRequest` contents to a `SignedRequest`.
 struct DeletePlacementGroupRequestSerializer;
@@ -7800,7 +10584,46 @@ pub struct DeleteRouteRequest {
     #[doc="<p>The ID of the route table.</p>"]
     pub route_table_id: String,
 }
-
+impl DeleteRouteRequest {
+    /// Sets `destination_cidr_block`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRouteRequest.destination_cidr_block = Some(value.into());`.
+    pub fn destination_cidr_block<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination_cidr_block = Some(value.into());
+        self
+    }
+    /// Sets `destination_ipv_6_cidr_block`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRouteRequest.destination_ipv_6_cidr_block = Some(value.into());`.
+    pub fn destination_ipv_6_cidr_block<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.destination_ipv_6_cidr_block = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRouteRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `route_table_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRouteRequest.route_table_id = value.into();`.
+    pub fn route_table_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.route_table_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteRouteRequest with optional fields set to `None`.
+    pub fn new<RouteTableIdType: Into<String>>(route_table_id: RouteTableIdType)
+                                               -> DeleteRouteRequest {
+        DeleteRouteRequest {
+            route_table_id: route_table_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteRouteRequest` contents to a `SignedRequest`.
 struct DeleteRouteRequestSerializer;
@@ -7836,7 +10659,30 @@ pub struct DeleteRouteTableRequest {
     #[doc="<p>The ID of the route table.</p>"]
     pub route_table_id: String,
 }
-
+impl DeleteRouteTableRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRouteTableRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `route_table_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRouteTableRequest.route_table_id = value.into();`.
+    pub fn route_table_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.route_table_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteRouteTableRequest with optional fields set to `None`.
+    pub fn new<RouteTableIdType: Into<String>>(route_table_id: RouteTableIdType)
+                                               -> DeleteRouteTableRequest {
+        DeleteRouteTableRequest {
+            route_table_id: route_table_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteRouteTableRequest` contents to a `SignedRequest`.
 struct DeleteRouteTableRequestSerializer;
@@ -7866,7 +10712,33 @@ pub struct DeleteSecurityGroupRequest {
     #[doc="<p>[EC2-Classic, default VPC] The name of the security group. You can specify either the security group name or the security group ID.</p>"]
     pub group_name: Option<String>,
 }
-
+impl DeleteSecurityGroupRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSecurityGroupRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `group_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSecurityGroupRequest.group_id = Some(value.into());`.
+    pub fn group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_id = Some(value.into());
+        self
+    }
+    /// Sets `group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSecurityGroupRequest.group_name = Some(value.into());`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteSecurityGroupRequest with optional fields set to `None`.
+    pub fn new() -> DeleteSecurityGroupRequest {
+        DeleteSecurityGroupRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DeleteSecurityGroupRequest` contents to a `SignedRequest`.
 struct DeleteSecurityGroupRequestSerializer;
@@ -7898,7 +10770,29 @@ pub struct DeleteSnapshotRequest {
     #[doc="<p>The ID of the EBS snapshot.</p>"]
     pub snapshot_id: String,
 }
-
+impl DeleteSnapshotRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSnapshotRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSnapshotRequest.snapshot_id = value.into();`.
+    pub fn snapshot_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteSnapshotRequest with optional fields set to `None`.
+    pub fn new<SnapshotIdType: Into<String>>(snapshot_id: SnapshotIdType) -> DeleteSnapshotRequest {
+        DeleteSnapshotRequest {
+            snapshot_id: snapshot_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteSnapshotRequest` contents to a `SignedRequest`.
 struct DeleteSnapshotRequestSerializer;
@@ -7923,7 +10817,19 @@ pub struct DeleteSpotDatafeedSubscriptionRequest {
     #[doc="<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>"]
     pub dry_run: Option<bool>,
 }
-
+impl DeleteSpotDatafeedSubscriptionRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSpotDatafeedSubscriptionRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteSpotDatafeedSubscriptionRequest with optional fields set to `None`.
+    pub fn new() -> DeleteSpotDatafeedSubscriptionRequest {
+        DeleteSpotDatafeedSubscriptionRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DeleteSpotDatafeedSubscriptionRequest` contents to a `SignedRequest`.
 struct DeleteSpotDatafeedSubscriptionRequestSerializer;
@@ -7949,7 +10855,29 @@ pub struct DeleteSubnetRequest {
     #[doc="<p>The ID of the subnet.</p>"]
     pub subnet_id: String,
 }
-
+impl DeleteSubnetRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSubnetRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `subnet_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSubnetRequest.subnet_id = value.into();`.
+    pub fn subnet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subnet_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteSubnetRequest with optional fields set to `None`.
+    pub fn new<SubnetIdType: Into<String>>(subnet_id: SubnetIdType) -> DeleteSubnetRequest {
+        DeleteSubnetRequest {
+            subnet_id: subnet_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteSubnetRequest` contents to a `SignedRequest`.
 struct DeleteSubnetRequestSerializer;
@@ -7978,7 +10906,36 @@ pub struct DeleteTagsRequest {
     #[doc="<p>One or more tags to delete. If you omit the <code>value</code> parameter, we delete the tag regardless of its value. If you specify this parameter with an empty string as the value, we delete the key only if its value is an empty string.</p>"]
     pub tags: Option<Vec<Tag>>,
 }
-
+impl DeleteTagsRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTagsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `resources`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTagsRequest.resources = value.into();`.
+    pub fn resources<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resources = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTagsRequest.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteTagsRequest with optional fields set to `None`.
+    pub fn new<ResourcesType: Into<Vec<String>>>(resources: ResourcesType) -> DeleteTagsRequest {
+        DeleteTagsRequest {
+            resources: resources.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteTagsRequest` contents to a `SignedRequest`.
 struct DeleteTagsRequestSerializer;
@@ -8010,7 +10967,29 @@ pub struct DeleteVolumeRequest {
     #[doc="<p>The ID of the volume.</p>"]
     pub volume_id: String,
 }
-
+impl DeleteVolumeRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVolumeRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `volume_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVolumeRequest.volume_id = value.into();`.
+    pub fn volume_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteVolumeRequest with optional fields set to `None`.
+    pub fn new<VolumeIdType: Into<String>>(volume_id: VolumeIdType) -> DeleteVolumeRequest {
+        DeleteVolumeRequest {
+            volume_id: volume_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteVolumeRequest` contents to a `SignedRequest`.
 struct DeleteVolumeRequestSerializer;
@@ -8037,7 +11016,30 @@ pub struct DeleteVpcEndpointsRequest {
     #[doc="<p>One or more endpoint IDs.</p>"]
     pub vpc_endpoint_ids: Vec<String>,
 }
-
+impl DeleteVpcEndpointsRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVpcEndpointsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `vpc_endpoint_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVpcEndpointsRequest.vpc_endpoint_ids = value.into();`.
+    pub fn vpc_endpoint_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.vpc_endpoint_ids = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteVpcEndpointsRequest with optional fields set to `None`.
+    pub fn new<VpcEndpointIdsType: Into<Vec<String>>>(vpc_endpoint_ids: VpcEndpointIdsType)
+                                                      -> DeleteVpcEndpointsRequest {
+        DeleteVpcEndpointsRequest {
+            vpc_endpoint_ids: vpc_endpoint_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteVpcEndpointsRequest` contents to a `SignedRequest`.
 struct DeleteVpcEndpointsRequestSerializer;
@@ -8064,7 +11066,6 @@ pub struct DeleteVpcEndpointsResult {
     #[doc="<p>Information about the endpoints that were not successfully deleted.</p>"]
     pub unsuccessful: Option<Vec<UnsuccessfulItem>>,
 }
-
 struct DeleteVpcEndpointsResultDeserializer;
 impl DeleteVpcEndpointsResultDeserializer {
     #[allow(unused_variables)]
@@ -8116,7 +11117,29 @@ pub struct DeleteVpcPeeringConnectionRequest {
     #[doc="<p>The ID of the VPC peering connection.</p>"]
     pub vpc_peering_connection_id: String,
 }
-
+impl DeleteVpcPeeringConnectionRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVpcPeeringConnectionRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `vpc_peering_connection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVpcPeeringConnectionRequest.vpc_peering_connection_id = value.into();`.
+    pub fn vpc_peering_connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_peering_connection_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteVpcPeeringConnectionRequest with optional fields set to `None`.
+pub fn new<VpcPeeringConnectionIdType: Into<String>>(vpc_peering_connection_id: VpcPeeringConnectionIdType) -> DeleteVpcPeeringConnectionRequest{
+        DeleteVpcPeeringConnectionRequest {
+            vpc_peering_connection_id: vpc_peering_connection_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteVpcPeeringConnectionRequest` contents to a `SignedRequest`.
 struct DeleteVpcPeeringConnectionRequestSerializer;
@@ -8142,7 +11165,6 @@ pub struct DeleteVpcPeeringConnectionResult {
     #[doc="<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>"]
     pub return_: Option<bool>,
 }
-
 struct DeleteVpcPeeringConnectionResultDeserializer;
 impl DeleteVpcPeeringConnectionResultDeserializer {
     #[allow(unused_variables)]
@@ -8194,7 +11216,29 @@ pub struct DeleteVpcRequest {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: String,
 }
-
+impl DeleteVpcRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVpcRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `vpc_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVpcRequest.vpc_id = value.into();`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteVpcRequest with optional fields set to `None`.
+    pub fn new<VpcIdType: Into<String>>(vpc_id: VpcIdType) -> DeleteVpcRequest {
+        DeleteVpcRequest {
+            vpc_id: vpc_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteVpcRequest` contents to a `SignedRequest`.
 struct DeleteVpcRequestSerializer;
@@ -8221,7 +11265,30 @@ pub struct DeleteVpnConnectionRequest {
     #[doc="<p>The ID of the VPN connection.</p>"]
     pub vpn_connection_id: String,
 }
-
+impl DeleteVpnConnectionRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVpnConnectionRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `vpn_connection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVpnConnectionRequest.vpn_connection_id = value.into();`.
+    pub fn vpn_connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpn_connection_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteVpnConnectionRequest with optional fields set to `None`.
+    pub fn new<VpnConnectionIdType: Into<String>>(vpn_connection_id: VpnConnectionIdType)
+                                                  -> DeleteVpnConnectionRequest {
+        DeleteVpnConnectionRequest {
+            vpn_connection_id: vpn_connection_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteVpnConnectionRequest` contents to a `SignedRequest`.
 struct DeleteVpnConnectionRequestSerializer;
@@ -8249,7 +11316,33 @@ pub struct DeleteVpnConnectionRouteRequest {
     #[doc="<p>The ID of the VPN connection.</p>"]
     pub vpn_connection_id: String,
 }
-
+impl DeleteVpnConnectionRouteRequest {
+    /// Sets `destination_cidr_block`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVpnConnectionRouteRequest.destination_cidr_block = value.into();`.
+    pub fn destination_cidr_block<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination_cidr_block = value.into();
+        self
+    }
+    /// Sets `vpn_connection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVpnConnectionRouteRequest.vpn_connection_id = value.into();`.
+    pub fn vpn_connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpn_connection_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteVpnConnectionRouteRequest with optional fields set to `None`.
+    pub fn new<DestinationCidrBlockType: Into<String>, VpnConnectionIdType: Into<String>>
+        (destination_cidr_block: DestinationCidrBlockType,
+         vpn_connection_id: VpnConnectionIdType)
+         -> DeleteVpnConnectionRouteRequest {
+        DeleteVpnConnectionRouteRequest {
+            destination_cidr_block: destination_cidr_block.into(),
+            vpn_connection_id: vpn_connection_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteVpnConnectionRouteRequest` contents to a `SignedRequest`.
 struct DeleteVpnConnectionRouteRequestSerializer;
@@ -8276,7 +11369,30 @@ pub struct DeleteVpnGatewayRequest {
     #[doc="<p>The ID of the virtual private gateway.</p>"]
     pub vpn_gateway_id: String,
 }
-
+impl DeleteVpnGatewayRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVpnGatewayRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `vpn_gateway_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVpnGatewayRequest.vpn_gateway_id = value.into();`.
+    pub fn vpn_gateway_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpn_gateway_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteVpnGatewayRequest with optional fields set to `None`.
+    pub fn new<VpnGatewayIdType: Into<String>>(vpn_gateway_id: VpnGatewayIdType)
+                                               -> DeleteVpnGatewayRequest {
+        DeleteVpnGatewayRequest {
+            vpn_gateway_id: vpn_gateway_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteVpnGatewayRequest` contents to a `SignedRequest`.
 struct DeleteVpnGatewayRequestSerializer;
@@ -8304,7 +11420,29 @@ pub struct DeregisterImageRequest {
     #[doc="<p>The ID of the AMI.</p>"]
     pub image_id: String,
 }
-
+impl DeregisterImageRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterImageRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `image_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterImageRequest.image_id = value.into();`.
+    pub fn image_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.image_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeregisterImageRequest with optional fields set to `None`.
+    pub fn new<ImageIdType: Into<String>>(image_id: ImageIdType) -> DeregisterImageRequest {
+        DeregisterImageRequest {
+            image_id: image_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeregisterImageRequest` contents to a `SignedRequest`.
 struct DeregisterImageRequestSerializer;
@@ -8331,7 +11469,26 @@ pub struct DescribeAccountAttributesRequest {
     #[doc="<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>"]
     pub dry_run: Option<bool>,
 }
-
+impl DescribeAccountAttributesRequest {
+    /// Sets `attribute_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAccountAttributesRequest.attribute_names = Some(value.into());`.
+    pub fn attribute_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.attribute_names = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAccountAttributesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeAccountAttributesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeAccountAttributesRequest {
+        DescribeAccountAttributesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeAccountAttributesRequest` contents to a `SignedRequest`.
 struct DescribeAccountAttributesRequestSerializer;
@@ -8362,7 +11519,6 @@ pub struct DescribeAccountAttributesResult {
     #[doc="<p>Information about one or more account attributes.</p>"]
     pub account_attributes: Option<Vec<AccountAttribute>>,
 }
-
 struct DescribeAccountAttributesResultDeserializer;
 impl DescribeAccountAttributesResultDeserializer {
     #[allow(unused_variables)]
@@ -8419,7 +11575,40 @@ pub struct DescribeAddressesRequest {
     #[doc="<p>[EC2-Classic] One or more Elastic IP addresses.</p> <p>Default: Describes all your Elastic IP addresses.</p>"]
     pub public_ips: Option<Vec<String>>,
 }
-
+impl DescribeAddressesRequest {
+    /// Sets `allocation_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAddressesRequest.allocation_ids = Some(value.into());`.
+    pub fn allocation_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.allocation_ids = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAddressesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAddressesRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `public_ips`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAddressesRequest.public_ips = Some(value.into());`.
+    pub fn public_ips<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.public_ips = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeAddressesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeAddressesRequest {
+        DescribeAddressesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeAddressesRequest` contents to a `SignedRequest`.
 struct DescribeAddressesRequestSerializer;
@@ -8458,7 +11647,6 @@ pub struct DescribeAddressesResult {
     #[doc="<p>Information about one or more Elastic IP addresses.</p>"]
     pub addresses: Option<Vec<Address>>,
 }
-
 struct DescribeAddressesResultDeserializer;
 impl DescribeAddressesResultDeserializer {
     #[allow(unused_variables)]
@@ -8511,7 +11699,33 @@ pub struct DescribeAvailabilityZonesRequest {
     #[doc="<p>The names of one or more Availability Zones.</p>"]
     pub zone_names: Option<Vec<String>>,
 }
-
+impl DescribeAvailabilityZonesRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAvailabilityZonesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAvailabilityZonesRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `zone_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAvailabilityZonesRequest.zone_names = Some(value.into());`.
+    pub fn zone_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.zone_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeAvailabilityZonesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeAvailabilityZonesRequest {
+        DescribeAvailabilityZonesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeAvailabilityZonesRequest` contents to a `SignedRequest`.
 struct DescribeAvailabilityZonesRequestSerializer;
@@ -8545,7 +11759,6 @@ pub struct DescribeAvailabilityZonesResult {
     #[doc="<p>Information about one or more Availability Zones.</p>"]
     pub availability_zones: Option<Vec<AvailabilityZone>>,
 }
-
 struct DescribeAvailabilityZonesResultDeserializer;
 impl DescribeAvailabilityZonesResultDeserializer {
     #[allow(unused_variables)]
@@ -8600,7 +11813,33 @@ pub struct DescribeBundleTasksRequest {
     #[doc="<p>One or more filters.</p> <ul> <li> <p> <code>bundle-id</code> - The ID of the bundle task.</p> </li> <li> <p> <code>error-code</code> - If the task failed, the error code returned.</p> </li> <li> <p> <code>error-message</code> - If the task failed, the error message returned.</p> </li> <li> <p> <code>instance-id</code> - The ID of the instance.</p> </li> <li> <p> <code>progress</code> - The level of task completion, as a percentage (for example, 20%).</p> </li> <li> <p> <code>s3-bucket</code> - The Amazon S3 bucket to store the AMI.</p> </li> <li> <p> <code>s3-prefix</code> - The beginning of the AMI name.</p> </li> <li> <p> <code>start-time</code> - The time the task started (for example, 2013-09-15T17:15:20.000Z).</p> </li> <li> <p> <code>state</code> - The state of the task (<code>pending</code> | <code>waiting-for-shutdown</code> | <code>bundling</code> | <code>storing</code> | <code>cancelling</code> | <code>complete</code> | <code>failed</code>).</p> </li> <li> <p> <code>update-time</code> - The time of the most recent update for the task.</p> </li> </ul>"]
     pub filters: Option<Vec<Filter>>,
 }
-
+impl DescribeBundleTasksRequest {
+    /// Sets `bundle_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeBundleTasksRequest.bundle_ids = Some(value.into());`.
+    pub fn bundle_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.bundle_ids = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeBundleTasksRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeBundleTasksRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeBundleTasksRequest with optional fields set to `None`.
+    pub fn new() -> DescribeBundleTasksRequest {
+        DescribeBundleTasksRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeBundleTasksRequest` contents to a `SignedRequest`.
 struct DescribeBundleTasksRequestSerializer;
@@ -8634,7 +11873,6 @@ pub struct DescribeBundleTasksResult {
     #[doc="<p>Information about one or more bundle tasks.</p>"]
     pub bundle_tasks: Option<Vec<BundleTask>>,
 }
-
 struct DescribeBundleTasksResultDeserializer;
 impl DescribeBundleTasksResultDeserializer {
     #[allow(unused_variables)]
@@ -8692,7 +11930,47 @@ pub struct DescribeClassicLinkInstancesRequest {
     #[doc="<p>The token to retrieve the next page of results.</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeClassicLinkInstancesRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeClassicLinkInstancesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeClassicLinkInstancesRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `instance_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeClassicLinkInstancesRequest.instance_ids = Some(value.into());`.
+    pub fn instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_ids = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeClassicLinkInstancesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeClassicLinkInstancesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeClassicLinkInstancesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeClassicLinkInstancesRequest {
+        DescribeClassicLinkInstancesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeClassicLinkInstancesRequest` contents to a `SignedRequest`.
 struct DescribeClassicLinkInstancesRequestSerializer;
@@ -8735,7 +12013,6 @@ pub struct DescribeClassicLinkInstancesResult {
     #[doc="<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"]
     pub next_token: Option<String>,
 }
-
 struct DescribeClassicLinkInstancesResultDeserializer;
 impl DescribeClassicLinkInstancesResultDeserializer {
     #[allow(unused_variables)]
@@ -8833,7 +12110,26 @@ pub struct DescribeConversionTasksRequest {
     #[doc="<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>"]
     pub dry_run: Option<bool>,
 }
-
+impl DescribeConversionTasksRequest {
+    /// Sets `conversion_task_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConversionTasksRequest.conversion_task_ids = Some(value.into());`.
+    pub fn conversion_task_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.conversion_task_ids = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConversionTasksRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeConversionTasksRequest with optional fields set to `None`.
+    pub fn new() -> DescribeConversionTasksRequest {
+        DescribeConversionTasksRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeConversionTasksRequest` contents to a `SignedRequest`.
 struct DescribeConversionTasksRequestSerializer;
@@ -8864,7 +12160,6 @@ pub struct DescribeConversionTasksResult {
     #[doc="<p>Information about the conversion tasks.</p>"]
     pub conversion_tasks: Option<Vec<ConversionTask>>,
 }
-
 struct DescribeConversionTasksResultDeserializer;
 impl DescribeConversionTasksResultDeserializer {
     #[allow(unused_variables)]
@@ -8916,7 +12211,33 @@ pub struct DescribeCustomerGatewaysRequest {
     #[doc="<p>One or more filters.</p> <ul> <li> <p> <code>bgp-asn</code> - The customer gateway's Border Gateway Protocol (BGP) Autonomous System Number (ASN).</p> </li> <li> <p> <code>customer-gateway-id</code> - The ID of the customer gateway.</p> </li> <li> <p> <code>ip-address</code> - The IP address of the customer gateway's Internet-routable external interface.</p> </li> <li> <p> <code>state</code> - The state of the customer gateway (<code>pending</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code>).</p> </li> <li> <p> <code>type</code> - The type of customer gateway. Currently, the only supported type is <code>ipsec.1</code>.</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \"tag-key=Purpose\" and the filter \"tag-value=X\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> </ul>"]
     pub filters: Option<Vec<Filter>>,
 }
-
+impl DescribeCustomerGatewaysRequest {
+    /// Sets `customer_gateway_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCustomerGatewaysRequest.customer_gateway_ids = Some(value.into());`.
+    pub fn customer_gateway_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.customer_gateway_ids = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCustomerGatewaysRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCustomerGatewaysRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeCustomerGatewaysRequest with optional fields set to `None`.
+    pub fn new() -> DescribeCustomerGatewaysRequest {
+        DescribeCustomerGatewaysRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeCustomerGatewaysRequest` contents to a `SignedRequest`.
 struct DescribeCustomerGatewaysRequestSerializer;
@@ -8952,7 +12273,6 @@ pub struct DescribeCustomerGatewaysResult {
     #[doc="<p>Information about one or more customer gateways.</p>"]
     pub customer_gateways: Option<Vec<CustomerGateway>>,
 }
-
 struct DescribeCustomerGatewaysResultDeserializer;
 impl DescribeCustomerGatewaysResultDeserializer {
     #[allow(unused_variables)]
@@ -9006,7 +12326,33 @@ pub struct DescribeDhcpOptionsRequest {
     #[doc="<p>One or more filters.</p> <ul> <li> <p> <code>dhcp-options-id</code> - The ID of a set of DHCP options.</p> </li> <li> <p> <code>key</code> - The key for one of the options (for example, <code>domain-name</code>).</p> </li> <li> <p> <code>value</code> - The value for one of the options.</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \"tag-key=Purpose\" and the filter \"tag-value=X\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> </ul>"]
     pub filters: Option<Vec<Filter>>,
 }
-
+impl DescribeDhcpOptionsRequest {
+    /// Sets `dhcp_options_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDhcpOptionsRequest.dhcp_options_ids = Some(value.into());`.
+    pub fn dhcp_options_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.dhcp_options_ids = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDhcpOptionsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDhcpOptionsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDhcpOptionsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeDhcpOptionsRequest {
+        DescribeDhcpOptionsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeDhcpOptionsRequest` contents to a `SignedRequest`.
 struct DescribeDhcpOptionsRequestSerializer;
@@ -9040,7 +12386,6 @@ pub struct DescribeDhcpOptionsResult {
     #[doc="<p>Information about one or more DHCP options sets.</p>"]
     pub dhcp_options: Option<Vec<DhcpOptions>>,
 }
-
 struct DescribeDhcpOptionsResultDeserializer;
 impl DescribeDhcpOptionsResultDeserializer {
     #[allow(unused_variables)]
@@ -9095,7 +12440,42 @@ pub struct DescribeEgressOnlyInternetGatewaysRequest {
     #[doc="<p>The token to retrieve the next page of results.</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeEgressOnlyInternetGatewaysRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEgressOnlyInternetGatewaysRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `egress_only_internet_gateway_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEgressOnlyInternetGatewaysRequest.egress_only_internet_gateway_ids = Some(value.into());`.
+    pub fn egress_only_internet_gateway_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.egress_only_internet_gateway_ids = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEgressOnlyInternetGatewaysRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEgressOnlyInternetGatewaysRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEgressOnlyInternetGatewaysRequest with optional fields set to `None`.
+    pub fn new() -> DescribeEgressOnlyInternetGatewaysRequest {
+        DescribeEgressOnlyInternetGatewaysRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeEgressOnlyInternetGatewaysRequest` contents to a `SignedRequest`.
 struct DescribeEgressOnlyInternetGatewaysRequestSerializer;
@@ -9136,7 +12516,6 @@ pub struct DescribeEgressOnlyInternetGatewaysResult {
     #[doc="<p>The token to use to retrieve the next page of results.</p>"]
     pub next_token: Option<String>,
 }
-
 struct DescribeEgressOnlyInternetGatewaysResultDeserializer;
 impl DescribeEgressOnlyInternetGatewaysResultDeserializer {
     #[allow(unused_variables)]
@@ -9196,7 +12575,47 @@ pub struct DescribeElasticGpusRequest {
     #[doc="<p>The token to request the next page of results.</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeElasticGpusRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeElasticGpusRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `elastic_gpu_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeElasticGpusRequest.elastic_gpu_ids = Some(value.into());`.
+    pub fn elastic_gpu_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.elastic_gpu_ids = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeElasticGpusRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeElasticGpusRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeElasticGpusRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeElasticGpusRequest with optional fields set to `None`.
+    pub fn new() -> DescribeElasticGpusRequest {
+        DescribeElasticGpusRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeElasticGpusRequest` contents to a `SignedRequest`.
 struct DescribeElasticGpusRequestSerializer;
@@ -9240,7 +12659,6 @@ pub struct DescribeElasticGpusResult {
     #[doc="<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"]
     pub next_token: Option<String>,
 }
-
 struct DescribeElasticGpusResultDeserializer;
 impl DescribeElasticGpusResultDeserializer {
     #[allow(unused_variables)]
@@ -9298,7 +12716,19 @@ pub struct DescribeExportTasksRequest {
     #[doc="<p>One or more export task IDs.</p>"]
     pub export_task_ids: Option<Vec<String>>,
 }
-
+impl DescribeExportTasksRequest {
+    /// Sets `export_task_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeExportTasksRequest.export_task_ids = Some(value.into());`.
+    pub fn export_task_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.export_task_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeExportTasksRequest with optional fields set to `None`.
+    pub fn new() -> DescribeExportTasksRequest {
+        DescribeExportTasksRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeExportTasksRequest` contents to a `SignedRequest`.
 struct DescribeExportTasksRequestSerializer;
@@ -9324,7 +12754,6 @@ pub struct DescribeExportTasksResult {
     #[doc="<p>Information about the export tasks.</p>"]
     pub export_tasks: Option<Vec<ExportTask>>,
 }
-
 struct DescribeExportTasksResultDeserializer;
 impl DescribeExportTasksResultDeserializer {
     #[allow(unused_variables)]
@@ -9380,7 +12809,40 @@ pub struct DescribeFlowLogsRequest {
     #[doc="<p>The token to retrieve the next page of results.</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeFlowLogsRequest {
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFlowLogsRequest.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `flow_log_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFlowLogsRequest.flow_log_ids = Some(value.into());`.
+    pub fn flow_log_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.flow_log_ids = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFlowLogsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFlowLogsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeFlowLogsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeFlowLogsRequest {
+        DescribeFlowLogsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeFlowLogsRequest` contents to a `SignedRequest`.
 struct DescribeFlowLogsRequestSerializer;
@@ -9420,7 +12882,6 @@ pub struct DescribeFlowLogsResult {
     #[doc="<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"]
     pub next_token: Option<String>,
 }
-
 struct DescribeFlowLogsResultDeserializer;
 impl DescribeFlowLogsResultDeserializer {
     #[allow(unused_variables)]
@@ -9482,7 +12943,54 @@ pub struct DescribeFpgaImagesRequest {
     #[doc="<p>Filters the AFI by owner. Specify an AWS account ID, <code>self</code> (owner is the sender of the request), or an AWS owner alias (valid values are <code>amazon</code> | <code>aws-marketplace</code>).</p>"]
     pub owners: Option<Vec<String>>,
 }
-
+impl DescribeFpgaImagesRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFpgaImagesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFpgaImagesRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `fpga_image_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFpgaImagesRequest.fpga_image_ids = Some(value.into());`.
+    pub fn fpga_image_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.fpga_image_ids = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFpgaImagesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFpgaImagesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `owners`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFpgaImagesRequest.owners = Some(value.into());`.
+    pub fn owners<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.owners = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeFpgaImagesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeFpgaImagesRequest {
+        DescribeFpgaImagesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeFpgaImagesRequest` contents to a `SignedRequest`.
 struct DescribeFpgaImagesRequestSerializer;
@@ -9529,7 +13037,6 @@ pub struct DescribeFpgaImagesResult {
     #[doc="<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"]
     pub next_token: Option<String>,
 }
-
 struct DescribeFpgaImagesResultDeserializer;
 impl DescribeFpgaImagesResultDeserializer {
     #[allow(unused_variables)]
@@ -9592,7 +13099,54 @@ pub struct DescribeHostReservationOfferingsRequest {
     #[doc="<p>The ID of the reservation offering.</p>"]
     pub offering_id: Option<String>,
 }
-
+impl DescribeHostReservationOfferingsRequest {
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeHostReservationOfferingsRequest.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `max_duration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeHostReservationOfferingsRequest.max_duration = Some(value.into());`.
+    pub fn max_duration<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_duration = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeHostReservationOfferingsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `min_duration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeHostReservationOfferingsRequest.min_duration = Some(value.into());`.
+    pub fn min_duration<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.min_duration = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeHostReservationOfferingsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `offering_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeHostReservationOfferingsRequest.offering_id = Some(value.into());`.
+    pub fn offering_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.offering_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeHostReservationOfferingsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeHostReservationOfferingsRequest {
+        DescribeHostReservationOfferingsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeHostReservationOfferingsRequest` contents to a `SignedRequest`.
 struct DescribeHostReservationOfferingsRequestSerializer;
@@ -9637,7 +13191,6 @@ pub struct DescribeHostReservationOfferingsResult {
     #[doc="<p>Information about the offerings.</p>"]
     pub offering_set: Option<Vec<HostOffering>>,
 }
-
 struct DescribeHostReservationOfferingsResultDeserializer;
 impl DescribeHostReservationOfferingsResultDeserializer {
     #[allow(unused_variables)]
@@ -9697,7 +13250,42 @@ pub struct DescribeHostReservationsRequest {
     #[doc="<p>The token to use to retrieve the next page of results.</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeHostReservationsRequest {
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeHostReservationsRequest.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `host_reservation_id_set`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeHostReservationsRequest.host_reservation_id_set = Some(value.into());`.
+    pub fn host_reservation_id_set<ValueType: Into<Vec<String>>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.host_reservation_id_set = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeHostReservationsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeHostReservationsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeHostReservationsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeHostReservationsRequest {
+        DescribeHostReservationsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeHostReservationsRequest` contents to a `SignedRequest`.
 struct DescribeHostReservationsRequestSerializer;
@@ -9738,7 +13326,6 @@ pub struct DescribeHostReservationsResult {
     #[doc="<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"]
     pub next_token: Option<String>,
 }
-
 struct DescribeHostReservationsResultDeserializer;
 impl DescribeHostReservationsResultDeserializer {
     #[allow(unused_variables)]
@@ -9798,7 +13385,40 @@ pub struct DescribeHostsRequest {
     #[doc="<p>The token to retrieve the next page of results.</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeHostsRequest {
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeHostsRequest.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `host_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeHostsRequest.host_ids = Some(value.into());`.
+    pub fn host_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.host_ids = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeHostsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeHostsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeHostsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeHostsRequest {
+        DescribeHostsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeHostsRequest` contents to a `SignedRequest`.
 struct DescribeHostsRequestSerializer;
@@ -9838,7 +13458,6 @@ pub struct DescribeHostsResult {
     #[doc="<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"]
     pub next_token: Option<String>,
 }
-
 struct DescribeHostsResultDeserializer;
 impl DescribeHostsResultDeserializer {
     #[allow(unused_variables)]
@@ -9896,7 +13515,40 @@ pub struct DescribeIamInstanceProfileAssociationsRequest {
     #[doc="<p>The token to request the next page of results.</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeIamInstanceProfileAssociationsRequest {
+    /// Sets `association_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeIamInstanceProfileAssociationsRequest.association_ids = Some(value.into());`.
+    pub fn association_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.association_ids = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeIamInstanceProfileAssociationsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeIamInstanceProfileAssociationsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeIamInstanceProfileAssociationsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeIamInstanceProfileAssociationsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeIamInstanceProfileAssociationsRequest {
+        DescribeIamInstanceProfileAssociationsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeIamInstanceProfileAssociationsRequest` contents to a `SignedRequest`.
 struct DescribeIamInstanceProfileAssociationsRequestSerializer;
@@ -9937,7 +13589,6 @@ pub struct DescribeIamInstanceProfileAssociationsResult {
     #[doc="<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"]
     pub next_token: Option<String>,
 }
-
 struct DescribeIamInstanceProfileAssociationsResultDeserializer;
 impl DescribeIamInstanceProfileAssociationsResultDeserializer {
     #[allow(unused_variables)]
@@ -9990,7 +13641,19 @@ pub struct DescribeIdFormatRequest {
     #[doc="<p>The type of resource: <code>instance</code> | <code>reservation</code> | <code>snapshot</code> | <code>volume</code> </p>"]
     pub resource: Option<String>,
 }
-
+impl DescribeIdFormatRequest {
+    /// Sets `resource`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeIdFormatRequest.resource = Some(value.into());`.
+    pub fn resource<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeIdFormatRequest with optional fields set to `None`.
+    pub fn new() -> DescribeIdFormatRequest {
+        DescribeIdFormatRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeIdFormatRequest` contents to a `SignedRequest`.
 struct DescribeIdFormatRequestSerializer;
@@ -10014,7 +13677,6 @@ pub struct DescribeIdFormatResult {
     #[doc="<p>Information about the ID format for the resource.</p>"]
     pub statuses: Option<Vec<IdFormat>>,
 }
-
 struct DescribeIdFormatResultDeserializer;
 impl DescribeIdFormatResultDeserializer {
     #[allow(unused_variables)]
@@ -10065,7 +13727,30 @@ pub struct DescribeIdentityIdFormatRequest {
     #[doc="<p>The type of resource: <code>instance</code> | <code>reservation</code> | <code>snapshot</code> | <code>volume</code> </p>"]
     pub resource: Option<String>,
 }
-
+impl DescribeIdentityIdFormatRequest {
+    /// Sets `principal_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeIdentityIdFormatRequest.principal_arn = value.into();`.
+    pub fn principal_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.principal_arn = value.into();
+        self
+    }
+    /// Sets `resource`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeIdentityIdFormatRequest.resource = Some(value.into());`.
+    pub fn resource<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeIdentityIdFormatRequest with optional fields set to `None`.
+    pub fn new<PrincipalArnType: Into<String>>(principal_arn: PrincipalArnType)
+                                               -> DescribeIdentityIdFormatRequest {
+        DescribeIdentityIdFormatRequest {
+            principal_arn: principal_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeIdentityIdFormatRequest` contents to a `SignedRequest`.
 struct DescribeIdentityIdFormatRequestSerializer;
@@ -10090,7 +13775,6 @@ pub struct DescribeIdentityIdFormatResult {
     #[doc="<p>Information about the ID format for the resources.</p>"]
     pub statuses: Option<Vec<IdFormat>>,
 }
-
 struct DescribeIdentityIdFormatResultDeserializer;
 impl DescribeIdentityIdFormatResultDeserializer {
     #[allow(unused_variables)]
@@ -10143,7 +13827,40 @@ pub struct DescribeImageAttributeRequest {
     #[doc="<p>The ID of the AMI.</p>"]
     pub image_id: String,
 }
-
+impl DescribeImageAttributeRequest {
+    /// Sets `attribute`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImageAttributeRequest.attribute = value.into();`.
+    pub fn attribute<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImageAttributeRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `image_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImageAttributeRequest.image_id = value.into();`.
+    pub fn image_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.image_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeImageAttributeRequest with optional fields set to `None`.
+    pub fn new<AttributeType: Into<String>, ImageIdType: Into<String>>
+        (attribute: AttributeType,
+         image_id: ImageIdType)
+         -> DescribeImageAttributeRequest {
+        DescribeImageAttributeRequest {
+            attribute: attribute.into(),
+            image_id: image_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeImageAttributeRequest` contents to a `SignedRequest`.
 struct DescribeImageAttributeRequestSerializer;
@@ -10177,7 +13894,47 @@ pub struct DescribeImagesRequest {
     #[doc="<p>Filters the images by the owner. Specify an AWS account ID, <code>self</code> (owner is the sender of the request), or an AWS owner alias (valid values are <code>amazon</code> | <code>aws-marketplace</code> | <code>microsoft</code>). Omitting this option returns all images for which you have launch permissions, regardless of ownership.</p>"]
     pub owners: Option<Vec<String>>,
 }
-
+impl DescribeImagesRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImagesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `executable_users`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImagesRequest.executable_users = Some(value.into());`.
+    pub fn executable_users<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.executable_users = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImagesRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `image_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImagesRequest.image_ids = Some(value.into());`.
+    pub fn image_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.image_ids = Some(value.into());
+        self
+    }
+    /// Sets `owners`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImagesRequest.owners = Some(value.into());`.
+    pub fn owners<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.owners = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeImagesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeImagesRequest {
+        DescribeImagesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeImagesRequest` contents to a `SignedRequest`.
 struct DescribeImagesRequestSerializer;
@@ -10221,7 +13978,6 @@ pub struct DescribeImagesResult {
     #[doc="<p>Information about one or more images.</p>"]
     pub images: Option<Vec<Image>>,
 }
-
 struct DescribeImagesResultDeserializer;
 impl DescribeImagesResultDeserializer {
     #[allow(unused_variables)]
@@ -10278,7 +14034,47 @@ pub struct DescribeImportImageTasksRequest {
     #[doc="<p>A token that indicates the next page of results.</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeImportImageTasksRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImportImageTasksRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImportImageTasksRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `import_task_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImportImageTasksRequest.import_task_ids = Some(value.into());`.
+    pub fn import_task_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.import_task_ids = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImportImageTasksRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImportImageTasksRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeImportImageTasksRequest with optional fields set to `None`.
+    pub fn new() -> DescribeImportImageTasksRequest {
+        DescribeImportImageTasksRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeImportImageTasksRequest` contents to a `SignedRequest`.
 struct DescribeImportImageTasksRequestSerializer;
@@ -10321,7 +14117,6 @@ pub struct DescribeImportImageTasksResult {
     #[doc="<p>The token to use to get the next page of results. This value is <code>null</code> when there are no more results to return.</p>"]
     pub next_token: Option<String>,
 }
-
 struct DescribeImportImageTasksResultDeserializer;
 impl DescribeImportImageTasksResultDeserializer {
     #[allow(unused_variables)]
@@ -10383,7 +14178,47 @@ pub struct DescribeImportSnapshotTasksRequest {
     #[doc="<p>A token that indicates the next page of results.</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeImportSnapshotTasksRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImportSnapshotTasksRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImportSnapshotTasksRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `import_task_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImportSnapshotTasksRequest.import_task_ids = Some(value.into());`.
+    pub fn import_task_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.import_task_ids = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImportSnapshotTasksRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImportSnapshotTasksRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeImportSnapshotTasksRequest with optional fields set to `None`.
+    pub fn new() -> DescribeImportSnapshotTasksRequest {
+        DescribeImportSnapshotTasksRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeImportSnapshotTasksRequest` contents to a `SignedRequest`.
 struct DescribeImportSnapshotTasksRequestSerializer;
@@ -10426,7 +14261,6 @@ pub struct DescribeImportSnapshotTasksResult {
     #[doc="<p>The token to use to get the next page of results. This value is <code>null</code> when there are no more results to return.</p>"]
     pub next_token: Option<String>,
 }
-
 struct DescribeImportSnapshotTasksResultDeserializer;
 impl DescribeImportSnapshotTasksResultDeserializer {
     #[allow(unused_variables)]
@@ -10485,7 +14319,40 @@ pub struct DescribeInstanceAttributeRequest {
     #[doc="<p>The ID of the instance.</p>"]
     pub instance_id: String,
 }
-
+impl DescribeInstanceAttributeRequest {
+    /// Sets `attribute`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstanceAttributeRequest.attribute = value.into();`.
+    pub fn attribute<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstanceAttributeRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstanceAttributeRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeInstanceAttributeRequest with optional fields set to `None`.
+    pub fn new<AttributeType: Into<String>, InstanceIdType: Into<String>>
+        (attribute: AttributeType,
+         instance_id: InstanceIdType)
+         -> DescribeInstanceAttributeRequest {
+        DescribeInstanceAttributeRequest {
+            attribute: attribute.into(),
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeInstanceAttributeRequest` contents to a `SignedRequest`.
 struct DescribeInstanceAttributeRequestSerializer;
@@ -10521,7 +14388,54 @@ pub struct DescribeInstanceStatusRequest {
     #[doc="<p>The token to retrieve the next page of results.</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeInstanceStatusRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstanceStatusRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstanceStatusRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `include_all_instances`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstanceStatusRequest.include_all_instances = Some(value.into());`.
+    pub fn include_all_instances<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.include_all_instances = Some(value.into());
+        self
+    }
+    /// Sets `instance_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstanceStatusRequest.instance_ids = Some(value.into());`.
+    pub fn instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_ids = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstanceStatusRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstanceStatusRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeInstanceStatusRequest with optional fields set to `None`.
+    pub fn new() -> DescribeInstanceStatusRequest {
+        DescribeInstanceStatusRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeInstanceStatusRequest` contents to a `SignedRequest`.
 struct DescribeInstanceStatusRequestSerializer;
@@ -10568,7 +14482,6 @@ pub struct DescribeInstanceStatusResult {
     #[doc="<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"]
     pub next_token: Option<String>,
 }
-
 struct DescribeInstanceStatusResultDeserializer;
 impl DescribeInstanceStatusResultDeserializer {
     #[allow(unused_variables)]
@@ -10630,7 +14543,47 @@ pub struct DescribeInstancesRequest {
     #[doc="<p>The token to request the next page of results.</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeInstancesRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancesRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `instance_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancesRequest.instance_ids = Some(value.into());`.
+    pub fn instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_ids = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeInstancesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeInstancesRequest {
+        DescribeInstancesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeInstancesRequest` contents to a `SignedRequest`.
 struct DescribeInstancesRequestSerializer;
@@ -10673,7 +14626,6 @@ pub struct DescribeInstancesResult {
     #[doc="<p>Zero or more reservations.</p>"]
     pub reservations: Option<Vec<Reservation>>,
 }
-
 struct DescribeInstancesResultDeserializer;
 impl DescribeInstancesResultDeserializer {
     #[allow(unused_variables)]
@@ -10731,7 +14683,33 @@ pub struct DescribeInternetGatewaysRequest {
     #[doc="<p>One or more Internet gateway IDs.</p> <p>Default: Describes all your Internet gateways.</p>"]
     pub internet_gateway_ids: Option<Vec<String>>,
 }
-
+impl DescribeInternetGatewaysRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInternetGatewaysRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInternetGatewaysRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `internet_gateway_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInternetGatewaysRequest.internet_gateway_ids = Some(value.into());`.
+    pub fn internet_gateway_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.internet_gateway_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeInternetGatewaysRequest with optional fields set to `None`.
+    pub fn new() -> DescribeInternetGatewaysRequest {
+        DescribeInternetGatewaysRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeInternetGatewaysRequest` contents to a `SignedRequest`.
 struct DescribeInternetGatewaysRequestSerializer;
@@ -10765,7 +14743,6 @@ pub struct DescribeInternetGatewaysResult {
     #[doc="<p>Information about one or more Internet gateways.</p>"]
     pub internet_gateways: Option<Vec<InternetGateway>>,
 }
-
 struct DescribeInternetGatewaysResultDeserializer;
 impl DescribeInternetGatewaysResultDeserializer {
     #[allow(unused_variables)]
@@ -10819,7 +14796,33 @@ pub struct DescribeKeyPairsRequest {
     #[doc="<p>One or more key pair names.</p> <p>Default: Describes all your key pairs.</p>"]
     pub key_names: Option<Vec<String>>,
 }
-
+impl DescribeKeyPairsRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeKeyPairsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeKeyPairsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `key_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeKeyPairsRequest.key_names = Some(value.into());`.
+    pub fn key_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.key_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeKeyPairsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeKeyPairsRequest {
+        DescribeKeyPairsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeKeyPairsRequest` contents to a `SignedRequest`.
 struct DescribeKeyPairsRequestSerializer;
@@ -10853,7 +14856,6 @@ pub struct DescribeKeyPairsResult {
     #[doc="<p>Information about one or more key pairs.</p>"]
     pub key_pairs: Option<Vec<KeyPairInfo>>,
 }
-
 struct DescribeKeyPairsResultDeserializer;
 impl DescribeKeyPairsResultDeserializer {
     #[allow(unused_variables)]
@@ -10910,7 +14912,47 @@ pub struct DescribeMovingAddressesRequest {
     #[doc="<p>One or more Elastic IP addresses.</p>"]
     pub public_ips: Option<Vec<String>>,
 }
-
+impl DescribeMovingAddressesRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMovingAddressesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMovingAddressesRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMovingAddressesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMovingAddressesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `public_ips`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMovingAddressesRequest.public_ips = Some(value.into());`.
+    pub fn public_ips<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.public_ips = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeMovingAddressesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeMovingAddressesRequest {
+        DescribeMovingAddressesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeMovingAddressesRequest` contents to a `SignedRequest`.
 struct DescribeMovingAddressesRequestSerializer;
@@ -10953,7 +14995,6 @@ pub struct DescribeMovingAddressesResult {
     #[doc="<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"]
     pub next_token: Option<String>,
 }
-
 struct DescribeMovingAddressesResultDeserializer;
 impl DescribeMovingAddressesResultDeserializer {
     #[allow(unused_variables)]
@@ -11013,7 +15054,40 @@ pub struct DescribeNatGatewaysRequest {
     #[doc="<p>The token to retrieve the next page of results.</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeNatGatewaysRequest {
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNatGatewaysRequest.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNatGatewaysRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `nat_gateway_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNatGatewaysRequest.nat_gateway_ids = Some(value.into());`.
+    pub fn nat_gateway_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.nat_gateway_ids = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNatGatewaysRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeNatGatewaysRequest with optional fields set to `None`.
+    pub fn new() -> DescribeNatGatewaysRequest {
+        DescribeNatGatewaysRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeNatGatewaysRequest` contents to a `SignedRequest`.
 struct DescribeNatGatewaysRequestSerializer;
@@ -11053,7 +15127,6 @@ pub struct DescribeNatGatewaysResult {
     #[doc="<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"]
     pub next_token: Option<String>,
 }
-
 struct DescribeNatGatewaysResultDeserializer;
 impl DescribeNatGatewaysResultDeserializer {
     #[allow(unused_variables)]
@@ -11111,7 +15184,33 @@ pub struct DescribeNetworkAclsRequest {
     #[doc="<p>One or more network ACL IDs.</p> <p>Default: Describes all your network ACLs.</p>"]
     pub network_acl_ids: Option<Vec<String>>,
 }
-
+impl DescribeNetworkAclsRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNetworkAclsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNetworkAclsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `network_acl_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNetworkAclsRequest.network_acl_ids = Some(value.into());`.
+    pub fn network_acl_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.network_acl_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeNetworkAclsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeNetworkAclsRequest {
+        DescribeNetworkAclsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeNetworkAclsRequest` contents to a `SignedRequest`.
 struct DescribeNetworkAclsRequestSerializer;
@@ -11145,7 +15244,6 @@ pub struct DescribeNetworkAclsResult {
     #[doc="<p>Information about one or more network ACLs.</p>"]
     pub network_acls: Option<Vec<NetworkAcl>>,
 }
-
 struct DescribeNetworkAclsResultDeserializer;
 impl DescribeNetworkAclsResultDeserializer {
     #[allow(unused_variables)]
@@ -11199,7 +15297,38 @@ pub struct DescribeNetworkInterfaceAttributeRequest {
     #[doc="<p>The ID of the network interface.</p>"]
     pub network_interface_id: String,
 }
-
+impl DescribeNetworkInterfaceAttributeRequest {
+    /// Sets `attribute`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNetworkInterfaceAttributeRequest.attribute = Some(value.into());`.
+    pub fn attribute<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNetworkInterfaceAttributeRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `network_interface_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNetworkInterfaceAttributeRequest.network_interface_id = value.into();`.
+    pub fn network_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_interface_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeNetworkInterfaceAttributeRequest with optional fields set to `None`.
+    pub fn new<NetworkInterfaceIdType: Into<String>>
+        (network_interface_id: NetworkInterfaceIdType)
+         -> DescribeNetworkInterfaceAttributeRequest {
+        DescribeNetworkInterfaceAttributeRequest {
+            network_interface_id: network_interface_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeNetworkInterfaceAttributeRequest` contents to a `SignedRequest`.
 struct DescribeNetworkInterfaceAttributeRequestSerializer;
@@ -11236,7 +15365,6 @@ pub struct DescribeNetworkInterfaceAttributeResult {
     #[doc="<p>Indicates whether source/destination checking is enabled.</p>"]
     pub source_dest_check: Option<AttributeBooleanValue>,
 }
-
 struct DescribeNetworkInterfaceAttributeResultDeserializer;
 impl DescribeNetworkInterfaceAttributeResultDeserializer {
     #[allow(unused_variables)]
@@ -11311,7 +15439,42 @@ pub struct DescribeNetworkInterfacePermissionsRequest {
     #[doc="<p>The token to request the next page of results.</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeNetworkInterfacePermissionsRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNetworkInterfacePermissionsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNetworkInterfacePermissionsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `network_interface_permission_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNetworkInterfacePermissionsRequest.network_interface_permission_ids = Some(value.into());`.
+    pub fn network_interface_permission_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.network_interface_permission_ids = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNetworkInterfacePermissionsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeNetworkInterfacePermissionsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeNetworkInterfacePermissionsRequest {
+        DescribeNetworkInterfacePermissionsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeNetworkInterfacePermissionsRequest` contents to a `SignedRequest`.
 struct DescribeNetworkInterfacePermissionsRequestSerializer;
@@ -11355,7 +15518,6 @@ pub struct DescribeNetworkInterfacePermissionsResult {
     #[doc="<p>The token to use to retrieve the next page of results.</p>"]
     pub next_token: Option<String>,
 }
-
 struct DescribeNetworkInterfacePermissionsResultDeserializer;
 impl DescribeNetworkInterfacePermissionsResultDeserializer {
     #[allow(unused_variables)]
@@ -11412,7 +15574,33 @@ pub struct DescribeNetworkInterfacesRequest {
     #[doc="<p>One or more network interface IDs.</p> <p>Default: Describes all your network interfaces.</p>"]
     pub network_interface_ids: Option<Vec<String>>,
 }
-
+impl DescribeNetworkInterfacesRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNetworkInterfacesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNetworkInterfacesRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `network_interface_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNetworkInterfacesRequest.network_interface_ids = Some(value.into());`.
+    pub fn network_interface_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.network_interface_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeNetworkInterfacesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeNetworkInterfacesRequest {
+        DescribeNetworkInterfacesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeNetworkInterfacesRequest` contents to a `SignedRequest`.
 struct DescribeNetworkInterfacesRequestSerializer;
@@ -11448,7 +15636,6 @@ pub struct DescribeNetworkInterfacesResult {
     #[doc="<p>Information about one or more network interfaces.</p>"]
     pub network_interfaces: Option<Vec<NetworkInterface>>,
 }
-
 struct DescribeNetworkInterfacesResultDeserializer;
 impl DescribeNetworkInterfacesResultDeserializer {
     #[allow(unused_variables)]
@@ -11503,7 +15690,33 @@ pub struct DescribePlacementGroupsRequest {
     #[doc="<p>One or more placement group names.</p> <p>Default: Describes all your placement groups, or only those otherwise specified.</p>"]
     pub group_names: Option<Vec<String>>,
 }
-
+impl DescribePlacementGroupsRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePlacementGroupsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePlacementGroupsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `group_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePlacementGroupsRequest.group_names = Some(value.into());`.
+    pub fn group_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.group_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribePlacementGroupsRequest with optional fields set to `None`.
+    pub fn new() -> DescribePlacementGroupsRequest {
+        DescribePlacementGroupsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribePlacementGroupsRequest` contents to a `SignedRequest`.
 struct DescribePlacementGroupsRequestSerializer;
@@ -11537,7 +15750,6 @@ pub struct DescribePlacementGroupsResult {
     #[doc="<p>One or more placement groups.</p>"]
     pub placement_groups: Option<Vec<PlacementGroup>>,
 }
-
 struct DescribePlacementGroupsResultDeserializer;
 impl DescribePlacementGroupsResultDeserializer {
     #[allow(unused_variables)]
@@ -11595,7 +15807,47 @@ pub struct DescribePrefixListsRequest {
     #[doc="<p>One or more prefix list IDs.</p>"]
     pub prefix_list_ids: Option<Vec<String>>,
 }
-
+impl DescribePrefixListsRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePrefixListsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePrefixListsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePrefixListsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePrefixListsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `prefix_list_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePrefixListsRequest.prefix_list_ids = Some(value.into());`.
+    pub fn prefix_list_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.prefix_list_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribePrefixListsRequest with optional fields set to `None`.
+    pub fn new() -> DescribePrefixListsRequest {
+        DescribePrefixListsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribePrefixListsRequest` contents to a `SignedRequest`.
 struct DescribePrefixListsRequestSerializer;
@@ -11638,7 +15890,6 @@ pub struct DescribePrefixListsResult {
     #[doc="<p>All available prefix lists.</p>"]
     pub prefix_lists: Option<Vec<PrefixList>>,
 }
-
 struct DescribePrefixListsResultDeserializer;
 impl DescribePrefixListsResultDeserializer {
     #[allow(unused_variables)]
@@ -11696,7 +15947,33 @@ pub struct DescribeRegionsRequest {
     #[doc="<p>The names of one or more regions.</p>"]
     pub region_names: Option<Vec<String>>,
 }
-
+impl DescribeRegionsRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRegionsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRegionsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `region_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRegionsRequest.region_names = Some(value.into());`.
+    pub fn region_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.region_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeRegionsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeRegionsRequest {
+        DescribeRegionsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeRegionsRequest` contents to a `SignedRequest`.
 struct DescribeRegionsRequestSerializer;
@@ -11730,7 +16007,6 @@ pub struct DescribeRegionsResult {
     #[doc="<p>Information about one or more regions.</p>"]
     pub regions: Option<Vec<Region>>,
 }
-
 struct DescribeRegionsResultDeserializer;
 impl DescribeRegionsResultDeserializer {
     #[allow(unused_variables)]
@@ -11783,7 +16059,35 @@ pub struct DescribeReservedInstancesListingsRequest {
     #[doc="<p>One or more Reserved Instance listing IDs.</p>"]
     pub reserved_instances_listing_id: Option<String>,
 }
-
+impl DescribeReservedInstancesListingsRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesListingsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `reserved_instances_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesListingsRequest.reserved_instances_id = Some(value.into());`.
+    pub fn reserved_instances_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reserved_instances_id = Some(value.into());
+        self
+    }
+    /// Sets `reserved_instances_listing_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesListingsRequest.reserved_instances_listing_id = Some(value.into());`.
+    pub fn reserved_instances_listing_id<ValueType: Into<String>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.reserved_instances_listing_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeReservedInstancesListingsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeReservedInstancesListingsRequest {
+        DescribeReservedInstancesListingsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeReservedInstancesListingsRequest` contents to a `SignedRequest`.
 struct DescribeReservedInstancesListingsRequestSerializer;
@@ -11817,7 +16121,6 @@ pub struct DescribeReservedInstancesListingsResult {
     #[doc="<p>Information about the Reserved Instance listing.</p>"]
     pub reserved_instances_listings: Option<Vec<ReservedInstancesListing>>,
 }
-
 struct DescribeReservedInstancesListingsResultDeserializer;
 impl DescribeReservedInstancesListingsResultDeserializer {
     #[allow(unused_variables)]
@@ -11870,7 +16173,35 @@ pub struct DescribeReservedInstancesModificationsRequest {
     #[doc="<p>IDs for the submitted modification request.</p>"]
     pub reserved_instances_modification_ids: Option<Vec<String>>,
 }
-
+impl DescribeReservedInstancesModificationsRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesModificationsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesModificationsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `reserved_instances_modification_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesModificationsRequest.reserved_instances_modification_ids = Some(value.into());`.
+    pub fn reserved_instances_modification_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                             value: ValueType)
+                                                                             -> Self {
+        self.reserved_instances_modification_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeReservedInstancesModificationsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeReservedInstancesModificationsRequest {
+        DescribeReservedInstancesModificationsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeReservedInstancesModificationsRequest` contents to a `SignedRequest`.
 struct DescribeReservedInstancesModificationsRequestSerializer;
@@ -11910,7 +16241,6 @@ pub struct DescribeReservedInstancesModificationsResult {
     #[doc="<p>The Reserved Instance modification information.</p>"]
     pub reserved_instances_modifications: Option<Vec<ReservedInstancesModification>>,
 }
-
 struct DescribeReservedInstancesModificationsResultDeserializer;
 impl DescribeReservedInstancesModificationsResultDeserializer {
     #[allow(unused_variables)]
@@ -11991,7 +16321,119 @@ pub struct DescribeReservedInstancesOfferingsRequest {
     #[doc="<p>One or more Reserved Instances offering IDs.</p>"]
     pub reserved_instances_offering_ids: Option<Vec<String>>,
 }
-
+impl DescribeReservedInstancesOfferingsRequest {
+    /// Sets `availability_zone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesOfferingsRequest.availability_zone = Some(value.into());`.
+    pub fn availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.availability_zone = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesOfferingsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesOfferingsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `include_marketplace`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesOfferingsRequest.include_marketplace = Some(value.into());`.
+    pub fn include_marketplace<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.include_marketplace = Some(value.into());
+        self
+    }
+    /// Sets `instance_tenancy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesOfferingsRequest.instance_tenancy = Some(value.into());`.
+    pub fn instance_tenancy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_tenancy = Some(value.into());
+        self
+    }
+    /// Sets `instance_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesOfferingsRequest.instance_type = Some(value.into());`.
+    pub fn instance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_type = Some(value.into());
+        self
+    }
+    /// Sets `max_duration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesOfferingsRequest.max_duration = Some(value.into());`.
+    pub fn max_duration<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_duration = Some(value.into());
+        self
+    }
+    /// Sets `max_instance_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesOfferingsRequest.max_instance_count = Some(value.into());`.
+    pub fn max_instance_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_instance_count = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesOfferingsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `min_duration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesOfferingsRequest.min_duration = Some(value.into());`.
+    pub fn min_duration<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.min_duration = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesOfferingsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `offering_class`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesOfferingsRequest.offering_class = Some(value.into());`.
+    pub fn offering_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.offering_class = Some(value.into());
+        self
+    }
+    /// Sets `offering_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesOfferingsRequest.offering_type = Some(value.into());`.
+    pub fn offering_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.offering_type = Some(value.into());
+        self
+    }
+    /// Sets `product_description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesOfferingsRequest.product_description = Some(value.into());`.
+    pub fn product_description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_description = Some(value.into());
+        self
+    }
+    /// Sets `reserved_instances_offering_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesOfferingsRequest.reserved_instances_offering_ids = Some(value.into());`.
+    pub fn reserved_instances_offering_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.reserved_instances_offering_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeReservedInstancesOfferingsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeReservedInstancesOfferingsRequest {
+        DescribeReservedInstancesOfferingsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeReservedInstancesOfferingsRequest` contents to a `SignedRequest`.
 struct DescribeReservedInstancesOfferingsRequestSerializer;
@@ -12072,7 +16514,6 @@ pub struct DescribeReservedInstancesOfferingsResult {
     #[doc="<p>A list of Reserved Instances offerings.</p>"]
     pub reserved_instances_offerings: Option<Vec<ReservedInstancesOffering>>,
 }
-
 struct DescribeReservedInstancesOfferingsResultDeserializer;
 impl DescribeReservedInstancesOfferingsResultDeserializer {
     #[allow(unused_variables)]
@@ -12133,7 +16574,49 @@ pub struct DescribeReservedInstancesRequest {
     #[doc="<p>One or more Reserved Instance IDs.</p> <p>Default: Describes all your Reserved Instances, or only those otherwise specified.</p>"]
     pub reserved_instances_ids: Option<Vec<String>>,
 }
-
+impl DescribeReservedInstancesRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `offering_class`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesRequest.offering_class = Some(value.into());`.
+    pub fn offering_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.offering_class = Some(value.into());
+        self
+    }
+    /// Sets `offering_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesRequest.offering_type = Some(value.into());`.
+    pub fn offering_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.offering_type = Some(value.into());
+        self
+    }
+    /// Sets `reserved_instances_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedInstancesRequest.reserved_instances_ids = Some(value.into());`.
+    pub fn reserved_instances_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.reserved_instances_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeReservedInstancesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeReservedInstancesRequest {
+        DescribeReservedInstancesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeReservedInstancesRequest` contents to a `SignedRequest`.
 struct DescribeReservedInstancesRequestSerializer;
@@ -12175,7 +16658,6 @@ pub struct DescribeReservedInstancesResult {
     #[doc="<p>A list of Reserved Instances.</p>"]
     pub reserved_instances: Option<Vec<ReservedInstances>>,
 }
-
 struct DescribeReservedInstancesResultDeserializer;
 impl DescribeReservedInstancesResultDeserializer {
     #[allow(unused_variables)]
@@ -12230,7 +16712,33 @@ pub struct DescribeRouteTablesRequest {
     #[doc="<p>One or more route table IDs.</p> <p>Default: Describes all your route tables.</p>"]
     pub route_table_ids: Option<Vec<String>>,
 }
-
+impl DescribeRouteTablesRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRouteTablesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRouteTablesRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `route_table_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRouteTablesRequest.route_table_ids = Some(value.into());`.
+    pub fn route_table_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.route_table_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeRouteTablesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeRouteTablesRequest {
+        DescribeRouteTablesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeRouteTablesRequest` contents to a `SignedRequest`.
 struct DescribeRouteTablesRequestSerializer;
@@ -12264,7 +16772,6 @@ pub struct DescribeRouteTablesResult {
     #[doc="<p>Information about one or more route tables.</p>"]
     pub route_tables: Option<Vec<RouteTable>>,
 }
-
 struct DescribeRouteTablesResultDeserializer;
 impl DescribeRouteTablesResultDeserializer {
     #[allow(unused_variables)]
@@ -12328,7 +16835,78 @@ pub struct DescribeScheduledInstanceAvailabilityRequest {
     #[doc="<p>The schedule recurrence.</p>"]
     pub recurrence: ScheduledInstanceRecurrenceRequest,
 }
-
+impl DescribeScheduledInstanceAvailabilityRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScheduledInstanceAvailabilityRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScheduledInstanceAvailabilityRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `first_slot_start_time_range`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScheduledInstanceAvailabilityRequest.first_slot_start_time_range = value.into();`.
+pub fn first_slot_start_time_range<ValueType: Into<SlotDateTimeRangeRequest>>(mut self, value: ValueType) -> Self{
+        self.first_slot_start_time_range = value.into();
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScheduledInstanceAvailabilityRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `max_slot_duration_in_hours`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScheduledInstanceAvailabilityRequest.max_slot_duration_in_hours = Some(value.into());`.
+    pub fn max_slot_duration_in_hours<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_slot_duration_in_hours = Some(value.into());
+        self
+    }
+    /// Sets `min_slot_duration_in_hours`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScheduledInstanceAvailabilityRequest.min_slot_duration_in_hours = Some(value.into());`.
+    pub fn min_slot_duration_in_hours<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.min_slot_duration_in_hours = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScheduledInstanceAvailabilityRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `recurrence`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScheduledInstanceAvailabilityRequest.recurrence = value.into();`.
+    pub fn recurrence<ValueType: Into<ScheduledInstanceRecurrenceRequest>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.recurrence = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeScheduledInstanceAvailabilityRequest with optional fields set to `None`.
+    pub fn new<FirstSlotStartTimeRangeType: Into<SlotDateTimeRangeRequest>,
+               RecurrenceType: Into<ScheduledInstanceRecurrenceRequest>>
+        (first_slot_start_time_range: FirstSlotStartTimeRangeType,
+         recurrence: RecurrenceType)
+         -> DescribeScheduledInstanceAvailabilityRequest {
+        DescribeScheduledInstanceAvailabilityRequest {
+            first_slot_start_time_range: first_slot_start_time_range.into(),
+            recurrence: recurrence.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeScheduledInstanceAvailabilityRequest` contents to a `SignedRequest`.
 struct DescribeScheduledInstanceAvailabilityRequestSerializer;
@@ -12386,7 +16964,6 @@ pub struct DescribeScheduledInstanceAvailabilityResult {
     #[doc="<p>Information about the available Scheduled Instances.</p>"]
     pub scheduled_instance_availability_set: Option<Vec<ScheduledInstanceAvailability>>,
 }
-
 struct DescribeScheduledInstanceAvailabilityResultDeserializer;
 impl DescribeScheduledInstanceAvailabilityResultDeserializer {
     #[allow(unused_variables)]
@@ -12449,7 +17026,58 @@ pub struct DescribeScheduledInstancesRequest {
     #[doc="<p>The time period for the first schedule to start.</p>"]
     pub slot_start_time_range: Option<SlotStartTimeRangeRequest>,
 }
-
+impl DescribeScheduledInstancesRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScheduledInstancesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScheduledInstancesRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScheduledInstancesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScheduledInstancesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `scheduled_instance_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScheduledInstancesRequest.scheduled_instance_ids = Some(value.into());`.
+    pub fn scheduled_instance_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.scheduled_instance_ids = Some(value.into());
+        self
+    }
+    /// Sets `slot_start_time_range`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScheduledInstancesRequest.slot_start_time_range = Some(value.into());`.
+    pub fn slot_start_time_range<ValueType: Into<SlotStartTimeRangeRequest>>(mut self,
+                                                                             value: ValueType)
+                                                                             -> Self {
+        self.slot_start_time_range = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeScheduledInstancesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeScheduledInstancesRequest {
+        DescribeScheduledInstancesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeScheduledInstancesRequest` contents to a `SignedRequest`.
 struct DescribeScheduledInstancesRequestSerializer;
@@ -12501,7 +17129,6 @@ pub struct DescribeScheduledInstancesResult {
     #[doc="<p>Information about the Scheduled Instances.</p>"]
     pub scheduled_instance_set: Option<Vec<ScheduledInstance>>,
 }
-
 struct DescribeScheduledInstancesResultDeserializer;
 impl DescribeScheduledInstancesResultDeserializer {
     #[allow(unused_variables)]
@@ -12557,7 +17184,30 @@ pub struct DescribeSecurityGroupReferencesRequest {
     #[doc="<p>One or more security group IDs in your account.</p>"]
     pub group_id: Vec<String>,
 }
-
+impl DescribeSecurityGroupReferencesRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSecurityGroupReferencesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `group_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSecurityGroupReferencesRequest.group_id = value.into();`.
+    pub fn group_id<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.group_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeSecurityGroupReferencesRequest with optional fields set to `None`.
+    pub fn new<GroupIdType: Into<Vec<String>>>(group_id: GroupIdType)
+                                               -> DescribeSecurityGroupReferencesRequest {
+        DescribeSecurityGroupReferencesRequest {
+            group_id: group_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeSecurityGroupReferencesRequest` contents to a `SignedRequest`.
 struct DescribeSecurityGroupReferencesRequestSerializer;
@@ -12581,7 +17231,6 @@ pub struct DescribeSecurityGroupReferencesResult {
     #[doc="<p>Information about the VPCs with the referencing security groups.</p>"]
     pub security_group_reference_set: Option<Vec<SecurityGroupReference>>,
 }
-
 struct DescribeSecurityGroupReferencesResultDeserializer;
 impl DescribeSecurityGroupReferencesResultDeserializer {
     #[allow(unused_variables)]
@@ -12638,7 +17287,40 @@ pub struct DescribeSecurityGroupsRequest {
     #[doc="<p>[EC2-Classic and default VPC only] One or more security group names. You can specify either the security group name or the security group ID. For security groups in a nondefault VPC, use the <code>group-name</code> filter to describe security groups by name.</p> <p>Default: Describes all your security groups.</p>"]
     pub group_names: Option<Vec<String>>,
 }
-
+impl DescribeSecurityGroupsRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSecurityGroupsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSecurityGroupsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSecurityGroupsRequest.group_ids = Some(value.into());`.
+    pub fn group_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.group_ids = Some(value.into());
+        self
+    }
+    /// Sets `group_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSecurityGroupsRequest.group_names = Some(value.into());`.
+    pub fn group_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.group_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeSecurityGroupsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeSecurityGroupsRequest {
+        DescribeSecurityGroupsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeSecurityGroupsRequest` contents to a `SignedRequest`.
 struct DescribeSecurityGroupsRequestSerializer;
@@ -12677,7 +17359,6 @@ pub struct DescribeSecurityGroupsResult {
     #[doc="<p>Information about one or more security groups.</p>"]
     pub security_groups: Option<Vec<SecurityGroup>>,
 }
-
 struct DescribeSecurityGroupsResultDeserializer;
 impl DescribeSecurityGroupsResultDeserializer {
     #[allow(unused_variables)]
@@ -12731,7 +17412,40 @@ pub struct DescribeSnapshotAttributeRequest {
     #[doc="<p>The ID of the EBS snapshot.</p>"]
     pub snapshot_id: String,
 }
-
+impl DescribeSnapshotAttributeRequest {
+    /// Sets `attribute`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSnapshotAttributeRequest.attribute = value.into();`.
+    pub fn attribute<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSnapshotAttributeRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSnapshotAttributeRequest.snapshot_id = value.into();`.
+    pub fn snapshot_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeSnapshotAttributeRequest with optional fields set to `None`.
+    pub fn new<AttributeType: Into<String>, SnapshotIdType: Into<String>>
+        (attribute: AttributeType,
+         snapshot_id: SnapshotIdType)
+         -> DescribeSnapshotAttributeRequest {
+        DescribeSnapshotAttributeRequest {
+            attribute: attribute.into(),
+            snapshot_id: snapshot_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeSnapshotAttributeRequest` contents to a `SignedRequest`.
 struct DescribeSnapshotAttributeRequestSerializer;
@@ -12761,7 +17475,6 @@ pub struct DescribeSnapshotAttributeResult {
     #[doc="<p>The ID of the EBS snapshot.</p>"]
     pub snapshot_id: Option<String>,
 }
-
 struct DescribeSnapshotAttributeResultDeserializer;
 impl DescribeSnapshotAttributeResultDeserializer {
     #[allow(unused_variables)]
@@ -12831,7 +17544,63 @@ pub struct DescribeSnapshotsRequest {
     #[doc="<p>One or more snapshot IDs.</p> <p>Default: Describes snapshots for which you have launch permissions.</p>"]
     pub snapshot_ids: Option<Vec<String>>,
 }
-
+impl DescribeSnapshotsRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSnapshotsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSnapshotsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSnapshotsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSnapshotsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `owner_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSnapshotsRequest.owner_ids = Some(value.into());`.
+    pub fn owner_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.owner_ids = Some(value.into());
+        self
+    }
+    /// Sets `restorable_by_user_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSnapshotsRequest.restorable_by_user_ids = Some(value.into());`.
+    pub fn restorable_by_user_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.restorable_by_user_ids = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSnapshotsRequest.snapshot_ids = Some(value.into());`.
+    pub fn snapshot_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.snapshot_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeSnapshotsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeSnapshotsRequest {
+        DescribeSnapshotsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeSnapshotsRequest` contents to a `SignedRequest`.
 struct DescribeSnapshotsRequestSerializer;
@@ -12884,7 +17653,6 @@ pub struct DescribeSnapshotsResult {
     #[doc="<p>Information about the snapshots.</p>"]
     pub snapshots: Option<Vec<Snapshot>>,
 }
-
 struct DescribeSnapshotsResultDeserializer;
 impl DescribeSnapshotsResultDeserializer {
     #[allow(unused_variables)]
@@ -12938,7 +17706,19 @@ pub struct DescribeSpotDatafeedSubscriptionRequest {
     #[doc="<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>"]
     pub dry_run: Option<bool>,
 }
-
+impl DescribeSpotDatafeedSubscriptionRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotDatafeedSubscriptionRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeSpotDatafeedSubscriptionRequest with optional fields set to `None`.
+    pub fn new() -> DescribeSpotDatafeedSubscriptionRequest {
+        DescribeSpotDatafeedSubscriptionRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeSpotDatafeedSubscriptionRequest` contents to a `SignedRequest`.
 struct DescribeSpotDatafeedSubscriptionRequestSerializer;
@@ -12962,7 +17742,6 @@ pub struct DescribeSpotDatafeedSubscriptionResult {
     #[doc="<p>The Spot instance data feed subscription.</p>"]
     pub spot_datafeed_subscription: Option<SpotDatafeedSubscription>,
 }
-
 struct DescribeSpotDatafeedSubscriptionResultDeserializer;
 impl DescribeSpotDatafeedSubscriptionResultDeserializer {
     #[allow(unused_variables)]
@@ -13017,7 +17796,43 @@ pub struct DescribeSpotFleetInstancesRequest {
     #[doc="<p>The ID of the Spot fleet request.</p>"]
     pub spot_fleet_request_id: String,
 }
-
+impl DescribeSpotFleetInstancesRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotFleetInstancesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotFleetInstancesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotFleetInstancesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `spot_fleet_request_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotFleetInstancesRequest.spot_fleet_request_id = value.into();`.
+    pub fn spot_fleet_request_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.spot_fleet_request_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeSpotFleetInstancesRequest with optional fields set to `None`.
+pub fn new<SpotFleetRequestIdType: Into<String>>(spot_fleet_request_id: SpotFleetRequestIdType) -> DescribeSpotFleetInstancesRequest{
+        DescribeSpotFleetInstancesRequest {
+            spot_fleet_request_id: spot_fleet_request_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeSpotFleetInstancesRequest` contents to a `SignedRequest`.
 struct DescribeSpotFleetInstancesRequestSerializer;
@@ -13054,7 +17869,6 @@ pub struct DescribeSpotFleetInstancesResponse {
     #[doc="<p>The ID of the Spot fleet request.</p>"]
     pub spot_fleet_request_id: String,
 }
-
 struct DescribeSpotFleetInstancesResponseDeserializer;
 impl DescribeSpotFleetInstancesResponseDeserializer {
     #[allow(unused_variables)]
@@ -13123,7 +17937,61 @@ pub struct DescribeSpotFleetRequestHistoryRequest {
     #[doc="<p>The starting date and time for the events, in UTC format (for example, <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>Z).</p>"]
     pub start_time: String,
 }
-
+impl DescribeSpotFleetRequestHistoryRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotFleetRequestHistoryRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `event_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotFleetRequestHistoryRequest.event_type = Some(value.into());`.
+    pub fn event_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.event_type = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotFleetRequestHistoryRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotFleetRequestHistoryRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `spot_fleet_request_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotFleetRequestHistoryRequest.spot_fleet_request_id = value.into();`.
+    pub fn spot_fleet_request_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.spot_fleet_request_id = value.into();
+        self
+    }
+    /// Sets `start_time`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotFleetRequestHistoryRequest.start_time = value.into();`.
+    pub fn start_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_time = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeSpotFleetRequestHistoryRequest with optional fields set to `None`.
+    pub fn new<SpotFleetRequestIdType: Into<String>, StartTimeType: Into<String>>
+        (spot_fleet_request_id: SpotFleetRequestIdType,
+         start_time: StartTimeType)
+         -> DescribeSpotFleetRequestHistoryRequest {
+        DescribeSpotFleetRequestHistoryRequest {
+            spot_fleet_request_id: spot_fleet_request_id.into(),
+            start_time: start_time.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeSpotFleetRequestHistoryRequest` contents to a `SignedRequest`.
 struct DescribeSpotFleetRequestHistoryRequestSerializer;
@@ -13168,7 +18036,6 @@ pub struct DescribeSpotFleetRequestHistoryResponse {
     #[doc="<p>The starting date and time for the events, in UTC format (for example, <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>Z).</p>"]
     pub start_time: String,
 }
-
 struct DescribeSpotFleetRequestHistoryResponseDeserializer;
 impl DescribeSpotFleetRequestHistoryResponseDeserializer {
     #[allow(unused_variables)]
@@ -13241,7 +18108,42 @@ pub struct DescribeSpotFleetRequestsRequest {
     #[doc="<p>The IDs of the Spot fleet requests.</p>"]
     pub spot_fleet_request_ids: Option<Vec<String>>,
 }
-
+impl DescribeSpotFleetRequestsRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotFleetRequestsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotFleetRequestsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotFleetRequestsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `spot_fleet_request_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotFleetRequestsRequest.spot_fleet_request_ids = Some(value.into());`.
+    pub fn spot_fleet_request_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.spot_fleet_request_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeSpotFleetRequestsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeSpotFleetRequestsRequest {
+        DescribeSpotFleetRequestsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeSpotFleetRequestsRequest` contents to a `SignedRequest`.
 struct DescribeSpotFleetRequestsRequestSerializer;
@@ -13279,7 +18181,6 @@ pub struct DescribeSpotFleetRequestsResponse {
     #[doc="<p>Information about the configuration of your Spot fleet.</p>"]
     pub spot_fleet_request_configs: Vec<SpotFleetRequestConfig>,
 }
-
 struct DescribeSpotFleetRequestsResponseDeserializer;
 impl DescribeSpotFleetRequestsResponseDeserializer {
     #[allow(unused_variables)]
@@ -13338,7 +18239,35 @@ pub struct DescribeSpotInstanceRequestsRequest {
     #[doc="<p>One or more Spot instance request IDs.</p>"]
     pub spot_instance_request_ids: Option<Vec<String>>,
 }
-
+impl DescribeSpotInstanceRequestsRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotInstanceRequestsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotInstanceRequestsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `spot_instance_request_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotInstanceRequestsRequest.spot_instance_request_ids = Some(value.into());`.
+    pub fn spot_instance_request_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.spot_instance_request_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeSpotInstanceRequestsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeSpotInstanceRequestsRequest {
+        DescribeSpotInstanceRequestsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeSpotInstanceRequestsRequest` contents to a `SignedRequest`.
 struct DescribeSpotInstanceRequestsRequestSerializer;
@@ -13374,7 +18303,6 @@ pub struct DescribeSpotInstanceRequestsResult {
     #[doc="<p>One or more Spot instance requests.</p>"]
     pub spot_instance_requests: Option<Vec<SpotInstanceRequest>>,
 }
-
 struct DescribeSpotInstanceRequestsResultDeserializer;
 impl DescribeSpotInstanceRequestsResultDeserializer {
     #[allow(unused_variables)]
@@ -13441,7 +18369,75 @@ pub struct DescribeSpotPriceHistoryRequest {
     #[doc="<p>The date and time, up to the past 90 days, from which to start retrieving the price history data, in UTC format (for example, <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>Z).</p>"]
     pub start_time: Option<String>,
 }
-
+impl DescribeSpotPriceHistoryRequest {
+    /// Sets `availability_zone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotPriceHistoryRequest.availability_zone = Some(value.into());`.
+    pub fn availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.availability_zone = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotPriceHistoryRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `end_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotPriceHistoryRequest.end_time = Some(value.into());`.
+    pub fn end_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.end_time = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotPriceHistoryRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `instance_types`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotPriceHistoryRequest.instance_types = Some(value.into());`.
+    pub fn instance_types<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_types = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotPriceHistoryRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotPriceHistoryRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `product_descriptions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotPriceHistoryRequest.product_descriptions = Some(value.into());`.
+    pub fn product_descriptions<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.product_descriptions = Some(value.into());
+        self
+    }
+    /// Sets `start_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSpotPriceHistoryRequest.start_time = Some(value.into());`.
+    pub fn start_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_time = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeSpotPriceHistoryRequest with optional fields set to `None`.
+    pub fn new() -> DescribeSpotPriceHistoryRequest {
+        DescribeSpotPriceHistoryRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeSpotPriceHistoryRequest` contents to a `SignedRequest`.
 struct DescribeSpotPriceHistoryRequestSerializer;
@@ -13500,7 +18496,6 @@ pub struct DescribeSpotPriceHistoryResult {
     #[doc="<p>The historical Spot prices.</p>"]
     pub spot_price_history: Option<Vec<SpotPrice>>,
 }
-
 struct DescribeSpotPriceHistoryResultDeserializer;
 impl DescribeSpotPriceHistoryResultDeserializer {
     #[allow(unused_variables)]
@@ -13559,7 +18554,43 @@ pub struct DescribeStaleSecurityGroupsRequest {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: String,
 }
-
+impl DescribeStaleSecurityGroupsRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStaleSecurityGroupsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStaleSecurityGroupsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStaleSecurityGroupsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `vpc_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStaleSecurityGroupsRequest.vpc_id = value.into();`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeStaleSecurityGroupsRequest with optional fields set to `None`.
+    pub fn new<VpcIdType: Into<String>>(vpc_id: VpcIdType) -> DescribeStaleSecurityGroupsRequest {
+        DescribeStaleSecurityGroupsRequest {
+            vpc_id: vpc_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeStaleSecurityGroupsRequest` contents to a `SignedRequest`.
 struct DescribeStaleSecurityGroupsRequestSerializer;
@@ -13592,7 +18623,6 @@ pub struct DescribeStaleSecurityGroupsResult {
     #[doc="<p>Information about the stale security groups.</p>"]
     pub stale_security_group_set: Option<Vec<StaleSecurityGroup>>,
 }
-
 struct DescribeStaleSecurityGroupsResultDeserializer;
 impl DescribeStaleSecurityGroupsResultDeserializer {
     #[allow(unused_variables)]
@@ -13651,7 +18681,33 @@ pub struct DescribeSubnetsRequest {
     #[doc="<p>One or more subnet IDs.</p> <p>Default: Describes all your subnets.</p>"]
     pub subnet_ids: Option<Vec<String>>,
 }
-
+impl DescribeSubnetsRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSubnetsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSubnetsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `subnet_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSubnetsRequest.subnet_ids = Some(value.into());`.
+    pub fn subnet_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.subnet_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeSubnetsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeSubnetsRequest {
+        DescribeSubnetsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeSubnetsRequest` contents to a `SignedRequest`.
 struct DescribeSubnetsRequestSerializer;
@@ -13685,7 +18741,6 @@ pub struct DescribeSubnetsResult {
     #[doc="<p>Information about one or more subnets.</p>"]
     pub subnets: Option<Vec<Subnet>>,
 }
-
 struct DescribeSubnetsResultDeserializer;
 impl DescribeSubnetsResultDeserializer {
     #[allow(unused_variables)]
@@ -13740,7 +18795,40 @@ pub struct DescribeTagsRequest {
     #[doc="<p>The token to retrieve the next page of results.</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeTagsRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTagsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTagsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTagsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTagsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeTagsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeTagsRequest {
+        DescribeTagsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeTagsRequest` contents to a `SignedRequest`.
 struct DescribeTagsRequestSerializer;
@@ -13778,7 +18866,6 @@ pub struct DescribeTagsResult {
     #[doc="<p>A list of tags.</p>"]
     pub tags: Option<Vec<TagDescription>>,
 }
-
 struct DescribeTagsResultDeserializer;
 impl DescribeTagsResultDeserializer {
     #[allow(unused_variables)]
@@ -13836,7 +18923,37 @@ pub struct DescribeVolumeAttributeRequest {
     #[doc="<p>The ID of the volume.</p>"]
     pub volume_id: String,
 }
-
+impl DescribeVolumeAttributeRequest {
+    /// Sets `attribute`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVolumeAttributeRequest.attribute = Some(value.into());`.
+    pub fn attribute<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVolumeAttributeRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `volume_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVolumeAttributeRequest.volume_id = value.into();`.
+    pub fn volume_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeVolumeAttributeRequest with optional fields set to `None`.
+    pub fn new<VolumeIdType: Into<String>>(volume_id: VolumeIdType)
+                                           -> DescribeVolumeAttributeRequest {
+        DescribeVolumeAttributeRequest {
+            volume_id: volume_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeVolumeAttributeRequest` contents to a `SignedRequest`.
 struct DescribeVolumeAttributeRequestSerializer;
@@ -13868,7 +18985,6 @@ pub struct DescribeVolumeAttributeResult {
     #[doc="<p>The ID of the volume.</p>"]
     pub volume_id: Option<String>,
 }
-
 struct DescribeVolumeAttributeResultDeserializer;
 impl DescribeVolumeAttributeResultDeserializer {
     #[allow(unused_variables)]
@@ -13935,7 +19051,47 @@ pub struct DescribeVolumeStatusRequest {
     #[doc="<p>One or more volume IDs.</p> <p>Default: Describes all your volumes.</p>"]
     pub volume_ids: Option<Vec<String>>,
 }
-
+impl DescribeVolumeStatusRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVolumeStatusRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVolumeStatusRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVolumeStatusRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVolumeStatusRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `volume_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVolumeStatusRequest.volume_ids = Some(value.into());`.
+    pub fn volume_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.volume_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeVolumeStatusRequest with optional fields set to `None`.
+    pub fn new() -> DescribeVolumeStatusRequest {
+        DescribeVolumeStatusRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeVolumeStatusRequest` contents to a `SignedRequest`.
 struct DescribeVolumeStatusRequestSerializer;
@@ -13978,7 +19134,6 @@ pub struct DescribeVolumeStatusResult {
     #[doc="<p>A list of volumes.</p>"]
     pub volume_statuses: Option<Vec<VolumeStatusItem>>,
 }
-
 struct DescribeVolumeStatusResultDeserializer;
 impl DescribeVolumeStatusResultDeserializer {
     #[allow(unused_variables)]
@@ -14039,7 +19194,47 @@ pub struct DescribeVolumesModificationsRequest {
     #[doc="<p>One or more volume IDs for which in-progress modifications will be described.</p>"]
     pub volume_ids: Option<Vec<String>>,
 }
-
+impl DescribeVolumesModificationsRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVolumesModificationsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVolumesModificationsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVolumesModificationsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVolumesModificationsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `volume_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVolumesModificationsRequest.volume_ids = Some(value.into());`.
+    pub fn volume_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.volume_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeVolumesModificationsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeVolumesModificationsRequest {
+        DescribeVolumesModificationsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeVolumesModificationsRequest` contents to a `SignedRequest`.
 struct DescribeVolumesModificationsRequestSerializer;
@@ -14081,7 +19276,6 @@ pub struct DescribeVolumesModificationsResult {
     #[doc="<p>A list of returned <a>VolumeModification</a> objects.</p>"]
     pub volumes_modifications: Option<Vec<VolumeModification>>,
 }
-
 struct DescribeVolumesModificationsResultDeserializer;
 impl DescribeVolumesModificationsResultDeserializer {
     #[allow(unused_variables)]
@@ -14144,7 +19338,47 @@ pub struct DescribeVolumesRequest {
     #[doc="<p>One or more volume IDs.</p>"]
     pub volume_ids: Option<Vec<String>>,
 }
-
+impl DescribeVolumesRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVolumesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVolumesRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVolumesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVolumesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `volume_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVolumesRequest.volume_ids = Some(value.into());`.
+    pub fn volume_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.volume_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeVolumesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeVolumesRequest {
+        DescribeVolumesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeVolumesRequest` contents to a `SignedRequest`.
 struct DescribeVolumesRequestSerializer;
@@ -14187,7 +19421,6 @@ pub struct DescribeVolumesResult {
     #[doc="<p>Information about the volumes.</p>"]
     pub volumes: Option<Vec<Volume>>,
 }
-
 struct DescribeVolumesResultDeserializer;
 impl DescribeVolumesResultDeserializer {
     #[allow(unused_variables)]
@@ -14244,7 +19477,40 @@ pub struct DescribeVpcAttributeRequest {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: String,
 }
-
+impl DescribeVpcAttributeRequest {
+    /// Sets `attribute`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcAttributeRequest.attribute = value.into();`.
+    pub fn attribute<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcAttributeRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `vpc_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcAttributeRequest.vpc_id = value.into();`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeVpcAttributeRequest with optional fields set to `None`.
+    pub fn new<AttributeType: Into<String>, VpcIdType: Into<String>>
+        (attribute: AttributeType,
+         vpc_id: VpcIdType)
+         -> DescribeVpcAttributeRequest {
+        DescribeVpcAttributeRequest {
+            attribute: attribute.into(),
+            vpc_id: vpc_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeVpcAttributeRequest` contents to a `SignedRequest`.
 struct DescribeVpcAttributeRequestSerializer;
@@ -14274,7 +19540,6 @@ pub struct DescribeVpcAttributeResult {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct DescribeVpcAttributeResultDeserializer;
 impl DescribeVpcAttributeResultDeserializer {
     #[allow(unused_variables)]
@@ -14337,7 +19602,33 @@ pub struct DescribeVpcClassicLinkDnsSupportRequest {
     #[doc="<p>One or more VPC IDs.</p>"]
     pub vpc_ids: Option<Vec<String>>,
 }
-
+impl DescribeVpcClassicLinkDnsSupportRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcClassicLinkDnsSupportRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcClassicLinkDnsSupportRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `vpc_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcClassicLinkDnsSupportRequest.vpc_ids = Some(value.into());`.
+    pub fn vpc_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.vpc_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeVpcClassicLinkDnsSupportRequest with optional fields set to `None`.
+    pub fn new() -> DescribeVpcClassicLinkDnsSupportRequest {
+        DescribeVpcClassicLinkDnsSupportRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeVpcClassicLinkDnsSupportRequest` contents to a `SignedRequest`.
 struct DescribeVpcClassicLinkDnsSupportRequestSerializer;
@@ -14372,7 +19663,6 @@ pub struct DescribeVpcClassicLinkDnsSupportResult {
     #[doc="<p>Information about the ClassicLink DNS support status of the VPCs.</p>"]
     pub vpcs: Option<Vec<ClassicLinkDnsSupport>>,
 }
-
 struct DescribeVpcClassicLinkDnsSupportResultDeserializer;
 impl DescribeVpcClassicLinkDnsSupportResultDeserializer {
     #[allow(unused_variables)]
@@ -14429,7 +19719,33 @@ pub struct DescribeVpcClassicLinkRequest {
     #[doc="<p>One or more VPCs for which you want to describe the ClassicLink status.</p>"]
     pub vpc_ids: Option<Vec<String>>,
 }
-
+impl DescribeVpcClassicLinkRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcClassicLinkRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcClassicLinkRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `vpc_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcClassicLinkRequest.vpc_ids = Some(value.into());`.
+    pub fn vpc_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.vpc_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeVpcClassicLinkRequest with optional fields set to `None`.
+    pub fn new() -> DescribeVpcClassicLinkRequest {
+        DescribeVpcClassicLinkRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeVpcClassicLinkRequest` contents to a `SignedRequest`.
 struct DescribeVpcClassicLinkRequestSerializer;
@@ -14463,7 +19779,6 @@ pub struct DescribeVpcClassicLinkResult {
     #[doc="<p>The ClassicLink status of one or more VPCs.</p>"]
     pub vpcs: Option<Vec<VpcClassicLink>>,
 }
-
 struct DescribeVpcClassicLinkResultDeserializer;
 impl DescribeVpcClassicLinkResultDeserializer {
     #[allow(unused_variables)]
@@ -14517,7 +19832,33 @@ pub struct DescribeVpcEndpointServicesRequest {
     #[doc="<p>The token for the next set of items to return. (You received this token from a prior call.)</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeVpcEndpointServicesRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcEndpointServicesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcEndpointServicesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcEndpointServicesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeVpcEndpointServicesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeVpcEndpointServicesRequest {
+        DescribeVpcEndpointServicesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeVpcEndpointServicesRequest` contents to a `SignedRequest`.
 struct DescribeVpcEndpointServicesRequestSerializer;
@@ -14550,7 +19891,6 @@ pub struct DescribeVpcEndpointServicesResult {
     #[doc="<p>A list of supported AWS services.</p>"]
     pub service_names: Option<Vec<String>>,
 }
-
 struct DescribeVpcEndpointServicesResultDeserializer;
 impl DescribeVpcEndpointServicesResultDeserializer {
     #[allow(unused_variables)]
@@ -14613,7 +19953,47 @@ pub struct DescribeVpcEndpointsRequest {
     #[doc="<p>One or more endpoint IDs.</p>"]
     pub vpc_endpoint_ids: Option<Vec<String>>,
 }
-
+impl DescribeVpcEndpointsRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcEndpointsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcEndpointsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcEndpointsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcEndpointsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `vpc_endpoint_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcEndpointsRequest.vpc_endpoint_ids = Some(value.into());`.
+    pub fn vpc_endpoint_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.vpc_endpoint_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeVpcEndpointsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeVpcEndpointsRequest {
+        DescribeVpcEndpointsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeVpcEndpointsRequest` contents to a `SignedRequest`.
 struct DescribeVpcEndpointsRequestSerializer;
@@ -14656,7 +20036,6 @@ pub struct DescribeVpcEndpointsResult {
     #[doc="<p>Information about the endpoints.</p>"]
     pub vpc_endpoints: Option<Vec<VpcEndpoint>>,
 }
-
 struct DescribeVpcEndpointsResultDeserializer;
 impl DescribeVpcEndpointsResultDeserializer {
     #[allow(unused_variables)]
@@ -14714,7 +20093,35 @@ pub struct DescribeVpcPeeringConnectionsRequest {
     #[doc="<p>One or more VPC peering connection IDs.</p> <p>Default: Describes all your VPC peering connections.</p>"]
     pub vpc_peering_connection_ids: Option<Vec<String>>,
 }
-
+impl DescribeVpcPeeringConnectionsRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcPeeringConnectionsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcPeeringConnectionsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `vpc_peering_connection_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcPeeringConnectionsRequest.vpc_peering_connection_ids = Some(value.into());`.
+    pub fn vpc_peering_connection_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.vpc_peering_connection_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeVpcPeeringConnectionsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeVpcPeeringConnectionsRequest {
+        DescribeVpcPeeringConnectionsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeVpcPeeringConnectionsRequest` contents to a `SignedRequest`.
 struct DescribeVpcPeeringConnectionsRequestSerializer;
@@ -14750,7 +20157,6 @@ pub struct DescribeVpcPeeringConnectionsResult {
     #[doc="<p>Information about the VPC peering connections.</p>"]
     pub vpc_peering_connections: Option<Vec<VpcPeeringConnection>>,
 }
-
 struct DescribeVpcPeeringConnectionsResultDeserializer;
 impl DescribeVpcPeeringConnectionsResultDeserializer {
     #[allow(unused_variables)]
@@ -14803,7 +20209,33 @@ pub struct DescribeVpcsRequest {
     #[doc="<p>One or more VPC IDs.</p> <p>Default: Describes all your VPCs.</p>"]
     pub vpc_ids: Option<Vec<String>>,
 }
-
+impl DescribeVpcsRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `vpc_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpcsRequest.vpc_ids = Some(value.into());`.
+    pub fn vpc_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.vpc_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeVpcsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeVpcsRequest {
+        DescribeVpcsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeVpcsRequest` contents to a `SignedRequest`.
 struct DescribeVpcsRequestSerializer;
@@ -14837,7 +20269,6 @@ pub struct DescribeVpcsResult {
     #[doc="<p>Information about one or more VPCs.</p>"]
     pub vpcs: Option<Vec<Vpc>>,
 }
-
 struct DescribeVpcsResultDeserializer;
 impl DescribeVpcsResultDeserializer {
     #[allow(unused_variables)]
@@ -14890,7 +20321,33 @@ pub struct DescribeVpnConnectionsRequest {
     #[doc="<p>One or more VPN connection IDs.</p> <p>Default: Describes your VPN connections.</p>"]
     pub vpn_connection_ids: Option<Vec<String>>,
 }
-
+impl DescribeVpnConnectionsRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpnConnectionsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpnConnectionsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `vpn_connection_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpnConnectionsRequest.vpn_connection_ids = Some(value.into());`.
+    pub fn vpn_connection_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.vpn_connection_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeVpnConnectionsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeVpnConnectionsRequest {
+        DescribeVpnConnectionsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeVpnConnectionsRequest` contents to a `SignedRequest`.
 struct DescribeVpnConnectionsRequestSerializer;
@@ -14926,7 +20383,6 @@ pub struct DescribeVpnConnectionsResult {
     #[doc="<p>Information about one or more VPN connections.</p>"]
     pub vpn_connections: Option<Vec<VpnConnection>>,
 }
-
 struct DescribeVpnConnectionsResultDeserializer;
 impl DescribeVpnConnectionsResultDeserializer {
     #[allow(unused_variables)]
@@ -14980,7 +20436,33 @@ pub struct DescribeVpnGatewaysRequest {
     #[doc="<p>One or more virtual private gateway IDs.</p> <p>Default: Describes all your virtual private gateways.</p>"]
     pub vpn_gateway_ids: Option<Vec<String>>,
 }
-
+impl DescribeVpnGatewaysRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpnGatewaysRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpnGatewaysRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `vpn_gateway_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVpnGatewaysRequest.vpn_gateway_ids = Some(value.into());`.
+    pub fn vpn_gateway_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.vpn_gateway_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeVpnGatewaysRequest with optional fields set to `None`.
+    pub fn new() -> DescribeVpnGatewaysRequest {
+        DescribeVpnGatewaysRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeVpnGatewaysRequest` contents to a `SignedRequest`.
 struct DescribeVpnGatewaysRequestSerializer;
@@ -15014,7 +20496,6 @@ pub struct DescribeVpnGatewaysResult {
     #[doc="<p>Information about one or more virtual private gateways.</p>"]
     pub vpn_gateways: Option<Vec<VpnGateway>>,
 }
-
 struct DescribeVpnGatewaysResultDeserializer;
 impl DescribeVpnGatewaysResultDeserializer {
     #[allow(unused_variables)]
@@ -15068,7 +20549,40 @@ pub struct DetachClassicLinkVpcRequest {
     #[doc="<p>The ID of the VPC to which the instance is linked.</p>"]
     pub vpc_id: String,
 }
-
+impl DetachClassicLinkVpcRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachClassicLinkVpcRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachClassicLinkVpcRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `vpc_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachClassicLinkVpcRequest.vpc_id = value.into();`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = value.into();
+        self
+    }
+    /// Returns a new instance of DetachClassicLinkVpcRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>, VpcIdType: Into<String>>
+        (instance_id: InstanceIdType,
+         vpc_id: VpcIdType)
+         -> DetachClassicLinkVpcRequest {
+        DetachClassicLinkVpcRequest {
+            instance_id: instance_id.into(),
+            vpc_id: vpc_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DetachClassicLinkVpcRequest` contents to a `SignedRequest`.
 struct DetachClassicLinkVpcRequestSerializer;
@@ -15094,7 +20608,6 @@ pub struct DetachClassicLinkVpcResult {
     #[doc="<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>"]
     pub return_: Option<bool>,
 }
-
 struct DetachClassicLinkVpcResultDeserializer;
 impl DetachClassicLinkVpcResultDeserializer {
     #[allow(unused_variables)]
@@ -15147,7 +20660,40 @@ pub struct DetachInternetGatewayRequest {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: String,
 }
-
+impl DetachInternetGatewayRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachInternetGatewayRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `internet_gateway_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachInternetGatewayRequest.internet_gateway_id = value.into();`.
+    pub fn internet_gateway_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.internet_gateway_id = value.into();
+        self
+    }
+    /// Sets `vpc_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachInternetGatewayRequest.vpc_id = value.into();`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = value.into();
+        self
+    }
+    /// Returns a new instance of DetachInternetGatewayRequest with optional fields set to `None`.
+    pub fn new<InternetGatewayIdType: Into<String>, VpcIdType: Into<String>>
+        (internet_gateway_id: InternetGatewayIdType,
+         vpc_id: VpcIdType)
+         -> DetachInternetGatewayRequest {
+        DetachInternetGatewayRequest {
+            internet_gateway_id: internet_gateway_id.into(),
+            vpc_id: vpc_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DetachInternetGatewayRequest` contents to a `SignedRequest`.
 struct DetachInternetGatewayRequestSerializer;
@@ -15178,7 +20724,37 @@ pub struct DetachNetworkInterfaceRequest {
     #[doc="<p>Specifies whether to force a detachment.</p>"]
     pub force: Option<bool>,
 }
-
+impl DetachNetworkInterfaceRequest {
+    /// Sets `attachment_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachNetworkInterfaceRequest.attachment_id = value.into();`.
+    pub fn attachment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attachment_id = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachNetworkInterfaceRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `force`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachNetworkInterfaceRequest.force = Some(value.into());`.
+    pub fn force<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.force = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DetachNetworkInterfaceRequest with optional fields set to `None`.
+    pub fn new<AttachmentIdType: Into<String>>(attachment_id: AttachmentIdType)
+                                               -> DetachNetworkInterfaceRequest {
+        DetachNetworkInterfaceRequest {
+            attachment_id: attachment_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DetachNetworkInterfaceRequest` contents to a `SignedRequest`.
 struct DetachNetworkInterfaceRequestSerializer;
@@ -15214,7 +20790,50 @@ pub struct DetachVolumeRequest {
     #[doc="<p>The ID of the volume.</p>"]
     pub volume_id: String,
 }
-
+impl DetachVolumeRequest {
+    /// Sets `device`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachVolumeRequest.device = Some(value.into());`.
+    pub fn device<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.device = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachVolumeRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `force`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachVolumeRequest.force = Some(value.into());`.
+    pub fn force<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.force = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachVolumeRequest.instance_id = Some(value.into());`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = Some(value.into());
+        self
+    }
+    /// Sets `volume_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachVolumeRequest.volume_id = value.into();`.
+    pub fn volume_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_id = value.into();
+        self
+    }
+    /// Returns a new instance of DetachVolumeRequest with optional fields set to `None`.
+    pub fn new<VolumeIdType: Into<String>>(volume_id: VolumeIdType) -> DetachVolumeRequest {
+        DetachVolumeRequest {
+            volume_id: volume_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DetachVolumeRequest` contents to a `SignedRequest`.
 struct DetachVolumeRequestSerializer;
@@ -15252,7 +20871,40 @@ pub struct DetachVpnGatewayRequest {
     #[doc="<p>The ID of the virtual private gateway.</p>"]
     pub vpn_gateway_id: String,
 }
-
+impl DetachVpnGatewayRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachVpnGatewayRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `vpc_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachVpnGatewayRequest.vpc_id = value.into();`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = value.into();
+        self
+    }
+    /// Sets `vpn_gateway_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachVpnGatewayRequest.vpn_gateway_id = value.into();`.
+    pub fn vpn_gateway_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpn_gateway_id = value.into();
+        self
+    }
+    /// Returns a new instance of DetachVpnGatewayRequest with optional fields set to `None`.
+    pub fn new<VpcIdType: Into<String>, VpnGatewayIdType: Into<String>>
+        (vpc_id: VpcIdType,
+         vpn_gateway_id: VpnGatewayIdType)
+         -> DetachVpnGatewayRequest {
+        DetachVpnGatewayRequest {
+            vpc_id: vpc_id.into(),
+            vpn_gateway_id: vpn_gateway_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DetachVpnGatewayRequest` contents to a `SignedRequest`.
 struct DetachVpnGatewayRequestSerializer;
@@ -15295,7 +20947,6 @@ pub struct DhcpConfiguration {
     #[doc="<p>One or more values for the DHCP option.</p>"]
     pub values: Option<Vec<AttributeValue>>,
 }
-
 struct DhcpConfigurationDeserializer;
 impl DhcpConfigurationDeserializer {
     #[allow(unused_variables)]
@@ -15432,7 +21083,6 @@ pub struct DhcpOptions {
     #[doc="<p>Any tags assigned to the DHCP options set.</p>"]
     pub tags: Option<Vec<Tag>>,
 }
-
 struct DhcpOptionsDeserializer;
 impl DhcpOptionsDeserializer {
     #[allow(unused_variables)]
@@ -15545,7 +21195,33 @@ pub struct DisableVgwRoutePropagationRequest {
     #[doc="<p>The ID of the route table.</p>"]
     pub route_table_id: String,
 }
-
+impl DisableVgwRoutePropagationRequest {
+    /// Sets `gateway_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableVgwRoutePropagationRequest.gateway_id = value.into();`.
+    pub fn gateway_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_id = value.into();
+        self
+    }
+    /// Sets `route_table_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableVgwRoutePropagationRequest.route_table_id = value.into();`.
+    pub fn route_table_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.route_table_id = value.into();
+        self
+    }
+    /// Returns a new instance of DisableVgwRoutePropagationRequest with optional fields set to `None`.
+    pub fn new<GatewayIdType: Into<String>, RouteTableIdType: Into<String>>
+        (gateway_id: GatewayIdType,
+         route_table_id: RouteTableIdType)
+         -> DisableVgwRoutePropagationRequest {
+        DisableVgwRoutePropagationRequest {
+            gateway_id: gateway_id.into(),
+            route_table_id: route_table_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DisableVgwRoutePropagationRequest` contents to a `SignedRequest`.
 struct DisableVgwRoutePropagationRequestSerializer;
@@ -15569,7 +21245,19 @@ pub struct DisableVpcClassicLinkDnsSupportRequest {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: Option<String>,
 }
-
+impl DisableVpcClassicLinkDnsSupportRequest {
+    /// Sets `vpc_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableVpcClassicLinkDnsSupportRequest.vpc_id = Some(value.into());`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DisableVpcClassicLinkDnsSupportRequest with optional fields set to `None`.
+    pub fn new() -> DisableVpcClassicLinkDnsSupportRequest {
+        DisableVpcClassicLinkDnsSupportRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DisableVpcClassicLinkDnsSupportRequest` contents to a `SignedRequest`.
 struct DisableVpcClassicLinkDnsSupportRequestSerializer;
@@ -15593,7 +21281,6 @@ pub struct DisableVpcClassicLinkDnsSupportResult {
     #[doc="<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>"]
     pub return_: Option<bool>,
 }
-
 struct DisableVpcClassicLinkDnsSupportResultDeserializer;
 impl DisableVpcClassicLinkDnsSupportResultDeserializer {
     #[allow(unused_variables)]
@@ -15645,7 +21332,29 @@ pub struct DisableVpcClassicLinkRequest {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: String,
 }
-
+impl DisableVpcClassicLinkRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableVpcClassicLinkRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `vpc_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableVpcClassicLinkRequest.vpc_id = value.into();`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = value.into();
+        self
+    }
+    /// Returns a new instance of DisableVpcClassicLinkRequest with optional fields set to `None`.
+    pub fn new<VpcIdType: Into<String>>(vpc_id: VpcIdType) -> DisableVpcClassicLinkRequest {
+        DisableVpcClassicLinkRequest {
+            vpc_id: vpc_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DisableVpcClassicLinkRequest` contents to a `SignedRequest`.
 struct DisableVpcClassicLinkRequestSerializer;
@@ -15670,7 +21379,6 @@ pub struct DisableVpcClassicLinkResult {
     #[doc="<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>"]
     pub return_: Option<bool>,
 }
-
 struct DisableVpcClassicLinkResultDeserializer;
 impl DisableVpcClassicLinkResultDeserializer {
     #[allow(unused_variables)]
@@ -15723,7 +21431,33 @@ pub struct DisassociateAddressRequest {
     #[doc="<p>[EC2-Classic] The Elastic IP address. Required for EC2-Classic.</p>"]
     pub public_ip: Option<String>,
 }
-
+impl DisassociateAddressRequest {
+    /// Sets `association_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateAddressRequest.association_id = Some(value.into());`.
+    pub fn association_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.association_id = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateAddressRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `public_ip`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateAddressRequest.public_ip = Some(value.into());`.
+    pub fn public_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.public_ip = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DisassociateAddressRequest with optional fields set to `None`.
+    pub fn new() -> DisassociateAddressRequest {
+        DisassociateAddressRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DisassociateAddressRequest` contents to a `SignedRequest`.
 struct DisassociateAddressRequestSerializer;
@@ -15752,7 +21486,23 @@ pub struct DisassociateIamInstanceProfileRequest {
     #[doc="<p>The ID of the IAM instance profile association.</p>"]
     pub association_id: String,
 }
-
+impl DisassociateIamInstanceProfileRequest {
+    /// Sets `association_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateIamInstanceProfileRequest.association_id = value.into();`.
+    pub fn association_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.association_id = value.into();
+        self
+    }
+    /// Returns a new instance of DisassociateIamInstanceProfileRequest with optional fields set to `None`.
+    pub fn new<AssociationIdType: Into<String>>(association_id: AssociationIdType)
+                                                -> DisassociateIamInstanceProfileRequest {
+        DisassociateIamInstanceProfileRequest {
+            association_id: association_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DisassociateIamInstanceProfileRequest` contents to a `SignedRequest`.
 struct DisassociateIamInstanceProfileRequestSerializer;
@@ -15774,7 +21524,6 @@ pub struct DisassociateIamInstanceProfileResult {
     #[doc="<p>Information about the IAM instance profile association.</p>"]
     pub iam_instance_profile_association: Option<IamInstanceProfileAssociation>,
 }
-
 struct DisassociateIamInstanceProfileResultDeserializer;
 impl DisassociateIamInstanceProfileResultDeserializer {
     #[allow(unused_variables)]
@@ -15825,7 +21574,30 @@ pub struct DisassociateRouteTableRequest {
     #[doc="<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>"]
     pub dry_run: Option<bool>,
 }
-
+impl DisassociateRouteTableRequest {
+    /// Sets `association_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateRouteTableRequest.association_id = value.into();`.
+    pub fn association_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.association_id = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateRouteTableRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DisassociateRouteTableRequest with optional fields set to `None`.
+    pub fn new<AssociationIdType: Into<String>>(association_id: AssociationIdType)
+                                                -> DisassociateRouteTableRequest {
+        DisassociateRouteTableRequest {
+            association_id: association_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DisassociateRouteTableRequest` contents to a `SignedRequest`.
 struct DisassociateRouteTableRequestSerializer;
@@ -15850,7 +21622,23 @@ pub struct DisassociateSubnetCidrBlockRequest {
     #[doc="<p>The association ID for the CIDR block.</p>"]
     pub association_id: String,
 }
-
+impl DisassociateSubnetCidrBlockRequest {
+    /// Sets `association_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateSubnetCidrBlockRequest.association_id = value.into();`.
+    pub fn association_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.association_id = value.into();
+        self
+    }
+    /// Returns a new instance of DisassociateSubnetCidrBlockRequest with optional fields set to `None`.
+    pub fn new<AssociationIdType: Into<String>>(association_id: AssociationIdType)
+                                                -> DisassociateSubnetCidrBlockRequest {
+        DisassociateSubnetCidrBlockRequest {
+            association_id: association_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DisassociateSubnetCidrBlockRequest` contents to a `SignedRequest`.
 struct DisassociateSubnetCidrBlockRequestSerializer;
@@ -15874,7 +21662,6 @@ pub struct DisassociateSubnetCidrBlockResult {
     #[doc="<p>The ID of the subnet.</p>"]
     pub subnet_id: Option<String>,
 }
-
 struct DisassociateSubnetCidrBlockResultDeserializer;
 impl DisassociateSubnetCidrBlockResultDeserializer {
     #[allow(unused_variables)]
@@ -15926,7 +21713,23 @@ pub struct DisassociateVpcCidrBlockRequest {
     #[doc="<p>The association ID for the CIDR block.</p>"]
     pub association_id: String,
 }
-
+impl DisassociateVpcCidrBlockRequest {
+    /// Sets `association_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateVpcCidrBlockRequest.association_id = value.into();`.
+    pub fn association_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.association_id = value.into();
+        self
+    }
+    /// Returns a new instance of DisassociateVpcCidrBlockRequest with optional fields set to `None`.
+    pub fn new<AssociationIdType: Into<String>>(association_id: AssociationIdType)
+                                                -> DisassociateVpcCidrBlockRequest {
+        DisassociateVpcCidrBlockRequest {
+            association_id: association_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DisassociateVpcCidrBlockRequest` contents to a `SignedRequest`.
 struct DisassociateVpcCidrBlockRequestSerializer;
@@ -15950,7 +21753,6 @@ pub struct DisassociateVpcCidrBlockResult {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct DisassociateVpcCidrBlockResultDeserializer;
 impl DisassociateVpcCidrBlockResultDeserializer {
     #[allow(unused_variables)]
@@ -16006,7 +21808,33 @@ pub struct DiskImage {
     #[doc="<p>Information about the volume.</p>"]
     pub volume: Option<VolumeDetail>,
 }
-
+impl DiskImage {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DiskImage.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `image`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DiskImage.image = Some(value.into());`.
+    pub fn image<ValueType: Into<DiskImageDetail>>(mut self, value: ValueType) -> Self {
+        self.image = Some(value.into());
+        self
+    }
+    /// Sets `volume`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DiskImage.volume = Some(value.into());`.
+    pub fn volume<ValueType: Into<VolumeDetail>>(mut self, value: ValueType) -> Self {
+        self.volume = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DiskImage with optional fields set to `None`.
+    pub fn new() -> DiskImage {
+        DiskImage { ..Default::default() }
+    }
+}
 
 /// Serialize `DiskImage` contents to a `SignedRequest`.
 struct DiskImageSerializer;
@@ -16046,7 +21874,6 @@ pub struct DiskImageDescription {
     #[doc="<p>The size of the disk image, in GiB.</p>"]
     pub size: i64,
 }
-
 struct DiskImageDescriptionDeserializer;
 impl DiskImageDescriptionDeserializer {
     #[allow(unused_variables)]
@@ -16110,7 +21937,42 @@ pub struct DiskImageDetail {
     #[doc="<p>A presigned URL for the import manifest stored in Amazon S3 and presented here as an Amazon S3 presigned URL. For information about creating a presigned URL for an Amazon S3 object, read the \"Query String Request Authentication Alternative\" section of the <a href=\"http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html\">Authenticating REST Requests</a> topic in the <i>Amazon Simple Storage Service Developer Guide</i>.</p> <p>For information about the import manifest referenced by this API action, see <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/manifest.html\">VM Import Manifest</a>.</p>"]
     pub import_manifest_url: String,
 }
-
+impl DiskImageDetail {
+    /// Sets `bytes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DiskImageDetail.bytes = value.into();`.
+    pub fn bytes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.bytes = value.into();
+        self
+    }
+    /// Sets `format`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DiskImageDetail.format = value.into();`.
+    pub fn format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.format = value.into();
+        self
+    }
+    /// Sets `import_manifest_url`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DiskImageDetail.import_manifest_url = value.into();`.
+    pub fn import_manifest_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.import_manifest_url = value.into();
+        self
+    }
+    /// Returns a new instance of DiskImageDetail with optional fields set to `None`.
+    pub fn new<BytesType: Into<i64>, FormatType: Into<String>, ImportManifestUrlType: Into<String>>
+        (bytes: BytesType,
+         format: FormatType,
+         import_manifest_url: ImportManifestUrlType)
+         -> DiskImageDetail {
+        DiskImageDetail {
+            bytes: bytes.into(),
+            format: format.into(),
+            import_manifest_url: import_manifest_url.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DiskImageDetail` contents to a `SignedRequest`.
 struct DiskImageDetailSerializer;
@@ -16163,7 +22025,6 @@ pub struct DiskImageVolumeDescription {
     #[doc="<p>The size of the volume, in GiB.</p>"]
     pub size: Option<i64>,
 }
-
 struct DiskImageVolumeDescriptionDeserializer;
 impl DiskImageVolumeDescriptionDeserializer {
     #[allow(unused_variables)]
@@ -16252,7 +22113,54 @@ pub struct EbsBlockDevice {
     #[doc="<p>The volume type: <code>gp2</code>, <code>io1</code>, <code>st1</code>, <code>sc1</code>, or <code>standard</code>.</p> <p>Default: <code>standard</code> </p>"]
     pub volume_type: Option<String>,
 }
-
+impl EbsBlockDevice {
+    /// Sets `delete_on_termination`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EbsBlockDevice.delete_on_termination = Some(value.into());`.
+    pub fn delete_on_termination<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.delete_on_termination = Some(value.into());
+        self
+    }
+    /// Sets `encrypted`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EbsBlockDevice.encrypted = Some(value.into());`.
+    pub fn encrypted<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.encrypted = Some(value.into());
+        self
+    }
+    /// Sets `iops`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EbsBlockDevice.iops = Some(value.into());`.
+    pub fn iops<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.iops = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EbsBlockDevice.snapshot_id = Some(value.into());`.
+    pub fn snapshot_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_id = Some(value.into());
+        self
+    }
+    /// Sets `volume_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EbsBlockDevice.volume_size = Some(value.into());`.
+    pub fn volume_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.volume_size = Some(value.into());
+        self
+    }
+    /// Sets `volume_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EbsBlockDevice.volume_type = Some(value.into());`.
+    pub fn volume_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of EbsBlockDevice with optional fields set to `None`.
+    pub fn new() -> EbsBlockDevice {
+        EbsBlockDevice { ..Default::default() }
+    }
+}
 struct EbsBlockDeviceDeserializer;
 impl EbsBlockDeviceDeserializer {
     #[allow(unused_variables)]
@@ -16363,7 +22271,6 @@ pub struct EbsInstanceBlockDevice {
     #[doc="<p>The ID of the EBS volume.</p>"]
     pub volume_id: Option<String>,
 }
-
 struct EbsInstanceBlockDeviceDeserializer;
 impl EbsInstanceBlockDeviceDeserializer {
     #[allow(unused_variables)]
@@ -16428,7 +22335,26 @@ pub struct EbsInstanceBlockDeviceSpecification {
     #[doc="<p>The ID of the EBS volume.</p>"]
     pub volume_id: Option<String>,
 }
-
+impl EbsInstanceBlockDeviceSpecification {
+    /// Sets `delete_on_termination`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EbsInstanceBlockDeviceSpecification.delete_on_termination = Some(value.into());`.
+    pub fn delete_on_termination<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.delete_on_termination = Some(value.into());
+        self
+    }
+    /// Sets `volume_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EbsInstanceBlockDeviceSpecification.volume_id = Some(value.into());`.
+    pub fn volume_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of EbsInstanceBlockDeviceSpecification with optional fields set to `None`.
+    pub fn new() -> EbsInstanceBlockDeviceSpecification {
+        EbsInstanceBlockDeviceSpecification { ..Default::default() }
+    }
+}
 
 /// Serialize `EbsInstanceBlockDeviceSpecification` contents to a `SignedRequest`.
 struct EbsInstanceBlockDeviceSpecificationSerializer;
@@ -16458,7 +22384,6 @@ pub struct EgressOnlyInternetGateway {
     #[doc="<p>The ID of the egress-only Internet gateway.</p>"]
     pub egress_only_internet_gateway_id: Option<String>,
 }
-
 struct EgressOnlyInternetGatewayDeserializer;
 impl EgressOnlyInternetGatewayDeserializer {
     #[allow(unused_variables)]
@@ -16583,7 +22508,6 @@ pub struct ElasticGpuAssociation {
     #[doc="<p>The ID of the Elastic GPU.</p>"]
     pub elastic_gpu_id: Option<String>,
 }
-
 struct ElasticGpuAssociationDeserializer;
 impl ElasticGpuAssociationDeserializer {
     #[allow(unused_variables)]
@@ -16689,7 +22613,6 @@ pub struct ElasticGpuHealth {
     #[doc="<p>The health status.</p>"]
     pub status: Option<String>,
 }
-
 struct ElasticGpuHealthDeserializer;
 impl ElasticGpuHealthDeserializer {
     #[allow(unused_variables)]
@@ -16792,7 +22715,22 @@ pub struct ElasticGpuSpecification {
     #[doc="<p>The type of Elastic GPU.</p>"]
     pub type_: String,
 }
-
+impl ElasticGpuSpecification {
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticGpuSpecification.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of ElasticGpuSpecification with optional fields set to `None`.
+    pub fn new<TypeType: Into<String>>(type_: TypeType) -> ElasticGpuSpecification {
+        ElasticGpuSpecification {
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ElasticGpuSpecification` contents to a `SignedRequest`.
 struct ElasticGpuSpecificationSerializer;
@@ -16864,7 +22802,6 @@ pub struct ElasticGpus {
     #[doc="<p>The ID of the instance to which the Elastic GPU is attached.</p>"]
     pub instance_id: Option<String>,
 }
-
 struct ElasticGpusDeserializer;
 impl ElasticGpusDeserializer {
     #[allow(unused_variables)]
@@ -16939,7 +22876,33 @@ pub struct EnableVgwRoutePropagationRequest {
     #[doc="<p>The ID of the route table.</p>"]
     pub route_table_id: String,
 }
-
+impl EnableVgwRoutePropagationRequest {
+    /// Sets `gateway_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableVgwRoutePropagationRequest.gateway_id = value.into();`.
+    pub fn gateway_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_id = value.into();
+        self
+    }
+    /// Sets `route_table_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableVgwRoutePropagationRequest.route_table_id = value.into();`.
+    pub fn route_table_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.route_table_id = value.into();
+        self
+    }
+    /// Returns a new instance of EnableVgwRoutePropagationRequest with optional fields set to `None`.
+    pub fn new<GatewayIdType: Into<String>, RouteTableIdType: Into<String>>
+        (gateway_id: GatewayIdType,
+         route_table_id: RouteTableIdType)
+         -> EnableVgwRoutePropagationRequest {
+        EnableVgwRoutePropagationRequest {
+            gateway_id: gateway_id.into(),
+            route_table_id: route_table_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `EnableVgwRoutePropagationRequest` contents to a `SignedRequest`.
 struct EnableVgwRoutePropagationRequestSerializer;
@@ -16965,7 +22928,29 @@ pub struct EnableVolumeIORequest {
     #[doc="<p>The ID of the volume.</p>"]
     pub volume_id: String,
 }
-
+impl EnableVolumeIORequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableVolumeIORequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `volume_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableVolumeIORequest.volume_id = value.into();`.
+    pub fn volume_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_id = value.into();
+        self
+    }
+    /// Returns a new instance of EnableVolumeIORequest with optional fields set to `None`.
+    pub fn new<VolumeIdType: Into<String>>(volume_id: VolumeIdType) -> EnableVolumeIORequest {
+        EnableVolumeIORequest {
+            volume_id: volume_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `EnableVolumeIORequest` contents to a `SignedRequest`.
 struct EnableVolumeIORequestSerializer;
@@ -16990,7 +22975,19 @@ pub struct EnableVpcClassicLinkDnsSupportRequest {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: Option<String>,
 }
-
+impl EnableVpcClassicLinkDnsSupportRequest {
+    /// Sets `vpc_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableVpcClassicLinkDnsSupportRequest.vpc_id = Some(value.into());`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of EnableVpcClassicLinkDnsSupportRequest with optional fields set to `None`.
+    pub fn new() -> EnableVpcClassicLinkDnsSupportRequest {
+        EnableVpcClassicLinkDnsSupportRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `EnableVpcClassicLinkDnsSupportRequest` contents to a `SignedRequest`.
 struct EnableVpcClassicLinkDnsSupportRequestSerializer;
@@ -17014,7 +23011,6 @@ pub struct EnableVpcClassicLinkDnsSupportResult {
     #[doc="<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>"]
     pub return_: Option<bool>,
 }
-
 struct EnableVpcClassicLinkDnsSupportResultDeserializer;
 impl EnableVpcClassicLinkDnsSupportResultDeserializer {
     #[allow(unused_variables)]
@@ -17066,7 +23062,29 @@ pub struct EnableVpcClassicLinkRequest {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: String,
 }
-
+impl EnableVpcClassicLinkRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableVpcClassicLinkRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `vpc_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableVpcClassicLinkRequest.vpc_id = value.into();`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = value.into();
+        self
+    }
+    /// Returns a new instance of EnableVpcClassicLinkRequest with optional fields set to `None`.
+    pub fn new<VpcIdType: Into<String>>(vpc_id: VpcIdType) -> EnableVpcClassicLinkRequest {
+        EnableVpcClassicLinkRequest {
+            vpc_id: vpc_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `EnableVpcClassicLinkRequest` contents to a `SignedRequest`.
 struct EnableVpcClassicLinkRequestSerializer;
@@ -17091,7 +23109,6 @@ pub struct EnableVpcClassicLinkResult {
     #[doc="<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>"]
     pub return_: Option<bool>,
 }
-
 struct EnableVpcClassicLinkResultDeserializer;
 impl EnableVpcClassicLinkResultDeserializer {
     #[allow(unused_variables)]
@@ -17158,7 +23175,6 @@ pub struct EventInformation {
     #[doc="<p>The ID of the instance. This information is available only for <code>instanceChange</code> events.</p>"]
     pub instance_id: Option<String>,
 }
-
 struct EventInformationDeserializer;
 impl EventInformationDeserializer {
     #[allow(unused_variables)]
@@ -17280,7 +23296,6 @@ pub struct ExportTask {
     #[doc="<p>The status message related to the export task.</p>"]
     pub status_message: Option<String>,
 }
-
 struct ExportTaskDeserializer;
 impl ExportTaskDeserializer {
     #[allow(unused_variables)]
@@ -17424,7 +23439,6 @@ pub struct ExportToS3Task {
     #[doc="<p>The encryption key for your S3 bucket.</p>"]
     pub s3_key: Option<String>,
 }
-
 struct ExportToS3TaskDeserializer;
 impl ExportToS3TaskDeserializer {
     #[allow(unused_variables)]
@@ -17493,7 +23507,40 @@ pub struct ExportToS3TaskSpecification {
     #[doc="<p>The image is written to a single object in the S3 bucket at the S3 key s3prefix + exportTaskId + '.' + diskImageFormat.</p>"]
     pub s3_prefix: Option<String>,
 }
-
+impl ExportToS3TaskSpecification {
+    /// Sets `container_format`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExportToS3TaskSpecification.container_format = Some(value.into());`.
+    pub fn container_format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.container_format = Some(value.into());
+        self
+    }
+    /// Sets `disk_image_format`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExportToS3TaskSpecification.disk_image_format = Some(value.into());`.
+    pub fn disk_image_format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.disk_image_format = Some(value.into());
+        self
+    }
+    /// Sets `s3_bucket`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExportToS3TaskSpecification.s3_bucket = Some(value.into());`.
+    pub fn s3_bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_bucket = Some(value.into());
+        self
+    }
+    /// Sets `s3_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExportToS3TaskSpecification.s3_prefix = Some(value.into());`.
+    pub fn s3_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_prefix = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ExportToS3TaskSpecification with optional fields set to `None`.
+    pub fn new() -> ExportToS3TaskSpecification {
+        ExportToS3TaskSpecification { ..Default::default() }
+    }
+}
 
 /// Serialize `ExportToS3TaskSpecification` contents to a `SignedRequest`.
 struct ExportToS3TaskSpecificationSerializer;
@@ -17528,7 +23575,26 @@ pub struct Filter {
     #[doc="<p>One or more filter values. Filter values are case-sensitive.</p>"]
     pub values: Option<Vec<String>>,
 }
-
+impl Filter {
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Filter.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Filter.values = Some(value.into());`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Filter with optional fields set to `None`.
+    pub fn new() -> Filter {
+        Filter { ..Default::default() }
+    }
+}
 
 /// Serialize `Filter` contents to a `SignedRequest`.
 struct FilterSerializer;
@@ -17613,7 +23679,6 @@ pub struct FlowLog {
     #[doc="<p>The type of traffic captured for the flow log.</p>"]
     pub traffic_type: Option<String>,
 }
-
 struct FlowLogDeserializer;
 impl FlowLogDeserializer {
     #[allow(unused_variables)]
@@ -17764,7 +23829,6 @@ pub struct FpgaImage {
     #[doc="<p>The time of the most recent update to the AFI.</p>"]
     pub update_time: Option<String>,
 }
-
 struct FpgaImageDeserializer;
 impl FpgaImageDeserializer {
     #[allow(unused_variables)]
@@ -17915,7 +23979,6 @@ pub struct FpgaImageState {
     #[doc="<p>If the state is <code>failed</code>, this is the error message.</p>"]
     pub message: Option<String>,
 }
-
 struct FpgaImageStateDeserializer;
 impl FpgaImageStateDeserializer {
     #[allow(unused_variables)]
@@ -17999,7 +24062,30 @@ pub struct GetConsoleOutputRequest {
     #[doc="<p>The ID of the instance.</p>"]
     pub instance_id: String,
 }
-
+impl GetConsoleOutputRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetConsoleOutputRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetConsoleOutputRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetConsoleOutputRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>>(instance_id: InstanceIdType)
+                                             -> GetConsoleOutputRequest {
+        GetConsoleOutputRequest {
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetConsoleOutputRequest` contents to a `SignedRequest`.
 struct GetConsoleOutputRequestSerializer;
@@ -18028,7 +24114,6 @@ pub struct GetConsoleOutputResult {
     #[doc="<p>The time the output was last updated.</p>"]
     pub timestamp: Option<String>,
 }
-
 struct GetConsoleOutputResultDeserializer;
 impl GetConsoleOutputResultDeserializer {
     #[allow(unused_variables)]
@@ -18089,7 +24174,37 @@ pub struct GetConsoleScreenshotRequest {
     #[doc="<p>When set to <code>true</code>, acts as keystroke input and wakes up an instance that's in standby or \"sleep\" mode.</p>"]
     pub wake_up: Option<bool>,
 }
-
+impl GetConsoleScreenshotRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetConsoleScreenshotRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetConsoleScreenshotRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `wake_up`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetConsoleScreenshotRequest.wake_up = Some(value.into());`.
+    pub fn wake_up<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.wake_up = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetConsoleScreenshotRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>>(instance_id: InstanceIdType)
+                                             -> GetConsoleScreenshotRequest {
+        GetConsoleScreenshotRequest {
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetConsoleScreenshotRequest` contents to a `SignedRequest`.
 struct GetConsoleScreenshotRequestSerializer;
@@ -18119,7 +24234,6 @@ pub struct GetConsoleScreenshotResult {
     #[doc="<p>The ID of the instance.</p>"]
     pub instance_id: Option<String>,
 }
-
 struct GetConsoleScreenshotResultDeserializer;
 impl GetConsoleScreenshotResultDeserializer {
     #[allow(unused_variables)]
@@ -18173,7 +24287,33 @@ pub struct GetHostReservationPurchasePreviewRequest {
     #[doc="<p>The offering ID of the reservation.</p>"]
     pub offering_id: String,
 }
-
+impl GetHostReservationPurchasePreviewRequest {
+    /// Sets `host_id_set`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetHostReservationPurchasePreviewRequest.host_id_set = value.into();`.
+    pub fn host_id_set<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.host_id_set = value.into();
+        self
+    }
+    /// Sets `offering_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetHostReservationPurchasePreviewRequest.offering_id = value.into();`.
+    pub fn offering_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.offering_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetHostReservationPurchasePreviewRequest with optional fields set to `None`.
+    pub fn new<HostIdSetType: Into<Vec<String>>, OfferingIdType: Into<String>>
+        (host_id_set: HostIdSetType,
+         offering_id: OfferingIdType)
+         -> GetHostReservationPurchasePreviewRequest {
+        GetHostReservationPurchasePreviewRequest {
+            host_id_set: host_id_set.into(),
+            offering_id: offering_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetHostReservationPurchasePreviewRequest` contents to a `SignedRequest`.
 struct GetHostReservationPurchasePreviewRequestSerializer;
@@ -18203,7 +24343,6 @@ pub struct GetHostReservationPurchasePreviewResult {
     #[doc="<p>The potential total upfront price. This is billed immediately.</p>"]
     pub total_upfront_price: Option<String>,
 }
-
 struct GetHostReservationPurchasePreviewResultDeserializer;
 impl GetHostReservationPurchasePreviewResultDeserializer {
     #[allow(unused_variables)]
@@ -18270,7 +24409,30 @@ pub struct GetPasswordDataRequest {
     #[doc="<p>The ID of the Windows instance.</p>"]
     pub instance_id: String,
 }
-
+impl GetPasswordDataRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetPasswordDataRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetPasswordDataRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetPasswordDataRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>>(instance_id: InstanceIdType)
+                                             -> GetPasswordDataRequest {
+        GetPasswordDataRequest {
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetPasswordDataRequest` contents to a `SignedRequest`.
 struct GetPasswordDataRequestSerializer;
@@ -18299,7 +24461,6 @@ pub struct GetPasswordDataResult {
     #[doc="<p>The time the data was last updated.</p>"]
     pub timestamp: Option<String>,
 }
-
 struct GetPasswordDataResultDeserializer;
 impl GetPasswordDataResultDeserializer {
     #[allow(unused_variables)]
@@ -18360,7 +24521,38 @@ pub struct GetReservedInstancesExchangeQuoteRequest {
     #[doc="<p>The configuration requirements of the Convertible Reserved Instances to exchange for your current Convertible Reserved Instances.</p>"]
     pub target_configurations: Option<Vec<TargetConfigurationRequest>>,
 }
-
+impl GetReservedInstancesExchangeQuoteRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetReservedInstancesExchangeQuoteRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `reserved_instance_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetReservedInstancesExchangeQuoteRequest.reserved_instance_ids = value.into();`.
+    pub fn reserved_instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.reserved_instance_ids = value.into();
+        self
+    }
+    /// Sets `target_configurations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetReservedInstancesExchangeQuoteRequest.target_configurations = Some(value.into());`.
+pub fn target_configurations<ValueType: Into<Vec<TargetConfigurationRequest>>>(mut self, value: ValueType) -> Self{
+        self.target_configurations = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetReservedInstancesExchangeQuoteRequest with optional fields set to `None`.
+    pub fn new<ReservedInstanceIdsType: Into<Vec<String>>>
+        (reserved_instance_ids: ReservedInstanceIdsType)
+         -> GetReservedInstancesExchangeQuoteRequest {
+        GetReservedInstancesExchangeQuoteRequest {
+            reserved_instance_ids: reserved_instance_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetReservedInstancesExchangeQuoteRequest` contents to a `SignedRequest`.
 struct GetReservedInstancesExchangeQuoteRequestSerializer;
@@ -18410,7 +24602,6 @@ pub struct GetReservedInstancesExchangeQuoteResult {
     #[doc="<p>Describes the reason why the exchange cannot be completed.</p>"]
     pub validation_failure_reason: Option<String>,
 }
-
 struct GetReservedInstancesExchangeQuoteResultDeserializer;
 impl GetReservedInstancesExchangeQuoteResultDeserializer {
     #[allow(unused_variables)]
@@ -18509,7 +24700,26 @@ pub struct GroupIdentifier {
     #[doc="<p>The name of the security group.</p>"]
     pub group_name: Option<String>,
 }
-
+impl GroupIdentifier {
+    /// Sets `group_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GroupIdentifier.group_id = Some(value.into());`.
+    pub fn group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_id = Some(value.into());
+        self
+    }
+    /// Sets `group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GroupIdentifier.group_name = Some(value.into());`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GroupIdentifier with optional fields set to `None`.
+    pub fn new() -> GroupIdentifier {
+        GroupIdentifier { ..Default::default() }
+    }
+}
 struct GroupIdentifierDeserializer;
 impl GroupIdentifierDeserializer {
     #[allow(unused_variables)]
@@ -18663,7 +24873,6 @@ pub struct HistoryRecord {
     #[doc="<p>The date and time of the event, in UTC format (for example, <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>Z).</p>"]
     pub timestamp: String,
 }
-
 struct HistoryRecordDeserializer;
 impl HistoryRecordDeserializer {
     #[allow(unused_variables)]
@@ -18778,7 +24987,6 @@ pub struct Host {
     #[doc="<p>The Dedicated Host's state.</p>"]
     pub state: Option<String>,
 }
-
 struct HostDeserializer;
 impl HostDeserializer {
     #[allow(unused_variables)]
@@ -18867,7 +25075,6 @@ pub struct HostInstance {
     #[doc="<p>The instance type size (for example, <code>m3.medium</code>) of the running instance.</p>"]
     pub instance_type: Option<String>,
 }
-
 struct HostInstanceDeserializer;
 impl HostInstanceDeserializer {
     #[allow(unused_variables)]
@@ -19014,7 +25221,6 @@ pub struct HostOffering {
     #[doc="<p>The upfront price of the offering. Does not apply to No Upfront offerings.</p>"]
     pub upfront_price: Option<String>,
 }
-
 struct HostOfferingDeserializer;
 impl HostOfferingDeserializer {
     #[allow(unused_variables)]
@@ -19137,7 +25343,6 @@ pub struct HostProperties {
     #[doc="<p>The number of vCPUs on the Dedicated Host.</p>"]
     pub total_v_cpus: Option<i64>,
 }
-
 struct HostPropertiesDeserializer;
 impl HostPropertiesDeserializer {
     #[allow(unused_variables)]
@@ -19222,7 +25427,6 @@ pub struct HostReservation {
     #[doc="<p>The upfront price of the reservation.</p>"]
     pub upfront_price: Option<String>,
 }
-
 struct HostReservationDeserializer;
 impl HostReservationDeserializer {
     #[allow(unused_variables)]
@@ -19393,7 +25597,6 @@ pub struct IamInstanceProfile {
     #[doc="<p>The ID of the instance profile.</p>"]
     pub id: Option<String>,
 }
-
 struct IamInstanceProfileDeserializer;
 impl IamInstanceProfileDeserializer {
     #[allow(unused_variables)]
@@ -19452,7 +25655,6 @@ pub struct IamInstanceProfileAssociation {
     #[doc="<p>The time the IAM instance profile was associated with the instance.</p>"]
     pub timestamp: Option<String>,
 }
-
 struct IamInstanceProfileAssociationDeserializer;
 impl IamInstanceProfileAssociationDeserializer {
     #[allow(unused_variables)]
@@ -19575,7 +25777,26 @@ pub struct IamInstanceProfileSpecification {
     #[doc="<p>The name of the instance profile.</p>"]
     pub name: Option<String>,
 }
-
+impl IamInstanceProfileSpecification {
+    /// Sets `arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IamInstanceProfileSpecification.arn = Some(value.into());`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IamInstanceProfileSpecification.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of IamInstanceProfileSpecification with optional fields set to `None`.
+    pub fn new() -> IamInstanceProfileSpecification {
+        IamInstanceProfileSpecification { ..Default::default() }
+    }
+}
 struct IamInstanceProfileSpecificationDeserializer;
 impl IamInstanceProfileSpecificationDeserializer {
     #[allow(unused_variables)]
@@ -19649,7 +25870,26 @@ pub struct IcmpTypeCode {
     #[doc="<p>The ICMP type. A value of -1 means all types.</p>"]
     pub type_: Option<i64>,
 }
-
+impl IcmpTypeCode {
+    /// Sets `code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IcmpTypeCode.code = Some(value.into());`.
+    pub fn code<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.code = Some(value.into());
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IcmpTypeCode.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Returns a new instance of IcmpTypeCode with optional fields set to `None`.
+    pub fn new() -> IcmpTypeCode {
+        IcmpTypeCode { ..Default::default() }
+    }
+}
 struct IcmpTypeCodeDeserializer;
 impl IcmpTypeCodeDeserializer {
     #[allow(unused_variables)]
@@ -19724,7 +25964,6 @@ pub struct IdFormat {
     #[doc="<p>Indicates whether longer IDs (17-character IDs) are enabled for the resource.</p>"]
     pub use_long_ids: Option<bool>,
 }
-
 struct IdFormatDeserializer;
 impl IdFormatDeserializer {
     #[allow(unused_variables)]
@@ -19868,7 +26107,6 @@ pub struct Image {
     #[doc="<p>The type of virtualization of the AMI.</p>"]
     pub virtualization_type: Option<String>,
 }
-
 struct ImageDeserializer;
 impl ImageDeserializer {
     #[allow(unused_variables)]
@@ -20034,7 +26272,6 @@ pub struct ImageAttribute {
     #[doc="<p>Indicates whether enhanced networking with the Intel 82599 Virtual Function interface is enabled.</p>"]
     pub sriov_net_support: Option<AttributeValue>,
 }
-
 struct ImageAttributeDeserializer;
 impl ImageAttributeDeserializer {
     #[allow(unused_variables)]
@@ -20128,7 +26365,54 @@ pub struct ImageDiskContainer {
     #[doc="<p>The S3 bucket for the disk image.</p>"]
     pub user_bucket: Option<UserBucket>,
 }
-
+impl ImageDiskContainer {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImageDiskContainer.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `device_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImageDiskContainer.device_name = Some(value.into());`.
+    pub fn device_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.device_name = Some(value.into());
+        self
+    }
+    /// Sets `format`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImageDiskContainer.format = Some(value.into());`.
+    pub fn format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.format = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImageDiskContainer.snapshot_id = Some(value.into());`.
+    pub fn snapshot_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_id = Some(value.into());
+        self
+    }
+    /// Sets `url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImageDiskContainer.url = Some(value.into());`.
+    pub fn url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.url = Some(value.into());
+        self
+    }
+    /// Sets `user_bucket`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImageDiskContainer.user_bucket = Some(value.into());`.
+    pub fn user_bucket<ValueType: Into<UserBucket>>(mut self, value: ValueType) -> Self {
+        self.user_bucket = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ImageDiskContainer with optional fields set to `None`.
+    pub fn new() -> ImageDiskContainer {
+        ImageDiskContainer { ..Default::default() }
+    }
+}
 
 /// Serialize `ImageDiskContainer` contents to a `SignedRequest`.
 struct ImageDiskContainerSerializer;
@@ -20280,7 +26564,84 @@ pub struct ImportImageRequest {
     #[doc="<p>The name of the role to use when not using the default role, 'vmimport'.</p>"]
     pub role_name: Option<String>,
 }
-
+impl ImportImageRequest {
+    /// Sets `architecture`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportImageRequest.architecture = Some(value.into());`.
+    pub fn architecture<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.architecture = Some(value.into());
+        self
+    }
+    /// Sets `client_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportImageRequest.client_data = Some(value.into());`.
+    pub fn client_data<ValueType: Into<ClientData>>(mut self, value: ValueType) -> Self {
+        self.client_data = Some(value.into());
+        self
+    }
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportImageRequest.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportImageRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `disk_containers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportImageRequest.disk_containers = Some(value.into());`.
+    pub fn disk_containers<ValueType: Into<Vec<ImageDiskContainer>>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.disk_containers = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportImageRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `hypervisor`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportImageRequest.hypervisor = Some(value.into());`.
+    pub fn hypervisor<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hypervisor = Some(value.into());
+        self
+    }
+    /// Sets `license_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportImageRequest.license_type = Some(value.into());`.
+    pub fn license_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.license_type = Some(value.into());
+        self
+    }
+    /// Sets `platform`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportImageRequest.platform = Some(value.into());`.
+    pub fn platform<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.platform = Some(value.into());
+        self
+    }
+    /// Sets `role_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportImageRequest.role_name = Some(value.into());`.
+    pub fn role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ImportImageRequest with optional fields set to `None`.
+    pub fn new() -> ImportImageRequest {
+        ImportImageRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ImportImageRequest` contents to a `SignedRequest`.
 struct ImportImageRequestSerializer;
@@ -20355,7 +26716,6 @@ pub struct ImportImageResult {
     #[doc="<p>A detailed status message of the import task.</p>"]
     pub status_message: Option<String>,
 }
-
 struct ImportImageResultDeserializer;
 impl ImportImageResultDeserializer {
     #[allow(unused_variables)]
@@ -20465,7 +26825,6 @@ pub struct ImportImageTask {
     #[doc="<p>A descriptive status message for the import image task.</p>"]
     pub status_message: Option<String>,
 }
-
 struct ImportImageTaskDeserializer;
 impl ImportImageTaskDeserializer {
     #[allow(unused_variables)]
@@ -20616,7 +26975,91 @@ pub struct ImportInstanceLaunchSpecification {
     #[doc="<p>The user data to make available to the instance. If you are using an AWS SDK or command line tool, Base64-encoding is performed for you, and you can load the text from a file. Otherwise, you must provide Base64-encoded text.</p>"]
     pub user_data: Option<UserData>,
 }
-
+impl ImportInstanceLaunchSpecification {
+    /// Sets `additional_info`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportInstanceLaunchSpecification.additional_info = Some(value.into());`.
+    pub fn additional_info<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.additional_info = Some(value.into());
+        self
+    }
+    /// Sets `architecture`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportInstanceLaunchSpecification.architecture = Some(value.into());`.
+    pub fn architecture<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.architecture = Some(value.into());
+        self
+    }
+    /// Sets `group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportInstanceLaunchSpecification.group_ids = Some(value.into());`.
+    pub fn group_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.group_ids = Some(value.into());
+        self
+    }
+    /// Sets `group_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportInstanceLaunchSpecification.group_names = Some(value.into());`.
+    pub fn group_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.group_names = Some(value.into());
+        self
+    }
+    /// Sets `instance_initiated_shutdown_behavior`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportInstanceLaunchSpecification.instance_initiated_shutdown_behavior = Some(value.into());`.
+    pub fn instance_initiated_shutdown_behavior<ValueType: Into<String>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.instance_initiated_shutdown_behavior = Some(value.into());
+        self
+    }
+    /// Sets `instance_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportInstanceLaunchSpecification.instance_type = Some(value.into());`.
+    pub fn instance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_type = Some(value.into());
+        self
+    }
+    /// Sets `monitoring`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportInstanceLaunchSpecification.monitoring = Some(value.into());`.
+    pub fn monitoring<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.monitoring = Some(value.into());
+        self
+    }
+    /// Sets `placement`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportInstanceLaunchSpecification.placement = Some(value.into());`.
+    pub fn placement<ValueType: Into<Placement>>(mut self, value: ValueType) -> Self {
+        self.placement = Some(value.into());
+        self
+    }
+    /// Sets `private_ip_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportInstanceLaunchSpecification.private_ip_address = Some(value.into());`.
+    pub fn private_ip_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.private_ip_address = Some(value.into());
+        self
+    }
+    /// Sets `subnet_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportInstanceLaunchSpecification.subnet_id = Some(value.into());`.
+    pub fn subnet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subnet_id = Some(value.into());
+        self
+    }
+    /// Sets `user_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportInstanceLaunchSpecification.user_data = Some(value.into());`.
+    pub fn user_data<ValueType: Into<UserData>>(mut self, value: ValueType) -> Self {
+        self.user_data = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ImportInstanceLaunchSpecification with optional fields set to `None`.
+    pub fn new() -> ImportInstanceLaunchSpecification {
+        ImportInstanceLaunchSpecification { ..Default::default() }
+    }
+}
 
 /// Serialize `ImportInstanceLaunchSpecification` contents to a `SignedRequest`.
 struct ImportInstanceLaunchSpecificationSerializer;
@@ -20688,7 +27131,50 @@ pub struct ImportInstanceRequest {
     #[doc="<p>The instance operating system.</p>"]
     pub platform: String,
 }
-
+impl ImportInstanceRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportInstanceRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `disk_images`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportInstanceRequest.disk_images = Some(value.into());`.
+    pub fn disk_images<ValueType: Into<Vec<DiskImage>>>(mut self, value: ValueType) -> Self {
+        self.disk_images = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportInstanceRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `launch_specification`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportInstanceRequest.launch_specification = Some(value.into());`.
+pub fn launch_specification<ValueType: Into<ImportInstanceLaunchSpecification>>(mut self, value: ValueType) -> Self{
+        self.launch_specification = Some(value.into());
+        self
+    }
+    /// Sets `platform`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportInstanceRequest.platform = value.into();`.
+    pub fn platform<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.platform = value.into();
+        self
+    }
+    /// Returns a new instance of ImportInstanceRequest with optional fields set to `None`.
+    pub fn new<PlatformType: Into<String>>(platform: PlatformType) -> ImportInstanceRequest {
+        ImportInstanceRequest {
+            platform: platform.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ImportInstanceRequest` contents to a `SignedRequest`.
 struct ImportInstanceRequestSerializer;
@@ -20728,7 +27214,6 @@ pub struct ImportInstanceResult {
     #[doc="<p>Information about the conversion task.</p>"]
     pub conversion_task: Option<ConversionTask>,
 }
-
 struct ImportInstanceResultDeserializer;
 impl ImportInstanceResultDeserializer {
     #[allow(unused_variables)]
@@ -20784,7 +27269,6 @@ pub struct ImportInstanceTaskDetails {
     #[doc="<p>One or more volumes.</p>"]
     pub volumes: Vec<ImportInstanceVolumeDetailItem>,
 }
-
 struct ImportInstanceTaskDetailsDeserializer;
 impl ImportInstanceTaskDetailsDeserializer {
     #[allow(unused_variables)]
@@ -20859,7 +27343,6 @@ pub struct ImportInstanceVolumeDetailItem {
     #[doc="<p>The volume.</p>"]
     pub volume: DiskImageVolumeDescription,
 }
-
 struct ImportInstanceVolumeDetailItemDeserializer;
 impl ImportInstanceVolumeDetailItemDeserializer {
     #[allow(unused_variables)]
@@ -20978,7 +27461,40 @@ pub struct ImportKeyPairRequest {
     #[doc="<p>The public key. For API calls, the text must be base64-encoded. For command line tools, base64 encoding is performed for you.</p>"]
     pub public_key_material: Vec<u8>,
 }
-
+impl ImportKeyPairRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportKeyPairRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `key_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportKeyPairRequest.key_name = value.into();`.
+    pub fn key_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_name = value.into();
+        self
+    }
+    /// Sets `public_key_material`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportKeyPairRequest.public_key_material = value.into();`.
+    pub fn public_key_material<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.public_key_material = value.into();
+        self
+    }
+    /// Returns a new instance of ImportKeyPairRequest with optional fields set to `None`.
+    pub fn new<KeyNameType: Into<String>, PublicKeyMaterialType: Into<Vec<u8>>>
+        (key_name: KeyNameType,
+         public_key_material: PublicKeyMaterialType)
+         -> ImportKeyPairRequest {
+        ImportKeyPairRequest {
+            key_name: key_name.into(),
+            public_key_material: public_key_material.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ImportKeyPairRequest` contents to a `SignedRequest`.
 struct ImportKeyPairRequestSerializer;
@@ -21007,7 +27523,6 @@ pub struct ImportKeyPairResult {
     #[doc="<p>The key pair name you provided.</p>"]
     pub key_name: Option<String>,
 }
-
 struct ImportKeyPairResultDeserializer;
 impl ImportKeyPairResultDeserializer {
     #[allow(unused_variables)]
@@ -21071,7 +27586,56 @@ pub struct ImportSnapshotRequest {
     #[doc="<p>The name of the role to use when not using the default role, 'vmimport'.</p>"]
     pub role_name: Option<String>,
 }
-
+impl ImportSnapshotRequest {
+    /// Sets `client_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportSnapshotRequest.client_data = Some(value.into());`.
+    pub fn client_data<ValueType: Into<ClientData>>(mut self, value: ValueType) -> Self {
+        self.client_data = Some(value.into());
+        self
+    }
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportSnapshotRequest.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportSnapshotRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `disk_container`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportSnapshotRequest.disk_container = Some(value.into());`.
+    pub fn disk_container<ValueType: Into<SnapshotDiskContainer>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.disk_container = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportSnapshotRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `role_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportSnapshotRequest.role_name = Some(value.into());`.
+    pub fn role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ImportSnapshotRequest with optional fields set to `None`.
+    pub fn new() -> ImportSnapshotRequest {
+        ImportSnapshotRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ImportSnapshotRequest` contents to a `SignedRequest`.
 struct ImportSnapshotRequestSerializer;
@@ -21118,7 +27682,6 @@ pub struct ImportSnapshotResult {
     #[doc="<p>Information about the import snapshot task.</p>"]
     pub snapshot_task_detail: Option<SnapshotTaskDetail>,
 }
-
 struct ImportSnapshotResultDeserializer;
 impl ImportSnapshotResultDeserializer {
     #[allow(unused_variables)]
@@ -21180,7 +27743,6 @@ pub struct ImportSnapshotTask {
     #[doc="<p>Describes an import snapshot task.</p>"]
     pub snapshot_task_detail: Option<SnapshotTaskDetail>,
 }
-
 struct ImportSnapshotTaskDeserializer;
 impl ImportSnapshotTaskDeserializer {
     #[allow(unused_variables)]
@@ -21299,7 +27861,58 @@ pub struct ImportVolumeRequest {
     #[doc="<p>The volume size.</p>"]
     pub volume: VolumeDetail,
 }
-
+impl ImportVolumeRequest {
+    /// Sets `availability_zone`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportVolumeRequest.availability_zone = value.into();`.
+    pub fn availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.availability_zone = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportVolumeRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportVolumeRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `image`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportVolumeRequest.image = value.into();`.
+    pub fn image<ValueType: Into<DiskImageDetail>>(mut self, value: ValueType) -> Self {
+        self.image = value.into();
+        self
+    }
+    /// Sets `volume`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportVolumeRequest.volume = value.into();`.
+    pub fn volume<ValueType: Into<VolumeDetail>>(mut self, value: ValueType) -> Self {
+        self.volume = value.into();
+        self
+    }
+    /// Returns a new instance of ImportVolumeRequest with optional fields set to `None`.
+    pub fn new<AvailabilityZoneType: Into<String>,
+               ImageType: Into<DiskImageDetail>,
+               VolumeType: Into<VolumeDetail>>
+        (availability_zone: AvailabilityZoneType,
+         image: ImageType,
+         volume: VolumeType)
+         -> ImportVolumeRequest {
+        ImportVolumeRequest {
+            availability_zone: availability_zone.into(),
+            image: image.into(),
+            volume: volume.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ImportVolumeRequest` contents to a `SignedRequest`.
 struct ImportVolumeRequestSerializer;
@@ -21330,7 +27943,6 @@ pub struct ImportVolumeResult {
     #[doc="<p>Information about the conversion task.</p>"]
     pub conversion_task: Option<ConversionTask>,
 }
-
 struct ImportVolumeResultDeserializer;
 impl ImportVolumeResultDeserializer {
     #[allow(unused_variables)]
@@ -21388,7 +28000,6 @@ pub struct ImportVolumeTaskDetails {
     #[doc="<p>The volume.</p>"]
     pub volume: DiskImageVolumeDescription,
 }
-
 struct ImportVolumeTaskDetailsDeserializer;
 impl ImportVolumeTaskDetailsDeserializer {
     #[allow(unused_variables)]
@@ -21530,7 +28141,6 @@ pub struct Instance {
     #[doc="<p>[EC2-VPC] The ID of the VPC in which the instance is running.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct InstanceDeserializer;
 impl InstanceDeserializer {
     #[allow(unused_variables)]
@@ -21774,7 +28384,6 @@ pub struct InstanceAttribute {
     #[doc="<p>The user data.</p>"]
     pub user_data: Option<AttributeValue>,
 }
-
 struct InstanceAttributeDeserializer;
 impl InstanceAttributeDeserializer {
     #[allow(unused_variables)]
@@ -21893,7 +28502,6 @@ pub struct InstanceBlockDeviceMapping {
     #[doc="<p>Parameters used to automatically set up EBS volumes when the instance is launched.</p>"]
     pub ebs: Option<EbsInstanceBlockDevice>,
 }
-
 struct InstanceBlockDeviceMappingDeserializer;
 impl InstanceBlockDeviceMappingDeserializer {
     #[allow(unused_variables)]
@@ -21996,7 +28604,42 @@ pub struct InstanceBlockDeviceMappingSpecification {
     #[doc="<p>The virtual device name.</p>"]
     pub virtual_name: Option<String>,
 }
-
+impl InstanceBlockDeviceMappingSpecification {
+    /// Sets `device_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceBlockDeviceMappingSpecification.device_name = Some(value.into());`.
+    pub fn device_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.device_name = Some(value.into());
+        self
+    }
+    /// Sets `ebs`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceBlockDeviceMappingSpecification.ebs = Some(value.into());`.
+    pub fn ebs<ValueType: Into<EbsInstanceBlockDeviceSpecification>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.ebs = Some(value.into());
+        self
+    }
+    /// Sets `no_device`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceBlockDeviceMappingSpecification.no_device = Some(value.into());`.
+    pub fn no_device<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.no_device = Some(value.into());
+        self
+    }
+    /// Sets `virtual_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceBlockDeviceMappingSpecification.virtual_name = Some(value.into());`.
+    pub fn virtual_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.virtual_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InstanceBlockDeviceMappingSpecification with optional fields set to `None`.
+    pub fn new() -> InstanceBlockDeviceMappingSpecification {
+        InstanceBlockDeviceMappingSpecification { ..Default::default() }
+    }
+}
 
 /// Serialize `InstanceBlockDeviceMappingSpecification` contents to a `SignedRequest`.
 struct InstanceBlockDeviceMappingSpecificationSerializer;
@@ -22051,7 +28694,6 @@ pub struct InstanceCapacity {
     #[doc="<p>The total number of instances that can be launched onto the Dedicated Host.</p>"]
     pub total_capacity: Option<i64>,
 }
-
 struct InstanceCapacityDeserializer;
 impl InstanceCapacityDeserializer {
     #[allow(unused_variables)]
@@ -22112,7 +28754,6 @@ pub struct InstanceCount {
     #[doc="<p>The states of the listed Reserved Instances.</p>"]
     pub state: Option<String>,
 }
-
 struct InstanceCountDeserializer;
 impl InstanceCountDeserializer {
     #[allow(unused_variables)]
@@ -22209,7 +28850,6 @@ pub struct InstanceExportDetails {
     #[doc="<p>The target virtualization environment.</p>"]
     pub target_environment: Option<String>,
 }
-
 struct InstanceExportDetailsDeserializer;
 impl InstanceExportDetailsDeserializer {
     #[allow(unused_variables)]
@@ -22330,7 +28970,19 @@ pub struct InstanceIpv6Address {
     #[doc="<p>The IPv6 address.</p>"]
     pub ipv_6_address: Option<String>,
 }
-
+impl InstanceIpv6Address {
+    /// Sets `ipv_6_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceIpv6Address.ipv_6_address = Some(value.into());`.
+    pub fn ipv_6_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ipv_6_address = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InstanceIpv6Address with optional fields set to `None`.
+    pub fn new() -> InstanceIpv6Address {
+        InstanceIpv6Address { ..Default::default() }
+    }
+}
 struct InstanceIpv6AddressDeserializer;
 impl InstanceIpv6AddressDeserializer {
     #[allow(unused_variables)]
@@ -22506,7 +29158,6 @@ pub struct InstanceMonitoring {
     #[doc="<p>The monitoring for the instance.</p>"]
     pub monitoring: Option<Monitoring>,
 }
-
 struct InstanceMonitoringDeserializer;
 impl InstanceMonitoringDeserializer {
     #[allow(unused_variables)]
@@ -22628,7 +29279,6 @@ pub struct InstanceNetworkInterface {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct InstanceNetworkInterfaceDeserializer;
 impl InstanceNetworkInterfaceDeserializer {
     #[allow(unused_variables)]
@@ -22741,7 +29391,6 @@ pub struct InstanceNetworkInterfaceAssociation {
     #[doc="<p>The public IP address or Elastic IP address bound to the network interface.</p>"]
     pub public_ip: Option<String>,
 }
-
 struct InstanceNetworkInterfaceAssociationDeserializer;
 impl InstanceNetworkInterfaceAssociationDeserializer {
     #[allow(unused_variables)]
@@ -22807,7 +29456,6 @@ pub struct InstanceNetworkInterfaceAttachment {
     #[doc="<p>The attachment state.</p>"]
     pub status: Option<String>,
 }
-
 struct InstanceNetworkInterfaceAttachmentDeserializer;
 impl InstanceNetworkInterfaceAttachmentDeserializer {
     #[allow(unused_variables)]
@@ -22939,7 +29587,100 @@ pub struct InstanceNetworkInterfaceSpecification {
     #[doc="<p>The ID of the subnet associated with the network string. Applies only if creating a network interface when launching an instance.</p>"]
     pub subnet_id: Option<String>,
 }
-
+impl InstanceNetworkInterfaceSpecification {
+    /// Sets `associate_public_ip_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceNetworkInterfaceSpecification.associate_public_ip_address = Some(value.into());`.
+    pub fn associate_public_ip_address<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.associate_public_ip_address = Some(value.into());
+        self
+    }
+    /// Sets `delete_on_termination`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceNetworkInterfaceSpecification.delete_on_termination = Some(value.into());`.
+    pub fn delete_on_termination<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.delete_on_termination = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceNetworkInterfaceSpecification.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `device_index`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceNetworkInterfaceSpecification.device_index = Some(value.into());`.
+    pub fn device_index<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.device_index = Some(value.into());
+        self
+    }
+    /// Sets `groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceNetworkInterfaceSpecification.groups = Some(value.into());`.
+    pub fn groups<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.groups = Some(value.into());
+        self
+    }
+    /// Sets `ipv_6_address_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceNetworkInterfaceSpecification.ipv_6_address_count = Some(value.into());`.
+    pub fn ipv_6_address_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.ipv_6_address_count = Some(value.into());
+        self
+    }
+    /// Sets `ipv_6_addresses`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceNetworkInterfaceSpecification.ipv_6_addresses = Some(value.into());`.
+    pub fn ipv_6_addresses<ValueType: Into<Vec<InstanceIpv6Address>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.ipv_6_addresses = Some(value.into());
+        self
+    }
+    /// Sets `network_interface_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceNetworkInterfaceSpecification.network_interface_id = Some(value.into());`.
+    pub fn network_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_interface_id = Some(value.into());
+        self
+    }
+    /// Sets `private_ip_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceNetworkInterfaceSpecification.private_ip_address = Some(value.into());`.
+    pub fn private_ip_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.private_ip_address = Some(value.into());
+        self
+    }
+    /// Sets `private_ip_addresses`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceNetworkInterfaceSpecification.private_ip_addresses = Some(value.into());`.
+pub fn private_ip_addresses<ValueType: Into<Vec<PrivateIpAddressSpecification>>>(mut self, value: ValueType) -> Self{
+        self.private_ip_addresses = Some(value.into());
+        self
+    }
+    /// Sets `secondary_private_ip_address_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceNetworkInterfaceSpecification.secondary_private_ip_address_count = Some(value.into());`.
+    pub fn secondary_private_ip_address_count<ValueType: Into<i64>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.secondary_private_ip_address_count = Some(value.into());
+        self
+    }
+    /// Sets `subnet_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceNetworkInterfaceSpecification.subnet_id = Some(value.into());`.
+    pub fn subnet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subnet_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InstanceNetworkInterfaceSpecification with optional fields set to `None`.
+    pub fn new() -> InstanceNetworkInterfaceSpecification {
+        InstanceNetworkInterfaceSpecification { ..Default::default() }
+    }
+}
 struct InstanceNetworkInterfaceSpecificationDeserializer;
 impl InstanceNetworkInterfaceSpecificationDeserializer {
     #[allow(unused_variables)]
@@ -23167,7 +29908,6 @@ pub struct InstancePrivateIpAddress {
     #[doc="<p>The private IPv4 address of the network interface.</p>"]
     pub private_ip_address: Option<String>,
 }
-
 struct InstancePrivateIpAddressDeserializer;
 impl InstancePrivateIpAddressDeserializer {
     #[allow(unused_variables)]
@@ -23273,7 +30013,6 @@ pub struct InstanceState {
     #[doc="<p>The current state of the instance.</p>"]
     pub name: Option<String>,
 }
-
 struct InstanceStateDeserializer;
 impl InstanceStateDeserializer {
     #[allow(unused_variables)]
@@ -23330,7 +30069,6 @@ pub struct InstanceStateChange {
     #[doc="<p>The previous state of the instance.</p>"]
     pub previous_state: Option<InstanceState>,
 }
-
 struct InstanceStateChangeDeserializer;
 impl InstanceStateChangeDeserializer {
     #[allow(unused_variables)]
@@ -23454,7 +30192,6 @@ pub struct InstanceStatus {
     #[doc="<p>Reports impaired functionality that stems from issues related to the systems that support an instance, such as hardware failures and network connectivity problems.</p>"]
     pub system_status: Option<InstanceStatusSummary>,
 }
-
 struct InstanceStatusDeserializer;
 impl InstanceStatusDeserializer {
     #[allow(unused_variables)]
@@ -23532,7 +30269,6 @@ pub struct InstanceStatusDetails {
     #[doc="<p>The status.</p>"]
     pub status: Option<String>,
 }
-
 struct InstanceStatusDetailsDeserializer;
 impl InstanceStatusDetailsDeserializer {
     #[allow(unused_variables)]
@@ -23638,7 +30374,6 @@ pub struct InstanceStatusEvent {
     #[doc="<p>The earliest scheduled start time for the event.</p>"]
     pub not_before: Option<String>,
 }
-
 struct InstanceStatusEventDeserializer;
 impl InstanceStatusEventDeserializer {
     #[allow(unused_variables)]
@@ -23783,7 +30518,6 @@ pub struct InstanceStatusSummary {
     #[doc="<p>The status.</p>"]
     pub status: Option<String>,
 }
-
 struct InstanceStatusSummaryDeserializer;
 impl InstanceStatusSummaryDeserializer {
     #[allow(unused_variables)]
@@ -23893,7 +30627,6 @@ pub struct InternetGateway {
     #[doc="<p>Any tags assigned to the Internet gateway.</p>"]
     pub tags: Option<Vec<Tag>>,
 }
-
 struct InternetGatewayDeserializer;
 impl InternetGatewayDeserializer {
     #[allow(unused_variables)]
@@ -23952,7 +30685,6 @@ pub struct InternetGatewayAttachment {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct InternetGatewayAttachmentDeserializer;
 impl InternetGatewayAttachmentDeserializer {
     #[allow(unused_variables)]
@@ -24101,7 +30833,63 @@ pub struct IpPermission {
     #[doc="<p>One or more security group and AWS account ID pairs.</p>"]
     pub user_id_group_pairs: Option<Vec<UserIdGroupPair>>,
 }
-
+impl IpPermission {
+    /// Sets `from_port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IpPermission.from_port = Some(value.into());`.
+    pub fn from_port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.from_port = Some(value.into());
+        self
+    }
+    /// Sets `ip_protocol`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IpPermission.ip_protocol = Some(value.into());`.
+    pub fn ip_protocol<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ip_protocol = Some(value.into());
+        self
+    }
+    /// Sets `ip_ranges`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IpPermission.ip_ranges = Some(value.into());`.
+    pub fn ip_ranges<ValueType: Into<Vec<IpRange>>>(mut self, value: ValueType) -> Self {
+        self.ip_ranges = Some(value.into());
+        self
+    }
+    /// Sets `ipv_6_ranges`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IpPermission.ipv_6_ranges = Some(value.into());`.
+    pub fn ipv_6_ranges<ValueType: Into<Vec<Ipv6Range>>>(mut self, value: ValueType) -> Self {
+        self.ipv_6_ranges = Some(value.into());
+        self
+    }
+    /// Sets `prefix_list_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IpPermission.prefix_list_ids = Some(value.into());`.
+    pub fn prefix_list_ids<ValueType: Into<Vec<PrefixListId>>>(mut self, value: ValueType) -> Self {
+        self.prefix_list_ids = Some(value.into());
+        self
+    }
+    /// Sets `to_port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IpPermission.to_port = Some(value.into());`.
+    pub fn to_port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.to_port = Some(value.into());
+        self
+    }
+    /// Sets `user_id_group_pairs`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IpPermission.user_id_group_pairs = Some(value.into());`.
+    pub fn user_id_group_pairs<ValueType: Into<Vec<UserIdGroupPair>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.user_id_group_pairs = Some(value.into());
+        self
+    }
+    /// Returns a new instance of IpPermission with optional fields set to `None`.
+    pub fn new() -> IpPermission {
+        IpPermission { ..Default::default() }
+    }
+}
 struct IpPermissionDeserializer;
 impl IpPermissionDeserializer {
     #[allow(unused_variables)]
@@ -24274,7 +31062,19 @@ pub struct IpRange {
     #[doc="<p>The IPv4 CIDR range. You can either specify a CIDR range or a source security group, not both. To specify a single IPv4 address, use the /32 prefix.</p>"]
     pub cidr_ip: Option<String>,
 }
-
+impl IpRange {
+    /// Sets `cidr_ip`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IpRange.cidr_ip = Some(value.into());`.
+    pub fn cidr_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cidr_ip = Some(value.into());
+        self
+    }
+    /// Returns a new instance of IpRange with optional fields set to `None`.
+    pub fn new() -> IpRange {
+        IpRange { ..Default::default() }
+    }
+}
 struct IpRangeDeserializer;
 impl IpRangeDeserializer {
     #[allow(unused_variables)]
@@ -24487,7 +31287,6 @@ pub struct Ipv6CidrBlock {
     #[doc="<p>The IPv6 CIDR block.</p>"]
     pub ipv_6_cidr_block: Option<String>,
 }
-
 struct Ipv6CidrBlockDeserializer;
 impl Ipv6CidrBlockDeserializer {
     #[allow(unused_variables)]
@@ -24577,7 +31376,19 @@ pub struct Ipv6Range {
     #[doc="<p>The IPv6 CIDR range. You can either specify a CIDR range or a source security group, not both. To specify a single IPv6 address, use the /128 prefix.</p>"]
     pub cidr_ipv_6: Option<String>,
 }
-
+impl Ipv6Range {
+    /// Sets `cidr_ipv_6`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Ipv6Range.cidr_ipv_6 = Some(value.into());`.
+    pub fn cidr_ipv_6<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cidr_ipv_6 = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Ipv6Range with optional fields set to `None`.
+    pub fn new() -> Ipv6Range {
+        Ipv6Range { ..Default::default() }
+    }
+}
 struct Ipv6RangeDeserializer;
 impl Ipv6RangeDeserializer {
     #[allow(unused_variables)]
@@ -24712,7 +31523,6 @@ pub struct KeyPair {
     #[doc="<p>The name of the key pair.</p>"]
     pub key_name: Option<String>,
 }
-
 struct KeyPairDeserializer;
 impl KeyPairDeserializer {
     #[allow(unused_variables)]
@@ -24772,7 +31582,6 @@ pub struct KeyPairInfo {
     #[doc="<p>The name of the key pair.</p>"]
     pub key_name: Option<String>,
 }
-
 struct KeyPairInfoDeserializer;
 impl KeyPairInfoDeserializer {
     #[allow(unused_variables)]
@@ -24869,7 +31678,26 @@ pub struct LaunchPermission {
     #[doc="<p>The AWS account ID.</p>"]
     pub user_id: Option<String>,
 }
-
+impl LaunchPermission {
+    /// Sets `group`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LaunchPermission.group = Some(value.into());`.
+    pub fn group<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group = Some(value.into());
+        self
+    }
+    /// Sets `user_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LaunchPermission.user_id = Some(value.into());`.
+    pub fn user_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of LaunchPermission with optional fields set to `None`.
+    pub fn new() -> LaunchPermission {
+        LaunchPermission { ..Default::default() }
+    }
+}
 struct LaunchPermissionDeserializer;
 impl LaunchPermissionDeserializer {
     #[allow(unused_variables)]
@@ -24997,7 +31825,26 @@ pub struct LaunchPermissionModifications {
     #[doc="<p>The AWS account ID to remove from the list of launch permissions for the AMI.</p>"]
     pub remove: Option<Vec<LaunchPermission>>,
 }
-
+impl LaunchPermissionModifications {
+    /// Sets `add`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LaunchPermissionModifications.add = Some(value.into());`.
+    pub fn add<ValueType: Into<Vec<LaunchPermission>>>(mut self, value: ValueType) -> Self {
+        self.add = Some(value.into());
+        self
+    }
+    /// Sets `remove`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LaunchPermissionModifications.remove = Some(value.into());`.
+    pub fn remove<ValueType: Into<Vec<LaunchPermission>>>(mut self, value: ValueType) -> Self {
+        self.remove = Some(value.into());
+        self
+    }
+    /// Returns a new instance of LaunchPermissionModifications with optional fields set to `None`.
+    pub fn new() -> LaunchPermissionModifications {
+        LaunchPermissionModifications { ..Default::default() }
+    }
+}
 
 /// Serialize `LaunchPermissionModifications` contents to a `SignedRequest`.
 struct LaunchPermissionModificationsSerializer;
@@ -25055,7 +31902,6 @@ pub struct LaunchSpecification {
     #[doc="<p>The user data to make available to the instances. If you are using an AWS SDK or command line tool, Base64-encoding is performed for you, and you can load the text from a file. Otherwise, you must provide Base64-encoded text.</p>"]
     pub user_data: Option<String>,
 }
-
 struct LaunchSpecificationDeserializer;
 impl LaunchSpecificationDeserializer {
     #[allow(unused_variables)]
@@ -25260,7 +32106,33 @@ pub struct ModifyHostsRequest {
     #[doc="<p>The host IDs of the Dedicated Hosts you want to modify.</p>"]
     pub host_ids: Vec<String>,
 }
-
+impl ModifyHostsRequest {
+    /// Sets `auto_placement`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyHostsRequest.auto_placement = value.into();`.
+    pub fn auto_placement<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_placement = value.into();
+        self
+    }
+    /// Sets `host_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyHostsRequest.host_ids = value.into();`.
+    pub fn host_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.host_ids = value.into();
+        self
+    }
+    /// Returns a new instance of ModifyHostsRequest with optional fields set to `None`.
+    pub fn new<AutoPlacementType: Into<String>, HostIdsType: Into<Vec<String>>>
+        (auto_placement: AutoPlacementType,
+         host_ids: HostIdsType)
+         -> ModifyHostsRequest {
+        ModifyHostsRequest {
+            auto_placement: auto_placement.into(),
+            host_ids: host_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyHostsRequest` contents to a `SignedRequest`.
 struct ModifyHostsRequestSerializer;
@@ -25288,7 +32160,6 @@ pub struct ModifyHostsResult {
     #[doc="<p>The IDs of the Dedicated Hosts that could not be modified. Check whether the setting you requested can be used.</p>"]
     pub unsuccessful: Option<Vec<UnsuccessfulItem>>,
 }
-
 struct ModifyHostsResultDeserializer;
 impl ModifyHostsResultDeserializer {
     #[allow(unused_variables)]
@@ -25345,7 +32216,30 @@ pub struct ModifyIdFormatRequest {
     #[doc="<p>Indicate whether the resource should use longer IDs (17-character IDs).</p>"]
     pub use_long_ids: bool,
 }
-
+impl ModifyIdFormatRequest {
+    /// Sets `resource`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyIdFormatRequest.resource = value.into();`.
+    pub fn resource<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource = value.into();
+        self
+    }
+    /// Sets `use_long_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyIdFormatRequest.use_long_ids = value.into();`.
+    pub fn use_long_ids<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.use_long_ids = value.into();
+        self
+    }
+    /// Returns a new instance of ModifyIdFormatRequest with optional fields set to `None`.
+pub fn new<ResourceType: Into<String>, UseLongIdsType: Into<bool>>(resource: ResourceType, use_long_ids: UseLongIdsType) -> ModifyIdFormatRequest{
+        ModifyIdFormatRequest {
+            resource: resource.into(),
+            use_long_ids: use_long_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyIdFormatRequest` contents to a `SignedRequest`.
 struct ModifyIdFormatRequestSerializer;
@@ -25373,7 +32267,44 @@ pub struct ModifyIdentityIdFormatRequest {
     #[doc="<p>Indicates whether the resource should use longer IDs (17-character IDs)</p>"]
     pub use_long_ids: bool,
 }
-
+impl ModifyIdentityIdFormatRequest {
+    /// Sets `principal_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyIdentityIdFormatRequest.principal_arn = value.into();`.
+    pub fn principal_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.principal_arn = value.into();
+        self
+    }
+    /// Sets `resource`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyIdentityIdFormatRequest.resource = value.into();`.
+    pub fn resource<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource = value.into();
+        self
+    }
+    /// Sets `use_long_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyIdentityIdFormatRequest.use_long_ids = value.into();`.
+    pub fn use_long_ids<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.use_long_ids = value.into();
+        self
+    }
+    /// Returns a new instance of ModifyIdentityIdFormatRequest with optional fields set to `None`.
+    pub fn new<PrincipalArnType: Into<String>,
+               ResourceType: Into<String>,
+               UseLongIdsType: Into<bool>>
+        (principal_arn: PrincipalArnType,
+         resource: ResourceType,
+         use_long_ids: UseLongIdsType)
+         -> ModifyIdentityIdFormatRequest {
+        ModifyIdentityIdFormatRequest {
+            principal_arn: principal_arn.into(),
+            resource: resource.into(),
+            use_long_ids: use_long_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyIdentityIdFormatRequest` contents to a `SignedRequest`.
 struct ModifyIdentityIdFormatRequestSerializer;
@@ -25416,7 +32347,87 @@ pub struct ModifyImageAttributeRequest {
     #[doc="<p>The value of the attribute being modified. This is only valid when modifying the <code>description</code> attribute.</p>"]
     pub value: Option<String>,
 }
-
+impl ModifyImageAttributeRequest {
+    /// Sets `attribute`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyImageAttributeRequest.attribute = Some(value.into());`.
+    pub fn attribute<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyImageAttributeRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<AttributeValue>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyImageAttributeRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `image_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyImageAttributeRequest.image_id = value.into();`.
+    pub fn image_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.image_id = value.into();
+        self
+    }
+    /// Sets `launch_permission`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyImageAttributeRequest.launch_permission = Some(value.into());`.
+    pub fn launch_permission<ValueType: Into<LaunchPermissionModifications>>(mut self,
+                                                                             value: ValueType)
+                                                                             -> Self {
+        self.launch_permission = Some(value.into());
+        self
+    }
+    /// Sets `operation_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyImageAttributeRequest.operation_type = Some(value.into());`.
+    pub fn operation_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.operation_type = Some(value.into());
+        self
+    }
+    /// Sets `product_codes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyImageAttributeRequest.product_codes = Some(value.into());`.
+    pub fn product_codes<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.product_codes = Some(value.into());
+        self
+    }
+    /// Sets `user_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyImageAttributeRequest.user_groups = Some(value.into());`.
+    pub fn user_groups<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.user_groups = Some(value.into());
+        self
+    }
+    /// Sets `user_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyImageAttributeRequest.user_ids = Some(value.into());`.
+    pub fn user_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.user_ids = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyImageAttributeRequest.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifyImageAttributeRequest with optional fields set to `None`.
+    pub fn new<ImageIdType: Into<String>>(image_id: ImageIdType) -> ModifyImageAttributeRequest {
+        ModifyImageAttributeRequest {
+            image_id: image_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyImageAttributeRequest` contents to a `SignedRequest`.
 struct ModifyImageAttributeRequestSerializer;
@@ -25507,7 +32518,139 @@ pub struct ModifyInstanceAttributeRequest {
     #[doc="<p>A new value for the attribute. Use only with the <code>kernel</code>, <code>ramdisk</code>, <code>userData</code>, <code>disableApiTermination</code>, or <code>instanceInitiatedShutdownBehavior</code> attribute.</p>"]
     pub value: Option<String>,
 }
-
+impl ModifyInstanceAttributeRequest {
+    /// Sets `attribute`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstanceAttributeRequest.attribute = Some(value.into());`.
+    pub fn attribute<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute = Some(value.into());
+        self
+    }
+    /// Sets `block_device_mappings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstanceAttributeRequest.block_device_mappings = Some(value.into());`.
+    pub fn block_device_mappings<ValueType: Into<Vec<InstanceBlockDeviceMappingSpecification>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.block_device_mappings = Some(value.into());
+        self
+    }
+    /// Sets `disable_api_termination`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstanceAttributeRequest.disable_api_termination = Some(value.into());`.
+    pub fn disable_api_termination<ValueType: Into<AttributeBooleanValue>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.disable_api_termination = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstanceAttributeRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `ebs_optimized`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstanceAttributeRequest.ebs_optimized = Some(value.into());`.
+    pub fn ebs_optimized<ValueType: Into<AttributeBooleanValue>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.ebs_optimized = Some(value.into());
+        self
+    }
+    /// Sets `ena_support`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstanceAttributeRequest.ena_support = Some(value.into());`.
+    pub fn ena_support<ValueType: Into<AttributeBooleanValue>>(mut self, value: ValueType) -> Self {
+        self.ena_support = Some(value.into());
+        self
+    }
+    /// Sets `groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstanceAttributeRequest.groups = Some(value.into());`.
+    pub fn groups<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.groups = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstanceAttributeRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `instance_initiated_shutdown_behavior`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstanceAttributeRequest.instance_initiated_shutdown_behavior = Some(value.into());`.
+    pub fn instance_initiated_shutdown_behavior<ValueType: Into<AttributeValue>>(mut self,
+                                                                                 value: ValueType)
+                                                                                 -> Self {
+        self.instance_initiated_shutdown_behavior = Some(value.into());
+        self
+    }
+    /// Sets `instance_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstanceAttributeRequest.instance_type = Some(value.into());`.
+    pub fn instance_type<ValueType: Into<AttributeValue>>(mut self, value: ValueType) -> Self {
+        self.instance_type = Some(value.into());
+        self
+    }
+    /// Sets `kernel`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstanceAttributeRequest.kernel = Some(value.into());`.
+    pub fn kernel<ValueType: Into<AttributeValue>>(mut self, value: ValueType) -> Self {
+        self.kernel = Some(value.into());
+        self
+    }
+    /// Sets `ramdisk`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstanceAttributeRequest.ramdisk = Some(value.into());`.
+    pub fn ramdisk<ValueType: Into<AttributeValue>>(mut self, value: ValueType) -> Self {
+        self.ramdisk = Some(value.into());
+        self
+    }
+    /// Sets `source_dest_check`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstanceAttributeRequest.source_dest_check = Some(value.into());`.
+    pub fn source_dest_check<ValueType: Into<AttributeBooleanValue>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.source_dest_check = Some(value.into());
+        self
+    }
+    /// Sets `sriov_net_support`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstanceAttributeRequest.sriov_net_support = Some(value.into());`.
+    pub fn sriov_net_support<ValueType: Into<AttributeValue>>(mut self, value: ValueType) -> Self {
+        self.sriov_net_support = Some(value.into());
+        self
+    }
+    /// Sets `user_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstanceAttributeRequest.user_data = Some(value.into());`.
+    pub fn user_data<ValueType: Into<BlobAttributeValue>>(mut self, value: ValueType) -> Self {
+        self.user_data = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstanceAttributeRequest.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifyInstanceAttributeRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>>(instance_id: InstanceIdType)
+                                             -> ModifyInstanceAttributeRequest {
+        ModifyInstanceAttributeRequest {
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyInstanceAttributeRequest` contents to a `SignedRequest`.
 struct ModifyInstanceAttributeRequestSerializer;
@@ -25610,7 +32753,44 @@ pub struct ModifyInstancePlacementRequest {
     #[doc="<p>The tenancy of the instance that you are modifying.</p>"]
     pub tenancy: Option<String>,
 }
-
+impl ModifyInstancePlacementRequest {
+    /// Sets `affinity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstancePlacementRequest.affinity = Some(value.into());`.
+    pub fn affinity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.affinity = Some(value.into());
+        self
+    }
+    /// Sets `host_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstancePlacementRequest.host_id = Some(value.into());`.
+    pub fn host_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.host_id = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstancePlacementRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `tenancy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstancePlacementRequest.tenancy = Some(value.into());`.
+    pub fn tenancy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tenancy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifyInstancePlacementRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>>(instance_id: InstanceIdType)
+                                             -> ModifyInstancePlacementRequest {
+        ModifyInstancePlacementRequest {
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyInstancePlacementRequest` contents to a `SignedRequest`.
 struct ModifyInstancePlacementRequestSerializer;
@@ -25641,7 +32821,6 @@ pub struct ModifyInstancePlacementResult {
     #[doc="<p>Is <code>true</code> if the request succeeds, and an error otherwise.</p>"]
     pub return_: Option<bool>,
 }
-
 struct ModifyInstancePlacementResultDeserializer;
 impl ModifyInstancePlacementResultDeserializer {
     #[allow(unused_variables)]
@@ -25700,7 +32879,62 @@ pub struct ModifyNetworkInterfaceAttributeRequest {
     #[doc="<p>Indicates whether source/destination checking is enabled. A value of <code>true</code> means checking is enabled, and <code>false</code> means checking is disabled. This value must be <code>false</code> for a NAT instance to perform NAT. For more information, see <a href=\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_NAT_Instance.html\">NAT Instances</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>"]
     pub source_dest_check: Option<AttributeBooleanValue>,
 }
-
+impl ModifyNetworkInterfaceAttributeRequest {
+    /// Sets `attachment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyNetworkInterfaceAttributeRequest.attachment = Some(value.into());`.
+    pub fn attachment<ValueType: Into<NetworkInterfaceAttachmentChanges>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.attachment = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyNetworkInterfaceAttributeRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<AttributeValue>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyNetworkInterfaceAttributeRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyNetworkInterfaceAttributeRequest.groups = Some(value.into());`.
+    pub fn groups<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.groups = Some(value.into());
+        self
+    }
+    /// Sets `network_interface_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyNetworkInterfaceAttributeRequest.network_interface_id = value.into();`.
+    pub fn network_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_interface_id = value.into();
+        self
+    }
+    /// Sets `source_dest_check`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyNetworkInterfaceAttributeRequest.source_dest_check = Some(value.into());`.
+    pub fn source_dest_check<ValueType: Into<AttributeBooleanValue>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.source_dest_check = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifyNetworkInterfaceAttributeRequest with optional fields set to `None`.
+    pub fn new<NetworkInterfaceIdType: Into<String>>(network_interface_id: NetworkInterfaceIdType)
+                                                     -> ModifyNetworkInterfaceAttributeRequest {
+        ModifyNetworkInterfaceAttributeRequest {
+            network_interface_id: network_interface_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyNetworkInterfaceAttributeRequest` contents to a `SignedRequest`.
 struct ModifyNetworkInterfaceAttributeRequestSerializer;
@@ -25754,7 +32988,43 @@ pub struct ModifyReservedInstancesRequest {
     #[doc="<p>The configuration settings for the Reserved Instances to modify.</p>"]
     pub target_configurations: Vec<ReservedInstancesConfiguration>,
 }
-
+impl ModifyReservedInstancesRequest {
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReservedInstancesRequest.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `reserved_instances_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReservedInstancesRequest.reserved_instances_ids = value.into();`.
+    pub fn reserved_instances_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.reserved_instances_ids = value.into();
+        self
+    }
+    /// Sets `target_configurations`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReservedInstancesRequest.target_configurations = value.into();`.
+pub fn target_configurations<ValueType: Into<Vec<ReservedInstancesConfiguration>>>(mut self, value: ValueType) -> Self{
+        self.target_configurations = value.into();
+        self
+    }
+    /// Returns a new instance of ModifyReservedInstancesRequest with optional fields set to `None`.
+    pub fn new<ReservedInstancesIdsType: Into<Vec<String>>,
+               TargetConfigurationsType: Into<Vec<ReservedInstancesConfiguration>>>
+        (reserved_instances_ids: ReservedInstancesIdsType,
+         target_configurations: TargetConfigurationsType)
+         -> ModifyReservedInstancesRequest {
+        ModifyReservedInstancesRequest {
+            reserved_instances_ids: reserved_instances_ids.into(),
+            target_configurations: target_configurations.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyReservedInstancesRequest` contents to a `SignedRequest`.
 struct ModifyReservedInstancesRequestSerializer;
@@ -25788,7 +33058,6 @@ pub struct ModifyReservedInstancesResult {
     #[doc="<p>The ID for the modification.</p>"]
     pub reserved_instances_modification_id: Option<String>,
 }
-
 struct ModifyReservedInstancesResultDeserializer;
 impl ModifyReservedInstancesResultDeserializer {
     #[allow(unused_variables)]
@@ -25850,7 +33119,68 @@ pub struct ModifySnapshotAttributeRequest {
     #[doc="<p>The account ID to modify for the snapshot.</p>"]
     pub user_ids: Option<Vec<String>>,
 }
-
+impl ModifySnapshotAttributeRequest {
+    /// Sets `attribute`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifySnapshotAttributeRequest.attribute = Some(value.into());`.
+    pub fn attribute<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute = Some(value.into());
+        self
+    }
+    /// Sets `create_volume_permission`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifySnapshotAttributeRequest.create_volume_permission = Some(value.into());`.
+    pub fn create_volume_permission<ValueType: Into<CreateVolumePermissionModifications>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.create_volume_permission = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifySnapshotAttributeRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `group_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifySnapshotAttributeRequest.group_names = Some(value.into());`.
+    pub fn group_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.group_names = Some(value.into());
+        self
+    }
+    /// Sets `operation_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifySnapshotAttributeRequest.operation_type = Some(value.into());`.
+    pub fn operation_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.operation_type = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifySnapshotAttributeRequest.snapshot_id = value.into();`.
+    pub fn snapshot_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_id = value.into();
+        self
+    }
+    /// Sets `user_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifySnapshotAttributeRequest.user_ids = Some(value.into());`.
+    pub fn user_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.user_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifySnapshotAttributeRequest with optional fields set to `None`.
+    pub fn new<SnapshotIdType: Into<String>>(snapshot_id: SnapshotIdType)
+                                             -> ModifySnapshotAttributeRequest {
+        ModifySnapshotAttributeRequest {
+            snapshot_id: snapshot_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifySnapshotAttributeRequest` contents to a `SignedRequest`.
 struct ModifySnapshotAttributeRequestSerializer;
@@ -25902,7 +33232,38 @@ pub struct ModifySpotFleetRequestRequest {
     #[doc="<p>The size of the fleet.</p>"]
     pub target_capacity: Option<i64>,
 }
-
+impl ModifySpotFleetRequestRequest {
+    /// Sets `excess_capacity_termination_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifySpotFleetRequestRequest.excess_capacity_termination_policy = Some(value.into());`.
+    pub fn excess_capacity_termination_policy<ValueType: Into<String>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.excess_capacity_termination_policy = Some(value.into());
+        self
+    }
+    /// Sets `spot_fleet_request_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifySpotFleetRequestRequest.spot_fleet_request_id = value.into();`.
+    pub fn spot_fleet_request_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.spot_fleet_request_id = value.into();
+        self
+    }
+    /// Sets `target_capacity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifySpotFleetRequestRequest.target_capacity = Some(value.into());`.
+    pub fn target_capacity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.target_capacity = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifySpotFleetRequestRequest with optional fields set to `None`.
+pub fn new<SpotFleetRequestIdType: Into<String>>(spot_fleet_request_id: SpotFleetRequestIdType) -> ModifySpotFleetRequestRequest{
+        ModifySpotFleetRequestRequest {
+            spot_fleet_request_id: spot_fleet_request_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifySpotFleetRequestRequest` contents to a `SignedRequest`.
 struct ModifySpotFleetRequestRequestSerializer;
@@ -25933,7 +33294,6 @@ pub struct ModifySpotFleetRequestResponse {
     #[doc="<p>Is <code>true</code> if the request succeeds, and an error otherwise.</p>"]
     pub return_: Option<bool>,
 }
-
 struct ModifySpotFleetRequestResponseDeserializer;
 impl ModifySpotFleetRequestResponseDeserializer {
     #[allow(unused_variables)]
@@ -25986,7 +33346,39 @@ pub struct ModifySubnetAttributeRequest {
     #[doc="<p>The ID of the subnet.</p>"]
     pub subnet_id: String,
 }
-
+impl ModifySubnetAttributeRequest {
+    /// Sets `assign_ipv_6_address_on_creation`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifySubnetAttributeRequest.assign_ipv_6_address_on_creation = Some(value.into());`.
+pub fn assign_ipv_6_address_on_creation<ValueType: Into<AttributeBooleanValue>>(mut self, value: ValueType) -> Self{
+        self.assign_ipv_6_address_on_creation = Some(value.into());
+        self
+    }
+    /// Sets `map_public_ip_on_launch`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifySubnetAttributeRequest.map_public_ip_on_launch = Some(value.into());`.
+    pub fn map_public_ip_on_launch<ValueType: Into<AttributeBooleanValue>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.map_public_ip_on_launch = Some(value.into());
+        self
+    }
+    /// Sets `subnet_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifySubnetAttributeRequest.subnet_id = value.into();`.
+    pub fn subnet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subnet_id = value.into();
+        self
+    }
+    /// Returns a new instance of ModifySubnetAttributeRequest with optional fields set to `None`.
+    pub fn new<SubnetIdType: Into<String>>(subnet_id: SubnetIdType)
+                                           -> ModifySubnetAttributeRequest {
+        ModifySubnetAttributeRequest {
+            subnet_id: subnet_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifySubnetAttributeRequest` contents to a `SignedRequest`.
 struct ModifySubnetAttributeRequestSerializer;
@@ -26026,7 +33418,39 @@ pub struct ModifyVolumeAttributeRequest {
     #[doc="<p>The ID of the volume.</p>"]
     pub volume_id: String,
 }
-
+impl ModifyVolumeAttributeRequest {
+    /// Sets `auto_enable_io`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyVolumeAttributeRequest.auto_enable_io = Some(value.into());`.
+    pub fn auto_enable_io<ValueType: Into<AttributeBooleanValue>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.auto_enable_io = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyVolumeAttributeRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `volume_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyVolumeAttributeRequest.volume_id = value.into();`.
+    pub fn volume_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_id = value.into();
+        self
+    }
+    /// Returns a new instance of ModifyVolumeAttributeRequest with optional fields set to `None`.
+    pub fn new<VolumeIdType: Into<String>>(volume_id: VolumeIdType)
+                                           -> ModifyVolumeAttributeRequest {
+        ModifyVolumeAttributeRequest {
+            volume_id: volume_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyVolumeAttributeRequest` contents to a `SignedRequest`.
 struct ModifyVolumeAttributeRequestSerializer;
@@ -26062,7 +33486,50 @@ pub struct ModifyVolumeRequest {
     #[doc="<p>Target EBS volume type of the volume to be modified</p> <p> The API does not support modifications for volume type <code>standard</code>. You also cannot change the type of a volume to <code>standard</code>. </p> <p>Default: If no type is specified, the existing type is retained. </p>"]
     pub volume_type: Option<String>,
 }
-
+impl ModifyVolumeRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyVolumeRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `iops`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyVolumeRequest.iops = Some(value.into());`.
+    pub fn iops<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.iops = Some(value.into());
+        self
+    }
+    /// Sets `size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyVolumeRequest.size = Some(value.into());`.
+    pub fn size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.size = Some(value.into());
+        self
+    }
+    /// Sets `volume_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyVolumeRequest.volume_id = value.into();`.
+    pub fn volume_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_id = value.into();
+        self
+    }
+    /// Sets `volume_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyVolumeRequest.volume_type = Some(value.into());`.
+    pub fn volume_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifyVolumeRequest with optional fields set to `None`.
+    pub fn new<VolumeIdType: Into<String>>(volume_id: VolumeIdType) -> ModifyVolumeRequest {
+        ModifyVolumeRequest {
+            volume_id: volume_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyVolumeRequest` contents to a `SignedRequest`.
 struct ModifyVolumeRequestSerializer;
@@ -26095,7 +33562,6 @@ pub struct ModifyVolumeResult {
     #[doc="<p>A <a>VolumeModification</a> object.</p>"]
     pub volume_modification: Option<VolumeModification>,
 }
-
 struct ModifyVolumeResultDeserializer;
 impl ModifyVolumeResultDeserializer {
     #[allow(unused_variables)]
@@ -26149,7 +33615,40 @@ pub struct ModifyVpcAttributeRequest {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: String,
 }
-
+impl ModifyVpcAttributeRequest {
+    /// Sets `enable_dns_hostnames`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyVpcAttributeRequest.enable_dns_hostnames = Some(value.into());`.
+    pub fn enable_dns_hostnames<ValueType: Into<AttributeBooleanValue>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.enable_dns_hostnames = Some(value.into());
+        self
+    }
+    /// Sets `enable_dns_support`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyVpcAttributeRequest.enable_dns_support = Some(value.into());`.
+    pub fn enable_dns_support<ValueType: Into<AttributeBooleanValue>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.enable_dns_support = Some(value.into());
+        self
+    }
+    /// Sets `vpc_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyVpcAttributeRequest.vpc_id = value.into();`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = value.into();
+        self
+    }
+    /// Returns a new instance of ModifyVpcAttributeRequest with optional fields set to `None`.
+    pub fn new<VpcIdType: Into<String>>(vpc_id: VpcIdType) -> ModifyVpcAttributeRequest {
+        ModifyVpcAttributeRequest {
+            vpc_id: vpc_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyVpcAttributeRequest` contents to a `SignedRequest`.
 struct ModifyVpcAttributeRequestSerializer;
@@ -26195,7 +33694,60 @@ pub struct ModifyVpcEndpointRequest {
     #[doc="<p>The ID of the endpoint.</p>"]
     pub vpc_endpoint_id: String,
 }
-
+impl ModifyVpcEndpointRequest {
+    /// Sets `add_route_table_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyVpcEndpointRequest.add_route_table_ids = Some(value.into());`.
+    pub fn add_route_table_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.add_route_table_ids = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyVpcEndpointRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `policy_document`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyVpcEndpointRequest.policy_document = Some(value.into());`.
+    pub fn policy_document<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_document = Some(value.into());
+        self
+    }
+    /// Sets `remove_route_table_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyVpcEndpointRequest.remove_route_table_ids = Some(value.into());`.
+    pub fn remove_route_table_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.remove_route_table_ids = Some(value.into());
+        self
+    }
+    /// Sets `reset_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyVpcEndpointRequest.reset_policy = Some(value.into());`.
+    pub fn reset_policy<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.reset_policy = Some(value.into());
+        self
+    }
+    /// Sets `vpc_endpoint_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyVpcEndpointRequest.vpc_endpoint_id = value.into();`.
+    pub fn vpc_endpoint_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_endpoint_id = value.into();
+        self
+    }
+    /// Returns a new instance of ModifyVpcEndpointRequest with optional fields set to `None`.
+    pub fn new<VpcEndpointIdType: Into<String>>(vpc_endpoint_id: VpcEndpointIdType)
+                                                -> ModifyVpcEndpointRequest {
+        ModifyVpcEndpointRequest {
+            vpc_endpoint_id: vpc_endpoint_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyVpcEndpointRequest` contents to a `SignedRequest`.
 struct ModifyVpcEndpointRequestSerializer;
@@ -26238,7 +33790,6 @@ pub struct ModifyVpcEndpointResult {
     #[doc="<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>"]
     pub return_: Option<bool>,
 }
-
 struct ModifyVpcEndpointResultDeserializer;
 impl ModifyVpcEndpointResultDeserializer {
     #[allow(unused_variables)]
@@ -26292,7 +33843,51 @@ pub struct ModifyVpcPeeringConnectionOptionsRequest {
     #[doc="<p>The ID of the VPC peering connection.</p>"]
     pub vpc_peering_connection_id: String,
 }
-
+impl ModifyVpcPeeringConnectionOptionsRequest {
+    /// Sets `accepter_peering_connection_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyVpcPeeringConnectionOptionsRequest.accepter_peering_connection_options = Some(value.into());`.
+    pub fn accepter_peering_connection_options<ValueType: Into<PeeringConnectionOptionsRequest>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.accepter_peering_connection_options = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyVpcPeeringConnectionOptionsRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `requester_peering_connection_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyVpcPeeringConnectionOptionsRequest.requester_peering_connection_options = Some(value.into());`.
+    pub fn requester_peering_connection_options<ValueType: Into<PeeringConnectionOptionsRequest>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.requester_peering_connection_options = Some(value.into());
+        self
+    }
+    /// Sets `vpc_peering_connection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyVpcPeeringConnectionOptionsRequest.vpc_peering_connection_id = value.into();`.
+    pub fn vpc_peering_connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_peering_connection_id = value.into();
+        self
+    }
+    /// Returns a new instance of ModifyVpcPeeringConnectionOptionsRequest with optional fields set to `None`.
+    pub fn new<VpcPeeringConnectionIdType: Into<String>>
+        (vpc_peering_connection_id: VpcPeeringConnectionIdType)
+         -> ModifyVpcPeeringConnectionOptionsRequest {
+        ModifyVpcPeeringConnectionOptionsRequest {
+            vpc_peering_connection_id: vpc_peering_connection_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyVpcPeeringConnectionOptionsRequest` contents to a `SignedRequest`.
 struct ModifyVpcPeeringConnectionOptionsRequestSerializer;
@@ -26333,7 +33928,6 @@ pub struct ModifyVpcPeeringConnectionOptionsResult {
     #[doc="<p>Information about the VPC peering connection options for the requester VPC.</p>"]
     pub requester_peering_connection_options: Option<PeeringConnectionOptions>,
 }
-
 struct ModifyVpcPeeringConnectionOptionsResultDeserializer;
 impl ModifyVpcPeeringConnectionOptionsResultDeserializer {
     #[allow(unused_variables)]
@@ -26387,7 +33981,30 @@ pub struct MonitorInstancesRequest {
     #[doc="<p>One or more instance IDs.</p>"]
     pub instance_ids: Vec<String>,
 }
-
+impl MonitorInstancesRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MonitorInstancesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `instance_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MonitorInstancesRequest.instance_ids = value.into();`.
+    pub fn instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_ids = value.into();
+        self
+    }
+    /// Returns a new instance of MonitorInstancesRequest with optional fields set to `None`.
+    pub fn new<InstanceIdsType: Into<Vec<String>>>(instance_ids: InstanceIdsType)
+                                                   -> MonitorInstancesRequest {
+        MonitorInstancesRequest {
+            instance_ids: instance_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `MonitorInstancesRequest` contents to a `SignedRequest`.
 struct MonitorInstancesRequestSerializer;
@@ -26414,7 +34031,6 @@ pub struct MonitorInstancesResult {
     #[doc="<p>The monitoring information.</p>"]
     pub instance_monitorings: Option<Vec<InstanceMonitoring>>,
 }
-
 struct MonitorInstancesResultDeserializer;
 impl MonitorInstancesResultDeserializer {
     #[allow(unused_variables)]
@@ -26464,7 +34080,6 @@ pub struct Monitoring {
     #[doc="<p>Indicates whether detailed monitoring is enabled. Otherwise, basic monitoring is enabled.</p>"]
     pub state: Option<String>,
 }
-
 struct MonitoringDeserializer;
 impl MonitoringDeserializer {
     #[allow(unused_variables)]
@@ -26529,7 +34144,29 @@ pub struct MoveAddressToVpcRequest {
     #[doc="<p>The Elastic IP address.</p>"]
     pub public_ip: String,
 }
-
+impl MoveAddressToVpcRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MoveAddressToVpcRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `public_ip`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MoveAddressToVpcRequest.public_ip = value.into();`.
+    pub fn public_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.public_ip = value.into();
+        self
+    }
+    /// Returns a new instance of MoveAddressToVpcRequest with optional fields set to `None`.
+    pub fn new<PublicIpType: Into<String>>(public_ip: PublicIpType) -> MoveAddressToVpcRequest {
+        MoveAddressToVpcRequest {
+            public_ip: public_ip.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `MoveAddressToVpcRequest` contents to a `SignedRequest`.
 struct MoveAddressToVpcRequestSerializer;
@@ -26556,7 +34193,6 @@ pub struct MoveAddressToVpcResult {
     #[doc="<p>The status of the move of the IP address.</p>"]
     pub status: Option<String>,
 }
-
 struct MoveAddressToVpcResultDeserializer;
 impl MoveAddressToVpcResultDeserializer {
     #[allow(unused_variables)]
@@ -26625,7 +34261,6 @@ pub struct MovingAddressStatus {
     #[doc="<p>The Elastic IP address.</p>"]
     pub public_ip: Option<String>,
 }
-
 struct MovingAddressStatusDeserializer;
 impl MovingAddressStatusDeserializer {
     #[allow(unused_variables)]
@@ -26738,7 +34373,6 @@ pub struct NatGateway {
     #[doc="<p>The ID of the VPC in which the NAT gateway is located.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct NatGatewayDeserializer;
 impl NatGatewayDeserializer {
     #[allow(unused_variables)]
@@ -26832,7 +34466,6 @@ pub struct NatGatewayAddress {
     #[doc="<p>The Elastic IP address associated with the NAT gateway.</p>"]
     pub public_ip: Option<String>,
 }
-
 struct NatGatewayAddressDeserializer;
 impl NatGatewayAddressDeserializer {
     #[allow(unused_variables)]
@@ -27000,7 +34633,6 @@ pub struct NetworkAcl {
     #[doc="<p>The ID of the VPC for the network ACL.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct NetworkAclDeserializer;
 impl NetworkAclDeserializer {
     #[allow(unused_variables)]
@@ -27073,7 +34705,6 @@ pub struct NetworkAclAssociation {
     #[doc="<p>The ID of the subnet.</p>"]
     pub subnet_id: Option<String>,
 }
-
 struct NetworkAclAssociationDeserializer;
 impl NetworkAclAssociationDeserializer {
     #[allow(unused_variables)]
@@ -27187,7 +34818,6 @@ pub struct NetworkAclEntry {
     #[doc="<p>The rule number for the entry. ACL entries are processed in ascending order by rule number.</p>"]
     pub rule_number: Option<i64>,
 }
-
 struct NetworkAclEntryDeserializer;
 impl NetworkAclEntryDeserializer {
     #[allow(unused_variables)]
@@ -27386,7 +35016,6 @@ pub struct NetworkInterface {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct NetworkInterfaceDeserializer;
 impl NetworkInterfaceDeserializer {
     #[allow(unused_variables)]
@@ -27524,7 +35153,6 @@ pub struct NetworkInterfaceAssociation {
     #[doc="<p>The address of the Elastic IP address bound to the network interface.</p>"]
     pub public_ip: Option<String>,
 }
-
 struct NetworkInterfaceAssociationDeserializer;
 impl NetworkInterfaceAssociationDeserializer {
     #[allow(unused_variables)]
@@ -27601,7 +35229,6 @@ pub struct NetworkInterfaceAttachment {
     #[doc="<p>The attachment state.</p>"]
     pub status: Option<String>,
 }
-
 struct NetworkInterfaceAttachmentDeserializer;
 impl NetworkInterfaceAttachmentDeserializer {
     #[allow(unused_variables)]
@@ -27679,7 +35306,26 @@ pub struct NetworkInterfaceAttachmentChanges {
     #[doc="<p>Indicates whether the network interface is deleted when the instance is terminated.</p>"]
     pub delete_on_termination: Option<bool>,
 }
-
+impl NetworkInterfaceAttachmentChanges {
+    /// Sets `attachment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NetworkInterfaceAttachmentChanges.attachment_id = Some(value.into());`.
+    pub fn attachment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attachment_id = Some(value.into());
+        self
+    }
+    /// Sets `delete_on_termination`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NetworkInterfaceAttachmentChanges.delete_on_termination = Some(value.into());`.
+    pub fn delete_on_termination<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.delete_on_termination = Some(value.into());
+        self
+    }
+    /// Returns a new instance of NetworkInterfaceAttachmentChanges with optional fields set to `None`.
+    pub fn new() -> NetworkInterfaceAttachmentChanges {
+        NetworkInterfaceAttachmentChanges { ..Default::default() }
+    }
+}
 
 /// Serialize `NetworkInterfaceAttachmentChanges` contents to a `SignedRequest`.
 struct NetworkInterfaceAttachmentChangesSerializer;
@@ -27719,7 +35365,6 @@ pub struct NetworkInterfaceIpv6Address {
     #[doc="<p>The IPv6 address.</p>"]
     pub ipv_6_address: Option<String>,
 }
-
 struct NetworkInterfaceIpv6AddressDeserializer;
 impl NetworkInterfaceIpv6AddressDeserializer {
     #[allow(unused_variables)]
@@ -27862,7 +35507,6 @@ pub struct NetworkInterfacePermission {
     #[doc="<p>Information about the state of the permission.</p>"]
     pub permission_state: Option<NetworkInterfacePermissionState>,
 }
-
 struct NetworkInterfacePermissionDeserializer;
 impl NetworkInterfacePermissionDeserializer {
     #[allow(unused_variables)]
@@ -27990,7 +35634,6 @@ pub struct NetworkInterfacePermissionState {
     #[doc="<p>A status message, if applicable.</p>"]
     pub status_message: Option<String>,
 }
-
 struct NetworkInterfacePermissionStateDeserializer;
 impl NetworkInterfacePermissionStateDeserializer {
     #[allow(unused_variables)]
@@ -28063,7 +35706,6 @@ pub struct NetworkInterfacePrivateIpAddress {
     #[doc="<p>The private IPv4 address.</p>"]
     pub private_ip_address: Option<String>,
 }
-
 struct NetworkInterfacePrivateIpAddressDeserializer;
 impl NetworkInterfacePrivateIpAddressDeserializer {
     #[allow(unused_variables)]
@@ -28195,7 +35837,26 @@ pub struct NewDhcpConfiguration {
     pub key: Option<String>,
     pub values: Option<Vec<String>>,
 }
-
+impl NewDhcpConfiguration {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewDhcpConfiguration.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewDhcpConfiguration.values = Some(value.into());`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = Some(value.into());
+        self
+    }
+    /// Returns a new instance of NewDhcpConfiguration with optional fields set to `None`.
+    pub fn new() -> NewDhcpConfiguration {
+        NewDhcpConfiguration { ..Default::default() }
+    }
+}
 
 /// Serialize `NewDhcpConfiguration` contents to a `SignedRequest`.
 struct NewDhcpConfigurationSerializer;
@@ -28363,7 +36024,6 @@ pub struct PciId {
     #[doc="<p>The ID of the vendor.</p>"]
     pub vendor_id: Option<String>,
 }
-
 struct PciIdDeserializer;
 impl PciIdDeserializer {
     #[allow(unused_variables)]
@@ -28429,7 +36089,6 @@ pub struct PeeringConnectionOptions {
     #[doc="<p>If true, enables outbound communication from instances in a local VPC to an EC2-Classic instance that's linked to a peer VPC via ClassicLink.</p>"]
     pub allow_egress_from_local_vpc_to_remote_classic_link: Option<bool>,
 }
-
 struct PeeringConnectionOptionsDeserializer;
 impl PeeringConnectionOptionsDeserializer {
     #[allow(unused_variables)]
@@ -28493,7 +36152,35 @@ pub struct PeeringConnectionOptionsRequest {
     #[doc="<p>If true, enables outbound communication from instances in a local VPC to an EC2-Classic instance that's linked to a peer VPC via ClassicLink.</p>"]
     pub allow_egress_from_local_vpc_to_remote_classic_link: Option<bool>,
 }
-
+impl PeeringConnectionOptionsRequest {
+    /// Sets `allow_dns_resolution_from_remote_vpc`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PeeringConnectionOptionsRequest.allow_dns_resolution_from_remote_vpc = Some(value.into());`.
+    pub fn allow_dns_resolution_from_remote_vpc<ValueType: Into<bool>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.allow_dns_resolution_from_remote_vpc = Some(value.into());
+        self
+    }
+    /// Sets `allow_egress_from_local_classic_link_to_remote_vpc`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PeeringConnectionOptionsRequest.allow_egress_from_local_classic_link_to_remote_vpc = Some(value.into());`.
+pub fn allow_egress_from_local_classic_link_to_remote_vpc<ValueType: Into<bool>>(mut self, value: ValueType) -> Self{
+        self.allow_egress_from_local_classic_link_to_remote_vpc = Some(value.into());
+        self
+    }
+    /// Sets `allow_egress_from_local_vpc_to_remote_classic_link`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PeeringConnectionOptionsRequest.allow_egress_from_local_vpc_to_remote_classic_link = Some(value.into());`.
+pub fn allow_egress_from_local_vpc_to_remote_classic_link<ValueType: Into<bool>>(mut self, value: ValueType) -> Self{
+        self.allow_egress_from_local_vpc_to_remote_classic_link = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PeeringConnectionOptionsRequest with optional fields set to `None`.
+    pub fn new() -> PeeringConnectionOptionsRequest {
+        PeeringConnectionOptionsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `PeeringConnectionOptionsRequest` contents to a `SignedRequest`.
 struct PeeringConnectionOptionsRequestSerializer;
@@ -28550,7 +36237,54 @@ pub struct Placement {
     #[doc="<p>The tenancy of the instance (if the instance is running in a VPC). An instance with a tenancy of <code>dedicated</code> runs on single-tenant hardware. The <code>host</code> tenancy is not supported for the <a>ImportInstance</a> command.</p>"]
     pub tenancy: Option<String>,
 }
-
+impl Placement {
+    /// Sets `affinity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Placement.affinity = Some(value.into());`.
+    pub fn affinity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.affinity = Some(value.into());
+        self
+    }
+    /// Sets `availability_zone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Placement.availability_zone = Some(value.into());`.
+    pub fn availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.availability_zone = Some(value.into());
+        self
+    }
+    /// Sets `group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Placement.group_name = Some(value.into());`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = Some(value.into());
+        self
+    }
+    /// Sets `host_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Placement.host_id = Some(value.into());`.
+    pub fn host_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.host_id = Some(value.into());
+        self
+    }
+    /// Sets `spread_domain`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Placement.spread_domain = Some(value.into());`.
+    pub fn spread_domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.spread_domain = Some(value.into());
+        self
+    }
+    /// Sets `tenancy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Placement.tenancy = Some(value.into());`.
+    pub fn tenancy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tenancy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Placement with optional fields set to `None`.
+    pub fn new() -> Placement {
+        Placement { ..Default::default() }
+    }
+}
 struct PlacementDeserializer;
 impl PlacementDeserializer {
     #[allow(unused_variables)]
@@ -28656,7 +36390,6 @@ pub struct PlacementGroup {
     #[doc="<p>The placement strategy.</p>"]
     pub strategy: Option<String>,
 }
-
 struct PlacementGroupDeserializer;
 impl PlacementGroupDeserializer {
     #[allow(unused_variables)]
@@ -28812,7 +36545,26 @@ pub struct PortRange {
     #[doc="<p>The last port in the range.</p>"]
     pub to: Option<i64>,
 }
-
+impl PortRange {
+    /// Sets `from`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PortRange.from = Some(value.into());`.
+    pub fn from<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.from = Some(value.into());
+        self
+    }
+    /// Sets `to`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PortRange.to = Some(value.into());`.
+    pub fn to<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.to = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PortRange with optional fields set to `None`.
+    pub fn new() -> PortRange {
+        PortRange { ..Default::default() }
+    }
+}
 struct PortRangeDeserializer;
 impl PortRangeDeserializer {
     #[allow(unused_variables)]
@@ -28887,7 +36639,6 @@ pub struct PrefixList {
     #[doc="<p>The name of the prefix.</p>"]
     pub prefix_list_name: Option<String>,
 }
-
 struct PrefixListDeserializer;
 impl PrefixListDeserializer {
     #[allow(unused_variables)]
@@ -28945,7 +36696,19 @@ pub struct PrefixListId {
     #[doc="<p>The ID of the prefix.</p>"]
     pub prefix_list_id: Option<String>,
 }
-
+impl PrefixListId {
+    /// Sets `prefix_list_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PrefixListId.prefix_list_id = Some(value.into());`.
+    pub fn prefix_list_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix_list_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PrefixListId with optional fields set to `None`.
+    pub fn new() -> PrefixListId {
+        PrefixListId { ..Default::default() }
+    }
+}
 struct PrefixListIdDeserializer;
 impl PrefixListIdDeserializer {
     #[allow(unused_variables)]
@@ -29152,7 +36915,6 @@ pub struct PriceSchedule {
     #[doc="<p>The number of months remaining in the reservation. For example, 2 is the second to the last month before the capacity reservation expires.</p>"]
     pub term: Option<i64>,
 }
-
 struct PriceScheduleDeserializer;
 impl PriceScheduleDeserializer {
     #[allow(unused_variables)]
@@ -29257,7 +37019,33 @@ pub struct PriceScheduleSpecification {
     #[doc="<p>The number of months remaining in the reservation. For example, 2 is the second to the last month before the capacity reservation expires.</p>"]
     pub term: Option<i64>,
 }
-
+impl PriceScheduleSpecification {
+    /// Sets `currency_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PriceScheduleSpecification.currency_code = Some(value.into());`.
+    pub fn currency_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.currency_code = Some(value.into());
+        self
+    }
+    /// Sets `price`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PriceScheduleSpecification.price = Some(value.into());`.
+    pub fn price<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.price = Some(value.into());
+        self
+    }
+    /// Sets `term`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PriceScheduleSpecification.term = Some(value.into());`.
+    pub fn term<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.term = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PriceScheduleSpecification with optional fields set to `None`.
+    pub fn new() -> PriceScheduleSpecification {
+        PriceScheduleSpecification { ..Default::default() }
+    }
+}
 
 /// Serialize `PriceScheduleSpecification` contents to a `SignedRequest`.
 struct PriceScheduleSpecificationSerializer;
@@ -29301,7 +37089,6 @@ pub struct PricingDetail {
     #[doc="<p>The price per instance.</p>"]
     pub price: Option<f64>,
 }
-
 struct PricingDetailDeserializer;
 impl PricingDetailDeserializer {
     #[allow(unused_variables)]
@@ -29410,7 +37197,30 @@ pub struct PrivateIpAddressSpecification {
     #[doc="<p>The private IPv4 addresses.</p>"]
     pub private_ip_address: String,
 }
-
+impl PrivateIpAddressSpecification {
+    /// Sets `primary`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PrivateIpAddressSpecification.primary = Some(value.into());`.
+    pub fn primary<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.primary = Some(value.into());
+        self
+    }
+    /// Sets `private_ip_address`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PrivateIpAddressSpecification.private_ip_address = value.into();`.
+    pub fn private_ip_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.private_ip_address = value.into();
+        self
+    }
+    /// Returns a new instance of PrivateIpAddressSpecification with optional fields set to `None`.
+    pub fn new<PrivateIpAddressType: Into<String>>(private_ip_address: PrivateIpAddressType)
+                                                   -> PrivateIpAddressSpecification {
+        PrivateIpAddressSpecification {
+            private_ip_address: private_ip_address.into(),
+            ..Default::default()
+        }
+    }
+}
 struct PrivateIpAddressSpecificationDeserializer;
 impl PrivateIpAddressSpecificationDeserializer {
     #[allow(unused_variables)]
@@ -29551,7 +37361,6 @@ pub struct ProductCode {
     #[doc="<p>The type of product code.</p>"]
     pub product_code_type: Option<String>,
 }
-
 struct ProductCodeDeserializer;
 impl ProductCodeDeserializer {
     #[allow(unused_variables)]
@@ -29684,7 +37493,6 @@ pub struct PropagatingVgw {
     #[doc="<p>The ID of the virtual private gateway (VGW).</p>"]
     pub gateway_id: Option<String>,
 }
-
 struct PropagatingVgwDeserializer;
 impl PropagatingVgwDeserializer {
     #[allow(unused_variables)]
@@ -29782,7 +37590,6 @@ pub struct ProvisionedBandwidth {
     #[doc="<p>Reserved. If you need to sustain traffic greater than the <a href=\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-nat-gateway.html\">documented limits</a>, contact us through the <a href=\"https://console.aws.amazon.com/support/home?\">Support Center</a>.</p>"]
     pub status: Option<String>,
 }
-
 struct ProvisionedBandwidthDeserializer;
 impl ProvisionedBandwidthDeserializer {
     #[allow(unused_variables)]
@@ -29874,7 +37681,6 @@ pub struct Purchase {
     #[doc="<p>The upfront price of the reservation.</p>"]
     pub upfront_price: Option<String>,
 }
-
 struct PurchaseDeserializer;
 impl PurchaseDeserializer {
     #[allow(unused_variables)]
@@ -29963,7 +37769,54 @@ pub struct PurchaseHostReservationRequest {
     #[doc="<p>The ID of the offering.</p>"]
     pub offering_id: String,
 }
-
+impl PurchaseHostReservationRequest {
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseHostReservationRequest.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `currency_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseHostReservationRequest.currency_code = Some(value.into());`.
+    pub fn currency_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.currency_code = Some(value.into());
+        self
+    }
+    /// Sets `host_id_set`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseHostReservationRequest.host_id_set = value.into();`.
+    pub fn host_id_set<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.host_id_set = value.into();
+        self
+    }
+    /// Sets `limit_price`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseHostReservationRequest.limit_price = Some(value.into());`.
+    pub fn limit_price<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.limit_price = Some(value.into());
+        self
+    }
+    /// Sets `offering_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseHostReservationRequest.offering_id = value.into();`.
+    pub fn offering_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.offering_id = value.into();
+        self
+    }
+    /// Returns a new instance of PurchaseHostReservationRequest with optional fields set to `None`.
+    pub fn new<HostIdSetType: Into<Vec<String>>, OfferingIdType: Into<String>>
+        (host_id_set: HostIdSetType,
+         offering_id: OfferingIdType)
+         -> PurchaseHostReservationRequest {
+        PurchaseHostReservationRequest {
+            host_id_set: host_id_set.into(),
+            offering_id: offering_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `PurchaseHostReservationRequest` contents to a `SignedRequest`.
 struct PurchaseHostReservationRequestSerializer;
@@ -30004,7 +37857,6 @@ pub struct PurchaseHostReservationResult {
     #[doc="<p>The total amount that will be charged to your account when you purchase the reservation.</p>"]
     pub total_upfront_price: Option<String>,
 }
-
 struct PurchaseHostReservationResultDeserializer;
 impl PurchaseHostReservationResultDeserializer {
     #[allow(unused_variables)]
@@ -30074,7 +37926,33 @@ pub struct PurchaseRequest {
     #[doc="<p>The purchase token.</p>"]
     pub purchase_token: String,
 }
-
+impl PurchaseRequest {
+    /// Sets `instance_count`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseRequest.instance_count = value.into();`.
+    pub fn instance_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.instance_count = value.into();
+        self
+    }
+    /// Sets `purchase_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseRequest.purchase_token = value.into();`.
+    pub fn purchase_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.purchase_token = value.into();
+        self
+    }
+    /// Returns a new instance of PurchaseRequest with optional fields set to `None`.
+    pub fn new<InstanceCountType: Into<i64>, PurchaseTokenType: Into<String>>
+        (instance_count: InstanceCountType,
+         purchase_token: PurchaseTokenType)
+         -> PurchaseRequest {
+        PurchaseRequest {
+            instance_count: instance_count.into(),
+            purchase_token: purchase_token.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `PurchaseRequest` contents to a `SignedRequest`.
 struct PurchaseRequestSerializer;
@@ -30117,7 +37995,51 @@ pub struct PurchaseReservedInstancesOfferingRequest {
     #[doc="<p>The ID of the Reserved Instance offering to purchase.</p>"]
     pub reserved_instances_offering_id: String,
 }
-
+impl PurchaseReservedInstancesOfferingRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseReservedInstancesOfferingRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `instance_count`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseReservedInstancesOfferingRequest.instance_count = value.into();`.
+    pub fn instance_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.instance_count = value.into();
+        self
+    }
+    /// Sets `limit_price`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseReservedInstancesOfferingRequest.limit_price = Some(value.into());`.
+    pub fn limit_price<ValueType: Into<ReservedInstanceLimitPrice>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.limit_price = Some(value.into());
+        self
+    }
+    /// Sets `reserved_instances_offering_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseReservedInstancesOfferingRequest.reserved_instances_offering_id = value.into();`.
+    pub fn reserved_instances_offering_id<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.reserved_instances_offering_id = value.into();
+        self
+    }
+    /// Returns a new instance of PurchaseReservedInstancesOfferingRequest with optional fields set to `None`.
+    pub fn new<InstanceCountType: Into<i64>, ReservedInstancesOfferingIdType: Into<String>>
+        (instance_count: InstanceCountType,
+         reserved_instances_offering_id: ReservedInstancesOfferingIdType)
+         -> PurchaseReservedInstancesOfferingRequest {
+        PurchaseReservedInstancesOfferingRequest {
+            instance_count: instance_count.into(),
+            reserved_instances_offering_id: reserved_instances_offering_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `PurchaseReservedInstancesOfferingRequest` contents to a `SignedRequest`.
 struct PurchaseReservedInstancesOfferingRequestSerializer;
@@ -30150,7 +38072,6 @@ pub struct PurchaseReservedInstancesOfferingResult {
     #[doc="<p>The IDs of the purchased Reserved Instances.</p>"]
     pub reserved_instances_id: Option<String>,
 }
-
 struct PurchaseReservedInstancesOfferingResultDeserializer;
 impl PurchaseReservedInstancesOfferingResultDeserializer {
     #[allow(unused_variables)]
@@ -30205,7 +38126,40 @@ pub struct PurchaseScheduledInstancesRequest {
     #[doc="<p>One or more purchase requests.</p>"]
     pub purchase_requests: Vec<PurchaseRequest>,
 }
-
+impl PurchaseScheduledInstancesRequest {
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseScheduledInstancesRequest.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseScheduledInstancesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `purchase_requests`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseScheduledInstancesRequest.purchase_requests = value.into();`.
+    pub fn purchase_requests<ValueType: Into<Vec<PurchaseRequest>>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.purchase_requests = value.into();
+        self
+    }
+    /// Returns a new instance of PurchaseScheduledInstancesRequest with optional fields set to `None`.
+    pub fn new<PurchaseRequestsType: Into<Vec<PurchaseRequest>>>
+        (purchase_requests: PurchaseRequestsType)
+         -> PurchaseScheduledInstancesRequest {
+        PurchaseScheduledInstancesRequest {
+            purchase_requests: purchase_requests.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `PurchaseScheduledInstancesRequest` contents to a `SignedRequest`.
 struct PurchaseScheduledInstancesRequestSerializer;
@@ -30235,7 +38189,6 @@ pub struct PurchaseScheduledInstancesResult {
     #[doc="<p>Information about the Scheduled Instances.</p>"]
     pub scheduled_instance_set: Option<Vec<ScheduledInstance>>,
 }
-
 struct PurchaseScheduledInstancesResultDeserializer;
 impl PurchaseScheduledInstancesResultDeserializer {
     #[allow(unused_variables)]
@@ -30394,7 +38347,30 @@ pub struct RebootInstancesRequest {
     #[doc="<p>One or more instance IDs.</p>"]
     pub instance_ids: Vec<String>,
 }
-
+impl RebootInstancesRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RebootInstancesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `instance_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RebootInstancesRequest.instance_ids = value.into();`.
+    pub fn instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_ids = value.into();
+        self
+    }
+    /// Returns a new instance of RebootInstancesRequest with optional fields set to `None`.
+    pub fn new<InstanceIdsType: Into<Vec<String>>>(instance_ids: InstanceIdsType)
+                                                   -> RebootInstancesRequest {
+        RebootInstancesRequest {
+            instance_ids: instance_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RebootInstancesRequest` contents to a `SignedRequest`.
 struct RebootInstancesRequestSerializer;
@@ -30423,7 +38399,6 @@ pub struct RecurringCharge {
     #[doc="<p>The frequency of the recurring charge.</p>"]
     pub frequency: Option<String>,
 }
-
 struct RecurringChargeDeserializer;
 impl RecurringChargeDeserializer {
     #[allow(unused_variables)]
@@ -30532,7 +38507,6 @@ pub struct Region {
     #[doc="<p>The name of the region.</p>"]
     pub region_name: Option<String>,
 }
-
 struct RegionDeserializer;
 impl RegionDeserializer {
     #[allow(unused_variables)]
@@ -30662,7 +38636,108 @@ pub struct RegisterImageRequest {
     #[doc="<p>The type of virtualization.</p> <p>Default: <code>paravirtual</code> </p>"]
     pub virtualization_type: Option<String>,
 }
-
+impl RegisterImageRequest {
+    /// Sets `architecture`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterImageRequest.architecture = Some(value.into());`.
+    pub fn architecture<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.architecture = Some(value.into());
+        self
+    }
+    /// Sets `billing_products`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterImageRequest.billing_products = Some(value.into());`.
+    pub fn billing_products<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.billing_products = Some(value.into());
+        self
+    }
+    /// Sets `block_device_mappings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterImageRequest.block_device_mappings = Some(value.into());`.
+    pub fn block_device_mappings<ValueType: Into<Vec<BlockDeviceMapping>>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.block_device_mappings = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterImageRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterImageRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `ena_support`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterImageRequest.ena_support = Some(value.into());`.
+    pub fn ena_support<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.ena_support = Some(value.into());
+        self
+    }
+    /// Sets `image_location`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterImageRequest.image_location = Some(value.into());`.
+    pub fn image_location<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.image_location = Some(value.into());
+        self
+    }
+    /// Sets `kernel_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterImageRequest.kernel_id = Some(value.into());`.
+    pub fn kernel_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kernel_id = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterImageRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `ramdisk_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterImageRequest.ramdisk_id = Some(value.into());`.
+    pub fn ramdisk_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ramdisk_id = Some(value.into());
+        self
+    }
+    /// Sets `root_device_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterImageRequest.root_device_name = Some(value.into());`.
+    pub fn root_device_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.root_device_name = Some(value.into());
+        self
+    }
+    /// Sets `sriov_net_support`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterImageRequest.sriov_net_support = Some(value.into());`.
+    pub fn sriov_net_support<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sriov_net_support = Some(value.into());
+        self
+    }
+    /// Sets `virtualization_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterImageRequest.virtualization_type = Some(value.into());`.
+    pub fn virtualization_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.virtualization_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RegisterImageRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> RegisterImageRequest {
+        RegisterImageRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RegisterImageRequest` contents to a `SignedRequest`.
 struct RegisterImageRequestSerializer;
@@ -30727,7 +38802,6 @@ pub struct RegisterImageResult {
     #[doc="<p>The ID of the newly registered AMI.</p>"]
     pub image_id: Option<String>,
 }
-
 struct RegisterImageResultDeserializer;
 impl RegisterImageResultDeserializer {
     #[allow(unused_variables)]
@@ -30778,7 +38852,29 @@ pub struct RejectVpcPeeringConnectionRequest {
     #[doc="<p>The ID of the VPC peering connection.</p>"]
     pub vpc_peering_connection_id: String,
 }
-
+impl RejectVpcPeeringConnectionRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RejectVpcPeeringConnectionRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `vpc_peering_connection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RejectVpcPeeringConnectionRequest.vpc_peering_connection_id = value.into();`.
+    pub fn vpc_peering_connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_peering_connection_id = value.into();
+        self
+    }
+    /// Returns a new instance of RejectVpcPeeringConnectionRequest with optional fields set to `None`.
+pub fn new<VpcPeeringConnectionIdType: Into<String>>(vpc_peering_connection_id: VpcPeeringConnectionIdType) -> RejectVpcPeeringConnectionRequest{
+        RejectVpcPeeringConnectionRequest {
+            vpc_peering_connection_id: vpc_peering_connection_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RejectVpcPeeringConnectionRequest` contents to a `SignedRequest`.
 struct RejectVpcPeeringConnectionRequestSerializer;
@@ -30804,7 +38900,6 @@ pub struct RejectVpcPeeringConnectionResult {
     #[doc="<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>"]
     pub return_: Option<bool>,
 }
-
 struct RejectVpcPeeringConnectionResultDeserializer;
 impl RejectVpcPeeringConnectionResultDeserializer {
     #[allow(unused_variables)]
@@ -30858,7 +38953,33 @@ pub struct ReleaseAddressRequest {
     #[doc="<p>[EC2-Classic] The Elastic IP address. Required for EC2-Classic.</p>"]
     pub public_ip: Option<String>,
 }
-
+impl ReleaseAddressRequest {
+    /// Sets `allocation_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReleaseAddressRequest.allocation_id = Some(value.into());`.
+    pub fn allocation_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.allocation_id = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReleaseAddressRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `public_ip`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReleaseAddressRequest.public_ip = Some(value.into());`.
+    pub fn public_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.public_ip = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ReleaseAddressRequest with optional fields set to `None`.
+    pub fn new() -> ReleaseAddressRequest {
+        ReleaseAddressRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ReleaseAddressRequest` contents to a `SignedRequest`.
 struct ReleaseAddressRequestSerializer;
@@ -30888,7 +39009,22 @@ pub struct ReleaseHostsRequest {
     #[doc="<p>The IDs of the Dedicated Hosts you want to release.</p>"]
     pub host_ids: Vec<String>,
 }
-
+impl ReleaseHostsRequest {
+    /// Sets `host_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReleaseHostsRequest.host_ids = value.into();`.
+    pub fn host_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.host_ids = value.into();
+        self
+    }
+    /// Returns a new instance of ReleaseHostsRequest with optional fields set to `None`.
+    pub fn new<HostIdsType: Into<Vec<String>>>(host_ids: HostIdsType) -> ReleaseHostsRequest {
+        ReleaseHostsRequest {
+            host_ids: host_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ReleaseHostsRequest` contents to a `SignedRequest`.
 struct ReleaseHostsRequestSerializer;
@@ -30914,7 +39050,6 @@ pub struct ReleaseHostsResult {
     #[doc="<p>The IDs of the Dedicated Hosts that could not be released, including an error message.</p>"]
     pub unsuccessful: Option<Vec<UnsuccessfulItem>>,
 }
-
 struct ReleaseHostsResultDeserializer;
 impl ReleaseHostsResultDeserializer {
     #[allow(unused_variables)]
@@ -30970,7 +39105,34 @@ pub struct ReplaceIamInstanceProfileAssociationRequest {
     #[doc="<p>The IAM instance profile.</p>"]
     pub iam_instance_profile: IamInstanceProfileSpecification,
 }
-
+impl ReplaceIamInstanceProfileAssociationRequest {
+    /// Sets `association_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceIamInstanceProfileAssociationRequest.association_id = value.into();`.
+    pub fn association_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.association_id = value.into();
+        self
+    }
+    /// Sets `iam_instance_profile`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceIamInstanceProfileAssociationRequest.iam_instance_profile = value.into();`.
+pub fn iam_instance_profile<ValueType: Into<IamInstanceProfileSpecification>>(mut self, value: ValueType) -> Self{
+        self.iam_instance_profile = value.into();
+        self
+    }
+    /// Returns a new instance of ReplaceIamInstanceProfileAssociationRequest with optional fields set to `None`.
+    pub fn new<AssociationIdType: Into<String>,
+               IamInstanceProfileType: Into<IamInstanceProfileSpecification>>
+        (association_id: AssociationIdType,
+         iam_instance_profile: IamInstanceProfileType)
+         -> ReplaceIamInstanceProfileAssociationRequest {
+        ReplaceIamInstanceProfileAssociationRequest {
+            association_id: association_id.into(),
+            iam_instance_profile: iam_instance_profile.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ReplaceIamInstanceProfileAssociationRequest` contents to a `SignedRequest`.
 struct ReplaceIamInstanceProfileAssociationRequestSerializer;
@@ -30999,7 +39161,6 @@ pub struct ReplaceIamInstanceProfileAssociationResult {
     #[doc="<p>Information about the IAM instance profile association.</p>"]
     pub iam_instance_profile_association: Option<IamInstanceProfileAssociation>,
 }
-
 struct ReplaceIamInstanceProfileAssociationResultDeserializer;
 impl ReplaceIamInstanceProfileAssociationResultDeserializer {
     #[allow(unused_variables)]
@@ -31052,7 +39213,40 @@ pub struct ReplaceNetworkAclAssociationRequest {
     #[doc="<p>The ID of the new network ACL to associate with the subnet.</p>"]
     pub network_acl_id: String,
 }
-
+impl ReplaceNetworkAclAssociationRequest {
+    /// Sets `association_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceNetworkAclAssociationRequest.association_id = value.into();`.
+    pub fn association_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.association_id = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceNetworkAclAssociationRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `network_acl_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceNetworkAclAssociationRequest.network_acl_id = value.into();`.
+    pub fn network_acl_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_acl_id = value.into();
+        self
+    }
+    /// Returns a new instance of ReplaceNetworkAclAssociationRequest with optional fields set to `None`.
+    pub fn new<AssociationIdType: Into<String>, NetworkAclIdType: Into<String>>
+        (association_id: AssociationIdType,
+         network_acl_id: NetworkAclIdType)
+         -> ReplaceNetworkAclAssociationRequest {
+        ReplaceNetworkAclAssociationRequest {
+            association_id: association_id.into(),
+            network_acl_id: network_acl_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ReplaceNetworkAclAssociationRequest` contents to a `SignedRequest`.
 struct ReplaceNetworkAclAssociationRequestSerializer;
@@ -31080,7 +39274,6 @@ pub struct ReplaceNetworkAclAssociationResult {
     #[doc="<p>The ID of the new association.</p>"]
     pub new_association_id: Option<String>,
 }
-
 struct ReplaceNetworkAclAssociationResultDeserializer;
 impl ReplaceNetworkAclAssociationResultDeserializer {
     #[allow(unused_variables)]
@@ -31149,7 +39342,99 @@ pub struct ReplaceNetworkAclEntryRequest {
     #[doc="<p>The rule number of the entry to replace.</p>"]
     pub rule_number: i64,
 }
-
+impl ReplaceNetworkAclEntryRequest {
+    /// Sets `cidr_block`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceNetworkAclEntryRequest.cidr_block = Some(value.into());`.
+    pub fn cidr_block<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cidr_block = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceNetworkAclEntryRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `egress`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceNetworkAclEntryRequest.egress = value.into();`.
+    pub fn egress<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.egress = value.into();
+        self
+    }
+    /// Sets `icmp_type_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceNetworkAclEntryRequest.icmp_type_code = Some(value.into());`.
+    pub fn icmp_type_code<ValueType: Into<IcmpTypeCode>>(mut self, value: ValueType) -> Self {
+        self.icmp_type_code = Some(value.into());
+        self
+    }
+    /// Sets `ipv_6_cidr_block`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceNetworkAclEntryRequest.ipv_6_cidr_block = Some(value.into());`.
+    pub fn ipv_6_cidr_block<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ipv_6_cidr_block = Some(value.into());
+        self
+    }
+    /// Sets `network_acl_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceNetworkAclEntryRequest.network_acl_id = value.into();`.
+    pub fn network_acl_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_acl_id = value.into();
+        self
+    }
+    /// Sets `port_range`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceNetworkAclEntryRequest.port_range = Some(value.into());`.
+    pub fn port_range<ValueType: Into<PortRange>>(mut self, value: ValueType) -> Self {
+        self.port_range = Some(value.into());
+        self
+    }
+    /// Sets `protocol`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceNetworkAclEntryRequest.protocol = value.into();`.
+    pub fn protocol<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.protocol = value.into();
+        self
+    }
+    /// Sets `rule_action`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceNetworkAclEntryRequest.rule_action = value.into();`.
+    pub fn rule_action<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_action = value.into();
+        self
+    }
+    /// Sets `rule_number`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceNetworkAclEntryRequest.rule_number = value.into();`.
+    pub fn rule_number<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.rule_number = value.into();
+        self
+    }
+    /// Returns a new instance of ReplaceNetworkAclEntryRequest with optional fields set to `None`.
+    pub fn new<EgressType: Into<bool>,
+               NetworkAclIdType: Into<String>,
+               ProtocolType: Into<String>,
+               RuleActionType: Into<String>,
+               RuleNumberType: Into<i64>>
+        (egress: EgressType,
+         network_acl_id: NetworkAclIdType,
+         protocol: ProtocolType,
+         rule_action: RuleActionType,
+         rule_number: RuleNumberType)
+         -> ReplaceNetworkAclEntryRequest {
+        ReplaceNetworkAclEntryRequest {
+            egress: egress.into(),
+            network_acl_id: network_acl_id.into(),
+            protocol: protocol.into(),
+            rule_action: rule_action.into(),
+            rule_number: rule_number.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ReplaceNetworkAclEntryRequest` contents to a `SignedRequest`.
 struct ReplaceNetworkAclEntryRequestSerializer;
@@ -31214,7 +39499,90 @@ pub struct ReplaceRouteRequest {
     #[doc="<p>The ID of a VPC peering connection.</p>"]
     pub vpc_peering_connection_id: Option<String>,
 }
-
+impl ReplaceRouteRequest {
+    /// Sets `destination_cidr_block`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceRouteRequest.destination_cidr_block = Some(value.into());`.
+    pub fn destination_cidr_block<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination_cidr_block = Some(value.into());
+        self
+    }
+    /// Sets `destination_ipv_6_cidr_block`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceRouteRequest.destination_ipv_6_cidr_block = Some(value.into());`.
+    pub fn destination_ipv_6_cidr_block<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.destination_ipv_6_cidr_block = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceRouteRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `egress_only_internet_gateway_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceRouteRequest.egress_only_internet_gateway_id = Some(value.into());`.
+    pub fn egress_only_internet_gateway_id<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.egress_only_internet_gateway_id = Some(value.into());
+        self
+    }
+    /// Sets `gateway_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceRouteRequest.gateway_id = Some(value.into());`.
+    pub fn gateway_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_id = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceRouteRequest.instance_id = Some(value.into());`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = Some(value.into());
+        self
+    }
+    /// Sets `nat_gateway_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceRouteRequest.nat_gateway_id = Some(value.into());`.
+    pub fn nat_gateway_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.nat_gateway_id = Some(value.into());
+        self
+    }
+    /// Sets `network_interface_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceRouteRequest.network_interface_id = Some(value.into());`.
+    pub fn network_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_interface_id = Some(value.into());
+        self
+    }
+    /// Sets `route_table_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceRouteRequest.route_table_id = value.into();`.
+    pub fn route_table_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.route_table_id = value.into();
+        self
+    }
+    /// Sets `vpc_peering_connection_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceRouteRequest.vpc_peering_connection_id = Some(value.into());`.
+    pub fn vpc_peering_connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_peering_connection_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ReplaceRouteRequest with optional fields set to `None`.
+    pub fn new<RouteTableIdType: Into<String>>(route_table_id: RouteTableIdType)
+                                               -> ReplaceRouteRequest {
+        ReplaceRouteRequest {
+            route_table_id: route_table_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ReplaceRouteRequest` contents to a `SignedRequest`.
 struct ReplaceRouteRequestSerializer;
@@ -31272,7 +39640,40 @@ pub struct ReplaceRouteTableAssociationRequest {
     #[doc="<p>The ID of the new route table to associate with the subnet.</p>"]
     pub route_table_id: String,
 }
-
+impl ReplaceRouteTableAssociationRequest {
+    /// Sets `association_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceRouteTableAssociationRequest.association_id = value.into();`.
+    pub fn association_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.association_id = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceRouteTableAssociationRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `route_table_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceRouteTableAssociationRequest.route_table_id = value.into();`.
+    pub fn route_table_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.route_table_id = value.into();
+        self
+    }
+    /// Returns a new instance of ReplaceRouteTableAssociationRequest with optional fields set to `None`.
+    pub fn new<AssociationIdType: Into<String>, RouteTableIdType: Into<String>>
+        (association_id: AssociationIdType,
+         route_table_id: RouteTableIdType)
+         -> ReplaceRouteTableAssociationRequest {
+        ReplaceRouteTableAssociationRequest {
+            association_id: association_id.into(),
+            route_table_id: route_table_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ReplaceRouteTableAssociationRequest` contents to a `SignedRequest`.
 struct ReplaceRouteTableAssociationRequestSerializer;
@@ -31300,7 +39701,6 @@ pub struct ReplaceRouteTableAssociationResult {
     #[doc="<p>The ID of the new association.</p>"]
     pub new_association_id: Option<String>,
 }
-
 struct ReplaceRouteTableAssociationResultDeserializer;
 impl ReplaceRouteTableAssociationResultDeserializer {
     #[allow(unused_variables)]
@@ -31363,7 +39763,72 @@ pub struct ReportInstanceStatusRequest {
     #[doc="<p>The status of all instances listed.</p>"]
     pub status: String,
 }
-
+impl ReportInstanceStatusRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReportInstanceStatusRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReportInstanceStatusRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `end_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReportInstanceStatusRequest.end_time = Some(value.into());`.
+    pub fn end_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.end_time = Some(value.into());
+        self
+    }
+    /// Sets `instances`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReportInstanceStatusRequest.instances = value.into();`.
+    pub fn instances<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instances = value.into();
+        self
+    }
+    /// Sets `reason_codes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReportInstanceStatusRequest.reason_codes = value.into();`.
+    pub fn reason_codes<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.reason_codes = value.into();
+        self
+    }
+    /// Sets `start_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReportInstanceStatusRequest.start_time = Some(value.into());`.
+    pub fn start_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_time = Some(value.into());
+        self
+    }
+    /// Sets `status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReportInstanceStatusRequest.status = value.into();`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = value.into();
+        self
+    }
+    /// Returns a new instance of ReportInstanceStatusRequest with optional fields set to `None`.
+    pub fn new<InstancesType: Into<Vec<String>>,
+               ReasonCodesType: Into<Vec<String>>,
+               StatusType: Into<String>>
+        (instances: InstancesType,
+         reason_codes: ReasonCodesType,
+         status: StatusType)
+         -> ReportInstanceStatusRequest {
+        ReportInstanceStatusRequest {
+            instances: instances.into(),
+            reason_codes: reason_codes.into(),
+            status: status.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ReportInstanceStatusRequest` contents to a `SignedRequest`.
 struct ReportInstanceStatusRequestSerializer;
@@ -31429,7 +39894,31 @@ pub struct RequestSpotFleetRequest {
     #[doc="<p>The configuration for the Spot fleet request.</p>"]
     pub spot_fleet_request_config: SpotFleetRequestConfigData,
 }
-
+impl RequestSpotFleetRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotFleetRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `spot_fleet_request_config`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotFleetRequest.spot_fleet_request_config = value.into();`.
+pub fn spot_fleet_request_config<ValueType: Into<SpotFleetRequestConfigData>>(mut self, value: ValueType) -> Self{
+        self.spot_fleet_request_config = value.into();
+        self
+    }
+    /// Returns a new instance of RequestSpotFleetRequest with optional fields set to `None`.
+    pub fn new<SpotFleetRequestConfigType: Into<SpotFleetRequestConfigData>>
+        (spot_fleet_request_config: SpotFleetRequestConfigType)
+         -> RequestSpotFleetRequest {
+        RequestSpotFleetRequest {
+            spot_fleet_request_config: spot_fleet_request_config.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RequestSpotFleetRequest` contents to a `SignedRequest`.
 struct RequestSpotFleetRequestSerializer;
@@ -31458,7 +39947,6 @@ pub struct RequestSpotFleetResponse {
     #[doc="<p>The ID of the Spot fleet request.</p>"]
     pub spot_fleet_request_id: String,
 }
-
 struct RequestSpotFleetResponseDeserializer;
 impl RequestSpotFleetResponseDeserializer {
     #[allow(unused_variables)]
@@ -31527,7 +40015,95 @@ pub struct RequestSpotInstancesRequest {
     #[doc="<p>The end date of the request. If this is a one-time request, the request remains active until all instances launch, the request is canceled, or this date is reached. If the request is persistent, it remains active until it is canceled or this date and time is reached.</p> <p>Default: The request is effective indefinitely.</p>"]
     pub valid_until: Option<String>,
 }
-
+impl RequestSpotInstancesRequest {
+    /// Sets `availability_zone_group`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotInstancesRequest.availability_zone_group = Some(value.into());`.
+    pub fn availability_zone_group<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.availability_zone_group = Some(value.into());
+        self
+    }
+    /// Sets `block_duration_minutes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotInstancesRequest.block_duration_minutes = Some(value.into());`.
+    pub fn block_duration_minutes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.block_duration_minutes = Some(value.into());
+        self
+    }
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotInstancesRequest.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotInstancesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `instance_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotInstancesRequest.instance_count = Some(value.into());`.
+    pub fn instance_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.instance_count = Some(value.into());
+        self
+    }
+    /// Sets `launch_group`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotInstancesRequest.launch_group = Some(value.into());`.
+    pub fn launch_group<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.launch_group = Some(value.into());
+        self
+    }
+    /// Sets `launch_specification`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotInstancesRequest.launch_specification = Some(value.into());`.
+    pub fn launch_specification<ValueType: Into<RequestSpotLaunchSpecification>>(mut self,
+                                                                                 value: ValueType)
+                                                                                 -> Self {
+        self.launch_specification = Some(value.into());
+        self
+    }
+    /// Sets `spot_price`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotInstancesRequest.spot_price = value.into();`.
+    pub fn spot_price<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.spot_price = value.into();
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotInstancesRequest.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Sets `valid_from`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotInstancesRequest.valid_from = Some(value.into());`.
+    pub fn valid_from<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.valid_from = Some(value.into());
+        self
+    }
+    /// Sets `valid_until`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotInstancesRequest.valid_until = Some(value.into());`.
+    pub fn valid_until<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.valid_until = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RequestSpotInstancesRequest with optional fields set to `None`.
+    pub fn new<SpotPriceType: Into<String>>(spot_price: SpotPriceType)
+                                            -> RequestSpotInstancesRequest {
+        RequestSpotInstancesRequest {
+            spot_price: spot_price.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RequestSpotInstancesRequest` contents to a `SignedRequest`.
 struct RequestSpotInstancesRequestSerializer;
@@ -31586,7 +40162,6 @@ pub struct RequestSpotInstancesResult {
     #[doc="<p>One or more Spot instance requests.</p>"]
     pub spot_instance_requests: Option<Vec<SpotInstanceRequest>>,
 }
-
 struct RequestSpotInstancesResultDeserializer;
 impl RequestSpotInstancesResultDeserializer {
     #[allow(unused_variables)]
@@ -31666,7 +40241,131 @@ pub struct RequestSpotLaunchSpecification {
     #[doc="<p>The user data to make available to the instances. If you are using an AWS SDK or command line tool, Base64-encoding is performed for you, and you can load the text from a file. Otherwise, you must provide Base64-encoded text.</p>"]
     pub user_data: Option<String>,
 }
-
+impl RequestSpotLaunchSpecification {
+    /// Sets `addressing_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotLaunchSpecification.addressing_type = Some(value.into());`.
+    pub fn addressing_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.addressing_type = Some(value.into());
+        self
+    }
+    /// Sets `block_device_mappings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotLaunchSpecification.block_device_mappings = Some(value.into());`.
+    pub fn block_device_mappings<ValueType: Into<Vec<BlockDeviceMapping>>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.block_device_mappings = Some(value.into());
+        self
+    }
+    /// Sets `ebs_optimized`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotLaunchSpecification.ebs_optimized = Some(value.into());`.
+    pub fn ebs_optimized<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.ebs_optimized = Some(value.into());
+        self
+    }
+    /// Sets `iam_instance_profile`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotLaunchSpecification.iam_instance_profile = Some(value.into());`.
+pub fn iam_instance_profile<ValueType: Into<IamInstanceProfileSpecification>>(mut self, value: ValueType) -> Self{
+        self.iam_instance_profile = Some(value.into());
+        self
+    }
+    /// Sets `image_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotLaunchSpecification.image_id = Some(value.into());`.
+    pub fn image_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.image_id = Some(value.into());
+        self
+    }
+    /// Sets `instance_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotLaunchSpecification.instance_type = Some(value.into());`.
+    pub fn instance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_type = Some(value.into());
+        self
+    }
+    /// Sets `kernel_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotLaunchSpecification.kernel_id = Some(value.into());`.
+    pub fn kernel_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kernel_id = Some(value.into());
+        self
+    }
+    /// Sets `key_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotLaunchSpecification.key_name = Some(value.into());`.
+    pub fn key_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_name = Some(value.into());
+        self
+    }
+    /// Sets `monitoring`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotLaunchSpecification.monitoring = Some(value.into());`.
+    pub fn monitoring<ValueType: Into<RunInstancesMonitoringEnabled>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.monitoring = Some(value.into());
+        self
+    }
+    /// Sets `network_interfaces`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotLaunchSpecification.network_interfaces = Some(value.into());`.
+    pub fn network_interfaces<ValueType: Into<Vec<InstanceNetworkInterfaceSpecification>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.network_interfaces = Some(value.into());
+        self
+    }
+    /// Sets `placement`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotLaunchSpecification.placement = Some(value.into());`.
+    pub fn placement<ValueType: Into<SpotPlacement>>(mut self, value: ValueType) -> Self {
+        self.placement = Some(value.into());
+        self
+    }
+    /// Sets `ramdisk_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotLaunchSpecification.ramdisk_id = Some(value.into());`.
+    pub fn ramdisk_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ramdisk_id = Some(value.into());
+        self
+    }
+    /// Sets `security_group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotLaunchSpecification.security_group_ids = Some(value.into());`.
+    pub fn security_group_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.security_group_ids = Some(value.into());
+        self
+    }
+    /// Sets `security_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotLaunchSpecification.security_groups = Some(value.into());`.
+    pub fn security_groups<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.security_groups = Some(value.into());
+        self
+    }
+    /// Sets `subnet_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotLaunchSpecification.subnet_id = Some(value.into());`.
+    pub fn subnet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subnet_id = Some(value.into());
+        self
+    }
+    /// Sets `user_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestSpotLaunchSpecification.user_data = Some(value.into());`.
+    pub fn user_data<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_data = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RequestSpotLaunchSpecification with optional fields set to `None`.
+    pub fn new() -> RequestSpotLaunchSpecification {
+        RequestSpotLaunchSpecification { ..Default::default() }
+    }
+}
 
 /// Serialize `RequestSpotLaunchSpecification` contents to a `SignedRequest`.
 struct RequestSpotLaunchSpecificationSerializer;
@@ -31766,7 +40465,6 @@ pub struct Reservation {
     #[doc="<p>The ID of the reservation.</p>"]
     pub reservation_id: Option<String>,
 }
-
 struct ReservationDeserializer;
 impl ReservationDeserializer {
     #[allow(unused_variables)]
@@ -31892,7 +40590,6 @@ pub struct ReservationValue {
     #[doc="<p>The remaining upfront cost of the reservation.</p>"]
     pub remaining_upfront_value: Option<String>,
 }
-
 struct ReservationValueDeserializer;
 impl ReservationValueDeserializer {
     #[allow(unused_variables)]
@@ -31965,7 +40662,26 @@ pub struct ReservedInstanceLimitPrice {
     #[doc="<p>The currency in which the <code>limitPrice</code> amount is specified. At this time, the only supported currency is <code>USD</code>.</p>"]
     pub currency_code: Option<String>,
 }
-
+impl ReservedInstanceLimitPrice {
+    /// Sets `amount`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReservedInstanceLimitPrice.amount = Some(value.into());`.
+    pub fn amount<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.amount = Some(value.into());
+        self
+    }
+    /// Sets `currency_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReservedInstanceLimitPrice.currency_code = Some(value.into());`.
+    pub fn currency_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.currency_code = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ReservedInstanceLimitPrice with optional fields set to `None`.
+    pub fn new() -> ReservedInstanceLimitPrice {
+        ReservedInstanceLimitPrice { ..Default::default() }
+    }
+}
 
 /// Serialize `ReservedInstanceLimitPrice` contents to a `SignedRequest`.
 struct ReservedInstanceLimitPriceSerializer;
@@ -31994,7 +40710,6 @@ pub struct ReservedInstanceReservationValue {
     #[doc="<p>The ID of the Convertible Reserved Instance that you are exchanging.</p>"]
     pub reserved_instance_id: Option<String>,
 }
-
 struct ReservedInstanceReservationValueDeserializer;
 impl ReservedInstanceReservationValueDeserializer {
     #[allow(unused_variables)]
@@ -32140,7 +40855,6 @@ pub struct ReservedInstances {
     #[doc="<p>The usage price of the Reserved Instance, per hour.</p>"]
     pub usage_price: Option<f32>,
 }
-
 struct ReservedInstancesDeserializer;
 impl ReservedInstancesDeserializer {
     #[allow(unused_variables)]
@@ -32274,7 +40988,47 @@ pub struct ReservedInstancesConfiguration {
     #[doc="<p>Whether the Reserved Instance is applied to instances in a region or instances in a specific Availability Zone.</p>"]
     pub scope: Option<String>,
 }
-
+impl ReservedInstancesConfiguration {
+    /// Sets `availability_zone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReservedInstancesConfiguration.availability_zone = Some(value.into());`.
+    pub fn availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.availability_zone = Some(value.into());
+        self
+    }
+    /// Sets `instance_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReservedInstancesConfiguration.instance_count = Some(value.into());`.
+    pub fn instance_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.instance_count = Some(value.into());
+        self
+    }
+    /// Sets `instance_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReservedInstancesConfiguration.instance_type = Some(value.into());`.
+    pub fn instance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_type = Some(value.into());
+        self
+    }
+    /// Sets `platform`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReservedInstancesConfiguration.platform = Some(value.into());`.
+    pub fn platform<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.platform = Some(value.into());
+        self
+    }
+    /// Sets `scope`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReservedInstancesConfiguration.scope = Some(value.into());`.
+    pub fn scope<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.scope = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ReservedInstancesConfiguration with optional fields set to `None`.
+    pub fn new() -> ReservedInstancesConfiguration {
+        ReservedInstancesConfiguration { ..Default::default() }
+    }
+}
 struct ReservedInstancesConfigurationDeserializer;
 impl ReservedInstancesConfigurationDeserializer {
     #[allow(unused_variables)]
@@ -32383,7 +41137,6 @@ pub struct ReservedInstancesId {
     #[doc="<p>The ID of the Reserved Instance.</p>"]
     pub reserved_instances_id: Option<String>,
 }
-
 struct ReservedInstancesIdDeserializer;
 impl ReservedInstancesIdDeserializer {
     #[allow(unused_variables)]
@@ -32504,7 +41257,6 @@ pub struct ReservedInstancesListing {
     #[doc="<p>The last modified timestamp of the listing.</p>"]
     pub update_date: Option<String>,
 }
-
 struct ReservedInstancesListingDeserializer;
 impl ReservedInstancesListingDeserializer {
     #[allow(unused_variables)]
@@ -32651,7 +41403,6 @@ pub struct ReservedInstancesModification {
     #[doc="<p>The time when the modification request was last updated.</p>"]
     pub update_date: Option<String>,
 }
-
 struct ReservedInstancesModificationDeserializer;
 impl ReservedInstancesModificationDeserializer {
     #[allow(unused_variables)]
@@ -32790,7 +41541,6 @@ pub struct ReservedInstancesModificationResult {
     #[doc="<p>The target Reserved Instances configurations supplied as part of the modification request.</p>"]
     pub target_configuration: Option<ReservedInstancesConfiguration>,
 }
-
 struct ReservedInstancesModificationResultDeserializer;
 impl ReservedInstancesModificationResultDeserializer {
     #[allow(unused_variables)]
@@ -32914,7 +41664,6 @@ pub struct ReservedInstancesOffering {
     #[doc="<p>The usage price of the Reserved Instance, per hour.</p>"]
     pub usage_price: Option<f32>,
 }
-
 struct ReservedInstancesOfferingDeserializer;
 impl ReservedInstancesOfferingDeserializer {
     #[allow(unused_variables)]
@@ -33127,7 +41876,40 @@ pub struct ResetImageAttributeRequest {
     #[doc="<p>The ID of the AMI.</p>"]
     pub image_id: String,
 }
-
+impl ResetImageAttributeRequest {
+    /// Sets `attribute`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetImageAttributeRequest.attribute = value.into();`.
+    pub fn attribute<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetImageAttributeRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `image_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetImageAttributeRequest.image_id = value.into();`.
+    pub fn image_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.image_id = value.into();
+        self
+    }
+    /// Returns a new instance of ResetImageAttributeRequest with optional fields set to `None`.
+    pub fn new<AttributeType: Into<String>, ImageIdType: Into<String>>
+        (attribute: AttributeType,
+         image_id: ImageIdType)
+         -> ResetImageAttributeRequest {
+        ResetImageAttributeRequest {
+            attribute: attribute.into(),
+            image_id: image_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ResetImageAttributeRequest` contents to a `SignedRequest`.
 struct ResetImageAttributeRequestSerializer;
@@ -33157,7 +41939,40 @@ pub struct ResetInstanceAttributeRequest {
     #[doc="<p>The ID of the instance.</p>"]
     pub instance_id: String,
 }
-
+impl ResetInstanceAttributeRequest {
+    /// Sets `attribute`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetInstanceAttributeRequest.attribute = value.into();`.
+    pub fn attribute<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetInstanceAttributeRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetInstanceAttributeRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Returns a new instance of ResetInstanceAttributeRequest with optional fields set to `None`.
+    pub fn new<AttributeType: Into<String>, InstanceIdType: Into<String>>
+        (attribute: AttributeType,
+         instance_id: InstanceIdType)
+         -> ResetInstanceAttributeRequest {
+        ResetInstanceAttributeRequest {
+            attribute: attribute.into(),
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ResetInstanceAttributeRequest` contents to a `SignedRequest`.
 struct ResetInstanceAttributeRequestSerializer;
@@ -33187,7 +42002,37 @@ pub struct ResetNetworkInterfaceAttributeRequest {
     #[doc="<p>The source/destination checking attribute. Resets the value to <code>true</code>.</p>"]
     pub source_dest_check: Option<String>,
 }
-
+impl ResetNetworkInterfaceAttributeRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetNetworkInterfaceAttributeRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `network_interface_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetNetworkInterfaceAttributeRequest.network_interface_id = value.into();`.
+    pub fn network_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_interface_id = value.into();
+        self
+    }
+    /// Sets `source_dest_check`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetNetworkInterfaceAttributeRequest.source_dest_check = Some(value.into());`.
+    pub fn source_dest_check<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_dest_check = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ResetNetworkInterfaceAttributeRequest with optional fields set to `None`.
+    pub fn new<NetworkInterfaceIdType: Into<String>>(network_interface_id: NetworkInterfaceIdType)
+                                                     -> ResetNetworkInterfaceAttributeRequest {
+        ResetNetworkInterfaceAttributeRequest {
+            network_interface_id: network_interface_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ResetNetworkInterfaceAttributeRequest` contents to a `SignedRequest`.
 struct ResetNetworkInterfaceAttributeRequestSerializer;
@@ -33220,7 +42065,40 @@ pub struct ResetSnapshotAttributeRequest {
     #[doc="<p>The ID of the snapshot.</p>"]
     pub snapshot_id: String,
 }
-
+impl ResetSnapshotAttributeRequest {
+    /// Sets `attribute`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetSnapshotAttributeRequest.attribute = value.into();`.
+    pub fn attribute<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute = value.into();
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetSnapshotAttributeRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetSnapshotAttributeRequest.snapshot_id = value.into();`.
+    pub fn snapshot_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_id = value.into();
+        self
+    }
+    /// Returns a new instance of ResetSnapshotAttributeRequest with optional fields set to `None`.
+    pub fn new<AttributeType: Into<String>, SnapshotIdType: Into<String>>
+        (attribute: AttributeType,
+         snapshot_id: SnapshotIdType)
+         -> ResetSnapshotAttributeRequest {
+        ResetSnapshotAttributeRequest {
+            attribute: attribute.into(),
+            snapshot_id: snapshot_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ResetSnapshotAttributeRequest` contents to a `SignedRequest`.
 struct ResetSnapshotAttributeRequestSerializer;
@@ -33368,7 +42246,30 @@ pub struct RestoreAddressToClassicRequest {
     #[doc="<p>The Elastic IP address.</p>"]
     pub public_ip: String,
 }
-
+impl RestoreAddressToClassicRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreAddressToClassicRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `public_ip`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreAddressToClassicRequest.public_ip = value.into();`.
+    pub fn public_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.public_ip = value.into();
+        self
+    }
+    /// Returns a new instance of RestoreAddressToClassicRequest with optional fields set to `None`.
+    pub fn new<PublicIpType: Into<String>>(public_ip: PublicIpType)
+                                           -> RestoreAddressToClassicRequest {
+        RestoreAddressToClassicRequest {
+            public_ip: public_ip.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RestoreAddressToClassicRequest` contents to a `SignedRequest`.
 struct RestoreAddressToClassicRequestSerializer;
@@ -33395,7 +42296,6 @@ pub struct RestoreAddressToClassicResult {
     #[doc="<p>The move status for the IP address.</p>"]
     pub status: Option<String>,
 }
-
 struct RestoreAddressToClassicResultDeserializer;
 impl RestoreAddressToClassicResultDeserializer {
     #[allow(unused_variables)]
@@ -33464,7 +42364,81 @@ pub struct RevokeSecurityGroupEgressRequest {
     #[doc="<p>The end of port range for the TCP and UDP protocols, or an ICMP type number. We recommend that you specify the port range in a set of IP permissions instead.</p>"]
     pub to_port: Option<i64>,
 }
-
+impl RevokeSecurityGroupEgressRequest {
+    /// Sets `cidr_ip`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeSecurityGroupEgressRequest.cidr_ip = Some(value.into());`.
+    pub fn cidr_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cidr_ip = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeSecurityGroupEgressRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `from_port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeSecurityGroupEgressRequest.from_port = Some(value.into());`.
+    pub fn from_port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.from_port = Some(value.into());
+        self
+    }
+    /// Sets `group_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeSecurityGroupEgressRequest.group_id = value.into();`.
+    pub fn group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_id = value.into();
+        self
+    }
+    /// Sets `ip_permissions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeSecurityGroupEgressRequest.ip_permissions = Some(value.into());`.
+    pub fn ip_permissions<ValueType: Into<Vec<IpPermission>>>(mut self, value: ValueType) -> Self {
+        self.ip_permissions = Some(value.into());
+        self
+    }
+    /// Sets `ip_protocol`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeSecurityGroupEgressRequest.ip_protocol = Some(value.into());`.
+    pub fn ip_protocol<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ip_protocol = Some(value.into());
+        self
+    }
+    /// Sets `source_security_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeSecurityGroupEgressRequest.source_security_group_name = Some(value.into());`.
+    pub fn source_security_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_security_group_name = Some(value.into());
+        self
+    }
+    /// Sets `source_security_group_owner_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeSecurityGroupEgressRequest.source_security_group_owner_id = Some(value.into());`.
+    pub fn source_security_group_owner_id<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.source_security_group_owner_id = Some(value.into());
+        self
+    }
+    /// Sets `to_port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeSecurityGroupEgressRequest.to_port = Some(value.into());`.
+    pub fn to_port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.to_port = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RevokeSecurityGroupEgressRequest with optional fields set to `None`.
+    pub fn new<GroupIdType: Into<String>>(group_id: GroupIdType)
+                                          -> RevokeSecurityGroupEgressRequest {
+        RevokeSecurityGroupEgressRequest {
+            group_id: group_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RevokeSecurityGroupEgressRequest` contents to a `SignedRequest`.
 struct RevokeSecurityGroupEgressRequestSerializer;
@@ -33533,7 +42507,84 @@ pub struct RevokeSecurityGroupIngressRequest {
     #[doc="<p>The end of port range for the TCP and UDP protocols, or an ICMP code number. For the ICMP code number, use <code>-1</code> to specify all ICMP codes for the ICMP type.</p>"]
     pub to_port: Option<i64>,
 }
-
+impl RevokeSecurityGroupIngressRequest {
+    /// Sets `cidr_ip`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeSecurityGroupIngressRequest.cidr_ip = Some(value.into());`.
+    pub fn cidr_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cidr_ip = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeSecurityGroupIngressRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `from_port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeSecurityGroupIngressRequest.from_port = Some(value.into());`.
+    pub fn from_port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.from_port = Some(value.into());
+        self
+    }
+    /// Sets `group_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeSecurityGroupIngressRequest.group_id = Some(value.into());`.
+    pub fn group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_id = Some(value.into());
+        self
+    }
+    /// Sets `group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeSecurityGroupIngressRequest.group_name = Some(value.into());`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = Some(value.into());
+        self
+    }
+    /// Sets `ip_permissions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeSecurityGroupIngressRequest.ip_permissions = Some(value.into());`.
+    pub fn ip_permissions<ValueType: Into<Vec<IpPermission>>>(mut self, value: ValueType) -> Self {
+        self.ip_permissions = Some(value.into());
+        self
+    }
+    /// Sets `ip_protocol`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeSecurityGroupIngressRequest.ip_protocol = Some(value.into());`.
+    pub fn ip_protocol<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ip_protocol = Some(value.into());
+        self
+    }
+    /// Sets `source_security_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeSecurityGroupIngressRequest.source_security_group_name = Some(value.into());`.
+    pub fn source_security_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_security_group_name = Some(value.into());
+        self
+    }
+    /// Sets `source_security_group_owner_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeSecurityGroupIngressRequest.source_security_group_owner_id = Some(value.into());`.
+    pub fn source_security_group_owner_id<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.source_security_group_owner_id = Some(value.into());
+        self
+    }
+    /// Sets `to_port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeSecurityGroupIngressRequest.to_port = Some(value.into());`.
+    pub fn to_port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.to_port = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RevokeSecurityGroupIngressRequest with optional fields set to `None`.
+    pub fn new() -> RevokeSecurityGroupIngressRequest {
+        RevokeSecurityGroupIngressRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `RevokeSecurityGroupIngressRequest` contents to a `SignedRequest`.
 struct RevokeSecurityGroupIngressRequestSerializer;
@@ -33611,7 +42662,6 @@ pub struct Route {
     #[doc="<p>The ID of the VPC peering connection.</p>"]
     pub vpc_peering_connection_id: Option<String>,
 }
-
 struct RouteDeserializer;
 impl RouteDeserializer {
     #[allow(unused_variables)]
@@ -33790,7 +42840,6 @@ pub struct RouteTable {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct RouteTableDeserializer;
 impl RouteTableDeserializer {
     #[allow(unused_variables)]
@@ -33865,7 +42914,6 @@ pub struct RouteTableAssociation {
     #[doc="<p>The ID of the subnet. A subnet ID is not returned for an implicit association.</p>"]
     pub subnet_id: Option<String>,
 }
-
 struct RouteTableAssociationDeserializer;
 impl RouteTableAssociationDeserializer {
     #[allow(unused_variables)]
@@ -34023,7 +43071,22 @@ pub struct RunInstancesMonitoringEnabled {
     #[doc="<p>Indicates whether detailed monitoring is enabled. Otherwise, basic monitoring is enabled.</p>"]
     pub enabled: bool,
 }
-
+impl RunInstancesMonitoringEnabled {
+    /// Sets `enabled`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesMonitoringEnabled.enabled = value.into();`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = value.into();
+        self
+    }
+    /// Returns a new instance of RunInstancesMonitoringEnabled with optional fields set to `None`.
+    pub fn new<EnabledType: Into<bool>>(enabled: EnabledType) -> RunInstancesMonitoringEnabled {
+        RunInstancesMonitoringEnabled {
+            enabled: enabled.into(),
+            ..Default::default()
+        }
+    }
+}
 struct RunInstancesMonitoringEnabledDeserializer;
 impl RunInstancesMonitoringEnabledDeserializer {
     #[allow(unused_variables)]
@@ -34139,7 +43202,223 @@ pub struct RunInstancesRequest {
     #[doc="<p>The user data to make available to the instance. For more information, see <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html\">Running Commands on Your Linux Instance at Launch</a> (Linux) and <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ec2-instance-metadata.html#instancedata-add-user-data\">Adding User Data</a> (Windows). If you are using an AWS SDK or command line tool, Base64-encoding is performed for you, and you can load the text from a file. Otherwise, you must provide Base64-encoded text.</p>"]
     pub user_data: Option<String>,
 }
-
+impl RunInstancesRequest {
+    /// Sets `additional_info`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.additional_info = Some(value.into());`.
+    pub fn additional_info<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.additional_info = Some(value.into());
+        self
+    }
+    /// Sets `block_device_mappings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.block_device_mappings = Some(value.into());`.
+    pub fn block_device_mappings<ValueType: Into<Vec<BlockDeviceMapping>>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.block_device_mappings = Some(value.into());
+        self
+    }
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `disable_api_termination`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.disable_api_termination = Some(value.into());`.
+    pub fn disable_api_termination<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.disable_api_termination = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `ebs_optimized`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.ebs_optimized = Some(value.into());`.
+    pub fn ebs_optimized<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.ebs_optimized = Some(value.into());
+        self
+    }
+    /// Sets `elastic_gpu_specification`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.elastic_gpu_specification = Some(value.into());`.
+pub fn elastic_gpu_specification<ValueType: Into<Vec<ElasticGpuSpecification>>>(mut self, value: ValueType) -> Self{
+        self.elastic_gpu_specification = Some(value.into());
+        self
+    }
+    /// Sets `iam_instance_profile`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.iam_instance_profile = Some(value.into());`.
+pub fn iam_instance_profile<ValueType: Into<IamInstanceProfileSpecification>>(mut self, value: ValueType) -> Self{
+        self.iam_instance_profile = Some(value.into());
+        self
+    }
+    /// Sets `image_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.image_id = value.into();`.
+    pub fn image_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.image_id = value.into();
+        self
+    }
+    /// Sets `instance_initiated_shutdown_behavior`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.instance_initiated_shutdown_behavior = Some(value.into());`.
+    pub fn instance_initiated_shutdown_behavior<ValueType: Into<String>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.instance_initiated_shutdown_behavior = Some(value.into());
+        self
+    }
+    /// Sets `instance_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.instance_type = Some(value.into());`.
+    pub fn instance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_type = Some(value.into());
+        self
+    }
+    /// Sets `ipv_6_address_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.ipv_6_address_count = Some(value.into());`.
+    pub fn ipv_6_address_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.ipv_6_address_count = Some(value.into());
+        self
+    }
+    /// Sets `ipv_6_addresses`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.ipv_6_addresses = Some(value.into());`.
+    pub fn ipv_6_addresses<ValueType: Into<Vec<InstanceIpv6Address>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.ipv_6_addresses = Some(value.into());
+        self
+    }
+    /// Sets `kernel_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.kernel_id = Some(value.into());`.
+    pub fn kernel_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kernel_id = Some(value.into());
+        self
+    }
+    /// Sets `key_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.key_name = Some(value.into());`.
+    pub fn key_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_name = Some(value.into());
+        self
+    }
+    /// Sets `max_count`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.max_count = value.into();`.
+    pub fn max_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_count = value.into();
+        self
+    }
+    /// Sets `min_count`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.min_count = value.into();`.
+    pub fn min_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.min_count = value.into();
+        self
+    }
+    /// Sets `monitoring`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.monitoring = Some(value.into());`.
+    pub fn monitoring<ValueType: Into<RunInstancesMonitoringEnabled>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.monitoring = Some(value.into());
+        self
+    }
+    /// Sets `network_interfaces`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.network_interfaces = Some(value.into());`.
+    pub fn network_interfaces<ValueType: Into<Vec<InstanceNetworkInterfaceSpecification>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.network_interfaces = Some(value.into());
+        self
+    }
+    /// Sets `placement`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.placement = Some(value.into());`.
+    pub fn placement<ValueType: Into<Placement>>(mut self, value: ValueType) -> Self {
+        self.placement = Some(value.into());
+        self
+    }
+    /// Sets `private_ip_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.private_ip_address = Some(value.into());`.
+    pub fn private_ip_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.private_ip_address = Some(value.into());
+        self
+    }
+    /// Sets `ramdisk_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.ramdisk_id = Some(value.into());`.
+    pub fn ramdisk_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ramdisk_id = Some(value.into());
+        self
+    }
+    /// Sets `security_group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.security_group_ids = Some(value.into());`.
+    pub fn security_group_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.security_group_ids = Some(value.into());
+        self
+    }
+    /// Sets `security_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.security_groups = Some(value.into());`.
+    pub fn security_groups<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.security_groups = Some(value.into());
+        self
+    }
+    /// Sets `subnet_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.subnet_id = Some(value.into());`.
+    pub fn subnet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subnet_id = Some(value.into());
+        self
+    }
+    /// Sets `tag_specifications`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.tag_specifications = Some(value.into());`.
+    pub fn tag_specifications<ValueType: Into<Vec<TagSpecification>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.tag_specifications = Some(value.into());
+        self
+    }
+    /// Sets `user_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunInstancesRequest.user_data = Some(value.into());`.
+    pub fn user_data<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_data = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RunInstancesRequest with optional fields set to `None`.
+    pub fn new<ImageIdType: Into<String>, MaxCountType: Into<i64>, MinCountType: Into<i64>>
+        (image_id: ImageIdType,
+         max_count: MaxCountType,
+         min_count: MinCountType)
+         -> RunInstancesRequest {
+        RunInstancesRequest {
+            image_id: image_id.into(),
+            max_count: max_count.into(),
+            min_count: min_count.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RunInstancesRequest` contents to a `SignedRequest`.
 struct RunInstancesRequestSerializer;
@@ -34281,7 +43560,55 @@ pub struct RunScheduledInstancesRequest {
     #[doc="<p>The Scheduled Instance ID.</p>"]
     pub scheduled_instance_id: String,
 }
-
+impl RunScheduledInstancesRequest {
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunScheduledInstancesRequest.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunScheduledInstancesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `instance_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunScheduledInstancesRequest.instance_count = Some(value.into());`.
+    pub fn instance_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.instance_count = Some(value.into());
+        self
+    }
+    /// Sets `launch_specification`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunScheduledInstancesRequest.launch_specification = value.into();`.
+pub fn launch_specification<ValueType: Into<ScheduledInstancesLaunchSpecification>>(mut self, value: ValueType) -> Self{
+        self.launch_specification = value.into();
+        self
+    }
+    /// Sets `scheduled_instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunScheduledInstancesRequest.scheduled_instance_id = value.into();`.
+    pub fn scheduled_instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.scheduled_instance_id = value.into();
+        self
+    }
+    /// Returns a new instance of RunScheduledInstancesRequest with optional fields set to `None`.
+    pub fn new<LaunchSpecificationType: Into<ScheduledInstancesLaunchSpecification>,
+               ScheduledInstanceIdType: Into<String>>
+        (launch_specification: LaunchSpecificationType,
+         scheduled_instance_id: ScheduledInstanceIdType)
+         -> RunScheduledInstancesRequest {
+        RunScheduledInstancesRequest {
+            launch_specification: launch_specification.into(),
+            scheduled_instance_id: scheduled_instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RunScheduledInstancesRequest` contents to a `SignedRequest`.
 struct RunScheduledInstancesRequestSerializer;
@@ -34319,7 +43646,6 @@ pub struct RunScheduledInstancesResult {
     #[doc="<p>The IDs of the newly launched instances.</p>"]
     pub instance_id_set: Option<Vec<String>>,
 }
-
 struct RunScheduledInstancesResultDeserializer;
 impl RunScheduledInstancesResultDeserializer {
     #[allow(unused_variables)]
@@ -34377,7 +43703,47 @@ pub struct S3Storage {
     #[doc="<p>The signature of the JSON document.</p>"]
     pub upload_policy_signature: Option<String>,
 }
-
+impl S3Storage {
+    /// Sets `aws_access_key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Storage.aws_access_key_id = Some(value.into());`.
+    pub fn aws_access_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.aws_access_key_id = Some(value.into());
+        self
+    }
+    /// Sets `bucket`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Storage.bucket = Some(value.into());`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = Some(value.into());
+        self
+    }
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Storage.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Sets `upload_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Storage.upload_policy = Some(value.into());`.
+    pub fn upload_policy<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.upload_policy = Some(value.into());
+        self
+    }
+    /// Sets `upload_policy_signature`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Storage.upload_policy_signature = Some(value.into());`.
+    pub fn upload_policy_signature<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.upload_policy_signature = Some(value.into());
+        self
+    }
+    /// Returns a new instance of S3Storage with optional fields set to `None`.
+    pub fn new() -> S3Storage {
+        S3Storage { ..Default::default() }
+    }
+}
 struct S3StorageDeserializer;
 impl S3StorageDeserializer {
     #[allow(unused_variables)]
@@ -34503,7 +43869,6 @@ pub struct ScheduledInstance {
     #[doc="<p>The total number of hours for a single instance for the entire term.</p>"]
     pub total_scheduled_instance_hours: Option<i64>,
 }
-
 struct ScheduledInstanceDeserializer;
 impl ScheduledInstanceDeserializer {
     #[allow(unused_variables)]
@@ -34640,7 +44005,6 @@ pub struct ScheduledInstanceAvailability {
     #[doc="<p>The total number of hours for a single instance for the entire term.</p>"]
     pub total_scheduled_instance_hours: Option<i64>,
 }
-
 struct ScheduledInstanceAvailabilityDeserializer;
 impl ScheduledInstanceAvailabilityDeserializer {
     #[allow(unused_variables)]
@@ -34806,7 +44170,6 @@ pub struct ScheduledInstanceRecurrence {
     #[doc="<p>The unit for <code>occurrenceDaySet</code> (<code>DayOfWeek</code> or <code>DayOfMonth</code>).</p>"]
     pub occurrence_unit: Option<String>,
 }
-
 struct ScheduledInstanceRecurrenceDeserializer;
 impl ScheduledInstanceRecurrenceDeserializer {
     #[allow(unused_variables)]
@@ -34882,7 +44245,47 @@ pub struct ScheduledInstanceRecurrenceRequest {
     #[doc="<p>The unit for <code>OccurrenceDays</code> (<code>DayOfWeek</code> or <code>DayOfMonth</code>). This value is required for a monthly schedule. You can't specify <code>DayOfWeek</code> with a weekly schedule. You can't specify this value with a daily schedule.</p>"]
     pub occurrence_unit: Option<String>,
 }
-
+impl ScheduledInstanceRecurrenceRequest {
+    /// Sets `frequency`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstanceRecurrenceRequest.frequency = Some(value.into());`.
+    pub fn frequency<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.frequency = Some(value.into());
+        self
+    }
+    /// Sets `interval`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstanceRecurrenceRequest.interval = Some(value.into());`.
+    pub fn interval<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.interval = Some(value.into());
+        self
+    }
+    /// Sets `occurrence_days`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstanceRecurrenceRequest.occurrence_days = Some(value.into());`.
+    pub fn occurrence_days<ValueType: Into<Vec<i64>>>(mut self, value: ValueType) -> Self {
+        self.occurrence_days = Some(value.into());
+        self
+    }
+    /// Sets `occurrence_relative_to_end`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstanceRecurrenceRequest.occurrence_relative_to_end = Some(value.into());`.
+    pub fn occurrence_relative_to_end<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.occurrence_relative_to_end = Some(value.into());
+        self
+    }
+    /// Sets `occurrence_unit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstanceRecurrenceRequest.occurrence_unit = Some(value.into());`.
+    pub fn occurrence_unit<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.occurrence_unit = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ScheduledInstanceRecurrenceRequest with optional fields set to `None`.
+    pub fn new() -> ScheduledInstanceRecurrenceRequest {
+        ScheduledInstanceRecurrenceRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ScheduledInstanceRecurrenceRequest` contents to a `SignedRequest`.
 struct ScheduledInstanceRecurrenceRequestSerializer;
@@ -34969,7 +44372,40 @@ pub struct ScheduledInstancesBlockDeviceMapping {
     #[doc="<p>The virtual device name (<code>ephemeral</code>N). Instance store volumes are numbered starting from 0. An instance type with two available instance store volumes can specify mappings for <code>ephemeral0</code> and <code>ephemeral1</code>.The number of available instance store volumes depends on the instance type. After you connect to the instance, you must mount the volume.</p> <p>Constraints: For M3 instances, you must specify instance store volumes in the block device mapping for the instance. When you launch an M3 instance, we ignore any instance store volumes specified in the block device mapping for the AMI.</p>"]
     pub virtual_name: Option<String>,
 }
-
+impl ScheduledInstancesBlockDeviceMapping {
+    /// Sets `device_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesBlockDeviceMapping.device_name = Some(value.into());`.
+    pub fn device_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.device_name = Some(value.into());
+        self
+    }
+    /// Sets `ebs`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesBlockDeviceMapping.ebs = Some(value.into());`.
+    pub fn ebs<ValueType: Into<ScheduledInstancesEbs>>(mut self, value: ValueType) -> Self {
+        self.ebs = Some(value.into());
+        self
+    }
+    /// Sets `no_device`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesBlockDeviceMapping.no_device = Some(value.into());`.
+    pub fn no_device<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.no_device = Some(value.into());
+        self
+    }
+    /// Sets `virtual_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesBlockDeviceMapping.virtual_name = Some(value.into());`.
+    pub fn virtual_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.virtual_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ScheduledInstancesBlockDeviceMapping with optional fields set to `None`.
+    pub fn new() -> ScheduledInstancesBlockDeviceMapping {
+        ScheduledInstancesBlockDeviceMapping { ..Default::default() }
+    }
+}
 
 /// Serialize `ScheduledInstancesBlockDeviceMapping` contents to a `SignedRequest`.
 struct ScheduledInstancesBlockDeviceMappingSerializer;
@@ -35028,7 +44464,54 @@ pub struct ScheduledInstancesEbs {
     #[doc="<p>The volume type. <code>gp2</code> for General Purpose SSD, <code>io1</code> for Provisioned IOPS SSD, Throughput Optimized HDD for <code>st1</code>, Cold HDD for <code>sc1</code>, or <code>standard</code> for Magnetic.</p> <p>Default: <code>standard</code> </p>"]
     pub volume_type: Option<String>,
 }
-
+impl ScheduledInstancesEbs {
+    /// Sets `delete_on_termination`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesEbs.delete_on_termination = Some(value.into());`.
+    pub fn delete_on_termination<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.delete_on_termination = Some(value.into());
+        self
+    }
+    /// Sets `encrypted`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesEbs.encrypted = Some(value.into());`.
+    pub fn encrypted<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.encrypted = Some(value.into());
+        self
+    }
+    /// Sets `iops`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesEbs.iops = Some(value.into());`.
+    pub fn iops<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.iops = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesEbs.snapshot_id = Some(value.into());`.
+    pub fn snapshot_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_id = Some(value.into());
+        self
+    }
+    /// Sets `volume_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesEbs.volume_size = Some(value.into());`.
+    pub fn volume_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.volume_size = Some(value.into());
+        self
+    }
+    /// Sets `volume_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesEbs.volume_type = Some(value.into());`.
+    pub fn volume_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ScheduledInstancesEbs with optional fields set to `None`.
+    pub fn new() -> ScheduledInstancesEbs {
+        ScheduledInstancesEbs { ..Default::default() }
+    }
+}
 
 /// Serialize `ScheduledInstancesEbs` contents to a `SignedRequest`.
 struct ScheduledInstancesEbsSerializer;
@@ -35072,7 +44555,26 @@ pub struct ScheduledInstancesIamInstanceProfile {
     #[doc="<p>The name.</p>"]
     pub name: Option<String>,
 }
-
+impl ScheduledInstancesIamInstanceProfile {
+    /// Sets `arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesIamInstanceProfile.arn = Some(value.into());`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesIamInstanceProfile.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ScheduledInstancesIamInstanceProfile with optional fields set to `None`.
+    pub fn new() -> ScheduledInstancesIamInstanceProfile {
+        ScheduledInstancesIamInstanceProfile { ..Default::default() }
+    }
+}
 
 /// Serialize `ScheduledInstancesIamInstanceProfile` contents to a `SignedRequest`.
 struct ScheduledInstancesIamInstanceProfileSerializer;
@@ -35099,7 +44601,19 @@ pub struct ScheduledInstancesIpv6Address {
     #[doc="<p>The IPv6 address.</p>"]
     pub ipv_6_address: Option<String>,
 }
-
+impl ScheduledInstancesIpv6Address {
+    /// Sets `ipv_6_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesIpv6Address.ipv_6_address = Some(value.into());`.
+    pub fn ipv_6_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ipv_6_address = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ScheduledInstancesIpv6Address with optional fields set to `None`.
+    pub fn new() -> ScheduledInstancesIpv6Address {
+        ScheduledInstancesIpv6Address { ..Default::default() }
+    }
+}
 
 /// Serialize `ScheduledInstancesIpv6Address` contents to a `SignedRequest`.
 struct ScheduledInstancesIpv6AddressSerializer;
@@ -35161,7 +44675,121 @@ pub struct ScheduledInstancesLaunchSpecification {
     #[doc="<p>The base64-encoded MIME user data.</p>"]
     pub user_data: Option<String>,
 }
-
+impl ScheduledInstancesLaunchSpecification {
+    /// Sets `block_device_mappings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesLaunchSpecification.block_device_mappings = Some(value.into());`.
+    pub fn block_device_mappings<ValueType: Into<Vec<ScheduledInstancesBlockDeviceMapping>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.block_device_mappings = Some(value.into());
+        self
+    }
+    /// Sets `ebs_optimized`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesLaunchSpecification.ebs_optimized = Some(value.into());`.
+    pub fn ebs_optimized<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.ebs_optimized = Some(value.into());
+        self
+    }
+    /// Sets `iam_instance_profile`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesLaunchSpecification.iam_instance_profile = Some(value.into());`.
+pub fn iam_instance_profile<ValueType: Into<ScheduledInstancesIamInstanceProfile>>(mut self, value: ValueType) -> Self{
+        self.iam_instance_profile = Some(value.into());
+        self
+    }
+    /// Sets `image_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesLaunchSpecification.image_id = value.into();`.
+    pub fn image_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.image_id = value.into();
+        self
+    }
+    /// Sets `instance_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesLaunchSpecification.instance_type = Some(value.into());`.
+    pub fn instance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_type = Some(value.into());
+        self
+    }
+    /// Sets `kernel_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesLaunchSpecification.kernel_id = Some(value.into());`.
+    pub fn kernel_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kernel_id = Some(value.into());
+        self
+    }
+    /// Sets `key_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesLaunchSpecification.key_name = Some(value.into());`.
+    pub fn key_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_name = Some(value.into());
+        self
+    }
+    /// Sets `monitoring`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesLaunchSpecification.monitoring = Some(value.into());`.
+    pub fn monitoring<ValueType: Into<ScheduledInstancesMonitoring>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.monitoring = Some(value.into());
+        self
+    }
+    /// Sets `network_interfaces`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesLaunchSpecification.network_interfaces = Some(value.into());`.
+pub fn network_interfaces<ValueType: Into<Vec<ScheduledInstancesNetworkInterface>>>(mut self, value: ValueType) -> Self{
+        self.network_interfaces = Some(value.into());
+        self
+    }
+    /// Sets `placement`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesLaunchSpecification.placement = Some(value.into());`.
+    pub fn placement<ValueType: Into<ScheduledInstancesPlacement>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.placement = Some(value.into());
+        self
+    }
+    /// Sets `ramdisk_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesLaunchSpecification.ramdisk_id = Some(value.into());`.
+    pub fn ramdisk_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ramdisk_id = Some(value.into());
+        self
+    }
+    /// Sets `security_group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesLaunchSpecification.security_group_ids = Some(value.into());`.
+    pub fn security_group_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.security_group_ids = Some(value.into());
+        self
+    }
+    /// Sets `subnet_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesLaunchSpecification.subnet_id = Some(value.into());`.
+    pub fn subnet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subnet_id = Some(value.into());
+        self
+    }
+    /// Sets `user_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesLaunchSpecification.user_data = Some(value.into());`.
+    pub fn user_data<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_data = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ScheduledInstancesLaunchSpecification with optional fields set to `None`.
+    pub fn new<ImageIdType: Into<String>>(image_id: ImageIdType)
+                                          -> ScheduledInstancesLaunchSpecification {
+        ScheduledInstancesLaunchSpecification {
+            image_id: image_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ScheduledInstancesLaunchSpecification` contents to a `SignedRequest`.
 struct ScheduledInstancesLaunchSpecificationSerializer;
@@ -35245,7 +44873,19 @@ pub struct ScheduledInstancesMonitoring {
     #[doc="<p>Indicates whether monitoring is enabled.</p>"]
     pub enabled: Option<bool>,
 }
-
+impl ScheduledInstancesMonitoring {
+    /// Sets `enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesMonitoring.enabled = Some(value.into());`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ScheduledInstancesMonitoring with optional fields set to `None`.
+    pub fn new() -> ScheduledInstancesMonitoring {
+        ScheduledInstancesMonitoring { ..Default::default() }
+    }
+}
 
 /// Serialize `ScheduledInstancesMonitoring` contents to a `SignedRequest`.
 struct ScheduledInstancesMonitoringSerializer;
@@ -35292,7 +44932,100 @@ pub struct ScheduledInstancesNetworkInterface {
     #[doc="<p>The ID of the subnet.</p>"]
     pub subnet_id: Option<String>,
 }
-
+impl ScheduledInstancesNetworkInterface {
+    /// Sets `associate_public_ip_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesNetworkInterface.associate_public_ip_address = Some(value.into());`.
+    pub fn associate_public_ip_address<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.associate_public_ip_address = Some(value.into());
+        self
+    }
+    /// Sets `delete_on_termination`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesNetworkInterface.delete_on_termination = Some(value.into());`.
+    pub fn delete_on_termination<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.delete_on_termination = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesNetworkInterface.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `device_index`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesNetworkInterface.device_index = Some(value.into());`.
+    pub fn device_index<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.device_index = Some(value.into());
+        self
+    }
+    /// Sets `groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesNetworkInterface.groups = Some(value.into());`.
+    pub fn groups<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.groups = Some(value.into());
+        self
+    }
+    /// Sets `ipv_6_address_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesNetworkInterface.ipv_6_address_count = Some(value.into());`.
+    pub fn ipv_6_address_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.ipv_6_address_count = Some(value.into());
+        self
+    }
+    /// Sets `ipv_6_addresses`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesNetworkInterface.ipv_6_addresses = Some(value.into());`.
+    pub fn ipv_6_addresses<ValueType: Into<Vec<ScheduledInstancesIpv6Address>>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.ipv_6_addresses = Some(value.into());
+        self
+    }
+    /// Sets `network_interface_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesNetworkInterface.network_interface_id = Some(value.into());`.
+    pub fn network_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_interface_id = Some(value.into());
+        self
+    }
+    /// Sets `private_ip_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesNetworkInterface.private_ip_address = Some(value.into());`.
+    pub fn private_ip_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.private_ip_address = Some(value.into());
+        self
+    }
+    /// Sets `private_ip_address_configs`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesNetworkInterface.private_ip_address_configs = Some(value.into());`.
+pub fn private_ip_address_configs<ValueType: Into<Vec<ScheduledInstancesPrivateIpAddressConfig>>>(mut self, value: ValueType) -> Self{
+        self.private_ip_address_configs = Some(value.into());
+        self
+    }
+    /// Sets `secondary_private_ip_address_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesNetworkInterface.secondary_private_ip_address_count = Some(value.into());`.
+    pub fn secondary_private_ip_address_count<ValueType: Into<i64>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.secondary_private_ip_address_count = Some(value.into());
+        self
+    }
+    /// Sets `subnet_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesNetworkInterface.subnet_id = Some(value.into());`.
+    pub fn subnet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subnet_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ScheduledInstancesNetworkInterface with optional fields set to `None`.
+    pub fn new() -> ScheduledInstancesNetworkInterface {
+        ScheduledInstancesNetworkInterface { ..Default::default() }
+    }
+}
 
 /// Serialize `ScheduledInstancesNetworkInterface` contents to a `SignedRequest`.
 struct ScheduledInstancesNetworkInterfaceSerializer;
@@ -35380,7 +45113,26 @@ pub struct ScheduledInstancesPlacement {
     #[doc="<p>The name of the placement group.</p>"]
     pub group_name: Option<String>,
 }
-
+impl ScheduledInstancesPlacement {
+    /// Sets `availability_zone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesPlacement.availability_zone = Some(value.into());`.
+    pub fn availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.availability_zone = Some(value.into());
+        self
+    }
+    /// Sets `group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesPlacement.group_name = Some(value.into());`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ScheduledInstancesPlacement with optional fields set to `None`.
+    pub fn new() -> ScheduledInstancesPlacement {
+        ScheduledInstancesPlacement { ..Default::default() }
+    }
+}
 
 /// Serialize `ScheduledInstancesPlacement` contents to a `SignedRequest`.
 struct ScheduledInstancesPlacementSerializer;
@@ -35409,7 +45161,26 @@ pub struct ScheduledInstancesPrivateIpAddressConfig {
     #[doc="<p>The IPv4 address.</p>"]
     pub private_ip_address: Option<String>,
 }
-
+impl ScheduledInstancesPrivateIpAddressConfig {
+    /// Sets `primary`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesPrivateIpAddressConfig.primary = Some(value.into());`.
+    pub fn primary<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.primary = Some(value.into());
+        self
+    }
+    /// Sets `private_ip_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduledInstancesPrivateIpAddressConfig.private_ip_address = Some(value.into());`.
+    pub fn private_ip_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.private_ip_address = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ScheduledInstancesPrivateIpAddressConfig with optional fields set to `None`.
+    pub fn new() -> ScheduledInstancesPrivateIpAddressConfig {
+        ScheduledInstancesPrivateIpAddressConfig { ..Default::default() }
+    }
+}
 
 /// Serialize `ScheduledInstancesPrivateIpAddressConfig` contents to a `SignedRequest`.
 struct ScheduledInstancesPrivateIpAddressConfigSerializer;
@@ -35477,7 +45248,6 @@ pub struct SecurityGroup {
     #[doc="<p>[EC2-VPC] The ID of the VPC for the security group.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct SecurityGroupDeserializer;
 impl SecurityGroupDeserializer {
     #[allow(unused_variables)]
@@ -35654,7 +45424,6 @@ pub struct SecurityGroupReference {
     #[doc="<p>The ID of the VPC peering connection.</p>"]
     pub vpc_peering_connection_id: Option<String>,
 }
-
 struct SecurityGroupReferenceDeserializer;
 impl SecurityGroupReferenceDeserializer {
     #[allow(unused_variables)]
@@ -35767,7 +45536,33 @@ pub struct SlotDateTimeRangeRequest {
     #[doc="<p>The latest date and time, in UTC, for the Scheduled Instance to start. This value must be later than or equal to the earliest date and at most three months in the future.</p>"]
     pub latest_time: String,
 }
-
+impl SlotDateTimeRangeRequest {
+    /// Sets `earliest_time`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SlotDateTimeRangeRequest.earliest_time = value.into();`.
+    pub fn earliest_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.earliest_time = value.into();
+        self
+    }
+    /// Sets `latest_time`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SlotDateTimeRangeRequest.latest_time = value.into();`.
+    pub fn latest_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.latest_time = value.into();
+        self
+    }
+    /// Returns a new instance of SlotDateTimeRangeRequest with optional fields set to `None`.
+    pub fn new<EarliestTimeType: Into<String>, LatestTimeType: Into<String>>
+        (earliest_time: EarliestTimeType,
+         latest_time: LatestTimeType)
+         -> SlotDateTimeRangeRequest {
+        SlotDateTimeRangeRequest {
+            earliest_time: earliest_time.into(),
+            latest_time: latest_time.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SlotDateTimeRangeRequest` contents to a `SignedRequest`.
 struct SlotDateTimeRangeRequestSerializer;
@@ -35792,7 +45587,26 @@ pub struct SlotStartTimeRangeRequest {
     #[doc="<p>The latest date and time, in UTC, for the Scheduled Instance to start.</p>"]
     pub latest_time: Option<String>,
 }
-
+impl SlotStartTimeRangeRequest {
+    /// Sets `earliest_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SlotStartTimeRangeRequest.earliest_time = Some(value.into());`.
+    pub fn earliest_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.earliest_time = Some(value.into());
+        self
+    }
+    /// Sets `latest_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SlotStartTimeRangeRequest.latest_time = Some(value.into());`.
+    pub fn latest_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.latest_time = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SlotStartTimeRangeRequest with optional fields set to `None`.
+    pub fn new() -> SlotStartTimeRangeRequest {
+        SlotStartTimeRangeRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `SlotStartTimeRangeRequest` contents to a `SignedRequest`.
 struct SlotStartTimeRangeRequestSerializer;
@@ -35845,7 +45659,6 @@ pub struct Snapshot {
     #[doc="<p>The size of the volume, in GiB.</p>"]
     pub volume_size: Option<i64>,
 }
-
 struct SnapshotDeserializer;
 impl SnapshotDeserializer {
     #[allow(unused_variables)]
@@ -35965,7 +45778,6 @@ pub struct SnapshotDetail {
     #[doc="<p>The S3 bucket for the disk image.</p>"]
     pub user_bucket: Option<UserBucketDetails>,
 }
-
 struct SnapshotDetailDeserializer;
 impl SnapshotDetailDeserializer {
     #[allow(unused_variables)]
@@ -36097,7 +45909,40 @@ pub struct SnapshotDiskContainer {
     #[doc="<p>The S3 bucket for the disk image.</p>"]
     pub user_bucket: Option<UserBucket>,
 }
-
+impl SnapshotDiskContainer {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SnapshotDiskContainer.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `format`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SnapshotDiskContainer.format = Some(value.into());`.
+    pub fn format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.format = Some(value.into());
+        self
+    }
+    /// Sets `url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SnapshotDiskContainer.url = Some(value.into());`.
+    pub fn url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.url = Some(value.into());
+        self
+    }
+    /// Sets `user_bucket`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SnapshotDiskContainer.user_bucket = Some(value.into());`.
+    pub fn user_bucket<ValueType: Into<UserBucket>>(mut self, value: ValueType) -> Self {
+        self.user_bucket = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SnapshotDiskContainer with optional fields set to `None`.
+    pub fn new() -> SnapshotDiskContainer {
+        SnapshotDiskContainer { ..Default::default() }
+    }
+}
 
 /// Serialize `SnapshotDiskContainer` contents to a `SignedRequest`.
 struct SnapshotDiskContainerSerializer;
@@ -36215,7 +46060,6 @@ pub struct SnapshotTaskDetail {
     #[doc="<p>The S3 bucket for the disk image.</p>"]
     pub user_bucket: Option<UserBucketDetails>,
 }
-
 struct SnapshotTaskDetailDeserializer;
 impl SnapshotTaskDetailDeserializer {
     #[allow(unused_variables)]
@@ -36304,7 +46148,6 @@ pub struct SpotDatafeedSubscription {
     #[doc="<p>The state of the Spot instance data feed subscription.</p>"]
     pub state: Option<String>,
 }
-
 struct SpotDatafeedSubscriptionDeserializer;
 impl SpotDatafeedSubscriptionDeserializer {
     #[allow(unused_variables)]
@@ -36403,7 +46246,147 @@ pub struct SpotFleetLaunchSpecification {
     #[doc="<p>The number of units provided by the specified instance type. These are the same units that you chose to set the target capacity in terms (instances or a performance characteristic such as vCPUs, memory, or I/O).</p> <p>If the target capacity divided by this value is not a whole number, we round the number of instances to the next whole number. If this value is not specified, the default is 1.</p>"]
     pub weighted_capacity: Option<f64>,
 }
-
+impl SpotFleetLaunchSpecification {
+    /// Sets `addressing_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetLaunchSpecification.addressing_type = Some(value.into());`.
+    pub fn addressing_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.addressing_type = Some(value.into());
+        self
+    }
+    /// Sets `block_device_mappings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetLaunchSpecification.block_device_mappings = Some(value.into());`.
+    pub fn block_device_mappings<ValueType: Into<Vec<BlockDeviceMapping>>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.block_device_mappings = Some(value.into());
+        self
+    }
+    /// Sets `ebs_optimized`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetLaunchSpecification.ebs_optimized = Some(value.into());`.
+    pub fn ebs_optimized<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.ebs_optimized = Some(value.into());
+        self
+    }
+    /// Sets `iam_instance_profile`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetLaunchSpecification.iam_instance_profile = Some(value.into());`.
+pub fn iam_instance_profile<ValueType: Into<IamInstanceProfileSpecification>>(mut self, value: ValueType) -> Self{
+        self.iam_instance_profile = Some(value.into());
+        self
+    }
+    /// Sets `image_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetLaunchSpecification.image_id = Some(value.into());`.
+    pub fn image_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.image_id = Some(value.into());
+        self
+    }
+    /// Sets `instance_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetLaunchSpecification.instance_type = Some(value.into());`.
+    pub fn instance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_type = Some(value.into());
+        self
+    }
+    /// Sets `kernel_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetLaunchSpecification.kernel_id = Some(value.into());`.
+    pub fn kernel_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kernel_id = Some(value.into());
+        self
+    }
+    /// Sets `key_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetLaunchSpecification.key_name = Some(value.into());`.
+    pub fn key_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_name = Some(value.into());
+        self
+    }
+    /// Sets `monitoring`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetLaunchSpecification.monitoring = Some(value.into());`.
+    pub fn monitoring<ValueType: Into<SpotFleetMonitoring>>(mut self, value: ValueType) -> Self {
+        self.monitoring = Some(value.into());
+        self
+    }
+    /// Sets `network_interfaces`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetLaunchSpecification.network_interfaces = Some(value.into());`.
+    pub fn network_interfaces<ValueType: Into<Vec<InstanceNetworkInterfaceSpecification>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.network_interfaces = Some(value.into());
+        self
+    }
+    /// Sets `placement`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetLaunchSpecification.placement = Some(value.into());`.
+    pub fn placement<ValueType: Into<SpotPlacement>>(mut self, value: ValueType) -> Self {
+        self.placement = Some(value.into());
+        self
+    }
+    /// Sets `ramdisk_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetLaunchSpecification.ramdisk_id = Some(value.into());`.
+    pub fn ramdisk_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ramdisk_id = Some(value.into());
+        self
+    }
+    /// Sets `security_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetLaunchSpecification.security_groups = Some(value.into());`.
+    pub fn security_groups<ValueType: Into<Vec<GroupIdentifier>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.security_groups = Some(value.into());
+        self
+    }
+    /// Sets `spot_price`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetLaunchSpecification.spot_price = Some(value.into());`.
+    pub fn spot_price<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.spot_price = Some(value.into());
+        self
+    }
+    /// Sets `subnet_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetLaunchSpecification.subnet_id = Some(value.into());`.
+    pub fn subnet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subnet_id = Some(value.into());
+        self
+    }
+    /// Sets `tag_specifications`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetLaunchSpecification.tag_specifications = Some(value.into());`.
+    pub fn tag_specifications<ValueType: Into<Vec<SpotFleetTagSpecification>>>(mut self,
+                                                                               value: ValueType)
+                                                                               -> Self {
+        self.tag_specifications = Some(value.into());
+        self
+    }
+    /// Sets `user_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetLaunchSpecification.user_data = Some(value.into());`.
+    pub fn user_data<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_data = Some(value.into());
+        self
+    }
+    /// Sets `weighted_capacity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetLaunchSpecification.weighted_capacity = Some(value.into());`.
+    pub fn weighted_capacity<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.weighted_capacity = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SpotFleetLaunchSpecification with optional fields set to `None`.
+    pub fn new() -> SpotFleetLaunchSpecification {
+        SpotFleetLaunchSpecification { ..Default::default() }
+    }
+}
 struct SpotFleetLaunchSpecificationDeserializer;
 impl SpotFleetLaunchSpecificationDeserializer {
     #[allow(unused_variables)]
@@ -36616,7 +46599,19 @@ pub struct SpotFleetMonitoring {
     #[doc="<p>Enables monitoring for the instance.</p> <p>Default: <code>false</code> </p>"]
     pub enabled: Option<bool>,
 }
-
+impl SpotFleetMonitoring {
+    /// Sets `enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetMonitoring.enabled = Some(value.into());`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SpotFleetMonitoring with optional fields set to `None`.
+    pub fn new() -> SpotFleetMonitoring {
+        SpotFleetMonitoring { ..Default::default() }
+    }
+}
 struct SpotFleetMonitoringDeserializer;
 impl SpotFleetMonitoringDeserializer {
     #[allow(unused_variables)]
@@ -36691,7 +46686,6 @@ pub struct SpotFleetRequestConfig {
     #[doc="<p>The state of the Spot fleet request.</p>"]
     pub spot_fleet_request_state: String,
 }
-
 struct SpotFleetRequestConfigDeserializer;
 impl SpotFleetRequestConfigDeserializer {
     #[allow(unused_variables)]
@@ -36783,7 +46777,121 @@ pub struct SpotFleetRequestConfigData {
     #[doc="<p>The end date and time of the request, in UTC format (for example, <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>Z). At this point, no new Spot instance requests are placed or enabled to fulfill the request.</p>"]
     pub valid_until: Option<String>,
 }
-
+impl SpotFleetRequestConfigData {
+    /// Sets `allocation_strategy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetRequestConfigData.allocation_strategy = Some(value.into());`.
+    pub fn allocation_strategy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.allocation_strategy = Some(value.into());
+        self
+    }
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetRequestConfigData.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `excess_capacity_termination_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetRequestConfigData.excess_capacity_termination_policy = Some(value.into());`.
+    pub fn excess_capacity_termination_policy<ValueType: Into<String>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.excess_capacity_termination_policy = Some(value.into());
+        self
+    }
+    /// Sets `fulfilled_capacity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetRequestConfigData.fulfilled_capacity = Some(value.into());`.
+    pub fn fulfilled_capacity<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.fulfilled_capacity = Some(value.into());
+        self
+    }
+    /// Sets `iam_fleet_role`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetRequestConfigData.iam_fleet_role = value.into();`.
+    pub fn iam_fleet_role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.iam_fleet_role = value.into();
+        self
+    }
+    /// Sets `launch_specifications`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetRequestConfigData.launch_specifications = value.into();`.
+pub fn launch_specifications<ValueType: Into<Vec<SpotFleetLaunchSpecification>>>(mut self, value: ValueType) -> Self{
+        self.launch_specifications = value.into();
+        self
+    }
+    /// Sets `replace_unhealthy_instances`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetRequestConfigData.replace_unhealthy_instances = Some(value.into());`.
+    pub fn replace_unhealthy_instances<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.replace_unhealthy_instances = Some(value.into());
+        self
+    }
+    /// Sets `spot_price`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetRequestConfigData.spot_price = value.into();`.
+    pub fn spot_price<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.spot_price = value.into();
+        self
+    }
+    /// Sets `target_capacity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetRequestConfigData.target_capacity = value.into();`.
+    pub fn target_capacity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.target_capacity = value.into();
+        self
+    }
+    /// Sets `terminate_instances_with_expiration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetRequestConfigData.terminate_instances_with_expiration = Some(value.into());`.
+    pub fn terminate_instances_with_expiration<ValueType: Into<bool>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.terminate_instances_with_expiration = Some(value.into());
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetRequestConfigData.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Sets `valid_from`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetRequestConfigData.valid_from = Some(value.into());`.
+    pub fn valid_from<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.valid_from = Some(value.into());
+        self
+    }
+    /// Sets `valid_until`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetRequestConfigData.valid_until = Some(value.into());`.
+    pub fn valid_until<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.valid_until = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SpotFleetRequestConfigData with optional fields set to `None`.
+    pub fn new<IamFleetRoleType: Into<String>,
+               LaunchSpecificationsType: Into<Vec<SpotFleetLaunchSpecification>>,
+               SpotPriceType: Into<String>,
+               TargetCapacityType: Into<i64>>
+        (iam_fleet_role: IamFleetRoleType,
+         launch_specifications: LaunchSpecificationsType,
+         spot_price: SpotPriceType,
+         target_capacity: TargetCapacityType)
+         -> SpotFleetRequestConfigData {
+        SpotFleetRequestConfigData {
+            iam_fleet_role: iam_fleet_role.into(),
+            launch_specifications: launch_specifications.into(),
+            spot_price: spot_price.into(),
+            target_capacity: target_capacity.into(),
+            ..Default::default()
+        }
+    }
+}
 struct SpotFleetRequestConfigDataDeserializer;
 impl SpotFleetRequestConfigDataDeserializer {
     #[allow(unused_variables)]
@@ -36981,7 +47089,26 @@ pub struct SpotFleetTagSpecification {
     #[doc="<p>The tags.</p>"]
     pub tags: Option<Vec<Tag>>,
 }
-
+impl SpotFleetTagSpecification {
+    /// Sets `resource_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetTagSpecification.resource_type = Some(value.into());`.
+    pub fn resource_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_type = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotFleetTagSpecification.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SpotFleetTagSpecification with optional fields set to `None`.
+    pub fn new() -> SpotFleetTagSpecification {
+        SpotFleetTagSpecification { ..Default::default() }
+    }
+}
 struct SpotFleetTagSpecificationDeserializer;
 impl SpotFleetTagSpecificationDeserializer {
     #[allow(unused_variables)]
@@ -37142,7 +47269,6 @@ pub struct SpotInstanceRequest {
     #[doc="<p>The end date of the request, in UTC format (for example, <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>Z). If this is a one-time request, it remains active until all instances launch, the request is canceled, or this date is reached. If the request is persistent, it remains active until it is canceled or this date is reached.</p>"]
     pub valid_until: Option<String>,
 }
-
 struct SpotInstanceRequestDeserializer;
 impl SpotInstanceRequestDeserializer {
     #[allow(unused_variables)]
@@ -37339,7 +47465,6 @@ pub struct SpotInstanceStateFault {
     #[doc="<p>The message for the Spot instance state change.</p>"]
     pub message: Option<String>,
 }
-
 struct SpotInstanceStateFaultDeserializer;
 impl SpotInstanceStateFaultDeserializer {
     #[allow(unused_variables)]
@@ -37395,7 +47520,6 @@ pub struct SpotInstanceStatus {
     #[doc="<p>The date and time of the most recent status update, in UTC format (for example, <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>Z).</p>"]
     pub update_time: Option<String>,
 }
-
 struct SpotInstanceStatusDeserializer;
 impl SpotInstanceStatusDeserializer {
     #[allow(unused_variables)]
@@ -37469,7 +47593,33 @@ pub struct SpotPlacement {
     #[doc="<p>The tenancy of the instance (if the instance is running in a VPC). An instance with a tenancy of <code>dedicated</code> runs on single-tenant hardware. The <code>host</code> tenancy is not supported for Spot instances.</p>"]
     pub tenancy: Option<String>,
 }
-
+impl SpotPlacement {
+    /// Sets `availability_zone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotPlacement.availability_zone = Some(value.into());`.
+    pub fn availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.availability_zone = Some(value.into());
+        self
+    }
+    /// Sets `group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotPlacement.group_name = Some(value.into());`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = Some(value.into());
+        self
+    }
+    /// Sets `tenancy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotPlacement.tenancy = Some(value.into());`.
+    pub fn tenancy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tenancy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SpotPlacement with optional fields set to `None`.
+    pub fn new() -> SpotPlacement {
+        SpotPlacement { ..Default::default() }
+    }
+}
 struct SpotPlacementDeserializer;
 impl SpotPlacementDeserializer {
     #[allow(unused_variables)]
@@ -37558,7 +47708,6 @@ pub struct SpotPrice {
     #[doc="<p>The date and time the request was created, in UTC format (for example, <i>YYYY</i>-<i>MM</i>-<i>DD</i>T<i>HH</i>:<i>MM</i>:<i>SS</i>Z).</p>"]
     pub timestamp: Option<String>,
 }
-
 struct SpotPriceDeserializer;
 impl SpotPriceDeserializer {
     #[allow(unused_variables)]
@@ -37677,7 +47826,6 @@ pub struct StaleIpPermission {
     #[doc="<p>One or more security group pairs. Returns the ID of the referenced security group and VPC, and the ID and status of the VPC peering connection.</p>"]
     pub user_id_group_pairs: Option<Vec<UserIdGroupPair>>,
 }
-
 struct StaleIpPermissionDeserializer;
 impl StaleIpPermissionDeserializer {
     #[allow(unused_variables)]
@@ -37799,7 +47947,6 @@ pub struct StaleSecurityGroup {
     #[doc="<p>The ID of the VPC for the security group.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct StaleSecurityGroupDeserializer;
 impl StaleSecurityGroupDeserializer {
     #[allow(unused_variables)]
@@ -37914,7 +48061,37 @@ pub struct StartInstancesRequest {
     #[doc="<p>One or more instance IDs.</p>"]
     pub instance_ids: Vec<String>,
 }
-
+impl StartInstancesRequest {
+    /// Sets `additional_info`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartInstancesRequest.additional_info = Some(value.into());`.
+    pub fn additional_info<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.additional_info = Some(value.into());
+        self
+    }
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartInstancesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `instance_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartInstancesRequest.instance_ids = value.into();`.
+    pub fn instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_ids = value.into();
+        self
+    }
+    /// Returns a new instance of StartInstancesRequest with optional fields set to `None`.
+    pub fn new<InstanceIdsType: Into<Vec<String>>>(instance_ids: InstanceIdsType)
+                                                   -> StartInstancesRequest {
+        StartInstancesRequest {
+            instance_ids: instance_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `StartInstancesRequest` contents to a `SignedRequest`.
 struct StartInstancesRequestSerializer;
@@ -37944,7 +48121,6 @@ pub struct StartInstancesResult {
     #[doc="<p>Information about one or more started instances.</p>"]
     pub starting_instances: Option<Vec<InstanceStateChange>>,
 }
-
 struct StartInstancesResultDeserializer;
 impl StartInstancesResultDeserializer {
     #[allow(unused_variables)]
@@ -38010,7 +48186,6 @@ pub struct StateReason {
     #[doc="<p>The message for the state change.</p> <ul> <li> <p> <code>Server.InsufficientInstanceCapacity</code>: There was insufficient instance capacity to satisfy the launch request.</p> </li> <li> <p> <code>Server.InternalError</code>: An internal error occurred during instance launch, resulting in termination.</p> </li> <li> <p> <code>Server.ScheduledStop</code>: The instance was stopped due to a scheduled retirement.</p> </li> <li> <p> <code>Server.SpotInstanceTermination</code>: A Spot instance was terminated due to an increase in the market price.</p> </li> <li> <p> <code>Client.InternalError</code>: A client error caused the instance to terminate on launch.</p> </li> <li> <p> <code>Client.InstanceInitiatedShutdown</code>: The instance was shut down using the <code>shutdown -h</code> command from the instance.</p> </li> <li> <p> <code>Client.UserInitiatedShutdown</code>: The instance was shut down using the Amazon EC2 API.</p> </li> <li> <p> <code>Client.VolumeLimitExceeded</code>: The limit on the number of EBS volumes or total storage was exceeded. Decrease usage or request an increase in your limits.</p> </li> <li> <p> <code>Client.InvalidSnapshot.NotFound</code>: The specified snapshot was not found.</p> </li> </ul>"]
     pub message: Option<String>,
 }
-
 struct StateReasonDeserializer;
 impl StateReasonDeserializer {
     #[allow(unused_variables)]
@@ -38108,7 +48283,37 @@ pub struct StopInstancesRequest {
     #[doc="<p>One or more instance IDs.</p>"]
     pub instance_ids: Vec<String>,
 }
-
+impl StopInstancesRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopInstancesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `force`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopInstancesRequest.force = Some(value.into());`.
+    pub fn force<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.force = Some(value.into());
+        self
+    }
+    /// Sets `instance_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopInstancesRequest.instance_ids = value.into();`.
+    pub fn instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_ids = value.into();
+        self
+    }
+    /// Returns a new instance of StopInstancesRequest with optional fields set to `None`.
+    pub fn new<InstanceIdsType: Into<Vec<String>>>(instance_ids: InstanceIdsType)
+                                                   -> StopInstancesRequest {
+        StopInstancesRequest {
+            instance_ids: instance_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `StopInstancesRequest` contents to a `SignedRequest`.
 struct StopInstancesRequestSerializer;
@@ -38138,7 +48343,6 @@ pub struct StopInstancesResult {
     #[doc="<p>Information about one or more stopped instances.</p>"]
     pub stopping_instances: Option<Vec<InstanceStateChange>>,
 }
-
 struct StopInstancesResultDeserializer;
 impl StopInstancesResultDeserializer {
     #[allow(unused_variables)]
@@ -38188,7 +48392,19 @@ pub struct Storage {
     #[doc="<p>An Amazon S3 storage location.</p>"]
     pub s3: Option<S3Storage>,
 }
-
+impl Storage {
+    /// Sets `s3`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Storage.s3 = Some(value.into());`.
+    pub fn s3<ValueType: Into<S3Storage>>(mut self, value: ValueType) -> Self {
+        self.s3 = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Storage with optional fields set to `None`.
+    pub fn new() -> Storage {
+        Storage { ..Default::default() }
+    }
+}
 struct StorageDeserializer;
 impl StorageDeserializer {
     #[allow(unused_variables)]
@@ -38255,7 +48471,26 @@ pub struct StorageLocation {
     #[doc="<p>The key.</p>"]
     pub key: Option<String>,
 }
-
+impl StorageLocation {
+    /// Sets `bucket`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StorageLocation.bucket = Some(value.into());`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = Some(value.into());
+        self
+    }
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StorageLocation.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Returns a new instance of StorageLocation with optional fields set to `None`.
+    pub fn new() -> StorageLocation {
+        StorageLocation { ..Default::default() }
+    }
+}
 
 /// Serialize `StorageLocation` contents to a `SignedRequest`.
 struct StorageLocationSerializer;
@@ -38316,7 +48551,6 @@ pub struct Subnet {
     #[doc="<p>The ID of the VPC the subnet is in.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct SubnetDeserializer;
 impl SubnetDeserializer {
     #[allow(unused_variables)]
@@ -38410,7 +48644,6 @@ pub struct SubnetCidrBlockState {
     #[doc="<p>A message about the status of the CIDR block, if applicable.</p>"]
     pub status_message: Option<String>,
 }
-
 struct SubnetCidrBlockStateDeserializer;
 impl SubnetCidrBlockStateDeserializer {
     #[allow(unused_variables)]
@@ -38492,7 +48725,6 @@ pub struct SubnetIpv6CidrBlockAssociation {
     #[doc="<p>Information about the state of the CIDR block.</p>"]
     pub ipv_6_cidr_block_state: Option<SubnetCidrBlockState>,
 }
-
 struct SubnetIpv6CidrBlockAssociationDeserializer;
 impl SubnetIpv6CidrBlockAssociationDeserializer {
     #[allow(unused_variables)]
@@ -38663,7 +48895,26 @@ pub struct Tag {
     #[doc="<p>The value of the tag.</p> <p>Constraints: Tag values are case-sensitive and accept a maximum of 255 Unicode characters.</p>"]
     pub value: Option<String>,
 }
-
+impl Tag {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new() -> Tag {
+        Tag { ..Default::default() }
+    }
+}
 struct TagDeserializer;
 impl TagDeserializer {
     #[allow(unused_variables)]
@@ -38740,7 +48991,6 @@ pub struct TagDescription {
     #[doc="<p>The tag value.</p>"]
     pub value: Option<String>,
 }
-
 struct TagDescriptionDeserializer;
 impl TagDescriptionDeserializer {
     #[allow(unused_variables)]
@@ -38896,7 +49146,26 @@ pub struct TagSpecification {
     #[doc="<p>The tags to apply to the resource.</p>"]
     pub tags: Option<Vec<Tag>>,
 }
-
+impl TagSpecification {
+    /// Sets `resource_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TagSpecification.resource_type = Some(value.into());`.
+    pub fn resource_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_type = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TagSpecification.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TagSpecification with optional fields set to `None`.
+    pub fn new() -> TagSpecification {
+        TagSpecification { ..Default::default() }
+    }
+}
 
 /// Serialize `TagSpecification` contents to a `SignedRequest`.
 struct TagSpecificationSerializer;
@@ -38937,7 +49206,6 @@ pub struct TargetConfiguration {
     #[doc="<p>The ID of the Convertible Reserved Instance offering.</p>"]
     pub offering_id: Option<String>,
 }
-
 struct TargetConfigurationDeserializer;
 impl TargetConfigurationDeserializer {
     #[allow(unused_variables)]
@@ -38993,7 +49261,30 @@ pub struct TargetConfigurationRequest {
     #[doc="<p>The Convertible Reserved Instance offering ID.</p>"]
     pub offering_id: String,
 }
-
+impl TargetConfigurationRequest {
+    /// Sets `instance_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TargetConfigurationRequest.instance_count = Some(value.into());`.
+    pub fn instance_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.instance_count = Some(value.into());
+        self
+    }
+    /// Sets `offering_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TargetConfigurationRequest.offering_id = value.into();`.
+    pub fn offering_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.offering_id = value.into();
+        self
+    }
+    /// Returns a new instance of TargetConfigurationRequest with optional fields set to `None`.
+    pub fn new<OfferingIdType: Into<String>>(offering_id: OfferingIdType)
+                                             -> TargetConfigurationRequest {
+        TargetConfigurationRequest {
+            offering_id: offering_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `TargetConfigurationRequest` contents to a `SignedRequest`.
 struct TargetConfigurationRequestSerializer;
@@ -39033,7 +49324,6 @@ pub struct TargetReservationValue {
     #[doc="<p>The configuration of the Convertible Reserved Instances that make up the exchange.</p>"]
     pub target_configuration: Option<TargetConfiguration>,
 }
-
 struct TargetReservationValueDeserializer;
 impl TargetReservationValueDeserializer {
     #[allow(unused_variables)]
@@ -39160,7 +49450,30 @@ pub struct TerminateInstancesRequest {
     #[doc="<p>One or more instance IDs.</p> <p>Constraints: Up to 1000 instance IDs. We recommend breaking up this request into smaller batches.</p>"]
     pub instance_ids: Vec<String>,
 }
-
+impl TerminateInstancesRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateInstancesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `instance_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateInstancesRequest.instance_ids = value.into();`.
+    pub fn instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_ids = value.into();
+        self
+    }
+    /// Returns a new instance of TerminateInstancesRequest with optional fields set to `None`.
+    pub fn new<InstanceIdsType: Into<Vec<String>>>(instance_ids: InstanceIdsType)
+                                                   -> TerminateInstancesRequest {
+        TerminateInstancesRequest {
+            instance_ids: instance_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `TerminateInstancesRequest` contents to a `SignedRequest`.
 struct TerminateInstancesRequestSerializer;
@@ -39187,7 +49500,6 @@ pub struct TerminateInstancesResult {
     #[doc="<p>Information about one or more terminated instances.</p>"]
     pub terminating_instances: Option<Vec<InstanceStateChange>>,
 }
-
 struct TerminateInstancesResultDeserializer;
 impl TerminateInstancesResultDeserializer {
     #[allow(unused_variables)]
@@ -39252,7 +49564,33 @@ pub struct UnassignIpv6AddressesRequest {
     #[doc="<p>The ID of the network interface.</p>"]
     pub network_interface_id: String,
 }
-
+impl UnassignIpv6AddressesRequest {
+    /// Sets `ipv_6_addresses`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UnassignIpv6AddressesRequest.ipv_6_addresses = value.into();`.
+    pub fn ipv_6_addresses<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.ipv_6_addresses = value.into();
+        self
+    }
+    /// Sets `network_interface_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UnassignIpv6AddressesRequest.network_interface_id = value.into();`.
+    pub fn network_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_interface_id = value.into();
+        self
+    }
+    /// Returns a new instance of UnassignIpv6AddressesRequest with optional fields set to `None`.
+    pub fn new<Ipv6AddressesType: Into<Vec<String>>, NetworkInterfaceIdType: Into<String>>
+        (ipv_6_addresses: Ipv6AddressesType,
+         network_interface_id: NetworkInterfaceIdType)
+         -> UnassignIpv6AddressesRequest {
+        UnassignIpv6AddressesRequest {
+            ipv_6_addresses: ipv_6_addresses.into(),
+            network_interface_id: network_interface_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UnassignIpv6AddressesRequest` contents to a `SignedRequest`.
 struct UnassignIpv6AddressesRequestSerializer;
@@ -39279,7 +49617,6 @@ pub struct UnassignIpv6AddressesResult {
     #[doc="<p>The IPv6 addresses that have been unassigned from the network interface.</p>"]
     pub unassigned_ipv_6_addresses: Option<Vec<String>>,
 }
-
 struct UnassignIpv6AddressesResultDeserializer;
 impl UnassignIpv6AddressesResultDeserializer {
     #[allow(unused_variables)]
@@ -39336,7 +49673,33 @@ pub struct UnassignPrivateIpAddressesRequest {
     #[doc="<p>The secondary private IP addresses to unassign from the network interface. You can specify this option multiple times to unassign more than one IP address.</p>"]
     pub private_ip_addresses: Vec<String>,
 }
-
+impl UnassignPrivateIpAddressesRequest {
+    /// Sets `network_interface_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UnassignPrivateIpAddressesRequest.network_interface_id = value.into();`.
+    pub fn network_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_interface_id = value.into();
+        self
+    }
+    /// Sets `private_ip_addresses`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UnassignPrivateIpAddressesRequest.private_ip_addresses = value.into();`.
+    pub fn private_ip_addresses<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.private_ip_addresses = value.into();
+        self
+    }
+    /// Returns a new instance of UnassignPrivateIpAddressesRequest with optional fields set to `None`.
+    pub fn new<NetworkInterfaceIdType: Into<String>, PrivateIpAddressesType: Into<Vec<String>>>
+        (network_interface_id: NetworkInterfaceIdType,
+         private_ip_addresses: PrivateIpAddressesType)
+         -> UnassignPrivateIpAddressesRequest {
+        UnassignPrivateIpAddressesRequest {
+            network_interface_id: network_interface_id.into(),
+            private_ip_addresses: private_ip_addresses.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UnassignPrivateIpAddressesRequest` contents to a `SignedRequest`.
 struct UnassignPrivateIpAddressesRequestSerializer;
@@ -39366,7 +49729,30 @@ pub struct UnmonitorInstancesRequest {
     #[doc="<p>One or more instance IDs.</p>"]
     pub instance_ids: Vec<String>,
 }
-
+impl UnmonitorInstancesRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UnmonitorInstancesRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `instance_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UnmonitorInstancesRequest.instance_ids = value.into();`.
+    pub fn instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_ids = value.into();
+        self
+    }
+    /// Returns a new instance of UnmonitorInstancesRequest with optional fields set to `None`.
+    pub fn new<InstanceIdsType: Into<Vec<String>>>(instance_ids: InstanceIdsType)
+                                                   -> UnmonitorInstancesRequest {
+        UnmonitorInstancesRequest {
+            instance_ids: instance_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UnmonitorInstancesRequest` contents to a `SignedRequest`.
 struct UnmonitorInstancesRequestSerializer;
@@ -39393,7 +49779,6 @@ pub struct UnmonitorInstancesResult {
     #[doc="<p>The monitoring information.</p>"]
     pub instance_monitorings: Option<Vec<InstanceMonitoring>>,
 }
-
 struct UnmonitorInstancesResultDeserializer;
 impl UnmonitorInstancesResultDeserializer {
     #[allow(unused_variables)]
@@ -39445,7 +49830,6 @@ pub struct UnsuccessfulItem {
     #[doc="<p>The ID of the resource.</p>"]
     pub resource_id: Option<String>,
 }
-
 struct UnsuccessfulItemDeserializer;
 impl UnsuccessfulItemDeserializer {
     #[allow(unused_variables)]
@@ -39500,7 +49884,6 @@ pub struct UnsuccessfulItemError {
     #[doc="<p>The error message accompanying the error code.</p>"]
     pub message: String,
 }
-
 struct UnsuccessfulItemErrorDeserializer;
 impl UnsuccessfulItemErrorDeserializer {
     #[allow(unused_variables)]
@@ -39635,7 +50018,26 @@ pub struct UserBucket {
     #[doc="<p>The file name of the disk image.</p>"]
     pub s3_key: Option<String>,
 }
-
+impl UserBucket {
+    /// Sets `s3_bucket`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UserBucket.s3_bucket = Some(value.into());`.
+    pub fn s3_bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_bucket = Some(value.into());
+        self
+    }
+    /// Sets `s3_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UserBucket.s3_key = Some(value.into());`.
+    pub fn s3_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_key = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UserBucket with optional fields set to `None`.
+    pub fn new() -> UserBucket {
+        UserBucket { ..Default::default() }
+    }
+}
 
 /// Serialize `UserBucket` contents to a `SignedRequest`.
 struct UserBucketSerializer;
@@ -39664,7 +50066,6 @@ pub struct UserBucketDetails {
     #[doc="<p>The file name of the disk image.</p>"]
     pub s3_key: Option<String>,
 }
-
 struct UserBucketDetailsDeserializer;
 impl UserBucketDetailsDeserializer {
     #[allow(unused_variables)]
@@ -39717,7 +50118,19 @@ pub struct UserData {
     #[doc="<p>The user data. If you are using an AWS SDK or command line tool, Base64-encoding is performed for you, and you can load the text from a file. Otherwise, you must provide Base64-encoded text.</p>"]
     pub data: Option<String>,
 }
-
+impl UserData {
+    /// Sets `data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UserData.data = Some(value.into());`.
+    pub fn data<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UserData with optional fields set to `None`.
+    pub fn new() -> UserData {
+        UserData { ..Default::default() }
+    }
+}
 
 /// Serialize `UserData` contents to a `SignedRequest`.
 struct UserDataSerializer;
@@ -39763,7 +50176,54 @@ pub struct UserIdGroupPair {
     #[doc="<p>The ID of the VPC peering connection, if applicable.</p>"]
     pub vpc_peering_connection_id: Option<String>,
 }
-
+impl UserIdGroupPair {
+    /// Sets `group_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UserIdGroupPair.group_id = Some(value.into());`.
+    pub fn group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_id = Some(value.into());
+        self
+    }
+    /// Sets `group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UserIdGroupPair.group_name = Some(value.into());`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = Some(value.into());
+        self
+    }
+    /// Sets `peering_status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UserIdGroupPair.peering_status = Some(value.into());`.
+    pub fn peering_status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.peering_status = Some(value.into());
+        self
+    }
+    /// Sets `user_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UserIdGroupPair.user_id = Some(value.into());`.
+    pub fn user_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_id = Some(value.into());
+        self
+    }
+    /// Sets `vpc_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UserIdGroupPair.vpc_id = Some(value.into());`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = Some(value.into());
+        self
+    }
+    /// Sets `vpc_peering_connection_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UserIdGroupPair.vpc_peering_connection_id = Some(value.into());`.
+    pub fn vpc_peering_connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_peering_connection_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UserIdGroupPair with optional fields set to `None`.
+    pub fn new() -> UserIdGroupPair {
+        UserIdGroupPair { ..Default::default() }
+    }
+}
 struct UserIdGroupPairDeserializer;
 impl UserIdGroupPairDeserializer {
     #[allow(unused_variables)]
@@ -40033,7 +50493,6 @@ pub struct VgwTelemetry {
     #[doc="<p>If an error occurs, a description of the error.</p>"]
     pub status_message: Option<String>,
 }
-
 struct VgwTelemetryDeserializer;
 impl VgwTelemetryDeserializer {
     #[allow(unused_variables)]
@@ -40179,7 +50638,6 @@ pub struct Volume {
     #[doc="<p>The volume type. This can be <code>gp2</code> for General Purpose SSD, <code>io1</code> for Provisioned IOPS SSD, <code>st1</code> for Throughput Optimized HDD, <code>sc1</code> for Cold HDD, or <code>standard</code> for Magnetic volumes.</p>"]
     pub volume_type: Option<String>,
 }
-
 struct VolumeDeserializer;
 impl VolumeDeserializer {
     #[allow(unused_variables)]
@@ -40283,7 +50741,6 @@ pub struct VolumeAttachment {
     #[doc="<p>The ID of the volume.</p>"]
     pub volume_id: Option<String>,
 }
-
 struct VolumeAttachmentDeserializer;
 impl VolumeAttachmentDeserializer {
     #[allow(unused_variables)]
@@ -40409,7 +50866,22 @@ pub struct VolumeDetail {
     #[doc="<p>The size of the volume, in GiB.</p>"]
     pub size: i64,
 }
-
+impl VolumeDetail {
+    /// Sets `size`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VolumeDetail.size = value.into();`.
+    pub fn size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.size = value.into();
+        self
+    }
+    /// Returns a new instance of VolumeDetail with optional fields set to `None`.
+    pub fn new<SizeType: Into<i64>>(size: SizeType) -> VolumeDetail {
+        VolumeDetail {
+            size: size.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `VolumeDetail` contents to a `SignedRequest`.
 struct VolumeDetailSerializer;
@@ -40506,7 +50978,6 @@ pub struct VolumeModification {
     #[doc="<p>ID of the volume being modified.</p>"]
     pub volume_id: Option<String>,
 }
-
 struct VolumeModificationDeserializer;
 impl VolumeModificationDeserializer {
     #[allow(unused_variables)]
@@ -40677,7 +51148,6 @@ pub struct VolumeStatusAction {
     #[doc="<p>The event type associated with this operation.</p>"]
     pub event_type: Option<String>,
 }
-
 struct VolumeStatusActionDeserializer;
 impl VolumeStatusActionDeserializer {
     #[allow(unused_variables)]
@@ -40780,7 +51250,6 @@ pub struct VolumeStatusDetails {
     #[doc="<p>The intended status of the volume status.</p>"]
     pub status: Option<String>,
 }
-
 struct VolumeStatusDetailsDeserializer;
 impl VolumeStatusDetailsDeserializer {
     #[allow(unused_variables)]
@@ -40882,7 +51351,6 @@ pub struct VolumeStatusEvent {
     #[doc="<p>The earliest start time of the event.</p>"]
     pub not_before: Option<String>,
 }
-
 struct VolumeStatusEventDeserializer;
 impl VolumeStatusEventDeserializer {
     #[allow(unused_variables)]
@@ -40990,7 +51458,6 @@ pub struct VolumeStatusInfo {
     #[doc="<p>The status of the volume.</p>"]
     pub status: Option<String>,
 }
-
 struct VolumeStatusInfoDeserializer;
 impl VolumeStatusInfoDeserializer {
     #[allow(unused_variables)]
@@ -41067,7 +51534,6 @@ pub struct VolumeStatusItem {
     #[doc="<p>The volume status.</p>"]
     pub volume_status: Option<VolumeStatusInfo>,
 }
-
 struct VolumeStatusItemDeserializer;
 impl VolumeStatusItemDeserializer {
     #[allow(unused_variables)]
@@ -41219,7 +51685,6 @@ pub struct Vpc {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct VpcDeserializer;
 impl VpcDeserializer {
     #[allow(unused_variables)]
@@ -41298,7 +51763,6 @@ pub struct VpcAttachment {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct VpcAttachmentDeserializer;
 impl VpcAttachmentDeserializer {
     #[allow(unused_variables)]
@@ -41395,7 +51859,6 @@ pub struct VpcCidrBlockState {
     #[doc="<p>A message about the status of the CIDR block, if applicable.</p>"]
     pub status_message: Option<String>,
 }
-
 struct VpcCidrBlockStateDeserializer;
 impl VpcCidrBlockStateDeserializer {
     #[allow(unused_variables)]
@@ -41467,7 +51930,6 @@ pub struct VpcClassicLink {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct VpcClassicLinkDeserializer;
 impl VpcClassicLinkDeserializer {
     #[allow(unused_variables)]
@@ -41590,7 +52052,6 @@ pub struct VpcEndpoint {
     #[doc="<p>The ID of the VPC to which the endpoint is associated.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct VpcEndpointDeserializer;
 impl VpcEndpointDeserializer {
     #[allow(unused_variables)]
@@ -41722,7 +52183,6 @@ pub struct VpcIpv6CidrBlockAssociation {
     #[doc="<p>Information about the state of the CIDR block.</p>"]
     pub ipv_6_cidr_block_state: Option<VpcCidrBlockState>,
 }
-
 struct VpcIpv6CidrBlockAssociationDeserializer;
 impl VpcIpv6CidrBlockAssociationDeserializer {
     #[allow(unused_variables)]
@@ -41874,7 +52334,6 @@ pub struct VpcPeeringConnection {
     #[doc="<p>The ID of the VPC peering connection.</p>"]
     pub vpc_peering_connection_id: Option<String>,
 }
-
 struct VpcPeeringConnectionDeserializer;
 impl VpcPeeringConnectionDeserializer {
     #[allow(unused_variables)]
@@ -41988,7 +52447,6 @@ pub struct VpcPeeringConnectionOptionsDescription {
     #[doc="<p>Indicates whether a local VPC can communicate with a ClassicLink connection in the peer VPC over the VPC peering connection.</p>"]
     pub allow_egress_from_local_vpc_to_remote_classic_link: Option<bool>,
 }
-
 struct VpcPeeringConnectionOptionsDescriptionDeserializer;
 impl VpcPeeringConnectionOptionsDescriptionDeserializer {
     #[allow(unused_variables)]
@@ -42051,7 +52509,6 @@ pub struct VpcPeeringConnectionStateReason {
     #[doc="<p>A message that provides more information about the status, if applicable.</p>"]
     pub message: Option<String>,
 }
-
 struct VpcPeeringConnectionStateReasonDeserializer;
 impl VpcPeeringConnectionStateReasonDeserializer {
     #[allow(unused_variables)]
@@ -42126,7 +52583,6 @@ pub struct VpcPeeringConnectionVpcInfo {
     #[doc="<p>The ID of the VPC.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct VpcPeeringConnectionVpcInfoDeserializer;
 impl VpcPeeringConnectionVpcInfoDeserializer {
     #[allow(unused_variables)]
@@ -42223,7 +52679,6 @@ pub struct VpnConnection {
     #[doc="<p>The ID of the virtual private gateway at the AWS side of the VPN connection.</p>"]
     pub vpn_gateway_id: Option<String>,
 }
-
 struct VpnConnectionDeserializer;
 impl VpnConnectionDeserializer {
     #[allow(unused_variables)]
@@ -42367,7 +52822,6 @@ pub struct VpnConnectionOptions {
     #[doc="<p>Indicates whether the VPN connection uses static routes only. Static routes must be used for devices that don't support BGP.</p>"]
     pub static_routes_only: Option<bool>,
 }
-
 struct VpnConnectionOptionsDeserializer;
 impl VpnConnectionOptionsDeserializer {
     #[allow(unused_variables)]
@@ -42417,7 +52871,19 @@ pub struct VpnConnectionOptionsSpecification {
     #[doc="<p>Indicates whether the VPN connection uses static routes only. Static routes must be used for devices that don't support BGP.</p>"]
     pub static_routes_only: Option<bool>,
 }
-
+impl VpnConnectionOptionsSpecification {
+    /// Sets `static_routes_only`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VpnConnectionOptionsSpecification.static_routes_only = Some(value.into());`.
+    pub fn static_routes_only<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.static_routes_only = Some(value.into());
+        self
+    }
+    /// Returns a new instance of VpnConnectionOptionsSpecification with optional fields set to `None`.
+    pub fn new() -> VpnConnectionOptionsSpecification {
+        VpnConnectionOptionsSpecification { ..Default::default() }
+    }
+}
 
 /// Serialize `VpnConnectionOptionsSpecification` contents to a `SignedRequest`.
 struct VpnConnectionOptionsSpecificationSerializer;
@@ -42452,7 +52918,6 @@ pub struct VpnGateway {
     #[doc="<p>The ID of the virtual private gateway.</p>"]
     pub vpn_gateway_id: Option<String>,
 }
-
 struct VpnGatewayDeserializer;
 impl VpnGatewayDeserializer {
     #[allow(unused_variables)]
@@ -42594,7 +53059,6 @@ pub struct VpnStaticRoute {
     #[doc="<p>The current state of the static route.</p>"]
     pub state: Option<String>,
 }
-
 struct VpnStaticRouteDeserializer;
 impl VpnStaticRouteDeserializer {
     #[allow(unused_variables)]

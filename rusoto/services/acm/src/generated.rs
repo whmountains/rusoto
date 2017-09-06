@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -37,7 +38,33 @@ pub struct AddTagsToCertificateRequest {
     #[serde(rename="Tags")]
     pub tags: Vec<Tag>,
 }
-
+impl AddTagsToCertificateRequest {
+    /// Sets `certificate_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToCertificateRequest.certificate_arn = value.into();`.
+    pub fn certificate_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_arn = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToCertificateRequest.tags = value.into();`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of AddTagsToCertificateRequest with optional fields set to `None`.
+    pub fn new<CertificateArnType: Into<String>, TagsType: Into<Vec<Tag>>>
+        (certificate_arn: CertificateArnType,
+         tags: TagsType)
+         -> AddTagsToCertificateRequest {
+        AddTagsToCertificateRequest {
+            certificate_arn: certificate_arn.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains metadata about an ACM certificate. This structure is returned in the response to a <a>DescribeCertificate</a> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CertificateDetail {
@@ -126,7 +153,6 @@ pub struct CertificateDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>This structure is returned in the response object of <a>ListCertificates</a> action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CertificateSummary {
@@ -139,21 +165,52 @@ pub struct CertificateSummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub domain_name: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteCertificateRequest {
     #[doc="<p>String that contains the ARN of the ACM Certificate to be deleted. This must be of the form:</p> <p> <code>arn:aws:acm:region:123456789012:certificate/12345678-1234-1234-1234-123456789012</code> </p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a>.</p>"]
     #[serde(rename="CertificateArn")]
     pub certificate_arn: String,
 }
-
+impl DeleteCertificateRequest {
+    /// Sets `certificate_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteCertificateRequest.certificate_arn = value.into();`.
+    pub fn certificate_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteCertificateRequest with optional fields set to `None`.
+    pub fn new<CertificateArnType: Into<String>>(certificate_arn: CertificateArnType)
+                                                 -> DeleteCertificateRequest {
+        DeleteCertificateRequest {
+            certificate_arn: certificate_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeCertificateRequest {
     #[doc="<p>The Amazon Resource Name (ARN) of the ACM Certificate. The ARN must have the following form:</p> <p> <code>arn:aws:acm:region:123456789012:certificate/12345678-1234-1234-1234-123456789012</code> </p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a>.</p>"]
     #[serde(rename="CertificateArn")]
     pub certificate_arn: String,
 }
-
+impl DescribeCertificateRequest {
+    /// Sets `certificate_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCertificateRequest.certificate_arn = value.into();`.
+    pub fn certificate_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeCertificateRequest with optional fields set to `None`.
+    pub fn new<CertificateArnType: Into<String>>(certificate_arn: CertificateArnType)
+                                                 -> DescribeCertificateRequest {
+        DescribeCertificateRequest {
+            certificate_arn: certificate_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeCertificateResponse {
     #[doc="<p>Metadata about an ACM certificate.</p>"]
@@ -161,7 +218,6 @@ pub struct DescribeCertificateResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub certificate: Option<CertificateDetail>,
 }
-
 #[doc="<p>Contains information about the validation of each domain name in the certificate.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DomainValidation {
@@ -181,7 +237,6 @@ pub struct DomainValidation {
     #[serde(skip_serializing_if="Option::is_none")]
     pub validation_status: Option<String>,
 }
-
 #[doc="<p>Contains information about the domain names that you want ACM to use to send you emails to validate your ownership of the domain.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DomainValidationOption {
@@ -192,14 +247,56 @@ pub struct DomainValidationOption {
     #[serde(rename="ValidationDomain")]
     pub validation_domain: String,
 }
-
+impl DomainValidationOption {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DomainValidationOption.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `validation_domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DomainValidationOption.validation_domain = value.into();`.
+    pub fn validation_domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.validation_domain = value.into();
+        self
+    }
+    /// Returns a new instance of DomainValidationOption with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>, ValidationDomainType: Into<String>>
+        (domain_name: DomainNameType,
+         validation_domain: ValidationDomainType)
+         -> DomainValidationOption {
+        DomainValidationOption {
+            domain_name: domain_name.into(),
+            validation_domain: validation_domain.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetCertificateRequest {
     #[doc="<p>String that contains a certificate ARN in the following format:</p> <p> <code>arn:aws:acm:region:123456789012:certificate/12345678-1234-1234-1234-123456789012</code> </p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a>.</p>"]
     #[serde(rename="CertificateArn")]
     pub certificate_arn: String,
 }
-
+impl GetCertificateRequest {
+    /// Sets `certificate_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetCertificateRequest.certificate_arn = value.into();`.
+    pub fn certificate_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetCertificateRequest with optional fields set to `None`.
+    pub fn new<CertificateArnType: Into<String>>(certificate_arn: CertificateArnType)
+                                                 -> GetCertificateRequest {
+        GetCertificateRequest {
+            certificate_arn: certificate_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetCertificateResponse {
     #[doc="<p>String that contains the ACM Certificate represented by the ARN specified at input.</p>"]
@@ -211,7 +308,6 @@ pub struct GetCertificateResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub certificate_chain: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ImportCertificateRequest {
     #[doc="<p>The certificate to import. It must meet the following requirements:</p> <ul> <li> <p>Must be PEM-encoded.</p> </li> <li> <p>Must contain a 1024-bit or 2048-bit RSA public key.</p> </li> <li> <p>Must be valid at the time of import. You cannot import a certificate before its validity period begins (the certificate's <code>NotBefore</code> date) or after it expires (the certificate's <code>NotAfter</code> date).</p> </li> </ul>"]
@@ -243,7 +339,47 @@ pub struct ImportCertificateRequest {
                         )]
     pub private_key: Vec<u8>,
 }
-
+impl ImportCertificateRequest {
+    /// Sets `certificate`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportCertificateRequest.certificate = value.into();`.
+    pub fn certificate<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.certificate = value.into();
+        self
+    }
+    /// Sets `certificate_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportCertificateRequest.certificate_arn = Some(value.into());`.
+    pub fn certificate_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_arn = Some(value.into());
+        self
+    }
+    /// Sets `certificate_chain`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportCertificateRequest.certificate_chain = Some(value.into());`.
+    pub fn certificate_chain<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.certificate_chain = Some(value.into());
+        self
+    }
+    /// Sets `private_key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportCertificateRequest.private_key = value.into();`.
+    pub fn private_key<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.private_key = value.into();
+        self
+    }
+    /// Returns a new instance of ImportCertificateRequest with optional fields set to `None`.
+    pub fn new<CertificateType: Into<Vec<u8>>, PrivateKeyType: Into<Vec<u8>>>
+        (certificate: CertificateType,
+         private_key: PrivateKeyType)
+         -> ImportCertificateRequest {
+        ImportCertificateRequest {
+            certificate: certificate.into(),
+            private_key: private_key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ImportCertificateResponse {
     #[doc="<p>The <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Name (ARN)</a> of the imported certificate.</p>"]
@@ -251,7 +387,6 @@ pub struct ImportCertificateResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub certificate_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListCertificatesRequest {
     #[doc="<p>The status or statuses on which to filter the list of ACM Certificates.</p>"]
@@ -267,7 +402,33 @@ pub struct ListCertificatesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListCertificatesRequest {
+    /// Sets `certificate_statuses`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCertificatesRequest.certificate_statuses = Some(value.into());`.
+    pub fn certificate_statuses<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.certificate_statuses = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCertificatesRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCertificatesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListCertificatesRequest with optional fields set to `None`.
+    pub fn new() -> ListCertificatesRequest {
+        ListCertificatesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListCertificatesResponse {
     #[doc="<p>A list of ACM Certificates.</p>"]
@@ -279,14 +440,29 @@ pub struct ListCertificatesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTagsForCertificateRequest {
     #[doc="<p>String that contains the ARN of the ACM Certificate for which you want to list the tags. This has the following form:</p> <p> <code>arn:aws:acm:region:123456789012:certificate/12345678-1234-1234-1234-123456789012</code> </p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a>.</p>"]
     #[serde(rename="CertificateArn")]
     pub certificate_arn: String,
 }
-
+impl ListTagsForCertificateRequest {
+    /// Sets `certificate_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForCertificateRequest.certificate_arn = value.into();`.
+    pub fn certificate_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_arn = value.into();
+        self
+    }
+    /// Returns a new instance of ListTagsForCertificateRequest with optional fields set to `None`.
+    pub fn new<CertificateArnType: Into<String>>(certificate_arn: CertificateArnType)
+                                                 -> ListTagsForCertificateRequest {
+        ListTagsForCertificateRequest {
+            certificate_arn: certificate_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTagsForCertificateResponse {
     #[doc="<p>The key-value pairs that define the applied tags.</p>"]
@@ -294,7 +470,6 @@ pub struct ListTagsForCertificateResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RemoveTagsFromCertificateRequest {
     #[doc="<p>String that contains the ARN of the ACM Certificate with one or more tags that you want to remove. This must be of the form:</p> <p> <code>arn:aws:acm:region:123456789012:certificate/12345678-1234-1234-1234-123456789012</code> </p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a>.</p>"]
@@ -304,7 +479,33 @@ pub struct RemoveTagsFromCertificateRequest {
     #[serde(rename="Tags")]
     pub tags: Vec<Tag>,
 }
-
+impl RemoveTagsFromCertificateRequest {
+    /// Sets `certificate_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromCertificateRequest.certificate_arn = value.into();`.
+    pub fn certificate_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_arn = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromCertificateRequest.tags = value.into();`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveTagsFromCertificateRequest with optional fields set to `None`.
+    pub fn new<CertificateArnType: Into<String>, TagsType: Into<Vec<Tag>>>
+        (certificate_arn: CertificateArnType,
+         tags: TagsType)
+         -> RemoveTagsFromCertificateRequest {
+        RemoveTagsFromCertificateRequest {
+            certificate_arn: certificate_arn.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains information about the status of ACM's <a href=\"http://docs.aws.amazon.com/acm/latest/userguide/acm-renewal.html\">managed renewal</a> for the certificate. This structure exists only when the certificate type is <code>AMAZON_ISSUED</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RenewalSummary {
@@ -315,7 +516,6 @@ pub struct RenewalSummary {
     #[serde(rename="RenewalStatus")]
     pub renewal_status: String,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RequestCertificateRequest {
     #[doc="<p> Fully qualified domain name (FQDN), such as www.example.com, of the site that you want to secure with an ACM Certificate. Use an asterisk (*) to create a wildcard certificate that protects several sites in the same domain. For example, *.example.com protects www.example.com, site.example.com, and images.example.com. </p> <p> The maximum length of a DNS name is 253 octets. The name is made up of multiple labels separated by periods. No label can be longer than 63 octets. Consider the following examples: </p> <p> <code>(63 octets).(63 octets).(63 octets).(61 octets)</code> is legal because the total length is 253 octets (63+1+63+1+63+1+61) and no label exceeds 63 octets. </p> <p> <code>(64 octets).(63 octets).(63 octets).(61 octets)</code> is not legal because the total length exceeds 253 octets (64+1+63+1+63+1+61) and the first label exceeds 63 octets. </p> <p> <code>(63 octets).(63 octets).(63 octets).(62 octets)</code> is not legal because the total length of the DNS name (63+1+63+1+63+1+62) exceeds 253 octets. </p>"]
@@ -334,7 +534,46 @@ pub struct RequestCertificateRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub subject_alternative_names: Option<Vec<String>>,
 }
-
+impl RequestCertificateRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestCertificateRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `domain_validation_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestCertificateRequest.domain_validation_options = Some(value.into());`.
+pub fn domain_validation_options<ValueType: Into<Vec<DomainValidationOption>>>(mut self, value: ValueType) -> Self{
+        self.domain_validation_options = Some(value.into());
+        self
+    }
+    /// Sets `idempotency_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestCertificateRequest.idempotency_token = Some(value.into());`.
+    pub fn idempotency_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.idempotency_token = Some(value.into());
+        self
+    }
+    /// Sets `subject_alternative_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestCertificateRequest.subject_alternative_names = Some(value.into());`.
+    pub fn subject_alternative_names<ValueType: Into<Vec<String>>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.subject_alternative_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RequestCertificateRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType)
+                                             -> RequestCertificateRequest {
+        RequestCertificateRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RequestCertificateResponse {
     #[doc="<p>String that contains the ARN of the issued certificate. This must be of the form:</p> <p> <code>arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012</code> </p>"]
@@ -342,7 +581,6 @@ pub struct RequestCertificateResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub certificate_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ResendValidationEmailRequest {
     #[doc="<p>String that contains the ARN of the requested certificate. The certificate ARN is generated and returned by the <a>RequestCertificate</a> action as soon as the request is made. By default, using this parameter causes email to be sent to all top-level domains you specified in the certificate request.</p> <p>The ARN must be of the form:</p> <p> <code>arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012</code> </p>"]
@@ -355,7 +593,44 @@ pub struct ResendValidationEmailRequest {
     #[serde(rename="ValidationDomain")]
     pub validation_domain: String,
 }
-
+impl ResendValidationEmailRequest {
+    /// Sets `certificate_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResendValidationEmailRequest.certificate_arn = value.into();`.
+    pub fn certificate_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_arn = value.into();
+        self
+    }
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResendValidationEmailRequest.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `validation_domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResendValidationEmailRequest.validation_domain = value.into();`.
+    pub fn validation_domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.validation_domain = value.into();
+        self
+    }
+    /// Returns a new instance of ResendValidationEmailRequest with optional fields set to `None`.
+    pub fn new<CertificateArnType: Into<String>,
+               DomainType: Into<String>,
+               ValidationDomainType: Into<String>>
+        (certificate_arn: CertificateArnType,
+         domain: DomainType,
+         validation_domain: ValidationDomainType)
+         -> ResendValidationEmailRequest {
+        ResendValidationEmailRequest {
+            certificate_arn: certificate_arn.into(),
+            domain: domain.into(),
+            validation_domain: validation_domain.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A key-value pair that identifies or specifies metadata about an ACM resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Tag {
@@ -367,7 +642,29 @@ pub struct Tag {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl Tag {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>>(key: KeyType) -> Tag {
+        Tag {
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 /// Errors returned by AddTagsToCertificate
 #[derive(Debug, PartialEq)]
 pub enum AddTagsToCertificateError {

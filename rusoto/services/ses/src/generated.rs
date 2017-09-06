@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -47,7 +48,30 @@ pub struct AddHeaderAction {
     #[doc="<p>Must be less than 2048 characters, and must not contain newline characters (\"\\r\" or \"\\n\").</p>"]
     pub header_value: String,
 }
-
+impl AddHeaderAction {
+    /// Sets `header_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddHeaderAction.header_name = value.into();`.
+    pub fn header_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.header_name = value.into();
+        self
+    }
+    /// Sets `header_value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddHeaderAction.header_value = value.into();`.
+    pub fn header_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.header_value = value.into();
+        self
+    }
+    /// Returns a new instance of AddHeaderAction with optional fields set to `None`.
+pub fn new<HeaderNameType: Into<String>, HeaderValueType: Into<String>>(header_name: HeaderNameType, header_value: HeaderValueType) -> AddHeaderAction{
+        AddHeaderAction {
+            header_name: header_name.into(),
+            header_value: header_value.into(),
+            ..Default::default()
+        }
+    }
+}
 struct AddHeaderActionDeserializer;
 impl AddHeaderActionDeserializer {
     #[allow(unused_variables)]
@@ -213,7 +237,26 @@ pub struct Body {
     #[doc="<p>The content of the message, in text format. Use this for text-based email clients, or clients on high-latency networks (such as mobile devices).</p>"]
     pub text: Option<Content>,
 }
-
+impl Body {
+    /// Sets `html`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Body.html = Some(value.into());`.
+    pub fn html<ValueType: Into<Content>>(mut self, value: ValueType) -> Self {
+        self.html = Some(value.into());
+        self
+    }
+    /// Sets `text`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Body.text = Some(value.into());`.
+    pub fn text<ValueType: Into<Content>>(mut self, value: ValueType) -> Self {
+        self.text = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Body with optional fields set to `None`.
+    pub fn new() -> Body {
+        Body { ..Default::default() }
+    }
+}
 
 /// Serialize `Body` contents to a `SignedRequest`.
 struct BodySerializer;
@@ -248,7 +291,56 @@ pub struct BounceAction {
     #[doc="<p>The Amazon Resource Name (ARN) of the Amazon SNS topic to notify when the bounce action is taken. An example of an Amazon SNS topic ARN is <code>arn:aws:sns:us-west-2:123456789012:MyTopic</code>. For more information about Amazon SNS topics, see the <a href=\"http://docs.aws.amazon.com/sns/latest/dg/CreateTopic.html\">Amazon SNS Developer Guide</a>.</p>"]
     pub topic_arn: Option<String>,
 }
-
+impl BounceAction {
+    /// Sets `message`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BounceAction.message = value.into();`.
+    pub fn message<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.message = value.into();
+        self
+    }
+    /// Sets `sender`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BounceAction.sender = value.into();`.
+    pub fn sender<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sender = value.into();
+        self
+    }
+    /// Sets `smtp_reply_code`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BounceAction.smtp_reply_code = value.into();`.
+    pub fn smtp_reply_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.smtp_reply_code = value.into();
+        self
+    }
+    /// Sets `status_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BounceAction.status_code = Some(value.into());`.
+    pub fn status_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status_code = Some(value.into());
+        self
+    }
+    /// Sets `topic_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BounceAction.topic_arn = Some(value.into());`.
+    pub fn topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of BounceAction with optional fields set to `None`.
+    pub fn new<MessageType: Into<String>, SenderType: Into<String>, SmtpReplyCodeType: Into<String>>
+        (message: MessageType,
+         sender: SenderType,
+         smtp_reply_code: SmtpReplyCodeType)
+         -> BounceAction {
+        BounceAction {
+            message: message.into(),
+            sender: sender.into(),
+            smtp_reply_code: smtp_reply_code.into(),
+            ..Default::default()
+        }
+    }
+}
 struct BounceActionDeserializer;
 impl BounceActionDeserializer {
     #[allow(unused_variables)]
@@ -387,7 +479,45 @@ pub struct BouncedRecipientInfo {
     #[doc="<p>Recipient-related DSN fields, most of which would normally be filled in automatically when provided with a <code>BounceType</code>. You must provide either this parameter or <code>BounceType</code>.</p>"]
     pub recipient_dsn_fields: Option<RecipientDsnFields>,
 }
-
+impl BouncedRecipientInfo {
+    /// Sets `bounce_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BouncedRecipientInfo.bounce_type = Some(value.into());`.
+    pub fn bounce_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bounce_type = Some(value.into());
+        self
+    }
+    /// Sets `recipient`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BouncedRecipientInfo.recipient = value.into();`.
+    pub fn recipient<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.recipient = value.into();
+        self
+    }
+    /// Sets `recipient_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BouncedRecipientInfo.recipient_arn = Some(value.into());`.
+    pub fn recipient_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.recipient_arn = Some(value.into());
+        self
+    }
+    /// Sets `recipient_dsn_fields`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BouncedRecipientInfo.recipient_dsn_fields = Some(value.into());`.
+    pub fn recipient_dsn_fields<ValueType: Into<RecipientDsnFields>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.recipient_dsn_fields = Some(value.into());
+        self
+    }
+    /// Returns a new instance of BouncedRecipientInfo with optional fields set to `None`.
+    pub fn new<RecipientType: Into<String>>(recipient: RecipientType) -> BouncedRecipientInfo {
+        BouncedRecipientInfo {
+            recipient: recipient.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `BouncedRecipientInfo` contents to a `SignedRequest`.
 struct BouncedRecipientInfoSerializer;
@@ -448,7 +578,33 @@ pub struct CloneReceiptRuleSetRequest {
     #[doc="<p>The name of the rule set to create. The name must:</p> <ul> <li> <p>Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods (.), underscores (_), or dashes (-).</p> </li> <li> <p>Start and end with a letter or number.</p> </li> <li> <p>Contain less than 64 characters.</p> </li> </ul>"]
     pub rule_set_name: String,
 }
-
+impl CloneReceiptRuleSetRequest {
+    /// Sets `original_rule_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneReceiptRuleSetRequest.original_rule_set_name = value.into();`.
+    pub fn original_rule_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.original_rule_set_name = value.into();
+        self
+    }
+    /// Sets `rule_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneReceiptRuleSetRequest.rule_set_name = value.into();`.
+    pub fn rule_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of CloneReceiptRuleSetRequest with optional fields set to `None`.
+    pub fn new<OriginalRuleSetNameType: Into<String>, RuleSetNameType: Into<String>>
+        (original_rule_set_name: OriginalRuleSetNameType,
+         rule_set_name: RuleSetNameType)
+         -> CloneReceiptRuleSetRequest {
+        CloneReceiptRuleSetRequest {
+            original_rule_set_name: original_rule_set_name.into(),
+            rule_set_name: rule_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CloneReceiptRuleSetRequest` contents to a `SignedRequest`.
 struct CloneReceiptRuleSetRequestSerializer;
@@ -492,7 +648,27 @@ pub struct CloudWatchDestination {
     #[doc="<p>A list of dimensions upon which to categorize your emails when you publish email sending events to Amazon CloudWatch.</p>"]
     pub dimension_configurations: Vec<CloudWatchDimensionConfiguration>,
 }
-
+impl CloudWatchDestination {
+    /// Sets `dimension_configurations`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchDestination.dimension_configurations = value.into();`.
+    pub fn dimension_configurations<ValueType: Into<Vec<CloudWatchDimensionConfiguration>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.dimension_configurations = value.into();
+        self
+    }
+    /// Returns a new instance of CloudWatchDestination with optional fields set to `None`.
+    pub fn new<DimensionConfigurationsType: Into<Vec<CloudWatchDimensionConfiguration>>>
+        (dimension_configurations: DimensionConfigurationsType)
+         -> CloudWatchDestination {
+        CloudWatchDestination {
+            dimension_configurations: dimension_configurations.into(),
+            ..Default::default()
+        }
+    }
+}
 struct CloudWatchDestinationDeserializer;
 impl CloudWatchDestinationDeserializer {
     #[allow(unused_variables)]
@@ -563,7 +739,44 @@ pub struct CloudWatchDimensionConfiguration {
     #[doc="<p>The place where Amazon SES finds the value of a dimension to publish to Amazon CloudWatch. If you want Amazon SES to use the message tags that you specify using an <code>X-SES-MESSAGE-TAGS</code> header or a parameter to the <code>SendEmail</code>/<code>SendRawEmail</code> API, choose <code>messageTag</code>. If you want Amazon SES to use your own email headers, choose <code>emailHeader</code>.</p>"]
     pub dimension_value_source: String,
 }
-
+impl CloudWatchDimensionConfiguration {
+    /// Sets `default_dimension_value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchDimensionConfiguration.default_dimension_value = value.into();`.
+    pub fn default_dimension_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_dimension_value = value.into();
+        self
+    }
+    /// Sets `dimension_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchDimensionConfiguration.dimension_name = value.into();`.
+    pub fn dimension_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.dimension_name = value.into();
+        self
+    }
+    /// Sets `dimension_value_source`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchDimensionConfiguration.dimension_value_source = value.into();`.
+    pub fn dimension_value_source<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.dimension_value_source = value.into();
+        self
+    }
+    /// Returns a new instance of CloudWatchDimensionConfiguration with optional fields set to `None`.
+    pub fn new<DefaultDimensionValueType: Into<String>,
+               DimensionNameType: Into<String>,
+               DimensionValueSourceType: Into<String>>
+        (default_dimension_value: DefaultDimensionValueType,
+         dimension_name: DimensionNameType,
+         dimension_value_source: DimensionValueSourceType)
+         -> CloudWatchDimensionConfiguration {
+        CloudWatchDimensionConfiguration {
+            default_dimension_value: default_dimension_value.into(),
+            dimension_name: dimension_name.into(),
+            dimension_value_source: dimension_value_source.into(),
+            ..Default::default()
+        }
+    }
+}
 struct CloudWatchDimensionConfigurationDeserializer;
 impl CloudWatchDimensionConfigurationDeserializer {
     #[allow(unused_variables)]
@@ -698,7 +911,22 @@ pub struct ConfigurationSet {
     #[doc="<p>The name of the configuration set. The name must:</p> <ul> <li> <p>Contain only ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).</p> </li> <li> <p>Contain less than 64 characters.</p> </li> </ul>"]
     pub name: String,
 }
-
+impl ConfigurationSet {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfigurationSet.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of ConfigurationSet with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> ConfigurationSet {
+        ConfigurationSet {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 struct ConfigurationSetDeserializer;
 impl ConfigurationSetDeserializer {
     #[allow(unused_variables)]
@@ -831,7 +1059,29 @@ pub struct Content {
     #[doc="<p>The textual data of the content.</p>"]
     pub data: String,
 }
-
+impl Content {
+    /// Sets `charset`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Content.charset = Some(value.into());`.
+    pub fn charset<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.charset = Some(value.into());
+        self
+    }
+    /// Sets `data`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Content.data = value.into();`.
+    pub fn data<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data = value.into();
+        self
+    }
+    /// Returns a new instance of Content with optional fields set to `None`.
+    pub fn new<DataType: Into<String>>(data: DataType) -> Content {
+        Content {
+            data: data.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `Content` contents to a `SignedRequest`.
 struct ContentSerializer;
@@ -872,7 +1122,35 @@ pub struct CreateConfigurationSetEventDestinationRequest {
     #[doc="<p>An object that describes the AWS service to which Amazon SES will publish the email sending events associated with the specified configuration set.</p>"]
     pub event_destination: EventDestination,
 }
-
+impl CreateConfigurationSetEventDestinationRequest {
+    /// Sets `configuration_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConfigurationSetEventDestinationRequest.configuration_set_name = value.into();`.
+    pub fn configuration_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.configuration_set_name = value.into();
+        self
+    }
+    /// Sets `event_destination`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConfigurationSetEventDestinationRequest.event_destination = value.into();`.
+    pub fn event_destination<ValueType: Into<EventDestination>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.event_destination = value.into();
+        self
+    }
+    /// Returns a new instance of CreateConfigurationSetEventDestinationRequest with optional fields set to `None`.
+    pub fn new<ConfigurationSetNameType: Into<String>, EventDestinationType: Into<EventDestination>>
+        (configuration_set_name: ConfigurationSetNameType,
+         event_destination: EventDestinationType)
+         -> CreateConfigurationSetEventDestinationRequest {
+        CreateConfigurationSetEventDestinationRequest {
+            configuration_set_name: configuration_set_name.into(),
+            event_destination: event_destination.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateConfigurationSetEventDestinationRequest` contents to a `SignedRequest`.
 struct CreateConfigurationSetEventDestinationRequestSerializer;
@@ -921,7 +1199,24 @@ pub struct CreateConfigurationSetRequest {
     #[doc="<p>A data structure that contains the name of the configuration set.</p>"]
     pub configuration_set: ConfigurationSet,
 }
-
+impl CreateConfigurationSetRequest {
+    /// Sets `configuration_set`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConfigurationSetRequest.configuration_set = value.into();`.
+    pub fn configuration_set<ValueType: Into<ConfigurationSet>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.configuration_set = value.into();
+        self
+    }
+    /// Returns a new instance of CreateConfigurationSetRequest with optional fields set to `None`.
+pub fn new<ConfigurationSetType: Into<ConfigurationSet>>(configuration_set: ConfigurationSetType) -> CreateConfigurationSetRequest{
+        CreateConfigurationSetRequest {
+            configuration_set: configuration_set.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateConfigurationSetRequest` contents to a `SignedRequest`.
 struct CreateConfigurationSetRequestSerializer;
@@ -965,7 +1260,22 @@ pub struct CreateReceiptFilterRequest {
     #[doc="<p>A data structure that describes the IP address filter to create, which consists of a name, an IP address range, and whether to allow or block mail from it.</p>"]
     pub filter: ReceiptFilter,
 }
-
+impl CreateReceiptFilterRequest {
+    /// Sets `filter`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReceiptFilterRequest.filter = value.into();`.
+    pub fn filter<ValueType: Into<ReceiptFilter>>(mut self, value: ValueType) -> Self {
+        self.filter = value.into();
+        self
+    }
+    /// Returns a new instance of CreateReceiptFilterRequest with optional fields set to `None`.
+    pub fn new<FilterType: Into<ReceiptFilter>>(filter: FilterType) -> CreateReceiptFilterRequest {
+        CreateReceiptFilterRequest {
+            filter: filter.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateReceiptFilterRequest` contents to a `SignedRequest`.
 struct CreateReceiptFilterRequestSerializer;
@@ -1011,7 +1321,40 @@ pub struct CreateReceiptRuleRequest {
     #[doc="<p>The name of the rule set to which to add the rule.</p>"]
     pub rule_set_name: String,
 }
-
+impl CreateReceiptRuleRequest {
+    /// Sets `after`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReceiptRuleRequest.after = Some(value.into());`.
+    pub fn after<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.after = Some(value.into());
+        self
+    }
+    /// Sets `rule`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReceiptRuleRequest.rule = value.into();`.
+    pub fn rule<ValueType: Into<ReceiptRule>>(mut self, value: ValueType) -> Self {
+        self.rule = value.into();
+        self
+    }
+    /// Sets `rule_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReceiptRuleRequest.rule_set_name = value.into();`.
+    pub fn rule_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateReceiptRuleRequest with optional fields set to `None`.
+    pub fn new<RuleType: Into<ReceiptRule>, RuleSetNameType: Into<String>>
+        (rule: RuleType,
+         rule_set_name: RuleSetNameType)
+         -> CreateReceiptRuleRequest {
+        CreateReceiptRuleRequest {
+            rule: rule.into(),
+            rule_set_name: rule_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateReceiptRuleRequest` contents to a `SignedRequest`.
 struct CreateReceiptRuleRequestSerializer;
@@ -1057,7 +1400,23 @@ pub struct CreateReceiptRuleSetRequest {
     #[doc="<p>The name of the rule set to create. The name must:</p> <ul> <li> <p>Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods (.), underscores (_), or dashes (-).</p> </li> <li> <p>Start and end with a letter or number.</p> </li> <li> <p>Contain less than 64 characters.</p> </li> </ul>"]
     pub rule_set_name: String,
 }
-
+impl CreateReceiptRuleSetRequest {
+    /// Sets `rule_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReceiptRuleSetRequest.rule_set_name = value.into();`.
+    pub fn rule_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateReceiptRuleSetRequest with optional fields set to `None`.
+    pub fn new<RuleSetNameType: Into<String>>(rule_set_name: RuleSetNameType)
+                                              -> CreateReceiptRuleSetRequest {
+        CreateReceiptRuleSetRequest {
+            rule_set_name: rule_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateReceiptRuleSetRequest` contents to a `SignedRequest`.
 struct CreateReceiptRuleSetRequestSerializer;
@@ -1129,7 +1488,33 @@ pub struct DeleteConfigurationSetEventDestinationRequest {
     #[doc="<p>The name of the event destination to delete.</p>"]
     pub event_destination_name: String,
 }
-
+impl DeleteConfigurationSetEventDestinationRequest {
+    /// Sets `configuration_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteConfigurationSetEventDestinationRequest.configuration_set_name = value.into();`.
+    pub fn configuration_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.configuration_set_name = value.into();
+        self
+    }
+    /// Sets `event_destination_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteConfigurationSetEventDestinationRequest.event_destination_name = value.into();`.
+    pub fn event_destination_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.event_destination_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteConfigurationSetEventDestinationRequest with optional fields set to `None`.
+    pub fn new<ConfigurationSetNameType: Into<String>, EventDestinationNameType: Into<String>>
+        (configuration_set_name: ConfigurationSetNameType,
+         event_destination_name: EventDestinationNameType)
+         -> DeleteConfigurationSetEventDestinationRequest {
+        DeleteConfigurationSetEventDestinationRequest {
+            configuration_set_name: configuration_set_name.into(),
+            event_destination_name: event_destination_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteConfigurationSetEventDestinationRequest` contents to a `SignedRequest`.
 struct DeleteConfigurationSetEventDestinationRequestSerializer;
@@ -1177,7 +1562,22 @@ pub struct DeleteConfigurationSetRequest {
     #[doc="<p>The name of the configuration set to delete.</p>"]
     pub configuration_set_name: String,
 }
-
+impl DeleteConfigurationSetRequest {
+    /// Sets `configuration_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteConfigurationSetRequest.configuration_set_name = value.into();`.
+    pub fn configuration_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.configuration_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteConfigurationSetRequest with optional fields set to `None`.
+pub fn new<ConfigurationSetNameType: Into<String>>(configuration_set_name: ConfigurationSetNameType) -> DeleteConfigurationSetRequest{
+        DeleteConfigurationSetRequest {
+            configuration_set_name: configuration_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteConfigurationSetRequest` contents to a `SignedRequest`.
 struct DeleteConfigurationSetRequestSerializer;
@@ -1222,7 +1622,33 @@ pub struct DeleteIdentityPolicyRequest {
     #[doc="<p>The name of the policy to be deleted.</p>"]
     pub policy_name: String,
 }
-
+impl DeleteIdentityPolicyRequest {
+    /// Sets `identity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteIdentityPolicyRequest.identity = value.into();`.
+    pub fn identity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity = value.into();
+        self
+    }
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteIdentityPolicyRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteIdentityPolicyRequest with optional fields set to `None`.
+    pub fn new<IdentityType: Into<String>, PolicyNameType: Into<String>>
+        (identity: IdentityType,
+         policy_name: PolicyNameType)
+         -> DeleteIdentityPolicyRequest {
+        DeleteIdentityPolicyRequest {
+            identity: identity.into(),
+            policy_name: policy_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteIdentityPolicyRequest` contents to a `SignedRequest`.
 struct DeleteIdentityPolicyRequestSerializer;
@@ -1265,7 +1691,22 @@ pub struct DeleteIdentityRequest {
     #[doc="<p>The identity to be removed from the list of identities for the AWS Account.</p>"]
     pub identity: String,
 }
-
+impl DeleteIdentityRequest {
+    /// Sets `identity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteIdentityRequest.identity = value.into();`.
+    pub fn identity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteIdentityRequest with optional fields set to `None`.
+    pub fn new<IdentityType: Into<String>>(identity: IdentityType) -> DeleteIdentityRequest {
+        DeleteIdentityRequest {
+            identity: identity.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteIdentityRequest` contents to a `SignedRequest`.
 struct DeleteIdentityRequestSerializer;
@@ -1307,7 +1748,23 @@ pub struct DeleteReceiptFilterRequest {
     #[doc="<p>The name of the IP address filter to delete.</p>"]
     pub filter_name: String,
 }
-
+impl DeleteReceiptFilterRequest {
+    /// Sets `filter_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteReceiptFilterRequest.filter_name = value.into();`.
+    pub fn filter_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteReceiptFilterRequest with optional fields set to `None`.
+    pub fn new<FilterNameType: Into<String>>(filter_name: FilterNameType)
+                                             -> DeleteReceiptFilterRequest {
+        DeleteReceiptFilterRequest {
+            filter_name: filter_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteReceiptFilterRequest` contents to a `SignedRequest`.
 struct DeleteReceiptFilterRequestSerializer;
@@ -1351,7 +1808,33 @@ pub struct DeleteReceiptRuleRequest {
     #[doc="<p>The name of the receipt rule set that contains the receipt rule to delete.</p>"]
     pub rule_set_name: String,
 }
-
+impl DeleteReceiptRuleRequest {
+    /// Sets `rule_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteReceiptRuleRequest.rule_name = value.into();`.
+    pub fn rule_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_name = value.into();
+        self
+    }
+    /// Sets `rule_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteReceiptRuleRequest.rule_set_name = value.into();`.
+    pub fn rule_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteReceiptRuleRequest with optional fields set to `None`.
+    pub fn new<RuleNameType: Into<String>, RuleSetNameType: Into<String>>
+        (rule_name: RuleNameType,
+         rule_set_name: RuleSetNameType)
+         -> DeleteReceiptRuleRequest {
+        DeleteReceiptRuleRequest {
+            rule_name: rule_name.into(),
+            rule_set_name: rule_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteReceiptRuleRequest` contents to a `SignedRequest`.
 struct DeleteReceiptRuleRequestSerializer;
@@ -1394,7 +1877,23 @@ pub struct DeleteReceiptRuleSetRequest {
     #[doc="<p>The name of the receipt rule set to delete.</p>"]
     pub rule_set_name: String,
 }
-
+impl DeleteReceiptRuleSetRequest {
+    /// Sets `rule_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteReceiptRuleSetRequest.rule_set_name = value.into();`.
+    pub fn rule_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteReceiptRuleSetRequest with optional fields set to `None`.
+    pub fn new<RuleSetNameType: Into<String>>(rule_set_name: RuleSetNameType)
+                                              -> DeleteReceiptRuleSetRequest {
+        DeleteReceiptRuleSetRequest {
+            rule_set_name: rule_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteReceiptRuleSetRequest` contents to a `SignedRequest`.
 struct DeleteReceiptRuleSetRequestSerializer;
@@ -1436,7 +1935,23 @@ pub struct DeleteVerifiedEmailAddressRequest {
     #[doc="<p>An email address to be removed from the list of verified addresses.</p>"]
     pub email_address: String,
 }
-
+impl DeleteVerifiedEmailAddressRequest {
+    /// Sets `email_address`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVerifiedEmailAddressRequest.email_address = value.into();`.
+    pub fn email_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.email_address = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteVerifiedEmailAddressRequest with optional fields set to `None`.
+    pub fn new<EmailAddressType: Into<String>>(email_address: EmailAddressType)
+                                               -> DeleteVerifiedEmailAddressRequest {
+        DeleteVerifiedEmailAddressRequest {
+            email_address: email_address.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteVerifiedEmailAddressRequest` contents to a `SignedRequest`.
 struct DeleteVerifiedEmailAddressRequestSerializer;
@@ -1479,7 +1994,6 @@ pub struct DescribeActiveReceiptRuleSetResponse {
     #[doc="<p>The receipt rules that belong to the active rule set.</p>"]
     pub rules: Option<Vec<ReceiptRule>>,
 }
-
 struct DescribeActiveReceiptRuleSetResponseDeserializer;
 impl DescribeActiveReceiptRuleSetResponseDeserializer {
     #[allow(unused_variables)]
@@ -1537,7 +2051,31 @@ pub struct DescribeConfigurationSetRequest {
     #[doc="<p>The name of the configuration set to describe.</p>"]
     pub configuration_set_name: String,
 }
-
+impl DescribeConfigurationSetRequest {
+    /// Sets `configuration_set_attribute_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConfigurationSetRequest.configuration_set_attribute_names = Some(value.into());`.
+    pub fn configuration_set_attribute_names<ValueType: Into<Vec<String>>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.configuration_set_attribute_names = Some(value.into());
+        self
+    }
+    /// Sets `configuration_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConfigurationSetRequest.configuration_set_name = value.into();`.
+    pub fn configuration_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.configuration_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeConfigurationSetRequest with optional fields set to `None`.
+pub fn new<ConfigurationSetNameType: Into<String>>(configuration_set_name: ConfigurationSetNameType) -> DescribeConfigurationSetRequest{
+        DescribeConfigurationSetRequest {
+            configuration_set_name: configuration_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeConfigurationSetRequest` contents to a `SignedRequest`.
 struct DescribeConfigurationSetRequestSerializer;
@@ -1569,7 +2107,6 @@ pub struct DescribeConfigurationSetResponse {
     #[doc="<p>A list of event destinations associated with the configuration set. </p>"]
     pub event_destinations: Option<Vec<EventDestination>>,
 }
-
 struct DescribeConfigurationSetResponseDeserializer;
 impl DescribeConfigurationSetResponseDeserializer {
     #[allow(unused_variables)]
@@ -1627,7 +2164,33 @@ pub struct DescribeReceiptRuleRequest {
     #[doc="<p>The name of the receipt rule set to which the receipt rule belongs.</p>"]
     pub rule_set_name: String,
 }
-
+impl DescribeReceiptRuleRequest {
+    /// Sets `rule_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReceiptRuleRequest.rule_name = value.into();`.
+    pub fn rule_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_name = value.into();
+        self
+    }
+    /// Sets `rule_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReceiptRuleRequest.rule_set_name = value.into();`.
+    pub fn rule_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeReceiptRuleRequest with optional fields set to `None`.
+    pub fn new<RuleNameType: Into<String>, RuleSetNameType: Into<String>>
+        (rule_name: RuleNameType,
+         rule_set_name: RuleSetNameType)
+         -> DescribeReceiptRuleRequest {
+        DescribeReceiptRuleRequest {
+            rule_name: rule_name.into(),
+            rule_set_name: rule_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeReceiptRuleRequest` contents to a `SignedRequest`.
 struct DescribeReceiptRuleRequestSerializer;
@@ -1650,7 +2213,6 @@ pub struct DescribeReceiptRuleResponse {
     #[doc="<p>A data structure that contains the specified receipt rule's name, actions, recipients, domains, enabled status, scan status, and Transport Layer Security (TLS) policy.</p>"]
     pub rule: Option<ReceiptRule>,
 }
-
 struct DescribeReceiptRuleResponseDeserializer;
 impl DescribeReceiptRuleResponseDeserializer {
     #[allow(unused_variables)]
@@ -1699,7 +2261,23 @@ pub struct DescribeReceiptRuleSetRequest {
     #[doc="<p>The name of the receipt rule set to describe.</p>"]
     pub rule_set_name: String,
 }
-
+impl DescribeReceiptRuleSetRequest {
+    /// Sets `rule_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReceiptRuleSetRequest.rule_set_name = value.into();`.
+    pub fn rule_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeReceiptRuleSetRequest with optional fields set to `None`.
+    pub fn new<RuleSetNameType: Into<String>>(rule_set_name: RuleSetNameType)
+                                              -> DescribeReceiptRuleSetRequest {
+        DescribeReceiptRuleSetRequest {
+            rule_set_name: rule_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeReceiptRuleSetRequest` contents to a `SignedRequest`.
 struct DescribeReceiptRuleSetRequestSerializer;
@@ -1723,7 +2301,6 @@ pub struct DescribeReceiptRuleSetResponse {
     #[doc="<p>A list of the receipt rules that belong to the specified receipt rule set.</p>"]
     pub rules: Option<Vec<ReceiptRule>>,
 }
-
 struct DescribeReceiptRuleSetResponseDeserializer;
 impl DescribeReceiptRuleSetResponseDeserializer {
     #[allow(unused_variables)]
@@ -1782,7 +2359,33 @@ pub struct Destination {
     #[doc="<p>The To: field(s) of the message.</p>"]
     pub to_addresses: Option<Vec<String>>,
 }
-
+impl Destination {
+    /// Sets `bcc_addresses`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Destination.bcc_addresses = Some(value.into());`.
+    pub fn bcc_addresses<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.bcc_addresses = Some(value.into());
+        self
+    }
+    /// Sets `cc_addresses`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Destination.cc_addresses = Some(value.into());`.
+    pub fn cc_addresses<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.cc_addresses = Some(value.into());
+        self
+    }
+    /// Sets `to_addresses`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Destination.to_addresses = Some(value.into());`.
+    pub fn to_addresses<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.to_addresses = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Destination with optional fields set to `None`.
+    pub fn new() -> Destination {
+        Destination { ..Default::default() }
+    }
+}
 
 /// Serialize `Destination` contents to a `SignedRequest`.
 struct DestinationSerializer;
@@ -1894,7 +2497,63 @@ pub struct EventDestination {
     #[doc="<p>An object that contains the topic ARN associated with an Amazon Simple Notification Service (Amazon SNS) event destination.</p>"]
     pub sns_destination: Option<SNSDestination>,
 }
-
+impl EventDestination {
+    /// Sets `cloud_watch_destination`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventDestination.cloud_watch_destination = Some(value.into());`.
+    pub fn cloud_watch_destination<ValueType: Into<CloudWatchDestination>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.cloud_watch_destination = Some(value.into());
+        self
+    }
+    /// Sets `enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventDestination.enabled = Some(value.into());`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = Some(value.into());
+        self
+    }
+    /// Sets `kinesis_firehose_destination`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventDestination.kinesis_firehose_destination = Some(value.into());`.
+pub fn kinesis_firehose_destination<ValueType: Into<KinesisFirehoseDestination>>(mut self, value: ValueType) -> Self{
+        self.kinesis_firehose_destination = Some(value.into());
+        self
+    }
+    /// Sets `matching_event_types`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventDestination.matching_event_types = value.into();`.
+    pub fn matching_event_types<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.matching_event_types = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventDestination.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `sns_destination`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventDestination.sns_destination = Some(value.into());`.
+    pub fn sns_destination<ValueType: Into<SNSDestination>>(mut self, value: ValueType) -> Self {
+        self.sns_destination = Some(value.into());
+        self
+    }
+    /// Returns a new instance of EventDestination with optional fields set to `None`.
+    pub fn new<MatchingEventTypesType: Into<Vec<String>>, NameType: Into<String>>
+        (matching_event_types: MatchingEventTypesType,
+         name: NameType)
+         -> EventDestination {
+        EventDestination {
+            matching_event_types: matching_event_types.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 struct EventDestinationDeserializer;
 impl EventDestinationDeserializer {
     #[allow(unused_variables)]
@@ -2130,7 +2789,32 @@ pub struct ExtensionField {
     #[doc="<p>The value of the header to add. Must be less than 2048 characters, and must not contain newline characters (\"\\r\" or \"\\n\").</p>"]
     pub value: String,
 }
-
+impl ExtensionField {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtensionField.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtensionField.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of ExtensionField with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, ValueType: Into<String>>(name: NameType,
+                                                                value: ValueType)
+                                                                -> ExtensionField {
+        ExtensionField {
+            name: name.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ExtensionField` contents to a `SignedRequest`.
 struct ExtensionFieldSerializer;
@@ -2165,7 +2849,23 @@ pub struct GetIdentityDkimAttributesRequest {
     #[doc="<p>A list of one or more verified identities - email addresses, domains, or both.</p>"]
     pub identities: Vec<String>,
 }
-
+impl GetIdentityDkimAttributesRequest {
+    /// Sets `identities`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetIdentityDkimAttributesRequest.identities = value.into();`.
+    pub fn identities<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.identities = value.into();
+        self
+    }
+    /// Returns a new instance of GetIdentityDkimAttributesRequest with optional fields set to `None`.
+    pub fn new<IdentitiesType: Into<Vec<String>>>(identities: IdentitiesType)
+                                                  -> GetIdentityDkimAttributesRequest {
+        GetIdentityDkimAttributesRequest {
+            identities: identities.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetIdentityDkimAttributesRequest` contents to a `SignedRequest`.
 struct GetIdentityDkimAttributesRequestSerializer;
@@ -2189,7 +2889,6 @@ pub struct GetIdentityDkimAttributesResponse {
     #[doc="<p>The DKIM attributes for an email address or a domain.</p>"]
     pub dkim_attributes: ::std::collections::HashMap<String, IdentityDkimAttributes>,
 }
-
 struct GetIdentityDkimAttributesResponseDeserializer;
 impl GetIdentityDkimAttributesResponseDeserializer {
     #[allow(unused_variables)]
@@ -2240,7 +2939,23 @@ pub struct GetIdentityMailFromDomainAttributesRequest {
     #[doc="<p>A list of one or more identities.</p>"]
     pub identities: Vec<String>,
 }
-
+impl GetIdentityMailFromDomainAttributesRequest {
+    /// Sets `identities`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetIdentityMailFromDomainAttributesRequest.identities = value.into();`.
+    pub fn identities<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.identities = value.into();
+        self
+    }
+    /// Returns a new instance of GetIdentityMailFromDomainAttributesRequest with optional fields set to `None`.
+    pub fn new<IdentitiesType: Into<Vec<String>>>(identities: IdentitiesType)
+                                                  -> GetIdentityMailFromDomainAttributesRequest {
+        GetIdentityMailFromDomainAttributesRequest {
+            identities: identities.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetIdentityMailFromDomainAttributesRequest` contents to a `SignedRequest`.
 struct GetIdentityMailFromDomainAttributesRequestSerializer;
@@ -2267,7 +2982,6 @@ pub struct GetIdentityMailFromDomainAttributesResponse {
     pub mail_from_domain_attributes:
         ::std::collections::HashMap<String, IdentityMailFromDomainAttributes>,
 }
-
 struct GetIdentityMailFromDomainAttributesResponseDeserializer;
 impl GetIdentityMailFromDomainAttributesResponseDeserializer {
     #[allow(unused_variables)]
@@ -2318,7 +3032,23 @@ pub struct GetIdentityNotificationAttributesRequest {
     #[doc="<p>A list of one or more identities. You can specify an identity by using its name or by using its Amazon Resource Name (ARN). Examples: <code>user@example.com</code>, <code>example.com</code>, <code>arn:aws:ses:us-east-1:123456789012:identity/example.com</code>.</p>"]
     pub identities: Vec<String>,
 }
-
+impl GetIdentityNotificationAttributesRequest {
+    /// Sets `identities`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetIdentityNotificationAttributesRequest.identities = value.into();`.
+    pub fn identities<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.identities = value.into();
+        self
+    }
+    /// Returns a new instance of GetIdentityNotificationAttributesRequest with optional fields set to `None`.
+    pub fn new<IdentitiesType: Into<Vec<String>>>(identities: IdentitiesType)
+                                                  -> GetIdentityNotificationAttributesRequest {
+        GetIdentityNotificationAttributesRequest {
+            identities: identities.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetIdentityNotificationAttributesRequest` contents to a `SignedRequest`.
 struct GetIdentityNotificationAttributesRequestSerializer;
@@ -2343,7 +3073,6 @@ pub struct GetIdentityNotificationAttributesResponse {
     pub notification_attributes:
         ::std::collections::HashMap<String, IdentityNotificationAttributes>,
 }
-
 struct GetIdentityNotificationAttributesResponseDeserializer;
 impl GetIdentityNotificationAttributesResponseDeserializer {
     #[allow(unused_variables)]
@@ -2396,7 +3125,33 @@ pub struct GetIdentityPoliciesRequest {
     #[doc="<p>A list of the names of policies to be retrieved. You can retrieve a maximum of 20 policies at a time. If you do not know the names of the policies that are attached to the identity, you can use <code>ListIdentityPolicies</code>.</p>"]
     pub policy_names: Vec<String>,
 }
-
+impl GetIdentityPoliciesRequest {
+    /// Sets `identity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetIdentityPoliciesRequest.identity = value.into();`.
+    pub fn identity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity = value.into();
+        self
+    }
+    /// Sets `policy_names`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetIdentityPoliciesRequest.policy_names = value.into();`.
+    pub fn policy_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.policy_names = value.into();
+        self
+    }
+    /// Returns a new instance of GetIdentityPoliciesRequest with optional fields set to `None`.
+    pub fn new<IdentityType: Into<String>, PolicyNamesType: Into<Vec<String>>>
+        (identity: IdentityType,
+         policy_names: PolicyNamesType)
+         -> GetIdentityPoliciesRequest {
+        GetIdentityPoliciesRequest {
+            identity: identity.into(),
+            policy_names: policy_names.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetIdentityPoliciesRequest` contents to a `SignedRequest`.
 struct GetIdentityPoliciesRequestSerializer;
@@ -2421,7 +3176,6 @@ pub struct GetIdentityPoliciesResponse {
     #[doc="<p>A map of policy names to policies.</p>"]
     pub policies: ::std::collections::HashMap<String, String>,
 }
-
 struct GetIdentityPoliciesResponseDeserializer;
 impl GetIdentityPoliciesResponseDeserializer {
     #[allow(unused_variables)]
@@ -2470,7 +3224,23 @@ pub struct GetIdentityVerificationAttributesRequest {
     #[doc="<p>A list of identities.</p>"]
     pub identities: Vec<String>,
 }
-
+impl GetIdentityVerificationAttributesRequest {
+    /// Sets `identities`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetIdentityVerificationAttributesRequest.identities = value.into();`.
+    pub fn identities<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.identities = value.into();
+        self
+    }
+    /// Returns a new instance of GetIdentityVerificationAttributesRequest with optional fields set to `None`.
+    pub fn new<IdentitiesType: Into<Vec<String>>>(identities: IdentitiesType)
+                                                  -> GetIdentityVerificationAttributesRequest {
+        GetIdentityVerificationAttributesRequest {
+            identities: identities.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetIdentityVerificationAttributesRequest` contents to a `SignedRequest`.
 struct GetIdentityVerificationAttributesRequestSerializer;
@@ -2495,7 +3265,6 @@ pub struct GetIdentityVerificationAttributesResponse {
     pub verification_attributes:
         ::std::collections::HashMap<String, IdentityVerificationAttributes>,
 }
-
 struct GetIdentityVerificationAttributesResponseDeserializer;
 impl GetIdentityVerificationAttributesResponseDeserializer {
     #[allow(unused_variables)]
@@ -2550,7 +3319,6 @@ pub struct GetSendQuotaResponse {
     #[doc="<p>The number of emails sent during the previous 24 hours.</p>"]
     pub sent_last_24_hours: Option<f64>,
 }
-
 struct GetSendQuotaResponseDeserializer;
 impl GetSendQuotaResponseDeserializer {
     #[allow(unused_variables)]
@@ -2610,7 +3378,6 @@ pub struct GetSendStatisticsResponse {
     #[doc="<p>A list of data points, each of which represents 15 minutes of activity.</p>"]
     pub send_data_points: Option<Vec<SendDataPoint>>,
 }
-
 struct GetSendStatisticsResponseDeserializer;
 impl GetSendStatisticsResponseDeserializer {
     #[allow(unused_variables)]
@@ -2706,7 +3473,6 @@ pub struct IdentityDkimAttributes {
     #[doc="<p>Describes whether Amazon SES has successfully verified the DKIM DNS records (tokens) published in the domain name's DNS. (This only applies to domain identities, not email address identities.)</p>"]
     pub dkim_verification_status: String,
 }
-
 struct IdentityDkimAttributesDeserializer;
 impl IdentityDkimAttributesDeserializer {
     #[allow(unused_variables)]
@@ -2822,7 +3588,6 @@ pub struct IdentityMailFromDomainAttributes {
     #[doc="<p>The state that indicates whether Amazon SES has successfully read the MX record required for custom MAIL FROM domain setup. If the state is <code>Success</code>, Amazon SES uses the specified custom MAIL FROM domain when the verified identity sends an email. All other states indicate that Amazon SES takes the action described by <code>BehaviorOnMXFailure</code>.</p>"]
     pub mail_from_domain_status: String,
 }
-
 struct IdentityMailFromDomainAttributesDeserializer;
 impl IdentityMailFromDomainAttributesDeserializer {
     #[allow(unused_variables)]
@@ -2895,7 +3660,6 @@ pub struct IdentityNotificationAttributes {
     #[doc="<p>Describes whether Amazon SES includes the original email headers in Amazon SNS notifications of type <code>Delivery</code>. A value of <code>true</code> specifies that Amazon SES will include headers in delivery notifications, and a value of <code>false</code> specifies that Amazon SES will not include headers in delivery notifications.</p>"]
     pub headers_in_delivery_notifications_enabled: Option<bool>,
 }
-
 struct IdentityNotificationAttributesDeserializer;
 impl IdentityNotificationAttributesDeserializer {
     #[allow(unused_variables)]
@@ -2976,7 +3740,6 @@ pub struct IdentityVerificationAttributes {
     #[doc="<p>The verification token for a domain identity. Null for email address identities.</p>"]
     pub verification_token: Option<String>,
 }
-
 struct IdentityVerificationAttributesDeserializer;
 impl IdentityVerificationAttributesDeserializer {
     #[allow(unused_variables)]
@@ -3047,7 +3810,33 @@ pub struct KinesisFirehoseDestination {
     #[doc="<p>The ARN of the IAM role under which Amazon SES publishes email sending events to the Amazon Kinesis Firehose stream.</p>"]
     pub iam_role_arn: String,
 }
-
+impl KinesisFirehoseDestination {
+    /// Sets `delivery_stream_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisFirehoseDestination.delivery_stream_arn = value.into();`.
+    pub fn delivery_stream_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.delivery_stream_arn = value.into();
+        self
+    }
+    /// Sets `iam_role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisFirehoseDestination.iam_role_arn = value.into();`.
+    pub fn iam_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.iam_role_arn = value.into();
+        self
+    }
+    /// Returns a new instance of KinesisFirehoseDestination with optional fields set to `None`.
+    pub fn new<DeliveryStreamARNType: Into<String>, IAMRoleARNType: Into<String>>
+        (delivery_stream_arn: DeliveryStreamARNType,
+         iam_role_arn: IAMRoleARNType)
+         -> KinesisFirehoseDestination {
+        KinesisFirehoseDestination {
+            delivery_stream_arn: delivery_stream_arn.into(),
+            iam_role_arn: iam_role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 struct KinesisFirehoseDestinationDeserializer;
 impl KinesisFirehoseDestinationDeserializer {
     #[allow(unused_variables)]
@@ -3123,7 +3912,36 @@ pub struct LambdaAction {
     #[doc="<p>The Amazon Resource Name (ARN) of the Amazon SNS topic to notify when the Lambda action is taken. An example of an Amazon SNS topic ARN is <code>arn:aws:sns:us-west-2:123456789012:MyTopic</code>. For more information about Amazon SNS topics, see the <a href=\"http://docs.aws.amazon.com/sns/latest/dg/CreateTopic.html\">Amazon SNS Developer Guide</a>.</p>"]
     pub topic_arn: Option<String>,
 }
-
+impl LambdaAction {
+    /// Sets `function_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LambdaAction.function_arn = value.into();`.
+    pub fn function_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_arn = value.into();
+        self
+    }
+    /// Sets `invocation_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LambdaAction.invocation_type = Some(value.into());`.
+    pub fn invocation_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.invocation_type = Some(value.into());
+        self
+    }
+    /// Sets `topic_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LambdaAction.topic_arn = Some(value.into());`.
+    pub fn topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of LambdaAction with optional fields set to `None`.
+    pub fn new<FunctionArnType: Into<String>>(function_arn: FunctionArnType) -> LambdaAction {
+        LambdaAction {
+            function_arn: function_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 struct LambdaActionDeserializer;
 impl LambdaActionDeserializer {
     #[allow(unused_variables)]
@@ -3206,7 +4024,26 @@ pub struct ListConfigurationSetsRequest {
     #[doc="<p>A token returned from a previous call to <code>ListConfigurationSets</code> to indicate the position of the configuration set in the configuration set list.</p>"]
     pub next_token: Option<String>,
 }
-
+impl ListConfigurationSetsRequest {
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListConfigurationSetsRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListConfigurationSetsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListConfigurationSetsRequest with optional fields set to `None`.
+    pub fn new() -> ListConfigurationSetsRequest {
+        ListConfigurationSetsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ListConfigurationSetsRequest` contents to a `SignedRequest`.
 struct ListConfigurationSetsRequestSerializer;
@@ -3236,7 +4073,6 @@ pub struct ListConfigurationSetsResponse {
     #[doc="<p>A token indicating that there are additional configuration sets available to be listed. Pass this token to successive calls of <code>ListConfigurationSets</code>. </p>"]
     pub next_token: Option<String>,
 }
-
 struct ListConfigurationSetsResponseDeserializer;
 impl ListConfigurationSetsResponseDeserializer {
     #[allow(unused_variables)]
@@ -3294,7 +4130,33 @@ pub struct ListIdentitiesRequest {
     #[doc="<p>The token to use for pagination.</p>"]
     pub next_token: Option<String>,
 }
-
+impl ListIdentitiesRequest {
+    /// Sets `identity_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListIdentitiesRequest.identity_type = Some(value.into());`.
+    pub fn identity_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity_type = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListIdentitiesRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListIdentitiesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListIdentitiesRequest with optional fields set to `None`.
+    pub fn new() -> ListIdentitiesRequest {
+        ListIdentitiesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ListIdentitiesRequest` contents to a `SignedRequest`.
 struct ListIdentitiesRequestSerializer;
@@ -3327,7 +4189,6 @@ pub struct ListIdentitiesResponse {
     #[doc="<p>The token used for pagination.</p>"]
     pub next_token: Option<String>,
 }
-
 struct ListIdentitiesResponseDeserializer;
 impl ListIdentitiesResponseDeserializer {
     #[allow(unused_variables)]
@@ -3380,7 +4241,22 @@ pub struct ListIdentityPoliciesRequest {
     #[doc="<p>The identity that is associated with the policy for which the policies will be listed. You can specify an identity by using its name or by using its Amazon Resource Name (ARN). Examples: <code>user@example.com</code>, <code>example.com</code>, <code>arn:aws:ses:us-east-1:123456789012:identity/example.com</code>.</p> <p>To successfully call this API, you must own the identity.</p>"]
     pub identity: String,
 }
-
+impl ListIdentityPoliciesRequest {
+    /// Sets `identity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListIdentityPoliciesRequest.identity = value.into();`.
+    pub fn identity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity = value.into();
+        self
+    }
+    /// Returns a new instance of ListIdentityPoliciesRequest with optional fields set to `None`.
+    pub fn new<IdentityType: Into<String>>(identity: IdentityType) -> ListIdentityPoliciesRequest {
+        ListIdentityPoliciesRequest {
+            identity: identity.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ListIdentityPoliciesRequest` contents to a `SignedRequest`.
 struct ListIdentityPoliciesRequestSerializer;
@@ -3402,7 +4278,6 @@ pub struct ListIdentityPoliciesResponse {
     #[doc="<p>A list of names of policies that apply to the specified identity.</p>"]
     pub policy_names: Vec<String>,
 }
-
 struct ListIdentityPoliciesResponseDeserializer;
 impl ListIdentityPoliciesResponseDeserializer {
     #[allow(unused_variables)]
@@ -3470,7 +4345,6 @@ pub struct ListReceiptFiltersResponse {
     #[doc="<p>A list of IP address filter data structures, which each consist of a name, an IP address range, and whether to allow or block mail from it.</p>"]
     pub filters: Option<Vec<ReceiptFilter>>,
 }
-
 struct ListReceiptFiltersResponseDeserializer;
 impl ListReceiptFiltersResponseDeserializer {
     #[allow(unused_variables)]
@@ -3520,7 +4394,19 @@ pub struct ListReceiptRuleSetsRequest {
     #[doc="<p>A token returned from a previous call to <code>ListReceiptRuleSets</code> to indicate the position in the receipt rule set list.</p>"]
     pub next_token: Option<String>,
 }
-
+impl ListReceiptRuleSetsRequest {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListReceiptRuleSetsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListReceiptRuleSetsRequest with optional fields set to `None`.
+    pub fn new() -> ListReceiptRuleSetsRequest {
+        ListReceiptRuleSetsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ListReceiptRuleSetsRequest` contents to a `SignedRequest`.
 struct ListReceiptRuleSetsRequestSerializer;
@@ -3546,7 +4432,6 @@ pub struct ListReceiptRuleSetsResponse {
     #[doc="<p>The metadata for the currently active receipt rule set. The metadata consists of the rule set name and the timestamp of when the rule set was created.</p>"]
     pub rule_sets: Option<Vec<ReceiptRuleSetMetadata>>,
 }
-
 struct ListReceiptRuleSetsResponseDeserializer;
 impl ListReceiptRuleSetsResponseDeserializer {
     #[allow(unused_variables)]
@@ -3600,7 +4485,6 @@ pub struct ListVerifiedEmailAddressesResponse {
     #[doc="<p>A list of email addresses that have been verified.</p>"]
     pub verified_email_addresses: Option<Vec<String>>,
 }
-
 struct ListVerifiedEmailAddressesResponseDeserializer;
 impl ListVerifiedEmailAddressesResponseDeserializer {
     #[allow(unused_variables)]
@@ -3721,7 +4605,32 @@ pub struct Message {
     #[doc="<p>The subject of the message: A short summary of the content, which will appear in the recipient's inbox.</p>"]
     pub subject: Content,
 }
-
+impl Message {
+    /// Sets `body`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Message.body = value.into();`.
+    pub fn body<ValueType: Into<Body>>(mut self, value: ValueType) -> Self {
+        self.body = value.into();
+        self
+    }
+    /// Sets `subject`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Message.subject = value.into();`.
+    pub fn subject<ValueType: Into<Content>>(mut self, value: ValueType) -> Self {
+        self.subject = value.into();
+        self
+    }
+    /// Returns a new instance of Message with optional fields set to `None`.
+    pub fn new<BodyType: Into<Body>, SubjectType: Into<Content>>(body: BodyType,
+                                                                 subject: SubjectType)
+                                                                 -> Message {
+        Message {
+            body: body.into(),
+            subject: subject.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `Message` contents to a `SignedRequest`.
 struct MessageSerializer;
@@ -3748,7 +4657,38 @@ pub struct MessageDsn {
     #[doc="<p>The reporting MTA that attempted to deliver the message, formatted as specified in <a href=\"https://tools.ietf.org/html/rfc3464\">RFC 3464</a> (<code>mta-name-type; mta-name</code>). The default value is <code>dns; inbound-smtp.[region].amazonaws.com</code>.</p>"]
     pub reporting_mta: String,
 }
-
+impl MessageDsn {
+    /// Sets `arrival_date`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MessageDsn.arrival_date = Some(value.into());`.
+    pub fn arrival_date<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arrival_date = Some(value.into());
+        self
+    }
+    /// Sets `extension_fields`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MessageDsn.extension_fields = Some(value.into());`.
+    pub fn extension_fields<ValueType: Into<Vec<ExtensionField>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.extension_fields = Some(value.into());
+        self
+    }
+    /// Sets `reporting_mta`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MessageDsn.reporting_mta = value.into();`.
+    pub fn reporting_mta<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reporting_mta = value.into();
+        self
+    }
+    /// Returns a new instance of MessageDsn with optional fields set to `None`.
+    pub fn new<ReportingMtaType: Into<String>>(reporting_mta: ReportingMtaType) -> MessageDsn {
+        MessageDsn {
+            reporting_mta: reporting_mta.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `MessageDsn` contents to a `SignedRequest`.
 struct MessageDsnSerializer;
@@ -3794,7 +4734,32 @@ pub struct MessageTag {
     #[doc="<p>The value of the tag. The value must:</p> <ul> <li> <p>Contain only ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).</p> </li> <li> <p>Contain less than 256 characters.</p> </li> </ul>"]
     pub value: String,
 }
-
+impl MessageTag {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MessageTag.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MessageTag.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of MessageTag with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, ValueType: Into<String>>(name: NameType,
+                                                                value: ValueType)
+                                                                -> MessageTag {
+        MessageTag {
+            name: name.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `MessageTag` contents to a `SignedRequest`.
 struct MessageTagSerializer;
@@ -3992,7 +4957,42 @@ pub struct PutIdentityPolicyRequest {
     #[doc="<p>The name of the policy.</p> <p>The policy name cannot exceed 64 characters and can only include alphanumeric characters, dashes, and underscores.</p>"]
     pub policy_name: String,
 }
-
+impl PutIdentityPolicyRequest {
+    /// Sets `identity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIdentityPolicyRequest.identity = value.into();`.
+    pub fn identity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity = value.into();
+        self
+    }
+    /// Sets `policy`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIdentityPolicyRequest.policy = value.into();`.
+    pub fn policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy = value.into();
+        self
+    }
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIdentityPolicyRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Returns a new instance of PutIdentityPolicyRequest with optional fields set to `None`.
+    pub fn new<IdentityType: Into<String>, PolicyType: Into<String>, PolicyNameType: Into<String>>
+        (identity: IdentityType,
+         policy: PolicyType,
+         policy_name: PolicyNameType)
+         -> PutIdentityPolicyRequest {
+        PutIdentityPolicyRequest {
+            identity: identity.into(),
+            policy: policy.into(),
+            policy_name: policy_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `PutIdentityPolicyRequest` contents to a `SignedRequest`.
 struct PutIdentityPolicyRequestSerializer;
@@ -4036,7 +5036,22 @@ pub struct RawMessage {
     #[doc="<p>The raw data of the message. This data needs to base64-encoded if you are accessing Amazon SES directly through the HTTPS interface. If you are accessing Amazon SES using an AWS SDK, the SDK takes care of the base 64-encoding for you. In all cases, the client must ensure that the message format complies with Internet email standards regarding email header fields, MIME types, and MIME encoding.</p> <p>The To:, CC:, and BCC: headers in the raw message can contain a group list.</p> <p>If you are using <code>SendRawEmail</code> with sending authorization, you can include X-headers in the raw message to specify the \"Source,\" \"From,\" and \"Return-Path\" addresses. For more information, see the documentation for <code>SendRawEmail</code>. </p> <important> <p>Do not include these X-headers in the DKIM signature, because they are removed by Amazon SES before sending the email.</p> </important> <p>For more information, go to the <a href=\"http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-raw.html\">Amazon SES Developer Guide</a>. </p>"]
     pub data: Vec<u8>,
 }
-
+impl RawMessage {
+    /// Sets `data`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RawMessage.data = value.into();`.
+    pub fn data<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.data = value.into();
+        self
+    }
+    /// Returns a new instance of RawMessage with optional fields set to `None`.
+    pub fn new<DataType: Into<Vec<u8>>>(data: DataType) -> RawMessage {
+        RawMessage {
+            data: data.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RawMessage` contents to a `SignedRequest`.
 struct RawMessageSerializer;
@@ -4071,7 +5086,61 @@ pub struct ReceiptAction {
     #[doc="<p>Calls Amazon WorkMail and, optionally, publishes a notification to Amazon SNS.</p>"]
     pub workmail_action: Option<WorkmailAction>,
 }
-
+impl ReceiptAction {
+    /// Sets `add_header_action`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiptAction.add_header_action = Some(value.into());`.
+    pub fn add_header_action<ValueType: Into<AddHeaderAction>>(mut self, value: ValueType) -> Self {
+        self.add_header_action = Some(value.into());
+        self
+    }
+    /// Sets `bounce_action`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiptAction.bounce_action = Some(value.into());`.
+    pub fn bounce_action<ValueType: Into<BounceAction>>(mut self, value: ValueType) -> Self {
+        self.bounce_action = Some(value.into());
+        self
+    }
+    /// Sets `lambda_action`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiptAction.lambda_action = Some(value.into());`.
+    pub fn lambda_action<ValueType: Into<LambdaAction>>(mut self, value: ValueType) -> Self {
+        self.lambda_action = Some(value.into());
+        self
+    }
+    /// Sets `s3_action`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiptAction.s3_action = Some(value.into());`.
+    pub fn s3_action<ValueType: Into<S3Action>>(mut self, value: ValueType) -> Self {
+        self.s3_action = Some(value.into());
+        self
+    }
+    /// Sets `sns_action`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiptAction.sns_action = Some(value.into());`.
+    pub fn sns_action<ValueType: Into<SNSAction>>(mut self, value: ValueType) -> Self {
+        self.sns_action = Some(value.into());
+        self
+    }
+    /// Sets `stop_action`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiptAction.stop_action = Some(value.into());`.
+    pub fn stop_action<ValueType: Into<StopAction>>(mut self, value: ValueType) -> Self {
+        self.stop_action = Some(value.into());
+        self
+    }
+    /// Sets `workmail_action`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiptAction.workmail_action = Some(value.into());`.
+    pub fn workmail_action<ValueType: Into<WorkmailAction>>(mut self, value: ValueType) -> Self {
+        self.workmail_action = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ReceiptAction with optional fields set to `None`.
+    pub fn new() -> ReceiptAction {
+        ReceiptAction { ..Default::default() }
+    }
+}
 struct ReceiptActionDeserializer;
 impl ReceiptActionDeserializer {
     #[allow(unused_variables)]
@@ -4253,7 +5322,30 @@ pub struct ReceiptFilter {
     #[doc="<p>The name of the IP address filter. The name must:</p> <ul> <li> <p>Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods (.), underscores (_), or dashes (-).</p> </li> <li> <p>Start and end with a letter or number.</p> </li> <li> <p>Contain less than 64 characters.</p> </li> </ul>"]
     pub name: String,
 }
-
+impl ReceiptFilter {
+    /// Sets `ip_filter`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiptFilter.ip_filter = value.into();`.
+    pub fn ip_filter<ValueType: Into<ReceiptIpFilter>>(mut self, value: ValueType) -> Self {
+        self.ip_filter = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiptFilter.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of ReceiptFilter with optional fields set to `None`.
+pub fn new<IpFilterType: Into<ReceiptIpFilter>, NameType: Into<String>>(ip_filter: IpFilterType, name: NameType) -> ReceiptFilter{
+        ReceiptFilter {
+            ip_filter: ip_filter.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 struct ReceiptFilterDeserializer;
 impl ReceiptFilterDeserializer {
     #[allow(unused_variables)]
@@ -4395,7 +5487,32 @@ pub struct ReceiptIpFilter {
     #[doc="<p>Indicates whether to block or allow incoming mail from the specified IP addresses.</p>"]
     pub policy: String,
 }
-
+impl ReceiptIpFilter {
+    /// Sets `cidr`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiptIpFilter.cidr = value.into();`.
+    pub fn cidr<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cidr = value.into();
+        self
+    }
+    /// Sets `policy`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiptIpFilter.policy = value.into();`.
+    pub fn policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy = value.into();
+        self
+    }
+    /// Returns a new instance of ReceiptIpFilter with optional fields set to `None`.
+    pub fn new<CidrType: Into<String>, PolicyType: Into<String>>(cidr: CidrType,
+                                                                 policy: PolicyType)
+                                                                 -> ReceiptIpFilter {
+        ReceiptIpFilter {
+            cidr: cidr.into(),
+            policy: policy.into(),
+            ..Default::default()
+        }
+    }
+}
 struct ReceiptIpFilterDeserializer;
 impl ReceiptIpFilterDeserializer {
     #[allow(unused_variables)]
@@ -4473,7 +5590,57 @@ pub struct ReceiptRule {
     #[doc="<p>Specifies whether Amazon SES should require that incoming email is delivered over a connection encrypted with Transport Layer Security (TLS). If this parameter is set to <code>Require</code>, Amazon SES will bounce emails that are not received over TLS. The default is <code>Optional</code>.</p>"]
     pub tls_policy: Option<String>,
 }
-
+impl ReceiptRule {
+    /// Sets `actions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiptRule.actions = Some(value.into());`.
+    pub fn actions<ValueType: Into<Vec<ReceiptAction>>>(mut self, value: ValueType) -> Self {
+        self.actions = Some(value.into());
+        self
+    }
+    /// Sets `enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiptRule.enabled = Some(value.into());`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiptRule.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `recipients`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiptRule.recipients = Some(value.into());`.
+    pub fn recipients<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.recipients = Some(value.into());
+        self
+    }
+    /// Sets `scan_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiptRule.scan_enabled = Some(value.into());`.
+    pub fn scan_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.scan_enabled = Some(value.into());
+        self
+    }
+    /// Sets `tls_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiptRule.tls_policy = Some(value.into());`.
+    pub fn tls_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tls_policy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ReceiptRule with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> ReceiptRule {
+        ReceiptRule {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 struct ReceiptRuleDeserializer;
 impl ReceiptRuleDeserializer {
     #[allow(unused_variables)]
@@ -4608,7 +5775,6 @@ pub struct ReceiptRuleSetMetadata {
     #[doc="<p>The name of the receipt rule set. The name must:</p> <ul> <li> <p>Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods (.), underscores (_), or dashes (-).</p> </li> <li> <p>Start and end with a letter or number.</p> </li> <li> <p>Contain less than 64 characters.</p> </li> </ul>"]
     pub name: Option<String>,
 }
-
 struct ReceiptRuleSetMetadataDeserializer;
 impl ReceiptRuleSetMetadataDeserializer {
     #[allow(unused_variables)]
@@ -4786,7 +5952,69 @@ pub struct RecipientDsnFields {
     #[doc="<p>The status code that indicates what went wrong. This is required by <a href=\"https://tools.ietf.org/html/rfc3464\">RFC 3464</a>.</p>"]
     pub status: String,
 }
-
+impl RecipientDsnFields {
+    /// Sets `action`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecipientDsnFields.action = value.into();`.
+    pub fn action<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.action = value.into();
+        self
+    }
+    /// Sets `diagnostic_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecipientDsnFields.diagnostic_code = Some(value.into());`.
+    pub fn diagnostic_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.diagnostic_code = Some(value.into());
+        self
+    }
+    /// Sets `extension_fields`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecipientDsnFields.extension_fields = Some(value.into());`.
+    pub fn extension_fields<ValueType: Into<Vec<ExtensionField>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.extension_fields = Some(value.into());
+        self
+    }
+    /// Sets `final_recipient`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecipientDsnFields.final_recipient = Some(value.into());`.
+    pub fn final_recipient<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.final_recipient = Some(value.into());
+        self
+    }
+    /// Sets `last_attempt_date`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecipientDsnFields.last_attempt_date = Some(value.into());`.
+    pub fn last_attempt_date<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.last_attempt_date = Some(value.into());
+        self
+    }
+    /// Sets `remote_mta`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecipientDsnFields.remote_mta = Some(value.into());`.
+    pub fn remote_mta<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.remote_mta = Some(value.into());
+        self
+    }
+    /// Sets `status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecipientDsnFields.status = value.into();`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = value.into();
+        self
+    }
+    /// Returns a new instance of RecipientDsnFields with optional fields set to `None`.
+    pub fn new<ActionType: Into<String>, StatusType: Into<String>>(action: ActionType,
+                                                                   status: StatusType)
+                                                                   -> RecipientDsnFields {
+        RecipientDsnFields {
+            action: action.into(),
+            status: status.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RecipientDsnFields` contents to a `SignedRequest`.
 struct RecipientDsnFieldsSerializer;
@@ -4881,7 +6109,33 @@ pub struct ReorderReceiptRuleSetRequest {
     #[doc="<p>The name of the receipt rule set to reorder.</p>"]
     pub rule_set_name: String,
 }
-
+impl ReorderReceiptRuleSetRequest {
+    /// Sets `rule_names`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReorderReceiptRuleSetRequest.rule_names = value.into();`.
+    pub fn rule_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.rule_names = value.into();
+        self
+    }
+    /// Sets `rule_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReorderReceiptRuleSetRequest.rule_set_name = value.into();`.
+    pub fn rule_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of ReorderReceiptRuleSetRequest with optional fields set to `None`.
+    pub fn new<RuleNamesType: Into<Vec<String>>, RuleSetNameType: Into<String>>
+        (rule_names: RuleNamesType,
+         rule_set_name: RuleSetNameType)
+         -> ReorderReceiptRuleSetRequest {
+        ReorderReceiptRuleSetRequest {
+            rule_names: rule_names.into(),
+            rule_set_name: rule_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ReorderReceiptRuleSetRequest` contents to a `SignedRequest`.
 struct ReorderReceiptRuleSetRequestSerializer;
@@ -4932,7 +6186,43 @@ pub struct S3Action {
     #[doc="<p>The ARN of the Amazon SNS topic to notify when the message is saved to the Amazon S3 bucket. An example of an Amazon SNS topic ARN is <code>arn:aws:sns:us-west-2:123456789012:MyTopic</code>. For more information about Amazon SNS topics, see the <a href=\"http://docs.aws.amazon.com/sns/latest/dg/CreateTopic.html\">Amazon SNS Developer Guide</a>.</p>"]
     pub topic_arn: Option<String>,
 }
-
+impl S3Action {
+    /// Sets `bucket_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Action.bucket_name = value.into();`.
+    pub fn bucket_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket_name = value.into();
+        self
+    }
+    /// Sets `kms_key_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Action.kms_key_arn = Some(value.into());`.
+    pub fn kms_key_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kms_key_arn = Some(value.into());
+        self
+    }
+    /// Sets `object_key_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Action.object_key_prefix = Some(value.into());`.
+    pub fn object_key_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.object_key_prefix = Some(value.into());
+        self
+    }
+    /// Sets `topic_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Action.topic_arn = Some(value.into());`.
+    pub fn topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of S3Action with optional fields set to `None`.
+    pub fn new<BucketNameType: Into<String>>(bucket_name: BucketNameType) -> S3Action {
+        S3Action {
+            bucket_name: bucket_name.into(),
+            ..Default::default()
+        }
+    }
+}
 struct S3ActionDeserializer;
 impl S3ActionDeserializer {
     #[allow(unused_variables)]
@@ -5050,7 +6340,29 @@ pub struct SNSAction {
     #[doc="<p>The Amazon Resource Name (ARN) of the Amazon SNS topic to notify. An example of an Amazon SNS topic ARN is <code>arn:aws:sns:us-west-2:123456789012:MyTopic</code>. For more information about Amazon SNS topics, see the <a href=\"http://docs.aws.amazon.com/sns/latest/dg/CreateTopic.html\">Amazon SNS Developer Guide</a>.</p>"]
     pub topic_arn: String,
 }
-
+impl SNSAction {
+    /// Sets `encoding`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SNSAction.encoding = Some(value.into());`.
+    pub fn encoding<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.encoding = Some(value.into());
+        self
+    }
+    /// Sets `topic_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SNSAction.topic_arn = value.into();`.
+    pub fn topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_arn = value.into();
+        self
+    }
+    /// Returns a new instance of SNSAction with optional fields set to `None`.
+    pub fn new<TopicArnType: Into<String>>(topic_arn: TopicArnType) -> SNSAction {
+        SNSAction {
+            topic_arn: topic_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 struct SNSActionDeserializer;
 impl SNSActionDeserializer {
     #[allow(unused_variables)]
@@ -5137,7 +6449,22 @@ pub struct SNSDestination {
     #[doc="<p>The ARN of the Amazon SNS topic to which you want to publish email sending events. An example of an Amazon SNS topic ARN is arn:aws:sns:us-west-2:123456789012:MyTopic. For more information about Amazon SNS topics, see the <a href=\"http://docs.aws.amazon.com/http:/alpha-docs-aws.amazon.com/sns/latest/dg/CreateTopic.html\"> <i>Amazon SNS Developer Guide</i> </a>.</p>"]
     pub topic_arn: String,
 }
-
+impl SNSDestination {
+    /// Sets `topic_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SNSDestination.topic_arn = value.into();`.
+    pub fn topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_arn = value.into();
+        self
+    }
+    /// Returns a new instance of SNSDestination with optional fields set to `None`.
+    pub fn new<TopicARNType: Into<String>>(topic_arn: TopicARNType) -> SNSDestination {
+        SNSDestination {
+            topic_arn: topic_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 struct SNSDestinationDeserializer;
 impl SNSDestinationDeserializer {
     #[allow(unused_variables)]
@@ -5212,7 +6539,65 @@ pub struct SendBounceRequest {
     #[doc="<p>The message ID of the message to be bounced.</p>"]
     pub original_message_id: String,
 }
-
+impl SendBounceRequest {
+    /// Sets `bounce_sender`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendBounceRequest.bounce_sender = value.into();`.
+    pub fn bounce_sender<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bounce_sender = value.into();
+        self
+    }
+    /// Sets `bounce_sender_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendBounceRequest.bounce_sender_arn = Some(value.into());`.
+    pub fn bounce_sender_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bounce_sender_arn = Some(value.into());
+        self
+    }
+    /// Sets `bounced_recipient_info_list`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendBounceRequest.bounced_recipient_info_list = value.into();`.
+pub fn bounced_recipient_info_list<ValueType: Into<Vec<BouncedRecipientInfo>>>(mut self, value: ValueType) -> Self{
+        self.bounced_recipient_info_list = value.into();
+        self
+    }
+    /// Sets `explanation`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendBounceRequest.explanation = Some(value.into());`.
+    pub fn explanation<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.explanation = Some(value.into());
+        self
+    }
+    /// Sets `message_dsn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendBounceRequest.message_dsn = Some(value.into());`.
+    pub fn message_dsn<ValueType: Into<MessageDsn>>(mut self, value: ValueType) -> Self {
+        self.message_dsn = Some(value.into());
+        self
+    }
+    /// Sets `original_message_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendBounceRequest.original_message_id = value.into();`.
+    pub fn original_message_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.original_message_id = value.into();
+        self
+    }
+    /// Returns a new instance of SendBounceRequest with optional fields set to `None`.
+    pub fn new<BounceSenderType: Into<String>,
+               BouncedRecipientInfoListType: Into<Vec<BouncedRecipientInfo>>,
+               OriginalMessageIdType: Into<String>>
+        (bounce_sender: BounceSenderType,
+         bounced_recipient_info_list: BouncedRecipientInfoListType,
+         original_message_id: OriginalMessageIdType)
+         -> SendBounceRequest {
+        SendBounceRequest {
+            bounce_sender: bounce_sender.into(),
+            bounced_recipient_info_list: bounced_recipient_info_list.into(),
+            original_message_id: original_message_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SendBounceRequest` contents to a `SignedRequest`.
 struct SendBounceRequestSerializer;
@@ -5252,7 +6637,6 @@ pub struct SendBounceResponse {
     #[doc="<p>The message ID of the bounce message.</p>"]
     pub message_id: Option<String>,
 }
-
 struct SendBounceResponseDeserializer;
 impl SendBounceResponseDeserializer {
     #[allow(unused_variables)]
@@ -5309,7 +6693,6 @@ pub struct SendDataPoint {
     #[doc="<p>Time of the data point.</p>"]
     pub timestamp: Option<String>,
 }
-
 struct SendDataPointDeserializer;
 impl SendDataPointDeserializer {
     #[allow(unused_variables)]
@@ -5432,7 +6815,86 @@ pub struct SendEmailRequest {
     #[doc="<p>A list of tags, in the form of name/value pairs, to apply to an email that you send using <code>SendEmail</code>. Tags correspond to characteristics of the email that you define, so that you can publish email sending events.</p>"]
     pub tags: Option<Vec<MessageTag>>,
 }
-
+impl SendEmailRequest {
+    /// Sets `configuration_set_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendEmailRequest.configuration_set_name = Some(value.into());`.
+    pub fn configuration_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.configuration_set_name = Some(value.into());
+        self
+    }
+    /// Sets `destination`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendEmailRequest.destination = value.into();`.
+    pub fn destination<ValueType: Into<Destination>>(mut self, value: ValueType) -> Self {
+        self.destination = value.into();
+        self
+    }
+    /// Sets `message`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendEmailRequest.message = value.into();`.
+    pub fn message<ValueType: Into<Message>>(mut self, value: ValueType) -> Self {
+        self.message = value.into();
+        self
+    }
+    /// Sets `reply_to_addresses`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendEmailRequest.reply_to_addresses = Some(value.into());`.
+    pub fn reply_to_addresses<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.reply_to_addresses = Some(value.into());
+        self
+    }
+    /// Sets `return_path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendEmailRequest.return_path = Some(value.into());`.
+    pub fn return_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.return_path = Some(value.into());
+        self
+    }
+    /// Sets `return_path_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendEmailRequest.return_path_arn = Some(value.into());`.
+    pub fn return_path_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.return_path_arn = Some(value.into());
+        self
+    }
+    /// Sets `source`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendEmailRequest.source = value.into();`.
+    pub fn source<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source = value.into();
+        self
+    }
+    /// Sets `source_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendEmailRequest.source_arn = Some(value.into());`.
+    pub fn source_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_arn = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendEmailRequest.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<MessageTag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SendEmailRequest with optional fields set to `None`.
+    pub fn new<DestinationType: Into<Destination>,
+               MessageType: Into<Message>,
+               SourceType: Into<String>>
+        (destination: DestinationType,
+         message: MessageType,
+         source: SourceType)
+         -> SendEmailRequest {
+        SendEmailRequest {
+            destination: destination.into(),
+            message: message.into(),
+            source: source.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SendEmailRequest` contents to a `SignedRequest`.
 struct SendEmailRequestSerializer;
@@ -5481,7 +6943,6 @@ pub struct SendEmailResponse {
     #[doc="<p>The unique message identifier returned from the <code>SendEmail</code> action. </p>"]
     pub message_id: String,
 }
-
 struct SendEmailResponseDeserializer;
 impl SendEmailResponseDeserializer {
     #[allow(unused_variables)]
@@ -5544,7 +7005,72 @@ pub struct SendRawEmailRequest {
     #[doc="<p>A list of tags, in the form of name/value pairs, to apply to an email that you send using <code>SendRawEmail</code>. Tags correspond to characteristics of the email that you define, so that you can publish email sending events.</p>"]
     pub tags: Option<Vec<MessageTag>>,
 }
-
+impl SendRawEmailRequest {
+    /// Sets `configuration_set_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendRawEmailRequest.configuration_set_name = Some(value.into());`.
+    pub fn configuration_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.configuration_set_name = Some(value.into());
+        self
+    }
+    /// Sets `destinations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendRawEmailRequest.destinations = Some(value.into());`.
+    pub fn destinations<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.destinations = Some(value.into());
+        self
+    }
+    /// Sets `from_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendRawEmailRequest.from_arn = Some(value.into());`.
+    pub fn from_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.from_arn = Some(value.into());
+        self
+    }
+    /// Sets `raw_message`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendRawEmailRequest.raw_message = value.into();`.
+    pub fn raw_message<ValueType: Into<RawMessage>>(mut self, value: ValueType) -> Self {
+        self.raw_message = value.into();
+        self
+    }
+    /// Sets `return_path_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendRawEmailRequest.return_path_arn = Some(value.into());`.
+    pub fn return_path_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.return_path_arn = Some(value.into());
+        self
+    }
+    /// Sets `source`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendRawEmailRequest.source = Some(value.into());`.
+    pub fn source<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source = Some(value.into());
+        self
+    }
+    /// Sets `source_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendRawEmailRequest.source_arn = Some(value.into());`.
+    pub fn source_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_arn = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendRawEmailRequest.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<MessageTag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SendRawEmailRequest with optional fields set to `None`.
+    pub fn new<RawMessageType: Into<RawMessage>>(raw_message: RawMessageType)
+                                                 -> SendRawEmailRequest {
+        SendRawEmailRequest {
+            raw_message: raw_message.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SendRawEmailRequest` contents to a `SignedRequest`.
 struct SendRawEmailRequestSerializer;
@@ -5594,7 +7120,6 @@ pub struct SendRawEmailResponse {
     #[doc="<p>The unique message identifier returned from the <code>SendRawEmail</code> action. </p>"]
     pub message_id: String,
 }
-
 struct SendRawEmailResponseDeserializer;
 impl SendRawEmailResponseDeserializer {
     #[allow(unused_variables)]
@@ -5657,7 +7182,19 @@ pub struct SetActiveReceiptRuleSetRequest {
     #[doc="<p>The name of the receipt rule set to make active. Setting this value to null disables all email receiving.</p>"]
     pub rule_set_name: Option<String>,
 }
-
+impl SetActiveReceiptRuleSetRequest {
+    /// Sets `rule_set_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetActiveReceiptRuleSetRequest.rule_set_name = Some(value.into());`.
+    pub fn rule_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_set_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SetActiveReceiptRuleSetRequest with optional fields set to `None`.
+    pub fn new() -> SetActiveReceiptRuleSetRequest {
+        SetActiveReceiptRuleSetRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `SetActiveReceiptRuleSetRequest` contents to a `SignedRequest`.
 struct SetActiveReceiptRuleSetRequestSerializer;
@@ -5704,7 +7241,33 @@ pub struct SetIdentityDkimEnabledRequest {
     #[doc="<p>The identity for which DKIM signing should be enabled or disabled.</p>"]
     pub identity: String,
 }
-
+impl SetIdentityDkimEnabledRequest {
+    /// Sets `dkim_enabled`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetIdentityDkimEnabledRequest.dkim_enabled = value.into();`.
+    pub fn dkim_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dkim_enabled = value.into();
+        self
+    }
+    /// Sets `identity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetIdentityDkimEnabledRequest.identity = value.into();`.
+    pub fn identity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity = value.into();
+        self
+    }
+    /// Returns a new instance of SetIdentityDkimEnabledRequest with optional fields set to `None`.
+    pub fn new<DkimEnabledType: Into<bool>, IdentityType: Into<String>>
+        (dkim_enabled: DkimEnabledType,
+         identity: IdentityType)
+         -> SetIdentityDkimEnabledRequest {
+        SetIdentityDkimEnabledRequest {
+            dkim_enabled: dkim_enabled.into(),
+            identity: identity.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SetIdentityDkimEnabledRequest` contents to a `SignedRequest`.
 struct SetIdentityDkimEnabledRequestSerializer;
@@ -5750,7 +7313,33 @@ pub struct SetIdentityFeedbackForwardingEnabledRequest {
     #[doc="<p>The identity for which to set bounce and complaint notification forwarding. Examples: <code>user@example.com</code>, <code>example.com</code>.</p>"]
     pub identity: String,
 }
-
+impl SetIdentityFeedbackForwardingEnabledRequest {
+    /// Sets `forwarding_enabled`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetIdentityFeedbackForwardingEnabledRequest.forwarding_enabled = value.into();`.
+    pub fn forwarding_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.forwarding_enabled = value.into();
+        self
+    }
+    /// Sets `identity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetIdentityFeedbackForwardingEnabledRequest.identity = value.into();`.
+    pub fn identity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity = value.into();
+        self
+    }
+    /// Returns a new instance of SetIdentityFeedbackForwardingEnabledRequest with optional fields set to `None`.
+    pub fn new<ForwardingEnabledType: Into<bool>, IdentityType: Into<String>>
+        (forwarding_enabled: ForwardingEnabledType,
+         identity: IdentityType)
+         -> SetIdentityFeedbackForwardingEnabledRequest {
+        SetIdentityFeedbackForwardingEnabledRequest {
+            forwarding_enabled: forwarding_enabled.into(),
+            identity: identity.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SetIdentityFeedbackForwardingEnabledRequest` contents to a `SignedRequest`.
 struct SetIdentityFeedbackForwardingEnabledRequestSerializer;
@@ -5801,7 +7390,44 @@ pub struct SetIdentityHeadersInNotificationsEnabledRequest {
     #[doc="<p>The notification type for which to enable or disable headers in notifications. </p>"]
     pub notification_type: String,
 }
-
+impl SetIdentityHeadersInNotificationsEnabledRequest {
+    /// Sets `enabled`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetIdentityHeadersInNotificationsEnabledRequest.enabled = value.into();`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = value.into();
+        self
+    }
+    /// Sets `identity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetIdentityHeadersInNotificationsEnabledRequest.identity = value.into();`.
+    pub fn identity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity = value.into();
+        self
+    }
+    /// Sets `notification_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetIdentityHeadersInNotificationsEnabledRequest.notification_type = value.into();`.
+    pub fn notification_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.notification_type = value.into();
+        self
+    }
+    /// Returns a new instance of SetIdentityHeadersInNotificationsEnabledRequest with optional fields set to `None`.
+    pub fn new<EnabledType: Into<bool>,
+               IdentityType: Into<String>,
+               NotificationTypeType: Into<String>>
+        (enabled: EnabledType,
+         identity: IdentityType,
+         notification_type: NotificationTypeType)
+         -> SetIdentityHeadersInNotificationsEnabledRequest {
+        SetIdentityHeadersInNotificationsEnabledRequest {
+            enabled: enabled.into(),
+            identity: identity.into(),
+            notification_type: notification_type.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SetIdentityHeadersInNotificationsEnabledRequest` contents to a `SignedRequest`.
 struct SetIdentityHeadersInNotificationsEnabledRequestSerializer;
@@ -5854,7 +7480,37 @@ pub struct SetIdentityMailFromDomainRequest {
     #[doc="<p>The custom MAIL FROM domain that you want the verified identity to use. The MAIL FROM domain must 1) be a subdomain of the verified identity, 2) not be used in a \"From\" address if the MAIL FROM domain is the destination of email feedback forwarding (for more information, see the <a href=\"http://docs.aws.amazon.com/ses/latest/DeveloperGuide/mail-from.html\">Amazon SES Developer Guide</a>), and 3) not be used to receive emails. A value of <code>null</code> disables the custom MAIL FROM setting for the identity.</p>"]
     pub mail_from_domain: Option<String>,
 }
-
+impl SetIdentityMailFromDomainRequest {
+    /// Sets `behavior_on_mx_failure`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetIdentityMailFromDomainRequest.behavior_on_mx_failure = Some(value.into());`.
+    pub fn behavior_on_mx_failure<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.behavior_on_mx_failure = Some(value.into());
+        self
+    }
+    /// Sets `identity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetIdentityMailFromDomainRequest.identity = value.into();`.
+    pub fn identity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity = value.into();
+        self
+    }
+    /// Sets `mail_from_domain`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetIdentityMailFromDomainRequest.mail_from_domain = Some(value.into());`.
+    pub fn mail_from_domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.mail_from_domain = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SetIdentityMailFromDomainRequest with optional fields set to `None`.
+    pub fn new<IdentityType: Into<String>>(identity: IdentityType)
+                                           -> SetIdentityMailFromDomainRequest {
+        SetIdentityMailFromDomainRequest {
+            identity: identity.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SetIdentityMailFromDomainRequest` contents to a `SignedRequest`.
 struct SetIdentityMailFromDomainRequestSerializer;
@@ -5908,7 +7564,40 @@ pub struct SetIdentityNotificationTopicRequest {
     #[doc="<p>The Amazon Resource Name (ARN) of the Amazon SNS topic. If the parameter is omitted from the request or a null value is passed, <code>SnsTopic</code> is cleared and publishing is disabled.</p>"]
     pub sns_topic: Option<String>,
 }
-
+impl SetIdentityNotificationTopicRequest {
+    /// Sets `identity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetIdentityNotificationTopicRequest.identity = value.into();`.
+    pub fn identity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity = value.into();
+        self
+    }
+    /// Sets `notification_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetIdentityNotificationTopicRequest.notification_type = value.into();`.
+    pub fn notification_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.notification_type = value.into();
+        self
+    }
+    /// Sets `sns_topic`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetIdentityNotificationTopicRequest.sns_topic = Some(value.into());`.
+    pub fn sns_topic<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sns_topic = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SetIdentityNotificationTopicRequest with optional fields set to `None`.
+    pub fn new<IdentityType: Into<String>, NotificationTypeType: Into<String>>
+        (identity: IdentityType,
+         notification_type: NotificationTypeType)
+         -> SetIdentityNotificationTopicRequest {
+        SetIdentityNotificationTopicRequest {
+            identity: identity.into(),
+            notification_type: notification_type.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SetIdentityNotificationTopicRequest` contents to a `SignedRequest`.
 struct SetIdentityNotificationTopicRequestSerializer;
@@ -5960,7 +7649,40 @@ pub struct SetReceiptRulePositionRequest {
     #[doc="<p>The name of the receipt rule set that contains the receipt rule to reposition.</p>"]
     pub rule_set_name: String,
 }
-
+impl SetReceiptRulePositionRequest {
+    /// Sets `after`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetReceiptRulePositionRequest.after = Some(value.into());`.
+    pub fn after<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.after = Some(value.into());
+        self
+    }
+    /// Sets `rule_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetReceiptRulePositionRequest.rule_name = value.into();`.
+    pub fn rule_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_name = value.into();
+        self
+    }
+    /// Sets `rule_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetReceiptRulePositionRequest.rule_set_name = value.into();`.
+    pub fn rule_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of SetReceiptRulePositionRequest with optional fields set to `None`.
+    pub fn new<RuleNameType: Into<String>, RuleSetNameType: Into<String>>
+        (rule_name: RuleNameType,
+         rule_set_name: RuleSetNameType)
+         -> SetReceiptRulePositionRequest {
+        SetReceiptRulePositionRequest {
+            rule_name: rule_name.into(),
+            rule_set_name: rule_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SetReceiptRulePositionRequest` contents to a `SignedRequest`.
 struct SetReceiptRulePositionRequestSerializer;
@@ -6008,7 +7730,29 @@ pub struct StopAction {
     #[doc="<p>The Amazon Resource Name (ARN) of the Amazon SNS topic to notify when the stop action is taken. An example of an Amazon SNS topic ARN is <code>arn:aws:sns:us-west-2:123456789012:MyTopic</code>. For more information about Amazon SNS topics, see the <a href=\"http://docs.aws.amazon.com/sns/latest/dg/CreateTopic.html\">Amazon SNS Developer Guide</a>.</p>"]
     pub topic_arn: Option<String>,
 }
-
+impl StopAction {
+    /// Sets `scope`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopAction.scope = value.into();`.
+    pub fn scope<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.scope = value.into();
+        self
+    }
+    /// Sets `topic_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopAction.topic_arn = Some(value.into());`.
+    pub fn topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of StopAction with optional fields set to `None`.
+    pub fn new<ScopeType: Into<String>>(scope: ScopeType) -> StopAction {
+        StopAction {
+            scope: scope.into(),
+            ..Default::default()
+        }
+    }
+}
 struct StopActionDeserializer;
 impl StopActionDeserializer {
     #[allow(unused_variables)]
@@ -6123,7 +7867,35 @@ pub struct UpdateConfigurationSetEventDestinationRequest {
     #[doc="<p>The event destination object that you want to apply to the specified configuration set.</p>"]
     pub event_destination: EventDestination,
 }
-
+impl UpdateConfigurationSetEventDestinationRequest {
+    /// Sets `configuration_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateConfigurationSetEventDestinationRequest.configuration_set_name = value.into();`.
+    pub fn configuration_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.configuration_set_name = value.into();
+        self
+    }
+    /// Sets `event_destination`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateConfigurationSetEventDestinationRequest.event_destination = value.into();`.
+    pub fn event_destination<ValueType: Into<EventDestination>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.event_destination = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateConfigurationSetEventDestinationRequest with optional fields set to `None`.
+    pub fn new<ConfigurationSetNameType: Into<String>, EventDestinationType: Into<EventDestination>>
+        (configuration_set_name: ConfigurationSetNameType,
+         event_destination: EventDestinationType)
+         -> UpdateConfigurationSetEventDestinationRequest {
+        UpdateConfigurationSetEventDestinationRequest {
+            configuration_set_name: configuration_set_name.into(),
+            event_destination: event_destination.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateConfigurationSetEventDestinationRequest` contents to a `SignedRequest`.
 struct UpdateConfigurationSetEventDestinationRequestSerializer;
@@ -6174,7 +7946,33 @@ pub struct UpdateReceiptRuleRequest {
     #[doc="<p>The name of the receipt rule set to which the receipt rule belongs.</p>"]
     pub rule_set_name: String,
 }
-
+impl UpdateReceiptRuleRequest {
+    /// Sets `rule`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateReceiptRuleRequest.rule = value.into();`.
+    pub fn rule<ValueType: Into<ReceiptRule>>(mut self, value: ValueType) -> Self {
+        self.rule = value.into();
+        self
+    }
+    /// Sets `rule_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateReceiptRuleRequest.rule_set_name = value.into();`.
+    pub fn rule_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateReceiptRuleRequest with optional fields set to `None`.
+    pub fn new<RuleType: Into<ReceiptRule>, RuleSetNameType: Into<String>>
+        (rule: RuleType,
+         rule_set_name: RuleSetNameType)
+         -> UpdateReceiptRuleRequest {
+        UpdateReceiptRuleRequest {
+            rule: rule.into(),
+            rule_set_name: rule_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateReceiptRuleRequest` contents to a `SignedRequest`.
 struct UpdateReceiptRuleRequestSerializer;
@@ -6312,7 +8110,22 @@ pub struct VerifyDomainDkimRequest {
     #[doc="<p>The name of the domain to be verified for Easy DKIM signing.</p>"]
     pub domain: String,
 }
-
+impl VerifyDomainDkimRequest {
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VerifyDomainDkimRequest.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Returns a new instance of VerifyDomainDkimRequest with optional fields set to `None`.
+    pub fn new<DomainType: Into<String>>(domain: DomainType) -> VerifyDomainDkimRequest {
+        VerifyDomainDkimRequest {
+            domain: domain.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `VerifyDomainDkimRequest` contents to a `SignedRequest`.
 struct VerifyDomainDkimRequestSerializer;
@@ -6334,7 +8147,6 @@ pub struct VerifyDomainDkimResponse {
     #[doc="<p>A set of character strings that represent the domain's identity. If the identity is an email address, the tokens represent the domain of that address.</p> <p>Using these tokens, you will need to create DNS CNAME records that point to DKIM public keys hosted by Amazon SES. Amazon Web Services will eventually detect that you have updated your DNS records; this detection process may take up to 72 hours. Upon successful detection, Amazon SES will be able to DKIM-sign emails originating from that domain.</p> <p>For more information about creating DNS records using DKIM tokens, go to the <a href=\"http://docs.aws.amazon.com/ses/latest/DeveloperGuide/easy-dkim-dns-records.html\">Amazon SES Developer Guide</a>.</p>"]
     pub dkim_tokens: Vec<String>,
 }
-
 struct VerifyDomainDkimResponseDeserializer;
 impl VerifyDomainDkimResponseDeserializer {
     #[allow(unused_variables)]
@@ -6384,7 +8196,22 @@ pub struct VerifyDomainIdentityRequest {
     #[doc="<p>The domain to be verified.</p>"]
     pub domain: String,
 }
-
+impl VerifyDomainIdentityRequest {
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VerifyDomainIdentityRequest.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Returns a new instance of VerifyDomainIdentityRequest with optional fields set to `None`.
+    pub fn new<DomainType: Into<String>>(domain: DomainType) -> VerifyDomainIdentityRequest {
+        VerifyDomainIdentityRequest {
+            domain: domain.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `VerifyDomainIdentityRequest` contents to a `SignedRequest`.
 struct VerifyDomainIdentityRequestSerializer;
@@ -6406,7 +8233,6 @@ pub struct VerifyDomainIdentityResponse {
     #[doc="<p>A TXT record that you must place in the DNS settings of the domain to complete domain verification with Amazon SES.</p> <p>As Amazon SES searches for the TXT record, the domain's verification status is \"Pending\". When Amazon SES detects the record, the domain's verification status changes to \"Success\". If Amazon SES is unable to detect the record within 72 hours, the domain's verification status changes to \"Failed.\" In that case, if you still want to verify the domain, you must restart the verification process from the beginning.</p>"]
     pub verification_token: String,
 }
-
 struct VerifyDomainIdentityResponseDeserializer;
 impl VerifyDomainIdentityResponseDeserializer {
     #[allow(unused_variables)]
@@ -6456,7 +8282,23 @@ pub struct VerifyEmailAddressRequest {
     #[doc="<p>The email address to be verified.</p>"]
     pub email_address: String,
 }
-
+impl VerifyEmailAddressRequest {
+    /// Sets `email_address`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VerifyEmailAddressRequest.email_address = value.into();`.
+    pub fn email_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.email_address = value.into();
+        self
+    }
+    /// Returns a new instance of VerifyEmailAddressRequest with optional fields set to `None`.
+    pub fn new<EmailAddressType: Into<String>>(email_address: EmailAddressType)
+                                               -> VerifyEmailAddressRequest {
+        VerifyEmailAddressRequest {
+            email_address: email_address.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `VerifyEmailAddressRequest` contents to a `SignedRequest`.
 struct VerifyEmailAddressRequestSerializer;
@@ -6478,7 +8320,23 @@ pub struct VerifyEmailIdentityRequest {
     #[doc="<p>The email address to be verified.</p>"]
     pub email_address: String,
 }
-
+impl VerifyEmailIdentityRequest {
+    /// Sets `email_address`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VerifyEmailIdentityRequest.email_address = value.into();`.
+    pub fn email_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.email_address = value.into();
+        self
+    }
+    /// Returns a new instance of VerifyEmailIdentityRequest with optional fields set to `None`.
+    pub fn new<EmailAddressType: Into<String>>(email_address: EmailAddressType)
+                                               -> VerifyEmailIdentityRequest {
+        VerifyEmailIdentityRequest {
+            email_address: email_address.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `VerifyEmailIdentityRequest` contents to a `SignedRequest`.
 struct VerifyEmailIdentityRequestSerializer;
@@ -6522,7 +8380,30 @@ pub struct WorkmailAction {
     #[doc="<p>The Amazon Resource Name (ARN) of the Amazon SNS topic to notify when the WorkMail action is called. An example of an Amazon SNS topic ARN is <code>arn:aws:sns:us-west-2:123456789012:MyTopic</code>. For more information about Amazon SNS topics, see the <a href=\"http://docs.aws.amazon.com/sns/latest/dg/CreateTopic.html\">Amazon SNS Developer Guide</a>.</p>"]
     pub topic_arn: Option<String>,
 }
-
+impl WorkmailAction {
+    /// Sets `organization_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WorkmailAction.organization_arn = value.into();`.
+    pub fn organization_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.organization_arn = value.into();
+        self
+    }
+    /// Sets `topic_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WorkmailAction.topic_arn = Some(value.into());`.
+    pub fn topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of WorkmailAction with optional fields set to `None`.
+    pub fn new<OrganizationArnType: Into<String>>(organization_arn: OrganizationArnType)
+                                                  -> WorkmailAction {
+        WorkmailAction {
+            organization_arn: organization_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 struct WorkmailActionDeserializer;
 impl WorkmailActionDeserializer {
     #[allow(unused_variables)]

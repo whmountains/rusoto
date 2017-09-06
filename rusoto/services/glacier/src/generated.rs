@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -42,7 +43,42 @@ pub struct AbortMultipartUploadInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl AbortMultipartUploadInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AbortMultipartUploadInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `upload_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AbortMultipartUploadInput.upload_id = value.into();`.
+    pub fn upload_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.upload_id = value.into();
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AbortMultipartUploadInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of AbortMultipartUploadInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>, uploadIdType: Into<String>, vaultNameType: Into<String>>
+        (account_id: accountIdType,
+         upload_id: uploadIdType,
+         vault_name: vaultNameType)
+         -> AbortMultipartUploadInput {
+        AbortMultipartUploadInput {
+            account_id: account_id.into(),
+            upload_id: upload_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input values for <code>AbortVaultLock</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AbortVaultLockInput {
@@ -53,7 +89,30 @@ pub struct AbortVaultLockInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl AbortVaultLockInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AbortVaultLockInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AbortVaultLockInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of AbortVaultLockInput with optional fields set to `None`.
+pub fn new<accountIdType: Into<String>, vaultNameType: Into<String>>(account_id: accountIdType, vault_name: vaultNameType) -> AbortVaultLockInput{
+        AbortVaultLockInput {
+            account_id: account_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input values for <code>AddTagsToVault</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AddTagsToVaultInput {
@@ -68,7 +127,39 @@ pub struct AddTagsToVaultInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl AddTagsToVaultInput {
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToVaultInput.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToVaultInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToVaultInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of AddTagsToVaultInput with optional fields set to `None`.
+pub fn new<accountIdType: Into<String>, vaultNameType: Into<String>>(account_id: accountIdType, vault_name: vaultNameType) -> AddTagsToVaultInput{
+        AddTagsToVaultInput {
+            account_id: account_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the Amazon Glacier response to your request.</p> <p>For information about the underlying REST API, see <a href=\"http://docs.aws.amazon.com/amazonglacier/latest/dev/api-archive-post.html\">Upload Archive</a>. For conceptual information, see <a href=\"http://docs.aws.amazon.com/amazonglacier/latest/dev/working-with-archives.html\">Working with Archives in Amazon Glacier</a>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ArchiveCreationOutput {
@@ -85,7 +176,6 @@ pub struct ArchiveCreationOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub location: Option<String>,
 }
-
 #[doc="<p>Provides options to complete a multipart upload operation. This informs Amazon Glacier that all the archive parts have been uploaded and Amazon Glacier can now assemble the archive from the uploaded parts. After assembling and saving the archive to the vault, Amazon Glacier returns the URI path of the newly created archive resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CompleteMultipartUploadInput {
@@ -107,7 +197,56 @@ pub struct CompleteMultipartUploadInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl CompleteMultipartUploadInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteMultipartUploadInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `archive_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteMultipartUploadInput.archive_size = Some(value.into());`.
+    pub fn archive_size<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.archive_size = Some(value.into());
+        self
+    }
+    /// Sets `checksum`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteMultipartUploadInput.checksum = Some(value.into());`.
+    pub fn checksum<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.checksum = Some(value.into());
+        self
+    }
+    /// Sets `upload_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteMultipartUploadInput.upload_id = value.into();`.
+    pub fn upload_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.upload_id = value.into();
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteMultipartUploadInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of CompleteMultipartUploadInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>, uploadIdType: Into<String>, vaultNameType: Into<String>>
+        (account_id: accountIdType,
+         upload_id: uploadIdType,
+         vault_name: vaultNameType)
+         -> CompleteMultipartUploadInput {
+        CompleteMultipartUploadInput {
+            account_id: account_id.into(),
+            upload_id: upload_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input values for <code>CompleteVaultLock</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CompleteVaultLockInput {
@@ -121,7 +260,42 @@ pub struct CompleteVaultLockInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl CompleteVaultLockInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteVaultLockInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `lock_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteVaultLockInput.lock_id = value.into();`.
+    pub fn lock_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lock_id = value.into();
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteVaultLockInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of CompleteVaultLockInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>, lockIdType: Into<String>, vaultNameType: Into<String>>
+        (account_id: accountIdType,
+         lock_id: lockIdType,
+         vault_name: vaultNameType)
+         -> CompleteVaultLockInput {
+        CompleteVaultLockInput {
+            account_id: account_id.into(),
+            lock_id: lock_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides options to create a vault.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateVaultInput {
@@ -132,7 +306,30 @@ pub struct CreateVaultInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl CreateVaultInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVaultInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVaultInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateVaultInput with optional fields set to `None`.
+pub fn new<accountIdType: Into<String>, vaultNameType: Into<String>>(account_id: accountIdType, vault_name: vaultNameType) -> CreateVaultInput{
+        CreateVaultInput {
+            account_id: account_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the Amazon Glacier response to your request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateVaultOutput {
@@ -141,7 +338,6 @@ pub struct CreateVaultOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub location: Option<String>,
 }
-
 #[doc="<p>Data retrieval policy.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct DataRetrievalPolicy {
@@ -150,7 +346,19 @@ pub struct DataRetrievalPolicy {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rules: Option<Vec<DataRetrievalRule>>,
 }
-
+impl DataRetrievalPolicy {
+    /// Sets `rules`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DataRetrievalPolicy.rules = Some(value.into());`.
+    pub fn rules<ValueType: Into<Vec<DataRetrievalRule>>>(mut self, value: ValueType) -> Self {
+        self.rules = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DataRetrievalPolicy with optional fields set to `None`.
+    pub fn new() -> DataRetrievalPolicy {
+        DataRetrievalPolicy { ..Default::default() }
+    }
+}
 #[doc="<p>Data retrieval policy rule.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct DataRetrievalRule {
@@ -163,7 +371,26 @@ pub struct DataRetrievalRule {
     #[serde(skip_serializing_if="Option::is_none")]
     pub strategy: Option<String>,
 }
-
+impl DataRetrievalRule {
+    /// Sets `bytes_per_hour`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DataRetrievalRule.bytes_per_hour = Some(value.into());`.
+    pub fn bytes_per_hour<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.bytes_per_hour = Some(value.into());
+        self
+    }
+    /// Sets `strategy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DataRetrievalRule.strategy = Some(value.into());`.
+    pub fn strategy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.strategy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DataRetrievalRule with optional fields set to `None`.
+    pub fn new() -> DataRetrievalRule {
+        DataRetrievalRule { ..Default::default() }
+    }
+}
 #[doc="<p>Provides options for deleting an archive from an Amazon Glacier vault.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteArchiveInput {
@@ -177,7 +404,44 @@ pub struct DeleteArchiveInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl DeleteArchiveInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteArchiveInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `archive_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteArchiveInput.archive_id = value.into();`.
+    pub fn archive_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.archive_id = value.into();
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteArchiveInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteArchiveInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>,
+               archiveIdType: Into<String>,
+               vaultNameType: Into<String>>
+        (account_id: accountIdType,
+         archive_id: archiveIdType,
+         vault_name: vaultNameType)
+         -> DeleteArchiveInput {
+        DeleteArchiveInput {
+            account_id: account_id.into(),
+            archive_id: archive_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>DeleteVaultAccessPolicy input.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteVaultAccessPolicyInput {
@@ -188,7 +452,33 @@ pub struct DeleteVaultAccessPolicyInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl DeleteVaultAccessPolicyInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVaultAccessPolicyInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVaultAccessPolicyInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteVaultAccessPolicyInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>, vaultNameType: Into<String>>
+        (account_id: accountIdType,
+         vault_name: vaultNameType)
+         -> DeleteVaultAccessPolicyInput {
+        DeleteVaultAccessPolicyInput {
+            account_id: account_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides options for deleting a vault from Amazon Glacier.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteVaultInput {
@@ -199,7 +489,30 @@ pub struct DeleteVaultInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl DeleteVaultInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVaultInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVaultInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteVaultInput with optional fields set to `None`.
+pub fn new<accountIdType: Into<String>, vaultNameType: Into<String>>(account_id: accountIdType, vault_name: vaultNameType) -> DeleteVaultInput{
+        DeleteVaultInput {
+            account_id: account_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides options for deleting a vault notification configuration from an Amazon Glacier vault.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteVaultNotificationsInput {
@@ -210,7 +523,33 @@ pub struct DeleteVaultNotificationsInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl DeleteVaultNotificationsInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVaultNotificationsInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVaultNotificationsInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteVaultNotificationsInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>, vaultNameType: Into<String>>
+        (account_id: accountIdType,
+         vault_name: vaultNameType)
+         -> DeleteVaultNotificationsInput {
+        DeleteVaultNotificationsInput {
+            account_id: account_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides options for retrieving a job description.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeJobInput {
@@ -224,7 +563,42 @@ pub struct DescribeJobInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl DescribeJobInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeJobInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeJobInput.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeJobInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeJobInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>, jobIdType: Into<String>, vaultNameType: Into<String>>
+        (account_id: accountIdType,
+         job_id: jobIdType,
+         vault_name: vaultNameType)
+         -> DescribeJobInput {
+        DescribeJobInput {
+            account_id: account_id.into(),
+            job_id: job_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides options for retrieving metadata for a specific vault in Amazon Glacier.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeVaultInput {
@@ -235,7 +609,30 @@ pub struct DescribeVaultInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl DescribeVaultInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVaultInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVaultInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeVaultInput with optional fields set to `None`.
+pub fn new<accountIdType: Into<String>, vaultNameType: Into<String>>(account_id: accountIdType, vault_name: vaultNameType) -> DescribeVaultInput{
+        DescribeVaultInput {
+            account_id: account_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the Amazon Glacier response to your request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeVaultOutput {
@@ -264,7 +661,6 @@ pub struct DescribeVaultOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vault_name: Option<String>,
 }
-
 #[doc="<p>Input for GetDataRetrievalPolicy.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDataRetrievalPolicyInput {
@@ -272,7 +668,23 @@ pub struct GetDataRetrievalPolicyInput {
     #[serde(rename="accountId")]
     pub account_id: String,
 }
-
+impl GetDataRetrievalPolicyInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDataRetrievalPolicyInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetDataRetrievalPolicyInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>>(account_id: accountIdType)
+                                            -> GetDataRetrievalPolicyInput {
+        GetDataRetrievalPolicyInput {
+            account_id: account_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the Amazon Glacier response to the <code>GetDataRetrievalPolicy</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetDataRetrievalPolicyOutput {
@@ -281,7 +693,6 @@ pub struct GetDataRetrievalPolicyOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policy: Option<DataRetrievalPolicy>,
 }
-
 #[doc="<p>Provides options for downloading output of an Amazon Glacier job.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetJobOutputInput {
@@ -299,7 +710,49 @@ pub struct GetJobOutputInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl GetJobOutputInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetJobOutputInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetJobOutputInput.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Sets `range`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetJobOutputInput.range = Some(value.into());`.
+    pub fn range<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.range = Some(value.into());
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetJobOutputInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetJobOutputInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>, jobIdType: Into<String>, vaultNameType: Into<String>>
+        (account_id: accountIdType,
+         job_id: jobIdType,
+         vault_name: vaultNameType)
+         -> GetJobOutputInput {
+        GetJobOutputInput {
+            account_id: account_id.into(),
+            job_id: job_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the Amazon Glacier response to your request.</p>"]
 #[derive(Default,Debug,Clone)]
 pub struct GetJobOutputOutput {
@@ -318,7 +771,6 @@ pub struct GetJobOutputOutput {
     #[doc="<p>The HTTP response code for a job output request. The value depends on whether a range was specified in the request.</p>"]
     pub status: Option<i64>,
 }
-
 #[doc="<p>Input for GetVaultAccessPolicy.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetVaultAccessPolicyInput {
@@ -329,7 +781,33 @@ pub struct GetVaultAccessPolicyInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl GetVaultAccessPolicyInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetVaultAccessPolicyInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetVaultAccessPolicyInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetVaultAccessPolicyInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>, vaultNameType: Into<String>>
+        (account_id: accountIdType,
+         vault_name: vaultNameType)
+         -> GetVaultAccessPolicyInput {
+        GetVaultAccessPolicyInput {
+            account_id: account_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Output for GetVaultAccessPolicy.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetVaultAccessPolicyOutput {
@@ -338,7 +816,6 @@ pub struct GetVaultAccessPolicyOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policy: Option<VaultAccessPolicy>,
 }
-
 #[doc="<p>The input values for <code>GetVaultLock</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetVaultLockInput {
@@ -349,7 +826,30 @@ pub struct GetVaultLockInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl GetVaultLockInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetVaultLockInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetVaultLockInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetVaultLockInput with optional fields set to `None`.
+pub fn new<accountIdType: Into<String>, vaultNameType: Into<String>>(account_id: accountIdType, vault_name: vaultNameType) -> GetVaultLockInput{
+        GetVaultLockInput {
+            account_id: account_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the Amazon Glacier response to your request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetVaultLockOutput {
@@ -370,7 +870,6 @@ pub struct GetVaultLockOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub state: Option<String>,
 }
-
 #[doc="<p>Provides options for retrieving the notification configuration set on an Amazon Glacier vault.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetVaultNotificationsInput {
@@ -381,7 +880,33 @@ pub struct GetVaultNotificationsInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl GetVaultNotificationsInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetVaultNotificationsInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetVaultNotificationsInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetVaultNotificationsInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>, vaultNameType: Into<String>>
+        (account_id: accountIdType,
+         vault_name: vaultNameType)
+         -> GetVaultNotificationsInput {
+        GetVaultNotificationsInput {
+            account_id: account_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the Amazon Glacier response to your request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetVaultNotificationsOutput {
@@ -390,7 +915,6 @@ pub struct GetVaultNotificationsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vault_notification_config: Option<VaultNotificationConfig>,
 }
-
 #[doc="<p>Describes an Amazon Glacier job.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GlacierJobDescription {
@@ -467,7 +991,6 @@ pub struct GlacierJobDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vault_arn: Option<String>,
 }
-
 #[doc="<p>Provides options for initiating an Amazon Glacier job.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InitiateJobInput {
@@ -482,7 +1005,37 @@ pub struct InitiateJobInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl InitiateJobInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InitiateJobInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `job_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InitiateJobInput.job_parameters = Some(value.into());`.
+    pub fn job_parameters<ValueType: Into<JobParameters>>(mut self, value: ValueType) -> Self {
+        self.job_parameters = Some(value.into());
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InitiateJobInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of InitiateJobInput with optional fields set to `None`.
+pub fn new<accountIdType: Into<String>, vaultNameType: Into<String>>(account_id: accountIdType, vault_name: vaultNameType) -> InitiateJobInput{
+        InitiateJobInput {
+            account_id: account_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the Amazon Glacier response to your request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InitiateJobOutput {
@@ -495,7 +1048,6 @@ pub struct InitiateJobOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub location: Option<String>,
 }
-
 #[doc="<p>Provides options for initiating a multipart upload to an Amazon Glacier vault.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InitiateMultipartUploadInput {
@@ -514,7 +1066,47 @@ pub struct InitiateMultipartUploadInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl InitiateMultipartUploadInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InitiateMultipartUploadInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `archive_description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InitiateMultipartUploadInput.archive_description = Some(value.into());`.
+    pub fn archive_description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.archive_description = Some(value.into());
+        self
+    }
+    /// Sets `part_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InitiateMultipartUploadInput.part_size = Some(value.into());`.
+    pub fn part_size<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.part_size = Some(value.into());
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InitiateMultipartUploadInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of InitiateMultipartUploadInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>, vaultNameType: Into<String>>
+        (account_id: accountIdType,
+         vault_name: vaultNameType)
+         -> InitiateMultipartUploadInput {
+        InitiateMultipartUploadInput {
+            account_id: account_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The Amazon Glacier response to your request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InitiateMultipartUploadOutput {
@@ -527,7 +1119,6 @@ pub struct InitiateMultipartUploadOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub upload_id: Option<String>,
 }
-
 #[doc="<p>The input values for <code>InitiateVaultLock</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InitiateVaultLockInput {
@@ -542,7 +1133,40 @@ pub struct InitiateVaultLockInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl InitiateVaultLockInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InitiateVaultLockInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InitiateVaultLockInput.policy = Some(value.into());`.
+    pub fn policy<ValueType: Into<VaultLockPolicy>>(mut self, value: ValueType) -> Self {
+        self.policy = Some(value.into());
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InitiateVaultLockInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of InitiateVaultLockInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>, vaultNameType: Into<String>>
+        (account_id: accountIdType,
+         vault_name: vaultNameType)
+         -> InitiateVaultLockInput {
+        InitiateVaultLockInput {
+            account_id: account_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the Amazon Glacier response to your request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InitiateVaultLockOutput {
@@ -551,7 +1175,6 @@ pub struct InitiateVaultLockOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub lock_id: Option<String>,
 }
-
 #[doc="<p>Describes the options for a range inventory retrieval job.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InventoryRetrievalJobDescription {
@@ -576,7 +1199,6 @@ pub struct InventoryRetrievalJobDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub start_date: Option<String>,
 }
-
 #[doc="<p>Provides options for specifying a range inventory retrieval job.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InventoryRetrievalJobInput {
@@ -597,7 +1219,40 @@ pub struct InventoryRetrievalJobInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub start_date: Option<String>,
 }
-
+impl InventoryRetrievalJobInput {
+    /// Sets `end_date`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryRetrievalJobInput.end_date = Some(value.into());`.
+    pub fn end_date<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.end_date = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryRetrievalJobInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryRetrievalJobInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `start_date`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryRetrievalJobInput.start_date = Some(value.into());`.
+    pub fn start_date<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_date = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InventoryRetrievalJobInput with optional fields set to `None`.
+    pub fn new() -> InventoryRetrievalJobInput {
+        InventoryRetrievalJobInput { ..Default::default() }
+    }
+}
 #[doc="<p>Provides options for defining a job.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct JobParameters {
@@ -634,7 +1289,68 @@ pub struct JobParameters {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
+impl JobParameters {
+    /// Sets `archive_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobParameters.archive_id = Some(value.into());`.
+    pub fn archive_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.archive_id = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobParameters.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `format`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobParameters.format = Some(value.into());`.
+    pub fn format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.format = Some(value.into());
+        self
+    }
+    /// Sets `inventory_retrieval_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobParameters.inventory_retrieval_parameters = Some(value.into());`.
+pub fn inventory_retrieval_parameters<ValueType: Into<InventoryRetrievalJobInput>>(mut self, value: ValueType) -> Self{
+        self.inventory_retrieval_parameters = Some(value.into());
+        self
+    }
+    /// Sets `retrieval_byte_range`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobParameters.retrieval_byte_range = Some(value.into());`.
+    pub fn retrieval_byte_range<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.retrieval_byte_range = Some(value.into());
+        self
+    }
+    /// Sets `sns_topic`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobParameters.sns_topic = Some(value.into());`.
+    pub fn sns_topic<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sns_topic = Some(value.into());
+        self
+    }
+    /// Sets `tier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobParameters.tier = Some(value.into());`.
+    pub fn tier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tier = Some(value.into());
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobParameters.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Returns a new instance of JobParameters with optional fields set to `None`.
+    pub fn new() -> JobParameters {
+        JobParameters { ..Default::default() }
+    }
+}
 #[doc="<p>Provides options for retrieving a job list for an Amazon Glacier vault.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListJobsInput {
@@ -661,7 +1377,58 @@ pub struct ListJobsInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl ListJobsInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `completed`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsInput.completed = Some(value.into());`.
+    pub fn completed<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.completed = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `statuscode`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsInput.statuscode = Some(value.into());`.
+    pub fn statuscode<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.statuscode = Some(value.into());
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListJobsInput with optional fields set to `None`.
+pub fn new<accountIdType: Into<String>, vaultNameType: Into<String>>(account_id: accountIdType, vault_name: vaultNameType) -> ListJobsInput{
+        ListJobsInput {
+            account_id: account_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the Amazon Glacier response to your request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListJobsOutput {
@@ -674,7 +1441,6 @@ pub struct ListJobsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
 #[doc="<p>Provides options for retrieving list of in-progress multipart uploads for an Amazon Glacier vault.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListMultipartUploadsInput {
@@ -693,7 +1459,47 @@ pub struct ListMultipartUploadsInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl ListMultipartUploadsInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListMultipartUploadsInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListMultipartUploadsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListMultipartUploadsInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListMultipartUploadsInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListMultipartUploadsInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>, vaultNameType: Into<String>>
+        (account_id: accountIdType,
+         vault_name: vaultNameType)
+         -> ListMultipartUploadsInput {
+        ListMultipartUploadsInput {
+            account_id: account_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the Amazon Glacier response to your request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListMultipartUploadsOutput {
@@ -706,7 +1512,6 @@ pub struct ListMultipartUploadsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub uploads_list: Option<Vec<UploadListElement>>,
 }
-
 #[doc="<p>Provides options for retrieving a list of parts of an archive that have been uploaded in a specific multipart upload.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListPartsInput {
@@ -728,7 +1533,56 @@ pub struct ListPartsInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl ListPartsInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPartsInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPartsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPartsInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `upload_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPartsInput.upload_id = value.into();`.
+    pub fn upload_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.upload_id = value.into();
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPartsInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListPartsInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>, uploadIdType: Into<String>, vaultNameType: Into<String>>
+        (account_id: accountIdType,
+         upload_id: uploadIdType,
+         vault_name: vaultNameType)
+         -> ListPartsInput {
+        ListPartsInput {
+            account_id: account_id.into(),
+            upload_id: upload_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the Amazon Glacier response to your request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListPartsOutput {
@@ -761,14 +1615,29 @@ pub struct ListPartsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vault_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListProvisionedCapacityInput {
     #[doc="<p>The <code>AccountId</code> value is the AWS account ID of the account that owns the vault. You can either specify an AWS account ID or optionally a single '-' (hyphen), in which case Amazon Glacier uses the AWS account ID associated with the credentials used to sign the request. If you use an account ID, don't include any hyphens ('-') in the ID. </p>"]
     #[serde(rename="accountId")]
     pub account_id: String,
 }
-
+impl ListProvisionedCapacityInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListProvisionedCapacityInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListProvisionedCapacityInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>>(account_id: accountIdType)
+                                            -> ListProvisionedCapacityInput {
+        ListProvisionedCapacityInput {
+            account_id: account_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListProvisionedCapacityOutput {
     #[doc="<p>The response body contains the following JSON fields.</p>"]
@@ -776,7 +1645,6 @@ pub struct ListProvisionedCapacityOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub provisioned_capacity_list: Option<Vec<ProvisionedCapacityDescription>>,
 }
-
 #[doc="<p>The input value for <code>ListTagsForVaultInput</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTagsForVaultInput {
@@ -787,7 +1655,33 @@ pub struct ListTagsForVaultInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl ListTagsForVaultInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForVaultInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForVaultInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListTagsForVaultInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>, vaultNameType: Into<String>>
+        (account_id: accountIdType,
+         vault_name: vaultNameType)
+         -> ListTagsForVaultInput {
+        ListTagsForVaultInput {
+            account_id: account_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the Amazon Glacier response to your request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTagsForVaultOutput {
@@ -796,7 +1690,6 @@ pub struct ListTagsForVaultOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<::std::collections::HashMap<String, String>>,
 }
-
 #[doc="<p>Provides options to retrieve the vault list owned by the calling user's account. The list provides metadata information for each vault.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListVaultsInput {
@@ -812,7 +1705,36 @@ pub struct ListVaultsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
+impl ListVaultsInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListVaultsInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListVaultsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListVaultsInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListVaultsInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>>(account_id: accountIdType) -> ListVaultsInput {
+        ListVaultsInput {
+            account_id: account_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the Amazon Glacier response to your request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListVaultsOutput {
@@ -825,7 +1747,6 @@ pub struct ListVaultsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vault_list: Option<Vec<DescribeVaultOutput>>,
 }
-
 #[doc="<p>A list of the part sizes of the multipart upload.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PartListElement {
@@ -838,7 +1759,6 @@ pub struct PartListElement {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sha256_tree_hash: Option<String>,
 }
-
 #[doc="<p>The definition for a provisioned capacity unit.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ProvisionedCapacityDescription {
@@ -855,14 +1775,29 @@ pub struct ProvisionedCapacityDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub start_date: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PurchaseProvisionedCapacityInput {
     #[doc="<p>The AWS account ID of the account that owns the vault. You can either specify an AWS account ID or optionally a single '-' (hyphen), in which case Amazon Glacier uses the AWS account ID associated with the credentials used to sign the request. If you use an account ID, don't include any hyphens ('-') in the ID. </p>"]
     #[serde(rename="accountId")]
     pub account_id: String,
 }
-
+impl PurchaseProvisionedCapacityInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseProvisionedCapacityInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Returns a new instance of PurchaseProvisionedCapacityInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>>(account_id: accountIdType)
+                                            -> PurchaseProvisionedCapacityInput {
+        PurchaseProvisionedCapacityInput {
+            account_id: account_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PurchaseProvisionedCapacityOutput {
     #[doc="<p>The ID that identifies the provisioned capacity unit.</p>"]
@@ -870,7 +1805,6 @@ pub struct PurchaseProvisionedCapacityOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub capacity_id: Option<String>,
 }
-
 #[doc="<p>The input value for <code>RemoveTagsFromVaultInput</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RemoveTagsFromVaultInput {
@@ -885,7 +1819,40 @@ pub struct RemoveTagsFromVaultInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl RemoveTagsFromVaultInput {
+    /// Sets `tag_keys`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromVaultInput.tag_keys = Some(value.into());`.
+    pub fn tag_keys<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tag_keys = Some(value.into());
+        self
+    }
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromVaultInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromVaultInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveTagsFromVaultInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>, vaultNameType: Into<String>>
+        (account_id: accountIdType,
+         vault_name: vaultNameType)
+         -> RemoveTagsFromVaultInput {
+        RemoveTagsFromVaultInput {
+            account_id: account_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>SetDataRetrievalPolicy input.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SetDataRetrievalPolicyInput {
@@ -897,7 +1864,30 @@ pub struct SetDataRetrievalPolicyInput {
     #[serde(rename="accountId")]
     pub account_id: String,
 }
-
+impl SetDataRetrievalPolicyInput {
+    /// Sets `policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetDataRetrievalPolicyInput.policy = Some(value.into());`.
+    pub fn policy<ValueType: Into<DataRetrievalPolicy>>(mut self, value: ValueType) -> Self {
+        self.policy = Some(value.into());
+        self
+    }
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetDataRetrievalPolicyInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Returns a new instance of SetDataRetrievalPolicyInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>>(account_id: accountIdType)
+                                            -> SetDataRetrievalPolicyInput {
+        SetDataRetrievalPolicyInput {
+            account_id: account_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>SetVaultAccessPolicy input.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SetVaultAccessPolicyInput {
@@ -912,7 +1902,40 @@ pub struct SetVaultAccessPolicyInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl SetVaultAccessPolicyInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetVaultAccessPolicyInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetVaultAccessPolicyInput.policy = Some(value.into());`.
+    pub fn policy<ValueType: Into<VaultAccessPolicy>>(mut self, value: ValueType) -> Self {
+        self.policy = Some(value.into());
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetVaultAccessPolicyInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of SetVaultAccessPolicyInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>, vaultNameType: Into<String>>
+        (account_id: accountIdType,
+         vault_name: vaultNameType)
+         -> SetVaultAccessPolicyInput {
+        SetVaultAccessPolicyInput {
+            account_id: account_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides options to configure notifications that will be sent when specific events happen to a vault.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SetVaultNotificationsInput {
@@ -927,7 +1950,42 @@ pub struct SetVaultNotificationsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vault_notification_config: Option<VaultNotificationConfig>,
 }
-
+impl SetVaultNotificationsInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetVaultNotificationsInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetVaultNotificationsInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Sets `vault_notification_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetVaultNotificationsInput.vault_notification_config = Some(value.into());`.
+    pub fn vault_notification_config<ValueType: Into<VaultNotificationConfig>>(mut self,
+                                                                               value: ValueType)
+                                                                               -> Self {
+        self.vault_notification_config = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SetVaultNotificationsInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>, vaultNameType: Into<String>>
+        (account_id: accountIdType,
+         vault_name: vaultNameType)
+         -> SetVaultNotificationsInput {
+        SetVaultNotificationsInput {
+            account_id: account_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides options to add an archive to a vault.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UploadArchiveInput {
@@ -954,7 +2012,51 @@ pub struct UploadArchiveInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl UploadArchiveInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadArchiveInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `archive_description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadArchiveInput.archive_description = Some(value.into());`.
+    pub fn archive_description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.archive_description = Some(value.into());
+        self
+    }
+    /// Sets `body`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadArchiveInput.body = Some(value.into());`.
+    pub fn body<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.body = Some(value.into());
+        self
+    }
+    /// Sets `checksum`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadArchiveInput.checksum = Some(value.into());`.
+    pub fn checksum<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.checksum = Some(value.into());
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadArchiveInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of UploadArchiveInput with optional fields set to `None`.
+pub fn new<accountIdType: Into<String>, vaultNameType: Into<String>>(account_id: accountIdType, vault_name: vaultNameType) -> UploadArchiveInput{
+        UploadArchiveInput {
+            account_id: account_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A list of in-progress multipart uploads for a vault.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UploadListElement {
@@ -979,7 +2081,6 @@ pub struct UploadListElement {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vault_arn: Option<String>,
 }
-
 #[doc="<p>Provides options to upload a part of an archive in a multipart upload operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UploadMultipartPartInput {
@@ -1009,7 +2110,63 @@ pub struct UploadMultipartPartInput {
     #[serde(rename="vaultName")]
     pub vault_name: String,
 }
-
+impl UploadMultipartPartInput {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadMultipartPartInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `body`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadMultipartPartInput.body = Some(value.into());`.
+    pub fn body<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.body = Some(value.into());
+        self
+    }
+    /// Sets `checksum`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadMultipartPartInput.checksum = Some(value.into());`.
+    pub fn checksum<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.checksum = Some(value.into());
+        self
+    }
+    /// Sets `range`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadMultipartPartInput.range = Some(value.into());`.
+    pub fn range<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.range = Some(value.into());
+        self
+    }
+    /// Sets `upload_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadMultipartPartInput.upload_id = value.into();`.
+    pub fn upload_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.upload_id = value.into();
+        self
+    }
+    /// Sets `vault_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadMultipartPartInput.vault_name = value.into();`.
+    pub fn vault_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vault_name = value.into();
+        self
+    }
+    /// Returns a new instance of UploadMultipartPartInput with optional fields set to `None`.
+    pub fn new<accountIdType: Into<String>, uploadIdType: Into<String>, vaultNameType: Into<String>>
+        (account_id: accountIdType,
+         upload_id: uploadIdType,
+         vault_name: vaultNameType)
+         -> UploadMultipartPartInput {
+        UploadMultipartPartInput {
+            account_id: account_id.into(),
+            upload_id: upload_id.into(),
+            vault_name: vault_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the Amazon Glacier response to your request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UploadMultipartPartOutput {
@@ -1018,7 +2175,6 @@ pub struct UploadMultipartPartOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub checksum: Option<String>,
 }
-
 #[doc="<p>Contains the vault access policy.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct VaultAccessPolicy {
@@ -1027,7 +2183,19 @@ pub struct VaultAccessPolicy {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policy: Option<String>,
 }
-
+impl VaultAccessPolicy {
+    /// Sets `policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VaultAccessPolicy.policy = Some(value.into());`.
+    pub fn policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of VaultAccessPolicy with optional fields set to `None`.
+    pub fn new() -> VaultAccessPolicy {
+        VaultAccessPolicy { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the vault lock policy.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct VaultLockPolicy {
@@ -1036,7 +2204,19 @@ pub struct VaultLockPolicy {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policy: Option<String>,
 }
-
+impl VaultLockPolicy {
+    /// Sets `policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VaultLockPolicy.policy = Some(value.into());`.
+    pub fn policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of VaultLockPolicy with optional fields set to `None`.
+    pub fn new() -> VaultLockPolicy {
+        VaultLockPolicy { ..Default::default() }
+    }
+}
 #[doc="<p>Represents a vault's notification configuration.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct VaultNotificationConfig {
@@ -1049,7 +2229,26 @@ pub struct VaultNotificationConfig {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sns_topic: Option<String>,
 }
-
+impl VaultNotificationConfig {
+    /// Sets `events`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VaultNotificationConfig.events = Some(value.into());`.
+    pub fn events<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.events = Some(value.into());
+        self
+    }
+    /// Sets `sns_topic`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VaultNotificationConfig.sns_topic = Some(value.into());`.
+    pub fn sns_topic<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sns_topic = Some(value.into());
+        self
+    }
+    /// Returns a new instance of VaultNotificationConfig with optional fields set to `None`.
+    pub fn new() -> VaultNotificationConfig {
+        VaultNotificationConfig { ..Default::default() }
+    }
+}
 /// Errors returned by AbortMultipartUpload
 #[derive(Debug, PartialEq)]
 pub enum AbortMultipartUploadError {

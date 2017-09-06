@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -37,14 +38,39 @@ pub struct AddAttributesToFindingsRequest {
     #[serde(rename="findingArns")]
     pub finding_arns: Vec<String>,
 }
-
+impl AddAttributesToFindingsRequest {
+    /// Sets `attributes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddAttributesToFindingsRequest.attributes = value.into();`.
+    pub fn attributes<ValueType: Into<Vec<Attribute>>>(mut self, value: ValueType) -> Self {
+        self.attributes = value.into();
+        self
+    }
+    /// Sets `finding_arns`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddAttributesToFindingsRequest.finding_arns = value.into();`.
+    pub fn finding_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.finding_arns = value.into();
+        self
+    }
+    /// Returns a new instance of AddAttributesToFindingsRequest with optional fields set to `None`.
+    pub fn new<attributesType: Into<Vec<Attribute>>, findingArnsType: Into<Vec<String>>>
+        (attributes: attributesType,
+         finding_arns: findingArnsType)
+         -> AddAttributesToFindingsRequest {
+        AddAttributesToFindingsRequest {
+            attributes: attributes.into(),
+            finding_arns: finding_arns.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddAttributesToFindingsResponse {
     #[doc="<p>Attribute details that cannot be described. An error code is provided for each failed item.</p>"]
     #[serde(rename="failedItems")]
     pub failed_items: ::std::collections::HashMap<String, FailedItemDetails>,
 }
-
 #[doc="<p>Used in the exception error that is thrown if you start an assessment run for an assessment target that includes an EC2 instance that is already participating in another started assessment run.</p>"]
 #[derive(Default,Debug,Clone)]
 pub struct AgentAlreadyRunningAssessment {
@@ -53,7 +79,6 @@ pub struct AgentAlreadyRunningAssessment {
     #[doc="<p>The ARN of the assessment run that has already been started.</p>"]
     pub assessment_run_arn: String,
 }
-
 #[doc="<p>Contains information about an Amazon Inspector agent. This data type is used as a request parameter in the <a>ListAssessmentRunAgents</a> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AgentFilter {
@@ -64,7 +89,33 @@ pub struct AgentFilter {
     #[serde(rename="agentHealths")]
     pub agent_healths: Vec<String>,
 }
-
+impl AgentFilter {
+    /// Sets `agent_health_codes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AgentFilter.agent_health_codes = value.into();`.
+    pub fn agent_health_codes<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.agent_health_codes = value.into();
+        self
+    }
+    /// Sets `agent_healths`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AgentFilter.agent_healths = value.into();`.
+    pub fn agent_healths<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.agent_healths = value.into();
+        self
+    }
+    /// Returns a new instance of AgentFilter with optional fields set to `None`.
+    pub fn new<agentHealthCodesType: Into<Vec<String>>, agentHealthsType: Into<Vec<String>>>
+        (agent_health_codes: agentHealthCodesType,
+         agent_healths: agentHealthsType)
+         -> AgentFilter {
+        AgentFilter {
+            agent_health_codes: agent_health_codes.into(),
+            agent_healths: agent_healths.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Used as a response element in the <a>PreviewAgents</a> action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AgentPreview {
@@ -76,7 +127,6 @@ pub struct AgentPreview {
     #[serde(skip_serializing_if="Option::is_none")]
     pub auto_scaling_group: Option<String>,
 }
-
 #[doc="<p>A snapshot of an Amazon Inspector assessment run that contains the findings of the assessment run .</p> <p>Used as the response element in the <a>DescribeAssessmentRuns</a> action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AssessmentRun {
@@ -128,7 +178,6 @@ pub struct AssessmentRun {
     #[serde(rename="userAttributesForFindings")]
     pub user_attributes_for_findings: Vec<Attribute>,
 }
-
 #[doc="<p>Contains information about an Amazon Inspector agent. This data type is used as a response element in the <a>ListAssessmentRunAgents</a> action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AssessmentRunAgent {
@@ -156,7 +205,6 @@ pub struct AssessmentRunAgent {
     #[serde(rename="telemetryMetadata")]
     pub telemetry_metadata: Vec<TelemetryMetadata>,
 }
-
 #[doc="<p>Used as the request parameter in the <a>ListAssessmentRuns</a> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AssessmentRunFilter {
@@ -189,7 +237,65 @@ pub struct AssessmentRunFilter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub states: Option<Vec<String>>,
 }
-
+impl AssessmentRunFilter {
+    /// Sets `completion_time_range`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssessmentRunFilter.completion_time_range = Some(value.into());`.
+    pub fn completion_time_range<ValueType: Into<TimestampRange>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.completion_time_range = Some(value.into());
+        self
+    }
+    /// Sets `duration_range`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssessmentRunFilter.duration_range = Some(value.into());`.
+    pub fn duration_range<ValueType: Into<DurationRange>>(mut self, value: ValueType) -> Self {
+        self.duration_range = Some(value.into());
+        self
+    }
+    /// Sets `name_pattern`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssessmentRunFilter.name_pattern = Some(value.into());`.
+    pub fn name_pattern<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name_pattern = Some(value.into());
+        self
+    }
+    /// Sets `rules_package_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssessmentRunFilter.rules_package_arns = Some(value.into());`.
+    pub fn rules_package_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.rules_package_arns = Some(value.into());
+        self
+    }
+    /// Sets `start_time_range`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssessmentRunFilter.start_time_range = Some(value.into());`.
+    pub fn start_time_range<ValueType: Into<TimestampRange>>(mut self, value: ValueType) -> Self {
+        self.start_time_range = Some(value.into());
+        self
+    }
+    /// Sets `state_change_time_range`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssessmentRunFilter.state_change_time_range = Some(value.into());`.
+    pub fn state_change_time_range<ValueType: Into<TimestampRange>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.state_change_time_range = Some(value.into());
+        self
+    }
+    /// Sets `states`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssessmentRunFilter.states = Some(value.into());`.
+    pub fn states<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.states = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AssessmentRunFilter with optional fields set to `None`.
+    pub fn new() -> AssessmentRunFilter {
+        AssessmentRunFilter { ..Default::default() }
+    }
+}
 #[doc="<p>Used as one of the elements of the <a>AssessmentRun</a> data type.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AssessmentRunNotification {
@@ -215,7 +321,6 @@ pub struct AssessmentRunNotification {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sns_topic_arn: Option<String>,
 }
-
 #[doc="<p>Used as one of the elements of the <a>AssessmentRun</a> data type.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AssessmentRunStateChange {
@@ -226,7 +331,6 @@ pub struct AssessmentRunStateChange {
     #[serde(rename="stateChangedAt")]
     pub state_changed_at: f64,
 }
-
 #[doc="<p>Contains information about an Amazon Inspector application. This data type is used as the response element in the <a>DescribeAssessmentTargets</a> action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AssessmentTarget {
@@ -246,7 +350,6 @@ pub struct AssessmentTarget {
     #[serde(rename="updatedAt")]
     pub updated_at: f64,
 }
-
 #[doc="<p>Used as the request parameter in the <a>ListAssessmentTargets</a> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AssessmentTargetFilter {
@@ -255,7 +358,21 @@ pub struct AssessmentTargetFilter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub assessment_target_name_pattern: Option<String>,
 }
-
+impl AssessmentTargetFilter {
+    /// Sets `assessment_target_name_pattern`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssessmentTargetFilter.assessment_target_name_pattern = Some(value.into());`.
+    pub fn assessment_target_name_pattern<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.assessment_target_name_pattern = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AssessmentTargetFilter with optional fields set to `None`.
+    pub fn new() -> AssessmentTargetFilter {
+        AssessmentTargetFilter { ..Default::default() }
+    }
+}
 #[doc="<p>Contains information about an Amazon Inspector assessment template. This data type is used as the response element in the <a>DescribeAssessmentTemplates</a> action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AssessmentTemplate {
@@ -281,7 +398,6 @@ pub struct AssessmentTemplate {
     #[serde(rename="userAttributesForFindings")]
     pub user_attributes_for_findings: Vec<Attribute>,
 }
-
 #[doc="<p>Used as the request parameter in the <a>ListAssessmentTemplates</a> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AssessmentTemplateFilter {
@@ -298,7 +414,33 @@ pub struct AssessmentTemplateFilter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rules_package_arns: Option<Vec<String>>,
 }
-
+impl AssessmentTemplateFilter {
+    /// Sets `duration_range`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssessmentTemplateFilter.duration_range = Some(value.into());`.
+    pub fn duration_range<ValueType: Into<DurationRange>>(mut self, value: ValueType) -> Self {
+        self.duration_range = Some(value.into());
+        self
+    }
+    /// Sets `name_pattern`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssessmentTemplateFilter.name_pattern = Some(value.into());`.
+    pub fn name_pattern<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name_pattern = Some(value.into());
+        self
+    }
+    /// Sets `rules_package_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssessmentTemplateFilter.rules_package_arns = Some(value.into());`.
+    pub fn rules_package_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.rules_package_arns = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AssessmentTemplateFilter with optional fields set to `None`.
+    pub fn new() -> AssessmentTemplateFilter {
+        AssessmentTemplateFilter { ..Default::default() }
+    }
+}
 #[doc="<p>A collection of attributes of the host from which the finding is generated.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AssetAttributes {
@@ -326,7 +468,6 @@ pub struct AssetAttributes {
     #[serde(rename="schemaVersion")]
     pub schema_version: i64,
 }
-
 #[doc="<p>This data type is used as a request parameter in the <a>AddAttributesToFindings</a> and <a>CreateAssessmentTemplate</a> actions.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Attribute {
@@ -338,7 +479,29 @@ pub struct Attribute {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl Attribute {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Attribute.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Attribute.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Attribute with optional fields set to `None`.
+    pub fn new<keyType: Into<String>>(key: keyType) -> Attribute {
+        Attribute {
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateAssessmentTargetRequest {
     #[doc="<p>The user-defined name that identifies the assessment target that you want to create. The name must be unique within the AWS account.</p>"]
@@ -348,14 +511,39 @@ pub struct CreateAssessmentTargetRequest {
     #[serde(rename="resourceGroupArn")]
     pub resource_group_arn: String,
 }
-
+impl CreateAssessmentTargetRequest {
+    /// Sets `assessment_target_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssessmentTargetRequest.assessment_target_name = value.into();`.
+    pub fn assessment_target_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.assessment_target_name = value.into();
+        self
+    }
+    /// Sets `resource_group_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssessmentTargetRequest.resource_group_arn = value.into();`.
+    pub fn resource_group_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_group_arn = value.into();
+        self
+    }
+    /// Returns a new instance of CreateAssessmentTargetRequest with optional fields set to `None`.
+    pub fn new<assessmentTargetNameType: Into<String>, resourceGroupArnType: Into<String>>
+        (assessment_target_name: assessmentTargetNameType,
+         resource_group_arn: resourceGroupArnType)
+         -> CreateAssessmentTargetRequest {
+        CreateAssessmentTargetRequest {
+            assessment_target_name: assessment_target_name.into(),
+            resource_group_arn: resource_group_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateAssessmentTargetResponse {
     #[doc="<p>The ARN that specifies the assessment target that is created.</p>"]
     #[serde(rename="assessmentTargetArn")]
     pub assessment_target_arn: String,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateAssessmentTemplateRequest {
     #[doc="<p>The ARN that specifies the assessment target for which you want to create the assessment template.</p>"]
@@ -375,56 +563,190 @@ pub struct CreateAssessmentTemplateRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_attributes_for_findings: Option<Vec<Attribute>>,
 }
-
+impl CreateAssessmentTemplateRequest {
+    /// Sets `assessment_target_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssessmentTemplateRequest.assessment_target_arn = value.into();`.
+    pub fn assessment_target_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.assessment_target_arn = value.into();
+        self
+    }
+    /// Sets `assessment_template_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssessmentTemplateRequest.assessment_template_name = value.into();`.
+    pub fn assessment_template_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.assessment_template_name = value.into();
+        self
+    }
+    /// Sets `duration_in_seconds`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssessmentTemplateRequest.duration_in_seconds = value.into();`.
+    pub fn duration_in_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.duration_in_seconds = value.into();
+        self
+    }
+    /// Sets `rules_package_arns`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssessmentTemplateRequest.rules_package_arns = value.into();`.
+    pub fn rules_package_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.rules_package_arns = value.into();
+        self
+    }
+    /// Sets `user_attributes_for_findings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssessmentTemplateRequest.user_attributes_for_findings = Some(value.into());`.
+    pub fn user_attributes_for_findings<ValueType: Into<Vec<Attribute>>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.user_attributes_for_findings = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateAssessmentTemplateRequest with optional fields set to `None`.
+    pub fn new<assessmentTargetArnType: Into<String>,
+               assessmentTemplateNameType: Into<String>,
+               durationInSecondsType: Into<i64>,
+               rulesPackageArnsType: Into<Vec<String>>>
+        (assessment_target_arn: assessmentTargetArnType,
+         assessment_template_name: assessmentTemplateNameType,
+         duration_in_seconds: durationInSecondsType,
+         rules_package_arns: rulesPackageArnsType)
+         -> CreateAssessmentTemplateRequest {
+        CreateAssessmentTemplateRequest {
+            assessment_target_arn: assessment_target_arn.into(),
+            assessment_template_name: assessment_template_name.into(),
+            duration_in_seconds: duration_in_seconds.into(),
+            rules_package_arns: rules_package_arns.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateAssessmentTemplateResponse {
     #[doc="<p>The ARN that specifies the assessment template that is created.</p>"]
     #[serde(rename="assessmentTemplateArn")]
     pub assessment_template_arn: String,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateResourceGroupRequest {
     #[doc="<p>A collection of keys and an array of possible values, '[{\"key\":\"key1\",\"values\":[\"Value1\",\"Value2\"]},{\"key\":\"Key2\",\"values\":[\"Value3\"]}]'.</p> <p>For example,'[{\"key\":\"Name\",\"values\":[\"TestEC2Instance\"]}]'.</p>"]
     #[serde(rename="resourceGroupTags")]
     pub resource_group_tags: Vec<ResourceGroupTag>,
 }
-
+impl CreateResourceGroupRequest {
+    /// Sets `resource_group_tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateResourceGroupRequest.resource_group_tags = value.into();`.
+    pub fn resource_group_tags<ValueType: Into<Vec<ResourceGroupTag>>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.resource_group_tags = value.into();
+        self
+    }
+    /// Returns a new instance of CreateResourceGroupRequest with optional fields set to `None`.
+    pub fn new<resourceGroupTagsType: Into<Vec<ResourceGroupTag>>>
+        (resource_group_tags: resourceGroupTagsType)
+         -> CreateResourceGroupRequest {
+        CreateResourceGroupRequest {
+            resource_group_tags: resource_group_tags.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateResourceGroupResponse {
     #[doc="<p>The ARN that specifies the resource group that is created.</p>"]
     #[serde(rename="resourceGroupArn")]
     pub resource_group_arn: String,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteAssessmentRunRequest {
     #[doc="<p>The ARN that specifies the assessment run that you want to delete.</p>"]
     #[serde(rename="assessmentRunArn")]
     pub assessment_run_arn: String,
 }
-
+impl DeleteAssessmentRunRequest {
+    /// Sets `assessment_run_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAssessmentRunRequest.assessment_run_arn = value.into();`.
+    pub fn assessment_run_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.assessment_run_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteAssessmentRunRequest with optional fields set to `None`.
+    pub fn new<assessmentRunArnType: Into<String>>(assessment_run_arn: assessmentRunArnType)
+                                                   -> DeleteAssessmentRunRequest {
+        DeleteAssessmentRunRequest {
+            assessment_run_arn: assessment_run_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteAssessmentTargetRequest {
     #[doc="<p>The ARN that specifies the assessment target that you want to delete.</p>"]
     #[serde(rename="assessmentTargetArn")]
     pub assessment_target_arn: String,
 }
-
+impl DeleteAssessmentTargetRequest {
+    /// Sets `assessment_target_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAssessmentTargetRequest.assessment_target_arn = value.into();`.
+    pub fn assessment_target_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.assessment_target_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteAssessmentTargetRequest with optional fields set to `None`.
+pub fn new<assessmentTargetArnType: Into<String>>(assessment_target_arn: assessmentTargetArnType) -> DeleteAssessmentTargetRequest{
+        DeleteAssessmentTargetRequest {
+            assessment_target_arn: assessment_target_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteAssessmentTemplateRequest {
     #[doc="<p>The ARN that specifies the assessment template that you want to delete.</p>"]
     #[serde(rename="assessmentTemplateArn")]
     pub assessment_template_arn: String,
 }
-
+impl DeleteAssessmentTemplateRequest {
+    /// Sets `assessment_template_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAssessmentTemplateRequest.assessment_template_arn = value.into();`.
+    pub fn assessment_template_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.assessment_template_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteAssessmentTemplateRequest with optional fields set to `None`.
+pub fn new<assessmentTemplateArnType: Into<String>>(assessment_template_arn: assessmentTemplateArnType) -> DeleteAssessmentTemplateRequest{
+        DeleteAssessmentTemplateRequest {
+            assessment_template_arn: assessment_template_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeAssessmentRunsRequest {
     #[doc="<p>The ARN that specifies the assessment run that you want to describe.</p>"]
     #[serde(rename="assessmentRunArns")]
     pub assessment_run_arns: Vec<String>,
 }
-
+impl DescribeAssessmentRunsRequest {
+    /// Sets `assessment_run_arns`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAssessmentRunsRequest.assessment_run_arns = value.into();`.
+    pub fn assessment_run_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.assessment_run_arns = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeAssessmentRunsRequest with optional fields set to `None`.
+pub fn new<assessmentRunArnsType: Into<Vec<String>>>(assessment_run_arns: assessmentRunArnsType) -> DescribeAssessmentRunsRequest{
+        DescribeAssessmentRunsRequest {
+            assessment_run_arns: assessment_run_arns.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeAssessmentRunsResponse {
     #[doc="<p>Information about the assessment run.</p>"]
@@ -434,14 +756,30 @@ pub struct DescribeAssessmentRunsResponse {
     #[serde(rename="failedItems")]
     pub failed_items: ::std::collections::HashMap<String, FailedItemDetails>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeAssessmentTargetsRequest {
     #[doc="<p>The ARNs that specifies the assessment targets that you want to describe.</p>"]
     #[serde(rename="assessmentTargetArns")]
     pub assessment_target_arns: Vec<String>,
 }
-
+impl DescribeAssessmentTargetsRequest {
+    /// Sets `assessment_target_arns`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAssessmentTargetsRequest.assessment_target_arns = value.into();`.
+    pub fn assessment_target_arns<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.assessment_target_arns = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeAssessmentTargetsRequest with optional fields set to `None`.
+pub fn new<assessmentTargetArnsType: Into<Vec<String>>>(assessment_target_arns: assessmentTargetArnsType) -> DescribeAssessmentTargetsRequest{
+        DescribeAssessmentTargetsRequest {
+            assessment_target_arns: assessment_target_arns.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeAssessmentTargetsResponse {
     #[doc="<p>Information about the assessment targets.</p>"]
@@ -451,13 +789,31 @@ pub struct DescribeAssessmentTargetsResponse {
     #[serde(rename="failedItems")]
     pub failed_items: ::std::collections::HashMap<String, FailedItemDetails>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeAssessmentTemplatesRequest {
     #[serde(rename="assessmentTemplateArns")]
     pub assessment_template_arns: Vec<String>,
 }
-
+impl DescribeAssessmentTemplatesRequest {
+    /// Sets `assessment_template_arns`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAssessmentTemplatesRequest.assessment_template_arns = value.into();`.
+    pub fn assessment_template_arns<ValueType: Into<Vec<String>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.assessment_template_arns = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeAssessmentTemplatesRequest with optional fields set to `None`.
+    pub fn new<assessmentTemplateArnsType: Into<Vec<String>>>
+        (assessment_template_arns: assessmentTemplateArnsType)
+         -> DescribeAssessmentTemplatesRequest {
+        DescribeAssessmentTemplatesRequest {
+            assessment_template_arns: assessment_template_arns.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeAssessmentTemplatesResponse {
     #[doc="<p>Information about the assessment templates.</p>"]
@@ -467,7 +823,6 @@ pub struct DescribeAssessmentTemplatesResponse {
     #[serde(rename="failedItems")]
     pub failed_items: ::std::collections::HashMap<String, FailedItemDetails>,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeCrossAccountAccessRoleResponse {
     #[doc="<p>The date when the cross-account access role was registered.</p>"]
@@ -480,7 +835,6 @@ pub struct DescribeCrossAccountAccessRoleResponse {
     #[serde(rename="valid")]
     pub valid: bool,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeFindingsRequest {
     #[doc="<p>The ARN that specifies the finding that you want to describe.</p>"]
@@ -491,7 +845,30 @@ pub struct DescribeFindingsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub locale: Option<String>,
 }
-
+impl DescribeFindingsRequest {
+    /// Sets `finding_arns`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFindingsRequest.finding_arns = value.into();`.
+    pub fn finding_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.finding_arns = value.into();
+        self
+    }
+    /// Sets `locale`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFindingsRequest.locale = Some(value.into());`.
+    pub fn locale<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.locale = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeFindingsRequest with optional fields set to `None`.
+    pub fn new<findingArnsType: Into<Vec<String>>>(finding_arns: findingArnsType)
+                                                   -> DescribeFindingsRequest {
+        DescribeFindingsRequest {
+            finding_arns: finding_arns.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeFindingsResponse {
     #[doc="<p>Finding details that cannot be described. An error code is provided for each failed item.</p>"]
@@ -501,14 +878,28 @@ pub struct DescribeFindingsResponse {
     #[serde(rename="findings")]
     pub findings: Vec<Finding>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeResourceGroupsRequest {
     #[doc="<p>The ARN that specifies the resource group that you want to describe.</p>"]
     #[serde(rename="resourceGroupArns")]
     pub resource_group_arns: Vec<String>,
 }
-
+impl DescribeResourceGroupsRequest {
+    /// Sets `resource_group_arns`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeResourceGroupsRequest.resource_group_arns = value.into();`.
+    pub fn resource_group_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resource_group_arns = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeResourceGroupsRequest with optional fields set to `None`.
+pub fn new<resourceGroupArnsType: Into<Vec<String>>>(resource_group_arns: resourceGroupArnsType) -> DescribeResourceGroupsRequest{
+        DescribeResourceGroupsRequest {
+            resource_group_arns: resource_group_arns.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeResourceGroupsResponse {
     #[doc="<p>Resource group details that cannot be described. An error code is provided for each failed item.</p>"]
@@ -518,7 +909,6 @@ pub struct DescribeResourceGroupsResponse {
     #[serde(rename="resourceGroups")]
     pub resource_groups: Vec<ResourceGroup>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeRulesPackagesRequest {
     #[doc="<p>The locale that you want to translate a rules package description into.</p>"]
@@ -529,7 +919,30 @@ pub struct DescribeRulesPackagesRequest {
     #[serde(rename="rulesPackageArns")]
     pub rules_package_arns: Vec<String>,
 }
-
+impl DescribeRulesPackagesRequest {
+    /// Sets `locale`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRulesPackagesRequest.locale = Some(value.into());`.
+    pub fn locale<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.locale = Some(value.into());
+        self
+    }
+    /// Sets `rules_package_arns`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRulesPackagesRequest.rules_package_arns = value.into();`.
+    pub fn rules_package_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.rules_package_arns = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeRulesPackagesRequest with optional fields set to `None`.
+    pub fn new<rulesPackageArnsType: Into<Vec<String>>>(rules_package_arns: rulesPackageArnsType)
+                                                        -> DescribeRulesPackagesRequest {
+        DescribeRulesPackagesRequest {
+            rules_package_arns: rules_package_arns.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeRulesPackagesResponse {
     #[doc="<p>Rules package details that cannot be described. An error code is provided for each failed item.</p>"]
@@ -539,7 +952,6 @@ pub struct DescribeRulesPackagesResponse {
     #[serde(rename="rulesPackages")]
     pub rules_packages: Vec<RulesPackage>,
 }
-
 #[doc="<p>This data type is used in the <a>AssessmentTemplateFilter</a> data type.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DurationRange {
@@ -552,7 +964,26 @@ pub struct DurationRange {
     #[serde(skip_serializing_if="Option::is_none")]
     pub min_seconds: Option<i64>,
 }
-
+impl DurationRange {
+    /// Sets `max_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DurationRange.max_seconds = Some(value.into());`.
+    pub fn max_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_seconds = Some(value.into());
+        self
+    }
+    /// Sets `min_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DurationRange.min_seconds = Some(value.into());`.
+    pub fn min_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.min_seconds = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DurationRange with optional fields set to `None`.
+    pub fn new() -> DurationRange {
+        DurationRange { ..Default::default() }
+    }
+}
 #[doc="<p>This data type is used in the <a>Subscription</a> data type.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EventSubscription {
@@ -563,7 +994,6 @@ pub struct EventSubscription {
     #[serde(rename="subscribedAt")]
     pub subscribed_at: f64,
 }
-
 #[doc="<p>Includes details about the failed items.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct FailedItemDetails {
@@ -574,7 +1004,6 @@ pub struct FailedItemDetails {
     #[serde(rename="retryable")]
     pub retryable: bool,
 }
-
 #[doc="<p>Contains information about an Amazon Inspector finding. This data type is used as the response element in the <a>DescribeFindings</a> action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Finding {
@@ -646,7 +1075,6 @@ pub struct Finding {
     #[serde(rename="userAttributes")]
     pub user_attributes: Vec<Attribute>,
 }
-
 #[doc="<p>This data type is used as a request parameter in the <a>ListFindings</a> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct FindingFilter {
@@ -683,7 +1111,70 @@ pub struct FindingFilter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_attributes: Option<Vec<Attribute>>,
 }
-
+impl FindingFilter {
+    /// Sets `agent_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FindingFilter.agent_ids = Some(value.into());`.
+    pub fn agent_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.agent_ids = Some(value.into());
+        self
+    }
+    /// Sets `attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FindingFilter.attributes = Some(value.into());`.
+    pub fn attributes<ValueType: Into<Vec<Attribute>>>(mut self, value: ValueType) -> Self {
+        self.attributes = Some(value.into());
+        self
+    }
+    /// Sets `auto_scaling_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FindingFilter.auto_scaling_groups = Some(value.into());`.
+    pub fn auto_scaling_groups<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_groups = Some(value.into());
+        self
+    }
+    /// Sets `creation_time_range`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FindingFilter.creation_time_range = Some(value.into());`.
+    pub fn creation_time_range<ValueType: Into<TimestampRange>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.creation_time_range = Some(value.into());
+        self
+    }
+    /// Sets `rule_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FindingFilter.rule_names = Some(value.into());`.
+    pub fn rule_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.rule_names = Some(value.into());
+        self
+    }
+    /// Sets `rules_package_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FindingFilter.rules_package_arns = Some(value.into());`.
+    pub fn rules_package_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.rules_package_arns = Some(value.into());
+        self
+    }
+    /// Sets `severities`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FindingFilter.severities = Some(value.into());`.
+    pub fn severities<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.severities = Some(value.into());
+        self
+    }
+    /// Sets `user_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FindingFilter.user_attributes = Some(value.into());`.
+    pub fn user_attributes<ValueType: Into<Vec<Attribute>>>(mut self, value: ValueType) -> Self {
+        self.user_attributes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of FindingFilter with optional fields set to `None`.
+    pub fn new() -> FindingFilter {
+        FindingFilter { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetAssessmentReportRequest {
     #[doc="<p>The ARN that specifies the assessment run for which you want to generate a report.</p>"]
@@ -696,7 +1187,44 @@ pub struct GetAssessmentReportRequest {
     #[serde(rename="reportType")]
     pub report_type: String,
 }
-
+impl GetAssessmentReportRequest {
+    /// Sets `assessment_run_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetAssessmentReportRequest.assessment_run_arn = value.into();`.
+    pub fn assessment_run_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.assessment_run_arn = value.into();
+        self
+    }
+    /// Sets `report_file_format`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetAssessmentReportRequest.report_file_format = value.into();`.
+    pub fn report_file_format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.report_file_format = value.into();
+        self
+    }
+    /// Sets `report_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetAssessmentReportRequest.report_type = value.into();`.
+    pub fn report_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.report_type = value.into();
+        self
+    }
+    /// Returns a new instance of GetAssessmentReportRequest with optional fields set to `None`.
+    pub fn new<assessmentRunArnType: Into<String>,
+               reportFileFormatType: Into<String>,
+               reportTypeType: Into<String>>
+        (assessment_run_arn: assessmentRunArnType,
+         report_file_format: reportFileFormatType,
+         report_type: reportTypeType)
+         -> GetAssessmentReportRequest {
+        GetAssessmentReportRequest {
+            assessment_run_arn: assessment_run_arn.into(),
+            report_file_format: report_file_format.into(),
+            report_type: report_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetAssessmentReportResponse {
     #[doc="<p>Specifies the status of the request to generate an assessment report. </p>"]
@@ -707,21 +1235,35 @@ pub struct GetAssessmentReportResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub url: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetTelemetryMetadataRequest {
     #[doc="<p>The ARN that specifies the assessment run that has the telemetry data that you want to obtain.</p>"]
     #[serde(rename="assessmentRunArn")]
     pub assessment_run_arn: String,
 }
-
+impl GetTelemetryMetadataRequest {
+    /// Sets `assessment_run_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetTelemetryMetadataRequest.assessment_run_arn = value.into();`.
+    pub fn assessment_run_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.assessment_run_arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetTelemetryMetadataRequest with optional fields set to `None`.
+    pub fn new<assessmentRunArnType: Into<String>>(assessment_run_arn: assessmentRunArnType)
+                                                   -> GetTelemetryMetadataRequest {
+        GetTelemetryMetadataRequest {
+            assessment_run_arn: assessment_run_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetTelemetryMetadataResponse {
     #[doc="<p>Telemetry details.</p>"]
     #[serde(rename="telemetryMetadata")]
     pub telemetry_metadata: Vec<TelemetryMetadata>,
 }
-
 #[doc="<p>This data type is used in the <a>Finding</a> data type.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InspectorServiceAttributes {
@@ -737,7 +1279,6 @@ pub struct InspectorServiceAttributes {
     #[serde(rename="schemaVersion")]
     pub schema_version: i64,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListAssessmentRunAgentsRequest {
     #[doc="<p>The ARN that specifies the assessment run whose agents you want to list.</p>"]
@@ -756,7 +1297,44 @@ pub struct ListAssessmentRunAgentsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListAssessmentRunAgentsRequest {
+    /// Sets `assessment_run_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssessmentRunAgentsRequest.assessment_run_arn = value.into();`.
+    pub fn assessment_run_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.assessment_run_arn = value.into();
+        self
+    }
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssessmentRunAgentsRequest.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<AgentFilter>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssessmentRunAgentsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssessmentRunAgentsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListAssessmentRunAgentsRequest with optional fields set to `None`.
+    pub fn new<assessmentRunArnType: Into<String>>(assessment_run_arn: assessmentRunArnType)
+                                                   -> ListAssessmentRunAgentsRequest {
+        ListAssessmentRunAgentsRequest {
+            assessment_run_arn: assessment_run_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListAssessmentRunAgentsResponse {
     #[doc="<p>A list of ARNs that specifies the agents returned by the action.</p>"]
@@ -767,7 +1345,6 @@ pub struct ListAssessmentRunAgentsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListAssessmentRunsRequest {
     #[doc="<p>The ARNs that specify the assessment templates whose assessment runs you want to list.</p>"]
@@ -787,7 +1364,42 @@ pub struct ListAssessmentRunsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListAssessmentRunsRequest {
+    /// Sets `assessment_template_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssessmentRunsRequest.assessment_template_arns = Some(value.into());`.
+    pub fn assessment_template_arns<ValueType: Into<Vec<String>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.assessment_template_arns = Some(value.into());
+        self
+    }
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssessmentRunsRequest.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<AssessmentRunFilter>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssessmentRunsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssessmentRunsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListAssessmentRunsRequest with optional fields set to `None`.
+    pub fn new() -> ListAssessmentRunsRequest {
+        ListAssessmentRunsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListAssessmentRunsResponse {
     #[doc="<p>A list of ARNs that specifies the assessment runs that are returned by the action.</p>"]
@@ -798,7 +1410,6 @@ pub struct ListAssessmentRunsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListAssessmentTargetsRequest {
     #[doc="<p>You can use this parameter to specify a subset of data to be included in the action's response.</p> <p>For a record to match a filter, all specified filter attributes must match. When multiple values are specified for a filter attribute, any of the values can match.</p>"]
@@ -814,7 +1425,33 @@ pub struct ListAssessmentTargetsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListAssessmentTargetsRequest {
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssessmentTargetsRequest.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<AssessmentTargetFilter>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssessmentTargetsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssessmentTargetsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListAssessmentTargetsRequest with optional fields set to `None`.
+    pub fn new() -> ListAssessmentTargetsRequest {
+        ListAssessmentTargetsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListAssessmentTargetsResponse {
     #[doc="<p>A list of ARNs that specifies the assessment targets that are returned by the action.</p>"]
@@ -825,7 +1462,6 @@ pub struct ListAssessmentTargetsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListAssessmentTemplatesRequest {
     #[doc="<p>A list of ARNs that specifies the assessment targets whose assessment templates you want to list.</p>"]
@@ -845,7 +1481,42 @@ pub struct ListAssessmentTemplatesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListAssessmentTemplatesRequest {
+    /// Sets `assessment_target_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssessmentTemplatesRequest.assessment_target_arns = Some(value.into());`.
+    pub fn assessment_target_arns<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.assessment_target_arns = Some(value.into());
+        self
+    }
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssessmentTemplatesRequest.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<AssessmentTemplateFilter>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssessmentTemplatesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssessmentTemplatesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListAssessmentTemplatesRequest with optional fields set to `None`.
+    pub fn new() -> ListAssessmentTemplatesRequest {
+        ListAssessmentTemplatesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListAssessmentTemplatesResponse {
     #[doc="<p>A list of ARNs that specifies the assessment templates returned by the action.</p>"]
@@ -856,7 +1527,6 @@ pub struct ListAssessmentTemplatesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListEventSubscriptionsRequest {
     #[doc="<p>You can use this parameter to indicate the maximum number of items you want in the response. The default value is 10. The maximum value is 500.</p>"]
@@ -872,7 +1542,33 @@ pub struct ListEventSubscriptionsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_arn: Option<String>,
 }
-
+impl ListEventSubscriptionsRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListEventSubscriptionsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListEventSubscriptionsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `resource_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListEventSubscriptionsRequest.resource_arn = Some(value.into());`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListEventSubscriptionsRequest with optional fields set to `None`.
+    pub fn new() -> ListEventSubscriptionsRequest {
+        ListEventSubscriptionsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListEventSubscriptionsResponse {
     #[doc="<p> When a response is generated, if there is more data to be listed, this parameter is present in the response and contains the value to use for the <b>nextToken</b> parameter in a subsequent pagination request. If there is no more data to be listed, this parameter is set to null.</p>"]
@@ -883,7 +1579,6 @@ pub struct ListEventSubscriptionsResponse {
     #[serde(rename="subscriptions")]
     pub subscriptions: Vec<Subscription>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListFindingsRequest {
     #[doc="<p>The ARNs of the assessment runs that generate the findings that you want to list.</p>"]
@@ -903,7 +1598,40 @@ pub struct ListFindingsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListFindingsRequest {
+    /// Sets `assessment_run_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListFindingsRequest.assessment_run_arns = Some(value.into());`.
+    pub fn assessment_run_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.assessment_run_arns = Some(value.into());
+        self
+    }
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListFindingsRequest.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<FindingFilter>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListFindingsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListFindingsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListFindingsRequest with optional fields set to `None`.
+    pub fn new() -> ListFindingsRequest {
+        ListFindingsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListFindingsResponse {
     #[doc="<p>A list of ARNs that specifies the findings returned by the action.</p>"]
@@ -914,7 +1642,6 @@ pub struct ListFindingsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListRulesPackagesRequest {
     #[doc="<p>You can use this parameter to indicate the maximum number of items you want in the response. The default value is 10. The maximum value is 500.</p>"]
@@ -926,7 +1653,26 @@ pub struct ListRulesPackagesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListRulesPackagesRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRulesPackagesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRulesPackagesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListRulesPackagesRequest with optional fields set to `None`.
+    pub fn new() -> ListRulesPackagesRequest {
+        ListRulesPackagesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListRulesPackagesResponse {
     #[doc="<p> When a response is generated, if there is more data to be listed, this parameter is present in the response and contains the value to use for the <b>nextToken</b> parameter in a subsequent pagination request. If there is no more data to be listed, this parameter is set to null.</p>"]
@@ -937,21 +1683,35 @@ pub struct ListRulesPackagesResponse {
     #[serde(rename="rulesPackageArns")]
     pub rules_package_arns: Vec<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTagsForResourceRequest {
     #[doc="<p>The ARN that specifies the assessment template whose tags you want to list.</p>"]
     #[serde(rename="resourceArn")]
     pub resource_arn: String,
 }
-
+impl ListTagsForResourceRequest {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForResourceRequest.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Returns a new instance of ListTagsForResourceRequest with optional fields set to `None`.
+    pub fn new<resourceArnType: Into<String>>(resource_arn: resourceArnType)
+                                              -> ListTagsForResourceRequest {
+        ListTagsForResourceRequest {
+            resource_arn: resource_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTagsForResourceResponse {
     #[doc="<p>A collection of key and value pairs.</p>"]
     #[serde(rename="tags")]
     pub tags: Vec<Tag>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PreviewAgentsRequest {
     #[doc="<p>You can use this parameter to indicate the maximum number of items you want in the response. The default value is 10. The maximum value is 500.</p>"]
@@ -966,7 +1726,37 @@ pub struct PreviewAgentsRequest {
     #[serde(rename="previewAgentsArn")]
     pub preview_agents_arn: String,
 }
-
+impl PreviewAgentsRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PreviewAgentsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PreviewAgentsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `preview_agents_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PreviewAgentsRequest.preview_agents_arn = value.into();`.
+    pub fn preview_agents_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.preview_agents_arn = value.into();
+        self
+    }
+    /// Returns a new instance of PreviewAgentsRequest with optional fields set to `None`.
+    pub fn new<previewAgentsArnType: Into<String>>(preview_agents_arn: previewAgentsArnType)
+                                                   -> PreviewAgentsRequest {
+        PreviewAgentsRequest {
+            preview_agents_arn: preview_agents_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PreviewAgentsResponse {
     #[doc="<p>The resulting list of agents.</p>"]
@@ -977,14 +1767,29 @@ pub struct PreviewAgentsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RegisterCrossAccountAccessRoleRequest {
     #[doc="<p>The ARN of the IAM role that Amazon Inspector uses to list your EC2 instances during the assessment run or when you call the <a>PreviewAgents</a> action. </p>"]
     #[serde(rename="roleArn")]
     pub role_arn: String,
 }
-
+impl RegisterCrossAccountAccessRoleRequest {
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterCrossAccountAccessRoleRequest.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Returns a new instance of RegisterCrossAccountAccessRoleRequest with optional fields set to `None`.
+    pub fn new<roleArnType: Into<String>>(role_arn: roleArnType)
+                                          -> RegisterCrossAccountAccessRoleRequest {
+        RegisterCrossAccountAccessRoleRequest {
+            role_arn: role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RemoveAttributesFromFindingsRequest {
     #[doc="<p>The array of attribute keys that you want to remove from specified findings.</p>"]
@@ -994,14 +1799,39 @@ pub struct RemoveAttributesFromFindingsRequest {
     #[serde(rename="findingArns")]
     pub finding_arns: Vec<String>,
 }
-
+impl RemoveAttributesFromFindingsRequest {
+    /// Sets `attribute_keys`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveAttributesFromFindingsRequest.attribute_keys = value.into();`.
+    pub fn attribute_keys<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.attribute_keys = value.into();
+        self
+    }
+    /// Sets `finding_arns`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveAttributesFromFindingsRequest.finding_arns = value.into();`.
+    pub fn finding_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.finding_arns = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveAttributesFromFindingsRequest with optional fields set to `None`.
+    pub fn new<attributeKeysType: Into<Vec<String>>, findingArnsType: Into<Vec<String>>>
+        (attribute_keys: attributeKeysType,
+         finding_arns: findingArnsType)
+         -> RemoveAttributesFromFindingsRequest {
+        RemoveAttributesFromFindingsRequest {
+            attribute_keys: attribute_keys.into(),
+            finding_arns: finding_arns.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RemoveAttributesFromFindingsResponse {
     #[doc="<p>Attributes details that cannot be described. An error code is provided for each failed item.</p>"]
     #[serde(rename="failedItems")]
     pub failed_items: ::std::collections::HashMap<String, FailedItemDetails>,
 }
-
 #[doc="<p>Contains information about a resource group. The resource group defines a set of tags that, when queried, identify the AWS resources that make up the assessment target. This data type is used as the response element in the <a>DescribeResourceGroups</a> action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ResourceGroup {
@@ -1015,7 +1845,6 @@ pub struct ResourceGroup {
     #[serde(rename="tags")]
     pub tags: Vec<ResourceGroupTag>,
 }
-
 #[doc="<p>This data type is used as one of the elements of the <a>ResourceGroup</a> data type.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ResourceGroupTag {
@@ -1027,7 +1856,29 @@ pub struct ResourceGroupTag {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl ResourceGroupTag {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceGroupTag.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceGroupTag.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ResourceGroupTag with optional fields set to `None`.
+    pub fn new<keyType: Into<String>>(key: keyType) -> ResourceGroupTag {
+        ResourceGroupTag {
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains information about an Amazon Inspector rules package. This data type is used as the response element in the <a>DescribeRulesPackages</a> action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RulesPackage {
@@ -1048,7 +1899,6 @@ pub struct RulesPackage {
     #[serde(rename="version")]
     pub version: String,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SetTagsForResourceRequest {
     #[doc="<p>The ARN of the assessment template that you want to set tags to.</p>"]
@@ -1059,7 +1909,30 @@ pub struct SetTagsForResourceRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
+impl SetTagsForResourceRequest {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetTagsForResourceRequest.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetTagsForResourceRequest.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SetTagsForResourceRequest with optional fields set to `None`.
+    pub fn new<resourceArnType: Into<String>>(resource_arn: resourceArnType)
+                                              -> SetTagsForResourceRequest {
+        SetTagsForResourceRequest {
+            resource_arn: resource_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartAssessmentRunRequest {
     #[doc="<p>You can specify the name for the assessment run. The name must be unique for the assessment template whose ARN is used to start the assessment run.</p>"]
@@ -1070,14 +1943,35 @@ pub struct StartAssessmentRunRequest {
     #[serde(rename="assessmentTemplateArn")]
     pub assessment_template_arn: String,
 }
-
+impl StartAssessmentRunRequest {
+    /// Sets `assessment_run_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartAssessmentRunRequest.assessment_run_name = Some(value.into());`.
+    pub fn assessment_run_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.assessment_run_name = Some(value.into());
+        self
+    }
+    /// Sets `assessment_template_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartAssessmentRunRequest.assessment_template_arn = value.into();`.
+    pub fn assessment_template_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.assessment_template_arn = value.into();
+        self
+    }
+    /// Returns a new instance of StartAssessmentRunRequest with optional fields set to `None`.
+pub fn new<assessmentTemplateArnType: Into<String>>(assessment_template_arn: assessmentTemplateArnType) -> StartAssessmentRunRequest{
+        StartAssessmentRunRequest {
+            assessment_template_arn: assessment_template_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartAssessmentRunResponse {
     #[doc="<p>The ARN of the assessment run that has been started.</p>"]
     #[serde(rename="assessmentRunArn")]
     pub assessment_run_arn: String,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StopAssessmentRunRequest {
     #[doc="<p>The ARN of the assessment run that you want to stop.</p>"]
@@ -1088,7 +1982,30 @@ pub struct StopAssessmentRunRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stop_action: Option<String>,
 }
-
+impl StopAssessmentRunRequest {
+    /// Sets `assessment_run_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopAssessmentRunRequest.assessment_run_arn = value.into();`.
+    pub fn assessment_run_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.assessment_run_arn = value.into();
+        self
+    }
+    /// Sets `stop_action`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopAssessmentRunRequest.stop_action = Some(value.into());`.
+    pub fn stop_action<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stop_action = Some(value.into());
+        self
+    }
+    /// Returns a new instance of StopAssessmentRunRequest with optional fields set to `None`.
+    pub fn new<assessmentRunArnType: Into<String>>(assessment_run_arn: assessmentRunArnType)
+                                                   -> StopAssessmentRunRequest {
+        StopAssessmentRunRequest {
+            assessment_run_arn: assessment_run_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SubscribeToEventRequest {
     #[doc="<p>The event for which you want to receive SNS notifications.</p>"]
@@ -1101,7 +2018,42 @@ pub struct SubscribeToEventRequest {
     #[serde(rename="topicArn")]
     pub topic_arn: String,
 }
-
+impl SubscribeToEventRequest {
+    /// Sets `event`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubscribeToEventRequest.event = value.into();`.
+    pub fn event<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.event = value.into();
+        self
+    }
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubscribeToEventRequest.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Sets `topic_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubscribeToEventRequest.topic_arn = value.into();`.
+    pub fn topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_arn = value.into();
+        self
+    }
+    /// Returns a new instance of SubscribeToEventRequest with optional fields set to `None`.
+    pub fn new<eventType: Into<String>, resourceArnType: Into<String>, topicArnType: Into<String>>
+        (event: eventType,
+         resource_arn: resourceArnType,
+         topic_arn: topicArnType)
+         -> SubscribeToEventRequest {
+        SubscribeToEventRequest {
+            event: event.into(),
+            resource_arn: resource_arn.into(),
+            topic_arn: topic_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>This data type is used as a response element in the <a>ListEventSubscriptions</a> action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Subscription {
@@ -1115,7 +2067,6 @@ pub struct Subscription {
     #[serde(rename="topicArn")]
     pub topic_arn: String,
 }
-
 #[doc="<p>A key and value pair. This data type is used as a request parameter in the <a>SetTagsForResource</a> action and a response element in the <a>ListTagsForResource</a> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Tag {
@@ -1127,7 +2078,29 @@ pub struct Tag {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl Tag {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new<keyType: Into<String>>(key: keyType) -> Tag {
+        Tag {
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The metadata about the Amazon Inspector application data metrics collected by the agent. This data type is used as the response element in the <a>GetTelemetryMetadata</a> action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TelemetryMetadata {
@@ -1142,7 +2115,6 @@ pub struct TelemetryMetadata {
     #[serde(rename="messageType")]
     pub message_type: String,
 }
-
 #[doc="<p>This data type is used in the <a>AssessmentRunFilter</a> data type.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TimestampRange {
@@ -1155,7 +2127,26 @@ pub struct TimestampRange {
     #[serde(skip_serializing_if="Option::is_none")]
     pub end_date: Option<f64>,
 }
-
+impl TimestampRange {
+    /// Sets `begin_date`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TimestampRange.begin_date = Some(value.into());`.
+    pub fn begin_date<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.begin_date = Some(value.into());
+        self
+    }
+    /// Sets `end_date`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TimestampRange.end_date = Some(value.into());`.
+    pub fn end_date<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.end_date = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TimestampRange with optional fields set to `None`.
+    pub fn new() -> TimestampRange {
+        TimestampRange { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UnsubscribeFromEventRequest {
     #[doc="<p>The event for which you want to stop receiving SNS notifications.</p>"]
@@ -1168,7 +2159,42 @@ pub struct UnsubscribeFromEventRequest {
     #[serde(rename="topicArn")]
     pub topic_arn: String,
 }
-
+impl UnsubscribeFromEventRequest {
+    /// Sets `event`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UnsubscribeFromEventRequest.event = value.into();`.
+    pub fn event<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.event = value.into();
+        self
+    }
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UnsubscribeFromEventRequest.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Sets `topic_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UnsubscribeFromEventRequest.topic_arn = value.into();`.
+    pub fn topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_arn = value.into();
+        self
+    }
+    /// Returns a new instance of UnsubscribeFromEventRequest with optional fields set to `None`.
+    pub fn new<eventType: Into<String>, resourceArnType: Into<String>, topicArnType: Into<String>>
+        (event: eventType,
+         resource_arn: resourceArnType,
+         topic_arn: topicArnType)
+         -> UnsubscribeFromEventRequest {
+        UnsubscribeFromEventRequest {
+            event: event.into(),
+            resource_arn: resource_arn.into(),
+            topic_arn: topic_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateAssessmentTargetRequest {
     #[doc="<p>The ARN of the assessment target that you want to update.</p>"]
@@ -1181,7 +2207,44 @@ pub struct UpdateAssessmentTargetRequest {
     #[serde(rename="resourceGroupArn")]
     pub resource_group_arn: String,
 }
-
+impl UpdateAssessmentTargetRequest {
+    /// Sets `assessment_target_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAssessmentTargetRequest.assessment_target_arn = value.into();`.
+    pub fn assessment_target_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.assessment_target_arn = value.into();
+        self
+    }
+    /// Sets `assessment_target_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAssessmentTargetRequest.assessment_target_name = value.into();`.
+    pub fn assessment_target_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.assessment_target_name = value.into();
+        self
+    }
+    /// Sets `resource_group_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAssessmentTargetRequest.resource_group_arn = value.into();`.
+    pub fn resource_group_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_group_arn = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateAssessmentTargetRequest with optional fields set to `None`.
+    pub fn new<assessmentTargetArnType: Into<String>,
+               assessmentTargetNameType: Into<String>,
+               resourceGroupArnType: Into<String>>
+        (assessment_target_arn: assessmentTargetArnType,
+         assessment_target_name: assessmentTargetNameType,
+         resource_group_arn: resourceGroupArnType)
+         -> UpdateAssessmentTargetRequest {
+        UpdateAssessmentTargetRequest {
+            assessment_target_arn: assessment_target_arn.into(),
+            assessment_target_name: assessment_target_name.into(),
+            resource_group_arn: resource_group_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 /// Errors returned by AddAttributesToFindings
 #[derive(Debug, PartialEq)]
 pub enum AddAttributesToFindingsError {

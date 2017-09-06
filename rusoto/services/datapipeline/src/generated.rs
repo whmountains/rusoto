@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -43,7 +44,38 @@ pub struct ActivatePipelineInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub start_timestamp: Option<f64>,
 }
-
+impl ActivatePipelineInput {
+    /// Sets `parameter_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActivatePipelineInput.parameter_values = Some(value.into());`.
+    pub fn parameter_values<ValueType: Into<Vec<ParameterValue>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.parameter_values = Some(value.into());
+        self
+    }
+    /// Sets `pipeline_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActivatePipelineInput.pipeline_id = value.into();`.
+    pub fn pipeline_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_id = value.into();
+        self
+    }
+    /// Sets `start_timestamp`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActivatePipelineInput.start_timestamp = Some(value.into());`.
+    pub fn start_timestamp<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.start_timestamp = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ActivatePipelineInput with optional fields set to `None`.
+    pub fn new<pipelineIdType: Into<String>>(pipeline_id: pipelineIdType) -> ActivatePipelineInput {
+        ActivatePipelineInput {
+            pipeline_id: pipeline_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of ActivatePipeline.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActivatePipelineOutput;
@@ -58,7 +90,30 @@ pub struct AddTagsInput {
     #[serde(rename="tags")]
     pub tags: Vec<Tag>,
 }
-
+impl AddTagsInput {
+    /// Sets `pipeline_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsInput.pipeline_id = value.into();`.
+    pub fn pipeline_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_id = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsInput.tags = value.into();`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of AddTagsInput with optional fields set to `None`.
+pub fn new<pipelineIdType: Into<String>, tagsType: Into<Vec<Tag>>>(pipeline_id: pipelineIdType, tags: tagsType) -> AddTagsInput{
+        AddTagsInput {
+            pipeline_id: pipeline_id.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of AddTags.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddTagsOutput;
@@ -81,7 +136,46 @@ pub struct CreatePipelineInput {
     #[serde(rename="uniqueId")]
     pub unique_id: String,
 }
-
+impl CreatePipelineInput {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePipelineInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePipelineInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePipelineInput.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `unique_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePipelineInput.unique_id = value.into();`.
+    pub fn unique_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.unique_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreatePipelineInput with optional fields set to `None`.
+    pub fn new<nameType: Into<String>, uniqueIdType: Into<String>>(name: nameType,
+                                                                   unique_id: uniqueIdType)
+                                                                   -> CreatePipelineInput {
+        CreatePipelineInput {
+            name: name.into(),
+            unique_id: unique_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of CreatePipeline.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreatePipelineOutput {
@@ -89,7 +183,6 @@ pub struct CreatePipelineOutput {
     #[serde(rename="pipelineId")]
     pub pipeline_id: String,
 }
-
 #[doc="<p>Contains the parameters for DeactivatePipeline.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeactivatePipelineInput {
@@ -101,7 +194,30 @@ pub struct DeactivatePipelineInput {
     #[serde(rename="pipelineId")]
     pub pipeline_id: String,
 }
-
+impl DeactivatePipelineInput {
+    /// Sets `cancel_active`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeactivatePipelineInput.cancel_active = Some(value.into());`.
+    pub fn cancel_active<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.cancel_active = Some(value.into());
+        self
+    }
+    /// Sets `pipeline_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeactivatePipelineInput.pipeline_id = value.into();`.
+    pub fn pipeline_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeactivatePipelineInput with optional fields set to `None`.
+    pub fn new<pipelineIdType: Into<String>>(pipeline_id: pipelineIdType)
+                                             -> DeactivatePipelineInput {
+        DeactivatePipelineInput {
+            pipeline_id: pipeline_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of DeactivatePipeline.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeactivatePipelineOutput;
@@ -113,7 +229,22 @@ pub struct DeletePipelineInput {
     #[serde(rename="pipelineId")]
     pub pipeline_id: String,
 }
-
+impl DeletePipelineInput {
+    /// Sets `pipeline_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePipelineInput.pipeline_id = value.into();`.
+    pub fn pipeline_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeletePipelineInput with optional fields set to `None`.
+    pub fn new<pipelineIdType: Into<String>>(pipeline_id: pipelineIdType) -> DeletePipelineInput {
+        DeletePipelineInput {
+            pipeline_id: pipeline_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the parameters for DescribeObjects.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeObjectsInput {
@@ -132,7 +263,47 @@ pub struct DescribeObjectsInput {
     #[serde(rename="pipelineId")]
     pub pipeline_id: String,
 }
-
+impl DescribeObjectsInput {
+    /// Sets `evaluate_expressions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeObjectsInput.evaluate_expressions = Some(value.into());`.
+    pub fn evaluate_expressions<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.evaluate_expressions = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeObjectsInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `object_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeObjectsInput.object_ids = value.into();`.
+    pub fn object_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.object_ids = value.into();
+        self
+    }
+    /// Sets `pipeline_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeObjectsInput.pipeline_id = value.into();`.
+    pub fn pipeline_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeObjectsInput with optional fields set to `None`.
+    pub fn new<objectIdsType: Into<Vec<String>>, pipelineIdType: Into<String>>
+        (object_ids: objectIdsType,
+         pipeline_id: pipelineIdType)
+         -> DescribeObjectsInput {
+        DescribeObjectsInput {
+            object_ids: object_ids.into(),
+            pipeline_id: pipeline_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of DescribeObjects.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeObjectsOutput {
@@ -148,7 +319,6 @@ pub struct DescribeObjectsOutput {
     #[serde(rename="pipelineObjects")]
     pub pipeline_objects: Vec<PipelineObject>,
 }
-
 #[doc="<p>Contains the parameters for DescribePipelines.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribePipelinesInput {
@@ -156,7 +326,23 @@ pub struct DescribePipelinesInput {
     #[serde(rename="pipelineIds")]
     pub pipeline_ids: Vec<String>,
 }
-
+impl DescribePipelinesInput {
+    /// Sets `pipeline_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePipelinesInput.pipeline_ids = value.into();`.
+    pub fn pipeline_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.pipeline_ids = value.into();
+        self
+    }
+    /// Returns a new instance of DescribePipelinesInput with optional fields set to `None`.
+    pub fn new<pipelineIdsType: Into<Vec<String>>>(pipeline_ids: pipelineIdsType)
+                                                   -> DescribePipelinesInput {
+        DescribePipelinesInput {
+            pipeline_ids: pipeline_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of DescribePipelines.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribePipelinesOutput {
@@ -164,7 +350,6 @@ pub struct DescribePipelinesOutput {
     #[serde(rename="pipelineDescriptionList")]
     pub pipeline_description_list: Vec<PipelineDescription>,
 }
-
 #[doc="<p>Contains the parameters for EvaluateExpression.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct EvaluateExpressionInput {
@@ -178,7 +363,44 @@ pub struct EvaluateExpressionInput {
     #[serde(rename="pipelineId")]
     pub pipeline_id: String,
 }
-
+impl EvaluateExpressionInput {
+    /// Sets `expression`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EvaluateExpressionInput.expression = value.into();`.
+    pub fn expression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.expression = value.into();
+        self
+    }
+    /// Sets `object_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EvaluateExpressionInput.object_id = value.into();`.
+    pub fn object_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.object_id = value.into();
+        self
+    }
+    /// Sets `pipeline_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EvaluateExpressionInput.pipeline_id = value.into();`.
+    pub fn pipeline_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_id = value.into();
+        self
+    }
+    /// Returns a new instance of EvaluateExpressionInput with optional fields set to `None`.
+    pub fn new<expressionType: Into<String>,
+               objectIdType: Into<String>,
+               pipelineIdType: Into<String>>
+        (expression: expressionType,
+         object_id: objectIdType,
+         pipeline_id: pipelineIdType)
+         -> EvaluateExpressionInput {
+        EvaluateExpressionInput {
+            expression: expression.into(),
+            object_id: object_id.into(),
+            pipeline_id: pipeline_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of EvaluateExpression.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EvaluateExpressionOutput {
@@ -186,7 +408,6 @@ pub struct EvaluateExpressionOutput {
     #[serde(rename="evaluatedExpression")]
     pub evaluated_expression: String,
 }
-
 #[doc="<p>A key-value pair that describes a property of a pipeline object. The value is specified as either a string value (<code>StringValue</code>) or a reference to another object (<code>RefValue</code>) but not as both.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Field {
@@ -202,7 +423,36 @@ pub struct Field {
     #[serde(skip_serializing_if="Option::is_none")]
     pub string_value: Option<String>,
 }
-
+impl Field {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Field.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `ref_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Field.ref_value = Some(value.into());`.
+    pub fn ref_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ref_value = Some(value.into());
+        self
+    }
+    /// Sets `string_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Field.string_value = Some(value.into());`.
+    pub fn string_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.string_value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Field with optional fields set to `None`.
+    pub fn new<keyType: Into<String>>(key: keyType) -> Field {
+        Field {
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the parameters for GetPipelineDefinition.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetPipelineDefinitionInput {
@@ -214,7 +464,30 @@ pub struct GetPipelineDefinitionInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<String>,
 }
-
+impl GetPipelineDefinitionInput {
+    /// Sets `pipeline_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetPipelineDefinitionInput.pipeline_id = value.into();`.
+    pub fn pipeline_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_id = value.into();
+        self
+    }
+    /// Sets `version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetPipelineDefinitionInput.version = Some(value.into());`.
+    pub fn version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetPipelineDefinitionInput with optional fields set to `None`.
+    pub fn new<pipelineIdType: Into<String>>(pipeline_id: pipelineIdType)
+                                             -> GetPipelineDefinitionInput {
+        GetPipelineDefinitionInput {
+            pipeline_id: pipeline_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of GetPipelineDefinition.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetPipelineDefinitionOutput {
@@ -231,7 +504,6 @@ pub struct GetPipelineDefinitionOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pipeline_objects: Option<Vec<PipelineObject>>,
 }
-
 #[doc="<p><p>Identity information for the EC2 instance that is hosting the task runner. You can get this value by calling a metadata URI from the EC2 instance. For more information, see <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html\">Instance Metadata</a> in the <i>Amazon Elastic Compute Cloud User Guide.</i> Passing in this value proves that your task runner is running on an EC2 instance, and ensures the proper AWS Data Pipeline service charges are applied to your pipeline.</p></p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InstanceIdentity {
@@ -244,7 +516,26 @@ pub struct InstanceIdentity {
     #[serde(skip_serializing_if="Option::is_none")]
     pub signature: Option<String>,
 }
-
+impl InstanceIdentity {
+    /// Sets `document`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceIdentity.document = Some(value.into());`.
+    pub fn document<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.document = Some(value.into());
+        self
+    }
+    /// Sets `signature`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceIdentity.signature = Some(value.into());`.
+    pub fn signature<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.signature = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InstanceIdentity with optional fields set to `None`.
+    pub fn new() -> InstanceIdentity {
+        InstanceIdentity { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the parameters for ListPipelines.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListPipelinesInput {
@@ -253,7 +544,19 @@ pub struct ListPipelinesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
+impl ListPipelinesInput {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPipelinesInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListPipelinesInput with optional fields set to `None`.
+    pub fn new() -> ListPipelinesInput {
+        ListPipelinesInput { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the output of ListPipelines.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListPipelinesOutput {
@@ -269,7 +572,6 @@ pub struct ListPipelinesOutput {
     #[serde(rename="pipelineIdList")]
     pub pipeline_id_list: Vec<PipelineIdName>,
 }
-
 #[doc="<p>Contains a logical operation for comparing the value of a field with a specified value.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct Operator {
@@ -282,7 +584,26 @@ pub struct Operator {
     #[serde(skip_serializing_if="Option::is_none")]
     pub values: Option<Vec<String>>,
 }
-
+impl Operator {
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Operator.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Sets `values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Operator.values = Some(value.into());`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Operator with optional fields set to `None`.
+    pub fn new() -> Operator {
+        Operator { ..Default::default() }
+    }
+}
 #[doc="<p>The attributes allowed or specified with a parameter object.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ParameterAttribute {
@@ -293,7 +614,30 @@ pub struct ParameterAttribute {
     #[serde(rename="stringValue")]
     pub string_value: String,
 }
-
+impl ParameterAttribute {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ParameterAttribute.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `string_value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ParameterAttribute.string_value = value.into();`.
+    pub fn string_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.string_value = value.into();
+        self
+    }
+    /// Returns a new instance of ParameterAttribute with optional fields set to `None`.
+pub fn new<keyType: Into<String>, stringValueType: Into<String>>(key: keyType, string_value: stringValueType) -> ParameterAttribute{
+        ParameterAttribute {
+            key: key.into(),
+            string_value: string_value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains information about a parameter object.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ParameterObject {
@@ -304,7 +648,35 @@ pub struct ParameterObject {
     #[serde(rename="id")]
     pub id: String,
 }
-
+impl ParameterObject {
+    /// Sets `attributes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ParameterObject.attributes = value.into();`.
+    pub fn attributes<ValueType: Into<Vec<ParameterAttribute>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.attributes = value.into();
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ParameterObject.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of ParameterObject with optional fields set to `None`.
+    pub fn new<attributesType: Into<Vec<ParameterAttribute>>, idType: Into<String>>
+        (attributes: attributesType,
+         id: idType)
+         -> ParameterObject {
+        ParameterObject {
+            attributes: attributes.into(),
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A value or list of parameter values. </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ParameterValue {
@@ -315,7 +687,32 @@ pub struct ParameterValue {
     #[serde(rename="stringValue")]
     pub string_value: String,
 }
-
+impl ParameterValue {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ParameterValue.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `string_value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ParameterValue.string_value = value.into();`.
+    pub fn string_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.string_value = value.into();
+        self
+    }
+    /// Returns a new instance of ParameterValue with optional fields set to `None`.
+    pub fn new<idType: Into<String>, stringValueType: Into<String>>(id: idType,
+                                                                    string_value: stringValueType)
+                                                                    -> ParameterValue {
+        ParameterValue {
+            id: id.into(),
+            string_value: string_value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains pipeline metadata.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PipelineDescription {
@@ -337,7 +734,6 @@ pub struct PipelineDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
 #[doc="<p>Contains the name and identifier of a pipeline.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PipelineIdName {
@@ -350,7 +746,6 @@ pub struct PipelineIdName {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p>Contains information about a pipeline object. This can be a logical, physical, or physical attempt pipeline object. The complete set of components of a pipeline defines the pipeline.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct PipelineObject {
@@ -364,7 +759,42 @@ pub struct PipelineObject {
     #[serde(rename="name")]
     pub name: String,
 }
-
+impl PipelineObject {
+    /// Sets `fields`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PipelineObject.fields = value.into();`.
+    pub fn fields<ValueType: Into<Vec<Field>>>(mut self, value: ValueType) -> Self {
+        self.fields = value.into();
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PipelineObject.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PipelineObject.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of PipelineObject with optional fields set to `None`.
+    pub fn new<fieldsType: Into<Vec<Field>>, idType: Into<String>, nameType: Into<String>>
+        (fields: fieldsType,
+         id: idType,
+         name: nameType)
+         -> PipelineObject {
+        PipelineObject {
+            fields: fields.into(),
+            id: id.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the parameters for PollForTask.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PollForTaskInput {
@@ -380,7 +810,38 @@ pub struct PollForTaskInput {
     #[serde(rename="workerGroup")]
     pub worker_group: String,
 }
-
+impl PollForTaskInput {
+    /// Sets `hostname`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PollForTaskInput.hostname = Some(value.into());`.
+    pub fn hostname<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hostname = Some(value.into());
+        self
+    }
+    /// Sets `instance_identity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PollForTaskInput.instance_identity = Some(value.into());`.
+    pub fn instance_identity<ValueType: Into<InstanceIdentity>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.instance_identity = Some(value.into());
+        self
+    }
+    /// Sets `worker_group`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PollForTaskInput.worker_group = value.into();`.
+    pub fn worker_group<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.worker_group = value.into();
+        self
+    }
+    /// Returns a new instance of PollForTaskInput with optional fields set to `None`.
+    pub fn new<workerGroupType: Into<String>>(worker_group: workerGroupType) -> PollForTaskInput {
+        PollForTaskInput {
+            worker_group: worker_group.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of PollForTask.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PollForTaskOutput {
@@ -389,7 +850,6 @@ pub struct PollForTaskOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub task_object: Option<TaskObject>,
 }
-
 #[doc="<p>Contains the parameters for PutPipelineDefinition.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutPipelineDefinitionInput {
@@ -408,7 +868,53 @@ pub struct PutPipelineDefinitionInput {
     #[serde(rename="pipelineObjects")]
     pub pipeline_objects: Vec<PipelineObject>,
 }
-
+impl PutPipelineDefinitionInput {
+    /// Sets `parameter_objects`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutPipelineDefinitionInput.parameter_objects = Some(value.into());`.
+    pub fn parameter_objects<ValueType: Into<Vec<ParameterObject>>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.parameter_objects = Some(value.into());
+        self
+    }
+    /// Sets `parameter_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutPipelineDefinitionInput.parameter_values = Some(value.into());`.
+    pub fn parameter_values<ValueType: Into<Vec<ParameterValue>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.parameter_values = Some(value.into());
+        self
+    }
+    /// Sets `pipeline_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutPipelineDefinitionInput.pipeline_id = value.into();`.
+    pub fn pipeline_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_id = value.into();
+        self
+    }
+    /// Sets `pipeline_objects`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutPipelineDefinitionInput.pipeline_objects = value.into();`.
+    pub fn pipeline_objects<ValueType: Into<Vec<PipelineObject>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.pipeline_objects = value.into();
+        self
+    }
+    /// Returns a new instance of PutPipelineDefinitionInput with optional fields set to `None`.
+    pub fn new<pipelineIdType: Into<String>, pipelineObjectsType: Into<Vec<PipelineObject>>>
+        (pipeline_id: pipelineIdType,
+         pipeline_objects: pipelineObjectsType)
+         -> PutPipelineDefinitionInput {
+        PutPipelineDefinitionInput {
+            pipeline_id: pipeline_id.into(),
+            pipeline_objects: pipeline_objects.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of PutPipelineDefinition.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutPipelineDefinitionOutput {
@@ -424,7 +930,6 @@ pub struct PutPipelineDefinitionOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub validation_warnings: Option<Vec<ValidationWarning>>,
 }
-
 #[doc="<p>Defines the query to run against an object.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct Query {
@@ -433,7 +938,19 @@ pub struct Query {
     #[serde(skip_serializing_if="Option::is_none")]
     pub selectors: Option<Vec<Selector>>,
 }
-
+impl Query {
+    /// Sets `selectors`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Query.selectors = Some(value.into());`.
+    pub fn selectors<ValueType: Into<Vec<Selector>>>(mut self, value: ValueType) -> Self {
+        self.selectors = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Query with optional fields set to `None`.
+    pub fn new() -> Query {
+        Query { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the parameters for QueryObjects.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct QueryObjectsInput {
@@ -456,7 +973,51 @@ pub struct QueryObjectsInput {
     #[serde(rename="sphere")]
     pub sphere: String,
 }
-
+impl QueryObjectsInput {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryObjectsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryObjectsInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `pipeline_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryObjectsInput.pipeline_id = value.into();`.
+    pub fn pipeline_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_id = value.into();
+        self
+    }
+    /// Sets `query`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryObjectsInput.query = Some(value.into());`.
+    pub fn query<ValueType: Into<Query>>(mut self, value: ValueType) -> Self {
+        self.query = Some(value.into());
+        self
+    }
+    /// Sets `sphere`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryObjectsInput.sphere = value.into();`.
+    pub fn sphere<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sphere = value.into();
+        self
+    }
+    /// Returns a new instance of QueryObjectsInput with optional fields set to `None`.
+pub fn new<pipelineIdType: Into<String>, sphereType: Into<String>>(pipeline_id: pipelineIdType, sphere: sphereType) -> QueryObjectsInput{
+        QueryObjectsInput {
+            pipeline_id: pipeline_id.into(),
+            sphere: sphere.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of QueryObjects.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct QueryObjectsOutput {
@@ -473,7 +1034,6 @@ pub struct QueryObjectsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
 #[doc="<p>Contains the parameters for RemoveTags.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RemoveTagsInput {
@@ -484,7 +1044,30 @@ pub struct RemoveTagsInput {
     #[serde(rename="tagKeys")]
     pub tag_keys: Vec<String>,
 }
-
+impl RemoveTagsInput {
+    /// Sets `pipeline_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsInput.pipeline_id = value.into();`.
+    pub fn pipeline_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_id = value.into();
+        self
+    }
+    /// Sets `tag_keys`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsInput.tag_keys = value.into();`.
+    pub fn tag_keys<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tag_keys = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveTagsInput with optional fields set to `None`.
+pub fn new<pipelineIdType: Into<String>, tagKeysType: Into<Vec<String>>>(pipeline_id: pipelineIdType, tag_keys: tagKeysType) -> RemoveTagsInput{
+        RemoveTagsInput {
+            pipeline_id: pipeline_id.into(),
+            tag_keys: tag_keys.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of RemoveTags.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RemoveTagsOutput;
@@ -500,7 +1083,29 @@ pub struct ReportTaskProgressInput {
     #[serde(rename="taskId")]
     pub task_id: String,
 }
-
+impl ReportTaskProgressInput {
+    /// Sets `fields`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReportTaskProgressInput.fields = Some(value.into());`.
+    pub fn fields<ValueType: Into<Vec<Field>>>(mut self, value: ValueType) -> Self {
+        self.fields = Some(value.into());
+        self
+    }
+    /// Sets `task_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReportTaskProgressInput.task_id = value.into();`.
+    pub fn task_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_id = value.into();
+        self
+    }
+    /// Returns a new instance of ReportTaskProgressInput with optional fields set to `None`.
+    pub fn new<taskIdType: Into<String>>(task_id: taskIdType) -> ReportTaskProgressInput {
+        ReportTaskProgressInput {
+            task_id: task_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of ReportTaskProgress.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ReportTaskProgressOutput {
@@ -508,7 +1113,6 @@ pub struct ReportTaskProgressOutput {
     #[serde(rename="canceled")]
     pub canceled: bool,
 }
-
 #[doc="<p>Contains the parameters for ReportTaskRunnerHeartbeat.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ReportTaskRunnerHeartbeatInput {
@@ -524,7 +1128,37 @@ pub struct ReportTaskRunnerHeartbeatInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub worker_group: Option<String>,
 }
-
+impl ReportTaskRunnerHeartbeatInput {
+    /// Sets `hostname`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReportTaskRunnerHeartbeatInput.hostname = Some(value.into());`.
+    pub fn hostname<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hostname = Some(value.into());
+        self
+    }
+    /// Sets `taskrunner_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReportTaskRunnerHeartbeatInput.taskrunner_id = value.into();`.
+    pub fn taskrunner_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.taskrunner_id = value.into();
+        self
+    }
+    /// Sets `worker_group`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReportTaskRunnerHeartbeatInput.worker_group = Some(value.into());`.
+    pub fn worker_group<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.worker_group = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ReportTaskRunnerHeartbeatInput with optional fields set to `None`.
+    pub fn new<taskrunnerIdType: Into<String>>(taskrunner_id: taskrunnerIdType)
+                                               -> ReportTaskRunnerHeartbeatInput {
+        ReportTaskRunnerHeartbeatInput {
+            taskrunner_id: taskrunner_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of ReportTaskRunnerHeartbeat.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ReportTaskRunnerHeartbeatOutput {
@@ -532,7 +1166,6 @@ pub struct ReportTaskRunnerHeartbeatOutput {
     #[serde(rename="terminate")]
     pub terminate: bool,
 }
-
 #[doc="<p>A comparision that is used to determine whether a query should return this object.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct Selector {
@@ -544,7 +1177,26 @@ pub struct Selector {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operator: Option<Operator>,
 }
-
+impl Selector {
+    /// Sets `field_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Selector.field_name = Some(value.into());`.
+    pub fn field_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.field_name = Some(value.into());
+        self
+    }
+    /// Sets `operator`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Selector.operator = Some(value.into());`.
+    pub fn operator<ValueType: Into<Operator>>(mut self, value: ValueType) -> Self {
+        self.operator = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Selector with optional fields set to `None`.
+    pub fn new() -> Selector {
+        Selector { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the parameters for SetStatus.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SetStatusInput {
@@ -558,7 +1210,44 @@ pub struct SetStatusInput {
     #[serde(rename="status")]
     pub status: String,
 }
-
+impl SetStatusInput {
+    /// Sets `object_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetStatusInput.object_ids = value.into();`.
+    pub fn object_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.object_ids = value.into();
+        self
+    }
+    /// Sets `pipeline_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetStatusInput.pipeline_id = value.into();`.
+    pub fn pipeline_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_id = value.into();
+        self
+    }
+    /// Sets `status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetStatusInput.status = value.into();`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = value.into();
+        self
+    }
+    /// Returns a new instance of SetStatusInput with optional fields set to `None`.
+    pub fn new<objectIdsType: Into<Vec<String>>,
+               pipelineIdType: Into<String>,
+               statusType: Into<String>>
+        (object_ids: objectIdsType,
+         pipeline_id: pipelineIdType,
+         status: statusType)
+         -> SetStatusInput {
+        SetStatusInput {
+            object_ids: object_ids.into(),
+            pipeline_id: pipeline_id.into(),
+            status: status.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the parameters for SetTaskStatus.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SetTaskStatusInput {
@@ -581,7 +1270,51 @@ pub struct SetTaskStatusInput {
     #[serde(rename="taskStatus")]
     pub task_status: String,
 }
-
+impl SetTaskStatusInput {
+    /// Sets `error_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetTaskStatusInput.error_id = Some(value.into());`.
+    pub fn error_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.error_id = Some(value.into());
+        self
+    }
+    /// Sets `error_message`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetTaskStatusInput.error_message = Some(value.into());`.
+    pub fn error_message<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.error_message = Some(value.into());
+        self
+    }
+    /// Sets `error_stack_trace`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetTaskStatusInput.error_stack_trace = Some(value.into());`.
+    pub fn error_stack_trace<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.error_stack_trace = Some(value.into());
+        self
+    }
+    /// Sets `task_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetTaskStatusInput.task_id = value.into();`.
+    pub fn task_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_id = value.into();
+        self
+    }
+    /// Sets `task_status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetTaskStatusInput.task_status = value.into();`.
+    pub fn task_status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_status = value.into();
+        self
+    }
+    /// Returns a new instance of SetTaskStatusInput with optional fields set to `None`.
+pub fn new<taskIdType: Into<String>, taskStatusType: Into<String>>(task_id: taskIdType, task_status: taskStatusType) -> SetTaskStatusInput{
+        SetTaskStatusInput {
+            task_id: task_id.into(),
+            task_status: task_status.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of SetTaskStatus.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SetTaskStatusOutput;
@@ -596,7 +1329,32 @@ pub struct Tag {
     #[serde(rename="value")]
     pub value: String,
 }
-
+impl Tag {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new<keyType: Into<String>, valueType: Into<String>>(key: keyType,
+                                                               value: valueType)
+                                                               -> Tag {
+        Tag {
+            key: key.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains information about a pipeline task that is assigned to a task runner.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TaskObject {
@@ -617,7 +1375,6 @@ pub struct TaskObject {
     #[serde(skip_serializing_if="Option::is_none")]
     pub task_id: Option<String>,
 }
-
 #[doc="<p>Contains the parameters for ValidatePipelineDefinition.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ValidatePipelineDefinitionInput {
@@ -636,7 +1393,53 @@ pub struct ValidatePipelineDefinitionInput {
     #[serde(rename="pipelineObjects")]
     pub pipeline_objects: Vec<PipelineObject>,
 }
-
+impl ValidatePipelineDefinitionInput {
+    /// Sets `parameter_objects`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ValidatePipelineDefinitionInput.parameter_objects = Some(value.into());`.
+    pub fn parameter_objects<ValueType: Into<Vec<ParameterObject>>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.parameter_objects = Some(value.into());
+        self
+    }
+    /// Sets `parameter_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ValidatePipelineDefinitionInput.parameter_values = Some(value.into());`.
+    pub fn parameter_values<ValueType: Into<Vec<ParameterValue>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.parameter_values = Some(value.into());
+        self
+    }
+    /// Sets `pipeline_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ValidatePipelineDefinitionInput.pipeline_id = value.into();`.
+    pub fn pipeline_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_id = value.into();
+        self
+    }
+    /// Sets `pipeline_objects`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ValidatePipelineDefinitionInput.pipeline_objects = value.into();`.
+    pub fn pipeline_objects<ValueType: Into<Vec<PipelineObject>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.pipeline_objects = value.into();
+        self
+    }
+    /// Returns a new instance of ValidatePipelineDefinitionInput with optional fields set to `None`.
+    pub fn new<pipelineIdType: Into<String>, pipelineObjectsType: Into<Vec<PipelineObject>>>
+        (pipeline_id: pipelineIdType,
+         pipeline_objects: pipelineObjectsType)
+         -> ValidatePipelineDefinitionInput {
+        ValidatePipelineDefinitionInput {
+            pipeline_id: pipeline_id.into(),
+            pipeline_objects: pipeline_objects.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the output of ValidatePipelineDefinition.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ValidatePipelineDefinitionOutput {
@@ -652,7 +1455,6 @@ pub struct ValidatePipelineDefinitionOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub validation_warnings: Option<Vec<ValidationWarning>>,
 }
-
 #[doc="<p>Defines a validation error. Validation errors prevent pipeline activation. The set of validation errors that can be returned are defined by AWS Data Pipeline.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ValidationError {
@@ -665,7 +1467,6 @@ pub struct ValidationError {
     #[serde(skip_serializing_if="Option::is_none")]
     pub id: Option<String>,
 }
-
 #[doc="<p>Defines a validation warning. Validation warnings do not prevent pipeline activation. The set of validation warnings that can be returned are defined by AWS Data Pipeline.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ValidationWarning {
@@ -678,7 +1479,6 @@ pub struct ValidationWarning {
     #[serde(skip_serializing_if="Option::is_none")]
     pub warnings: Option<Vec<String>>,
 }
-
 /// Errors returned by ActivatePipeline
 #[derive(Debug, PartialEq)]
 pub enum ActivatePipelineError {

@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -95,7 +96,6 @@ pub struct AlarmHistoryItem {
     #[doc="<p>The time stamp for the alarm history item.</p>"]
     pub timestamp: Option<String>,
 }
-
 struct AlarmHistoryItemDeserializer;
 impl AlarmHistoryItemDeserializer {
     #[allow(unused_variables)]
@@ -319,7 +319,6 @@ pub struct DashboardEntry {
     #[doc="<p>The size of the dashboard, in bytes.</p>"]
     pub size: Option<i64>,
 }
-
 struct DashboardEntryDeserializer;
 impl DashboardEntryDeserializer {
     #[allow(unused_variables)]
@@ -410,7 +409,6 @@ pub struct DashboardValidationMessage {
     #[doc="<p>A message describing the error or warning.</p>"]
     pub message: Option<String>,
 }
-
 struct DashboardValidationMessageDeserializer;
 impl DashboardValidationMessageDeserializer {
     #[allow(unused_variables)]
@@ -534,7 +532,6 @@ pub struct Datapoint {
     #[doc="<p>The standard unit for the data point.</p>"]
     pub unit: Option<String>,
 }
-
 struct DatapointDeserializer;
 impl DatapointDeserializer {
     #[allow(unused_variables)]
@@ -694,7 +691,23 @@ pub struct DeleteAlarmsInput {
     #[doc="<p>The alarms to be deleted.</p>"]
     pub alarm_names: Vec<String>,
 }
-
+impl DeleteAlarmsInput {
+    /// Sets `alarm_names`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAlarmsInput.alarm_names = value.into();`.
+    pub fn alarm_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.alarm_names = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteAlarmsInput with optional fields set to `None`.
+    pub fn new<AlarmNamesType: Into<Vec<String>>>(alarm_names: AlarmNamesType)
+                                                  -> DeleteAlarmsInput {
+        DeleteAlarmsInput {
+            alarm_names: alarm_names.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteAlarmsInput` contents to a `SignedRequest`.
 struct DeleteAlarmsInputSerializer;
@@ -717,7 +730,19 @@ pub struct DeleteDashboardsInput {
     #[doc="<p>The dashboards to be deleted.</p>"]
     pub dashboard_names: Option<Vec<String>>,
 }
-
+impl DeleteDashboardsInput {
+    /// Sets `dashboard_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDashboardsInput.dashboard_names = Some(value.into());`.
+    pub fn dashboard_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.dashboard_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteDashboardsInput with optional fields set to `None`.
+    pub fn new() -> DeleteDashboardsInput {
+        DeleteDashboardsInput { ..Default::default() }
+    }
+}
 
 /// Serialize `DeleteDashboardsInput` contents to a `SignedRequest`.
 struct DeleteDashboardsInputSerializer;
@@ -771,7 +796,54 @@ pub struct DescribeAlarmHistoryInput {
     #[doc="<p>The starting date to retrieve alarm history.</p>"]
     pub start_date: Option<String>,
 }
-
+impl DescribeAlarmHistoryInput {
+    /// Sets `alarm_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAlarmHistoryInput.alarm_name = Some(value.into());`.
+    pub fn alarm_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.alarm_name = Some(value.into());
+        self
+    }
+    /// Sets `end_date`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAlarmHistoryInput.end_date = Some(value.into());`.
+    pub fn end_date<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.end_date = Some(value.into());
+        self
+    }
+    /// Sets `history_item_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAlarmHistoryInput.history_item_type = Some(value.into());`.
+    pub fn history_item_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.history_item_type = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAlarmHistoryInput.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAlarmHistoryInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `start_date`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAlarmHistoryInput.start_date = Some(value.into());`.
+    pub fn start_date<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_date = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeAlarmHistoryInput with optional fields set to `None`.
+    pub fn new() -> DescribeAlarmHistoryInput {
+        DescribeAlarmHistoryInput { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeAlarmHistoryInput` contents to a `SignedRequest`.
 struct DescribeAlarmHistoryInputSerializer;
@@ -812,7 +884,6 @@ pub struct DescribeAlarmHistoryOutput {
     #[doc="<p>The token that marks the start of the next batch of returned results.</p>"]
     pub next_token: Option<String>,
 }
-
 struct DescribeAlarmHistoryOutputDeserializer;
 impl DescribeAlarmHistoryOutputDeserializer {
     #[allow(unused_variables)]
@@ -877,7 +948,68 @@ pub struct DescribeAlarmsForMetricInput {
     #[doc="<p>The unit for the metric.</p>"]
     pub unit: Option<String>,
 }
-
+impl DescribeAlarmsForMetricInput {
+    /// Sets `dimensions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAlarmsForMetricInput.dimensions = Some(value.into());`.
+    pub fn dimensions<ValueType: Into<Vec<Dimension>>>(mut self, value: ValueType) -> Self {
+        self.dimensions = Some(value.into());
+        self
+    }
+    /// Sets `extended_statistic`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAlarmsForMetricInput.extended_statistic = Some(value.into());`.
+    pub fn extended_statistic<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.extended_statistic = Some(value.into());
+        self
+    }
+    /// Sets `metric_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAlarmsForMetricInput.metric_name = value.into();`.
+    pub fn metric_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_name = value.into();
+        self
+    }
+    /// Sets `namespace`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAlarmsForMetricInput.namespace = value.into();`.
+    pub fn namespace<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.namespace = value.into();
+        self
+    }
+    /// Sets `period`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAlarmsForMetricInput.period = Some(value.into());`.
+    pub fn period<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.period = Some(value.into());
+        self
+    }
+    /// Sets `statistic`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAlarmsForMetricInput.statistic = Some(value.into());`.
+    pub fn statistic<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.statistic = Some(value.into());
+        self
+    }
+    /// Sets `unit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAlarmsForMetricInput.unit = Some(value.into());`.
+    pub fn unit<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.unit = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeAlarmsForMetricInput with optional fields set to `None`.
+    pub fn new<MetricNameType: Into<String>, NamespaceType: Into<String>>
+        (metric_name: MetricNameType,
+         namespace: NamespaceType)
+         -> DescribeAlarmsForMetricInput {
+        DescribeAlarmsForMetricInput {
+            metric_name: metric_name.into(),
+            namespace: namespace.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeAlarmsForMetricInput` contents to a `SignedRequest`.
 struct DescribeAlarmsForMetricInputSerializer;
@@ -916,7 +1048,6 @@ pub struct DescribeAlarmsForMetricOutput {
     #[doc="<p>The information for each alarm with the specified metric.</p>"]
     pub metric_alarms: Option<Vec<MetricAlarm>>,
 }
-
 struct DescribeAlarmsForMetricOutputDeserializer;
 impl DescribeAlarmsForMetricOutputDeserializer {
     #[allow(unused_variables)]
@@ -975,7 +1106,54 @@ pub struct DescribeAlarmsInput {
     #[doc="<p>The state value to be used in matching alarms.</p>"]
     pub state_value: Option<String>,
 }
-
+impl DescribeAlarmsInput {
+    /// Sets `action_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAlarmsInput.action_prefix = Some(value.into());`.
+    pub fn action_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.action_prefix = Some(value.into());
+        self
+    }
+    /// Sets `alarm_name_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAlarmsInput.alarm_name_prefix = Some(value.into());`.
+    pub fn alarm_name_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.alarm_name_prefix = Some(value.into());
+        self
+    }
+    /// Sets `alarm_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAlarmsInput.alarm_names = Some(value.into());`.
+    pub fn alarm_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.alarm_names = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAlarmsInput.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAlarmsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `state_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAlarmsInput.state_value = Some(value.into());`.
+    pub fn state_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.state_value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeAlarmsInput with optional fields set to `None`.
+    pub fn new() -> DescribeAlarmsInput {
+        DescribeAlarmsInput { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeAlarmsInput` contents to a `SignedRequest`.
 struct DescribeAlarmsInputSerializer;
@@ -1018,7 +1196,6 @@ pub struct DescribeAlarmsOutput {
     #[doc="<p>The token that marks the start of the next batch of returned results.</p>"]
     pub next_token: Option<String>,
 }
-
 struct DescribeAlarmsOutputDeserializer;
 impl DescribeAlarmsOutputDeserializer {
     #[allow(unused_variables)]
@@ -1074,7 +1251,32 @@ pub struct Dimension {
     #[doc="<p>The value representing the dimension measurement.</p>"]
     pub value: String,
 }
-
+impl Dimension {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Dimension.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Dimension.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of Dimension with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, ValueType: Into<String>>(name: NameType,
+                                                                value: ValueType)
+                                                                -> Dimension {
+        Dimension {
+            name: name.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 struct DimensionDeserializer;
 impl DimensionDeserializer {
     #[allow(unused_variables)]
@@ -1144,7 +1346,29 @@ pub struct DimensionFilter {
     #[doc="<p>The value of the dimension to be matched.</p>"]
     pub value: Option<String>,
 }
-
+impl DimensionFilter {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DimensionFilter.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DimensionFilter.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DimensionFilter with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> DimensionFilter {
+        DimensionFilter {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DimensionFilter` contents to a `SignedRequest`.
 struct DimensionFilterSerializer;
@@ -1261,7 +1485,23 @@ pub struct DisableAlarmActionsInput {
     #[doc="<p>The names of the alarms.</p>"]
     pub alarm_names: Vec<String>,
 }
-
+impl DisableAlarmActionsInput {
+    /// Sets `alarm_names`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableAlarmActionsInput.alarm_names = value.into();`.
+    pub fn alarm_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.alarm_names = value.into();
+        self
+    }
+    /// Returns a new instance of DisableAlarmActionsInput with optional fields set to `None`.
+    pub fn new<AlarmNamesType: Into<Vec<String>>>(alarm_names: AlarmNamesType)
+                                                  -> DisableAlarmActionsInput {
+        DisableAlarmActionsInput {
+            alarm_names: alarm_names.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DisableAlarmActionsInput` contents to a `SignedRequest`.
 struct DisableAlarmActionsInputSerializer;
@@ -1284,7 +1524,23 @@ pub struct EnableAlarmActionsInput {
     #[doc="<p>The names of the alarms.</p>"]
     pub alarm_names: Vec<String>,
 }
-
+impl EnableAlarmActionsInput {
+    /// Sets `alarm_names`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableAlarmActionsInput.alarm_names = value.into();`.
+    pub fn alarm_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.alarm_names = value.into();
+        self
+    }
+    /// Returns a new instance of EnableAlarmActionsInput with optional fields set to `None`.
+    pub fn new<AlarmNamesType: Into<Vec<String>>>(alarm_names: AlarmNamesType)
+                                                  -> EnableAlarmActionsInput {
+        EnableAlarmActionsInput {
+            alarm_names: alarm_names.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `EnableAlarmActionsInput` contents to a `SignedRequest`.
 struct EnableAlarmActionsInputSerializer;
@@ -1361,7 +1617,19 @@ pub struct GetDashboardInput {
     #[doc="<p>The name of the dashboard to be described.</p>"]
     pub dashboard_name: Option<String>,
 }
-
+impl GetDashboardInput {
+    /// Sets `dashboard_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDashboardInput.dashboard_name = Some(value.into());`.
+    pub fn dashboard_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.dashboard_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetDashboardInput with optional fields set to `None`.
+    pub fn new() -> GetDashboardInput {
+        GetDashboardInput { ..Default::default() }
+    }
+}
 
 /// Serialize `GetDashboardInput` contents to a `SignedRequest`.
 struct GetDashboardInputSerializer;
@@ -1388,7 +1656,6 @@ pub struct GetDashboardOutput {
     #[doc="<p>The name of the dashboard.</p>"]
     pub dashboard_name: Option<String>,
 }
-
 struct GetDashboardOutputDeserializer;
 impl GetDashboardOutputDeserializer {
     #[allow(unused_variables)]
@@ -1463,7 +1730,92 @@ pub struct GetMetricStatisticsInput {
     #[doc="<p>The unit for a given metric. Metrics may be reported in multiple units. Not supplying a unit results in all units being returned. If the metric only ever reports one unit, specifying a unit has no effect.</p>"]
     pub unit: Option<String>,
 }
-
+impl GetMetricStatisticsInput {
+    /// Sets `dimensions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMetricStatisticsInput.dimensions = Some(value.into());`.
+    pub fn dimensions<ValueType: Into<Vec<Dimension>>>(mut self, value: ValueType) -> Self {
+        self.dimensions = Some(value.into());
+        self
+    }
+    /// Sets `end_time`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMetricStatisticsInput.end_time = value.into();`.
+    pub fn end_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.end_time = value.into();
+        self
+    }
+    /// Sets `extended_statistics`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMetricStatisticsInput.extended_statistics = Some(value.into());`.
+    pub fn extended_statistics<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.extended_statistics = Some(value.into());
+        self
+    }
+    /// Sets `metric_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMetricStatisticsInput.metric_name = value.into();`.
+    pub fn metric_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_name = value.into();
+        self
+    }
+    /// Sets `namespace`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMetricStatisticsInput.namespace = value.into();`.
+    pub fn namespace<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.namespace = value.into();
+        self
+    }
+    /// Sets `period`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMetricStatisticsInput.period = value.into();`.
+    pub fn period<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.period = value.into();
+        self
+    }
+    /// Sets `start_time`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMetricStatisticsInput.start_time = value.into();`.
+    pub fn start_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_time = value.into();
+        self
+    }
+    /// Sets `statistics`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMetricStatisticsInput.statistics = Some(value.into());`.
+    pub fn statistics<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.statistics = Some(value.into());
+        self
+    }
+    /// Sets `unit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMetricStatisticsInput.unit = Some(value.into());`.
+    pub fn unit<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.unit = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetMetricStatisticsInput with optional fields set to `None`.
+    pub fn new<EndTimeType: Into<String>,
+               MetricNameType: Into<String>,
+               NamespaceType: Into<String>,
+               PeriodType: Into<i64>,
+               StartTimeType: Into<String>>
+        (end_time: EndTimeType,
+         metric_name: MetricNameType,
+         namespace: NamespaceType,
+         period: PeriodType,
+         start_time: StartTimeType)
+         -> GetMetricStatisticsInput {
+        GetMetricStatisticsInput {
+            end_time: end_time.into(),
+            metric_name: metric_name.into(),
+            namespace: namespace.into(),
+            period: period.into(),
+            start_time: start_time.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetMetricStatisticsInput` contents to a `SignedRequest`.
 struct GetMetricStatisticsInputSerializer;
@@ -1508,7 +1860,6 @@ pub struct GetMetricStatisticsOutput {
     #[doc="<p>A label for the specified metric.</p>"]
     pub label: Option<String>,
 }
-
 struct GetMetricStatisticsOutputDeserializer;
 impl GetMetricStatisticsOutputDeserializer {
     #[allow(unused_variables)]
@@ -1618,7 +1969,26 @@ pub struct ListDashboardsInput {
     #[doc="<p>The token returned by a previous call to indicate that there is more data available.</p>"]
     pub next_token: Option<String>,
 }
-
+impl ListDashboardsInput {
+    /// Sets `dashboard_name_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDashboardsInput.dashboard_name_prefix = Some(value.into());`.
+    pub fn dashboard_name_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.dashboard_name_prefix = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDashboardsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListDashboardsInput with optional fields set to `None`.
+    pub fn new() -> ListDashboardsInput {
+        ListDashboardsInput { ..Default::default() }
+    }
+}
 
 /// Serialize `ListDashboardsInput` contents to a `SignedRequest`.
 struct ListDashboardsInputSerializer;
@@ -1647,7 +2017,6 @@ pub struct ListDashboardsOutput {
     #[doc="<p>The token that marks the start of the next batch of returned results.</p>"]
     pub next_token: Option<String>,
 }
-
 struct ListDashboardsOutputDeserializer;
 impl ListDashboardsOutputDeserializer {
     #[allow(unused_variables)]
@@ -1706,7 +2075,40 @@ pub struct ListMetricsInput {
     #[doc="<p>The token returned by a previous call to indicate that there is more data available.</p>"]
     pub next_token: Option<String>,
 }
-
+impl ListMetricsInput {
+    /// Sets `dimensions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListMetricsInput.dimensions = Some(value.into());`.
+    pub fn dimensions<ValueType: Into<Vec<DimensionFilter>>>(mut self, value: ValueType) -> Self {
+        self.dimensions = Some(value.into());
+        self
+    }
+    /// Sets `metric_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListMetricsInput.metric_name = Some(value.into());`.
+    pub fn metric_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_name = Some(value.into());
+        self
+    }
+    /// Sets `namespace`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListMetricsInput.namespace = Some(value.into());`.
+    pub fn namespace<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.namespace = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListMetricsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListMetricsInput with optional fields set to `None`.
+    pub fn new() -> ListMetricsInput {
+        ListMetricsInput { ..Default::default() }
+    }
+}
 
 /// Serialize `ListMetricsInput` contents to a `SignedRequest`.
 struct ListMetricsInputSerializer;
@@ -1742,7 +2144,6 @@ pub struct ListMetricsOutput {
     #[doc="<p>The token that marks the start of the next batch of returned results.</p>"]
     pub next_token: Option<String>,
 }
-
 struct ListMetricsOutputDeserializer;
 impl ListMetricsOutputDeserializer {
     #[allow(unused_variables)]
@@ -1813,7 +2214,6 @@ pub struct Metric {
     #[doc="<p>The namespace of the metric.</p>"]
     pub namespace: Option<String>,
 }
-
 struct MetricDeserializer;
 impl MetricDeserializer {
     #[allow(unused_variables)]
@@ -1917,7 +2317,6 @@ pub struct MetricAlarm {
     #[doc="<p>The unit of the metric associated with the alarm.</p>"]
     pub unit: Option<String>,
 }
-
 struct MetricAlarmDeserializer;
 impl MetricAlarmDeserializer {
     #[allow(unused_variables)]
@@ -2137,7 +2536,64 @@ pub struct MetricDatum {
     #[doc="<p>The value for the metric.</p> <p>Although the parameter accepts numbers of type Double, CloudWatch rejects values that are either too small or too large. Values must be in the range of 8.515920e-109 to 1.174271e+108 (Base 10) or 2e-360 to 2e360 (Base 2). In addition, special values (for example, NaN, +Infinity, -Infinity) are not supported.</p>"]
     pub value: Option<f64>,
 }
-
+impl MetricDatum {
+    /// Sets `dimensions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MetricDatum.dimensions = Some(value.into());`.
+    pub fn dimensions<ValueType: Into<Vec<Dimension>>>(mut self, value: ValueType) -> Self {
+        self.dimensions = Some(value.into());
+        self
+    }
+    /// Sets `metric_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MetricDatum.metric_name = value.into();`.
+    pub fn metric_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_name = value.into();
+        self
+    }
+    /// Sets `statistic_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MetricDatum.statistic_values = Some(value.into());`.
+    pub fn statistic_values<ValueType: Into<StatisticSet>>(mut self, value: ValueType) -> Self {
+        self.statistic_values = Some(value.into());
+        self
+    }
+    /// Sets `storage_resolution`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MetricDatum.storage_resolution = Some(value.into());`.
+    pub fn storage_resolution<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.storage_resolution = Some(value.into());
+        self
+    }
+    /// Sets `timestamp`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MetricDatum.timestamp = Some(value.into());`.
+    pub fn timestamp<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.timestamp = Some(value.into());
+        self
+    }
+    /// Sets `unit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MetricDatum.unit = Some(value.into());`.
+    pub fn unit<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.unit = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MetricDatum.value = Some(value.into());`.
+    pub fn value<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of MetricDatum with optional fields set to `None`.
+    pub fn new<MetricNameType: Into<String>>(metric_name: MetricNameType) -> MetricDatum {
+        MetricDatum {
+            metric_name: metric_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `MetricDatum` contents to a `SignedRequest`.
 struct MetricDatumSerializer;
@@ -2294,7 +2750,26 @@ pub struct PutDashboardInput {
     #[doc="<p>The name of the dashboard. If a dashboard with this name already exists, this call modifies that dashboard, replacing its current contents. Otherwise, a new dashboard is created. The maximum length is 255, and valid characters are A-Z, a-z, 0-9, \"-\", and \"_\".</p>"]
     pub dashboard_name: Option<String>,
 }
-
+impl PutDashboardInput {
+    /// Sets `dashboard_body`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutDashboardInput.dashboard_body = Some(value.into());`.
+    pub fn dashboard_body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.dashboard_body = Some(value.into());
+        self
+    }
+    /// Sets `dashboard_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutDashboardInput.dashboard_name = Some(value.into());`.
+    pub fn dashboard_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.dashboard_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PutDashboardInput with optional fields set to `None`.
+    pub fn new() -> PutDashboardInput {
+        PutDashboardInput { ..Default::default() }
+    }
+}
 
 /// Serialize `PutDashboardInput` contents to a `SignedRequest`.
 struct PutDashboardInputSerializer;
@@ -2320,7 +2795,6 @@ pub struct PutDashboardOutput {
     #[doc="<p>If the input for <code>PutDashboard</code> was correct and the dashboard was successfully created or modified, this result is empty.</p> <p>If this result includes only warning messages, then the input was valid enough for the dashboard to be created or modified, but some elements of the dashboard may not render.</p> <p>If this result includes error messages, the input was not valid and the operation failed.</p>"]
     pub dashboard_validation_messages: Option<Vec<DashboardValidationMessage>>,
 }
-
 struct PutDashboardOutputDeserializer;
 impl PutDashboardOutputDeserializer {
     #[allow(unused_variables)]
@@ -2401,7 +2875,165 @@ pub struct PutMetricAlarmInput {
     #[doc="<p>The unit of measure for the statistic. For example, the units for the Amazon EC2 NetworkIn metric are Bytes because NetworkIn tracks the number of bytes that an instance receives on all network interfaces. You can also specify a unit when you create a custom metric. Units help provide conceptual meaning to your data. Metric data points that specify a unit of measure, such as Percent, are aggregated separately.</p> <p>If you specify a unit, you must use a unit that is appropriate for the metric. Otherwise, the CloudWatch alarm can get stuck in the <code>INSUFFICIENT DATA</code> state. </p>"]
     pub unit: Option<String>,
 }
-
+impl PutMetricAlarmInput {
+    /// Sets `actions_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricAlarmInput.actions_enabled = Some(value.into());`.
+    pub fn actions_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.actions_enabled = Some(value.into());
+        self
+    }
+    /// Sets `alarm_actions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricAlarmInput.alarm_actions = Some(value.into());`.
+    pub fn alarm_actions<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.alarm_actions = Some(value.into());
+        self
+    }
+    /// Sets `alarm_description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricAlarmInput.alarm_description = Some(value.into());`.
+    pub fn alarm_description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.alarm_description = Some(value.into());
+        self
+    }
+    /// Sets `alarm_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricAlarmInput.alarm_name = value.into();`.
+    pub fn alarm_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.alarm_name = value.into();
+        self
+    }
+    /// Sets `comparison_operator`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricAlarmInput.comparison_operator = value.into();`.
+    pub fn comparison_operator<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.comparison_operator = value.into();
+        self
+    }
+    /// Sets `dimensions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricAlarmInput.dimensions = Some(value.into());`.
+    pub fn dimensions<ValueType: Into<Vec<Dimension>>>(mut self, value: ValueType) -> Self {
+        self.dimensions = Some(value.into());
+        self
+    }
+    /// Sets `evaluate_low_sample_count_percentile`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricAlarmInput.evaluate_low_sample_count_percentile = Some(value.into());`.
+    pub fn evaluate_low_sample_count_percentile<ValueType: Into<String>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.evaluate_low_sample_count_percentile = Some(value.into());
+        self
+    }
+    /// Sets `evaluation_periods`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricAlarmInput.evaluation_periods = value.into();`.
+    pub fn evaluation_periods<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.evaluation_periods = value.into();
+        self
+    }
+    /// Sets `extended_statistic`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricAlarmInput.extended_statistic = Some(value.into());`.
+    pub fn extended_statistic<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.extended_statistic = Some(value.into());
+        self
+    }
+    /// Sets `insufficient_data_actions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricAlarmInput.insufficient_data_actions = Some(value.into());`.
+    pub fn insufficient_data_actions<ValueType: Into<Vec<String>>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.insufficient_data_actions = Some(value.into());
+        self
+    }
+    /// Sets `metric_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricAlarmInput.metric_name = value.into();`.
+    pub fn metric_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_name = value.into();
+        self
+    }
+    /// Sets `namespace`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricAlarmInput.namespace = value.into();`.
+    pub fn namespace<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.namespace = value.into();
+        self
+    }
+    /// Sets `ok_actions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricAlarmInput.ok_actions = Some(value.into());`.
+    pub fn ok_actions<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.ok_actions = Some(value.into());
+        self
+    }
+    /// Sets `period`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricAlarmInput.period = value.into();`.
+    pub fn period<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.period = value.into();
+        self
+    }
+    /// Sets `statistic`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricAlarmInput.statistic = Some(value.into());`.
+    pub fn statistic<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.statistic = Some(value.into());
+        self
+    }
+    /// Sets `threshold`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricAlarmInput.threshold = value.into();`.
+    pub fn threshold<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.threshold = value.into();
+        self
+    }
+    /// Sets `treat_missing_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricAlarmInput.treat_missing_data = Some(value.into());`.
+    pub fn treat_missing_data<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.treat_missing_data = Some(value.into());
+        self
+    }
+    /// Sets `unit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricAlarmInput.unit = Some(value.into());`.
+    pub fn unit<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.unit = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PutMetricAlarmInput with optional fields set to `None`.
+    pub fn new<AlarmNameType: Into<String>,
+               ComparisonOperatorType: Into<String>,
+               EvaluationPeriodsType: Into<i64>,
+               MetricNameType: Into<String>,
+               NamespaceType: Into<String>,
+               PeriodType: Into<i64>,
+               ThresholdType: Into<f64>>
+        (alarm_name: AlarmNameType,
+         comparison_operator: ComparisonOperatorType,
+         evaluation_periods: EvaluationPeriodsType,
+         metric_name: MetricNameType,
+         namespace: NamespaceType,
+         period: PeriodType,
+         threshold: ThresholdType)
+         -> PutMetricAlarmInput {
+        PutMetricAlarmInput {
+            alarm_name: alarm_name.into(),
+            comparison_operator: comparison_operator.into(),
+            evaluation_periods: evaluation_periods.into(),
+            metric_name: metric_name.into(),
+            namespace: namespace.into(),
+            period: period.into(),
+            threshold: threshold.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `PutMetricAlarmInput` contents to a `SignedRequest`.
 struct PutMetricAlarmInputSerializer;
@@ -2476,7 +3108,33 @@ pub struct PutMetricDataInput {
     #[doc="<p>The namespace for the metric data.</p> <p>You cannot specify a namespace that begins with \"AWS/\". Namespaces that begin with \"AWS/\" are reserved for use by Amazon Web Services products.</p>"]
     pub namespace: String,
 }
-
+impl PutMetricDataInput {
+    /// Sets `metric_data`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricDataInput.metric_data = value.into();`.
+    pub fn metric_data<ValueType: Into<Vec<MetricDatum>>>(mut self, value: ValueType) -> Self {
+        self.metric_data = value.into();
+        self
+    }
+    /// Sets `namespace`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricDataInput.namespace = value.into();`.
+    pub fn namespace<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.namespace = value.into();
+        self
+    }
+    /// Returns a new instance of PutMetricDataInput with optional fields set to `None`.
+    pub fn new<MetricDataType: Into<Vec<MetricDatum>>, NamespaceType: Into<String>>
+        (metric_data: MetricDataType,
+         namespace: NamespaceType)
+         -> PutMetricDataInput {
+        PutMetricDataInput {
+            metric_data: metric_data.into(),
+            namespace: namespace.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `PutMetricDataInput` contents to a `SignedRequest`.
 struct PutMetricDataInputSerializer;
@@ -2573,7 +3231,51 @@ pub struct SetAlarmStateInput {
     #[doc="<p>The value of the state.</p>"]
     pub state_value: String,
 }
-
+impl SetAlarmStateInput {
+    /// Sets `alarm_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetAlarmStateInput.alarm_name = value.into();`.
+    pub fn alarm_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.alarm_name = value.into();
+        self
+    }
+    /// Sets `state_reason`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetAlarmStateInput.state_reason = value.into();`.
+    pub fn state_reason<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.state_reason = value.into();
+        self
+    }
+    /// Sets `state_reason_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetAlarmStateInput.state_reason_data = Some(value.into());`.
+    pub fn state_reason_data<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.state_reason_data = Some(value.into());
+        self
+    }
+    /// Sets `state_value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetAlarmStateInput.state_value = value.into();`.
+    pub fn state_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.state_value = value.into();
+        self
+    }
+    /// Returns a new instance of SetAlarmStateInput with optional fields set to `None`.
+    pub fn new<AlarmNameType: Into<String>,
+               StateReasonType: Into<String>,
+               StateValueType: Into<String>>
+        (alarm_name: AlarmNameType,
+         state_reason: StateReasonType,
+         state_value: StateValueType)
+         -> SetAlarmStateInput {
+        SetAlarmStateInput {
+            alarm_name: alarm_name.into(),
+            state_reason: state_reason.into(),
+            state_value: state_value.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SetAlarmStateInput` contents to a `SignedRequest`.
 struct SetAlarmStateInputSerializer;
@@ -2690,7 +3392,54 @@ pub struct StatisticSet {
     #[doc="<p>The sum of values for the sample set.</p>"]
     pub sum: f64,
 }
-
+impl StatisticSet {
+    /// Sets `maximum`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StatisticSet.maximum = value.into();`.
+    pub fn maximum<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.maximum = value.into();
+        self
+    }
+    /// Sets `minimum`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StatisticSet.minimum = value.into();`.
+    pub fn minimum<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.minimum = value.into();
+        self
+    }
+    /// Sets `sample_count`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StatisticSet.sample_count = value.into();`.
+    pub fn sample_count<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.sample_count = value.into();
+        self
+    }
+    /// Sets `sum`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StatisticSet.sum = value.into();`.
+    pub fn sum<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.sum = value.into();
+        self
+    }
+    /// Returns a new instance of StatisticSet with optional fields set to `None`.
+    pub fn new<MaximumType: Into<f64>,
+               MinimumType: Into<f64>,
+               SampleCountType: Into<f64>,
+               SumType: Into<f64>>
+        (maximum: MaximumType,
+         minimum: MinimumType,
+         sample_count: SampleCountType,
+         sum: SumType)
+         -> StatisticSet {
+        StatisticSet {
+            maximum: maximum.into(),
+            minimum: minimum.into(),
+            sample_count: sample_count.into(),
+            sum: sum.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `StatisticSet` contents to a `SignedRequest`.
 struct StatisticSetSerializer;

@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -61,7 +62,6 @@ pub struct AccountGateResult {
     #[doc="<p>The reason for the account gate status assigned to this account and region for the stack set operation.</p>"]
     pub status_reason: Option<String>,
 }
-
 struct AccountGateResultDeserializer;
 impl AccountGateResultDeserializer {
     #[allow(unused_variables)]
@@ -146,7 +146,6 @@ pub struct AccountLimit {
     #[doc="<p>The value that is associated with the account limit name.</p>"]
     pub value: Option<i64>,
 }
-
 struct AccountLimitDeserializer;
 impl AccountLimitDeserializer {
     #[allow(unused_variables)]
@@ -323,7 +322,29 @@ pub struct CancelUpdateStackInput {
     #[doc="<p>The name or the unique stack ID that is associated with the stack.</p>"]
     pub stack_name: String,
 }
-
+impl CancelUpdateStackInput {
+    /// Sets `client_request_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelUpdateStackInput.client_request_token = Some(value.into());`.
+    pub fn client_request_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_request_token = Some(value.into());
+        self
+    }
+    /// Sets `stack_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelUpdateStackInput.stack_name = value.into();`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = value.into();
+        self
+    }
+    /// Returns a new instance of CancelUpdateStackInput with optional fields set to `None`.
+    pub fn new<StackNameType: Into<String>>(stack_name: StackNameType) -> CancelUpdateStackInput {
+        CancelUpdateStackInput {
+            stack_name: stack_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CancelUpdateStackInput` contents to a `SignedRequest`.
 struct CancelUpdateStackInputSerializer;
@@ -445,7 +466,6 @@ pub struct Change {
     #[doc="<p>The type of entity that AWS CloudFormation changes. Currently, the only entity type is <code>Resource</code>.</p>"]
     pub type_: Option<String>,
 }
-
 struct ChangeDeserializer;
 impl ChangeDeserializer {
     #[allow(unused_variables)]
@@ -626,7 +646,6 @@ pub struct ChangeSetSummary {
     #[doc="<p>A description of the change set's status. For example, if your change set is in the <code>FAILED</code> state, AWS CloudFormation shows the error message.</p>"]
     pub status_reason: Option<String>,
 }
-
 struct ChangeSetSummaryDeserializer;
 impl ChangeSetSummaryDeserializer {
     #[allow(unused_variables)]
@@ -803,7 +822,44 @@ pub struct ContinueUpdateRollbackInput {
     #[doc="<p>The name or the unique ID of the stack that you want to continue rolling back.</p> <note> <p>Don't specify the name of a nested stack (a stack that was created by using the <code>AWS::CloudFormation::Stack</code> resource). Instead, use this operation on the parent stack (the stack that contains the <code>AWS::CloudFormation::Stack</code> resource).</p> </note>"]
     pub stack_name: String,
 }
-
+impl ContinueUpdateRollbackInput {
+    /// Sets `client_request_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContinueUpdateRollbackInput.client_request_token = Some(value.into());`.
+    pub fn client_request_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_request_token = Some(value.into());
+        self
+    }
+    /// Sets `resources_to_skip`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContinueUpdateRollbackInput.resources_to_skip = Some(value.into());`.
+    pub fn resources_to_skip<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resources_to_skip = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContinueUpdateRollbackInput.role_arn = Some(value.into());`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = Some(value.into());
+        self
+    }
+    /// Sets `stack_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContinueUpdateRollbackInput.stack_name = value.into();`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = value.into();
+        self
+    }
+    /// Returns a new instance of ContinueUpdateRollbackInput with optional fields set to `None`.
+    pub fn new<StackNameType: Into<String>>(stack_name: StackNameType)
+                                            -> ContinueUpdateRollbackInput {
+        ContinueUpdateRollbackInput {
+            stack_name: stack_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ContinueUpdateRollbackInput` contents to a `SignedRequest`.
 struct ContinueUpdateRollbackInputSerializer;
@@ -884,7 +940,126 @@ pub struct CreateChangeSetInput {
     #[doc="<p>Whether to reuse the template that is associated with the stack to create the change set.</p>"]
     pub use_previous_template: Option<bool>,
 }
-
+impl CreateChangeSetInput {
+    /// Sets `capabilities`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateChangeSetInput.capabilities = Some(value.into());`.
+    pub fn capabilities<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.capabilities = Some(value.into());
+        self
+    }
+    /// Sets `change_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateChangeSetInput.change_set_name = value.into();`.
+    pub fn change_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_set_name = value.into();
+        self
+    }
+    /// Sets `change_set_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateChangeSetInput.change_set_type = Some(value.into());`.
+    pub fn change_set_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_set_type = Some(value.into());
+        self
+    }
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateChangeSetInput.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateChangeSetInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `notification_ar_ns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateChangeSetInput.notification_ar_ns = Some(value.into());`.
+    pub fn notification_ar_ns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.notification_ar_ns = Some(value.into());
+        self
+    }
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateChangeSetInput.parameters = Some(value.into());`.
+    pub fn parameters<ValueType: Into<Vec<Parameter>>>(mut self, value: ValueType) -> Self {
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Sets `resource_types`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateChangeSetInput.resource_types = Some(value.into());`.
+    pub fn resource_types<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resource_types = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateChangeSetInput.role_arn = Some(value.into());`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = Some(value.into());
+        self
+    }
+    /// Sets `rollback_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateChangeSetInput.rollback_configuration = Some(value.into());`.
+    pub fn rollback_configuration<ValueType: Into<RollbackConfiguration>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.rollback_configuration = Some(value.into());
+        self
+    }
+    /// Sets `stack_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateChangeSetInput.stack_name = value.into();`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateChangeSetInput.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `template_body`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateChangeSetInput.template_body = Some(value.into());`.
+    pub fn template_body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_body = Some(value.into());
+        self
+    }
+    /// Sets `template_url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateChangeSetInput.template_url = Some(value.into());`.
+    pub fn template_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_url = Some(value.into());
+        self
+    }
+    /// Sets `use_previous_template`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateChangeSetInput.use_previous_template = Some(value.into());`.
+    pub fn use_previous_template<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.use_previous_template = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateChangeSetInput with optional fields set to `None`.
+    pub fn new<ChangeSetNameType: Into<String>, StackNameType: Into<String>>
+        (change_set_name: ChangeSetNameType,
+         stack_name: StackNameType)
+         -> CreateChangeSetInput {
+        CreateChangeSetInput {
+            change_set_name: change_set_name.into(),
+            stack_name: stack_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateChangeSetInput` contents to a `SignedRequest`.
 struct CreateChangeSetInputSerializer;
@@ -962,7 +1137,6 @@ pub struct CreateChangeSetOutput {
     #[doc="<p>The unique ID of the stack.</p>"]
     pub stack_id: Option<String>,
 }
-
 struct CreateChangeSetOutputDeserializer;
 impl CreateChangeSetOutputDeserializer {
     #[allow(unused_variables)]
@@ -1044,7 +1218,129 @@ pub struct CreateStackInput {
     #[doc="<p>The amount of time that can pass before the stack status becomes CREATE_FAILED; if <code>DisableRollback</code> is not set or is set to <code>false</code>, the stack will be rolled back.</p>"]
     pub timeout_in_minutes: Option<i64>,
 }
-
+impl CreateStackInput {
+    /// Sets `capabilities`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackInput.capabilities = Some(value.into());`.
+    pub fn capabilities<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.capabilities = Some(value.into());
+        self
+    }
+    /// Sets `client_request_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackInput.client_request_token = Some(value.into());`.
+    pub fn client_request_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_request_token = Some(value.into());
+        self
+    }
+    /// Sets `disable_rollback`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackInput.disable_rollback = Some(value.into());`.
+    pub fn disable_rollback<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.disable_rollback = Some(value.into());
+        self
+    }
+    /// Sets `notification_ar_ns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackInput.notification_ar_ns = Some(value.into());`.
+    pub fn notification_ar_ns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.notification_ar_ns = Some(value.into());
+        self
+    }
+    /// Sets `on_failure`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackInput.on_failure = Some(value.into());`.
+    pub fn on_failure<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.on_failure = Some(value.into());
+        self
+    }
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackInput.parameters = Some(value.into());`.
+    pub fn parameters<ValueType: Into<Vec<Parameter>>>(mut self, value: ValueType) -> Self {
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Sets `resource_types`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackInput.resource_types = Some(value.into());`.
+    pub fn resource_types<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resource_types = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackInput.role_arn = Some(value.into());`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = Some(value.into());
+        self
+    }
+    /// Sets `rollback_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackInput.rollback_configuration = Some(value.into());`.
+    pub fn rollback_configuration<ValueType: Into<RollbackConfiguration>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.rollback_configuration = Some(value.into());
+        self
+    }
+    /// Sets `stack_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackInput.stack_name = value.into();`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = value.into();
+        self
+    }
+    /// Sets `stack_policy_body`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackInput.stack_policy_body = Some(value.into());`.
+    pub fn stack_policy_body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_policy_body = Some(value.into());
+        self
+    }
+    /// Sets `stack_policy_url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackInput.stack_policy_url = Some(value.into());`.
+    pub fn stack_policy_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_policy_url = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackInput.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `template_body`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackInput.template_body = Some(value.into());`.
+    pub fn template_body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_body = Some(value.into());
+        self
+    }
+    /// Sets `template_url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackInput.template_url = Some(value.into());`.
+    pub fn template_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_url = Some(value.into());
+        self
+    }
+    /// Sets `timeout_in_minutes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackInput.timeout_in_minutes = Some(value.into());`.
+    pub fn timeout_in_minutes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.timeout_in_minutes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateStackInput with optional fields set to `None`.
+    pub fn new<StackNameType: Into<String>>(stack_name: StackNameType) -> CreateStackInput {
+        CreateStackInput {
+            stack_name: stack_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateStackInput` contents to a `SignedRequest`.
 struct CreateStackInputSerializer;
@@ -1132,7 +1428,60 @@ pub struct CreateStackInstancesInput {
     #[doc="<p>The name or unique ID of the stack set that you want to create stack instances from.</p>"]
     pub stack_set_name: String,
 }
-
+impl CreateStackInstancesInput {
+    /// Sets `accounts`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackInstancesInput.accounts = value.into();`.
+    pub fn accounts<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.accounts = value.into();
+        self
+    }
+    /// Sets `operation_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackInstancesInput.operation_id = Some(value.into());`.
+    pub fn operation_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.operation_id = Some(value.into());
+        self
+    }
+    /// Sets `operation_preferences`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackInstancesInput.operation_preferences = Some(value.into());`.
+    pub fn operation_preferences<ValueType: Into<StackSetOperationPreferences>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.operation_preferences = Some(value.into());
+        self
+    }
+    /// Sets `regions`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackInstancesInput.regions = value.into();`.
+    pub fn regions<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.regions = value.into();
+        self
+    }
+    /// Sets `stack_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackInstancesInput.stack_set_name = value.into();`.
+    pub fn stack_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateStackInstancesInput with optional fields set to `None`.
+    pub fn new<AccountsType: Into<Vec<String>>,
+               RegionsType: Into<Vec<String>>,
+               StackSetNameType: Into<String>>
+        (accounts: AccountsType,
+         regions: RegionsType,
+         stack_set_name: StackSetNameType)
+         -> CreateStackInstancesInput {
+        CreateStackInstancesInput {
+            accounts: accounts.into(),
+            regions: regions.into(),
+            stack_set_name: stack_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateStackInstancesInput` contents to a `SignedRequest`.
 struct CreateStackInstancesInputSerializer;
@@ -1168,7 +1517,6 @@ pub struct CreateStackInstancesOutput {
     #[doc="<p>The unique identifier for this stack set operation.</p>"]
     pub operation_id: Option<String>,
 }
-
 struct CreateStackInstancesOutputDeserializer;
 impl CreateStackInstancesOutputDeserializer {
     #[allow(unused_variables)]
@@ -1218,7 +1566,6 @@ pub struct CreateStackOutput {
     #[doc="<p>Unique identifier of the stack.</p>"]
     pub stack_id: Option<String>,
 }
-
 struct CreateStackOutputDeserializer;
 impl CreateStackOutputDeserializer {
     #[allow(unused_variables)]
@@ -1280,7 +1627,72 @@ pub struct CreateStackSetInput {
     #[doc="<p>The location of the file that contains the template body. The URL must point to a template (maximum size: 460,800 bytes) that's located in an Amazon S3 bucket. For more information, see <a href=\"http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-anatomy.html\">Template Anatomy</a> in the AWS CloudFormation User Guide.</p> <p>Conditional: You must specify either the TemplateBody or the TemplateURL parameter, but not both.</p>"]
     pub template_url: Option<String>,
 }
-
+impl CreateStackSetInput {
+    /// Sets `capabilities`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackSetInput.capabilities = Some(value.into());`.
+    pub fn capabilities<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.capabilities = Some(value.into());
+        self
+    }
+    /// Sets `client_request_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackSetInput.client_request_token = Some(value.into());`.
+    pub fn client_request_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_request_token = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackSetInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackSetInput.parameters = Some(value.into());`.
+    pub fn parameters<ValueType: Into<Vec<Parameter>>>(mut self, value: ValueType) -> Self {
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Sets `stack_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackSetInput.stack_set_name = value.into();`.
+    pub fn stack_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_set_name = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackSetInput.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `template_body`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackSetInput.template_body = Some(value.into());`.
+    pub fn template_body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_body = Some(value.into());
+        self
+    }
+    /// Sets `template_url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackSetInput.template_url = Some(value.into());`.
+    pub fn template_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_url = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateStackSetInput with optional fields set to `None`.
+    pub fn new<StackSetNameType: Into<String>>(stack_set_name: StackSetNameType)
+                                               -> CreateStackSetInput {
+        CreateStackSetInput {
+            stack_set_name: stack_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateStackSetInput` contents to a `SignedRequest`.
 struct CreateStackSetInputSerializer;
@@ -1327,7 +1739,6 @@ pub struct CreateStackSetOutput {
     #[doc="<p>The ID of the stack set that you're creating.</p>"]
     pub stack_set_id: Option<String>,
 }
-
 struct CreateStackSetOutputDeserializer;
 impl CreateStackSetOutputDeserializer {
     #[allow(unused_variables)]
@@ -1393,7 +1804,30 @@ pub struct DeleteChangeSetInput {
     #[doc="<p>If you specified the name of a change set to delete, specify the stack name or ID (ARN) that is associated with it.</p>"]
     pub stack_name: Option<String>,
 }
-
+impl DeleteChangeSetInput {
+    /// Sets `change_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteChangeSetInput.change_set_name = value.into();`.
+    pub fn change_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_set_name = value.into();
+        self
+    }
+    /// Sets `stack_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteChangeSetInput.stack_name = Some(value.into());`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteChangeSetInput with optional fields set to `None`.
+    pub fn new<ChangeSetNameType: Into<String>>(change_set_name: ChangeSetNameType)
+                                                -> DeleteChangeSetInput {
+        DeleteChangeSetInput {
+            change_set_name: change_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteChangeSetInput` contents to a `SignedRequest`.
 struct DeleteChangeSetInputSerializer;
@@ -1445,7 +1879,43 @@ pub struct DeleteStackInput {
     #[doc="<p>The name or the unique stack ID that is associated with the stack.</p>"]
     pub stack_name: String,
 }
-
+impl DeleteStackInput {
+    /// Sets `client_request_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteStackInput.client_request_token = Some(value.into());`.
+    pub fn client_request_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_request_token = Some(value.into());
+        self
+    }
+    /// Sets `retain_resources`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteStackInput.retain_resources = Some(value.into());`.
+    pub fn retain_resources<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.retain_resources = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteStackInput.role_arn = Some(value.into());`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = Some(value.into());
+        self
+    }
+    /// Sets `stack_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteStackInput.stack_name = value.into();`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteStackInput with optional fields set to `None`.
+    pub fn new<StackNameType: Into<String>>(stack_name: StackNameType) -> DeleteStackInput {
+        DeleteStackInput {
+            stack_name: stack_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteStackInput` contents to a `SignedRequest`.
 struct DeleteStackInputSerializer;
@@ -1487,7 +1957,70 @@ pub struct DeleteStackInstancesInput {
     #[doc="<p>The name or unique ID of the stack set that you want to delete stack instances for.</p>"]
     pub stack_set_name: String,
 }
-
+impl DeleteStackInstancesInput {
+    /// Sets `accounts`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteStackInstancesInput.accounts = value.into();`.
+    pub fn accounts<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.accounts = value.into();
+        self
+    }
+    /// Sets `operation_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteStackInstancesInput.operation_id = Some(value.into());`.
+    pub fn operation_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.operation_id = Some(value.into());
+        self
+    }
+    /// Sets `operation_preferences`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteStackInstancesInput.operation_preferences = Some(value.into());`.
+    pub fn operation_preferences<ValueType: Into<StackSetOperationPreferences>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.operation_preferences = Some(value.into());
+        self
+    }
+    /// Sets `regions`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteStackInstancesInput.regions = value.into();`.
+    pub fn regions<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.regions = value.into();
+        self
+    }
+    /// Sets `retain_stacks`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteStackInstancesInput.retain_stacks = value.into();`.
+    pub fn retain_stacks<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.retain_stacks = value.into();
+        self
+    }
+    /// Sets `stack_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteStackInstancesInput.stack_set_name = value.into();`.
+    pub fn stack_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteStackInstancesInput with optional fields set to `None`.
+    pub fn new<AccountsType: Into<Vec<String>>,
+               RegionsType: Into<Vec<String>>,
+               RetainStacksType: Into<bool>,
+               StackSetNameType: Into<String>>
+        (accounts: AccountsType,
+         regions: RegionsType,
+         retain_stacks: RetainStacksType,
+         stack_set_name: StackSetNameType)
+         -> DeleteStackInstancesInput {
+        DeleteStackInstancesInput {
+            accounts: accounts.into(),
+            regions: regions.into(),
+            retain_stacks: retain_stacks.into(),
+            stack_set_name: stack_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteStackInstancesInput` contents to a `SignedRequest`.
 struct DeleteStackInstancesInputSerializer;
@@ -1525,7 +2058,6 @@ pub struct DeleteStackInstancesOutput {
     #[doc="<p>The unique identifier for this stack set operation.</p>"]
     pub operation_id: Option<String>,
 }
-
 struct DeleteStackInstancesOutputDeserializer;
 impl DeleteStackInstancesOutputDeserializer {
     #[allow(unused_variables)]
@@ -1574,7 +2106,23 @@ pub struct DeleteStackSetInput {
     #[doc="<p>The name or unique ID of the stack set that you're deleting. You can obtain this value by running <a>ListStackSets</a>.</p>"]
     pub stack_set_name: String,
 }
-
+impl DeleteStackSetInput {
+    /// Sets `stack_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteStackSetInput.stack_set_name = value.into();`.
+    pub fn stack_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteStackSetInput with optional fields set to `None`.
+    pub fn new<StackSetNameType: Into<String>>(stack_set_name: StackSetNameType)
+                                               -> DeleteStackSetInput {
+        DeleteStackSetInput {
+            stack_set_name: stack_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteStackSetInput` contents to a `SignedRequest`.
 struct DeleteStackSetInputSerializer;
@@ -1630,7 +2178,19 @@ pub struct DescribeAccountLimitsInput {
     #[doc="<p>A string that identifies the next page of limits that you want to retrieve.</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeAccountLimitsInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAccountLimitsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeAccountLimitsInput with optional fields set to `None`.
+    pub fn new() -> DescribeAccountLimitsInput {
+        DescribeAccountLimitsInput { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeAccountLimitsInput` contents to a `SignedRequest`.
 struct DescribeAccountLimitsInputSerializer;
@@ -1656,7 +2216,6 @@ pub struct DescribeAccountLimitsOutput {
     #[doc="<p>If the output exceeds 1 MB in size, a string that identifies the next page of limits. If no additional page exists, this value is null.</p>"]
     pub next_token: Option<String>,
 }
-
 struct DescribeAccountLimitsOutputDeserializer;
 impl DescribeAccountLimitsOutputDeserializer {
     #[allow(unused_variables)]
@@ -1714,7 +2273,37 @@ pub struct DescribeChangeSetInput {
     #[doc="<p>If you specified the name of a change set, specify the stack name or ID (ARN) of the change set you want to describe.</p>"]
     pub stack_name: Option<String>,
 }
-
+impl DescribeChangeSetInput {
+    /// Sets `change_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeChangeSetInput.change_set_name = value.into();`.
+    pub fn change_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_set_name = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeChangeSetInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `stack_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeChangeSetInput.stack_name = Some(value.into());`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeChangeSetInput with optional fields set to `None`.
+    pub fn new<ChangeSetNameType: Into<String>>(change_set_name: ChangeSetNameType)
+                                                -> DescribeChangeSetInput {
+        DescribeChangeSetInput {
+            change_set_name: change_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeChangeSetInput` contents to a `SignedRequest`.
 struct DescribeChangeSetInputSerializer;
@@ -1773,7 +2362,6 @@ pub struct DescribeChangeSetOutput {
     #[doc="<p>If you execute the change set, the tags that will be associated with the stack.</p>"]
     pub tags: Option<Vec<Tag>>,
 }
-
 struct DescribeChangeSetOutputDeserializer;
 impl DescribeChangeSetOutputDeserializer {
     #[allow(unused_variables)]
@@ -1893,7 +2481,26 @@ pub struct DescribeStackEventsInput {
     #[doc="<p>The name or the unique stack ID that is associated with the stack, which are not always interchangeable:</p> <ul> <li> <p>Running stacks: You can specify either the stack's name or its unique stack ID.</p> </li> <li> <p>Deleted stacks: You must specify the unique stack ID.</p> </li> </ul> <p>Default: There is no default value.</p>"]
     pub stack_name: Option<String>,
 }
-
+impl DescribeStackEventsInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStackEventsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `stack_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStackEventsInput.stack_name = Some(value.into());`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeStackEventsInput with optional fields set to `None`.
+    pub fn new() -> DescribeStackEventsInput {
+        DescribeStackEventsInput { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeStackEventsInput` contents to a `SignedRequest`.
 struct DescribeStackEventsInputSerializer;
@@ -1922,7 +2529,6 @@ pub struct DescribeStackEventsOutput {
     #[doc="<p>A list of <code>StackEvents</code> structures.</p>"]
     pub stack_events: Option<Vec<StackEvent>>,
 }
-
 struct DescribeStackEventsOutputDeserializer;
 impl DescribeStackEventsOutputDeserializer {
     #[allow(unused_variables)]
@@ -1979,7 +2585,44 @@ pub struct DescribeStackInstanceInput {
     #[doc="<p>The name or the unique stack ID of the stack set that you want to get stack instance information for.</p>"]
     pub stack_set_name: String,
 }
-
+impl DescribeStackInstanceInput {
+    /// Sets `stack_instance_account`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStackInstanceInput.stack_instance_account = value.into();`.
+    pub fn stack_instance_account<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_instance_account = value.into();
+        self
+    }
+    /// Sets `stack_instance_region`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStackInstanceInput.stack_instance_region = value.into();`.
+    pub fn stack_instance_region<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_instance_region = value.into();
+        self
+    }
+    /// Sets `stack_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStackInstanceInput.stack_set_name = value.into();`.
+    pub fn stack_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeStackInstanceInput with optional fields set to `None`.
+    pub fn new<StackInstanceAccountType: Into<String>,
+               StackInstanceRegionType: Into<String>,
+               StackSetNameType: Into<String>>
+        (stack_instance_account: StackInstanceAccountType,
+         stack_instance_region: StackInstanceRegionType,
+         stack_set_name: StackSetNameType)
+         -> DescribeStackInstanceInput {
+        DescribeStackInstanceInput {
+            stack_instance_account: stack_instance_account.into(),
+            stack_instance_region: stack_instance_region.into(),
+            stack_set_name: stack_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeStackInstanceInput` contents to a `SignedRequest`.
 struct DescribeStackInstanceInputSerializer;
@@ -2005,7 +2648,6 @@ pub struct DescribeStackInstanceOutput {
     #[doc="<p>The stack instance that matches the specified request parameters.</p>"]
     pub stack_instance: Option<StackInstance>,
 }
-
 struct DescribeStackInstanceOutputDeserializer;
 impl DescribeStackInstanceOutputDeserializer {
     #[allow(unused_variables)]
@@ -2057,7 +2699,33 @@ pub struct DescribeStackResourceInput {
     #[doc="<p>The name or the unique stack ID that is associated with the stack, which are not always interchangeable:</p> <ul> <li> <p>Running stacks: You can specify either the stack's name or its unique stack ID.</p> </li> <li> <p>Deleted stacks: You must specify the unique stack ID.</p> </li> </ul> <p>Default: There is no default value.</p>"]
     pub stack_name: String,
 }
-
+impl DescribeStackResourceInput {
+    /// Sets `logical_resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStackResourceInput.logical_resource_id = value.into();`.
+    pub fn logical_resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.logical_resource_id = value.into();
+        self
+    }
+    /// Sets `stack_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStackResourceInput.stack_name = value.into();`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeStackResourceInput with optional fields set to `None`.
+    pub fn new<LogicalResourceIdType: Into<String>, StackNameType: Into<String>>
+        (logical_resource_id: LogicalResourceIdType,
+         stack_name: StackNameType)
+         -> DescribeStackResourceInput {
+        DescribeStackResourceInput {
+            logical_resource_id: logical_resource_id.into(),
+            stack_name: stack_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeStackResourceInput` contents to a `SignedRequest`.
 struct DescribeStackResourceInputSerializer;
@@ -2081,7 +2749,6 @@ pub struct DescribeStackResourceOutput {
     #[doc="<p>A <code>StackResourceDetail</code> structure containing the description of the specified resource in the specified stack.</p>"]
     pub stack_resource_detail: Option<StackResourceDetail>,
 }
-
 struct DescribeStackResourceOutputDeserializer;
 impl DescribeStackResourceOutputDeserializer {
     #[allow(unused_variables)]
@@ -2135,7 +2802,33 @@ pub struct DescribeStackResourcesInput {
     #[doc="<p>The name or the unique stack ID that is associated with the stack, which are not always interchangeable:</p> <ul> <li> <p>Running stacks: You can specify either the stack's name or its unique stack ID.</p> </li> <li> <p>Deleted stacks: You must specify the unique stack ID.</p> </li> </ul> <p>Default: There is no default value.</p> <p>Required: Conditional. If you do not specify <code>StackName</code>, you must specify <code>PhysicalResourceId</code>.</p>"]
     pub stack_name: Option<String>,
 }
-
+impl DescribeStackResourcesInput {
+    /// Sets `logical_resource_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStackResourcesInput.logical_resource_id = Some(value.into());`.
+    pub fn logical_resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.logical_resource_id = Some(value.into());
+        self
+    }
+    /// Sets `physical_resource_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStackResourcesInput.physical_resource_id = Some(value.into());`.
+    pub fn physical_resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.physical_resource_id = Some(value.into());
+        self
+    }
+    /// Sets `stack_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStackResourcesInput.stack_name = Some(value.into());`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeStackResourcesInput with optional fields set to `None`.
+    pub fn new() -> DescribeStackResourcesInput {
+        DescribeStackResourcesInput { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeStackResourcesInput` contents to a `SignedRequest`.
 struct DescribeStackResourcesInputSerializer;
@@ -2165,7 +2858,6 @@ pub struct DescribeStackResourcesOutput {
     #[doc="<p>A list of <code>StackResource</code> structures.</p>"]
     pub stack_resources: Option<Vec<StackResource>>,
 }
-
 struct DescribeStackResourcesOutputDeserializer;
 impl DescribeStackResourcesOutputDeserializer {
     #[allow(unused_variables)]
@@ -2214,7 +2906,23 @@ pub struct DescribeStackSetInput {
     #[doc="<p>The name or unique ID of the stack set whose description you want.</p>"]
     pub stack_set_name: String,
 }
-
+impl DescribeStackSetInput {
+    /// Sets `stack_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStackSetInput.stack_set_name = value.into();`.
+    pub fn stack_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeStackSetInput with optional fields set to `None`.
+    pub fn new<StackSetNameType: Into<String>>(stack_set_name: StackSetNameType)
+                                               -> DescribeStackSetInput {
+        DescribeStackSetInput {
+            stack_set_name: stack_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeStackSetInput` contents to a `SignedRequest`.
 struct DescribeStackSetInputSerializer;
@@ -2238,7 +2946,33 @@ pub struct DescribeStackSetOperationInput {
     #[doc="<p>The name or the unique stack ID of the stack set for the stack operation.</p>"]
     pub stack_set_name: String,
 }
-
+impl DescribeStackSetOperationInput {
+    /// Sets `operation_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStackSetOperationInput.operation_id = value.into();`.
+    pub fn operation_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.operation_id = value.into();
+        self
+    }
+    /// Sets `stack_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStackSetOperationInput.stack_set_name = value.into();`.
+    pub fn stack_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeStackSetOperationInput with optional fields set to `None`.
+    pub fn new<OperationIdType: Into<String>, StackSetNameType: Into<String>>
+        (operation_id: OperationIdType,
+         stack_set_name: StackSetNameType)
+         -> DescribeStackSetOperationInput {
+        DescribeStackSetOperationInput {
+            operation_id: operation_id.into(),
+            stack_set_name: stack_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeStackSetOperationInput` contents to a `SignedRequest`.
 struct DescribeStackSetOperationInputSerializer;
@@ -2261,7 +2995,6 @@ pub struct DescribeStackSetOperationOutput {
     #[doc="<p>The specified stack set operation.</p>"]
     pub stack_set_operation: Option<StackSetOperation>,
 }
-
 struct DescribeStackSetOperationOutputDeserializer;
 impl DescribeStackSetOperationOutputDeserializer {
     #[allow(unused_variables)]
@@ -2311,7 +3044,6 @@ pub struct DescribeStackSetOutput {
     #[doc="<p>The specified stack set.</p>"]
     pub stack_set: Option<StackSet>,
 }
-
 struct DescribeStackSetOutputDeserializer;
 impl DescribeStackSetOutputDeserializer {
     #[allow(unused_variables)]
@@ -2362,7 +3094,26 @@ pub struct DescribeStacksInput {
     #[doc="<p>The name or the unique stack ID that is associated with the stack, which are not always interchangeable:</p> <ul> <li> <p>Running stacks: You can specify either the stack's name or its unique stack ID.</p> </li> <li> <p>Deleted stacks: You must specify the unique stack ID.</p> </li> </ul> <p>Default: There is no default value.</p>"]
     pub stack_name: Option<String>,
 }
-
+impl DescribeStacksInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStacksInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `stack_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStacksInput.stack_name = Some(value.into());`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeStacksInput with optional fields set to `None`.
+    pub fn new() -> DescribeStacksInput {
+        DescribeStacksInput { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeStacksInput` contents to a `SignedRequest`.
 struct DescribeStacksInputSerializer;
@@ -2391,7 +3142,6 @@ pub struct DescribeStacksOutput {
     #[doc="<p>A list of stack structures.</p>"]
     pub stacks: Option<Vec<Stack>>,
 }
-
 struct DescribeStacksOutputDeserializer;
 impl DescribeStacksOutputDeserializer {
     #[allow(unused_variables)]
@@ -2476,7 +3226,33 @@ pub struct EstimateTemplateCostInput {
     #[doc="<p>Location of file containing the template body. The URL must point to a template that is located in an Amazon S3 bucket. For more information, go to <a href=\"http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-anatomy.html\">Template Anatomy</a> in the AWS CloudFormation User Guide.</p> <p>Conditional: You must pass <code>TemplateURL</code> or <code>TemplateBody</code>. If both are passed, only <code>TemplateBody</code> is used.</p>"]
     pub template_url: Option<String>,
 }
-
+impl EstimateTemplateCostInput {
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EstimateTemplateCostInput.parameters = Some(value.into());`.
+    pub fn parameters<ValueType: Into<Vec<Parameter>>>(mut self, value: ValueType) -> Self {
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Sets `template_body`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EstimateTemplateCostInput.template_body = Some(value.into());`.
+    pub fn template_body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_body = Some(value.into());
+        self
+    }
+    /// Sets `template_url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EstimateTemplateCostInput.template_url = Some(value.into());`.
+    pub fn template_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_url = Some(value.into());
+        self
+    }
+    /// Returns a new instance of EstimateTemplateCostInput with optional fields set to `None`.
+    pub fn new() -> EstimateTemplateCostInput {
+        EstimateTemplateCostInput { ..Default::default() }
+    }
+}
 
 /// Serialize `EstimateTemplateCostInput` contents to a `SignedRequest`.
 struct EstimateTemplateCostInputSerializer;
@@ -2508,7 +3284,6 @@ pub struct EstimateTemplateCostOutput {
     #[doc="<p>An AWS Simple Monthly Calculator URL with a query string that describes the resources required to run the template.</p>"]
     pub url: Option<String>,
 }
-
 struct EstimateTemplateCostOutputDeserializer;
 impl EstimateTemplateCostOutputDeserializer {
     #[allow(unused_variables)]
@@ -2588,7 +3363,37 @@ pub struct ExecuteChangeSetInput {
     #[doc="<p>If you specified the name of a change set, specify the stack name or ID (ARN) that is associated with the change set you want to execute.</p>"]
     pub stack_name: Option<String>,
 }
-
+impl ExecuteChangeSetInput {
+    /// Sets `change_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExecuteChangeSetInput.change_set_name = value.into();`.
+    pub fn change_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_set_name = value.into();
+        self
+    }
+    /// Sets `client_request_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExecuteChangeSetInput.client_request_token = Some(value.into());`.
+    pub fn client_request_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_request_token = Some(value.into());
+        self
+    }
+    /// Sets `stack_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExecuteChangeSetInput.stack_name = Some(value.into());`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ExecuteChangeSetInput with optional fields set to `None`.
+    pub fn new<ChangeSetNameType: Into<String>>(change_set_name: ChangeSetNameType)
+                                                -> ExecuteChangeSetInput {
+        ExecuteChangeSetInput {
+            change_set_name: change_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ExecuteChangeSetInput` contents to a `SignedRequest`.
 struct ExecuteChangeSetInputSerializer;
@@ -2655,7 +3460,6 @@ pub struct Export {
     #[doc="<p>The value of the exported output, such as a resource physical ID. This value is defined in the <code>Export</code> field in the associated stack's <code>Outputs</code> section.</p>"]
     pub value: Option<String>,
 }
-
 struct ExportDeserializer;
 impl ExportDeserializer {
     #[allow(unused_variables)]
@@ -2810,7 +3614,22 @@ pub struct GetStackPolicyInput {
     #[doc="<p>The name or unique stack ID that is associated with the stack whose policy you want to get.</p>"]
     pub stack_name: String,
 }
-
+impl GetStackPolicyInput {
+    /// Sets `stack_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetStackPolicyInput.stack_name = value.into();`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetStackPolicyInput with optional fields set to `None`.
+    pub fn new<StackNameType: Into<String>>(stack_name: StackNameType) -> GetStackPolicyInput {
+        GetStackPolicyInput {
+            stack_name: stack_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetStackPolicyInput` contents to a `SignedRequest`.
 struct GetStackPolicyInputSerializer;
@@ -2832,7 +3651,6 @@ pub struct GetStackPolicyOutput {
     #[doc="<p>Structure containing the stack policy body. (For more information, go to <a href=\"http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/protect-stack-resources.html\"> Prevent Updates to Stack Resources</a> in the AWS CloudFormation User Guide.)</p>"]
     pub stack_policy_body: Option<String>,
 }
-
 struct GetStackPolicyOutputDeserializer;
 impl GetStackPolicyOutputDeserializer {
     #[allow(unused_variables)]
@@ -2886,7 +3704,33 @@ pub struct GetTemplateInput {
     #[doc="<p>For templates that include transforms, the stage of the template that AWS CloudFormation returns. To get the user-submitted template, specify <code>Original</code>. To get the template after AWS CloudFormation has processed all transforms, specify <code>Processed</code>. </p> <p>If the template doesn't include transforms, <code>Original</code> and <code>Processed</code> return the same template. By default, AWS CloudFormation specifies <code>Original</code>. </p>"]
     pub template_stage: Option<String>,
 }
-
+impl GetTemplateInput {
+    /// Sets `change_set_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetTemplateInput.change_set_name = Some(value.into());`.
+    pub fn change_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_set_name = Some(value.into());
+        self
+    }
+    /// Sets `stack_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetTemplateInput.stack_name = Some(value.into());`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = Some(value.into());
+        self
+    }
+    /// Sets `template_stage`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetTemplateInput.template_stage = Some(value.into());`.
+    pub fn template_stage<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_stage = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetTemplateInput with optional fields set to `None`.
+    pub fn new() -> GetTemplateInput {
+        GetTemplateInput { ..Default::default() }
+    }
+}
 
 /// Serialize `GetTemplateInput` contents to a `SignedRequest`.
 struct GetTemplateInputSerializer;
@@ -2918,7 +3762,6 @@ pub struct GetTemplateOutput {
     #[doc="<p>Structure containing the template body. (For more information, go to <a href=\"http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-anatomy.html\">Template Anatomy</a> in the AWS CloudFormation User Guide.)</p> <p>AWS CloudFormation returns the same template that was used when the stack was created.</p>"]
     pub template_body: Option<String>,
 }
-
 struct GetTemplateOutputDeserializer;
 impl GetTemplateOutputDeserializer {
     #[allow(unused_variables)]
@@ -2979,7 +3822,40 @@ pub struct GetTemplateSummaryInput {
     #[doc="<p>Location of file containing the template body. The URL must point to a template (max size: 460,800 bytes) that is located in an Amazon S3 bucket. For more information about templates, see <a href=\"http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-anatomy.html\">Template Anatomy</a> in the AWS CloudFormation User Guide.</p> <p>Conditional: You must specify only one of the following parameters: <code>StackName</code>, <code>StackSetName</code>, <code>TemplateBody</code>, or <code>TemplateURL</code>.</p>"]
     pub template_url: Option<String>,
 }
-
+impl GetTemplateSummaryInput {
+    /// Sets `stack_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetTemplateSummaryInput.stack_name = Some(value.into());`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = Some(value.into());
+        self
+    }
+    /// Sets `stack_set_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetTemplateSummaryInput.stack_set_name = Some(value.into());`.
+    pub fn stack_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_set_name = Some(value.into());
+        self
+    }
+    /// Sets `template_body`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetTemplateSummaryInput.template_body = Some(value.into());`.
+    pub fn template_body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_body = Some(value.into());
+        self
+    }
+    /// Sets `template_url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetTemplateSummaryInput.template_url = Some(value.into());`.
+    pub fn template_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_url = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetTemplateSummaryInput with optional fields set to `None`.
+    pub fn new() -> GetTemplateSummaryInput {
+        GetTemplateSummaryInput { ..Default::default() }
+    }
+}
 
 /// Serialize `GetTemplateSummaryInput` contents to a `SignedRequest`.
 struct GetTemplateSummaryInputSerializer;
@@ -3026,7 +3902,6 @@ pub struct GetTemplateSummaryOutput {
     #[doc="<p>The AWS template format version, which identifies the capabilities of the template.</p>"]
     pub version: Option<String>,
 }
-
 struct GetTemplateSummaryOutputDeserializer;
 impl GetTemplateSummaryOutputDeserializer {
     #[allow(unused_variables)]
@@ -3194,7 +4069,29 @@ pub struct ListChangeSetsInput {
     #[doc="<p>The name or the Amazon Resource Name (ARN) of the stack for which you want to list change sets.</p>"]
     pub stack_name: String,
 }
-
+impl ListChangeSetsInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListChangeSetsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `stack_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListChangeSetsInput.stack_name = value.into();`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListChangeSetsInput with optional fields set to `None`.
+    pub fn new<StackNameType: Into<String>>(stack_name: StackNameType) -> ListChangeSetsInput {
+        ListChangeSetsInput {
+            stack_name: stack_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ListChangeSetsInput` contents to a `SignedRequest`.
 struct ListChangeSetsInputSerializer;
@@ -3221,7 +4118,6 @@ pub struct ListChangeSetsOutput {
     #[doc="<p>A list of <code>ChangeSetSummary</code> structures that provides the ID and status of each change set for the specified stack.</p>"]
     pub summaries: Option<Vec<ChangeSetSummary>>,
 }
-
 struct ListChangeSetsOutputDeserializer;
 impl ListChangeSetsOutputDeserializer {
     #[allow(unused_variables)]
@@ -3274,7 +4170,19 @@ pub struct ListExportsInput {
     #[doc="<p>A string (provided by the <a>ListExports</a> response output) that identifies the next page of exported output values that you asked to retrieve.</p>"]
     pub next_token: Option<String>,
 }
-
+impl ListExportsInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListExportsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListExportsInput with optional fields set to `None`.
+    pub fn new() -> ListExportsInput {
+        ListExportsInput { ..Default::default() }
+    }
+}
 
 /// Serialize `ListExportsInput` contents to a `SignedRequest`.
 struct ListExportsInputSerializer;
@@ -3299,7 +4207,6 @@ pub struct ListExportsOutput {
     #[doc="<p>If the output exceeds 100 exported output values, a string that identifies the next page of exports. If there is no additional page, this value is null.</p>"]
     pub next_token: Option<String>,
 }
-
 struct ListExportsOutputDeserializer;
 impl ListExportsOutputDeserializer {
     #[allow(unused_variables)]
@@ -3353,7 +4260,29 @@ pub struct ListImportsInput {
     #[doc="<p>A string (provided by the <a>ListImports</a> response output) that identifies the next page of stacks that are importing the specified exported output value. </p>"]
     pub next_token: Option<String>,
 }
-
+impl ListImportsInput {
+    /// Sets `export_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListImportsInput.export_name = value.into();`.
+    pub fn export_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.export_name = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListImportsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListImportsInput with optional fields set to `None`.
+    pub fn new<ExportNameType: Into<String>>(export_name: ExportNameType) -> ListImportsInput {
+        ListImportsInput {
+            export_name: export_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ListImportsInput` contents to a `SignedRequest`.
 struct ListImportsInputSerializer;
@@ -3379,7 +4308,6 @@ pub struct ListImportsOutput {
     #[doc="<p>A string that identifies the next page of exports. If there is no additional page, this value is null.</p>"]
     pub next_token: Option<String>,
 }
-
 struct ListImportsOutputDeserializer;
 impl ListImportsOutputDeserializer {
     #[allow(unused_variables)]
@@ -3439,7 +4367,51 @@ pub struct ListStackInstancesInput {
     #[doc="<p>The name or unique ID of the stack set that you want to list stack instances for.</p>"]
     pub stack_set_name: String,
 }
-
+impl ListStackInstancesInput {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStackInstancesInput.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStackInstancesInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `stack_instance_account`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStackInstancesInput.stack_instance_account = Some(value.into());`.
+    pub fn stack_instance_account<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_instance_account = Some(value.into());
+        self
+    }
+    /// Sets `stack_instance_region`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStackInstancesInput.stack_instance_region = Some(value.into());`.
+    pub fn stack_instance_region<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_instance_region = Some(value.into());
+        self
+    }
+    /// Sets `stack_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStackInstancesInput.stack_set_name = value.into();`.
+    pub fn stack_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListStackInstancesInput with optional fields set to `None`.
+    pub fn new<StackSetNameType: Into<String>>(stack_set_name: StackSetNameType)
+                                               -> ListStackInstancesInput {
+        ListStackInstancesInput {
+            stack_set_name: stack_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ListStackInstancesInput` contents to a `SignedRequest`.
 struct ListStackInstancesInputSerializer;
@@ -3478,7 +4450,6 @@ pub struct ListStackInstancesOutput {
     #[doc="<p>A list of <code>StackInstanceSummary</code> structures that contain information about the specified stack instances.</p>"]
     pub summaries: Option<Vec<StackInstanceSummary>>,
 }
-
 struct ListStackInstancesOutputDeserializer;
 impl ListStackInstancesOutputDeserializer {
     #[allow(unused_variables)]
@@ -3534,7 +4505,29 @@ pub struct ListStackResourcesInput {
     #[doc="<p>The name or the unique stack ID that is associated with the stack, which are not always interchangeable:</p> <ul> <li> <p>Running stacks: You can specify either the stack's name or its unique stack ID.</p> </li> <li> <p>Deleted stacks: You must specify the unique stack ID.</p> </li> </ul> <p>Default: There is no default value.</p>"]
     pub stack_name: String,
 }
-
+impl ListStackResourcesInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStackResourcesInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `stack_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStackResourcesInput.stack_name = value.into();`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListStackResourcesInput with optional fields set to `None`.
+    pub fn new<StackNameType: Into<String>>(stack_name: StackNameType) -> ListStackResourcesInput {
+        ListStackResourcesInput {
+            stack_name: stack_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ListStackResourcesInput` contents to a `SignedRequest`.
 struct ListStackResourcesInputSerializer;
@@ -3561,7 +4554,6 @@ pub struct ListStackResourcesOutput {
     #[doc="<p>A list of <code>StackResourceSummary</code> structures.</p>"]
     pub stack_resource_summaries: Option<Vec<StackResourceSummary>>,
 }
-
 struct ListStackResourcesOutputDeserializer;
 impl ListStackResourcesOutputDeserializer {
     #[allow(unused_variables)]
@@ -3620,7 +4612,47 @@ pub struct ListStackSetOperationResultsInput {
     #[doc="<p>The name or unique ID of the stack set that you want to get operation results for.</p>"]
     pub stack_set_name: String,
 }
-
+impl ListStackSetOperationResultsInput {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStackSetOperationResultsInput.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStackSetOperationResultsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `operation_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStackSetOperationResultsInput.operation_id = value.into();`.
+    pub fn operation_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.operation_id = value.into();
+        self
+    }
+    /// Sets `stack_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStackSetOperationResultsInput.stack_set_name = value.into();`.
+    pub fn stack_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListStackSetOperationResultsInput with optional fields set to `None`.
+    pub fn new<OperationIdType: Into<String>, StackSetNameType: Into<String>>
+        (operation_id: OperationIdType,
+         stack_set_name: StackSetNameType)
+         -> ListStackSetOperationResultsInput {
+        ListStackSetOperationResultsInput {
+            operation_id: operation_id.into(),
+            stack_set_name: stack_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ListStackSetOperationResultsInput` contents to a `SignedRequest`.
 struct ListStackSetOperationResultsInputSerializer;
@@ -3652,7 +4684,6 @@ pub struct ListStackSetOperationResultsOutput {
     #[doc="<p>A list of <code>StackSetOperationResultSummary</code> structures that contain information about the specified operation results, for accounts and regions that are included in the operation.</p>"]
     pub summaries: Option<Vec<StackSetOperationResultSummary>>,
 }
-
 struct ListStackSetOperationResultsOutputDeserializer;
 impl ListStackSetOperationResultsOutputDeserializer {
     #[allow(unused_variables)]
@@ -3708,7 +4739,37 @@ pub struct ListStackSetOperationsInput {
     #[doc="<p>The name or unique ID of the stack set that you want to get operation summaries for.</p>"]
     pub stack_set_name: String,
 }
-
+impl ListStackSetOperationsInput {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStackSetOperationsInput.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStackSetOperationsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `stack_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStackSetOperationsInput.stack_set_name = value.into();`.
+    pub fn stack_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListStackSetOperationsInput with optional fields set to `None`.
+    pub fn new<StackSetNameType: Into<String>>(stack_set_name: StackSetNameType)
+                                               -> ListStackSetOperationsInput {
+        ListStackSetOperationsInput {
+            stack_set_name: stack_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ListStackSetOperationsInput` contents to a `SignedRequest`.
 struct ListStackSetOperationsInputSerializer;
@@ -3739,7 +4800,6 @@ pub struct ListStackSetOperationsOutput {
     #[doc="<p>A list of <code>StackSetOperationSummary</code> structures that contain summary information about operations for the specified stack set.</p>"]
     pub summaries: Option<Vec<StackSetOperationSummary>>,
 }
-
 struct ListStackSetOperationsOutputDeserializer;
 impl ListStackSetOperationsOutputDeserializer {
     #[allow(unused_variables)]
@@ -3794,7 +4854,33 @@ pub struct ListStackSetsInput {
     #[doc="<p>The status of the stack sets that you want to get summary information about.</p>"]
     pub status: Option<String>,
 }
-
+impl ListStackSetsInput {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStackSetsInput.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStackSetsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStackSetsInput.status = Some(value.into());`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListStackSetsInput with optional fields set to `None`.
+    pub fn new() -> ListStackSetsInput {
+        ListStackSetsInput { ..Default::default() }
+    }
+}
 
 /// Serialize `ListStackSetsInput` contents to a `SignedRequest`.
 struct ListStackSetsInputSerializer;
@@ -3826,7 +4912,6 @@ pub struct ListStackSetsOutput {
     #[doc="<p>A list of <code>StackSetSummary</code> structures that contain information about the user's stack sets.</p>"]
     pub summaries: Option<Vec<StackSetSummary>>,
 }
-
 struct ListStackSetsOutputDeserializer;
 impl ListStackSetsOutputDeserializer {
     #[allow(unused_variables)]
@@ -3882,7 +4967,26 @@ pub struct ListStacksInput {
     #[doc="<p>Stack status to use as a filter. Specify one or more stack status codes to list only stacks with the specified status codes. For a complete list of stack status codes, see the <code>StackStatus</code> parameter of the <a>Stack</a> data type.</p>"]
     pub stack_status_filter: Option<Vec<String>>,
 }
-
+impl ListStacksInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStacksInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `stack_status_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStacksInput.stack_status_filter = Some(value.into());`.
+    pub fn stack_status_filter<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.stack_status_filter = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListStacksInput with optional fields set to `None`.
+    pub fn new() -> ListStacksInput {
+        ListStacksInput { ..Default::default() }
+    }
+}
 
 /// Serialize `ListStacksInput` contents to a `SignedRequest`.
 struct ListStacksInputSerializer;
@@ -3913,7 +5017,6 @@ pub struct ListStacksOutput {
     #[doc="<p>A list of <code>StackSummary</code> structures containing information about the specified stacks.</p>"]
     pub stack_summaries: Option<Vec<StackSummary>>,
 }
-
 struct ListStacksOutputDeserializer;
 impl ListStacksOutputDeserializer {
     #[allow(unused_variables)]
@@ -4138,7 +5241,6 @@ pub struct Output {
     #[doc="<p>The value associated with the output.</p>"]
     pub output_value: Option<String>,
 }
-
 struct OutputDeserializer;
 impl OutputDeserializer {
     #[allow(unused_variables)]
@@ -4275,7 +5377,33 @@ pub struct Parameter {
     #[doc="<p>During a stack update, use the existing parameter value that the stack is using for a given parameter key. If you specify <code>true</code>, do not specify a parameter value.</p>"]
     pub use_previous_value: Option<bool>,
 }
-
+impl Parameter {
+    /// Sets `parameter_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Parameter.parameter_key = Some(value.into());`.
+    pub fn parameter_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.parameter_key = Some(value.into());
+        self
+    }
+    /// Sets `parameter_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Parameter.parameter_value = Some(value.into());`.
+    pub fn parameter_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.parameter_value = Some(value.into());
+        self
+    }
+    /// Sets `use_previous_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Parameter.use_previous_value = Some(value.into());`.
+    pub fn use_previous_value<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.use_previous_value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Parameter with optional fields set to `None`.
+    pub fn new() -> Parameter {
+        Parameter { ..Default::default() }
+    }
+}
 struct ParameterDeserializer;
 impl ParameterDeserializer {
     #[allow(unused_variables)]
@@ -4359,7 +5487,6 @@ pub struct ParameterConstraints {
     #[doc="<p>A list of values that are permitted for a parameter.</p>"]
     pub allowed_values: Option<Vec<String>>,
 }
-
 struct ParameterConstraintsDeserializer;
 impl ParameterConstraintsDeserializer {
     #[allow(unused_variables)]
@@ -4419,7 +5546,6 @@ pub struct ParameterDeclaration {
     #[doc="<p>The type of parameter.</p>"]
     pub parameter_type: Option<String>,
 }
-
 struct ParameterDeclarationDeserializer;
 impl ParameterDeclarationDeserializer {
     #[allow(unused_variables)]
@@ -4793,7 +5919,6 @@ pub struct ResourceChange {
     #[doc="<p>For the <code>Modify</code> action, indicates which resource attribute is triggering this update, such as a change in the resource attribute's <code>Metadata</code>, <code>Properties</code>, or <code>Tags</code>.</p>"]
     pub scope: Option<Vec<String>>,
 }
-
 struct ResourceChangeDeserializer;
 impl ResourceChangeDeserializer {
     #[allow(unused_variables)]
@@ -4876,7 +6001,6 @@ pub struct ResourceChangeDetail {
     #[doc="<p>A <code>ResourceTargetDefinition</code> structure that describes the field that AWS CloudFormation will change and whether the resource will be recreated.</p>"]
     pub target: Option<ResourceTargetDefinition>,
 }
-
 struct ResourceChangeDetailDeserializer;
 impl ResourceChangeDetailDeserializer {
     #[allow(unused_variables)]
@@ -5027,7 +6151,6 @@ pub struct ResourceTargetDefinition {
     #[doc="<p>If the <code>Attribute</code> value is <code>Properties</code>, indicates whether a change to this property causes the resource to be recreated. The value can be <code>Never</code>, <code>Always</code>, or <code>Conditionally</code>. To determine the conditions for a <code>Conditionally</code> recreation, see the update behavior for that <a href=\"http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html\">property</a> in the AWS CloudFormation User Guide.</p>"]
     pub requires_recreation: Option<String>,
 }
-
 struct ResourceTargetDefinitionDeserializer;
 impl ResourceTargetDefinitionDeserializer {
     #[allow(unused_variables)]
@@ -5207,7 +6330,28 @@ pub struct RollbackConfiguration {
     #[doc="<p>The triggers to monitor during stack creation or update actions. </p> <p>By default, AWS CloudFormation saves the rollback triggers specified for a stack and applies them to any subsequent update operations for the stack, unless you specify otherwise. If you do specify rollback triggers for this parameter, those triggers replace any list of triggers previously specified for the stack. This means:</p> <ul> <li> <p>If you don't specify this parameter, AWS CloudFormation uses the rollback triggers previously specified for this stack, if any.</p> </li> <li> <p>If you specify any rollback triggers using this parameter, you must specify all the triggers that you want used for this stack, even triggers you've specifed before (for example, when creating the stack or during a previous stack update). Any triggers that you don't include in the updated list of triggers are no longer applied to the stack.</p> </li> <li> <p>If you specify an empty list, AWS CloudFormation removes all currently specified triggers.</p> </li> </ul> <p>If a specified Cloudwatch alarm is missing, the entire stack operation fails and is rolled back. </p>"]
     pub rollback_triggers: Option<Vec<RollbackTrigger>>,
 }
-
+impl RollbackConfiguration {
+    /// Sets `monitoring_time_in_minutes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RollbackConfiguration.monitoring_time_in_minutes = Some(value.into());`.
+    pub fn monitoring_time_in_minutes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.monitoring_time_in_minutes = Some(value.into());
+        self
+    }
+    /// Sets `rollback_triggers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RollbackConfiguration.rollback_triggers = Some(value.into());`.
+    pub fn rollback_triggers<ValueType: Into<Vec<RollbackTrigger>>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.rollback_triggers = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RollbackConfiguration with optional fields set to `None`.
+    pub fn new() -> RollbackConfiguration {
+        RollbackConfiguration { ..Default::default() }
+    }
+}
 struct RollbackConfigurationDeserializer;
 impl RollbackConfigurationDeserializer {
     #[allow(unused_variables)]
@@ -5287,7 +6431,32 @@ pub struct RollbackTrigger {
     #[doc="<p>The resource type of the rollback trigger. Currently, <a href=\"http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cw-alarm.html\">AWS::CloudWatch::Alarm</a> is the only supported resource type.</p>"]
     pub type_: String,
 }
-
+impl RollbackTrigger {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RollbackTrigger.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RollbackTrigger.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of RollbackTrigger with optional fields set to `None`.
+    pub fn new<ArnType: Into<String>, TypeType: Into<String>>(arn: ArnType,
+                                                              type_: TypeType)
+                                                              -> RollbackTrigger {
+        RollbackTrigger {
+            arn: arn.into(),
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 struct RollbackTriggerDeserializer;
 impl RollbackTriggerDeserializer {
     #[allow(unused_variables)]
@@ -5452,7 +6621,36 @@ pub struct SetStackPolicyInput {
     #[doc="<p>Location of a file containing the stack policy. The URL must point to a policy (maximum size: 16 KB) located in an S3 bucket in the same region as the stack. You can specify either the <code>StackPolicyBody</code> or the <code>StackPolicyURL</code> parameter, but not both.</p>"]
     pub stack_policy_url: Option<String>,
 }
-
+impl SetStackPolicyInput {
+    /// Sets `stack_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetStackPolicyInput.stack_name = value.into();`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = value.into();
+        self
+    }
+    /// Sets `stack_policy_body`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetStackPolicyInput.stack_policy_body = Some(value.into());`.
+    pub fn stack_policy_body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_policy_body = Some(value.into());
+        self
+    }
+    /// Sets `stack_policy_url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetStackPolicyInput.stack_policy_url = Some(value.into());`.
+    pub fn stack_policy_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_policy_url = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SetStackPolicyInput with optional fields set to `None`.
+    pub fn new<StackNameType: Into<String>>(stack_name: StackNameType) -> SetStackPolicyInput {
+        SetStackPolicyInput {
+            stack_name: stack_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SetStackPolicyInput` contents to a `SignedRequest`.
 struct SetStackPolicyInputSerializer;
@@ -5486,7 +6684,54 @@ pub struct SignalResourceInput {
     #[doc="<p>A unique ID of the signal. When you signal Amazon EC2 instances or Auto Scaling groups, specify the instance ID that you are signaling as the unique ID. If you send multiple signals to a single resource (such as signaling a wait condition), each signal requires a different unique ID.</p>"]
     pub unique_id: String,
 }
-
+impl SignalResourceInput {
+    /// Sets `logical_resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SignalResourceInput.logical_resource_id = value.into();`.
+    pub fn logical_resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.logical_resource_id = value.into();
+        self
+    }
+    /// Sets `stack_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SignalResourceInput.stack_name = value.into();`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = value.into();
+        self
+    }
+    /// Sets `status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SignalResourceInput.status = value.into();`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = value.into();
+        self
+    }
+    /// Sets `unique_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SignalResourceInput.unique_id = value.into();`.
+    pub fn unique_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.unique_id = value.into();
+        self
+    }
+    /// Returns a new instance of SignalResourceInput with optional fields set to `None`.
+    pub fn new<LogicalResourceIdType: Into<String>,
+               StackNameType: Into<String>,
+               StatusType: Into<String>,
+               UniqueIdType: Into<String>>
+        (logical_resource_id: LogicalResourceIdType,
+         stack_name: StackNameType,
+         status: StatusType,
+         unique_id: UniqueIdType)
+         -> SignalResourceInput {
+        SignalResourceInput {
+            logical_resource_id: logical_resource_id.into(),
+            stack_name: stack_name.into(),
+            status: status.into(),
+            unique_id: unique_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SignalResourceInput` contents to a `SignedRequest`.
 struct SignalResourceInputSerializer;
@@ -5544,7 +6789,6 @@ pub struct Stack {
     #[doc="<p>The amount of time within which stack creation should complete.</p>"]
     pub timeout_in_minutes: Option<i64>,
 }
-
 struct StackDeserializer;
 impl StackDeserializer {
     #[allow(unused_variables)]
@@ -5685,7 +6929,6 @@ pub struct StackEvent {
     #[doc="<p>Time the status was updated.</p>"]
     pub timestamp: String,
 }
-
 struct StackEventDeserializer;
 impl StackEventDeserializer {
     #[allow(unused_variables)]
@@ -5844,7 +7087,6 @@ pub struct StackInstance {
     #[doc="<p>The explanation for the specific status code that is assigned to this stack instance.</p>"]
     pub status_reason: Option<String>,
 }
-
 struct StackInstanceDeserializer;
 impl StackInstanceDeserializer {
     #[allow(unused_variables)]
@@ -5981,7 +7223,6 @@ pub struct StackInstanceSummary {
     #[doc="<p>The explanation for the specific status code assigned to this stack instance.</p>"]
     pub status_reason: Option<String>,
 }
-
 struct StackInstanceSummaryDeserializer;
 impl StackInstanceSummaryDeserializer {
     #[allow(unused_variables)]
@@ -6096,7 +7337,6 @@ pub struct StackResource {
     #[doc="<p>Time the status was updated.</p>"]
     pub timestamp: String,
 }
-
 struct StackResourceDeserializer;
 impl StackResourceDeserializer {
     #[allow(unused_variables)]
@@ -6200,7 +7440,6 @@ pub struct StackResourceDetail {
     #[doc="<p>The name associated with the stack.</p>"]
     pub stack_name: Option<String>,
 }
-
 struct StackResourceDetailDeserializer;
 impl StackResourceDetailDeserializer {
     #[allow(unused_variables)]
@@ -6343,7 +7582,6 @@ pub struct StackResourceSummary {
     #[doc="<p>Type of resource. (For more information, go to <a href=\"http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html\"> AWS Resource Types Reference</a> in the AWS CloudFormation User Guide.)</p>"]
     pub resource_type: String,
 }
-
 struct StackResourceSummaryDeserializer;
 impl StackResourceSummaryDeserializer {
     #[allow(unused_variables)]
@@ -6472,7 +7710,6 @@ pub struct StackSet {
     #[doc="<p>The structure that contains the body of the template that was used to create or update the stack set.</p>"]
     pub template_body: Option<String>,
 }
-
 struct StackSetDeserializer;
 impl StackSetDeserializer {
     #[allow(unused_variables)]
@@ -6595,7 +7832,6 @@ pub struct StackSetOperation {
     #[doc="<p>The status of the operation. </p> <ul> <li> <p> <code>FAILED</code>: The operation exceeded the specified failure tolerance. The failure tolerance value that you've set for an operation is applied for each region during stack create and update operations. If the number of failed stacks within a region exceeds the failure tolerance, the status of the operation in the region is set to <code>FAILED</code>. This in turn sets the status of the operation as a whole to <code>FAILED</code>, and AWS CloudFormation cancels the operation in any remaining regions.</p> </li> <li> <p> <code>RUNNING</code>: The operation is currently being performed.</p> </li> <li> <p> <code>STOPPED</code>: The user has cancelled the operation.</p> </li> <li> <p> <code>STOPPING</code>: The operation is in the process of stopping, at user request. </p> </li> <li> <p> <code>SUCCEEDED</code>: The operation completed creating or updating all the specified stacks without exceeding the failure tolerance for the operation.</p> </li> </ul>"]
     pub status: Option<String>,
 }
-
 struct StackSetOperationDeserializer;
 impl StackSetOperationDeserializer {
     #[allow(unused_variables)]
@@ -6700,7 +7936,47 @@ pub struct StackSetOperationPreferences {
     #[doc="<p>The order of the regions in where you want to perform the stack operation.</p>"]
     pub region_order: Option<Vec<String>>,
 }
-
+impl StackSetOperationPreferences {
+    /// Sets `failure_tolerance_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StackSetOperationPreferences.failure_tolerance_count = Some(value.into());`.
+    pub fn failure_tolerance_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.failure_tolerance_count = Some(value.into());
+        self
+    }
+    /// Sets `failure_tolerance_percentage`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StackSetOperationPreferences.failure_tolerance_percentage = Some(value.into());`.
+    pub fn failure_tolerance_percentage<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.failure_tolerance_percentage = Some(value.into());
+        self
+    }
+    /// Sets `max_concurrent_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StackSetOperationPreferences.max_concurrent_count = Some(value.into());`.
+    pub fn max_concurrent_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_concurrent_count = Some(value.into());
+        self
+    }
+    /// Sets `max_concurrent_percentage`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StackSetOperationPreferences.max_concurrent_percentage = Some(value.into());`.
+    pub fn max_concurrent_percentage<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_concurrent_percentage = Some(value.into());
+        self
+    }
+    /// Sets `region_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StackSetOperationPreferences.region_order = Some(value.into());`.
+    pub fn region_order<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.region_order = Some(value.into());
+        self
+    }
+    /// Returns a new instance of StackSetOperationPreferences with optional fields set to `None`.
+    pub fn new() -> StackSetOperationPreferences {
+        StackSetOperationPreferences { ..Default::default() }
+    }
+}
 struct StackSetOperationPreferencesDeserializer;
 impl StackSetOperationPreferencesDeserializer {
     #[allow(unused_variables)]
@@ -6867,7 +8143,6 @@ pub struct StackSetOperationResultSummary {
     #[doc="<p>The reason for the assigned result status.</p>"]
     pub status_reason: Option<String>,
 }
-
 struct StackSetOperationResultSummaryDeserializer;
 impl StackSetOperationResultSummaryDeserializer {
     #[allow(unused_variables)]
@@ -6996,7 +8271,6 @@ pub struct StackSetOperationSummary {
     #[doc="<p>The overall status of the operation.</p> <ul> <li> <p> <code>FAILED</code>: The operation exceeded the specified failure tolerance. The failure tolerance value that you've set for an operation is applied for each region during stack create and update operations. If the number of failed stacks within a region exceeds the failure tolerance, the status of the operation in the region is set to <code>FAILED</code>. This in turn sets the status of the operation as a whole to <code>FAILED</code>, and AWS CloudFormation cancels the operation in any remaining regions.</p> </li> <li> <p> <code>RUNNING</code>: The operation is currently being performed.</p> </li> <li> <p> <code>STOPPED</code>: The user has cancelled the operation.</p> </li> <li> <p> <code>STOPPING</code>: The operation is in the process of stopping, at user request. </p> </li> <li> <p> <code>SUCCEEDED</code>: The operation completed creating or updating all the specified stacks without exceeding the failure tolerance for the operation.</p> </li> </ul>"]
     pub status: Option<String>,
 }
-
 struct StackSetOperationSummaryDeserializer;
 impl StackSetOperationSummaryDeserializer {
     #[allow(unused_variables)]
@@ -7127,7 +8401,6 @@ pub struct StackSetSummary {
     #[doc="<p>The status of the stack set.</p>"]
     pub status: Option<String>,
 }
-
 struct StackSetSummaryDeserializer;
 impl StackSetSummaryDeserializer {
     #[allow(unused_variables)]
@@ -7286,7 +8559,6 @@ pub struct StackSummary {
     #[doc="<p>The template description of the template used to create the stack.</p>"]
     pub template_description: Option<String>,
 }
-
 struct StackSummaryDeserializer;
 impl StackSummaryDeserializer {
     #[allow(unused_variables)]
@@ -7450,7 +8722,33 @@ pub struct StopStackSetOperationInput {
     #[doc="<p>The name or unique ID of the stack set that you want to stop the operation for.</p>"]
     pub stack_set_name: String,
 }
-
+impl StopStackSetOperationInput {
+    /// Sets `operation_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopStackSetOperationInput.operation_id = value.into();`.
+    pub fn operation_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.operation_id = value.into();
+        self
+    }
+    /// Sets `stack_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopStackSetOperationInput.stack_set_name = value.into();`.
+    pub fn stack_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of StopStackSetOperationInput with optional fields set to `None`.
+    pub fn new<OperationIdType: Into<String>, StackSetNameType: Into<String>>
+        (operation_id: OperationIdType,
+         stack_set_name: StackSetNameType)
+         -> StopStackSetOperationInput {
+        StopStackSetOperationInput {
+            operation_id: operation_id.into(),
+            stack_set_name: stack_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `StopStackSetOperationInput` contents to a `SignedRequest`.
 struct StopStackSetOperationInputSerializer;
@@ -7495,7 +8793,32 @@ pub struct Tag {
     #[doc="<p> <i>Required</i>. A string containing the value for this tag. You can specify a maximum of 256 characters for a tag value.</p>"]
     pub value: String,
 }
-
+impl Tag {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>, ValueType: Into<String>>(key: KeyType,
+                                                               value: ValueType)
+                                                               -> Tag {
+        Tag {
+            key: key.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 struct TagDeserializer;
 impl TagDeserializer {
     #[allow(unused_variables)]
@@ -7677,7 +9000,6 @@ pub struct TemplateParameter {
     #[doc="<p>The name associated with the parameter.</p>"]
     pub parameter_key: Option<String>,
 }
-
 struct TemplateParameterDeserializer;
 impl TemplateParameterDeserializer {
     #[allow(unused_variables)]
@@ -7923,7 +9245,133 @@ pub struct UpdateStackInput {
     #[doc="<p>Reuse the existing template that is associated with the stack that you are updating.</p> <p>Conditional: You must specify only one of the following parameters: <code>TemplateBody</code>, <code>TemplateURL</code>, or set the <code>UsePreviousTemplate</code> to <code>true</code>.</p>"]
     pub use_previous_template: Option<bool>,
 }
-
+impl UpdateStackInput {
+    /// Sets `capabilities`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackInput.capabilities = Some(value.into());`.
+    pub fn capabilities<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.capabilities = Some(value.into());
+        self
+    }
+    /// Sets `client_request_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackInput.client_request_token = Some(value.into());`.
+    pub fn client_request_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_request_token = Some(value.into());
+        self
+    }
+    /// Sets `notification_ar_ns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackInput.notification_ar_ns = Some(value.into());`.
+    pub fn notification_ar_ns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.notification_ar_ns = Some(value.into());
+        self
+    }
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackInput.parameters = Some(value.into());`.
+    pub fn parameters<ValueType: Into<Vec<Parameter>>>(mut self, value: ValueType) -> Self {
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Sets `resource_types`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackInput.resource_types = Some(value.into());`.
+    pub fn resource_types<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resource_types = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackInput.role_arn = Some(value.into());`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = Some(value.into());
+        self
+    }
+    /// Sets `rollback_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackInput.rollback_configuration = Some(value.into());`.
+    pub fn rollback_configuration<ValueType: Into<RollbackConfiguration>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.rollback_configuration = Some(value.into());
+        self
+    }
+    /// Sets `stack_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackInput.stack_name = value.into();`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = value.into();
+        self
+    }
+    /// Sets `stack_policy_body`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackInput.stack_policy_body = Some(value.into());`.
+    pub fn stack_policy_body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_policy_body = Some(value.into());
+        self
+    }
+    /// Sets `stack_policy_during_update_body`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackInput.stack_policy_during_update_body = Some(value.into());`.
+    pub fn stack_policy_during_update_body<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.stack_policy_during_update_body = Some(value.into());
+        self
+    }
+    /// Sets `stack_policy_during_update_url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackInput.stack_policy_during_update_url = Some(value.into());`.
+    pub fn stack_policy_during_update_url<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.stack_policy_during_update_url = Some(value.into());
+        self
+    }
+    /// Sets `stack_policy_url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackInput.stack_policy_url = Some(value.into());`.
+    pub fn stack_policy_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_policy_url = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackInput.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `template_body`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackInput.template_body = Some(value.into());`.
+    pub fn template_body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_body = Some(value.into());
+        self
+    }
+    /// Sets `template_url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackInput.template_url = Some(value.into());`.
+    pub fn template_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_url = Some(value.into());
+        self
+    }
+    /// Sets `use_previous_template`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackInput.use_previous_template = Some(value.into());`.
+    pub fn use_previous_template<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.use_previous_template = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateStackInput with optional fields set to `None`.
+    pub fn new<StackNameType: Into<String>>(stack_name: StackNameType) -> UpdateStackInput {
+        UpdateStackInput {
+            stack_name: stack_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateStackInput` contents to a `SignedRequest`.
 struct UpdateStackInputSerializer;
@@ -8005,7 +9453,6 @@ pub struct UpdateStackOutput {
     #[doc="<p>Unique identifier of the stack.</p>"]
     pub stack_id: Option<String>,
 }
-
 struct UpdateStackOutputDeserializer;
 impl UpdateStackOutputDeserializer {
     #[allow(unused_variables)]
@@ -8071,7 +9518,88 @@ pub struct UpdateStackSetInput {
     #[doc="<p>Use the existing template that's associated with the stack set that you're updating.</p> <p>Conditional: You must specify only one of the following parameters: <code>TemplateBody</code> or <code>TemplateURL</code>—or set <code>UsePreviousTemplate</code> to true. </p>"]
     pub use_previous_template: Option<bool>,
 }
-
+impl UpdateStackSetInput {
+    /// Sets `capabilities`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackSetInput.capabilities = Some(value.into());`.
+    pub fn capabilities<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.capabilities = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackSetInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `operation_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackSetInput.operation_id = Some(value.into());`.
+    pub fn operation_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.operation_id = Some(value.into());
+        self
+    }
+    /// Sets `operation_preferences`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackSetInput.operation_preferences = Some(value.into());`.
+    pub fn operation_preferences<ValueType: Into<StackSetOperationPreferences>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.operation_preferences = Some(value.into());
+        self
+    }
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackSetInput.parameters = Some(value.into());`.
+    pub fn parameters<ValueType: Into<Vec<Parameter>>>(mut self, value: ValueType) -> Self {
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Sets `stack_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackSetInput.stack_set_name = value.into();`.
+    pub fn stack_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_set_name = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackSetInput.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `template_body`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackSetInput.template_body = Some(value.into());`.
+    pub fn template_body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_body = Some(value.into());
+        self
+    }
+    /// Sets `template_url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackSetInput.template_url = Some(value.into());`.
+    pub fn template_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_url = Some(value.into());
+        self
+    }
+    /// Sets `use_previous_template`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackSetInput.use_previous_template = Some(value.into());`.
+    pub fn use_previous_template<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.use_previous_template = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateStackSetInput with optional fields set to `None`.
+    pub fn new<StackSetNameType: Into<String>>(stack_set_name: StackSetNameType)
+                                               -> UpdateStackSetInput {
+        UpdateStackSetInput {
+            stack_set_name: stack_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateStackSetInput` contents to a `SignedRequest`.
 struct UpdateStackSetInputSerializer;
@@ -8129,7 +9657,6 @@ pub struct UpdateStackSetOutput {
     #[doc="<p>The unique ID for this stack set operation.</p>"]
     pub operation_id: Option<String>,
 }
-
 struct UpdateStackSetOutputDeserializer;
 impl UpdateStackSetOutputDeserializer {
     #[allow(unused_variables)]
@@ -8209,7 +9736,26 @@ pub struct ValidateTemplateInput {
     #[doc="<p>Location of file containing the template body. The URL must point to a template (max size: 460,800 bytes) that is located in an Amazon S3 bucket. For more information, go to <a href=\"http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-anatomy.html\">Template Anatomy</a> in the AWS CloudFormation User Guide.</p> <p>Conditional: You must pass <code>TemplateURL</code> or <code>TemplateBody</code>. If both are passed, only <code>TemplateBody</code> is used.</p>"]
     pub template_url: Option<String>,
 }
-
+impl ValidateTemplateInput {
+    /// Sets `template_body`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ValidateTemplateInput.template_body = Some(value.into());`.
+    pub fn template_body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_body = Some(value.into());
+        self
+    }
+    /// Sets `template_url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ValidateTemplateInput.template_url = Some(value.into());`.
+    pub fn template_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_url = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ValidateTemplateInput with optional fields set to `None`.
+    pub fn new() -> ValidateTemplateInput {
+        ValidateTemplateInput { ..Default::default() }
+    }
+}
 
 /// Serialize `ValidateTemplateInput` contents to a `SignedRequest`.
 struct ValidateTemplateInputSerializer;
@@ -8244,7 +9790,6 @@ pub struct ValidateTemplateOutput {
     #[doc="<p>A list of <code>TemplateParameter</code> structures.</p>"]
     pub parameters: Option<Vec<TemplateParameter>>,
 }
-
 struct ValidateTemplateOutputDeserializer;
 impl ValidateTemplateOutputDeserializer {
     #[allow(unused_variables)]

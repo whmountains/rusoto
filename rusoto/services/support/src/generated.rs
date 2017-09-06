@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -39,7 +40,30 @@ pub struct AddAttachmentsToSetRequest {
     #[serde(rename="attachments")]
     pub attachments: Vec<Attachment>,
 }
-
+impl AddAttachmentsToSetRequest {
+    /// Sets `attachment_set_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddAttachmentsToSetRequest.attachment_set_id = Some(value.into());`.
+    pub fn attachment_set_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attachment_set_id = Some(value.into());
+        self
+    }
+    /// Sets `attachments`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddAttachmentsToSetRequest.attachments = value.into();`.
+    pub fn attachments<ValueType: Into<Vec<Attachment>>>(mut self, value: ValueType) -> Self {
+        self.attachments = value.into();
+        self
+    }
+    /// Returns a new instance of AddAttachmentsToSetRequest with optional fields set to `None`.
+    pub fn new<attachmentsType: Into<Vec<Attachment>>>(attachments: attachmentsType)
+                                                       -> AddAttachmentsToSetRequest {
+        AddAttachmentsToSetRequest {
+            attachments: attachments.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The ID and expiry time of the attachment set returned by the <a>AddAttachmentsToSet</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddAttachmentsToSetResponse {
@@ -52,7 +76,6 @@ pub struct AddAttachmentsToSetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub expiry_time: Option<String>,
 }
-
 #[doc="<p>To be written.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AddCommunicationToCaseRequest {
@@ -72,7 +95,44 @@ pub struct AddCommunicationToCaseRequest {
     #[serde(rename="communicationBody")]
     pub communication_body: String,
 }
-
+impl AddCommunicationToCaseRequest {
+    /// Sets `attachment_set_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddCommunicationToCaseRequest.attachment_set_id = Some(value.into());`.
+    pub fn attachment_set_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attachment_set_id = Some(value.into());
+        self
+    }
+    /// Sets `case_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddCommunicationToCaseRequest.case_id = Some(value.into());`.
+    pub fn case_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.case_id = Some(value.into());
+        self
+    }
+    /// Sets `cc_email_addresses`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddCommunicationToCaseRequest.cc_email_addresses = Some(value.into());`.
+    pub fn cc_email_addresses<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.cc_email_addresses = Some(value.into());
+        self
+    }
+    /// Sets `communication_body`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddCommunicationToCaseRequest.communication_body = value.into();`.
+    pub fn communication_body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.communication_body = value.into();
+        self
+    }
+    /// Returns a new instance of AddCommunicationToCaseRequest with optional fields set to `None`.
+    pub fn new<communicationBodyType: Into<String>>(communication_body: communicationBodyType)
+                                                    -> AddCommunicationToCaseRequest {
+        AddCommunicationToCaseRequest {
+            communication_body: communication_body.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The result of the <a>AddCommunicationToCase</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddCommunicationToCaseResponse {
@@ -81,7 +141,6 @@ pub struct AddCommunicationToCaseResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub result: Option<bool>,
 }
-
 #[doc="<p>An attachment to a case communication. The attachment consists of the file name and the content of the file.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Attachment {
@@ -98,7 +157,26 @@ pub struct Attachment {
     #[serde(skip_serializing_if="Option::is_none")]
     pub file_name: Option<String>,
 }
-
+impl Attachment {
+    /// Sets `data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Attachment.data = Some(value.into());`.
+    pub fn data<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.data = Some(value.into());
+        self
+    }
+    /// Sets `file_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Attachment.file_name = Some(value.into());`.
+    pub fn file_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.file_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Attachment with optional fields set to `None`.
+    pub fn new() -> Attachment {
+        Attachment { ..Default::default() }
+    }
+}
 #[doc="<p>The file name and ID of an attachment to a case communication. You can use the ID to retrieve the attachment with the <a>DescribeAttachment</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AttachmentDetails {
@@ -111,7 +189,6 @@ pub struct AttachmentDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub file_name: Option<String>,
 }
-
 #[doc="<p>A JSON-formatted object that contains the metadata for a support case. It is contained the response from a <a>DescribeCases</a> request. <b>CaseDetails</b> contains the following fields:</p> <ul> <li> <p> <b>caseId.</b> The AWS Support case ID requested or returned in the call. The case ID is an alphanumeric string formatted as shown in this example: case-<i>12345678910-2013-c4c1d2bf33c5cf47</i>.</p> </li> <li> <p> <b>categoryCode.</b> The category of problem for the AWS Support case. Corresponds to the CategoryCode values returned by a call to <a>DescribeServices</a>.</p> </li> <li> <p> <b>displayId.</b> The identifier for the case on pages in the AWS Support Center.</p> </li> <li> <p> <b>language.</b> The ISO 639-1 code for the language in which AWS provides support. AWS Support currently supports English (\"en\") and Japanese (\"ja\"). Language parameters must be passed explicitly for operations that take them.</p> </li> <li> <p> <b>recentCommunications.</b> One or more <a>Communication</a> objects. Fields of these objects are <code>attachments</code>, <code>body</code>, <code>caseId</code>, <code>submittedBy</code>, and <code>timeCreated</code>.</p> </li> <li> <p> <b>nextToken.</b> A resumption point for pagination.</p> </li> <li> <p> <b>serviceCode.</b> The identifier for the AWS service that corresponds to the service code defined in the call to <a>DescribeServices</a>.</p> </li> <li> <p> <b>severityCode. </b>The severity code assigned to the case. Contains one of the values returned by the call to <a>DescribeSeverityLevels</a>.</p> </li> <li> <p> <b>status.</b> The status of the case in the AWS Support Center.</p> </li> <li> <p> <b>subject.</b> The subject line of the case.</p> </li> <li> <p> <b>submittedBy.</b> The email address of the account that submitted the case.</p> </li> <li> <p> <b>timeCreated.</b> The time the case was created, in ISO-8601 format.</p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CaseDetails {
@@ -164,7 +241,6 @@ pub struct CaseDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub time_created: Option<String>,
 }
-
 #[doc="<p>A JSON-formatted name/value pair that represents the category name and category code of the problem, selected from the <a>DescribeServices</a> response for each AWS service.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Category {
@@ -177,7 +253,6 @@ pub struct Category {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p>A communication associated with an AWS Support case. The communication consists of the case ID, the message body, attachment information, the account email address, and the date and time of the communication.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Communication {
@@ -202,7 +277,6 @@ pub struct Communication {
     #[serde(skip_serializing_if="Option::is_none")]
     pub time_created: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateCaseRequest {
@@ -241,7 +315,82 @@ pub struct CreateCaseRequest {
     #[serde(rename="subject")]
     pub subject: String,
 }
-
+impl CreateCaseRequest {
+    /// Sets `attachment_set_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCaseRequest.attachment_set_id = Some(value.into());`.
+    pub fn attachment_set_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attachment_set_id = Some(value.into());
+        self
+    }
+    /// Sets `category_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCaseRequest.category_code = Some(value.into());`.
+    pub fn category_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.category_code = Some(value.into());
+        self
+    }
+    /// Sets `cc_email_addresses`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCaseRequest.cc_email_addresses = Some(value.into());`.
+    pub fn cc_email_addresses<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.cc_email_addresses = Some(value.into());
+        self
+    }
+    /// Sets `communication_body`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCaseRequest.communication_body = value.into();`.
+    pub fn communication_body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.communication_body = value.into();
+        self
+    }
+    /// Sets `issue_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCaseRequest.issue_type = Some(value.into());`.
+    pub fn issue_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.issue_type = Some(value.into());
+        self
+    }
+    /// Sets `language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCaseRequest.language = Some(value.into());`.
+    pub fn language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.language = Some(value.into());
+        self
+    }
+    /// Sets `service_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCaseRequest.service_code = Some(value.into());`.
+    pub fn service_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_code = Some(value.into());
+        self
+    }
+    /// Sets `severity_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCaseRequest.severity_code = Some(value.into());`.
+    pub fn severity_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.severity_code = Some(value.into());
+        self
+    }
+    /// Sets `subject`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCaseRequest.subject = value.into();`.
+    pub fn subject<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subject = value.into();
+        self
+    }
+    /// Returns a new instance of CreateCaseRequest with optional fields set to `None`.
+    pub fn new<communicationBodyType: Into<String>, subjectType: Into<String>>
+        (communication_body: communicationBodyType,
+         subject: subjectType)
+         -> CreateCaseRequest {
+        CreateCaseRequest {
+            communication_body: communication_body.into(),
+            subject: subject.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The AWS Support case ID returned by a successful completion of the <a>CreateCase</a> operation. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateCaseResponse {
@@ -250,14 +399,29 @@ pub struct CreateCaseResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub case_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeAttachmentRequest {
     #[doc="<p>The ID of the attachment to return. Attachment IDs are returned by the <a>DescribeCommunications</a> operation.</p>"]
     #[serde(rename="attachmentId")]
     pub attachment_id: String,
 }
-
+impl DescribeAttachmentRequest {
+    /// Sets `attachment_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAttachmentRequest.attachment_id = value.into();`.
+    pub fn attachment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attachment_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeAttachmentRequest with optional fields set to `None`.
+    pub fn new<attachmentIdType: Into<String>>(attachment_id: attachmentIdType)
+                                               -> DescribeAttachmentRequest {
+        DescribeAttachmentRequest {
+            attachment_id: attachment_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The content and file name of the attachment returned by the <a>DescribeAttachment</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeAttachmentResponse {
@@ -266,7 +430,6 @@ pub struct DescribeAttachmentResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub attachment: Option<Attachment>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeCasesRequest {
@@ -307,7 +470,75 @@ pub struct DescribeCasesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeCasesRequest {
+    /// Sets `after_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCasesRequest.after_time = Some(value.into());`.
+    pub fn after_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.after_time = Some(value.into());
+        self
+    }
+    /// Sets `before_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCasesRequest.before_time = Some(value.into());`.
+    pub fn before_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.before_time = Some(value.into());
+        self
+    }
+    /// Sets `case_id_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCasesRequest.case_id_list = Some(value.into());`.
+    pub fn case_id_list<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.case_id_list = Some(value.into());
+        self
+    }
+    /// Sets `display_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCasesRequest.display_id = Some(value.into());`.
+    pub fn display_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.display_id = Some(value.into());
+        self
+    }
+    /// Sets `include_communications`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCasesRequest.include_communications = Some(value.into());`.
+    pub fn include_communications<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.include_communications = Some(value.into());
+        self
+    }
+    /// Sets `include_resolved_cases`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCasesRequest.include_resolved_cases = Some(value.into());`.
+    pub fn include_resolved_cases<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.include_resolved_cases = Some(value.into());
+        self
+    }
+    /// Sets `language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCasesRequest.language = Some(value.into());`.
+    pub fn language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.language = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCasesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCasesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeCasesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeCasesRequest {
+        DescribeCasesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Returns an array of <a>CaseDetails</a> objects and a <code>nextToken</code> that defines a point for pagination in the result set.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeCasesResponse {
@@ -320,7 +551,6 @@ pub struct DescribeCasesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeCommunicationsRequest {
@@ -344,7 +574,50 @@ pub struct DescribeCommunicationsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeCommunicationsRequest {
+    /// Sets `after_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCommunicationsRequest.after_time = Some(value.into());`.
+    pub fn after_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.after_time = Some(value.into());
+        self
+    }
+    /// Sets `before_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCommunicationsRequest.before_time = Some(value.into());`.
+    pub fn before_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.before_time = Some(value.into());
+        self
+    }
+    /// Sets `case_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCommunicationsRequest.case_id = value.into();`.
+    pub fn case_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.case_id = value.into();
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCommunicationsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCommunicationsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeCommunicationsRequest with optional fields set to `None`.
+    pub fn new<caseIdType: Into<String>>(case_id: caseIdType) -> DescribeCommunicationsRequest {
+        DescribeCommunicationsRequest {
+            case_id: case_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The communications returned by the <a>DescribeCommunications</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeCommunicationsResponse {
@@ -357,7 +630,6 @@ pub struct DescribeCommunicationsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeServicesRequest {
@@ -370,7 +642,26 @@ pub struct DescribeServicesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub service_code_list: Option<Vec<String>>,
 }
-
+impl DescribeServicesRequest {
+    /// Sets `language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeServicesRequest.language = Some(value.into());`.
+    pub fn language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.language = Some(value.into());
+        self
+    }
+    /// Sets `service_code_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeServicesRequest.service_code_list = Some(value.into());`.
+    pub fn service_code_list<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.service_code_list = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeServicesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeServicesRequest {
+        DescribeServicesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The list of AWS services returned by the <a>DescribeServices</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeServicesResponse {
@@ -379,7 +670,6 @@ pub struct DescribeServicesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub services: Option<Vec<Service>>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeSeverityLevelsRequest {
@@ -388,7 +678,19 @@ pub struct DescribeSeverityLevelsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub language: Option<String>,
 }
-
+impl DescribeSeverityLevelsRequest {
+    /// Sets `language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSeverityLevelsRequest.language = Some(value.into());`.
+    pub fn language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.language = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeSeverityLevelsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeSeverityLevelsRequest {
+        DescribeSeverityLevelsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The list of severity levels returned by the <a>DescribeSeverityLevels</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeSeverityLevelsResponse {
@@ -397,7 +699,6 @@ pub struct DescribeSeverityLevelsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub severity_levels: Option<Vec<SeverityLevel>>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeTrustedAdvisorCheckRefreshStatusesRequest {
@@ -405,7 +706,24 @@ pub struct DescribeTrustedAdvisorCheckRefreshStatusesRequest {
     #[serde(rename="checkIds")]
     pub check_ids: Vec<String>,
 }
-
+impl DescribeTrustedAdvisorCheckRefreshStatusesRequest {
+    /// Sets `check_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTrustedAdvisorCheckRefreshStatusesRequest.check_ids = value.into();`.
+    pub fn check_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.check_ids = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeTrustedAdvisorCheckRefreshStatusesRequest with optional fields set to `None`.
+    pub fn new<checkIdsType: Into<Vec<String>>>
+        (check_ids: checkIdsType)
+         -> DescribeTrustedAdvisorCheckRefreshStatusesRequest {
+        DescribeTrustedAdvisorCheckRefreshStatusesRequest {
+            check_ids: check_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The statuses of the Trusted Advisor checks returned by the <a>DescribeTrustedAdvisorCheckRefreshStatuses</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeTrustedAdvisorCheckRefreshStatusesResponse {
@@ -413,7 +731,6 @@ pub struct DescribeTrustedAdvisorCheckRefreshStatusesResponse {
     #[serde(rename="statuses")]
     pub statuses: Vec<TrustedAdvisorCheckRefreshStatus>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeTrustedAdvisorCheckResultRequest {
@@ -425,7 +742,30 @@ pub struct DescribeTrustedAdvisorCheckResultRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub language: Option<String>,
 }
-
+impl DescribeTrustedAdvisorCheckResultRequest {
+    /// Sets `check_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTrustedAdvisorCheckResultRequest.check_id = value.into();`.
+    pub fn check_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.check_id = value.into();
+        self
+    }
+    /// Sets `language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTrustedAdvisorCheckResultRequest.language = Some(value.into());`.
+    pub fn language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.language = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeTrustedAdvisorCheckResultRequest with optional fields set to `None`.
+    pub fn new<checkIdType: Into<String>>(check_id: checkIdType)
+                                          -> DescribeTrustedAdvisorCheckResultRequest {
+        DescribeTrustedAdvisorCheckResultRequest {
+            check_id: check_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The result of the Trusted Advisor check returned by the <a>DescribeTrustedAdvisorCheckResult</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeTrustedAdvisorCheckResultResponse {
@@ -434,7 +774,6 @@ pub struct DescribeTrustedAdvisorCheckResultResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub result: Option<TrustedAdvisorCheckResult>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeTrustedAdvisorCheckSummariesRequest {
@@ -442,7 +781,23 @@ pub struct DescribeTrustedAdvisorCheckSummariesRequest {
     #[serde(rename="checkIds")]
     pub check_ids: Vec<String>,
 }
-
+impl DescribeTrustedAdvisorCheckSummariesRequest {
+    /// Sets `check_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTrustedAdvisorCheckSummariesRequest.check_ids = value.into();`.
+    pub fn check_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.check_ids = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeTrustedAdvisorCheckSummariesRequest with optional fields set to `None`.
+    pub fn new<checkIdsType: Into<Vec<String>>>(check_ids: checkIdsType)
+                                                -> DescribeTrustedAdvisorCheckSummariesRequest {
+        DescribeTrustedAdvisorCheckSummariesRequest {
+            check_ids: check_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The summaries of the Trusted Advisor checks returned by the <a>DescribeTrustedAdvisorCheckSummaries</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeTrustedAdvisorCheckSummariesResponse {
@@ -450,7 +805,6 @@ pub struct DescribeTrustedAdvisorCheckSummariesResponse {
     #[serde(rename="summaries")]
     pub summaries: Vec<TrustedAdvisorCheckSummary>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeTrustedAdvisorChecksRequest {
@@ -458,7 +812,23 @@ pub struct DescribeTrustedAdvisorChecksRequest {
     #[serde(rename="language")]
     pub language: String,
 }
-
+impl DescribeTrustedAdvisorChecksRequest {
+    /// Sets `language`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTrustedAdvisorChecksRequest.language = value.into();`.
+    pub fn language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.language = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeTrustedAdvisorChecksRequest with optional fields set to `None`.
+    pub fn new<languageType: Into<String>>(language: languageType)
+                                           -> DescribeTrustedAdvisorChecksRequest {
+        DescribeTrustedAdvisorChecksRequest {
+            language: language.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Information about the Trusted Advisor checks returned by the <a>DescribeTrustedAdvisorChecks</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeTrustedAdvisorChecksResponse {
@@ -466,7 +836,6 @@ pub struct DescribeTrustedAdvisorChecksResponse {
     #[serde(rename="checks")]
     pub checks: Vec<TrustedAdvisorCheckDescription>,
 }
-
 #[doc="<p>The five most recent communications associated with the case.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RecentCaseCommunications {
@@ -479,7 +848,6 @@ pub struct RecentCaseCommunications {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RefreshTrustedAdvisorCheckRequest {
@@ -487,7 +855,23 @@ pub struct RefreshTrustedAdvisorCheckRequest {
     #[serde(rename="checkId")]
     pub check_id: String,
 }
-
+impl RefreshTrustedAdvisorCheckRequest {
+    /// Sets `check_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RefreshTrustedAdvisorCheckRequest.check_id = value.into();`.
+    pub fn check_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.check_id = value.into();
+        self
+    }
+    /// Returns a new instance of RefreshTrustedAdvisorCheckRequest with optional fields set to `None`.
+    pub fn new<checkIdType: Into<String>>(check_id: checkIdType)
+                                          -> RefreshTrustedAdvisorCheckRequest {
+        RefreshTrustedAdvisorCheckRequest {
+            check_id: check_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The current refresh status of a Trusted Advisor check.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RefreshTrustedAdvisorCheckResponse {
@@ -495,7 +879,6 @@ pub struct RefreshTrustedAdvisorCheckResponse {
     #[serde(rename="status")]
     pub status: TrustedAdvisorCheckRefreshStatus,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ResolveCaseRequest {
@@ -504,7 +887,19 @@ pub struct ResolveCaseRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub case_id: Option<String>,
 }
-
+impl ResolveCaseRequest {
+    /// Sets `case_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResolveCaseRequest.case_id = Some(value.into());`.
+    pub fn case_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.case_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ResolveCaseRequest with optional fields set to `None`.
+    pub fn new() -> ResolveCaseRequest {
+        ResolveCaseRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The status of the case returned by the <a>ResolveCase</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ResolveCaseResponse {
@@ -517,7 +912,6 @@ pub struct ResolveCaseResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub initial_case_status: Option<String>,
 }
-
 #[doc="<p>Information about an AWS service returned by the <a>DescribeServices</a> operation. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Service {
@@ -534,7 +928,6 @@ pub struct Service {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p>A code and name pair that represent a severity level that can be applied to a support case.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SeverityLevel {
@@ -547,7 +940,6 @@ pub struct SeverityLevel {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p>The container for summary information that relates to the category of the Trusted Advisor check.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TrustedAdvisorCategorySpecificSummary {
@@ -556,7 +948,6 @@ pub struct TrustedAdvisorCategorySpecificSummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub cost_optimizing: Option<TrustedAdvisorCostOptimizingSummary>,
 }
-
 #[doc="<p>The description and metadata for a Trusted Advisor check.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TrustedAdvisorCheckDescription {
@@ -576,7 +967,6 @@ pub struct TrustedAdvisorCheckDescription {
     #[serde(rename="name")]
     pub name: String,
 }
-
 #[doc="<p>The refresh status of a Trusted Advisor check.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TrustedAdvisorCheckRefreshStatus {
@@ -590,7 +980,6 @@ pub struct TrustedAdvisorCheckRefreshStatus {
     #[serde(rename="status")]
     pub status: String,
 }
-
 #[doc="<p>The results of a Trusted Advisor check returned by <a>DescribeTrustedAdvisorCheckResult</a>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TrustedAdvisorCheckResult {
@@ -612,7 +1001,6 @@ pub struct TrustedAdvisorCheckResult {
     #[serde(rename="timestamp")]
     pub timestamp: String,
 }
-
 #[doc="<p>A summary of a Trusted Advisor check result, including the alert status, last refresh, and number of resources examined.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TrustedAdvisorCheckSummary {
@@ -635,7 +1023,6 @@ pub struct TrustedAdvisorCheckSummary {
     #[serde(rename="timestamp")]
     pub timestamp: String,
 }
-
 #[doc="<p>The estimated cost savings that might be realized if the recommended actions are taken.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TrustedAdvisorCostOptimizingSummary {
@@ -646,7 +1033,6 @@ pub struct TrustedAdvisorCostOptimizingSummary {
     #[serde(rename="estimatedPercentMonthlySavings")]
     pub estimated_percent_monthly_savings: f64,
 }
-
 #[doc="<p>Contains information about a resource identified by a Trusted Advisor check.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TrustedAdvisorResourceDetail {
@@ -668,7 +1054,6 @@ pub struct TrustedAdvisorResourceDetail {
     #[serde(rename="status")]
     pub status: String,
 }
-
 #[doc="<p>Details about AWS resources that were analyzed in a call to Trusted Advisor <a>DescribeTrustedAdvisorCheckSummaries</a>. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TrustedAdvisorResourcesSummary {
@@ -685,7 +1070,6 @@ pub struct TrustedAdvisorResourcesSummary {
     #[serde(rename="resourcesSuppressed")]
     pub resources_suppressed: i64,
 }
-
 /// Errors returned by AddAttachmentsToSet
 #[derive(Debug, PartialEq)]
 pub enum AddAttachmentsToSetError {

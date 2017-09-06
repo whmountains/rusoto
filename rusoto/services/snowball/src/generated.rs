@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -88,14 +89,132 @@ pub struct Address {
     #[serde(skip_serializing_if="Option::is_none")]
     pub street_3: Option<String>,
 }
-
+impl Address {
+    /// Sets `address_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Address.address_id = Some(value.into());`.
+    pub fn address_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.address_id = Some(value.into());
+        self
+    }
+    /// Sets `city`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Address.city = Some(value.into());`.
+    pub fn city<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.city = Some(value.into());
+        self
+    }
+    /// Sets `company`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Address.company = Some(value.into());`.
+    pub fn company<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.company = Some(value.into());
+        self
+    }
+    /// Sets `country`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Address.country = Some(value.into());`.
+    pub fn country<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.country = Some(value.into());
+        self
+    }
+    /// Sets `is_restricted`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Address.is_restricted = Some(value.into());`.
+    pub fn is_restricted<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.is_restricted = Some(value.into());
+        self
+    }
+    /// Sets `landmark`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Address.landmark = Some(value.into());`.
+    pub fn landmark<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.landmark = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Address.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `phone_number`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Address.phone_number = Some(value.into());`.
+    pub fn phone_number<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.phone_number = Some(value.into());
+        self
+    }
+    /// Sets `postal_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Address.postal_code = Some(value.into());`.
+    pub fn postal_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.postal_code = Some(value.into());
+        self
+    }
+    /// Sets `prefecture_or_district`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Address.prefecture_or_district = Some(value.into());`.
+    pub fn prefecture_or_district<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefecture_or_district = Some(value.into());
+        self
+    }
+    /// Sets `state_or_province`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Address.state_or_province = Some(value.into());`.
+    pub fn state_or_province<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.state_or_province = Some(value.into());
+        self
+    }
+    /// Sets `street_1`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Address.street_1 = Some(value.into());`.
+    pub fn street_1<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.street_1 = Some(value.into());
+        self
+    }
+    /// Sets `street_2`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Address.street_2 = Some(value.into());`.
+    pub fn street_2<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.street_2 = Some(value.into());
+        self
+    }
+    /// Sets `street_3`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Address.street_3 = Some(value.into());`.
+    pub fn street_3<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.street_3 = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Address with optional fields set to `None`.
+    pub fn new() -> Address {
+        Address { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CancelClusterRequest {
     #[doc="<p>The 39-character ID for the cluster that you want to cancel, for example <code>CID123e4567-e89b-12d3-a456-426655440000</code>.</p>"]
     #[serde(rename="ClusterId")]
     pub cluster_id: String,
 }
-
+impl CancelClusterRequest {
+    /// Sets `cluster_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelClusterRequest.cluster_id = value.into();`.
+    pub fn cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster_id = value.into();
+        self
+    }
+    /// Returns a new instance of CancelClusterRequest with optional fields set to `None`.
+    pub fn new<ClusterIdType: Into<String>>(cluster_id: ClusterIdType) -> CancelClusterRequest {
+        CancelClusterRequest {
+            cluster_id: cluster_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CancelClusterResult;
 
@@ -105,7 +224,22 @@ pub struct CancelJobRequest {
     #[serde(rename="JobId")]
     pub job_id: String,
 }
-
+impl CancelJobRequest {
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelJobRequest.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Returns a new instance of CancelJobRequest with optional fields set to `None`.
+    pub fn new<JobIdType: Into<String>>(job_id: JobIdType) -> CancelJobRequest {
+        CancelJobRequest {
+            job_id: job_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CancelJobResult;
 
@@ -129,7 +263,6 @@ pub struct ClusterListEntry {
     #[serde(skip_serializing_if="Option::is_none")]
     pub description: Option<String>,
 }
-
 #[doc="<p>Contains metadata about a specific cluster.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ClusterMetadata {
@@ -186,14 +319,28 @@ pub struct ClusterMetadata {
     #[serde(skip_serializing_if="Option::is_none")]
     pub snowball_type: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateAddressRequest {
     #[doc="<p>The address that you want the Snowball shipped to.</p>"]
     #[serde(rename="Address")]
     pub address: Address,
 }
-
+impl CreateAddressRequest {
+    /// Sets `address`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAddressRequest.address = value.into();`.
+    pub fn address<ValueType: Into<Address>>(mut self, value: ValueType) -> Self {
+        self.address = value.into();
+        self
+    }
+    /// Returns a new instance of CreateAddressRequest with optional fields set to `None`.
+    pub fn new<AddressType: Into<Address>>(address: AddressType) -> CreateAddressRequest {
+        CreateAddressRequest {
+            address: address.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateAddressResult {
     #[doc="<p>The automatically generated ID for a specific address. You'll use this ID when you create a job to specify which address you want the Snowball for that job shipped to.</p>"]
@@ -201,7 +348,6 @@ pub struct CreateAddressResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub address_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateClusterRequest {
     #[doc="<p>The ID for the address that you want the cluster shipped to.&gt;</p>"]
@@ -240,7 +386,99 @@ pub struct CreateClusterRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub snowball_type: Option<String>,
 }
-
+impl CreateClusterRequest {
+    /// Sets `address_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateClusterRequest.address_id = value.into();`.
+    pub fn address_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.address_id = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateClusterRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `forwarding_address_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateClusterRequest.forwarding_address_id = Some(value.into());`.
+    pub fn forwarding_address_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.forwarding_address_id = Some(value.into());
+        self
+    }
+    /// Sets `job_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateClusterRequest.job_type = value.into();`.
+    pub fn job_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_type = value.into();
+        self
+    }
+    /// Sets `kms_key_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateClusterRequest.kms_key_arn = Some(value.into());`.
+    pub fn kms_key_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kms_key_arn = Some(value.into());
+        self
+    }
+    /// Sets `notification`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateClusterRequest.notification = Some(value.into());`.
+    pub fn notification<ValueType: Into<Notification>>(mut self, value: ValueType) -> Self {
+        self.notification = Some(value.into());
+        self
+    }
+    /// Sets `resources`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateClusterRequest.resources = value.into();`.
+    pub fn resources<ValueType: Into<JobResource>>(mut self, value: ValueType) -> Self {
+        self.resources = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateClusterRequest.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Sets `shipping_option`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateClusterRequest.shipping_option = value.into();`.
+    pub fn shipping_option<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.shipping_option = value.into();
+        self
+    }
+    /// Sets `snowball_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateClusterRequest.snowball_type = Some(value.into());`.
+    pub fn snowball_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snowball_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateClusterRequest with optional fields set to `None`.
+    pub fn new<AddressIdType: Into<String>,
+               JobTypeType: Into<String>,
+               ResourcesType: Into<JobResource>,
+               RoleARNType: Into<String>,
+               ShippingOptionType: Into<String>>
+        (address_id: AddressIdType,
+         job_type: JobTypeType,
+         resources: ResourcesType,
+         role_arn: RoleARNType,
+         shipping_option: ShippingOptionType)
+         -> CreateClusterRequest {
+        CreateClusterRequest {
+            address_id: address_id.into(),
+            job_type: job_type.into(),
+            resources: resources.into(),
+            role_arn: role_arn.into(),
+            shipping_option: shipping_option.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateClusterResult {
     #[doc="<p>The automatically generated ID for a cluster.</p>"]
@@ -248,7 +486,6 @@ pub struct CreateClusterResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub cluster_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateJobRequest {
     #[doc="<p>The ID for the address that you want the Snowball shipped to.</p>"]
@@ -300,7 +537,98 @@ pub struct CreateJobRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub snowball_type: Option<String>,
 }
-
+impl CreateJobRequest {
+    /// Sets `address_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobRequest.address_id = Some(value.into());`.
+    pub fn address_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.address_id = Some(value.into());
+        self
+    }
+    /// Sets `cluster_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobRequest.cluster_id = Some(value.into());`.
+    pub fn cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster_id = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `forwarding_address_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobRequest.forwarding_address_id = Some(value.into());`.
+    pub fn forwarding_address_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.forwarding_address_id = Some(value.into());
+        self
+    }
+    /// Sets `job_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobRequest.job_type = Some(value.into());`.
+    pub fn job_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_type = Some(value.into());
+        self
+    }
+    /// Sets `kms_key_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobRequest.kms_key_arn = Some(value.into());`.
+    pub fn kms_key_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kms_key_arn = Some(value.into());
+        self
+    }
+    /// Sets `notification`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobRequest.notification = Some(value.into());`.
+    pub fn notification<ValueType: Into<Notification>>(mut self, value: ValueType) -> Self {
+        self.notification = Some(value.into());
+        self
+    }
+    /// Sets `resources`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobRequest.resources = Some(value.into());`.
+    pub fn resources<ValueType: Into<JobResource>>(mut self, value: ValueType) -> Self {
+        self.resources = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobRequest.role_arn = Some(value.into());`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = Some(value.into());
+        self
+    }
+    /// Sets `shipping_option`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobRequest.shipping_option = Some(value.into());`.
+    pub fn shipping_option<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.shipping_option = Some(value.into());
+        self
+    }
+    /// Sets `snowball_capacity_preference`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobRequest.snowball_capacity_preference = Some(value.into());`.
+    pub fn snowball_capacity_preference<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.snowball_capacity_preference = Some(value.into());
+        self
+    }
+    /// Sets `snowball_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobRequest.snowball_type = Some(value.into());`.
+    pub fn snowball_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snowball_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateJobRequest with optional fields set to `None`.
+    pub fn new() -> CreateJobRequest {
+        CreateJobRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateJobResult {
     #[doc="<p>The automatically generated ID for a job, for example <code>JID123e4567-e89b-12d3-a456-426655440000</code>.</p>"]
@@ -308,7 +636,6 @@ pub struct CreateJobResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub job_id: Option<String>,
 }
-
 #[doc="<p>Defines the real-time status of a Snowball's data transfer while the appliance is at AWS. This data is only available while a job has a <code>JobState</code> value of <code>InProgress</code>, for both import and export jobs.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DataTransfer {
@@ -329,14 +656,28 @@ pub struct DataTransfer {
     #[serde(skip_serializing_if="Option::is_none")]
     pub total_objects: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeAddressRequest {
     #[doc="<p>The automatically generated ID for a specific address.</p>"]
     #[serde(rename="AddressId")]
     pub address_id: String,
 }
-
+impl DescribeAddressRequest {
+    /// Sets `address_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAddressRequest.address_id = value.into();`.
+    pub fn address_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.address_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeAddressRequest with optional fields set to `None`.
+    pub fn new<AddressIdType: Into<String>>(address_id: AddressIdType) -> DescribeAddressRequest {
+        DescribeAddressRequest {
+            address_id: address_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeAddressResult {
     #[doc="<p>The address that you want the Snowball or Snowballs associated with a specific job to be shipped to.</p>"]
@@ -344,7 +685,6 @@ pub struct DescribeAddressResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub address: Option<Address>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeAddressesRequest {
     #[doc="<p>The number of <code>ADDRESS</code> objects to return.</p>"]
@@ -356,7 +696,26 @@ pub struct DescribeAddressesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeAddressesRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAddressesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAddressesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeAddressesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeAddressesRequest {
+        DescribeAddressesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeAddressesResult {
     #[doc="<p>The Snowball shipping addresses that were created for this account.</p>"]
@@ -368,14 +727,28 @@ pub struct DescribeAddressesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeClusterRequest {
     #[doc="<p>The automatically generated ID for a cluster.</p>"]
     #[serde(rename="ClusterId")]
     pub cluster_id: String,
 }
-
+impl DescribeClusterRequest {
+    /// Sets `cluster_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeClusterRequest.cluster_id = value.into();`.
+    pub fn cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeClusterRequest with optional fields set to `None`.
+    pub fn new<ClusterIdType: Into<String>>(cluster_id: ClusterIdType) -> DescribeClusterRequest {
+        DescribeClusterRequest {
+            cluster_id: cluster_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeClusterResult {
     #[doc="<p>Information about a specific cluster, including shipping information, cluster status, and other important metadata.</p>"]
@@ -383,14 +756,28 @@ pub struct DescribeClusterResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub cluster_metadata: Option<ClusterMetadata>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeJobRequest {
     #[doc="<p>The automatically generated ID for a job, for example <code>JID123e4567-e89b-12d3-a456-426655440000</code>.</p>"]
     #[serde(rename="JobId")]
     pub job_id: String,
 }
-
+impl DescribeJobRequest {
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeJobRequest.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeJobRequest with optional fields set to `None`.
+    pub fn new<JobIdType: Into<String>>(job_id: JobIdType) -> DescribeJobRequest {
+        DescribeJobRequest {
+            job_id: job_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeJobResult {
     #[doc="<p>Information about a specific job, including shipping information, job status, and other important metadata.</p>"]
@@ -402,7 +789,6 @@ pub struct DescribeJobResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sub_job_metadata: Option<Vec<JobMetadata>>,
 }
-
 #[doc="<p>The container for the <a>EventTriggerDefinition$EventResourceARN</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct EventTriggerDefinition {
@@ -411,14 +797,41 @@ pub struct EventTriggerDefinition {
     #[serde(skip_serializing_if="Option::is_none")]
     pub event_resource_arn: Option<String>,
 }
-
+impl EventTriggerDefinition {
+    /// Sets `event_resource_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventTriggerDefinition.event_resource_arn = Some(value.into());`.
+    pub fn event_resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.event_resource_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of EventTriggerDefinition with optional fields set to `None`.
+    pub fn new() -> EventTriggerDefinition {
+        EventTriggerDefinition { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetJobManifestRequest {
     #[doc="<p>The ID for a job that you want to get the manifest file for, for example <code>JID123e4567-e89b-12d3-a456-426655440000</code>.</p>"]
     #[serde(rename="JobId")]
     pub job_id: String,
 }
-
+impl GetJobManifestRequest {
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetJobManifestRequest.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetJobManifestRequest with optional fields set to `None`.
+    pub fn new<JobIdType: Into<String>>(job_id: JobIdType) -> GetJobManifestRequest {
+        GetJobManifestRequest {
+            job_id: job_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetJobManifestResult {
     #[doc="<p>The Amazon S3 presigned URL for the manifest file associated with the specified <code>JobId</code> value.</p>"]
@@ -426,14 +839,28 @@ pub struct GetJobManifestResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub manifest_uri: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetJobUnlockCodeRequest {
     #[doc="<p>The ID for the job that you want to get the <code>UnlockCode</code> value for, for example <code>JID123e4567-e89b-12d3-a456-426655440000</code>.</p>"]
     #[serde(rename="JobId")]
     pub job_id: String,
 }
-
+impl GetJobUnlockCodeRequest {
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetJobUnlockCodeRequest.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetJobUnlockCodeRequest with optional fields set to `None`.
+    pub fn new<JobIdType: Into<String>>(job_id: JobIdType) -> GetJobUnlockCodeRequest {
+        GetJobUnlockCodeRequest {
+            job_id: job_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetJobUnlockCodeResult {
     #[doc="<p>The <code>UnlockCode</code> value for the specified job. The <code>UnlockCode</code> value can be accessed for up to 90 days after the job has been created.</p>"]
@@ -441,7 +868,6 @@ pub struct GetJobUnlockCodeResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub unlock_code: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetSnowballUsageRequest;
 
@@ -456,7 +882,6 @@ pub struct GetSnowballUsageResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub snowballs_in_use: Option<i64>,
 }
-
 #[doc="<p>Each <code>JobListEntry</code> object contains a job's state, a job's ID, and a value that indicates whether the job is a job part, in the case of an export job.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct JobListEntry {
@@ -489,7 +914,6 @@ pub struct JobListEntry {
     #[serde(skip_serializing_if="Option::is_none")]
     pub snowball_type: Option<String>,
 }
-
 #[doc="<p>Contains job logs. Whenever Snowball is used to import data into or export data out of Amazon S3, you'll have the option of downloading a PDF job report. Job logs are returned as a part of the response syntax of the <code>DescribeJob</code> action in the <code>JobMetadata</code> data type. The job logs can be accessed for up to 60 minutes after this request has been made. To access any of the job logs after 60 minutes have passed, you'll have to make another call to the <code>DescribeJob</code> action.</p> <p>For import jobs, the PDF job report becomes available at the end of the import process. For export jobs, your job report typically becomes available while the Snowball for your job part is being delivered to you.</p> <p>The job report provides you insight into the state of your Amazon S3 data transfer. The report includes details about your job or job part for your records.</p> <p>For deeper visibility into the status of your transferred objects, you can look at the two associated logs: a success log and a failure log. The logs are saved in comma-separated value (CSV) format, and the name of each log includes the ID of the job or job part that the log describes.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct JobLogs {
@@ -506,7 +930,6 @@ pub struct JobLogs {
     #[serde(skip_serializing_if="Option::is_none")]
     pub job_success_log_uri: Option<String>,
 }
-
 #[doc="<p>Contains information about a specific job including shipping information, job status, and other important metadata. This information is returned as a part of the response syntax of the <code>DescribeJob</code> action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct JobMetadata {
@@ -579,7 +1002,6 @@ pub struct JobMetadata {
     #[serde(skip_serializing_if="Option::is_none")]
     pub snowball_type: Option<String>,
 }
-
 #[doc="<p>Contains an array of <code>S3Resource</code> objects. Each <code>S3Resource</code> object represents an Amazon S3 bucket that your transferred data will be exported from or imported into.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct JobResource {
@@ -592,7 +1014,28 @@ pub struct JobResource {
     #[serde(skip_serializing_if="Option::is_none")]
     pub s3_resources: Option<Vec<S3Resource>>,
 }
-
+impl JobResource {
+    /// Sets `lambda_resources`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobResource.lambda_resources = Some(value.into());`.
+    pub fn lambda_resources<ValueType: Into<Vec<LambdaResource>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.lambda_resources = Some(value.into());
+        self
+    }
+    /// Sets `s3_resources`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobResource.s3_resources = Some(value.into());`.
+    pub fn s3_resources<ValueType: Into<Vec<S3Resource>>>(mut self, value: ValueType) -> Self {
+        self.s3_resources = Some(value.into());
+        self
+    }
+    /// Returns a new instance of JobResource with optional fields set to `None`.
+    pub fn new() -> JobResource {
+        JobResource { ..Default::default() }
+    }
+}
 #[doc="<p>Contains a key range. For export jobs, a <code>S3Resource</code> object can have an optional <code>KeyRange</code> value. The length of the range is defined at job creation, and has either an inclusive <code>BeginMarker</code>, an inclusive <code>EndMarker</code>, or both. Ranges are UTF-8 binary sorted.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct KeyRange {
@@ -605,7 +1048,26 @@ pub struct KeyRange {
     #[serde(skip_serializing_if="Option::is_none")]
     pub end_marker: Option<String>,
 }
-
+impl KeyRange {
+    /// Sets `begin_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KeyRange.begin_marker = Some(value.into());`.
+    pub fn begin_marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.begin_marker = Some(value.into());
+        self
+    }
+    /// Sets `end_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KeyRange.end_marker = Some(value.into());`.
+    pub fn end_marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.end_marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of KeyRange with optional fields set to `None`.
+    pub fn new() -> KeyRange {
+        KeyRange { ..Default::default() }
+    }
+}
 #[doc="<p>Identifies </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct LambdaResource {
@@ -618,7 +1080,28 @@ pub struct LambdaResource {
     #[serde(skip_serializing_if="Option::is_none")]
     pub lambda_arn: Option<String>,
 }
-
+impl LambdaResource {
+    /// Sets `event_triggers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LambdaResource.event_triggers = Some(value.into());`.
+    pub fn event_triggers<ValueType: Into<Vec<EventTriggerDefinition>>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.event_triggers = Some(value.into());
+        self
+    }
+    /// Sets `lambda_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LambdaResource.lambda_arn = Some(value.into());`.
+    pub fn lambda_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lambda_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of LambdaResource with optional fields set to `None`.
+    pub fn new() -> LambdaResource {
+        LambdaResource { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListClusterJobsRequest {
     #[doc="<p>The 39-character ID for the cluster that you want to list, for example <code>CID123e4567-e89b-12d3-a456-426655440000</code>.</p>"]
@@ -633,7 +1116,36 @@ pub struct ListClusterJobsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListClusterJobsRequest {
+    /// Sets `cluster_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListClusterJobsRequest.cluster_id = value.into();`.
+    pub fn cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster_id = value.into();
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListClusterJobsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListClusterJobsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListClusterJobsRequest with optional fields set to `None`.
+    pub fn new<ClusterIdType: Into<String>>(cluster_id: ClusterIdType) -> ListClusterJobsRequest {
+        ListClusterJobsRequest {
+            cluster_id: cluster_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListClusterJobsResult {
     #[doc="<p>Each <code>JobListEntry</code> object contains a job's state, a job's ID, and a value that indicates whether the job is a job part, in the case of export jobs. </p>"]
@@ -645,7 +1157,6 @@ pub struct ListClusterJobsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListClustersRequest {
     #[doc="<p>The number of <code>ClusterListEntry</code> objects to return.</p>"]
@@ -657,7 +1168,26 @@ pub struct ListClustersRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListClustersRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListClustersRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListClustersRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListClustersRequest with optional fields set to `None`.
+    pub fn new() -> ListClustersRequest {
+        ListClustersRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListClustersResult {
     #[doc="<p>Each <code>ClusterListEntry</code> object contains a cluster's state, a cluster's ID, and other important status information.</p>"]
@@ -669,7 +1199,6 @@ pub struct ListClustersResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListJobsRequest {
     #[doc="<p>The number of <code>JobListEntry</code> objects to return.</p>"]
@@ -681,7 +1210,26 @@ pub struct ListJobsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListJobsRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListJobsRequest with optional fields set to `None`.
+    pub fn new() -> ListJobsRequest {
+        ListJobsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListJobsResult {
     #[doc="<p>Each <code>JobListEntry</code> object contains a job's state, a job's ID, and a value that indicates whether the job is a job part, in the case of export jobs. </p>"]
@@ -693,7 +1241,6 @@ pub struct ListJobsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>The Amazon Simple Notification Service (Amazon SNS) notification settings associated with a specific job. The <code>Notification</code> object is returned as a part of the response syntax of the <code>DescribeJob</code> action in the <code>JobMetadata</code> data type.</p> <p>When the notification settings are defined during job creation, you can choose to notify based on a specific set of job states using the <code>JobStatesToNotify</code> array of strings, or you can specify that you want to have Amazon SNS notifications sent out for all job states with <code>NotifyAll</code> set to true.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Notification {
@@ -710,7 +1257,33 @@ pub struct Notification {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sns_topic_arn: Option<String>,
 }
-
+impl Notification {
+    /// Sets `job_states_to_notify`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Notification.job_states_to_notify = Some(value.into());`.
+    pub fn job_states_to_notify<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.job_states_to_notify = Some(value.into());
+        self
+    }
+    /// Sets `notify_all`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Notification.notify_all = Some(value.into());`.
+    pub fn notify_all<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.notify_all = Some(value.into());
+        self
+    }
+    /// Sets `sns_topic_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Notification.sns_topic_arn = Some(value.into());`.
+    pub fn sns_topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sns_topic_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Notification with optional fields set to `None`.
+    pub fn new() -> Notification {
+        Notification { ..Default::default() }
+    }
+}
 #[doc="<p>Each <code>S3Resource</code> object represents an Amazon S3 bucket that your transferred data will be exported from or imported into. For export jobs, this object can have an optional <code>KeyRange</code> value. The length of the range is defined at job creation, and has either an inclusive <code>BeginMarker</code>, an inclusive <code>EndMarker</code>, or both. Ranges are UTF-8 binary sorted.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct S3Resource {
@@ -723,7 +1296,26 @@ pub struct S3Resource {
     #[serde(skip_serializing_if="Option::is_none")]
     pub key_range: Option<KeyRange>,
 }
-
+impl S3Resource {
+    /// Sets `bucket_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Resource.bucket_arn = Some(value.into());`.
+    pub fn bucket_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket_arn = Some(value.into());
+        self
+    }
+    /// Sets `key_range`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Resource.key_range = Some(value.into());`.
+    pub fn key_range<ValueType: Into<KeyRange>>(mut self, value: ValueType) -> Self {
+        self.key_range = Some(value.into());
+        self
+    }
+    /// Returns a new instance of S3Resource with optional fields set to `None`.
+    pub fn new() -> S3Resource {
+        S3Resource { ..Default::default() }
+    }
+}
 #[doc="<p>The <code>Status</code> and <code>TrackingNumber</code> information for an inbound or outbound shipment.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Shipment {
@@ -736,7 +1328,6 @@ pub struct Shipment {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tracking_number: Option<String>,
 }
-
 #[doc="<p>A job's shipping information, including inbound and outbound tracking numbers and shipping speed options.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ShippingDetails {
@@ -753,7 +1344,6 @@ pub struct ShippingDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub shipping_option: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateClusterRequest {
     #[doc="<p>The ID of the updated <a>Address</a> object.</p>"]
@@ -788,7 +1378,71 @@ pub struct UpdateClusterRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub shipping_option: Option<String>,
 }
-
+impl UpdateClusterRequest {
+    /// Sets `address_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateClusterRequest.address_id = Some(value.into());`.
+    pub fn address_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.address_id = Some(value.into());
+        self
+    }
+    /// Sets `cluster_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateClusterRequest.cluster_id = value.into();`.
+    pub fn cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster_id = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateClusterRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `forwarding_address_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateClusterRequest.forwarding_address_id = Some(value.into());`.
+    pub fn forwarding_address_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.forwarding_address_id = Some(value.into());
+        self
+    }
+    /// Sets `notification`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateClusterRequest.notification = Some(value.into());`.
+    pub fn notification<ValueType: Into<Notification>>(mut self, value: ValueType) -> Self {
+        self.notification = Some(value.into());
+        self
+    }
+    /// Sets `resources`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateClusterRequest.resources = Some(value.into());`.
+    pub fn resources<ValueType: Into<JobResource>>(mut self, value: ValueType) -> Self {
+        self.resources = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateClusterRequest.role_arn = Some(value.into());`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = Some(value.into());
+        self
+    }
+    /// Sets `shipping_option`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateClusterRequest.shipping_option = Some(value.into());`.
+    pub fn shipping_option<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.shipping_option = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateClusterRequest with optional fields set to `None`.
+    pub fn new<ClusterIdType: Into<String>>(cluster_id: ClusterIdType) -> UpdateClusterRequest {
+        UpdateClusterRequest {
+            cluster_id: cluster_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateClusterResult;
 
@@ -830,7 +1484,80 @@ pub struct UpdateJobRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub snowball_capacity_preference: Option<String>,
 }
-
+impl UpdateJobRequest {
+    /// Sets `address_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateJobRequest.address_id = Some(value.into());`.
+    pub fn address_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.address_id = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateJobRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `forwarding_address_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateJobRequest.forwarding_address_id = Some(value.into());`.
+    pub fn forwarding_address_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.forwarding_address_id = Some(value.into());
+        self
+    }
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateJobRequest.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Sets `notification`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateJobRequest.notification = Some(value.into());`.
+    pub fn notification<ValueType: Into<Notification>>(mut self, value: ValueType) -> Self {
+        self.notification = Some(value.into());
+        self
+    }
+    /// Sets `resources`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateJobRequest.resources = Some(value.into());`.
+    pub fn resources<ValueType: Into<JobResource>>(mut self, value: ValueType) -> Self {
+        self.resources = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateJobRequest.role_arn = Some(value.into());`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = Some(value.into());
+        self
+    }
+    /// Sets `shipping_option`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateJobRequest.shipping_option = Some(value.into());`.
+    pub fn shipping_option<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.shipping_option = Some(value.into());
+        self
+    }
+    /// Sets `snowball_capacity_preference`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateJobRequest.snowball_capacity_preference = Some(value.into());`.
+    pub fn snowball_capacity_preference<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.snowball_capacity_preference = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateJobRequest with optional fields set to `None`.
+    pub fn new<JobIdType: Into<String>>(job_id: JobIdType) -> UpdateJobRequest {
+        UpdateJobRequest {
+            job_id: job_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateJobResult;
 

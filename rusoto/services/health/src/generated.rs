@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -60,7 +61,6 @@ pub struct AffectedEntity {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<::std::collections::HashMap<String, String>>,
 }
-
 #[doc="<p>A range of dates and times that is used by the <a>EventFilter</a> and <a>EntityFilter</a> objects. If <code>from</code> is set and <code>to</code> is set: match items where the timestamp (<code>startTime</code>, <code>endTime</code>, or <code>lastUpdatedTime</code>) is between <code>from</code> and <code>to</code> inclusive. If <code>from</code> is set and <code>to</code> is not set: match items where the timestamp value is equal to or after <code>from</code>. If <code>from</code> is not set and <code>to</code> is set: match items where the timestamp value is equal to or before <code>to</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DateTimeRange {
@@ -73,7 +73,26 @@ pub struct DateTimeRange {
     #[serde(skip_serializing_if="Option::is_none")]
     pub to: Option<f64>,
 }
-
+impl DateTimeRange {
+    /// Sets `from`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DateTimeRange.from = Some(value.into());`.
+    pub fn from<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.from = Some(value.into());
+        self
+    }
+    /// Sets `to`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DateTimeRange.to = Some(value.into());`.
+    pub fn to<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.to = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DateTimeRange with optional fields set to `None`.
+    pub fn new() -> DateTimeRange {
+        DateTimeRange { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeAffectedEntitiesRequest {
     #[doc="<p>Values to narrow the results returned. At least one event ARN is required. </p>"]
@@ -92,7 +111,44 @@ pub struct DescribeAffectedEntitiesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeAffectedEntitiesRequest {
+    /// Sets `filter`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAffectedEntitiesRequest.filter = value.into();`.
+    pub fn filter<ValueType: Into<EntityFilter>>(mut self, value: ValueType) -> Self {
+        self.filter = value.into();
+        self
+    }
+    /// Sets `locale`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAffectedEntitiesRequest.locale = Some(value.into());`.
+    pub fn locale<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.locale = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAffectedEntitiesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAffectedEntitiesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeAffectedEntitiesRequest with optional fields set to `None`.
+    pub fn new<filterType: Into<EntityFilter>>(filter: filterType)
+                                               -> DescribeAffectedEntitiesRequest {
+        DescribeAffectedEntitiesRequest {
+            filter: filter.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeAffectedEntitiesResponse {
     #[doc="<p>The entities that match the filter criteria.</p>"]
@@ -104,7 +160,6 @@ pub struct DescribeAffectedEntitiesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeEntityAggregatesRequest {
     #[doc="<p>A list of event ARNs (unique identifiers). For example: <code>\"arn:aws:health:us-east-1::event/AWS_EC2_MAINTENANCE_5331\", \"arn:aws:health:us-west-1::event/AWS_EBS_LOST_VOLUME_xyz\"</code> </p>"]
@@ -112,7 +167,19 @@ pub struct DescribeEntityAggregatesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub event_arns: Option<Vec<String>>,
 }
-
+impl DescribeEntityAggregatesRequest {
+    /// Sets `event_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEntityAggregatesRequest.event_arns = Some(value.into());`.
+    pub fn event_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.event_arns = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEntityAggregatesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeEntityAggregatesRequest {
+        DescribeEntityAggregatesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeEntityAggregatesResponse {
     #[doc="<p>The number of entities that are affected by each of the specified events.</p>"]
@@ -120,7 +187,6 @@ pub struct DescribeEntityAggregatesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub entity_aggregates: Option<Vec<EntityAggregate>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeEventAggregatesRequest {
     #[doc="<p>The only currently supported value is <code>eventTypeCategory</code>.</p>"]
@@ -139,7 +205,44 @@ pub struct DescribeEventAggregatesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeEventAggregatesRequest {
+    /// Sets `aggregate_field`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventAggregatesRequest.aggregate_field = value.into();`.
+    pub fn aggregate_field<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.aggregate_field = value.into();
+        self
+    }
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventAggregatesRequest.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<EventFilter>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventAggregatesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventAggregatesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEventAggregatesRequest with optional fields set to `None`.
+    pub fn new<aggregateFieldType: Into<String>>(aggregate_field: aggregateFieldType)
+                                                 -> DescribeEventAggregatesRequest {
+        DescribeEventAggregatesRequest {
+            aggregate_field: aggregate_field.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeEventAggregatesResponse {
     #[doc="<p>The number of events in each category that meet the optional filter criteria.</p>"]
@@ -151,7 +254,6 @@ pub struct DescribeEventAggregatesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeEventDetailsRequest {
     #[doc="<p>A list of event ARNs (unique identifiers). For example: <code>\"arn:aws:health:us-east-1::event/AWS_EC2_MAINTENANCE_5331\", \"arn:aws:health:us-west-1::event/AWS_EBS_LOST_VOLUME_xyz\"</code> </p>"]
@@ -162,7 +264,30 @@ pub struct DescribeEventDetailsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub locale: Option<String>,
 }
-
+impl DescribeEventDetailsRequest {
+    /// Sets `event_arns`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventDetailsRequest.event_arns = value.into();`.
+    pub fn event_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.event_arns = value.into();
+        self
+    }
+    /// Sets `locale`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventDetailsRequest.locale = Some(value.into());`.
+    pub fn locale<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.locale = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEventDetailsRequest with optional fields set to `None`.
+    pub fn new<eventArnsType: Into<Vec<String>>>(event_arns: eventArnsType)
+                                                 -> DescribeEventDetailsRequest {
+        DescribeEventDetailsRequest {
+            event_arns: event_arns.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeEventDetailsResponse {
     #[doc="<p>Error messages for any events that could not be retrieved.</p>"]
@@ -174,7 +299,6 @@ pub struct DescribeEventDetailsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub successful_set: Option<Vec<EventDetails>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeEventTypesRequest {
     #[doc="<p>Values to narrow the results returned.</p>"]
@@ -194,7 +318,40 @@ pub struct DescribeEventTypesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeEventTypesRequest {
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventTypesRequest.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<EventTypeFilter>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `locale`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventTypesRequest.locale = Some(value.into());`.
+    pub fn locale<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.locale = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventTypesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventTypesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEventTypesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeEventTypesRequest {
+        DescribeEventTypesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeEventTypesResponse {
     #[doc="<p>A list of event types that match the filter criteria. Event types have a category (<code>issue</code>, <code>accountNotification</code>, or <code>scheduledChange</code>), a service (for example, <code>EC2</code>, <code>RDS</code>, <code>DATAPIPELINE</code>, <code>BILLING</code>), and a code (in the format <code>AWS_<i>SERVICE</i>_<i>DESCRIPTION</i> </code>; for example, <code>AWS_EC2_SYSTEM_MAINTENANCE_EVENT</code>).</p>"]
@@ -206,7 +363,6 @@ pub struct DescribeEventTypesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeEventsRequest {
     #[doc="<p>Values to narrow the results returned.</p>"]
@@ -226,7 +382,40 @@ pub struct DescribeEventsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeEventsRequest {
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsRequest.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<EventFilter>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `locale`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsRequest.locale = Some(value.into());`.
+    pub fn locale<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.locale = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEventsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeEventsRequest {
+        DescribeEventsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeEventsResponse {
     #[doc="<p>The events that match the specified filter criteria.</p>"]
@@ -238,7 +427,6 @@ pub struct DescribeEventsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>The number of entities that are affected by one or more events. Returned by the <a>DescribeEntityAggregates</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EntityAggregate {
@@ -251,7 +439,6 @@ pub struct EntityAggregate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub event_arn: Option<String>,
 }
-
 #[doc="<p>The values to use to filter results from the <a>DescribeAffectedEntities</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct EntityFilter {
@@ -279,7 +466,59 @@ pub struct EntityFilter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<::std::collections::HashMap<String, String>>>,
 }
-
+impl EntityFilter {
+    /// Sets `entity_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EntityFilter.entity_arns = Some(value.into());`.
+    pub fn entity_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.entity_arns = Some(value.into());
+        self
+    }
+    /// Sets `entity_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EntityFilter.entity_values = Some(value.into());`.
+    pub fn entity_values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.entity_values = Some(value.into());
+        self
+    }
+    /// Sets `event_arns`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EntityFilter.event_arns = value.into();`.
+    pub fn event_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.event_arns = value.into();
+        self
+    }
+    /// Sets `last_updated_times`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EntityFilter.last_updated_times = Some(value.into());`.
+    pub fn last_updated_times<ValueType: Into<Vec<DateTimeRange>>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.last_updated_times = Some(value.into());
+        self
+    }
+    /// Sets `status_codes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EntityFilter.status_codes = Some(value.into());`.
+    pub fn status_codes<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.status_codes = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EntityFilter.tags = Some(value.into());`.
+pub fn tags<ValueType: Into<Vec<::std::collections::HashMap<String, String>>>>(mut self, value: ValueType) -> Self{
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of EntityFilter with optional fields set to `None`.
+    pub fn new<eventArnsType: Into<Vec<String>>>(event_arns: eventArnsType) -> EntityFilter {
+        EntityFilter {
+            event_arns: event_arns.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Summary information about an event, returned by the <a>DescribeEvents</a> operation. The <a>DescribeEventDetails</a> operation also returns this information, as well as the <a>EventDescription</a> and additional event metadata.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Event {
@@ -324,7 +563,6 @@ pub struct Event {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status_code: Option<String>,
 }
-
 #[doc="<p>The number of events of each issue type. Returned by the <a>DescribeEventAggregates</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EventAggregate {
@@ -337,7 +575,6 @@ pub struct EventAggregate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub count: Option<i64>,
 }
-
 #[doc="<p>Detailed information about an event. A combination of an <a>Event</a> object, an <a>EventDescription</a> object, and additional metadata about the event. Returned by the <a>DescribeEventDetails</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EventDetails {
@@ -354,7 +591,6 @@ pub struct EventDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub event_metadata: Option<::std::collections::HashMap<String, String>>,
 }
-
 #[doc="<p>Error information returned when a <a>DescribeEventDetails</a> operation cannot find a specified event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EventDetailsErrorItem {
@@ -371,7 +607,6 @@ pub struct EventDetailsErrorItem {
     #[serde(skip_serializing_if="Option::is_none")]
     pub event_arn: Option<String>,
 }
-
 #[doc="<p>The values to use to filter results from the <a>DescribeEvents</a> and <a>DescribeEventAggregates</a> operations.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct EventFilter {
@@ -428,7 +663,105 @@ pub struct EventFilter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<::std::collections::HashMap<String, String>>>,
 }
-
+impl EventFilter {
+    /// Sets `availability_zones`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventFilter.availability_zones = Some(value.into());`.
+    pub fn availability_zones<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.availability_zones = Some(value.into());
+        self
+    }
+    /// Sets `end_times`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventFilter.end_times = Some(value.into());`.
+    pub fn end_times<ValueType: Into<Vec<DateTimeRange>>>(mut self, value: ValueType) -> Self {
+        self.end_times = Some(value.into());
+        self
+    }
+    /// Sets `entity_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventFilter.entity_arns = Some(value.into());`.
+    pub fn entity_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.entity_arns = Some(value.into());
+        self
+    }
+    /// Sets `entity_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventFilter.entity_values = Some(value.into());`.
+    pub fn entity_values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.entity_values = Some(value.into());
+        self
+    }
+    /// Sets `event_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventFilter.event_arns = Some(value.into());`.
+    pub fn event_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.event_arns = Some(value.into());
+        self
+    }
+    /// Sets `event_status_codes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventFilter.event_status_codes = Some(value.into());`.
+    pub fn event_status_codes<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.event_status_codes = Some(value.into());
+        self
+    }
+    /// Sets `event_type_categories`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventFilter.event_type_categories = Some(value.into());`.
+    pub fn event_type_categories<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.event_type_categories = Some(value.into());
+        self
+    }
+    /// Sets `event_type_codes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventFilter.event_type_codes = Some(value.into());`.
+    pub fn event_type_codes<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.event_type_codes = Some(value.into());
+        self
+    }
+    /// Sets `last_updated_times`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventFilter.last_updated_times = Some(value.into());`.
+    pub fn last_updated_times<ValueType: Into<Vec<DateTimeRange>>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.last_updated_times = Some(value.into());
+        self
+    }
+    /// Sets `regions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventFilter.regions = Some(value.into());`.
+    pub fn regions<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.regions = Some(value.into());
+        self
+    }
+    /// Sets `services`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventFilter.services = Some(value.into());`.
+    pub fn services<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.services = Some(value.into());
+        self
+    }
+    /// Sets `start_times`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventFilter.start_times = Some(value.into());`.
+    pub fn start_times<ValueType: Into<Vec<DateTimeRange>>>(mut self, value: ValueType) -> Self {
+        self.start_times = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventFilter.tags = Some(value.into());`.
+pub fn tags<ValueType: Into<Vec<::std::collections::HashMap<String, String>>>>(mut self, value: ValueType) -> Self{
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of EventFilter with optional fields set to `None`.
+    pub fn new() -> EventFilter {
+        EventFilter { ..Default::default() }
+    }
+}
 #[doc="<p>The values to use to filter results from the <a>DescribeEventTypes</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct EventTypeFilter {
@@ -445,7 +778,33 @@ pub struct EventTypeFilter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub services: Option<Vec<String>>,
 }
-
+impl EventTypeFilter {
+    /// Sets `event_type_categories`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventTypeFilter.event_type_categories = Some(value.into());`.
+    pub fn event_type_categories<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.event_type_categories = Some(value.into());
+        self
+    }
+    /// Sets `event_type_codes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventTypeFilter.event_type_codes = Some(value.into());`.
+    pub fn event_type_codes<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.event_type_codes = Some(value.into());
+        self
+    }
+    /// Sets `services`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EventTypeFilter.services = Some(value.into());`.
+    pub fn services<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.services = Some(value.into());
+        self
+    }
+    /// Returns a new instance of EventTypeFilter with optional fields set to `None`.
+    pub fn new() -> EventTypeFilter {
+        EventTypeFilter { ..Default::default() }
+    }
+}
 /// Errors returned by DescribeAffectedEntities
 #[derive(Debug, PartialEq)]
 pub enum DescribeAffectedEntitiesError {

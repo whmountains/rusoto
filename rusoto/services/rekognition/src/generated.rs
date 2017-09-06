@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -40,7 +41,6 @@ pub struct AgeRange {
     #[serde(skip_serializing_if="Option::is_none")]
     pub low: Option<i64>,
 }
-
 #[doc="<p>Indicates whether or not the face has a beard, and the confidence level in the determination.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Beard {
@@ -53,7 +53,6 @@ pub struct Beard {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<bool>,
 }
-
 #[doc="<p>Identifies the bounding box around the object or face. The <code>left</code> (x-coordinate) and <code>top</code> (y-coordinate) are coordinates representing the top and left sides of the bounding box. Note that the upper-left corner of the image is the origin (0,0). </p> <p>The <code>top</code> and <code>left</code> values returned are ratios of the overall image size. For example, if the input image is 700x200 pixels, and the top-left coordinate of the bounding box is 350x50 pixels, the API returns a <code>left</code> value of 0.5 (350/700) and a <code>top</code> value of 0.25 (50/200).</p> <p> The <code>width</code> and <code>height</code> values represent the dimensions of the bounding box as a ratio of the overall image dimension. For example, if the input image is 700x200 pixels, and the bounding box width is 70 pixels, the width returned is 0.1. </p> <note> <p> The bounding box coordinates can have negative values. For example, if Amazon Rekognition is able to detect a face that is at the image edge and is only partially visible, the service can return coordinates that are outside the image bounds and, depending on the image edge, you might get negative values or values greater than 1 for the <code>left</code> or <code>top</code> values. </p> </note>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BoundingBox {
@@ -74,7 +73,6 @@ pub struct BoundingBox {
     #[serde(skip_serializing_if="Option::is_none")]
     pub width: Option<f32>,
 }
-
 #[doc="<p>Provides information about a celebrity recognized by the operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Celebrity {
@@ -99,7 +97,6 @@ pub struct Celebrity {
     #[serde(skip_serializing_if="Option::is_none")]
     pub urls: Option<Vec<String>>,
 }
-
 #[doc="<p>Provides information about a face in a target image that matches the source image face analysed by <code>CompareFaces</code>. The <code>Face</code> property contains the bounding box of the face in the target image. The <code>Similarity</code> property is the confidence that the source image face matches the face in the bounding box.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CompareFacesMatch {
@@ -112,7 +109,6 @@ pub struct CompareFacesMatch {
     #[serde(skip_serializing_if="Option::is_none")]
     pub similarity: Option<f32>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CompareFacesRequest {
     #[doc="<p>The minimum level of confidence in the face matches that a match must meet to be included in the <code>FaceMatches</code> array.</p>"]
@@ -126,7 +122,40 @@ pub struct CompareFacesRequest {
     #[serde(rename="TargetImage")]
     pub target_image: Image,
 }
-
+impl CompareFacesRequest {
+    /// Sets `similarity_threshold`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompareFacesRequest.similarity_threshold = Some(value.into());`.
+    pub fn similarity_threshold<ValueType: Into<f32>>(mut self, value: ValueType) -> Self {
+        self.similarity_threshold = Some(value.into());
+        self
+    }
+    /// Sets `source_image`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompareFacesRequest.source_image = value.into();`.
+    pub fn source_image<ValueType: Into<Image>>(mut self, value: ValueType) -> Self {
+        self.source_image = value.into();
+        self
+    }
+    /// Sets `target_image`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompareFacesRequest.target_image = value.into();`.
+    pub fn target_image<ValueType: Into<Image>>(mut self, value: ValueType) -> Self {
+        self.target_image = value.into();
+        self
+    }
+    /// Returns a new instance of CompareFacesRequest with optional fields set to `None`.
+    pub fn new<SourceImageType: Into<Image>, TargetImageType: Into<Image>>
+        (source_image: SourceImageType,
+         target_image: TargetImageType)
+         -> CompareFacesRequest {
+        CompareFacesRequest {
+            source_image: source_image.into(),
+            target_image: target_image.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CompareFacesResponse {
     #[doc="<p>An array of faces in the target image that match the source image face. Each <code>CompareFacesMatch</code> object provides the bounding box, the confidence level that the bounding box contains a face, and the similarity score for the face in the bounding box and the face in the source image.</p>"]
@@ -150,7 +179,6 @@ pub struct CompareFacesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub unmatched_faces: Option<Vec<ComparedFace>>,
 }
-
 #[doc="<p>Provides face metadata for target image faces that are analysed by <code>CompareFaces</code> and <code>RecognizeCelebrities</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ComparedFace {
@@ -175,7 +203,6 @@ pub struct ComparedFace {
     #[serde(skip_serializing_if="Option::is_none")]
     pub quality: Option<ImageQuality>,
 }
-
 #[doc="<p>Type that describes the face Amazon Rekognition chose to compare with the faces in the target. This contains a bounding box for the selected face and confidence level that the bounding box contains a face. Note that Amazon Rekognition selects the largest face in the source image for this comparison. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ComparedSourceImageFace {
@@ -188,14 +215,29 @@ pub struct ComparedSourceImageFace {
     #[serde(skip_serializing_if="Option::is_none")]
     pub confidence: Option<f32>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateCollectionRequest {
     #[doc="<p>ID for the collection that you are creating.</p>"]
     #[serde(rename="CollectionId")]
     pub collection_id: String,
 }
-
+impl CreateCollectionRequest {
+    /// Sets `collection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCollectionRequest.collection_id = value.into();`.
+    pub fn collection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.collection_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateCollectionRequest with optional fields set to `None`.
+    pub fn new<CollectionIdType: Into<String>>(collection_id: CollectionIdType)
+                                               -> CreateCollectionRequest {
+        CreateCollectionRequest {
+            collection_id: collection_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateCollectionResponse {
     #[doc="<p>Amazon Resource Name (ARN) of the collection. You can use this to manage permissions on your resources. </p>"]
@@ -207,14 +249,29 @@ pub struct CreateCollectionResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status_code: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteCollectionRequest {
     #[doc="<p>ID of the collection to delete.</p>"]
     #[serde(rename="CollectionId")]
     pub collection_id: String,
 }
-
+impl DeleteCollectionRequest {
+    /// Sets `collection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteCollectionRequest.collection_id = value.into();`.
+    pub fn collection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.collection_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteCollectionRequest with optional fields set to `None`.
+    pub fn new<CollectionIdType: Into<String>>(collection_id: CollectionIdType)
+                                               -> DeleteCollectionRequest {
+        DeleteCollectionRequest {
+            collection_id: collection_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteCollectionResponse {
     #[doc="<p>HTTP status code that indicates the result of the operation.</p>"]
@@ -222,7 +279,6 @@ pub struct DeleteCollectionResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status_code: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteFacesRequest {
     #[doc="<p>Collection from which to remove the specific faces.</p>"]
@@ -232,7 +288,33 @@ pub struct DeleteFacesRequest {
     #[serde(rename="FaceIds")]
     pub face_ids: Vec<String>,
 }
-
+impl DeleteFacesRequest {
+    /// Sets `collection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteFacesRequest.collection_id = value.into();`.
+    pub fn collection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.collection_id = value.into();
+        self
+    }
+    /// Sets `face_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteFacesRequest.face_ids = value.into();`.
+    pub fn face_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.face_ids = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteFacesRequest with optional fields set to `None`.
+    pub fn new<CollectionIdType: Into<String>, FaceIdsType: Into<Vec<String>>>
+        (collection_id: CollectionIdType,
+         face_ids: FaceIdsType)
+         -> DeleteFacesRequest {
+        DeleteFacesRequest {
+            collection_id: collection_id.into(),
+            face_ids: face_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteFacesResponse {
     #[doc="<p>An array of strings (face IDs) of the faces that were deleted.</p>"]
@@ -240,7 +322,6 @@ pub struct DeleteFacesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub deleted_faces: Option<Vec<String>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DetectFacesRequest {
     #[doc="<p>An array of facial attributes you want to be returned. This can be the default list of attributes or all attributes. If you don't specify a value for <code>Attributes</code> or if you specify <code>[\"DEFAULT\"]</code>, the API returns the following subset of facial attributes: <code>BoundingBox</code>, <code>Confidence</code>, <code>Pose</code>, <code>Quality</code> and <code>Landmarks</code>. If you provide <code>[\"ALL\"]</code>, all facial attributes are returned but the operation will take longer to complete.</p> <p>If you provide both, <code>[\"ALL\", \"DEFAULT\"]</code>, the service uses a logical AND operator to determine which attributes to return (in this case, all attributes). </p>"]
@@ -251,7 +332,29 @@ pub struct DetectFacesRequest {
     #[serde(rename="Image")]
     pub image: Image,
 }
-
+impl DetectFacesRequest {
+    /// Sets `attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetectFacesRequest.attributes = Some(value.into());`.
+    pub fn attributes<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.attributes = Some(value.into());
+        self
+    }
+    /// Sets `image`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetectFacesRequest.image = value.into();`.
+    pub fn image<ValueType: Into<Image>>(mut self, value: ValueType) -> Self {
+        self.image = value.into();
+        self
+    }
+    /// Returns a new instance of DetectFacesRequest with optional fields set to `None`.
+    pub fn new<ImageType: Into<Image>>(image: ImageType) -> DetectFacesRequest {
+        DetectFacesRequest {
+            image: image.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DetectFacesResponse {
     #[doc="<p>Details of each face found in the image. </p>"]
@@ -263,7 +366,6 @@ pub struct DetectFacesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub orientation_correction: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DetectLabelsRequest {
     #[doc="<p>The input image. You can provide a blob of image bytes or an S3 object.</p>"]
@@ -278,7 +380,36 @@ pub struct DetectLabelsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub min_confidence: Option<f32>,
 }
-
+impl DetectLabelsRequest {
+    /// Sets `image`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetectLabelsRequest.image = value.into();`.
+    pub fn image<ValueType: Into<Image>>(mut self, value: ValueType) -> Self {
+        self.image = value.into();
+        self
+    }
+    /// Sets `max_labels`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetectLabelsRequest.max_labels = Some(value.into());`.
+    pub fn max_labels<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_labels = Some(value.into());
+        self
+    }
+    /// Sets `min_confidence`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetectLabelsRequest.min_confidence = Some(value.into());`.
+    pub fn min_confidence<ValueType: Into<f32>>(mut self, value: ValueType) -> Self {
+        self.min_confidence = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DetectLabelsRequest with optional fields set to `None`.
+    pub fn new<ImageType: Into<Image>>(image: ImageType) -> DetectLabelsRequest {
+        DetectLabelsRequest {
+            image: image.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DetectLabelsResponse {
     #[doc="<p>An array of labels for the real-world objects detected. </p>"]
@@ -290,7 +421,6 @@ pub struct DetectLabelsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub orientation_correction: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DetectModerationLabelsRequest {
     #[doc="<p>The input image as bytes or an S3 object.</p>"]
@@ -301,7 +431,29 @@ pub struct DetectModerationLabelsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub min_confidence: Option<f32>,
 }
-
+impl DetectModerationLabelsRequest {
+    /// Sets `image`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetectModerationLabelsRequest.image = value.into();`.
+    pub fn image<ValueType: Into<Image>>(mut self, value: ValueType) -> Self {
+        self.image = value.into();
+        self
+    }
+    /// Sets `min_confidence`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetectModerationLabelsRequest.min_confidence = Some(value.into());`.
+    pub fn min_confidence<ValueType: Into<f32>>(mut self, value: ValueType) -> Self {
+        self.min_confidence = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DetectModerationLabelsRequest with optional fields set to `None`.
+    pub fn new<ImageType: Into<Image>>(image: ImageType) -> DetectModerationLabelsRequest {
+        DetectModerationLabelsRequest {
+            image: image.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DetectModerationLabelsResponse {
     #[doc="<p>An array of labels for explicit or suggestive adult content found in the image. The list includes the top-level label and each child label detected in the image. This is useful for filtering specific categories of content. </p>"]
@@ -309,7 +461,6 @@ pub struct DetectModerationLabelsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub moderation_labels: Option<Vec<ModerationLabel>>,
 }
-
 #[doc="<p>The emotions detected on the face, and the confidence level in the determination. For example, HAPPY, SAD, and ANGRY.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Emotion {
@@ -322,7 +473,6 @@ pub struct Emotion {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>Indicates whether or not the eyes on the face are open, and the confidence level in the determination.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EyeOpen {
@@ -335,7 +485,6 @@ pub struct EyeOpen {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<bool>,
 }
-
 #[doc="<p>Indicates whether or not the face is wearing eye glasses, and the confidence level in the determination.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Eyeglasses {
@@ -348,7 +497,6 @@ pub struct Eyeglasses {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<bool>,
 }
-
 #[doc="<p>Describes the face properties such as the bounding box, face ID, image ID of the input image, and external image ID that you assigned. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Face {
@@ -373,7 +521,6 @@ pub struct Face {
     #[serde(skip_serializing_if="Option::is_none")]
     pub image_id: Option<String>,
 }
-
 #[doc="<p>Structure containing attributes of the face that the algorithm detected.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct FaceDetail {
@@ -438,7 +585,6 @@ pub struct FaceDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sunglasses: Option<Sunglasses>,
 }
-
 #[doc="<p>Provides face metadata. In addition, it also provides the confidence in the match of this face with the input face.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct FaceMatch {
@@ -451,7 +597,6 @@ pub struct FaceMatch {
     #[serde(skip_serializing_if="Option::is_none")]
     pub similarity: Option<f32>,
 }
-
 #[doc="<p>Object containing both the face metadata (stored in the back-end database) and facial attributes that are detected but aren't stored in the database.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct FaceRecord {
@@ -464,7 +609,6 @@ pub struct FaceRecord {
     #[serde(skip_serializing_if="Option::is_none")]
     pub face_detail: Option<FaceDetail>,
 }
-
 #[doc="<p>Gender of the face and the confidence level in the determination.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Gender {
@@ -477,14 +621,28 @@ pub struct Gender {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetCelebrityInfoRequest {
     #[doc="<p>The ID for the celebrity. You get the celebrity ID from a call to the operation, which recognizes celebrities in an image. </p>"]
     #[serde(rename="Id")]
     pub id: String,
 }
-
+impl GetCelebrityInfoRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetCelebrityInfoRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of GetCelebrityInfoRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> GetCelebrityInfoRequest {
+        GetCelebrityInfoRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetCelebrityInfoResponse {
     #[doc="<p>The name of the celebrity.</p>"]
@@ -496,7 +654,6 @@ pub struct GetCelebrityInfoResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub urls: Option<Vec<String>>,
 }
-
 #[doc="<p>Provides the input image either as bytes or an S3 object.</p> <p>You pass image bytes to a Rekognition API operation by using the <code>Bytes</code> property. For example, you would use the <code>Bytes</code> property to pass an image loaded from a local file system. Image bytes passed by using the <code>Bytes</code> property must be base64-encoded. Your code may not need to encode image bytes if you are using an AWS SDK to call Rekognition API operations. For more information, see <a>example4</a>.</p> <p> You pass images stored in an S3 bucket to a Rekognition API operation by using the <code>S3Object</code> property. Images stored in an S3 bucket do not need to be base64-encoded.</p> <p>The region for the S3 bucket containing the S3 object must match the region you use for Amazon Rekognition operations.</p> <p>If you use the Amazon CLI to call Amazon Rekognition operations, passing image bytes using the Bytes property is not supported. You must first upload the image to an Amazon S3 bucket and then call the operation using the S3Object property.</p> <p>For Amazon Rekognition to process an S3 object, the user must have permission to access the S3 object. For more information, see <a>manage-access-resource-policies</a>. </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct Image {
@@ -513,7 +670,26 @@ pub struct Image {
     #[serde(skip_serializing_if="Option::is_none")]
     pub s3_object: Option<S3Object>,
 }
-
+impl Image {
+    /// Sets `bytes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Image.bytes = Some(value.into());`.
+    pub fn bytes<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.bytes = Some(value.into());
+        self
+    }
+    /// Sets `s3_object`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Image.s3_object = Some(value.into());`.
+    pub fn s3_object<ValueType: Into<S3Object>>(mut self, value: ValueType) -> Self {
+        self.s3_object = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Image with optional fields set to `None`.
+    pub fn new() -> Image {
+        Image { ..Default::default() }
+    }
+}
 #[doc="<p>Identifies face image brightness and sharpness. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ImageQuality {
@@ -526,7 +702,6 @@ pub struct ImageQuality {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sharpness: Option<f32>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct IndexFacesRequest {
     #[doc="<p>The ID of an existing collection to which you want to add the faces that are detected in the input images.</p>"]
@@ -544,7 +719,44 @@ pub struct IndexFacesRequest {
     #[serde(rename="Image")]
     pub image: Image,
 }
-
+impl IndexFacesRequest {
+    /// Sets `collection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IndexFacesRequest.collection_id = value.into();`.
+    pub fn collection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.collection_id = value.into();
+        self
+    }
+    /// Sets `detection_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IndexFacesRequest.detection_attributes = Some(value.into());`.
+    pub fn detection_attributes<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.detection_attributes = Some(value.into());
+        self
+    }
+    /// Sets `external_image_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IndexFacesRequest.external_image_id = Some(value.into());`.
+    pub fn external_image_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.external_image_id = Some(value.into());
+        self
+    }
+    /// Sets `image`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IndexFacesRequest.image = value.into();`.
+    pub fn image<ValueType: Into<Image>>(mut self, value: ValueType) -> Self {
+        self.image = value.into();
+        self
+    }
+    /// Returns a new instance of IndexFacesRequest with optional fields set to `None`.
+pub fn new<CollectionIdType: Into<String>, ImageType: Into<Image>>(collection_id: CollectionIdType, image: ImageType) -> IndexFacesRequest{
+        IndexFacesRequest {
+            collection_id: collection_id.into(),
+            image: image.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct IndexFacesResponse {
     #[doc="<p>An array of faces detected and added to the collection. For more information, see <a>howitworks-index-faces</a>. </p>"]
@@ -556,7 +768,6 @@ pub struct IndexFacesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub orientation_correction: Option<String>,
 }
-
 #[doc="<p>Structure containing details about the detected label, including name, and level of confidence.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Label {
@@ -569,7 +780,6 @@ pub struct Label {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p>Indicates the location of the landmark on the face.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Landmark {
@@ -586,7 +796,6 @@ pub struct Landmark {
     #[serde(skip_serializing_if="Option::is_none")]
     pub y: Option<f32>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListCollectionsRequest {
     #[doc="<p>Maximum number of collection IDs to return.</p>"]
@@ -598,7 +807,26 @@ pub struct ListCollectionsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListCollectionsRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCollectionsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCollectionsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListCollectionsRequest with optional fields set to `None`.
+    pub fn new() -> ListCollectionsRequest {
+        ListCollectionsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListCollectionsResponse {
     #[doc="<p>An array of collection IDs.</p>"]
@@ -610,7 +838,6 @@ pub struct ListCollectionsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListFacesRequest {
     #[doc="<p>ID of the collection from which to list the faces.</p>"]
@@ -625,7 +852,37 @@ pub struct ListFacesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListFacesRequest {
+    /// Sets `collection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListFacesRequest.collection_id = value.into();`.
+    pub fn collection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.collection_id = value.into();
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListFacesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListFacesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListFacesRequest with optional fields set to `None`.
+    pub fn new<CollectionIdType: Into<String>>(collection_id: CollectionIdType)
+                                               -> ListFacesRequest {
+        ListFacesRequest {
+            collection_id: collection_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListFacesResponse {
     #[doc="<p>An array of <code>Face</code> objects. </p>"]
@@ -637,7 +894,6 @@ pub struct ListFacesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Provides information about a single type of moderated content found in an image. Each type of moderated content has a label within a hierarchical taxonomy. For more information, see <a>image-moderation</a>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ModerationLabel {
@@ -654,7 +910,6 @@ pub struct ModerationLabel {
     #[serde(skip_serializing_if="Option::is_none")]
     pub parent_name: Option<String>,
 }
-
 #[doc="<p>Indicates whether or not the mouth on the face is open, and the confidence level in the determination.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MouthOpen {
@@ -667,7 +922,6 @@ pub struct MouthOpen {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<bool>,
 }
-
 #[doc="<p>Indicates whether or not the face has a mustache, and the confidence level in the determination.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Mustache {
@@ -680,7 +934,6 @@ pub struct Mustache {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<bool>,
 }
-
 #[doc="<p>Indicates the pose of the face as determined by its pitch, roll, and yaw.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Pose {
@@ -697,14 +950,28 @@ pub struct Pose {
     #[serde(skip_serializing_if="Option::is_none")]
     pub yaw: Option<f32>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RecognizeCelebritiesRequest {
     #[doc="<p>The input image to use for celebrity recognition.</p>"]
     #[serde(rename="Image")]
     pub image: Image,
 }
-
+impl RecognizeCelebritiesRequest {
+    /// Sets `image`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecognizeCelebritiesRequest.image = value.into();`.
+    pub fn image<ValueType: Into<Image>>(mut self, value: ValueType) -> Self {
+        self.image = value.into();
+        self
+    }
+    /// Returns a new instance of RecognizeCelebritiesRequest with optional fields set to `None`.
+    pub fn new<ImageType: Into<Image>>(image: ImageType) -> RecognizeCelebritiesRequest {
+        RecognizeCelebritiesRequest {
+            image: image.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RecognizeCelebritiesResponse {
     #[doc="<p>Details about each celebrity found in the image. Amazon Rekognition can detect a maximum of 15 celebrities in an image.</p>"]
@@ -720,7 +987,6 @@ pub struct RecognizeCelebritiesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub unrecognized_faces: Option<Vec<ComparedFace>>,
 }
-
 #[doc="<p>Provides the S3 bucket name and object name.</p> <p>The region for the S3 bucket containing the S3 object must match the region you use for Amazon Rekognition operations.</p> <p>For Amazon Rekognition to process an S3 object, the user must have permission to access the S3 object. For more information, see <a>manage-access-resource-policies</a>. </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct S3Object {
@@ -737,7 +1003,33 @@ pub struct S3Object {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<String>,
 }
-
+impl S3Object {
+    /// Sets `bucket`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Object.bucket = Some(value.into());`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Object.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Object.version = Some(value.into());`.
+    pub fn version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version = Some(value.into());
+        self
+    }
+    /// Returns a new instance of S3Object with optional fields set to `None`.
+    pub fn new() -> S3Object {
+        S3Object { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SearchFacesByImageRequest {
     #[doc="<p>ID of the collection to search.</p>"]
@@ -755,7 +1047,47 @@ pub struct SearchFacesByImageRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub max_faces: Option<i64>,
 }
-
+impl SearchFacesByImageRequest {
+    /// Sets `collection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchFacesByImageRequest.collection_id = value.into();`.
+    pub fn collection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.collection_id = value.into();
+        self
+    }
+    /// Sets `face_match_threshold`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchFacesByImageRequest.face_match_threshold = Some(value.into());`.
+    pub fn face_match_threshold<ValueType: Into<f32>>(mut self, value: ValueType) -> Self {
+        self.face_match_threshold = Some(value.into());
+        self
+    }
+    /// Sets `image`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchFacesByImageRequest.image = value.into();`.
+    pub fn image<ValueType: Into<Image>>(mut self, value: ValueType) -> Self {
+        self.image = value.into();
+        self
+    }
+    /// Sets `max_faces`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchFacesByImageRequest.max_faces = Some(value.into());`.
+    pub fn max_faces<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_faces = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SearchFacesByImageRequest with optional fields set to `None`.
+    pub fn new<CollectionIdType: Into<String>, ImageType: Into<Image>>
+        (collection_id: CollectionIdType,
+         image: ImageType)
+         -> SearchFacesByImageRequest {
+        SearchFacesByImageRequest {
+            collection_id: collection_id.into(),
+            image: image.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SearchFacesByImageResponse {
     #[doc="<p>An array of faces that match the input face, along with the confidence in the match.</p>"]
@@ -771,7 +1103,6 @@ pub struct SearchFacesByImageResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub searched_face_confidence: Option<f32>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SearchFacesRequest {
     #[doc="<p>ID of the collection the face belongs to.</p>"]
@@ -789,7 +1120,44 @@ pub struct SearchFacesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub max_faces: Option<i64>,
 }
-
+impl SearchFacesRequest {
+    /// Sets `collection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchFacesRequest.collection_id = value.into();`.
+    pub fn collection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.collection_id = value.into();
+        self
+    }
+    /// Sets `face_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchFacesRequest.face_id = value.into();`.
+    pub fn face_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.face_id = value.into();
+        self
+    }
+    /// Sets `face_match_threshold`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchFacesRequest.face_match_threshold = Some(value.into());`.
+    pub fn face_match_threshold<ValueType: Into<f32>>(mut self, value: ValueType) -> Self {
+        self.face_match_threshold = Some(value.into());
+        self
+    }
+    /// Sets `max_faces`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchFacesRequest.max_faces = Some(value.into());`.
+    pub fn max_faces<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_faces = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SearchFacesRequest with optional fields set to `None`.
+pub fn new<CollectionIdType: Into<String>, FaceIdType: Into<String>>(collection_id: CollectionIdType, face_id: FaceIdType) -> SearchFacesRequest{
+        SearchFacesRequest {
+            collection_id: collection_id.into(),
+            face_id: face_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SearchFacesResponse {
     #[doc="<p>An array of faces that matched the input face, along with the confidence in the match.</p>"]
@@ -801,7 +1169,6 @@ pub struct SearchFacesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub searched_face_id: Option<String>,
 }
-
 #[doc="<p>Indicates whether or not the face is smiling, and the confidence level in the determination.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Smile {
@@ -814,7 +1181,6 @@ pub struct Smile {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<bool>,
 }
-
 #[doc="<p>Indicates whether or not the face is wearing sunglasses, and the confidence level in the determination.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Sunglasses {
@@ -827,7 +1193,6 @@ pub struct Sunglasses {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<bool>,
 }
-
 /// Errors returned by CompareFaces
 #[derive(Debug, PartialEq)]
 pub enum CompareFacesError {

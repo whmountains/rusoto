@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -49,7 +50,6 @@ pub struct ActiveTrustedSigners {
     #[doc="<p>A complex type that contains one <code>Signer</code> complex type for each trusted signer specified in the <code>TrustedSigners</code> complex type.</p> <p>For more information, see <a>ActiveTrustedSigners</a>.</p>"]
     pub quantity: i64,
 }
-
 struct ActiveTrustedSignersDeserializer;
 impl ActiveTrustedSignersDeserializer {
     #[allow(unused_variables)]
@@ -163,7 +163,29 @@ pub struct Aliases {
     #[doc="<p>The number of CNAME aliases, if any, that you want to associate with this distribution.</p>"]
     pub quantity: i64,
 }
-
+impl Aliases {
+    /// Sets `items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Aliases.items = Some(value.into());`.
+    pub fn items<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.items = Some(value.into());
+        self
+    }
+    /// Sets `quantity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Aliases.quantity = value.into();`.
+    pub fn quantity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.quantity = value.into();
+        self
+    }
+    /// Returns a new instance of Aliases with optional fields set to `None`.
+    pub fn new<QuantityType: Into<i64>>(quantity: QuantityType) -> Aliases {
+        Aliases {
+            quantity: quantity.into(),
+            ..Default::default()
+        }
+    }
+}
 struct AliasesDeserializer;
 impl AliasesDeserializer {
     #[allow(unused_variables)]
@@ -234,7 +256,39 @@ pub struct AllowedMethods {
     #[doc="<p>The number of HTTP methods that you want CloudFront to forward to your origin. Valid values are 2 (for <code>GET</code> and <code>HEAD</code> requests), 3 (for <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code> requests) and 7 (for <code>GET, HEAD, OPTIONS, PUT, PATCH, POST</code>, and <code>DELETE</code> requests).</p>"]
     pub quantity: i64,
 }
-
+impl AllowedMethods {
+    /// Sets `cached_methods`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllowedMethods.cached_methods = Some(value.into());`.
+    pub fn cached_methods<ValueType: Into<CachedMethods>>(mut self, value: ValueType) -> Self {
+        self.cached_methods = Some(value.into());
+        self
+    }
+    /// Sets `items`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllowedMethods.items = value.into();`.
+    pub fn items<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.items = value.into();
+        self
+    }
+    /// Sets `quantity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllowedMethods.quantity = value.into();`.
+    pub fn quantity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.quantity = value.into();
+        self
+    }
+    /// Returns a new instance of AllowedMethods with optional fields set to `None`.
+    pub fn new<ItemsType: Into<Vec<String>>, QuantityType: Into<i64>>(items: ItemsType,
+                                                                      quantity: QuantityType)
+                                                                      -> AllowedMethods {
+        AllowedMethods {
+            items: items.into(),
+            quantity: quantity.into(),
+            ..Default::default()
+        }
+    }
+}
 struct AllowedMethodsDeserializer;
 impl AllowedMethodsDeserializer {
     #[allow(unused_variables)]
@@ -409,7 +463,116 @@ pub struct CacheBehavior {
     #[doc="<p>The protocol that viewers can use to access the files in the origin specified by <code>TargetOriginId</code> when a request matches the path pattern in <code>PathPattern</code>. You can specify the following options:</p> <ul> <li> <p> <code>allow-all</code>: Viewers can use HTTP or HTTPS.</p> </li> <li> <p> <code>redirect-to-https</code>: If a viewer submits an HTTP request, CloudFront returns an HTTP status code of 301 (Moved Permanently) to the viewer along with the HTTPS URL. The viewer then resubmits the request using the new URL. </p> </li> <li> <p> <code>https-only</code>: If a viewer sends an HTTP request, CloudFront returns an HTTP status code of 403 (Forbidden). </p> </li> </ul> <p>For more information about requiring the HTTPS protocol, see <a href=\"http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/SecureConnections.html\">Using an HTTPS Connection to Access Your Objects</a> in the <i>Amazon CloudFront Developer Guide</i>.</p> <note> <p>The only way to guarantee that viewers retrieve an object that was fetched from the origin using HTTPS is never to use any other protocol to fetch the object. If you have recently changed from HTTP to HTTPS, we recommend that you clear your objects' cache because cached objects are protocol agnostic. That means that an edge location will return an object from the cache regardless of whether the current request protocol matches the protocol used previously. For more information, see <a href=\"http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Expiration.html\">Specifying How Long Objects and Errors Stay in a CloudFront Edge Cache (Expiration)</a> in the <i>Amazon CloudFront Developer Guide</i>.</p> </note>"]
     pub viewer_protocol_policy: String,
 }
-
+impl CacheBehavior {
+    /// Sets `allowed_methods`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CacheBehavior.allowed_methods = Some(value.into());`.
+    pub fn allowed_methods<ValueType: Into<AllowedMethods>>(mut self, value: ValueType) -> Self {
+        self.allowed_methods = Some(value.into());
+        self
+    }
+    /// Sets `compress`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CacheBehavior.compress = Some(value.into());`.
+    pub fn compress<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.compress = Some(value.into());
+        self
+    }
+    /// Sets `default_ttl`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CacheBehavior.default_ttl = Some(value.into());`.
+    pub fn default_ttl<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.default_ttl = Some(value.into());
+        self
+    }
+    /// Sets `forwarded_values`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CacheBehavior.forwarded_values = value.into();`.
+    pub fn forwarded_values<ValueType: Into<ForwardedValues>>(mut self, value: ValueType) -> Self {
+        self.forwarded_values = value.into();
+        self
+    }
+    /// Sets `lambda_function_associations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CacheBehavior.lambda_function_associations = Some(value.into());`.
+pub fn lambda_function_associations<ValueType: Into<LambdaFunctionAssociations>>(mut self, value: ValueType) -> Self{
+        self.lambda_function_associations = Some(value.into());
+        self
+    }
+    /// Sets `max_ttl`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CacheBehavior.max_ttl = Some(value.into());`.
+    pub fn max_ttl<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_ttl = Some(value.into());
+        self
+    }
+    /// Sets `min_ttl`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CacheBehavior.min_ttl = value.into();`.
+    pub fn min_ttl<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.min_ttl = value.into();
+        self
+    }
+    /// Sets `path_pattern`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CacheBehavior.path_pattern = value.into();`.
+    pub fn path_pattern<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path_pattern = value.into();
+        self
+    }
+    /// Sets `smooth_streaming`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CacheBehavior.smooth_streaming = Some(value.into());`.
+    pub fn smooth_streaming<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.smooth_streaming = Some(value.into());
+        self
+    }
+    /// Sets `target_origin_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CacheBehavior.target_origin_id = value.into();`.
+    pub fn target_origin_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_origin_id = value.into();
+        self
+    }
+    /// Sets `trusted_signers`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CacheBehavior.trusted_signers = value.into();`.
+    pub fn trusted_signers<ValueType: Into<TrustedSigners>>(mut self, value: ValueType) -> Self {
+        self.trusted_signers = value.into();
+        self
+    }
+    /// Sets `viewer_protocol_policy`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CacheBehavior.viewer_protocol_policy = value.into();`.
+    pub fn viewer_protocol_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.viewer_protocol_policy = value.into();
+        self
+    }
+    /// Returns a new instance of CacheBehavior with optional fields set to `None`.
+    pub fn new<ForwardedValuesType: Into<ForwardedValues>,
+               MinTTLType: Into<i64>,
+               PathPatternType: Into<String>,
+               TargetOriginIdType: Into<String>,
+               TrustedSignersType: Into<TrustedSigners>,
+               ViewerProtocolPolicyType: Into<String>>
+        (forwarded_values: ForwardedValuesType,
+         min_ttl: MinTTLType,
+         path_pattern: PathPatternType,
+         target_origin_id: TargetOriginIdType,
+         trusted_signers: TrustedSignersType,
+         viewer_protocol_policy: ViewerProtocolPolicyType)
+         -> CacheBehavior {
+        CacheBehavior {
+            forwarded_values: forwarded_values.into(),
+            min_ttl: min_ttl.into(),
+            path_pattern: path_pattern.into(),
+            target_origin_id: target_origin_id.into(),
+            trusted_signers: trusted_signers.into(),
+            viewer_protocol_policy: viewer_protocol_policy.into(),
+            ..Default::default()
+        }
+    }
+}
 struct CacheBehaviorDeserializer;
 impl CacheBehaviorDeserializer {
     #[allow(unused_variables)]
@@ -604,7 +767,29 @@ pub struct CacheBehaviors {
     #[doc="<p>The number of cache behaviors for this distribution. </p>"]
     pub quantity: i64,
 }
-
+impl CacheBehaviors {
+    /// Sets `items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CacheBehaviors.items = Some(value.into());`.
+    pub fn items<ValueType: Into<Vec<CacheBehavior>>>(mut self, value: ValueType) -> Self {
+        self.items = Some(value.into());
+        self
+    }
+    /// Sets `quantity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CacheBehaviors.quantity = value.into();`.
+    pub fn quantity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.quantity = value.into();
+        self
+    }
+    /// Returns a new instance of CacheBehaviors with optional fields set to `None`.
+    pub fn new<QuantityType: Into<i64>>(quantity: QuantityType) -> CacheBehaviors {
+        CacheBehaviors {
+            quantity: quantity.into(),
+            ..Default::default()
+        }
+    }
+}
 struct CacheBehaviorsDeserializer;
 impl CacheBehaviorsDeserializer {
     #[allow(unused_variables)]
@@ -675,7 +860,32 @@ pub struct CachedMethods {
     #[doc="<p>The number of HTTP methods for which you want CloudFront to cache responses. Valid values are <code>2</code> (for caching responses to <code>GET</code> and <code>HEAD</code> requests) and <code>3</code> (for caching responses to <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code> requests).</p>"]
     pub quantity: i64,
 }
-
+impl CachedMethods {
+    /// Sets `items`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CachedMethods.items = value.into();`.
+    pub fn items<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.items = value.into();
+        self
+    }
+    /// Sets `quantity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CachedMethods.quantity = value.into();`.
+    pub fn quantity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.quantity = value.into();
+        self
+    }
+    /// Returns a new instance of CachedMethods with optional fields set to `None`.
+    pub fn new<ItemsType: Into<Vec<String>>, QuantityType: Into<i64>>(items: ItemsType,
+                                                                      quantity: QuantityType)
+                                                                      -> CachedMethods {
+        CachedMethods {
+            items: items.into(),
+            quantity: quantity.into(),
+            ..Default::default()
+        }
+    }
+}
 struct CachedMethodsDeserializer;
 impl CachedMethodsDeserializer {
     #[allow(unused_variables)]
@@ -744,7 +954,6 @@ pub struct CloudFrontOriginAccessIdentity {
     #[doc="<p>The Amazon S3 canonical user ID for the origin access identity, used when giving the origin access identity read permission to an object in Amazon S3. </p>"]
     pub s3_canonical_user_id: String,
 }
-
 struct CloudFrontOriginAccessIdentityDeserializer;
 impl CloudFrontOriginAccessIdentityDeserializer {
     #[allow(unused_variables)]
@@ -801,7 +1010,33 @@ pub struct CloudFrontOriginAccessIdentityConfig {
     #[doc="<p>Any comments you want to include about the origin access identity. </p>"]
     pub comment: String,
 }
-
+impl CloudFrontOriginAccessIdentityConfig {
+    /// Sets `caller_reference`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudFrontOriginAccessIdentityConfig.caller_reference = value.into();`.
+    pub fn caller_reference<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.caller_reference = value.into();
+        self
+    }
+    /// Sets `comment`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudFrontOriginAccessIdentityConfig.comment = value.into();`.
+    pub fn comment<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.comment = value.into();
+        self
+    }
+    /// Returns a new instance of CloudFrontOriginAccessIdentityConfig with optional fields set to `None`.
+    pub fn new<CallerReferenceType: Into<String>, CommentType: Into<String>>
+        (caller_reference: CallerReferenceType,
+         comment: CommentType)
+         -> CloudFrontOriginAccessIdentityConfig {
+        CloudFrontOriginAccessIdentityConfig {
+            caller_reference: caller_reference.into(),
+            comment: comment.into(),
+            ..Default::default()
+        }
+    }
+}
 struct CloudFrontOriginAccessIdentityConfigDeserializer;
 impl CloudFrontOriginAccessIdentityConfigDeserializer {
     #[allow(unused_variables)]
@@ -878,7 +1113,6 @@ pub struct CloudFrontOriginAccessIdentityList {
     #[doc="<p>The number of CloudFront origin access identities that were created by the current AWS account. </p>"]
     pub quantity: i64,
 }
-
 struct CloudFrontOriginAccessIdentityListDeserializer;
 impl CloudFrontOriginAccessIdentityListDeserializer {
     #[allow(unused_variables)]
@@ -950,7 +1184,6 @@ pub struct CloudFrontOriginAccessIdentitySummary {
     #[doc="<p>The Amazon S3 canonical user ID for the origin access identity, which you use when giving the origin access identity read permission to an object in Amazon S3.</p>"]
     pub s3_canonical_user_id: String,
 }
-
 struct CloudFrontOriginAccessIdentitySummaryDeserializer;
 impl CloudFrontOriginAccessIdentitySummaryDeserializer {
     #[allow(unused_variables)]
@@ -1106,7 +1339,29 @@ pub struct CookieNames {
     #[doc="<p>The number of different cookies that you want CloudFront to forward to the origin for this cache behavior.</p>"]
     pub quantity: i64,
 }
-
+impl CookieNames {
+    /// Sets `items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CookieNames.items = Some(value.into());`.
+    pub fn items<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.items = Some(value.into());
+        self
+    }
+    /// Sets `quantity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CookieNames.quantity = value.into();`.
+    pub fn quantity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.quantity = value.into();
+        self
+    }
+    /// Returns a new instance of CookieNames with optional fields set to `None`.
+    pub fn new<QuantityType: Into<i64>>(quantity: QuantityType) -> CookieNames {
+        CookieNames {
+            quantity: quantity.into(),
+            ..Default::default()
+        }
+    }
+}
 struct CookieNamesDeserializer;
 impl CookieNamesDeserializer {
     #[allow(unused_variables)]
@@ -1176,7 +1431,29 @@ pub struct CookiePreference {
     #[doc="<p>Required if you specify <code>whitelist</code> for the value of <code>Forward:</code>. A complex type that specifies how many different cookies you want CloudFront to forward to the origin for this cache behavior and, if you want to forward selected cookies, the names of those cookies.</p> <p>If you specify <code>all</code> or none for the value of <code>Forward</code>, omit <code>WhitelistedNames</code>. If you change the value of <code>Forward</code> from <code>whitelist</code> to all or none and you don't delete the <code>WhitelistedNames</code> element and its child elements, CloudFront deletes them automatically.</p> <p>For the current limit on the number of cookie names that you can whitelist for each cache behavior, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html#limits_cloudfront\">Amazon CloudFront Limits</a> in the <i>AWS General Reference</i>.</p>"]
     pub whitelisted_names: Option<CookieNames>,
 }
-
+impl CookiePreference {
+    /// Sets `forward`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CookiePreference.forward = value.into();`.
+    pub fn forward<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.forward = value.into();
+        self
+    }
+    /// Sets `whitelisted_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CookiePreference.whitelisted_names = Some(value.into());`.
+    pub fn whitelisted_names<ValueType: Into<CookieNames>>(mut self, value: ValueType) -> Self {
+        self.whitelisted_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CookiePreference with optional fields set to `None`.
+    pub fn new<ForwardType: Into<String>>(forward: ForwardType) -> CookiePreference {
+        CookiePreference {
+            forward: forward.into(),
+            ..Default::default()
+        }
+    }
+}
 struct CookiePreferenceDeserializer;
 impl CookiePreferenceDeserializer {
     #[allow(unused_variables)]
@@ -1245,7 +1522,25 @@ pub struct CreateCloudFrontOriginAccessIdentityRequest {
     #[doc="<p>The current configuration information for the identity.</p>"]
     pub cloud_front_origin_access_identity_config: CloudFrontOriginAccessIdentityConfig,
 }
-
+impl CreateCloudFrontOriginAccessIdentityRequest {
+    /// Sets `cloud_front_origin_access_identity_config`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCloudFrontOriginAccessIdentityRequest.cloud_front_origin_access_identity_config = value.into();`.
+pub fn cloud_front_origin_access_identity_config<ValueType: Into<CloudFrontOriginAccessIdentityConfig>>(mut self, value: ValueType) -> Self{
+        self.cloud_front_origin_access_identity_config = value.into();
+        self
+    }
+    /// Returns a new instance of CreateCloudFrontOriginAccessIdentityRequest with optional fields set to `None`.
+    pub fn new<CloudFrontOriginAccessIdentityConfigType: Into<CloudFrontOriginAccessIdentityConfig>>
+        (cloud_front_origin_access_identity_config: CloudFrontOriginAccessIdentityConfigType)
+         -> CreateCloudFrontOriginAccessIdentityRequest {
+        CreateCloudFrontOriginAccessIdentityRequest {
+            cloud_front_origin_access_identity_config: cloud_front_origin_access_identity_config
+                .into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The returned result of the corresponding request.</p>"]
 #[derive(Default,Debug)]
 pub struct CreateCloudFrontOriginAccessIdentityResult {
@@ -1256,7 +1551,6 @@ pub struct CreateCloudFrontOriginAccessIdentityResult {
     #[doc="<p>The fully qualified URI of the new origin access identity just created. For example: <code>https://cloudfront.amazonaws.com/2010-11-01/origin-access-identity/cloudfront/E74FTE3AJFJ256A</code>.</p>"]
     pub location: Option<String>,
 }
-
 struct CreateCloudFrontOriginAccessIdentityResultDeserializer;
 impl CreateCloudFrontOriginAccessIdentityResultDeserializer {
     #[allow(unused_variables)]
@@ -1305,7 +1599,24 @@ pub struct CreateDistributionRequest {
     #[doc="<p>The distribution's configuration information.</p>"]
     pub distribution_config: DistributionConfig,
 }
-
+impl CreateDistributionRequest {
+    /// Sets `distribution_config`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDistributionRequest.distribution_config = value.into();`.
+    pub fn distribution_config<ValueType: Into<DistributionConfig>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.distribution_config = value.into();
+        self
+    }
+    /// Returns a new instance of CreateDistributionRequest with optional fields set to `None`.
+pub fn new<DistributionConfigType: Into<DistributionConfig>>(distribution_config: DistributionConfigType) -> CreateDistributionRequest{
+        CreateDistributionRequest {
+            distribution_config: distribution_config.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The returned result of the corresponding request.</p>"]
 #[derive(Default,Debug)]
 pub struct CreateDistributionResult {
@@ -1316,7 +1627,6 @@ pub struct CreateDistributionResult {
     #[doc="<p>The fully qualified URI of the new distribution resource just created. For example: <code>https://cloudfront.amazonaws.com/2010-11-01/distribution/EDFDVBD632BHDS5</code>.</p>"]
     pub location: Option<String>,
 }
-
 struct CreateDistributionResultDeserializer;
 impl CreateDistributionResultDeserializer {
     #[allow(unused_variables)]
@@ -1366,7 +1676,24 @@ pub struct CreateDistributionWithTagsRequest {
     #[doc="<p>The distribution's configuration information. </p>"]
     pub distribution_config_with_tags: DistributionConfigWithTags,
 }
-
+impl CreateDistributionWithTagsRequest {
+    /// Sets `distribution_config_with_tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDistributionWithTagsRequest.distribution_config_with_tags = value.into();`.
+pub fn distribution_config_with_tags<ValueType: Into<DistributionConfigWithTags>>(mut self, value: ValueType) -> Self{
+        self.distribution_config_with_tags = value.into();
+        self
+    }
+    /// Returns a new instance of CreateDistributionWithTagsRequest with optional fields set to `None`.
+    pub fn new<DistributionConfigWithTagsType: Into<DistributionConfigWithTags>>
+        (distribution_config_with_tags: DistributionConfigWithTagsType)
+         -> CreateDistributionWithTagsRequest {
+        CreateDistributionWithTagsRequest {
+            distribution_config_with_tags: distribution_config_with_tags.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The returned result of the corresponding request. </p>"]
 #[derive(Default,Debug)]
 pub struct CreateDistributionWithTagsResult {
@@ -1377,7 +1704,6 @@ pub struct CreateDistributionWithTagsResult {
     #[doc="<p>The fully qualified URI of the new distribution resource just created. For example: <code>https://cloudfront.amazonaws.com/2010-11-01/distribution/EDFDVBD632BHDS5</code>. </p>"]
     pub location: Option<String>,
 }
-
 struct CreateDistributionWithTagsResultDeserializer;
 impl CreateDistributionWithTagsResultDeserializer {
     #[allow(unused_variables)]
@@ -1430,7 +1756,35 @@ pub struct CreateInvalidationRequest {
     #[doc="<p>The batch information for the invalidation.</p>"]
     pub invalidation_batch: InvalidationBatch,
 }
-
+impl CreateInvalidationRequest {
+    /// Sets `distribution_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInvalidationRequest.distribution_id = value.into();`.
+    pub fn distribution_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.distribution_id = value.into();
+        self
+    }
+    /// Sets `invalidation_batch`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInvalidationRequest.invalidation_batch = value.into();`.
+    pub fn invalidation_batch<ValueType: Into<InvalidationBatch>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.invalidation_batch = value.into();
+        self
+    }
+    /// Returns a new instance of CreateInvalidationRequest with optional fields set to `None`.
+    pub fn new<DistributionIdType: Into<String>, InvalidationBatchType: Into<InvalidationBatch>>
+        (distribution_id: DistributionIdType,
+         invalidation_batch: InvalidationBatchType)
+         -> CreateInvalidationRequest {
+        CreateInvalidationRequest {
+            distribution_id: distribution_id.into(),
+            invalidation_batch: invalidation_batch.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The returned result of the corresponding request.</p>"]
 #[derive(Default,Debug)]
 pub struct CreateInvalidationResult {
@@ -1439,7 +1793,6 @@ pub struct CreateInvalidationResult {
     #[doc="<p>The fully qualified URI of the distribution and invalidation batch request, including the <code>Invalidation ID</code>.</p>"]
     pub location: Option<String>,
 }
-
 struct CreateInvalidationResultDeserializer;
 impl CreateInvalidationResultDeserializer {
     #[allow(unused_variables)]
@@ -1489,7 +1842,24 @@ pub struct CreateStreamingDistributionRequest {
     #[doc="<p>The streaming distribution's configuration information.</p>"]
     pub streaming_distribution_config: StreamingDistributionConfig,
 }
-
+impl CreateStreamingDistributionRequest {
+    /// Sets `streaming_distribution_config`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStreamingDistributionRequest.streaming_distribution_config = value.into();`.
+pub fn streaming_distribution_config<ValueType: Into<StreamingDistributionConfig>>(mut self, value: ValueType) -> Self{
+        self.streaming_distribution_config = value.into();
+        self
+    }
+    /// Returns a new instance of CreateStreamingDistributionRequest with optional fields set to `None`.
+    pub fn new<StreamingDistributionConfigType: Into<StreamingDistributionConfig>>
+        (streaming_distribution_config: StreamingDistributionConfigType)
+         -> CreateStreamingDistributionRequest {
+        CreateStreamingDistributionRequest {
+            streaming_distribution_config: streaming_distribution_config.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The returned result of the corresponding request.</p>"]
 #[derive(Default,Debug)]
 pub struct CreateStreamingDistributionResult {
@@ -1500,7 +1870,6 @@ pub struct CreateStreamingDistributionResult {
     #[doc="<p>The streaming distribution's information.</p>"]
     pub streaming_distribution: Option<StreamingDistribution>,
 }
-
 struct CreateStreamingDistributionResultDeserializer;
 impl CreateStreamingDistributionResultDeserializer {
     #[allow(unused_variables)]
@@ -1551,7 +1920,24 @@ pub struct CreateStreamingDistributionWithTagsRequest {
     #[doc="<p> The streaming distribution's configuration information. </p>"]
     pub streaming_distribution_config_with_tags: StreamingDistributionConfigWithTags,
 }
-
+impl CreateStreamingDistributionWithTagsRequest {
+    /// Sets `streaming_distribution_config_with_tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStreamingDistributionWithTagsRequest.streaming_distribution_config_with_tags = value.into();`.
+pub fn streaming_distribution_config_with_tags<ValueType: Into<StreamingDistributionConfigWithTags>>(mut self, value: ValueType) -> Self{
+        self.streaming_distribution_config_with_tags = value.into();
+        self
+    }
+    /// Returns a new instance of CreateStreamingDistributionWithTagsRequest with optional fields set to `None`.
+    pub fn new<StreamingDistributionConfigWithTagsType: Into<StreamingDistributionConfigWithTags>>
+        (streaming_distribution_config_with_tags: StreamingDistributionConfigWithTagsType)
+         -> CreateStreamingDistributionWithTagsRequest {
+        CreateStreamingDistributionWithTagsRequest {
+            streaming_distribution_config_with_tags: streaming_distribution_config_with_tags.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The returned result of the corresponding request. </p>"]
 #[derive(Default,Debug)]
 pub struct CreateStreamingDistributionWithTagsResult {
@@ -1561,7 +1947,6 @@ pub struct CreateStreamingDistributionWithTagsResult {
     #[doc="<p>The streaming distribution's information. </p>"]
     pub streaming_distribution: Option<StreamingDistribution>,
 }
-
 struct CreateStreamingDistributionWithTagsResultDeserializer;
 impl CreateStreamingDistributionWithTagsResultDeserializer {
     #[allow(unused_variables)]
@@ -1618,7 +2003,43 @@ pub struct CustomErrorResponse {
     #[doc="<p>The path to the custom error page that you want CloudFront to return to a viewer when your origin returns the HTTP status code specified by <code>ErrorCode</code>, for example, <code>/4xx-errors/403-forbidden.html</code>. If you want to store your objects and your custom error pages in different locations, your distribution must include a cache behavior for which the following is true:</p> <ul> <li> <p>The value of <code>PathPattern</code> matches the path to your custom error messages. For example, suppose you saved custom error pages for 4xx errors in an Amazon S3 bucket in a directory named <code>/4xx-errors</code>. Your distribution must include a cache behavior for which the path pattern routes requests for your custom error pages to that location, for example, <code>/4xx-errors/*</code>. </p> </li> <li> <p>The value of <code>TargetOriginId</code> specifies the value of the <code>ID</code> element for the origin that contains your custom error pages.</p> </li> </ul> <p>If you specify a value for <code>ResponsePagePath</code>, you must also specify a value for <code>ResponseCode</code>. If you don't want to specify a value, include an empty element, <code>&lt;ResponsePagePath&gt;</code>, in the XML document.</p> <p>We recommend that you store custom error pages in an Amazon S3 bucket. If you store custom error pages on an HTTP server and the server starts to return 5xx errors, CloudFront can't get the files that you want to return to viewers because the origin server is unavailable.</p>"]
     pub response_page_path: Option<String>,
 }
-
+impl CustomErrorResponse {
+    /// Sets `error_caching_min_ttl`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CustomErrorResponse.error_caching_min_ttl = Some(value.into());`.
+    pub fn error_caching_min_ttl<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.error_caching_min_ttl = Some(value.into());
+        self
+    }
+    /// Sets `error_code`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CustomErrorResponse.error_code = value.into();`.
+    pub fn error_code<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.error_code = value.into();
+        self
+    }
+    /// Sets `response_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CustomErrorResponse.response_code = Some(value.into());`.
+    pub fn response_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.response_code = Some(value.into());
+        self
+    }
+    /// Sets `response_page_path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CustomErrorResponse.response_page_path = Some(value.into());`.
+    pub fn response_page_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.response_page_path = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CustomErrorResponse with optional fields set to `None`.
+    pub fn new<ErrorCodeType: Into<i64>>(error_code: ErrorCodeType) -> CustomErrorResponse {
+        CustomErrorResponse {
+            error_code: error_code.into(),
+            ..Default::default()
+        }
+    }
+}
 struct CustomErrorResponseDeserializer;
 impl CustomErrorResponseDeserializer {
     #[allow(unused_variables)]
@@ -1762,7 +2183,29 @@ pub struct CustomErrorResponses {
     #[doc="<p>The number of HTTP status codes for which you want to specify a custom error page and/or a caching duration. If <code>Quantity</code> is <code>0</code>, you can omit <code>Items</code>.</p>"]
     pub quantity: i64,
 }
-
+impl CustomErrorResponses {
+    /// Sets `items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CustomErrorResponses.items = Some(value.into());`.
+    pub fn items<ValueType: Into<Vec<CustomErrorResponse>>>(mut self, value: ValueType) -> Self {
+        self.items = Some(value.into());
+        self
+    }
+    /// Sets `quantity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CustomErrorResponses.quantity = value.into();`.
+    pub fn quantity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.quantity = value.into();
+        self
+    }
+    /// Returns a new instance of CustomErrorResponses with optional fields set to `None`.
+    pub fn new<QuantityType: Into<i64>>(quantity: QuantityType) -> CustomErrorResponses {
+        CustomErrorResponses {
+            quantity: quantity.into(),
+            ..Default::default()
+        }
+    }
+}
 struct CustomErrorResponsesDeserializer;
 impl CustomErrorResponsesDeserializer {
     #[allow(unused_variables)]
@@ -1833,7 +2276,29 @@ pub struct CustomHeaders {
     #[doc="<p>The number of custom headers, if any, for this distribution.</p>"]
     pub quantity: i64,
 }
-
+impl CustomHeaders {
+    /// Sets `items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CustomHeaders.items = Some(value.into());`.
+    pub fn items<ValueType: Into<Vec<OriginCustomHeader>>>(mut self, value: ValueType) -> Self {
+        self.items = Some(value.into());
+        self
+    }
+    /// Sets `quantity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CustomHeaders.quantity = value.into();`.
+    pub fn quantity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.quantity = value.into();
+        self
+    }
+    /// Returns a new instance of CustomHeaders with optional fields set to `None`.
+    pub fn new<QuantityType: Into<i64>>(quantity: QuantityType) -> CustomHeaders {
+        CustomHeaders {
+            quantity: quantity.into(),
+            ..Default::default()
+        }
+    }
+}
 struct CustomHeadersDeserializer;
 impl CustomHeadersDeserializer {
     #[allow(unused_variables)]
@@ -1912,7 +2377,67 @@ pub struct CustomOriginConfig {
     #[doc="<p>The SSL/TLS protocols that you want CloudFront to use when communicating with your origin over HTTPS.</p>"]
     pub origin_ssl_protocols: Option<OriginSslProtocols>,
 }
-
+impl CustomOriginConfig {
+    /// Sets `http_port`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CustomOriginConfig.http_port = value.into();`.
+    pub fn http_port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.http_port = value.into();
+        self
+    }
+    /// Sets `https_port`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CustomOriginConfig.https_port = value.into();`.
+    pub fn https_port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.https_port = value.into();
+        self
+    }
+    /// Sets `origin_keepalive_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CustomOriginConfig.origin_keepalive_timeout = Some(value.into());`.
+    pub fn origin_keepalive_timeout<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.origin_keepalive_timeout = Some(value.into());
+        self
+    }
+    /// Sets `origin_protocol_policy`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CustomOriginConfig.origin_protocol_policy = value.into();`.
+    pub fn origin_protocol_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.origin_protocol_policy = value.into();
+        self
+    }
+    /// Sets `origin_read_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CustomOriginConfig.origin_read_timeout = Some(value.into());`.
+    pub fn origin_read_timeout<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.origin_read_timeout = Some(value.into());
+        self
+    }
+    /// Sets `origin_ssl_protocols`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CustomOriginConfig.origin_ssl_protocols = Some(value.into());`.
+    pub fn origin_ssl_protocols<ValueType: Into<OriginSslProtocols>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.origin_ssl_protocols = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CustomOriginConfig with optional fields set to `None`.
+    pub fn new<HTTPPortType: Into<i64>,
+               HTTPSPortType: Into<i64>,
+               OriginProtocolPolicyType: Into<String>>
+        (http_port: HTTPPortType,
+         https_port: HTTPSPortType,
+         origin_protocol_policy: OriginProtocolPolicyType)
+         -> CustomOriginConfig {
+        CustomOriginConfig {
+            http_port: http_port.into(),
+            https_port: https_port.into(),
+            origin_protocol_policy: origin_protocol_policy.into(),
+            ..Default::default()
+        }
+    }
+}
 struct CustomOriginConfigDeserializer;
 impl CustomOriginConfigDeserializer {
     #[allow(unused_variables)]
@@ -2029,7 +2554,106 @@ pub struct DefaultCacheBehavior {
     #[doc="<p>The protocol that viewers can use to access the files in the origin specified by <code>TargetOriginId</code> when a request matches the path pattern in <code>PathPattern</code>. You can specify the following options:</p> <ul> <li> <p> <code>allow-all</code>: Viewers can use HTTP or HTTPS.</p> </li> <li> <p> <code>redirect-to-https</code>: If a viewer submits an HTTP request, CloudFront returns an HTTP status code of 301 (Moved Permanently) to the viewer along with the HTTPS URL. The viewer then resubmits the request using the new URL.</p> </li> <li> <p> <code>https-only</code>: If a viewer sends an HTTP request, CloudFront returns an HTTP status code of 403 (Forbidden).</p> </li> </ul> <p>For more information about requiring the HTTPS protocol, see <a href=\"http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/SecureConnections.html\">Using an HTTPS Connection to Access Your Objects</a> in the <i>Amazon CloudFront Developer Guide</i>.</p> <note> <p>The only way to guarantee that viewers retrieve an object that was fetched from the origin using HTTPS is never to use any other protocol to fetch the object. If you have recently changed from HTTP to HTTPS, we recommend that you clear your objects' cache because cached objects are protocol agnostic. That means that an edge location will return an object from the cache regardless of whether the current request protocol matches the protocol used previously. For more information, see <a href=\"http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Expiration.html\">Specifying How Long Objects and Errors Stay in a CloudFront Edge Cache (Expiration)</a> in the <i>Amazon CloudFront Developer Guide</i>.</p> </note>"]
     pub viewer_protocol_policy: String,
 }
-
+impl DefaultCacheBehavior {
+    /// Sets `allowed_methods`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DefaultCacheBehavior.allowed_methods = Some(value.into());`.
+    pub fn allowed_methods<ValueType: Into<AllowedMethods>>(mut self, value: ValueType) -> Self {
+        self.allowed_methods = Some(value.into());
+        self
+    }
+    /// Sets `compress`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DefaultCacheBehavior.compress = Some(value.into());`.
+    pub fn compress<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.compress = Some(value.into());
+        self
+    }
+    /// Sets `default_ttl`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DefaultCacheBehavior.default_ttl = Some(value.into());`.
+    pub fn default_ttl<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.default_ttl = Some(value.into());
+        self
+    }
+    /// Sets `forwarded_values`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DefaultCacheBehavior.forwarded_values = value.into();`.
+    pub fn forwarded_values<ValueType: Into<ForwardedValues>>(mut self, value: ValueType) -> Self {
+        self.forwarded_values = value.into();
+        self
+    }
+    /// Sets `lambda_function_associations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DefaultCacheBehavior.lambda_function_associations = Some(value.into());`.
+pub fn lambda_function_associations<ValueType: Into<LambdaFunctionAssociations>>(mut self, value: ValueType) -> Self{
+        self.lambda_function_associations = Some(value.into());
+        self
+    }
+    /// Sets `max_ttl`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DefaultCacheBehavior.max_ttl = Some(value.into());`.
+    pub fn max_ttl<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_ttl = Some(value.into());
+        self
+    }
+    /// Sets `min_ttl`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DefaultCacheBehavior.min_ttl = value.into();`.
+    pub fn min_ttl<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.min_ttl = value.into();
+        self
+    }
+    /// Sets `smooth_streaming`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DefaultCacheBehavior.smooth_streaming = Some(value.into());`.
+    pub fn smooth_streaming<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.smooth_streaming = Some(value.into());
+        self
+    }
+    /// Sets `target_origin_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DefaultCacheBehavior.target_origin_id = value.into();`.
+    pub fn target_origin_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_origin_id = value.into();
+        self
+    }
+    /// Sets `trusted_signers`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DefaultCacheBehavior.trusted_signers = value.into();`.
+    pub fn trusted_signers<ValueType: Into<TrustedSigners>>(mut self, value: ValueType) -> Self {
+        self.trusted_signers = value.into();
+        self
+    }
+    /// Sets `viewer_protocol_policy`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DefaultCacheBehavior.viewer_protocol_policy = value.into();`.
+    pub fn viewer_protocol_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.viewer_protocol_policy = value.into();
+        self
+    }
+    /// Returns a new instance of DefaultCacheBehavior with optional fields set to `None`.
+    pub fn new<ForwardedValuesType: Into<ForwardedValues>,
+               MinTTLType: Into<i64>,
+               TargetOriginIdType: Into<String>,
+               TrustedSignersType: Into<TrustedSigners>,
+               ViewerProtocolPolicyType: Into<String>>
+        (forwarded_values: ForwardedValuesType,
+         min_ttl: MinTTLType,
+         target_origin_id: TargetOriginIdType,
+         trusted_signers: TrustedSignersType,
+         viewer_protocol_policy: ViewerProtocolPolicyType)
+         -> DefaultCacheBehavior {
+        DefaultCacheBehavior {
+            forwarded_values: forwarded_values.into(),
+            min_ttl: min_ttl.into(),
+            target_origin_id: target_origin_id.into(),
+            trusted_signers: trusted_signers.into(),
+            viewer_protocol_policy: viewer_protocol_policy.into(),
+            ..Default::default()
+        }
+    }
+}
 struct DefaultCacheBehaviorDeserializer;
 impl DefaultCacheBehaviorDeserializer {
     #[allow(unused_variables)]
@@ -2161,7 +2785,29 @@ pub struct DeleteCloudFrontOriginAccessIdentityRequest {
     #[doc="<p>The value of the <code>ETag</code> header you received from a previous <code>GET</code> or <code>PUT</code> request. For example: <code>E2QWRUHAPOMQZL</code>.</p>"]
     pub if_match: Option<String>,
 }
-
+impl DeleteCloudFrontOriginAccessIdentityRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteCloudFrontOriginAccessIdentityRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `if_match`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteCloudFrontOriginAccessIdentityRequest.if_match = Some(value.into());`.
+    pub fn if_match<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.if_match = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteCloudFrontOriginAccessIdentityRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> DeleteCloudFrontOriginAccessIdentityRequest {
+        DeleteCloudFrontOriginAccessIdentityRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>This action deletes a web distribution. To delete a web distribution using the CloudFront API, perform the following steps.</p> <p> <b>To delete a web distribution using the CloudFront API:</b> </p> <ol> <li> <p>Disable the web distribution </p> </li> <li> <p>Submit a <code>GET Distribution Config</code> request to get the current configuration and the <code>Etag</code> header for the distribution.</p> </li> <li> <p>Update the XML document that was returned in the response to your <code>GET Distribution Config</code> request to change the value of <code>Enabled</code> to <code>false</code>.</p> </li> <li> <p>Submit a <code>PUT Distribution Config</code> request to update the configuration for your distribution. In the request body, include the XML document that you updated in Step 3. Set the value of the HTTP <code>If-Match</code> header to the value of the <code>ETag</code> header that CloudFront returned when you submitted the <code>GET Distribution Config</code> request in Step 2.</p> </li> <li> <p>Review the response to the <code>PUT Distribution Config</code> request to confirm that the distribution was successfully disabled.</p> </li> <li> <p>Submit a <code>GET Distribution</code> request to confirm that your changes have propagated. When propagation is complete, the value of <code>Status</code> is <code>Deployed</code>.</p> </li> <li> <p>Submit a <code>DELETE Distribution</code> request. Set the value of the HTTP <code>If-Match</code> header to the value of the <code>ETag</code> header that CloudFront returned when you submitted the <code>GET Distribution Config</code> request in Step 6.</p> </li> <li> <p>Review the response to your <code>DELETE Distribution</code> request to confirm that the distribution was successfully deleted.</p> </li> </ol> <p>For information about deleting a distribution using the CloudFront console, see <a href=\"http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/HowToDeleteDistribution.html\">Deleting a Distribution</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>"]
 #[derive(Default,Debug)]
 pub struct DeleteDistributionRequest {
@@ -2170,7 +2816,29 @@ pub struct DeleteDistributionRequest {
     #[doc="<p>The value of the <code>ETag</code> header that you received when you disabled the distribution. For example: <code>E2QWRUHAPOMQZL</code>. </p>"]
     pub if_match: Option<String>,
 }
-
+impl DeleteDistributionRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDistributionRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `if_match`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDistributionRequest.if_match = Some(value.into());`.
+    pub fn if_match<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.if_match = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteDistributionRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> DeleteDistributionRequest {
+        DeleteDistributionRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The request to delete a streaming distribution.</p>"]
 #[derive(Default,Debug)]
 pub struct DeleteStreamingDistributionRequest {
@@ -2179,7 +2847,29 @@ pub struct DeleteStreamingDistributionRequest {
     #[doc="<p>The value of the <code>ETag</code> header that you received when you disabled the streaming distribution. For example: <code>E2QWRUHAPOMQZL</code>.</p>"]
     pub if_match: Option<String>,
 }
-
+impl DeleteStreamingDistributionRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteStreamingDistributionRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `if_match`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteStreamingDistributionRequest.if_match = Some(value.into());`.
+    pub fn if_match<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.if_match = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteStreamingDistributionRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> DeleteStreamingDistributionRequest {
+        DeleteStreamingDistributionRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The distribution's information.</p>"]
 #[derive(Default,Debug)]
 pub struct Distribution {
@@ -2200,7 +2890,6 @@ pub struct Distribution {
     #[doc="<p>This response element indicates the current status of the distribution. When the status is <code>Deployed</code>, the distribution's information is fully propagated to all CloudFront edge locations. </p>"]
     pub status: String,
 }
-
 struct DistributionDeserializer;
 impl DistributionDeserializer {
     #[allow(unused_variables)]
@@ -2305,7 +2994,147 @@ pub struct DistributionConfig {
     #[doc="<p>A unique identifier that specifies the AWS WAF web ACL, if any, to associate with this distribution.</p> <p>AWS WAF is a web application firewall that lets you monitor the HTTP and HTTPS requests that are forwarded to CloudFront, and lets you control access to your content. Based on conditions that you specify, such as the IP addresses that requests originate from or the values of query strings, CloudFront responds to requests either with the requested content or with an HTTP 403 status code (Forbidden). You can also configure CloudFront to return a custom error page when a request is blocked. For more information about AWS WAF, see the <a href=\"http://docs.aws.amazon.com/waf/latest/developerguide/what-is-aws-waf.html\">AWS WAF Developer Guide</a>. </p>"]
     pub web_acl_id: Option<String>,
 }
-
+impl DistributionConfig {
+    /// Sets `aliases`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DistributionConfig.aliases = Some(value.into());`.
+    pub fn aliases<ValueType: Into<Aliases>>(mut self, value: ValueType) -> Self {
+        self.aliases = Some(value.into());
+        self
+    }
+    /// Sets `cache_behaviors`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DistributionConfig.cache_behaviors = Some(value.into());`.
+    pub fn cache_behaviors<ValueType: Into<CacheBehaviors>>(mut self, value: ValueType) -> Self {
+        self.cache_behaviors = Some(value.into());
+        self
+    }
+    /// Sets `caller_reference`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DistributionConfig.caller_reference = value.into();`.
+    pub fn caller_reference<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.caller_reference = value.into();
+        self
+    }
+    /// Sets `comment`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DistributionConfig.comment = value.into();`.
+    pub fn comment<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.comment = value.into();
+        self
+    }
+    /// Sets `custom_error_responses`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DistributionConfig.custom_error_responses = Some(value.into());`.
+    pub fn custom_error_responses<ValueType: Into<CustomErrorResponses>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.custom_error_responses = Some(value.into());
+        self
+    }
+    /// Sets `default_cache_behavior`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DistributionConfig.default_cache_behavior = value.into();`.
+    pub fn default_cache_behavior<ValueType: Into<DefaultCacheBehavior>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.default_cache_behavior = value.into();
+        self
+    }
+    /// Sets `default_root_object`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DistributionConfig.default_root_object = Some(value.into());`.
+    pub fn default_root_object<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_root_object = Some(value.into());
+        self
+    }
+    /// Sets `enabled`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DistributionConfig.enabled = value.into();`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = value.into();
+        self
+    }
+    /// Sets `http_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DistributionConfig.http_version = Some(value.into());`.
+    pub fn http_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.http_version = Some(value.into());
+        self
+    }
+    /// Sets `is_ipv6_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DistributionConfig.is_ipv6_enabled = Some(value.into());`.
+    pub fn is_ipv6_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.is_ipv6_enabled = Some(value.into());
+        self
+    }
+    /// Sets `logging`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DistributionConfig.logging = Some(value.into());`.
+    pub fn logging<ValueType: Into<LoggingConfig>>(mut self, value: ValueType) -> Self {
+        self.logging = Some(value.into());
+        self
+    }
+    /// Sets `origins`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DistributionConfig.origins = value.into();`.
+    pub fn origins<ValueType: Into<Origins>>(mut self, value: ValueType) -> Self {
+        self.origins = value.into();
+        self
+    }
+    /// Sets `price_class`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DistributionConfig.price_class = Some(value.into());`.
+    pub fn price_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.price_class = Some(value.into());
+        self
+    }
+    /// Sets `restrictions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DistributionConfig.restrictions = Some(value.into());`.
+    pub fn restrictions<ValueType: Into<Restrictions>>(mut self, value: ValueType) -> Self {
+        self.restrictions = Some(value.into());
+        self
+    }
+    /// Sets `viewer_certificate`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DistributionConfig.viewer_certificate = Some(value.into());`.
+    pub fn viewer_certificate<ValueType: Into<ViewerCertificate>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.viewer_certificate = Some(value.into());
+        self
+    }
+    /// Sets `web_acl_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DistributionConfig.web_acl_id = Some(value.into());`.
+    pub fn web_acl_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.web_acl_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DistributionConfig with optional fields set to `None`.
+    pub fn new<CallerReferenceType: Into<String>,
+               CommentType: Into<String>,
+               DefaultCacheBehaviorType: Into<DefaultCacheBehavior>,
+               EnabledType: Into<bool>,
+               OriginsType: Into<Origins>>
+        (caller_reference: CallerReferenceType,
+         comment: CommentType,
+         default_cache_behavior: DefaultCacheBehaviorType,
+         enabled: EnabledType,
+         origins: OriginsType)
+         -> DistributionConfig {
+        DistributionConfig {
+            caller_reference: caller_reference.into(),
+            comment: comment.into(),
+            default_cache_behavior: default_cache_behavior.into(),
+            enabled: enabled.into(),
+            origins: origins.into(),
+            ..Default::default()
+        }
+    }
+}
 struct DistributionConfigDeserializer;
 impl DistributionConfigDeserializer {
     #[allow(unused_variables)]
@@ -2474,7 +3303,35 @@ pub struct DistributionConfigWithTags {
     #[doc="<p>A complex type that contains zero or more <code>Tag</code> elements.</p>"]
     pub tags: Tags,
 }
-
+impl DistributionConfigWithTags {
+    /// Sets `distribution_config`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DistributionConfigWithTags.distribution_config = value.into();`.
+    pub fn distribution_config<ValueType: Into<DistributionConfig>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.distribution_config = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DistributionConfigWithTags.tags = value.into();`.
+    pub fn tags<ValueType: Into<Tags>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of DistributionConfigWithTags with optional fields set to `None`.
+    pub fn new<DistributionConfigType: Into<DistributionConfig>, TagsType: Into<Tags>>
+        (distribution_config: DistributionConfigType,
+         tags: TagsType)
+         -> DistributionConfigWithTags {
+        DistributionConfigWithTags {
+            distribution_config: distribution_config.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 
 pub struct DistributionConfigWithTagsSerializer;
 impl DistributionConfigWithTagsSerializer {
@@ -2505,7 +3362,6 @@ pub struct DistributionList {
     #[doc="<p>The number of distributions that were created by the current AWS account. </p>"]
     pub quantity: i64,
 }
-
 struct DistributionListDeserializer;
 impl DistributionListDeserializer {
     #[allow(unused_variables)]
@@ -2605,7 +3461,6 @@ pub struct DistributionSummary {
     #[doc="<p>The Web ACL Id (if any) associated with the distribution.</p>"]
     pub web_acl_id: String,
 }
-
 struct DistributionSummaryDeserializer;
 impl DistributionSummaryDeserializer {
     #[allow(unused_variables)]
@@ -2791,7 +3646,49 @@ pub struct ForwardedValues {
     #[doc="<p>A complex type that contains information about the query string parameters that you want CloudFront to use for caching for this cache behavior.</p>"]
     pub query_string_cache_keys: Option<QueryStringCacheKeys>,
 }
-
+impl ForwardedValues {
+    /// Sets `cookies`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ForwardedValues.cookies = value.into();`.
+    pub fn cookies<ValueType: Into<CookiePreference>>(mut self, value: ValueType) -> Self {
+        self.cookies = value.into();
+        self
+    }
+    /// Sets `headers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ForwardedValues.headers = Some(value.into());`.
+    pub fn headers<ValueType: Into<Headers>>(mut self, value: ValueType) -> Self {
+        self.headers = Some(value.into());
+        self
+    }
+    /// Sets `query_string`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ForwardedValues.query_string = value.into();`.
+    pub fn query_string<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.query_string = value.into();
+        self
+    }
+    /// Sets `query_string_cache_keys`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ForwardedValues.query_string_cache_keys = Some(value.into());`.
+    pub fn query_string_cache_keys<ValueType: Into<QueryStringCacheKeys>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.query_string_cache_keys = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ForwardedValues with optional fields set to `None`.
+    pub fn new<CookiesType: Into<CookiePreference>, QueryStringType: Into<bool>>
+        (cookies: CookiesType,
+         query_string: QueryStringType)
+         -> ForwardedValues {
+        ForwardedValues {
+            cookies: cookies.into(),
+            query_string: query_string.into(),
+            ..Default::default()
+        }
+    }
+}
 struct ForwardedValuesDeserializer;
 impl ForwardedValuesDeserializer {
     #[allow(unused_variables)]
@@ -2877,7 +3774,37 @@ pub struct GeoRestriction {
     #[doc="<p>The method that you want to use to restrict distribution of your content by country:</p> <ul> <li> <p> <code>none</code>: No geo restriction is enabled, meaning access to content is not restricted by client geo location.</p> </li> <li> <p> <code>blacklist</code>: The <code>Location</code> elements specify the countries in which you do not want CloudFront to distribute your content.</p> </li> <li> <p> <code>whitelist</code>: The <code>Location</code> elements specify the countries in which you want CloudFront to distribute your content.</p> </li> </ul>"]
     pub restriction_type: String,
 }
-
+impl GeoRestriction {
+    /// Sets `items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GeoRestriction.items = Some(value.into());`.
+    pub fn items<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.items = Some(value.into());
+        self
+    }
+    /// Sets `quantity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GeoRestriction.quantity = value.into();`.
+    pub fn quantity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.quantity = value.into();
+        self
+    }
+    /// Sets `restriction_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GeoRestriction.restriction_type = value.into();`.
+    pub fn restriction_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.restriction_type = value.into();
+        self
+    }
+    /// Returns a new instance of GeoRestriction with optional fields set to `None`.
+pub fn new<QuantityType: Into<i64>, RestrictionTypeType: Into<String>>(quantity: QuantityType, restriction_type: RestrictionTypeType) -> GeoRestriction{
+        GeoRestriction {
+            quantity: quantity.into(),
+            restriction_type: restriction_type.into(),
+            ..Default::default()
+        }
+    }
+}
 struct GeoRestrictionDeserializer;
 impl GeoRestrictionDeserializer {
     #[allow(unused_variables)]
@@ -2977,7 +3904,22 @@ pub struct GetCloudFrontOriginAccessIdentityConfigRequest {
     #[doc="<p>The identity's ID. </p>"]
     pub id: String,
 }
-
+impl GetCloudFrontOriginAccessIdentityConfigRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetCloudFrontOriginAccessIdentityConfigRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of GetCloudFrontOriginAccessIdentityConfigRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> GetCloudFrontOriginAccessIdentityConfigRequest {
+        GetCloudFrontOriginAccessIdentityConfigRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The returned result of the corresponding request.</p>"]
 #[derive(Default,Debug)]
 pub struct GetCloudFrontOriginAccessIdentityConfigResult {
@@ -2986,7 +3928,6 @@ pub struct GetCloudFrontOriginAccessIdentityConfigResult {
     #[doc="<p>The current version of the configuration. For example: <code>E2QWRUHAPOMQZL</code>.</p>"]
     pub e_tag: Option<String>,
 }
-
 struct GetCloudFrontOriginAccessIdentityConfigResultDeserializer;
 impl GetCloudFrontOriginAccessIdentityConfigResultDeserializer {
     #[allow(unused_variables)]
@@ -3035,7 +3976,22 @@ pub struct GetCloudFrontOriginAccessIdentityRequest {
     #[doc="<p>The identity's ID.</p>"]
     pub id: String,
 }
-
+impl GetCloudFrontOriginAccessIdentityRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetCloudFrontOriginAccessIdentityRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of GetCloudFrontOriginAccessIdentityRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> GetCloudFrontOriginAccessIdentityRequest {
+        GetCloudFrontOriginAccessIdentityRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The returned result of the corresponding request.</p>"]
 #[derive(Default,Debug)]
 pub struct GetCloudFrontOriginAccessIdentityResult {
@@ -3044,7 +4000,6 @@ pub struct GetCloudFrontOriginAccessIdentityResult {
     #[doc="<p>The current version of the origin access identity's information. For example: <code>E2QWRUHAPOMQZL</code>.</p>"]
     pub e_tag: Option<String>,
 }
-
 struct GetCloudFrontOriginAccessIdentityResultDeserializer;
 impl GetCloudFrontOriginAccessIdentityResultDeserializer {
     #[allow(unused_variables)]
@@ -3093,7 +4048,22 @@ pub struct GetDistributionConfigRequest {
     #[doc="<p>The distribution's ID.</p>"]
     pub id: String,
 }
-
+impl GetDistributionConfigRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDistributionConfigRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of GetDistributionConfigRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> GetDistributionConfigRequest {
+        GetDistributionConfigRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The returned result of the corresponding request.</p>"]
 #[derive(Default,Debug)]
 pub struct GetDistributionConfigResult {
@@ -3102,7 +4072,6 @@ pub struct GetDistributionConfigResult {
     #[doc="<p>The current version of the configuration. For example: <code>E2QWRUHAPOMQZL</code>.</p>"]
     pub e_tag: Option<String>,
 }
-
 struct GetDistributionConfigResultDeserializer;
 impl GetDistributionConfigResultDeserializer {
     #[allow(unused_variables)]
@@ -3152,7 +4121,22 @@ pub struct GetDistributionRequest {
     #[doc="<p>The distribution's ID.</p>"]
     pub id: String,
 }
-
+impl GetDistributionRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDistributionRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of GetDistributionRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> GetDistributionRequest {
+        GetDistributionRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The returned result of the corresponding request.</p>"]
 #[derive(Default,Debug)]
 pub struct GetDistributionResult {
@@ -3161,7 +4145,6 @@ pub struct GetDistributionResult {
     #[doc="<p>The current version of the distribution's information. For example: <code>E2QWRUHAPOMQZL</code>.</p>"]
     pub e_tag: Option<String>,
 }
-
 struct GetDistributionResultDeserializer;
 impl GetDistributionResultDeserializer {
     #[allow(unused_variables)]
@@ -3213,14 +4196,39 @@ pub struct GetInvalidationRequest {
     #[doc="<p>The identifier for the invalidation request, for example, <code>IDFDVBD632BHDS5</code>.</p>"]
     pub id: String,
 }
-
+impl GetInvalidationRequest {
+    /// Sets `distribution_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInvalidationRequest.distribution_id = value.into();`.
+    pub fn distribution_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.distribution_id = value.into();
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInvalidationRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of GetInvalidationRequest with optional fields set to `None`.
+    pub fn new<DistributionIdType: Into<String>, IdType: Into<String>>
+        (distribution_id: DistributionIdType,
+         id: IdType)
+         -> GetInvalidationRequest {
+        GetInvalidationRequest {
+            distribution_id: distribution_id.into(),
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The returned result of the corresponding request.</p>"]
 #[derive(Default,Debug)]
 pub struct GetInvalidationResult {
     #[doc="<p>The invalidation's information. For more information, see <a href=\"http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/InvalidationDatatype.html\">Invalidation Complex Type</a>. </p>"]
     pub invalidation: Option<Invalidation>,
 }
-
 struct GetInvalidationResultDeserializer;
 impl GetInvalidationResultDeserializer {
     #[allow(unused_variables)]
@@ -3270,7 +4278,22 @@ pub struct GetStreamingDistributionConfigRequest {
     #[doc="<p>The streaming distribution's ID.</p>"]
     pub id: String,
 }
-
+impl GetStreamingDistributionConfigRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetStreamingDistributionConfigRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of GetStreamingDistributionConfigRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> GetStreamingDistributionConfigRequest {
+        GetStreamingDistributionConfigRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The returned result of the corresponding request.</p>"]
 #[derive(Default,Debug)]
 pub struct GetStreamingDistributionConfigResult {
@@ -3279,7 +4302,6 @@ pub struct GetStreamingDistributionConfigResult {
     #[doc="<p>The streaming distribution's configuration information.</p>"]
     pub streaming_distribution_config: Option<StreamingDistributionConfig>,
 }
-
 struct GetStreamingDistributionConfigResultDeserializer;
 impl GetStreamingDistributionConfigResultDeserializer {
     #[allow(unused_variables)]
@@ -3328,7 +4350,22 @@ pub struct GetStreamingDistributionRequest {
     #[doc="<p>The streaming distribution's ID.</p>"]
     pub id: String,
 }
-
+impl GetStreamingDistributionRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetStreamingDistributionRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of GetStreamingDistributionRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> GetStreamingDistributionRequest {
+        GetStreamingDistributionRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The returned result of the corresponding request.</p>"]
 #[derive(Default,Debug)]
 pub struct GetStreamingDistributionResult {
@@ -3337,7 +4374,6 @@ pub struct GetStreamingDistributionResult {
     #[doc="<p>The streaming distribution's information.</p>"]
     pub streaming_distribution: Option<StreamingDistribution>,
 }
-
 struct GetStreamingDistributionResultDeserializer;
 impl GetStreamingDistributionResultDeserializer {
     #[allow(unused_variables)]
@@ -3445,7 +4481,29 @@ pub struct Headers {
     #[doc="<p>The number of different headers that you want CloudFront to forward to the origin for this cache behavior. You can configure each cache behavior in a web distribution to do one of the following:</p> <ul> <li> <p> <b>Forward all headers to your origin</b>: Specify <code>1</code> for <code>Quantity</code> and <code>*</code> for <code>Name</code>.</p> <important> <p>If you configure CloudFront to forward all headers to your origin, CloudFront doesn't cache the objects associated with this cache behavior. Instead, it sends every request to the origin.</p> </important> </li> <li> <p> <i>Forward a whitelist of headers you specify</i>: Specify the number of headers that you want to forward, and specify the header names in <code>Name</code> elements. CloudFront caches your objects based on the values in all of the specified headers. CloudFront also forwards the headers that it forwards by default, but it caches your objects based only on the headers that you specify. </p> </li> <li> <p> <b>Forward only the default headers</b>: Specify <code>0</code> for <code>Quantity</code> and omit <code>Items</code>. In this configuration, CloudFront doesn't cache based on the values in the request headers.</p> </li> </ul>"]
     pub quantity: i64,
 }
-
+impl Headers {
+    /// Sets `items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Headers.items = Some(value.into());`.
+    pub fn items<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.items = Some(value.into());
+        self
+    }
+    /// Sets `quantity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Headers.quantity = value.into();`.
+    pub fn quantity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.quantity = value.into();
+        self
+    }
+    /// Returns a new instance of Headers with optional fields set to `None`.
+    pub fn new<QuantityType: Into<i64>>(quantity: QuantityType) -> Headers {
+        Headers {
+            quantity: quantity.into(),
+            ..Default::default()
+        }
+    }
+}
 struct HeadersDeserializer;
 impl HeadersDeserializer {
     #[allow(unused_variables)]
@@ -3569,7 +4627,6 @@ pub struct Invalidation {
     #[doc="<p>The status of the invalidation request. When the invalidation batch is finished, the status is <code>Completed</code>.</p>"]
     pub status: String,
 }
-
 struct InvalidationDeserializer;
 impl InvalidationDeserializer {
     #[allow(unused_variables)]
@@ -3631,7 +4688,30 @@ pub struct InvalidationBatch {
     #[doc="<p>A complex type that contains information about the objects that you want to invalidate. For more information, see <a href=\"http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html#invalidation-specifying-objects\">Specifying the Objects to Invalidate</a> in the <i>Amazon CloudFront Developer Guide</i>. </p>"]
     pub paths: Paths,
 }
-
+impl InvalidationBatch {
+    /// Sets `caller_reference`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InvalidationBatch.caller_reference = value.into();`.
+    pub fn caller_reference<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.caller_reference = value.into();
+        self
+    }
+    /// Sets `paths`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InvalidationBatch.paths = value.into();`.
+    pub fn paths<ValueType: Into<Paths>>(mut self, value: ValueType) -> Self {
+        self.paths = value.into();
+        self
+    }
+    /// Returns a new instance of InvalidationBatch with optional fields set to `None`.
+pub fn new<CallerReferenceType: Into<String>, PathsType: Into<Paths>>(caller_reference: CallerReferenceType, paths: PathsType) -> InvalidationBatch{
+        InvalidationBatch {
+            caller_reference: caller_reference.into(),
+            paths: paths.into(),
+            ..Default::default()
+        }
+    }
+}
 struct InvalidationBatchDeserializer;
 impl InvalidationBatchDeserializer {
     #[allow(unused_variables)]
@@ -3707,7 +4787,6 @@ pub struct InvalidationList {
     #[doc="<p>The number of invalidation batches that were created by the current AWS account. </p>"]
     pub quantity: i64,
 }
-
 struct InvalidationListDeserializer;
 impl InvalidationListDeserializer {
     #[allow(unused_variables)]
@@ -3779,7 +4858,6 @@ pub struct InvalidationSummary {
     #[doc="<p>The status of an invalidation request.</p>"]
     pub status: String,
 }
-
 struct InvalidationSummaryDeserializer;
 impl InvalidationSummaryDeserializer {
     #[allow(unused_variables)]
@@ -3943,7 +5021,6 @@ pub struct KeyPairIds {
     #[doc="<p>The number of active CloudFront key pairs for <code>AwsAccountNumber</code>.</p> <p>For more information, see <a>ActiveTrustedSigners</a>.</p>"]
     pub quantity: i64,
 }
-
 struct KeyPairIdsDeserializer;
 impl KeyPairIdsDeserializer {
     #[allow(unused_variables)]
@@ -3998,7 +5075,26 @@ pub struct LambdaFunctionAssociation {
     #[doc="<p>The ARN of the Lambda function.</p>"]
     pub lambda_function_arn: Option<String>,
 }
-
+impl LambdaFunctionAssociation {
+    /// Sets `event_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LambdaFunctionAssociation.event_type = Some(value.into());`.
+    pub fn event_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.event_type = Some(value.into());
+        self
+    }
+    /// Sets `lambda_function_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LambdaFunctionAssociation.lambda_function_arn = Some(value.into());`.
+    pub fn lambda_function_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lambda_function_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of LambdaFunctionAssociation with optional fields set to `None`.
+    pub fn new() -> LambdaFunctionAssociation {
+        LambdaFunctionAssociation { ..Default::default() }
+    }
+}
 struct LambdaFunctionAssociationDeserializer;
 impl LambdaFunctionAssociationDeserializer {
     #[allow(unused_variables)]
@@ -4128,7 +5224,31 @@ pub struct LambdaFunctionAssociations {
     #[doc="<p>The number of Lambda function associations for this cache behavior.</p>"]
     pub quantity: i64,
 }
-
+impl LambdaFunctionAssociations {
+    /// Sets `items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LambdaFunctionAssociations.items = Some(value.into());`.
+    pub fn items<ValueType: Into<Vec<LambdaFunctionAssociation>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.items = Some(value.into());
+        self
+    }
+    /// Sets `quantity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LambdaFunctionAssociations.quantity = value.into();`.
+    pub fn quantity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.quantity = value.into();
+        self
+    }
+    /// Returns a new instance of LambdaFunctionAssociations with optional fields set to `None`.
+    pub fn new<QuantityType: Into<i64>>(quantity: QuantityType) -> LambdaFunctionAssociations {
+        LambdaFunctionAssociations {
+            quantity: quantity.into(),
+            ..Default::default()
+        }
+    }
+}
 struct LambdaFunctionAssociationsDeserializer;
 impl LambdaFunctionAssociationsDeserializer {
     #[allow(unused_variables)]
@@ -4197,14 +5317,32 @@ pub struct ListCloudFrontOriginAccessIdentitiesRequest {
     #[doc="<p>The maximum number of origin access identities you want in the response body. </p>"]
     pub max_items: Option<String>,
 }
-
+impl ListCloudFrontOriginAccessIdentitiesRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCloudFrontOriginAccessIdentitiesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCloudFrontOriginAccessIdentitiesRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListCloudFrontOriginAccessIdentitiesRequest with optional fields set to `None`.
+    pub fn new() -> ListCloudFrontOriginAccessIdentitiesRequest {
+        ListCloudFrontOriginAccessIdentitiesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The returned result of the corresponding request. </p>"]
 #[derive(Default,Debug)]
 pub struct ListCloudFrontOriginAccessIdentitiesResult {
     #[doc="<p>The <code>CloudFrontOriginAccessIdentityList</code> type. </p>"]
     pub cloud_front_origin_access_identity_list: Option<CloudFrontOriginAccessIdentityList>,
 }
-
 struct ListCloudFrontOriginAccessIdentitiesResultDeserializer;
 impl ListCloudFrontOriginAccessIdentitiesResultDeserializer {
     #[allow(unused_variables)]
@@ -4257,14 +5395,43 @@ pub struct ListDistributionsByWebACLIdRequest {
     #[doc="<p>The ID of the AWS WAF web ACL that you want to list the associated distributions. If you specify \"null\" for the ID, the request returns a list of the distributions that aren't associated with a web ACL. </p>"]
     pub web_acl_id: String,
 }
-
+impl ListDistributionsByWebACLIdRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDistributionsByWebACLIdRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDistributionsByWebACLIdRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `web_acl_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDistributionsByWebACLIdRequest.web_acl_id = value.into();`.
+    pub fn web_acl_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.web_acl_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListDistributionsByWebACLIdRequest with optional fields set to `None`.
+    pub fn new<WebACLIdType: Into<String>>(web_acl_id: WebACLIdType)
+                                           -> ListDistributionsByWebACLIdRequest {
+        ListDistributionsByWebACLIdRequest {
+            web_acl_id: web_acl_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response to a request to list the distributions that are associated with a specified AWS WAF web ACL. </p>"]
 #[derive(Default,Debug)]
 pub struct ListDistributionsByWebACLIdResult {
     #[doc="<p>The <code>DistributionList</code> type. </p>"]
     pub distribution_list: Option<DistributionList>,
 }
-
 struct ListDistributionsByWebACLIdResultDeserializer;
 impl ListDistributionsByWebACLIdResultDeserializer {
     #[allow(unused_variables)]
@@ -4317,14 +5484,32 @@ pub struct ListDistributionsRequest {
     #[doc="<p>The maximum number of distributions you want in the response body.</p>"]
     pub max_items: Option<String>,
 }
-
+impl ListDistributionsRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDistributionsRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDistributionsRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListDistributionsRequest with optional fields set to `None`.
+    pub fn new() -> ListDistributionsRequest {
+        ListDistributionsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The returned result of the corresponding request. </p>"]
 #[derive(Default,Debug)]
 pub struct ListDistributionsResult {
     #[doc="<p>The <code>DistributionList</code> type. </p>"]
     pub distribution_list: Option<DistributionList>,
 }
-
 struct ListDistributionsResultDeserializer;
 impl ListDistributionsResultDeserializer {
     #[allow(unused_variables)]
@@ -4378,14 +5563,43 @@ pub struct ListInvalidationsRequest {
     #[doc="<p>The maximum number of invalidation batches that you want in the response body.</p>"]
     pub max_items: Option<String>,
 }
-
+impl ListInvalidationsRequest {
+    /// Sets `distribution_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInvalidationsRequest.distribution_id = value.into();`.
+    pub fn distribution_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.distribution_id = value.into();
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInvalidationsRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInvalidationsRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListInvalidationsRequest with optional fields set to `None`.
+    pub fn new<DistributionIdType: Into<String>>(distribution_id: DistributionIdType)
+                                                 -> ListInvalidationsRequest {
+        ListInvalidationsRequest {
+            distribution_id: distribution_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The returned result of the corresponding request. </p>"]
 #[derive(Default,Debug)]
 pub struct ListInvalidationsResult {
     #[doc="<p>Information about invalidation batches. </p>"]
     pub invalidation_list: Option<InvalidationList>,
 }
-
 struct ListInvalidationsResultDeserializer;
 impl ListInvalidationsResultDeserializer {
     #[allow(unused_variables)]
@@ -4437,14 +5651,32 @@ pub struct ListStreamingDistributionsRequest {
     #[doc="<p>The value that you provided for the <code>MaxItems</code> request parameter.</p>"]
     pub max_items: Option<String>,
 }
-
+impl ListStreamingDistributionsRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStreamingDistributionsRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStreamingDistributionsRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListStreamingDistributionsRequest with optional fields set to `None`.
+    pub fn new() -> ListStreamingDistributionsRequest {
+        ListStreamingDistributionsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The returned result of the corresponding request. </p>"]
 #[derive(Default,Debug)]
 pub struct ListStreamingDistributionsResult {
     #[doc="<p>The <code>StreamingDistributionList</code> type. </p>"]
     pub streaming_distribution_list: Option<StreamingDistributionList>,
 }
-
 struct ListStreamingDistributionsResultDeserializer;
 impl ListStreamingDistributionsResultDeserializer {
     #[allow(unused_variables)]
@@ -4493,14 +5725,28 @@ pub struct ListTagsForResourceRequest {
     #[doc="<p> An ARN of a CloudFront resource.</p>"]
     pub resource: String,
 }
-
+impl ListTagsForResourceRequest {
+    /// Sets `resource`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForResourceRequest.resource = value.into();`.
+    pub fn resource<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource = value.into();
+        self
+    }
+    /// Returns a new instance of ListTagsForResourceRequest with optional fields set to `None`.
+    pub fn new<ResourceType: Into<String>>(resource: ResourceType) -> ListTagsForResourceRequest {
+        ListTagsForResourceRequest {
+            resource: resource.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> The returned result of the corresponding request.</p>"]
 #[derive(Default,Debug)]
 pub struct ListTagsForResourceResult {
     #[doc="<p> A complex type that contains zero or more <code>Tag</code> elements.</p>"]
     pub tags: Tags,
 }
-
 struct ListTagsForResourceResultDeserializer;
 impl ListTagsForResourceResultDeserializer {
     #[allow(unused_variables)]
@@ -4610,7 +5856,54 @@ pub struct LoggingConfig {
     #[doc="<p>An optional string that you want CloudFront to prefix to the access log <code>filenames</code> for this distribution, for example, <code>myprefix/</code>. If you want to enable logging, but you do not want to specify a prefix, you still must include an empty <code>Prefix</code> element in the <code>Logging</code> element.</p>"]
     pub prefix: String,
 }
-
+impl LoggingConfig {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LoggingConfig.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `enabled`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LoggingConfig.enabled = value.into();`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = value.into();
+        self
+    }
+    /// Sets `include_cookies`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LoggingConfig.include_cookies = value.into();`.
+    pub fn include_cookies<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.include_cookies = value.into();
+        self
+    }
+    /// Sets `prefix`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LoggingConfig.prefix = value.into();`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = value.into();
+        self
+    }
+    /// Returns a new instance of LoggingConfig with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>,
+               EnabledType: Into<bool>,
+               IncludeCookiesType: Into<bool>,
+               PrefixType: Into<String>>
+        (bucket: BucketType,
+         enabled: EnabledType,
+         include_cookies: IncludeCookiesType,
+         prefix: PrefixType)
+         -> LoggingConfig {
+        LoggingConfig {
+            bucket: bucket.into(),
+            enabled: enabled.into(),
+            include_cookies: include_cookies.into(),
+            prefix: prefix.into(),
+            ..Default::default()
+        }
+    }
+}
 struct LoggingConfigDeserializer;
 impl LoggingConfigDeserializer {
     #[allow(unused_variables)]
@@ -4825,7 +6118,62 @@ pub struct Origin {
     #[doc="<p>A complex type that contains information about the Amazon S3 origin. If the origin is a custom origin, use the <code>CustomOriginConfig</code> element instead.</p>"]
     pub s3_origin_config: Option<S3OriginConfig>,
 }
-
+impl Origin {
+    /// Sets `custom_headers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Origin.custom_headers = Some(value.into());`.
+    pub fn custom_headers<ValueType: Into<CustomHeaders>>(mut self, value: ValueType) -> Self {
+        self.custom_headers = Some(value.into());
+        self
+    }
+    /// Sets `custom_origin_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Origin.custom_origin_config = Some(value.into());`.
+    pub fn custom_origin_config<ValueType: Into<CustomOriginConfig>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.custom_origin_config = Some(value.into());
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Origin.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Origin.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `origin_path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Origin.origin_path = Some(value.into());`.
+    pub fn origin_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.origin_path = Some(value.into());
+        self
+    }
+    /// Sets `s3_origin_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Origin.s3_origin_config = Some(value.into());`.
+    pub fn s3_origin_config<ValueType: Into<S3OriginConfig>>(mut self, value: ValueType) -> Self {
+        self.s3_origin_config = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Origin with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>, IdType: Into<String>>(domain_name: DomainNameType,
+                                                                   id: IdType)
+                                                                   -> Origin {
+        Origin {
+            domain_name: domain_name.into(),
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 struct OriginDeserializer;
 impl OriginDeserializer {
     #[allow(unused_variables)]
@@ -4923,7 +6271,33 @@ pub struct OriginCustomHeader {
     #[doc="<p>The value for the header that you specified in the <code>HeaderName</code> field.</p>"]
     pub header_value: String,
 }
-
+impl OriginCustomHeader {
+    /// Sets `header_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OriginCustomHeader.header_name = value.into();`.
+    pub fn header_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.header_name = value.into();
+        self
+    }
+    /// Sets `header_value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OriginCustomHeader.header_value = value.into();`.
+    pub fn header_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.header_value = value.into();
+        self
+    }
+    /// Returns a new instance of OriginCustomHeader with optional fields set to `None`.
+    pub fn new<HeaderNameType: Into<String>, HeaderValueType: Into<String>>
+        (header_name: HeaderNameType,
+         header_value: HeaderValueType)
+         -> OriginCustomHeader {
+        OriginCustomHeader {
+            header_name: header_name.into(),
+            header_value: header_value.into(),
+            ..Default::default()
+        }
+    }
+}
 struct OriginCustomHeaderDeserializer;
 impl OriginCustomHeaderDeserializer {
     #[allow(unused_variables)]
@@ -5129,7 +6503,32 @@ pub struct OriginSslProtocols {
     #[doc="<p>The number of SSL/TLS protocols that you want to allow CloudFront to use when establishing an HTTPS connection with this origin. </p>"]
     pub quantity: i64,
 }
-
+impl OriginSslProtocols {
+    /// Sets `items`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OriginSslProtocols.items = value.into();`.
+    pub fn items<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.items = value.into();
+        self
+    }
+    /// Sets `quantity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OriginSslProtocols.quantity = value.into();`.
+    pub fn quantity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.quantity = value.into();
+        self
+    }
+    /// Returns a new instance of OriginSslProtocols with optional fields set to `None`.
+    pub fn new<ItemsType: Into<Vec<String>>, QuantityType: Into<i64>>(items: ItemsType,
+                                                                      quantity: QuantityType)
+                                                                      -> OriginSslProtocols {
+        OriginSslProtocols {
+            items: items.into(),
+            quantity: quantity.into(),
+            ..Default::default()
+        }
+    }
+}
 struct OriginSslProtocolsDeserializer;
 impl OriginSslProtocolsDeserializer {
     #[allow(unused_variables)]
@@ -5197,7 +6596,29 @@ pub struct Origins {
     #[doc="<p>The number of origins for this distribution.</p>"]
     pub quantity: i64,
 }
-
+impl Origins {
+    /// Sets `items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Origins.items = Some(value.into());`.
+    pub fn items<ValueType: Into<Vec<Origin>>>(mut self, value: ValueType) -> Self {
+        self.items = Some(value.into());
+        self
+    }
+    /// Sets `quantity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Origins.quantity = value.into();`.
+    pub fn quantity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.quantity = value.into();
+        self
+    }
+    /// Returns a new instance of Origins with optional fields set to `None`.
+    pub fn new<QuantityType: Into<i64>>(quantity: QuantityType) -> Origins {
+        Origins {
+            quantity: quantity.into(),
+            ..Default::default()
+        }
+    }
+}
 struct OriginsDeserializer;
 impl OriginsDeserializer {
     #[allow(unused_variables)]
@@ -5323,7 +6744,29 @@ pub struct Paths {
     #[doc="<p>The number of objects that you want to invalidate.</p>"]
     pub quantity: i64,
 }
-
+impl Paths {
+    /// Sets `items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Paths.items = Some(value.into());`.
+    pub fn items<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.items = Some(value.into());
+        self
+    }
+    /// Sets `quantity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Paths.quantity = value.into();`.
+    pub fn quantity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.quantity = value.into();
+        self
+    }
+    /// Returns a new instance of Paths with optional fields set to `None`.
+    pub fn new<QuantityType: Into<i64>>(quantity: QuantityType) -> Paths {
+        Paths {
+            quantity: quantity.into(),
+            ..Default::default()
+        }
+    }
+}
 struct PathsDeserializer;
 impl PathsDeserializer {
     #[allow(unused_variables)]
@@ -5417,7 +6860,29 @@ pub struct QueryStringCacheKeys {
     #[doc="<p>The number of <code>whitelisted</code> query string parameters for this cache behavior.</p>"]
     pub quantity: i64,
 }
-
+impl QueryStringCacheKeys {
+    /// Sets `items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryStringCacheKeys.items = Some(value.into());`.
+    pub fn items<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.items = Some(value.into());
+        self
+    }
+    /// Sets `quantity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QueryStringCacheKeys.quantity = value.into();`.
+    pub fn quantity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.quantity = value.into();
+        self
+    }
+    /// Returns a new instance of QueryStringCacheKeys with optional fields set to `None`.
+    pub fn new<QuantityType: Into<i64>>(quantity: QuantityType) -> QueryStringCacheKeys {
+        QueryStringCacheKeys {
+            quantity: quantity.into(),
+            ..Default::default()
+        }
+    }
+}
 struct QueryStringCacheKeysDeserializer;
 impl QueryStringCacheKeysDeserializer {
     #[allow(unused_variables)]
@@ -5550,7 +7015,23 @@ impl ResourceARNSerializer {
 pub struct Restrictions {
     pub geo_restriction: GeoRestriction,
 }
-
+impl Restrictions {
+    /// Sets `geo_restriction`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Restrictions.geo_restriction = value.into();`.
+    pub fn geo_restriction<ValueType: Into<GeoRestriction>>(mut self, value: ValueType) -> Self {
+        self.geo_restriction = value.into();
+        self
+    }
+    /// Returns a new instance of Restrictions with optional fields set to `None`.
+    pub fn new<GeoRestrictionType: Into<GeoRestriction>>(geo_restriction: GeoRestrictionType)
+                                                         -> Restrictions {
+        Restrictions {
+            geo_restriction: geo_restriction.into(),
+            ..Default::default()
+        }
+    }
+}
 struct RestrictionsDeserializer;
 impl RestrictionsDeserializer {
     #[allow(unused_variables)]
@@ -5614,7 +7095,33 @@ pub struct S3Origin {
     #[doc="<p>The CloudFront origin access identity to associate with the RTMP distribution. Use an origin access identity to configure the distribution so that end users can only access objects in an Amazon S3 bucket through CloudFront.</p> <p>If you want end users to be able to access objects using either the CloudFront URL or the Amazon S3 URL, specify an empty <code>OriginAccessIdentity</code> element.</p> <p>To delete the origin access identity from an existing distribution, update the distribution configuration and include an empty <code>OriginAccessIdentity</code> element.</p> <p>To replace the origin access identity, update the distribution configuration and specify the new origin access identity.</p> <p>For more information, see <a href=\"http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html\">Using an Origin Access Identity to Restrict Access to Your Amazon S3 Content</a> in the <i>Amazon Amazon CloudFront Developer Guide</i>.</p>"]
     pub origin_access_identity: String,
 }
-
+impl S3Origin {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Origin.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `origin_access_identity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Origin.origin_access_identity = value.into();`.
+    pub fn origin_access_identity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.origin_access_identity = value.into();
+        self
+    }
+    /// Returns a new instance of S3Origin with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>, OriginAccessIdentityType: Into<String>>
+        (domain_name: DomainNameType,
+         origin_access_identity: OriginAccessIdentityType)
+         -> S3Origin {
+        S3Origin {
+            domain_name: domain_name.into(),
+            origin_access_identity: origin_access_identity.into(),
+            ..Default::default()
+        }
+    }
+}
 struct S3OriginDeserializer;
 impl S3OriginDeserializer {
     #[allow(unused_variables)]
@@ -5682,7 +7189,22 @@ pub struct S3OriginConfig {
     #[doc="<p>The CloudFront origin access identity to associate with the origin. Use an origin access identity to configure the origin so that viewers can <i>only</i> access objects in an Amazon S3 bucket through CloudFront. The format of the value is:</p> <p>origin-access-identity/cloudfront/<i>ID-of-origin-access-identity</i> </p> <p>where <code> <i>ID-of-origin-access-identity</i> </code> is the value that CloudFront returned in the <code>ID</code> element when you created the origin access identity.</p> <p>If you want viewers to be able to access objects using either the CloudFront URL or the Amazon S3 URL, specify an empty <code>OriginAccessIdentity</code> element.</p> <p>To delete the origin access identity from an existing distribution, update the distribution configuration and include an empty <code>OriginAccessIdentity</code> element.</p> <p>To replace the origin access identity, update the distribution configuration and specify the new origin access identity.</p> <p>For more information about the origin access identity, see <a href=\"http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/PrivateContent.html\">Serving Private Content through CloudFront</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>"]
     pub origin_access_identity: String,
 }
-
+impl S3OriginConfig {
+    /// Sets `origin_access_identity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3OriginConfig.origin_access_identity = value.into();`.
+    pub fn origin_access_identity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.origin_access_identity = value.into();
+        self
+    }
+    /// Returns a new instance of S3OriginConfig with optional fields set to `None`.
+pub fn new<OriginAccessIdentityType: Into<String>>(origin_access_identity: OriginAccessIdentityType) -> S3OriginConfig{
+        S3OriginConfig {
+            origin_access_identity: origin_access_identity.into(),
+            ..Default::default()
+        }
+    }
+}
 struct S3OriginConfigDeserializer;
 impl S3OriginConfigDeserializer {
     #[allow(unused_variables)]
@@ -5772,7 +7294,6 @@ pub struct Signer {
     #[doc="<p>A complex type that lists the active CloudFront key pairs, if any, that are associated with <code>AwsAccountNumber</code>.</p>"]
     pub key_pair_ids: Option<KeyPairIds>,
 }
-
 struct SignerDeserializer;
 impl SignerDeserializer {
     #[allow(unused_variables)]
@@ -5960,7 +7481,6 @@ pub struct StreamingDistribution {
     #[doc="<p>The current configuration information for the RTMP distribution.</p>"]
     pub streaming_distribution_config: StreamingDistributionConfig,
 }
-
 struct StreamingDistributionDeserializer;
 impl StreamingDistributionDeserializer {
     #[allow(unused_variables)]
@@ -6047,7 +7567,85 @@ pub struct StreamingDistributionConfig {
     #[doc="<p>A complex type that specifies any AWS accounts that you want to permit to create signed URLs for private content. If you want the distribution to use signed URLs, include this element; if you want the distribution to use public URLs, remove this element. For more information, see <a href=\"http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/PrivateContent.html\">Serving Private Content through CloudFront</a> in the <i>Amazon CloudFront Developer Guide</i>. </p>"]
     pub trusted_signers: TrustedSigners,
 }
-
+impl StreamingDistributionConfig {
+    /// Sets `aliases`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StreamingDistributionConfig.aliases = Some(value.into());`.
+    pub fn aliases<ValueType: Into<Aliases>>(mut self, value: ValueType) -> Self {
+        self.aliases = Some(value.into());
+        self
+    }
+    /// Sets `caller_reference`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StreamingDistributionConfig.caller_reference = value.into();`.
+    pub fn caller_reference<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.caller_reference = value.into();
+        self
+    }
+    /// Sets `comment`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StreamingDistributionConfig.comment = value.into();`.
+    pub fn comment<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.comment = value.into();
+        self
+    }
+    /// Sets `enabled`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StreamingDistributionConfig.enabled = value.into();`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = value.into();
+        self
+    }
+    /// Sets `logging`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StreamingDistributionConfig.logging = Some(value.into());`.
+    pub fn logging<ValueType: Into<StreamingLoggingConfig>>(mut self, value: ValueType) -> Self {
+        self.logging = Some(value.into());
+        self
+    }
+    /// Sets `price_class`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StreamingDistributionConfig.price_class = Some(value.into());`.
+    pub fn price_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.price_class = Some(value.into());
+        self
+    }
+    /// Sets `s3_origin`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StreamingDistributionConfig.s3_origin = value.into();`.
+    pub fn s3_origin<ValueType: Into<S3Origin>>(mut self, value: ValueType) -> Self {
+        self.s3_origin = value.into();
+        self
+    }
+    /// Sets `trusted_signers`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StreamingDistributionConfig.trusted_signers = value.into();`.
+    pub fn trusted_signers<ValueType: Into<TrustedSigners>>(mut self, value: ValueType) -> Self {
+        self.trusted_signers = value.into();
+        self
+    }
+    /// Returns a new instance of StreamingDistributionConfig with optional fields set to `None`.
+    pub fn new<CallerReferenceType: Into<String>,
+               CommentType: Into<String>,
+               EnabledType: Into<bool>,
+               S3OriginType: Into<S3Origin>,
+               TrustedSignersType: Into<TrustedSigners>>
+        (caller_reference: CallerReferenceType,
+         comment: CommentType,
+         enabled: EnabledType,
+         s3_origin: S3OriginType,
+         trusted_signers: TrustedSignersType)
+         -> StreamingDistributionConfig {
+        StreamingDistributionConfig {
+            caller_reference: caller_reference.into(),
+            comment: comment.into(),
+            enabled: enabled.into(),
+            s3_origin: s3_origin.into(),
+            trusted_signers: trusted_signers.into(),
+            ..Default::default()
+        }
+    }
+}
 struct StreamingDistributionConfigDeserializer;
 impl StreamingDistributionConfigDeserializer {
     #[allow(unused_variables)]
@@ -6153,7 +7751,34 @@ pub struct StreamingDistributionConfigWithTags {
     #[doc="<p>A complex type that contains zero or more <code>Tag</code> elements.</p>"]
     pub tags: Tags,
 }
-
+impl StreamingDistributionConfigWithTags {
+    /// Sets `streaming_distribution_config`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StreamingDistributionConfigWithTags.streaming_distribution_config = value.into();`.
+pub fn streaming_distribution_config<ValueType: Into<StreamingDistributionConfig>>(mut self, value: ValueType) -> Self{
+        self.streaming_distribution_config = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StreamingDistributionConfigWithTags.tags = value.into();`.
+    pub fn tags<ValueType: Into<Tags>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of StreamingDistributionConfigWithTags with optional fields set to `None`.
+    pub fn new<StreamingDistributionConfigType: Into<StreamingDistributionConfig>,
+               TagsType: Into<Tags>>
+        (streaming_distribution_config: StreamingDistributionConfigType,
+         tags: TagsType)
+         -> StreamingDistributionConfigWithTags {
+        StreamingDistributionConfigWithTags {
+            streaming_distribution_config: streaming_distribution_config.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 
 pub struct StreamingDistributionConfigWithTagsSerializer;
 impl StreamingDistributionConfigWithTagsSerializer {
@@ -6185,7 +7810,6 @@ pub struct StreamingDistributionList {
     #[doc="<p>The number of streaming distributions that were created by the current AWS account. </p>"]
     pub quantity: i64,
 }
-
 struct StreamingDistributionListDeserializer;
 impl StreamingDistributionListDeserializer {
     #[allow(unused_variables)]
@@ -6271,7 +7895,6 @@ pub struct StreamingDistributionSummary {
     #[doc="<p>A complex type that specifies the AWS accounts, if any, that you want to allow to create signed URLs for private content. If you want to require signed URLs in requests for objects in the target origin that match the <code>PathPattern</code> for this cache behavior, specify <code>true</code> for <code>Enabled</code>, and specify the applicable values for <code>Quantity</code> and <code>Items</code>.If you don't want to require signed URLs in requests for objects that match <code>PathPattern</code>, specify <code>false</code> for <code>Enabled</code> and <code>0</code> for <code>Quantity</code>. Omit <code>Items</code>. To add, change, or remove one or more trusted signers, change <code>Enabled</code> to <code>true</code> (if it's currently <code>false</code>), change <code>Quantity</code> as applicable, and specify all of the trusted signers that you want to include in the updated distribution.</p>"]
     pub trusted_signers: TrustedSigners,
 }
-
 struct StreamingDistributionSummaryDeserializer;
 impl StreamingDistributionSummaryDeserializer {
     #[allow(unused_variables)]
@@ -6401,7 +8024,42 @@ pub struct StreamingLoggingConfig {
     #[doc="<p>An optional string that you want CloudFront to prefix to the access log <code>filenames</code> for this streaming distribution, for example, <code>myprefix/</code>. If you want to enable logging, but you do not want to specify a prefix, you still must include an empty <code>Prefix</code> element in the <code>Logging</code> element.</p>"]
     pub prefix: String,
 }
-
+impl StreamingLoggingConfig {
+    /// Sets `bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StreamingLoggingConfig.bucket = value.into();`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = value.into();
+        self
+    }
+    /// Sets `enabled`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StreamingLoggingConfig.enabled = value.into();`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = value.into();
+        self
+    }
+    /// Sets `prefix`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StreamingLoggingConfig.prefix = value.into();`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = value.into();
+        self
+    }
+    /// Returns a new instance of StreamingLoggingConfig with optional fields set to `None`.
+    pub fn new<BucketType: Into<String>, EnabledType: Into<bool>, PrefixType: Into<String>>
+        (bucket: BucketType,
+         enabled: EnabledType,
+         prefix: PrefixType)
+         -> StreamingLoggingConfig {
+        StreamingLoggingConfig {
+            bucket: bucket.into(),
+            enabled: enabled.into(),
+            prefix: prefix.into(),
+            ..Default::default()
+        }
+    }
+}
 struct StreamingLoggingConfigDeserializer;
 impl StreamingLoggingConfigDeserializer {
     #[allow(unused_variables)]
@@ -6496,7 +8154,29 @@ pub struct Tag {
     #[doc="<p> A string that contains an optional <code>Tag</code> value.</p> <p>The string length should be between 0 and 256 characters. Valid characters include <code>a-z</code>, <code>A-Z</code>, <code>0-9</code>, space, and the special characters <code>_ - . : / = + @</code>.</p>"]
     pub value: Option<String>,
 }
-
+impl Tag {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>>(key: KeyType) -> Tag {
+        Tag {
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 struct TagDeserializer;
 impl TagDeserializer {
     #[allow(unused_variables)]
@@ -6603,7 +8283,19 @@ pub struct TagKeys {
     #[doc="<p> A complex type that contains <code>Tag</code> key elements.</p>"]
     pub items: Option<Vec<String>>,
 }
-
+impl TagKeys {
+    /// Sets `items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TagKeys.items = Some(value.into());`.
+    pub fn items<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.items = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TagKeys with optional fields set to `None`.
+    pub fn new() -> TagKeys {
+        TagKeys { ..Default::default() }
+    }
+}
 
 pub struct TagKeysSerializer;
 impl TagKeysSerializer {
@@ -6682,7 +8374,32 @@ pub struct TagResourceRequest {
     #[doc="<p> A complex type that contains zero or more <code>Tag</code> elements.</p>"]
     pub tags: Tags,
 }
-
+impl TagResourceRequest {
+    /// Sets `resource`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TagResourceRequest.resource = value.into();`.
+    pub fn resource<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TagResourceRequest.tags = value.into();`.
+    pub fn tags<ValueType: Into<Tags>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of TagResourceRequest with optional fields set to `None`.
+    pub fn new<ResourceType: Into<String>, TagsType: Into<Tags>>(resource: ResourceType,
+                                                                 tags: TagsType)
+                                                                 -> TagResourceRequest {
+        TagResourceRequest {
+            resource: resource.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 struct TagValueDeserializer;
 impl TagValueDeserializer {
     #[allow(unused_variables)]
@@ -6714,7 +8431,19 @@ pub struct Tags {
     #[doc="<p> A complex type that contains <code>Tag</code> elements.</p>"]
     pub items: Option<Vec<Tag>>,
 }
-
+impl Tags {
+    /// Sets `items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tags.items = Some(value.into());`.
+    pub fn items<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.items = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Tags with optional fields set to `None`.
+    pub fn new() -> Tags {
+        Tags { ..Default::default() }
+    }
+}
 struct TagsDeserializer;
 impl TagsDeserializer {
     #[allow(unused_variables)]
@@ -6795,7 +8524,39 @@ pub struct TrustedSigners {
     #[doc="<p>The number of trusted signers for this cache behavior.</p>"]
     pub quantity: i64,
 }
-
+impl TrustedSigners {
+    /// Sets `enabled`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TrustedSigners.enabled = value.into();`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = value.into();
+        self
+    }
+    /// Sets `items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TrustedSigners.items = Some(value.into());`.
+    pub fn items<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.items = Some(value.into());
+        self
+    }
+    /// Sets `quantity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TrustedSigners.quantity = value.into();`.
+    pub fn quantity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.quantity = value.into();
+        self
+    }
+    /// Returns a new instance of TrustedSigners with optional fields set to `None`.
+    pub fn new<EnabledType: Into<bool>, QuantityType: Into<i64>>(enabled: EnabledType,
+                                                                 quantity: QuantityType)
+                                                                 -> TrustedSigners {
+        TrustedSigners {
+            enabled: enabled.into(),
+            quantity: quantity.into(),
+            ..Default::default()
+        }
+    }
+}
 struct TrustedSignersDeserializer;
 impl TrustedSignersDeserializer {
     #[allow(unused_variables)]
@@ -6870,7 +8631,32 @@ pub struct UntagResourceRequest {
     #[doc="<p> A complex type that contains zero or more <code>Tag</code> key elements.</p>"]
     pub tag_keys: TagKeys,
 }
-
+impl UntagResourceRequest {
+    /// Sets `resource`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UntagResourceRequest.resource = value.into();`.
+    pub fn resource<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource = value.into();
+        self
+    }
+    /// Sets `tag_keys`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UntagResourceRequest.tag_keys = value.into();`.
+    pub fn tag_keys<ValueType: Into<TagKeys>>(mut self, value: ValueType) -> Self {
+        self.tag_keys = value.into();
+        self
+    }
+    /// Returns a new instance of UntagResourceRequest with optional fields set to `None`.
+    pub fn new<ResourceType: Into<String>, TagKeysType: Into<TagKeys>>(resource: ResourceType,
+                                                                       tag_keys: TagKeysType)
+                                                                       -> UntagResourceRequest {
+        UntagResourceRequest {
+            resource: resource.into(),
+            tag_keys: tag_keys.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The request to update an origin access identity.</p>"]
 #[derive(Default,Debug)]
 pub struct UpdateCloudFrontOriginAccessIdentityRequest {
@@ -6881,7 +8667,42 @@ pub struct UpdateCloudFrontOriginAccessIdentityRequest {
     #[doc="<p>The value of the <code>ETag</code> header that you received when retrieving the identity's configuration. For example: <code>E2QWRUHAPOMQZL</code>.</p>"]
     pub if_match: Option<String>,
 }
-
+impl UpdateCloudFrontOriginAccessIdentityRequest {
+    /// Sets `cloud_front_origin_access_identity_config`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateCloudFrontOriginAccessIdentityRequest.cloud_front_origin_access_identity_config = value.into();`.
+pub fn cloud_front_origin_access_identity_config<ValueType: Into<CloudFrontOriginAccessIdentityConfig>>(mut self, value: ValueType) -> Self{
+        self.cloud_front_origin_access_identity_config = value.into();
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateCloudFrontOriginAccessIdentityRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `if_match`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateCloudFrontOriginAccessIdentityRequest.if_match = Some(value.into());`.
+    pub fn if_match<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.if_match = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateCloudFrontOriginAccessIdentityRequest with optional fields set to `None`.
+    pub fn new<CloudFrontOriginAccessIdentityConfigType: Into<CloudFrontOriginAccessIdentityConfig>,
+               IdType: Into<String>>
+        (cloud_front_origin_access_identity_config: CloudFrontOriginAccessIdentityConfigType,
+         id: IdType)
+         -> UpdateCloudFrontOriginAccessIdentityRequest {
+        UpdateCloudFrontOriginAccessIdentityRequest {
+            cloud_front_origin_access_identity_config: cloud_front_origin_access_identity_config
+                .into(),
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The returned result of the corresponding request.</p>"]
 #[derive(Default,Debug)]
 pub struct UpdateCloudFrontOriginAccessIdentityResult {
@@ -6890,7 +8711,6 @@ pub struct UpdateCloudFrontOriginAccessIdentityResult {
     #[doc="<p>The current version of the configuration. For example: <code>E2QWRUHAPOMQZL</code>.</p>"]
     pub e_tag: Option<String>,
 }
-
 struct UpdateCloudFrontOriginAccessIdentityResultDeserializer;
 impl UpdateCloudFrontOriginAccessIdentityResultDeserializer {
     #[allow(unused_variables)]
@@ -6943,7 +8763,42 @@ pub struct UpdateDistributionRequest {
     #[doc="<p>The value of the <code>ETag</code> header that you received when retrieving the distribution's configuration. For example: <code>E2QWRUHAPOMQZL</code>.</p>"]
     pub if_match: Option<String>,
 }
-
+impl UpdateDistributionRequest {
+    /// Sets `distribution_config`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDistributionRequest.distribution_config = value.into();`.
+    pub fn distribution_config<ValueType: Into<DistributionConfig>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.distribution_config = value.into();
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDistributionRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `if_match`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDistributionRequest.if_match = Some(value.into());`.
+    pub fn if_match<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.if_match = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateDistributionRequest with optional fields set to `None`.
+    pub fn new<DistributionConfigType: Into<DistributionConfig>, IdType: Into<String>>
+        (distribution_config: DistributionConfigType,
+         id: IdType)
+         -> UpdateDistributionRequest {
+        UpdateDistributionRequest {
+            distribution_config: distribution_config.into(),
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The returned result of the corresponding request.</p>"]
 #[derive(Default,Debug)]
 pub struct UpdateDistributionResult {
@@ -6952,7 +8807,6 @@ pub struct UpdateDistributionResult {
     #[doc="<p>The current version of the configuration. For example: <code>E2QWRUHAPOMQZL</code>.</p>"]
     pub e_tag: Option<String>,
 }
-
 struct UpdateDistributionResultDeserializer;
 impl UpdateDistributionResultDeserializer {
     #[allow(unused_variables)]
@@ -7006,7 +8860,41 @@ pub struct UpdateStreamingDistributionRequest {
     #[doc="<p>The streaming distribution's configuration information.</p>"]
     pub streaming_distribution_config: StreamingDistributionConfig,
 }
-
+impl UpdateStreamingDistributionRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStreamingDistributionRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `if_match`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStreamingDistributionRequest.if_match = Some(value.into());`.
+    pub fn if_match<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.if_match = Some(value.into());
+        self
+    }
+    /// Sets `streaming_distribution_config`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStreamingDistributionRequest.streaming_distribution_config = value.into();`.
+pub fn streaming_distribution_config<ValueType: Into<StreamingDistributionConfig>>(mut self, value: ValueType) -> Self{
+        self.streaming_distribution_config = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateStreamingDistributionRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>,
+               StreamingDistributionConfigType: Into<StreamingDistributionConfig>>
+        (id: IdType,
+         streaming_distribution_config: StreamingDistributionConfigType)
+         -> UpdateStreamingDistributionRequest {
+        UpdateStreamingDistributionRequest {
+            id: id.into(),
+            streaming_distribution_config: streaming_distribution_config.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The returned result of the corresponding request.</p>"]
 #[derive(Default,Debug)]
 pub struct UpdateStreamingDistributionResult {
@@ -7015,7 +8903,6 @@ pub struct UpdateStreamingDistributionResult {
     #[doc="<p>The streaming distribution's information.</p>"]
     pub streaming_distribution: Option<StreamingDistribution>,
 }
-
 struct UpdateStreamingDistributionResultDeserializer;
 impl UpdateStreamingDistributionResultDeserializer {
     #[allow(unused_variables)]
@@ -7071,7 +8958,49 @@ pub struct ViewerCertificate {
     #[doc="<p>If you specify a value for <code>ACMCertificateArn</code> or for <code>IAMCertificateId</code>, you must also specify how you want CloudFront to serve HTTPS requests: using a method that works for all clients or one that works for most clients:</p> <ul> <li> <p> <code>vip</code>: CloudFront uses dedicated IP addresses for your content and can respond to HTTPS requests from any viewer. However, you will incur additional monthly charges.</p> </li> <li> <p> <code>sni-only</code>: CloudFront can respond to HTTPS requests from viewers that support Server Name Indication (SNI). All modern browsers support SNI, but some browsers still in use don't support SNI. If some of your users' browsers don't support SNI, we recommend that you do one of the following:</p> <ul> <li> <p>Use the <code>vip</code> option (dedicated IP addresses) instead of <code>sni-only</code>.</p> </li> <li> <p>Use the CloudFront SSL/TLS certificate instead of a custom certificate. This requires that you use the CloudFront domain name of your distribution in the URLs for your objects, for example, <code>https://d111111abcdef8.cloudfront.net/logo.png</code>.</p> </li> <li> <p>If you can control which browser your users use, upgrade the browser to one that supports SNI.</p> </li> <li> <p>Use HTTP instead of HTTPS.</p> </li> </ul> </li> </ul> <p>Do not specify a value for <code>SSLSupportMethod</code> if you specified <code>&lt;CloudFrontDefaultCertificate&gt;true&lt;CloudFrontDefaultCertificate&gt;</code>.</p> <p>For more information, see <a href=\"http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/SecureConnections.html#CNAMEsAndHTTPS.html\">Using Alternate Domain Names and HTTPS</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>"]
     pub ssl_support_method: Option<String>,
 }
-
+impl ViewerCertificate {
+    /// Sets `acm_certificate_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ViewerCertificate.acm_certificate_arn = Some(value.into());`.
+    pub fn acm_certificate_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.acm_certificate_arn = Some(value.into());
+        self
+    }
+    /// Sets `cloud_front_default_certificate`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ViewerCertificate.cloud_front_default_certificate = Some(value.into());`.
+    pub fn cloud_front_default_certificate<ValueType: Into<bool>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.cloud_front_default_certificate = Some(value.into());
+        self
+    }
+    /// Sets `iam_certificate_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ViewerCertificate.iam_certificate_id = Some(value.into());`.
+    pub fn iam_certificate_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.iam_certificate_id = Some(value.into());
+        self
+    }
+    /// Sets `minimum_protocol_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ViewerCertificate.minimum_protocol_version = Some(value.into());`.
+    pub fn minimum_protocol_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.minimum_protocol_version = Some(value.into());
+        self
+    }
+    /// Sets `ssl_support_method`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ViewerCertificate.ssl_support_method = Some(value.into());`.
+    pub fn ssl_support_method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ssl_support_method = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ViewerCertificate with optional fields set to `None`.
+    pub fn new() -> ViewerCertificate {
+        ViewerCertificate { ..Default::default() }
+    }
+}
 struct ViewerCertificateDeserializer;
 impl ViewerCertificateDeserializer {
     #[allow(unused_variables)]

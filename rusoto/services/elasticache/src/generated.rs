@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -47,7 +48,33 @@ pub struct AddTagsToResourceMessage {
     #[doc="<p>A list of cost allocation tags to be added to this resource. A tag is a key-value pair. A tag key must be accompanied by a tag value.</p>"]
     pub tags: Vec<Tag>,
 }
-
+impl AddTagsToResourceMessage {
+    /// Sets `resource_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToResourceMessage.resource_name = value.into();`.
+    pub fn resource_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_name = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToResourceMessage.tags = value.into();`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of AddTagsToResourceMessage with optional fields set to `None`.
+    pub fn new<ResourceNameType: Into<String>, TagsType: Into<Vec<Tag>>>
+        (resource_name: ResourceNameType,
+         tags: TagsType)
+         -> AddTagsToResourceMessage {
+        AddTagsToResourceMessage {
+            resource_name: resource_name.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AddTagsToResourceMessage` contents to a `SignedRequest`.
 struct AddTagsToResourceMessageSerializer;
@@ -70,7 +97,6 @@ pub struct AllowedNodeTypeModificationsMessage {
     #[doc="<p>A string list, each element of which specifies a cache node type which you can use to scale your cache cluster or replication group.</p> <p>When scaling up a Redis cluster or replication group using <code>ModifyCacheCluster</code> or <code>ModifyReplicationGroup</code>, use a value from this list for the <code>CacheNodeType</code> parameter.</p>"]
     pub scale_up_modifications: Option<Vec<String>>,
 }
-
 struct AllowedNodeTypeModificationsMessageDeserializer;
 impl AllowedNodeTypeModificationsMessageDeserializer {
     #[allow(unused_variables)]
@@ -125,7 +151,46 @@ pub struct AuthorizeCacheSecurityGroupIngressMessage {
     #[doc="<p>The AWS account number of the Amazon EC2 security group owner. Note that this is not the same thing as an AWS access key ID - you must provide a valid AWS account number for this parameter.</p>"]
     pub ec2_security_group_owner_id: String,
 }
-
+impl AuthorizeCacheSecurityGroupIngressMessage {
+    /// Sets `cache_security_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeCacheSecurityGroupIngressMessage.cache_security_group_name = value.into();`.
+    pub fn cache_security_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_security_group_name = value.into();
+        self
+    }
+    /// Sets `ec2_security_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeCacheSecurityGroupIngressMessage.ec2_security_group_name = value.into();`.
+    pub fn ec2_security_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ec2_security_group_name = value.into();
+        self
+    }
+    /// Sets `ec2_security_group_owner_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeCacheSecurityGroupIngressMessage.ec2_security_group_owner_id = value.into();`.
+    pub fn ec2_security_group_owner_id<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.ec2_security_group_owner_id = value.into();
+        self
+    }
+    /// Returns a new instance of AuthorizeCacheSecurityGroupIngressMessage with optional fields set to `None`.
+    pub fn new<CacheSecurityGroupNameType: Into<String>,
+               EC2SecurityGroupNameType: Into<String>,
+               EC2SecurityGroupOwnerIdType: Into<String>>
+        (cache_security_group_name: CacheSecurityGroupNameType,
+         ec2_security_group_name: EC2SecurityGroupNameType,
+         ec2_security_group_owner_id: EC2SecurityGroupOwnerIdType)
+         -> AuthorizeCacheSecurityGroupIngressMessage {
+        AuthorizeCacheSecurityGroupIngressMessage {
+            cache_security_group_name: cache_security_group_name.into(),
+            ec2_security_group_name: ec2_security_group_name.into(),
+            ec2_security_group_owner_id: ec2_security_group_owner_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AuthorizeCacheSecurityGroupIngressMessage` contents to a `SignedRequest`.
 struct AuthorizeCacheSecurityGroupIngressMessageSerializer;
@@ -152,7 +217,6 @@ impl AuthorizeCacheSecurityGroupIngressMessageSerializer {
 pub struct AuthorizeCacheSecurityGroupIngressResult {
     pub cache_security_group: Option<CacheSecurityGroup>,
 }
-
 struct AuthorizeCacheSecurityGroupIngressResultDeserializer;
 impl AuthorizeCacheSecurityGroupIngressResultDeserializer {
     #[allow(unused_variables)]
@@ -217,7 +281,6 @@ pub struct AvailabilityZone {
     #[doc="<p>The name of the Availability Zone.</p>"]
     pub name: Option<String>,
 }
-
 struct AvailabilityZoneDeserializer;
 impl AvailabilityZoneDeserializer {
     #[allow(unused_variables)]
@@ -385,7 +448,6 @@ pub struct CacheCluster {
     #[doc="<p>The daily time range (in UTC) during which ElastiCache begins taking a daily snapshot of your cache cluster.</p> <p>Example: <code>05:00-09:00</code> </p>"]
     pub snapshot_window: Option<String>,
 }
-
 struct CacheClusterDeserializer;
 impl CacheClusterDeserializer {
     #[allow(unused_variables)]
@@ -573,7 +635,6 @@ pub struct CacheClusterMessage {
     #[doc="<p>Provides an identifier to allow retrieval of paginated results.</p>"]
     pub marker: Option<String>,
 }
-
 struct CacheClusterMessageDeserializer;
 impl CacheClusterMessageDeserializer {
     #[allow(unused_variables)]
@@ -635,7 +696,6 @@ pub struct CacheEngineVersion {
     #[doc="<p>The version number of the cache engine.</p>"]
     pub engine_version: Option<String>,
 }
-
 struct CacheEngineVersionDeserializer;
 impl CacheEngineVersionDeserializer {
     #[allow(unused_variables)]
@@ -746,7 +806,6 @@ pub struct CacheEngineVersionMessage {
     #[doc="<p>Provides an identifier to allow retrieval of paginated results.</p>"]
     pub marker: Option<String>,
 }
-
 struct CacheEngineVersionMessageDeserializer;
 impl CacheEngineVersionMessageDeserializer {
     #[allow(unused_variables)]
@@ -812,7 +871,6 @@ pub struct CacheNode {
     #[doc="<p>The ID of the primary node to which this read replica node is synchronized. If this field is empty, this node is not associated with a primary cache cluster.</p>"]
     pub source_cache_node_id: Option<String>,
 }
-
 struct CacheNodeDeserializer;
 impl CacheNodeDeserializer {
     #[allow(unused_variables)]
@@ -1000,7 +1058,6 @@ pub struct CacheNodeTypeSpecificParameter {
     #[doc="<p>The source of the parameter value.</p>"]
     pub source: Option<String>,
 }
-
 struct CacheNodeTypeSpecificParameterDeserializer;
 impl CacheNodeTypeSpecificParameterDeserializer {
     #[allow(unused_variables)]
@@ -1126,7 +1183,6 @@ pub struct CacheNodeTypeSpecificValue {
     #[doc="<p>The value for the cache node type.</p>"]
     pub value: Option<String>,
 }
-
 struct CacheNodeTypeSpecificValueDeserializer;
 impl CacheNodeTypeSpecificValueDeserializer {
     #[allow(unused_variables)]
@@ -1224,7 +1280,6 @@ pub struct CacheParameterGroup {
     #[doc="<p>The description for this cache parameter group.</p>"]
     pub description: Option<String>,
 }
-
 struct CacheParameterGroupDeserializer;
 impl CacheParameterGroupDeserializer {
     #[allow(unused_variables)]
@@ -1287,7 +1342,6 @@ pub struct CacheParameterGroupDetails {
     #[doc="<p>A list of <a>Parameter</a> instances.</p>"]
     pub parameters: Option<Vec<Parameter>>,
 }
-
 struct CacheParameterGroupDetailsDeserializer;
 impl CacheParameterGroupDetailsDeserializer {
     #[allow(unused_variables)]
@@ -1385,7 +1439,6 @@ pub struct CacheParameterGroupNameMessage {
     #[doc="<p>The name of the cache parameter group.</p>"]
     pub cache_parameter_group_name: Option<String>,
 }
-
 struct CacheParameterGroupNameMessageDeserializer;
 impl CacheParameterGroupNameMessageDeserializer {
     #[allow(unused_variables)]
@@ -1439,7 +1492,6 @@ pub struct CacheParameterGroupStatus {
     #[doc="<p>The status of parameter updates.</p>"]
     pub parameter_apply_status: Option<String>,
 }
-
 struct CacheParameterGroupStatusDeserializer;
 impl CacheParameterGroupStatusDeserializer {
     #[allow(unused_variables)]
@@ -1501,7 +1553,6 @@ pub struct CacheParameterGroupsMessage {
     #[doc="<p>Provides an identifier to allow retrieval of paginated results.</p>"]
     pub marker: Option<String>,
 }
-
 struct CacheParameterGroupsMessageDeserializer;
 impl CacheParameterGroupsMessageDeserializer {
     #[allow(unused_variables)]
@@ -1561,7 +1612,6 @@ pub struct CacheSecurityGroup {
     #[doc="<p>The AWS account ID of the cache security group owner.</p>"]
     pub owner_id: Option<String>,
 }
-
 struct CacheSecurityGroupDeserializer;
 impl CacheSecurityGroupDeserializer {
     #[allow(unused_variables)]
@@ -1626,7 +1676,6 @@ pub struct CacheSecurityGroupMembership {
     #[doc="<p>The membership status in the cache security group. The status changes when a cache security group is modified, or when the cache security groups assigned to a cache cluster are modified.</p>"]
     pub status: Option<String>,
 }
-
 struct CacheSecurityGroupMembershipDeserializer;
 impl CacheSecurityGroupMembershipDeserializer {
     #[allow(unused_variables)]
@@ -1724,7 +1773,6 @@ pub struct CacheSecurityGroupMessage {
     #[doc="<p>Provides an identifier to allow retrieval of paginated results.</p>"]
     pub marker: Option<String>,
 }
-
 struct CacheSecurityGroupMessageDeserializer;
 impl CacheSecurityGroupMessageDeserializer {
     #[allow(unused_variables)]
@@ -1837,7 +1885,6 @@ pub struct CacheSubnetGroup {
     #[doc="<p>The Amazon Virtual Private Cloud identifier (VPC ID) of the cache subnet group.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct CacheSubnetGroupDeserializer;
 impl CacheSubnetGroupDeserializer {
     #[allow(unused_variables)]
@@ -1902,7 +1949,6 @@ pub struct CacheSubnetGroupMessage {
     #[doc="<p>Provides an identifier to allow retrieval of paginated results.</p>"]
     pub marker: Option<String>,
 }
-
 struct CacheSubnetGroupMessageDeserializer;
 impl CacheSubnetGroupMessageDeserializer {
     #[allow(unused_variables)]
@@ -2057,7 +2103,40 @@ pub struct CopySnapshotMessage {
     #[doc="<p>A name for the snapshot copy. ElastiCache does not permit overwriting a snapshot, therefore this name must be unique within its context - ElastiCache or an Amazon S3 bucket if exporting.</p>"]
     pub target_snapshot_name: String,
 }
-
+impl CopySnapshotMessage {
+    /// Sets `source_snapshot_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopySnapshotMessage.source_snapshot_name = value.into();`.
+    pub fn source_snapshot_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_snapshot_name = value.into();
+        self
+    }
+    /// Sets `target_bucket`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopySnapshotMessage.target_bucket = Some(value.into());`.
+    pub fn target_bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_bucket = Some(value.into());
+        self
+    }
+    /// Sets `target_snapshot_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopySnapshotMessage.target_snapshot_name = value.into();`.
+    pub fn target_snapshot_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_snapshot_name = value.into();
+        self
+    }
+    /// Returns a new instance of CopySnapshotMessage with optional fields set to `None`.
+    pub fn new<SourceSnapshotNameType: Into<String>, TargetSnapshotNameType: Into<String>>
+        (source_snapshot_name: SourceSnapshotNameType,
+         target_snapshot_name: TargetSnapshotNameType)
+         -> CopySnapshotMessage {
+        CopySnapshotMessage {
+            source_snapshot_name: source_snapshot_name.into(),
+            target_snapshot_name: target_snapshot_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CopySnapshotMessage` contents to a `SignedRequest`.
 struct CopySnapshotMessageSerializer;
@@ -2083,7 +2162,6 @@ impl CopySnapshotMessageSerializer {
 pub struct CopySnapshotResult {
     pub snapshot: Option<Snapshot>,
 }
-
 struct CopySnapshotResultDeserializer;
 impl CopySnapshotResultDeserializer {
     #[allow(unused_variables)]
@@ -2176,7 +2254,185 @@ pub struct CreateCacheClusterMessage {
     #[doc="<p>A list of cost allocation tags to be added to this resource. A tag is a key-value pair. A tag key must be accompanied by a tag value.</p>"]
     pub tags: Option<Vec<Tag>>,
 }
-
+impl CreateCacheClusterMessage {
+    /// Sets `az_mode`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.az_mode = Some(value.into());`.
+    pub fn az_mode<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.az_mode = Some(value.into());
+        self
+    }
+    /// Sets `auth_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.auth_token = Some(value.into());`.
+    pub fn auth_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auth_token = Some(value.into());
+        self
+    }
+    /// Sets `auto_minor_version_upgrade`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.auto_minor_version_upgrade = Some(value.into());`.
+    pub fn auto_minor_version_upgrade<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.auto_minor_version_upgrade = Some(value.into());
+        self
+    }
+    /// Sets `cache_cluster_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.cache_cluster_id = value.into();`.
+    pub fn cache_cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_cluster_id = value.into();
+        self
+    }
+    /// Sets `cache_node_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.cache_node_type = Some(value.into());`.
+    pub fn cache_node_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_node_type = Some(value.into());
+        self
+    }
+    /// Sets `cache_parameter_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.cache_parameter_group_name = Some(value.into());`.
+    pub fn cache_parameter_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_parameter_group_name = Some(value.into());
+        self
+    }
+    /// Sets `cache_security_group_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.cache_security_group_names = Some(value.into());`.
+    pub fn cache_security_group_names<ValueType: Into<Vec<String>>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.cache_security_group_names = Some(value.into());
+        self
+    }
+    /// Sets `cache_subnet_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.cache_subnet_group_name = Some(value.into());`.
+    pub fn cache_subnet_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_subnet_group_name = Some(value.into());
+        self
+    }
+    /// Sets `engine`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.engine = Some(value.into());`.
+    pub fn engine<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine = Some(value.into());
+        self
+    }
+    /// Sets `engine_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.engine_version = Some(value.into());`.
+    pub fn engine_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine_version = Some(value.into());
+        self
+    }
+    /// Sets `notification_topic_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.notification_topic_arn = Some(value.into());`.
+    pub fn notification_topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.notification_topic_arn = Some(value.into());
+        self
+    }
+    /// Sets `num_cache_nodes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.num_cache_nodes = Some(value.into());`.
+    pub fn num_cache_nodes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.num_cache_nodes = Some(value.into());
+        self
+    }
+    /// Sets `port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.port = Some(value.into());`.
+    pub fn port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.port = Some(value.into());
+        self
+    }
+    /// Sets `preferred_availability_zone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.preferred_availability_zone = Some(value.into());`.
+    pub fn preferred_availability_zone<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.preferred_availability_zone = Some(value.into());
+        self
+    }
+    /// Sets `preferred_availability_zones`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.preferred_availability_zones = Some(value.into());`.
+    pub fn preferred_availability_zones<ValueType: Into<Vec<String>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.preferred_availability_zones = Some(value.into());
+        self
+    }
+    /// Sets `preferred_maintenance_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.preferred_maintenance_window = Some(value.into());`.
+    pub fn preferred_maintenance_window<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.preferred_maintenance_window = Some(value.into());
+        self
+    }
+    /// Sets `replication_group_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.replication_group_id = Some(value.into());`.
+    pub fn replication_group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_group_id = Some(value.into());
+        self
+    }
+    /// Sets `security_group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.security_group_ids = Some(value.into());`.
+    pub fn security_group_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.security_group_ids = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.snapshot_arns = Some(value.into());`.
+    pub fn snapshot_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.snapshot_arns = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.snapshot_name = Some(value.into());`.
+    pub fn snapshot_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_name = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_retention_limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.snapshot_retention_limit = Some(value.into());`.
+    pub fn snapshot_retention_limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.snapshot_retention_limit = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.snapshot_window = Some(value.into());`.
+    pub fn snapshot_window<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_window = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheClusterMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateCacheClusterMessage with optional fields set to `None`.
+    pub fn new<CacheClusterIdType: Into<String>>(cache_cluster_id: CacheClusterIdType)
+                                                 -> CreateCacheClusterMessage {
+        CreateCacheClusterMessage {
+            cache_cluster_id: cache_cluster_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateCacheClusterMessage` contents to a `SignedRequest`.
 struct CreateCacheClusterMessageSerializer;
@@ -2283,7 +2539,6 @@ impl CreateCacheClusterMessageSerializer {
 pub struct CreateCacheClusterResult {
     pub cache_cluster: Option<CacheCluster>,
 }
-
 struct CreateCacheClusterResultDeserializer;
 impl CreateCacheClusterResultDeserializer {
     #[allow(unused_variables)]
@@ -2337,7 +2592,46 @@ pub struct CreateCacheParameterGroupMessage {
     #[doc="<p>A user-specified description for the cache parameter group.</p>"]
     pub description: String,
 }
-
+impl CreateCacheParameterGroupMessage {
+    /// Sets `cache_parameter_group_family`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheParameterGroupMessage.cache_parameter_group_family = value.into();`.
+    pub fn cache_parameter_group_family<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.cache_parameter_group_family = value.into();
+        self
+    }
+    /// Sets `cache_parameter_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheParameterGroupMessage.cache_parameter_group_name = value.into();`.
+    pub fn cache_parameter_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_parameter_group_name = value.into();
+        self
+    }
+    /// Sets `description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheParameterGroupMessage.description = value.into();`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = value.into();
+        self
+    }
+    /// Returns a new instance of CreateCacheParameterGroupMessage with optional fields set to `None`.
+    pub fn new<CacheParameterGroupFamilyType: Into<String>,
+               CacheParameterGroupNameType: Into<String>,
+               DescriptionType: Into<String>>
+        (cache_parameter_group_family: CacheParameterGroupFamilyType,
+         cache_parameter_group_name: CacheParameterGroupNameType,
+         description: DescriptionType)
+         -> CreateCacheParameterGroupMessage {
+        CreateCacheParameterGroupMessage {
+            cache_parameter_group_family: cache_parameter_group_family.into(),
+            cache_parameter_group_name: cache_parameter_group_name.into(),
+            description: description.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateCacheParameterGroupMessage` contents to a `SignedRequest`.
 struct CreateCacheParameterGroupMessageSerializer;
@@ -2361,7 +2655,6 @@ impl CreateCacheParameterGroupMessageSerializer {
 pub struct CreateCacheParameterGroupResult {
     pub cache_parameter_group: Option<CacheParameterGroup>,
 }
-
 struct CreateCacheParameterGroupResultDeserializer;
 impl CreateCacheParameterGroupResultDeserializer {
     #[allow(unused_variables)]
@@ -2414,7 +2707,33 @@ pub struct CreateCacheSecurityGroupMessage {
     #[doc="<p>A description for the cache security group.</p>"]
     pub description: String,
 }
-
+impl CreateCacheSecurityGroupMessage {
+    /// Sets `cache_security_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheSecurityGroupMessage.cache_security_group_name = value.into();`.
+    pub fn cache_security_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_security_group_name = value.into();
+        self
+    }
+    /// Sets `description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheSecurityGroupMessage.description = value.into();`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = value.into();
+        self
+    }
+    /// Returns a new instance of CreateCacheSecurityGroupMessage with optional fields set to `None`.
+    pub fn new<CacheSecurityGroupNameType: Into<String>, DescriptionType: Into<String>>
+        (cache_security_group_name: CacheSecurityGroupNameType,
+         description: DescriptionType)
+         -> CreateCacheSecurityGroupMessage {
+        CreateCacheSecurityGroupMessage {
+            cache_security_group_name: cache_security_group_name.into(),
+            description: description.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateCacheSecurityGroupMessage` contents to a `SignedRequest`.
 struct CreateCacheSecurityGroupMessageSerializer;
@@ -2436,7 +2755,6 @@ impl CreateCacheSecurityGroupMessageSerializer {
 pub struct CreateCacheSecurityGroupResult {
     pub cache_security_group: Option<CacheSecurityGroup>,
 }
-
 struct CreateCacheSecurityGroupResultDeserializer;
 impl CreateCacheSecurityGroupResultDeserializer {
     #[allow(unused_variables)]
@@ -2490,7 +2808,46 @@ pub struct CreateCacheSubnetGroupMessage {
     #[doc="<p>A list of VPC subnet IDs for the cache subnet group.</p>"]
     pub subnet_ids: Vec<String>,
 }
-
+impl CreateCacheSubnetGroupMessage {
+    /// Sets `cache_subnet_group_description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheSubnetGroupMessage.cache_subnet_group_description = value.into();`.
+    pub fn cache_subnet_group_description<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.cache_subnet_group_description = value.into();
+        self
+    }
+    /// Sets `cache_subnet_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheSubnetGroupMessage.cache_subnet_group_name = value.into();`.
+    pub fn cache_subnet_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_subnet_group_name = value.into();
+        self
+    }
+    /// Sets `subnet_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCacheSubnetGroupMessage.subnet_ids = value.into();`.
+    pub fn subnet_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.subnet_ids = value.into();
+        self
+    }
+    /// Returns a new instance of CreateCacheSubnetGroupMessage with optional fields set to `None`.
+    pub fn new<CacheSubnetGroupDescriptionType: Into<String>,
+               CacheSubnetGroupNameType: Into<String>,
+               SubnetIdsType: Into<Vec<String>>>
+        (cache_subnet_group_description: CacheSubnetGroupDescriptionType,
+         cache_subnet_group_name: CacheSubnetGroupNameType,
+         subnet_ids: SubnetIdsType)
+         -> CreateCacheSubnetGroupMessage {
+        CreateCacheSubnetGroupMessage {
+            cache_subnet_group_description: cache_subnet_group_description.into(),
+            cache_subnet_group_name: cache_subnet_group_name.into(),
+            subnet_ids: subnet_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateCacheSubnetGroupMessage` contents to a `SignedRequest`.
 struct CreateCacheSubnetGroupMessageSerializer;
@@ -2516,7 +2873,6 @@ impl CreateCacheSubnetGroupMessageSerializer {
 pub struct CreateCacheSubnetGroupResult {
     pub cache_subnet_group: Option<CacheSubnetGroup>,
 }
-
 struct CreateCacheSubnetGroupResultDeserializer;
 impl CreateCacheSubnetGroupResultDeserializer {
     #[allow(unused_variables)]
@@ -2616,7 +2972,209 @@ pub struct CreateReplicationGroupMessage {
     #[doc="<p>A list of cost allocation tags to be added to this resource. A tag is a key-value pair. A tag key must be accompanied by a tag value.</p>"]
     pub tags: Option<Vec<Tag>>,
 }
-
+impl CreateReplicationGroupMessage {
+    /// Sets `auth_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.auth_token = Some(value.into());`.
+    pub fn auth_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auth_token = Some(value.into());
+        self
+    }
+    /// Sets `auto_minor_version_upgrade`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.auto_minor_version_upgrade = Some(value.into());`.
+    pub fn auto_minor_version_upgrade<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.auto_minor_version_upgrade = Some(value.into());
+        self
+    }
+    /// Sets `automatic_failover_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.automatic_failover_enabled = Some(value.into());`.
+    pub fn automatic_failover_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.automatic_failover_enabled = Some(value.into());
+        self
+    }
+    /// Sets `cache_node_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.cache_node_type = Some(value.into());`.
+    pub fn cache_node_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_node_type = Some(value.into());
+        self
+    }
+    /// Sets `cache_parameter_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.cache_parameter_group_name = Some(value.into());`.
+    pub fn cache_parameter_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_parameter_group_name = Some(value.into());
+        self
+    }
+    /// Sets `cache_security_group_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.cache_security_group_names = Some(value.into());`.
+    pub fn cache_security_group_names<ValueType: Into<Vec<String>>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.cache_security_group_names = Some(value.into());
+        self
+    }
+    /// Sets `cache_subnet_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.cache_subnet_group_name = Some(value.into());`.
+    pub fn cache_subnet_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_subnet_group_name = Some(value.into());
+        self
+    }
+    /// Sets `engine`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.engine = Some(value.into());`.
+    pub fn engine<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine = Some(value.into());
+        self
+    }
+    /// Sets `engine_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.engine_version = Some(value.into());`.
+    pub fn engine_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine_version = Some(value.into());
+        self
+    }
+    /// Sets `node_group_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.node_group_configuration = Some(value.into());`.
+pub fn node_group_configuration<ValueType: Into<Vec<NodeGroupConfiguration>>>(mut self, value: ValueType) -> Self{
+        self.node_group_configuration = Some(value.into());
+        self
+    }
+    /// Sets `notification_topic_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.notification_topic_arn = Some(value.into());`.
+    pub fn notification_topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.notification_topic_arn = Some(value.into());
+        self
+    }
+    /// Sets `num_cache_clusters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.num_cache_clusters = Some(value.into());`.
+    pub fn num_cache_clusters<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.num_cache_clusters = Some(value.into());
+        self
+    }
+    /// Sets `num_node_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.num_node_groups = Some(value.into());`.
+    pub fn num_node_groups<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.num_node_groups = Some(value.into());
+        self
+    }
+    /// Sets `port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.port = Some(value.into());`.
+    pub fn port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.port = Some(value.into());
+        self
+    }
+    /// Sets `preferred_cache_cluster_a_zs`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.preferred_cache_cluster_a_zs = Some(value.into());`.
+    pub fn preferred_cache_cluster_a_zs<ValueType: Into<Vec<String>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.preferred_cache_cluster_a_zs = Some(value.into());
+        self
+    }
+    /// Sets `preferred_maintenance_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.preferred_maintenance_window = Some(value.into());`.
+    pub fn preferred_maintenance_window<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.preferred_maintenance_window = Some(value.into());
+        self
+    }
+    /// Sets `primary_cluster_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.primary_cluster_id = Some(value.into());`.
+    pub fn primary_cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.primary_cluster_id = Some(value.into());
+        self
+    }
+    /// Sets `replicas_per_node_group`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.replicas_per_node_group = Some(value.into());`.
+    pub fn replicas_per_node_group<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.replicas_per_node_group = Some(value.into());
+        self
+    }
+    /// Sets `replication_group_description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.replication_group_description = value.into();`.
+    pub fn replication_group_description<ValueType: Into<String>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.replication_group_description = value.into();
+        self
+    }
+    /// Sets `replication_group_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.replication_group_id = value.into();`.
+    pub fn replication_group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_group_id = value.into();
+        self
+    }
+    /// Sets `security_group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.security_group_ids = Some(value.into());`.
+    pub fn security_group_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.security_group_ids = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.snapshot_arns = Some(value.into());`.
+    pub fn snapshot_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.snapshot_arns = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.snapshot_name = Some(value.into());`.
+    pub fn snapshot_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_name = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_retention_limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.snapshot_retention_limit = Some(value.into());`.
+    pub fn snapshot_retention_limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.snapshot_retention_limit = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.snapshot_window = Some(value.into());`.
+    pub fn snapshot_window<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_window = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationGroupMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateReplicationGroupMessage with optional fields set to `None`.
+    pub fn new<ReplicationGroupDescriptionType: Into<String>, ReplicationGroupIdType: Into<String>>
+        (replication_group_description: ReplicationGroupDescriptionType,
+         replication_group_id: ReplicationGroupIdType)
+         -> CreateReplicationGroupMessage {
+        CreateReplicationGroupMessage {
+            replication_group_description: replication_group_description.into(),
+            replication_group_id: replication_group_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateReplicationGroupMessage` contents to a `SignedRequest`.
 struct CreateReplicationGroupMessageSerializer;
@@ -2737,7 +3295,6 @@ impl CreateReplicationGroupMessageSerializer {
 pub struct CreateReplicationGroupResult {
     pub replication_group: Option<ReplicationGroup>,
 }
-
 struct CreateReplicationGroupResultDeserializer;
 impl CreateReplicationGroupResultDeserializer {
     #[allow(unused_variables)]
@@ -2791,7 +3348,37 @@ pub struct CreateSnapshotMessage {
     #[doc="<p>A name for the snapshot being created.</p>"]
     pub snapshot_name: String,
 }
-
+impl CreateSnapshotMessage {
+    /// Sets `cache_cluster_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSnapshotMessage.cache_cluster_id = Some(value.into());`.
+    pub fn cache_cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_cluster_id = Some(value.into());
+        self
+    }
+    /// Sets `replication_group_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSnapshotMessage.replication_group_id = Some(value.into());`.
+    pub fn replication_group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_group_id = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSnapshotMessage.snapshot_name = value.into();`.
+    pub fn snapshot_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateSnapshotMessage with optional fields set to `None`.
+    pub fn new<SnapshotNameType: Into<String>>(snapshot_name: SnapshotNameType)
+                                               -> CreateSnapshotMessage {
+        CreateSnapshotMessage {
+            snapshot_name: snapshot_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateSnapshotMessage` contents to a `SignedRequest`.
 struct CreateSnapshotMessageSerializer;
@@ -2817,7 +3404,6 @@ impl CreateSnapshotMessageSerializer {
 pub struct CreateSnapshotResult {
     pub snapshot: Option<Snapshot>,
 }
-
 struct CreateSnapshotResultDeserializer;
 impl CreateSnapshotResultDeserializer {
     #[allow(unused_variables)]
@@ -2868,7 +3454,30 @@ pub struct DeleteCacheClusterMessage {
     #[doc="<p>The user-supplied name of a final cache cluster snapshot. This is the unique name that identifies the snapshot. ElastiCache creates the snapshot, and then deletes the cache cluster immediately afterward.</p>"]
     pub final_snapshot_identifier: Option<String>,
 }
-
+impl DeleteCacheClusterMessage {
+    /// Sets `cache_cluster_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteCacheClusterMessage.cache_cluster_id = value.into();`.
+    pub fn cache_cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_cluster_id = value.into();
+        self
+    }
+    /// Sets `final_snapshot_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteCacheClusterMessage.final_snapshot_identifier = Some(value.into());`.
+    pub fn final_snapshot_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.final_snapshot_identifier = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteCacheClusterMessage with optional fields set to `None`.
+    pub fn new<CacheClusterIdType: Into<String>>(cache_cluster_id: CacheClusterIdType)
+                                                 -> DeleteCacheClusterMessage {
+        DeleteCacheClusterMessage {
+            cache_cluster_id: cache_cluster_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteCacheClusterMessage` contents to a `SignedRequest`.
 struct DeleteCacheClusterMessageSerializer;
@@ -2893,7 +3502,6 @@ impl DeleteCacheClusterMessageSerializer {
 pub struct DeleteCacheClusterResult {
     pub cache_cluster: Option<CacheCluster>,
 }
-
 struct DeleteCacheClusterResultDeserializer;
 impl DeleteCacheClusterResultDeserializer {
     #[allow(unused_variables)]
@@ -2943,7 +3551,22 @@ pub struct DeleteCacheParameterGroupMessage {
     #[doc="<p>The name of the cache parameter group to delete.</p> <note> <p>The specified cache security group must not be associated with any cache clusters.</p> </note>"]
     pub cache_parameter_group_name: String,
 }
-
+impl DeleteCacheParameterGroupMessage {
+    /// Sets `cache_parameter_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteCacheParameterGroupMessage.cache_parameter_group_name = value.into();`.
+    pub fn cache_parameter_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_parameter_group_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteCacheParameterGroupMessage with optional fields set to `None`.
+pub fn new<CacheParameterGroupNameType: Into<String>>(cache_parameter_group_name: CacheParameterGroupNameType) -> DeleteCacheParameterGroupMessage{
+        DeleteCacheParameterGroupMessage {
+            cache_parameter_group_name: cache_parameter_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteCacheParameterGroupMessage` contents to a `SignedRequest`.
 struct DeleteCacheParameterGroupMessageSerializer;
@@ -2966,7 +3589,22 @@ pub struct DeleteCacheSecurityGroupMessage {
     #[doc="<p>The name of the cache security group to delete.</p> <note> <p>You cannot delete the default security group.</p> </note>"]
     pub cache_security_group_name: String,
 }
-
+impl DeleteCacheSecurityGroupMessage {
+    /// Sets `cache_security_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteCacheSecurityGroupMessage.cache_security_group_name = value.into();`.
+    pub fn cache_security_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_security_group_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteCacheSecurityGroupMessage with optional fields set to `None`.
+pub fn new<CacheSecurityGroupNameType: Into<String>>(cache_security_group_name: CacheSecurityGroupNameType) -> DeleteCacheSecurityGroupMessage{
+        DeleteCacheSecurityGroupMessage {
+            cache_security_group_name: cache_security_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteCacheSecurityGroupMessage` contents to a `SignedRequest`.
 struct DeleteCacheSecurityGroupMessageSerializer;
@@ -2989,7 +3627,22 @@ pub struct DeleteCacheSubnetGroupMessage {
     #[doc="<p>The name of the cache subnet group to delete.</p> <p>Constraints: Must contain no more than 255 alphanumeric characters or hyphens.</p>"]
     pub cache_subnet_group_name: String,
 }
-
+impl DeleteCacheSubnetGroupMessage {
+    /// Sets `cache_subnet_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteCacheSubnetGroupMessage.cache_subnet_group_name = value.into();`.
+    pub fn cache_subnet_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_subnet_group_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteCacheSubnetGroupMessage with optional fields set to `None`.
+pub fn new<CacheSubnetGroupNameType: Into<String>>(cache_subnet_group_name: CacheSubnetGroupNameType) -> DeleteCacheSubnetGroupMessage{
+        DeleteCacheSubnetGroupMessage {
+            cache_subnet_group_name: cache_subnet_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteCacheSubnetGroupMessage` contents to a `SignedRequest`.
 struct DeleteCacheSubnetGroupMessageSerializer;
@@ -3016,7 +3669,37 @@ pub struct DeleteReplicationGroupMessage {
     #[doc="<p>If set to <code>true</code>, all of the read replicas are deleted, but the primary node is retained.</p>"]
     pub retain_primary_cluster: Option<bool>,
 }
-
+impl DeleteReplicationGroupMessage {
+    /// Sets `final_snapshot_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteReplicationGroupMessage.final_snapshot_identifier = Some(value.into());`.
+    pub fn final_snapshot_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.final_snapshot_identifier = Some(value.into());
+        self
+    }
+    /// Sets `replication_group_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteReplicationGroupMessage.replication_group_id = value.into();`.
+    pub fn replication_group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_group_id = value.into();
+        self
+    }
+    /// Sets `retain_primary_cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteReplicationGroupMessage.retain_primary_cluster = Some(value.into());`.
+    pub fn retain_primary_cluster<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.retain_primary_cluster = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteReplicationGroupMessage with optional fields set to `None`.
+    pub fn new<ReplicationGroupIdType: Into<String>>(replication_group_id: ReplicationGroupIdType)
+                                                     -> DeleteReplicationGroupMessage {
+        DeleteReplicationGroupMessage {
+            replication_group_id: replication_group_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteReplicationGroupMessage` contents to a `SignedRequest`.
 struct DeleteReplicationGroupMessageSerializer;
@@ -3045,7 +3728,6 @@ impl DeleteReplicationGroupMessageSerializer {
 pub struct DeleteReplicationGroupResult {
     pub replication_group: Option<ReplicationGroup>,
 }
-
 struct DeleteReplicationGroupResultDeserializer;
 impl DeleteReplicationGroupResultDeserializer {
     #[allow(unused_variables)]
@@ -3095,7 +3777,23 @@ pub struct DeleteSnapshotMessage {
     #[doc="<p>The name of the snapshot to be deleted.</p>"]
     pub snapshot_name: String,
 }
-
+impl DeleteSnapshotMessage {
+    /// Sets `snapshot_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSnapshotMessage.snapshot_name = value.into();`.
+    pub fn snapshot_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteSnapshotMessage with optional fields set to `None`.
+    pub fn new<SnapshotNameType: Into<String>>(snapshot_name: SnapshotNameType)
+                                               -> DeleteSnapshotMessage {
+        DeleteSnapshotMessage {
+            snapshot_name: snapshot_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteSnapshotMessage` contents to a `SignedRequest`.
 struct DeleteSnapshotMessageSerializer;
@@ -3115,7 +3813,6 @@ impl DeleteSnapshotMessageSerializer {
 pub struct DeleteSnapshotResult {
     pub snapshot: Option<Snapshot>,
 }
-
 struct DeleteSnapshotResultDeserializer;
 impl DeleteSnapshotResultDeserializer {
     #[allow(unused_variables)]
@@ -3172,7 +3869,49 @@ pub struct DescribeCacheClustersMessage {
     #[doc="<p>An optional flag that can be included in the <code>DescribeCacheCluster</code> request to retrieve information about the individual cache nodes.</p>"]
     pub show_cache_node_info: Option<bool>,
 }
-
+impl DescribeCacheClustersMessage {
+    /// Sets `cache_cluster_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheClustersMessage.cache_cluster_id = Some(value.into());`.
+    pub fn cache_cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_cluster_id = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheClustersMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheClustersMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `show_cache_clusters_not_in_replication_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheClustersMessage.show_cache_clusters_not_in_replication_groups = Some(value.into());`.
+    pub fn show_cache_clusters_not_in_replication_groups<ValueType: Into<bool>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.show_cache_clusters_not_in_replication_groups = Some(value.into());
+        self
+    }
+    /// Sets `show_cache_node_info`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheClustersMessage.show_cache_node_info = Some(value.into());`.
+    pub fn show_cache_node_info<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.show_cache_node_info = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeCacheClustersMessage with optional fields set to `None`.
+    pub fn new() -> DescribeCacheClustersMessage {
+        DescribeCacheClustersMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeCacheClustersMessage` contents to a `SignedRequest`.
 struct DescribeCacheClustersMessageSerializer;
@@ -3221,7 +3960,56 @@ pub struct DescribeCacheEngineVersionsMessage {
     #[doc="<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a marker is included in the response so that the remaining results can be retrieved.</p> <p>Default: 100</p> <p>Constraints: minimum 20; maximum 100.</p>"]
     pub max_records: Option<i64>,
 }
-
+impl DescribeCacheEngineVersionsMessage {
+    /// Sets `cache_parameter_group_family`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheEngineVersionsMessage.cache_parameter_group_family = Some(value.into());`.
+    pub fn cache_parameter_group_family<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.cache_parameter_group_family = Some(value.into());
+        self
+    }
+    /// Sets `default_only`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheEngineVersionsMessage.default_only = Some(value.into());`.
+    pub fn default_only<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.default_only = Some(value.into());
+        self
+    }
+    /// Sets `engine`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheEngineVersionsMessage.engine = Some(value.into());`.
+    pub fn engine<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine = Some(value.into());
+        self
+    }
+    /// Sets `engine_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheEngineVersionsMessage.engine_version = Some(value.into());`.
+    pub fn engine_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine_version = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheEngineVersionsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheEngineVersionsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeCacheEngineVersionsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeCacheEngineVersionsMessage {
+        DescribeCacheEngineVersionsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeCacheEngineVersionsMessage` contents to a `SignedRequest`.
 struct DescribeCacheEngineVersionsMessageSerializer;
@@ -3267,7 +4055,33 @@ pub struct DescribeCacheParameterGroupsMessage {
     #[doc="<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a marker is included in the response so that the remaining results can be retrieved.</p> <p>Default: 100</p> <p>Constraints: minimum 20; maximum 100.</p>"]
     pub max_records: Option<i64>,
 }
-
+impl DescribeCacheParameterGroupsMessage {
+    /// Sets `cache_parameter_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheParameterGroupsMessage.cache_parameter_group_name = Some(value.into());`.
+    pub fn cache_parameter_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_parameter_group_name = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheParameterGroupsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheParameterGroupsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeCacheParameterGroupsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeCacheParameterGroupsMessage {
+        DescribeCacheParameterGroupsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeCacheParameterGroupsMessage` contents to a `SignedRequest`.
 struct DescribeCacheParameterGroupsMessageSerializer;
@@ -3305,7 +4119,43 @@ pub struct DescribeCacheParametersMessage {
     #[doc="<p>The parameter types to return.</p> <p>Valid values: <code>user</code> | <code>system</code> | <code>engine-default</code> </p>"]
     pub source: Option<String>,
 }
-
+impl DescribeCacheParametersMessage {
+    /// Sets `cache_parameter_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheParametersMessage.cache_parameter_group_name = value.into();`.
+    pub fn cache_parameter_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_parameter_group_name = value.into();
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheParametersMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheParametersMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `source`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheParametersMessage.source = Some(value.into());`.
+    pub fn source<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeCacheParametersMessage with optional fields set to `None`.
+pub fn new<CacheParameterGroupNameType: Into<String>>(cache_parameter_group_name: CacheParameterGroupNameType) -> DescribeCacheParametersMessage{
+        DescribeCacheParametersMessage {
+            cache_parameter_group_name: cache_parameter_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeCacheParametersMessage` contents to a `SignedRequest`.
 struct DescribeCacheParametersMessageSerializer;
@@ -3342,7 +4192,33 @@ pub struct DescribeCacheSecurityGroupsMessage {
     #[doc="<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a marker is included in the response so that the remaining results can be retrieved.</p> <p>Default: 100</p> <p>Constraints: minimum 20; maximum 100.</p>"]
     pub max_records: Option<i64>,
 }
-
+impl DescribeCacheSecurityGroupsMessage {
+    /// Sets `cache_security_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheSecurityGroupsMessage.cache_security_group_name = Some(value.into());`.
+    pub fn cache_security_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_security_group_name = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheSecurityGroupsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheSecurityGroupsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeCacheSecurityGroupsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeCacheSecurityGroupsMessage {
+        DescribeCacheSecurityGroupsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeCacheSecurityGroupsMessage` contents to a `SignedRequest`.
 struct DescribeCacheSecurityGroupsMessageSerializer;
@@ -3378,7 +4254,33 @@ pub struct DescribeCacheSubnetGroupsMessage {
     #[doc="<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a marker is included in the response so that the remaining results can be retrieved.</p> <p>Default: 100</p> <p>Constraints: minimum 20; maximum 100.</p>"]
     pub max_records: Option<i64>,
 }
-
+impl DescribeCacheSubnetGroupsMessage {
+    /// Sets `cache_subnet_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheSubnetGroupsMessage.cache_subnet_group_name = Some(value.into());`.
+    pub fn cache_subnet_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_subnet_group_name = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheSubnetGroupsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheSubnetGroupsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeCacheSubnetGroupsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeCacheSubnetGroupsMessage {
+        DescribeCacheSubnetGroupsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeCacheSubnetGroupsMessage` contents to a `SignedRequest`.
 struct DescribeCacheSubnetGroupsMessageSerializer;
@@ -3414,7 +4316,40 @@ pub struct DescribeEngineDefaultParametersMessage {
     #[doc="<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a marker is included in the response so that the remaining results can be retrieved.</p> <p>Default: 100</p> <p>Constraints: minimum 20; maximum 100.</p>"]
     pub max_records: Option<i64>,
 }
-
+impl DescribeEngineDefaultParametersMessage {
+    /// Sets `cache_parameter_group_family`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEngineDefaultParametersMessage.cache_parameter_group_family = value.into();`.
+    pub fn cache_parameter_group_family<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.cache_parameter_group_family = value.into();
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEngineDefaultParametersMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEngineDefaultParametersMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEngineDefaultParametersMessage with optional fields set to `None`.
+    pub fn new<CacheParameterGroupFamilyType: Into<String>>
+        (cache_parameter_group_family: CacheParameterGroupFamilyType)
+         -> DescribeEngineDefaultParametersMessage {
+        DescribeEngineDefaultParametersMessage {
+            cache_parameter_group_family: cache_parameter_group_family.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeEngineDefaultParametersMessage` contents to a `SignedRequest`.
 struct DescribeEngineDefaultParametersMessageSerializer;
@@ -3442,7 +4377,6 @@ impl DescribeEngineDefaultParametersMessageSerializer {
 pub struct DescribeEngineDefaultParametersResult {
     pub engine_defaults: Option<EngineDefaults>,
 }
-
 struct DescribeEngineDefaultParametersResultDeserializer;
 impl DescribeEngineDefaultParametersResultDeserializer {
     #[allow(unused_variables)]
@@ -3505,7 +4439,61 @@ pub struct DescribeEventsMessage {
     #[doc="<p>The beginning of the time interval to retrieve events for, specified in ISO 8601 format.</p> <p> <b>Example:</b> 2017-03-30T07:03:49.555Z</p>"]
     pub start_time: Option<String>,
 }
-
+impl DescribeEventsMessage {
+    /// Sets `duration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.duration = Some(value.into());`.
+    pub fn duration<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.duration = Some(value.into());
+        self
+    }
+    /// Sets `end_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.end_time = Some(value.into());`.
+    pub fn end_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.end_time = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `source_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.source_identifier = Some(value.into());`.
+    pub fn source_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_identifier = Some(value.into());
+        self
+    }
+    /// Sets `source_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.source_type = Some(value.into());`.
+    pub fn source_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_type = Some(value.into());
+        self
+    }
+    /// Sets `start_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.start_time = Some(value.into());`.
+    pub fn start_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_time = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEventsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeEventsMessage {
+        DescribeEventsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeEventsMessage` contents to a `SignedRequest`.
 struct DescribeEventsMessageSerializer;
@@ -3553,7 +4541,33 @@ pub struct DescribeReplicationGroupsMessage {
     #[doc="<p>The identifier for the replication group to be described. This parameter is not case sensitive.</p> <p>If you do not specify this parameter, information about all replication groups is returned.</p>"]
     pub replication_group_id: Option<String>,
 }
-
+impl DescribeReplicationGroupsMessage {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReplicationGroupsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReplicationGroupsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `replication_group_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReplicationGroupsMessage.replication_group_id = Some(value.into());`.
+    pub fn replication_group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_group_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeReplicationGroupsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeReplicationGroupsMessage {
+        DescribeReplicationGroupsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeReplicationGroupsMessage` contents to a `SignedRequest`.
 struct DescribeReplicationGroupsMessageSerializer;
@@ -3598,7 +4612,70 @@ pub struct DescribeReservedCacheNodesMessage {
     #[doc="<p>The offering identifier filter value. Use this parameter to show only purchased reservations matching the specified offering identifier.</p>"]
     pub reserved_cache_nodes_offering_id: Option<String>,
 }
-
+impl DescribeReservedCacheNodesMessage {
+    /// Sets `cache_node_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedCacheNodesMessage.cache_node_type = Some(value.into());`.
+    pub fn cache_node_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_node_type = Some(value.into());
+        self
+    }
+    /// Sets `duration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedCacheNodesMessage.duration = Some(value.into());`.
+    pub fn duration<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.duration = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedCacheNodesMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedCacheNodesMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `offering_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedCacheNodesMessage.offering_type = Some(value.into());`.
+    pub fn offering_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.offering_type = Some(value.into());
+        self
+    }
+    /// Sets `product_description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedCacheNodesMessage.product_description = Some(value.into());`.
+    pub fn product_description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_description = Some(value.into());
+        self
+    }
+    /// Sets `reserved_cache_node_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedCacheNodesMessage.reserved_cache_node_id = Some(value.into());`.
+    pub fn reserved_cache_node_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reserved_cache_node_id = Some(value.into());
+        self
+    }
+    /// Sets `reserved_cache_nodes_offering_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedCacheNodesMessage.reserved_cache_nodes_offering_id = Some(value.into());`.
+    pub fn reserved_cache_nodes_offering_id<ValueType: Into<String>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.reserved_cache_nodes_offering_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeReservedCacheNodesMessage with optional fields set to `None`.
+    pub fn new() -> DescribeReservedCacheNodesMessage {
+        DescribeReservedCacheNodesMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeReservedCacheNodesMessage` contents to a `SignedRequest`.
 struct DescribeReservedCacheNodesMessageSerializer;
@@ -3658,7 +4735,63 @@ pub struct DescribeReservedCacheNodesOfferingsMessage {
     #[doc="<p>The offering identifier filter value. Use this parameter to show only the available offering that matches the specified reservation identifier.</p> <p>Example: <code>438012d3-4052-4cc7-b2e3-8d3372e0e706</code> </p>"]
     pub reserved_cache_nodes_offering_id: Option<String>,
 }
-
+impl DescribeReservedCacheNodesOfferingsMessage {
+    /// Sets `cache_node_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedCacheNodesOfferingsMessage.cache_node_type = Some(value.into());`.
+    pub fn cache_node_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_node_type = Some(value.into());
+        self
+    }
+    /// Sets `duration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedCacheNodesOfferingsMessage.duration = Some(value.into());`.
+    pub fn duration<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.duration = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedCacheNodesOfferingsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedCacheNodesOfferingsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `offering_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedCacheNodesOfferingsMessage.offering_type = Some(value.into());`.
+    pub fn offering_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.offering_type = Some(value.into());
+        self
+    }
+    /// Sets `product_description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedCacheNodesOfferingsMessage.product_description = Some(value.into());`.
+    pub fn product_description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_description = Some(value.into());
+        self
+    }
+    /// Sets `reserved_cache_nodes_offering_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedCacheNodesOfferingsMessage.reserved_cache_nodes_offering_id = Some(value.into());`.
+    pub fn reserved_cache_nodes_offering_id<ValueType: Into<String>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.reserved_cache_nodes_offering_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeReservedCacheNodesOfferingsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeReservedCacheNodesOfferingsMessage {
+        DescribeReservedCacheNodesOfferingsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeReservedCacheNodesOfferingsMessage` contents to a `SignedRequest`.
 struct DescribeReservedCacheNodesOfferingsMessageSerializer;
@@ -3706,7 +4839,6 @@ pub struct DescribeSnapshotsListMessage {
     #[doc="<p>A list of snapshots. Each item in the list contains detailed information about one snapshot.</p>"]
     pub snapshots: Option<Vec<Snapshot>>,
 }
-
 struct DescribeSnapshotsListMessageDeserializer;
 impl DescribeSnapshotsListMessageDeserializer {
     #[allow(unused_variables)]
@@ -3772,7 +4904,61 @@ pub struct DescribeSnapshotsMessage {
     #[doc="<p>If set to <code>system</code>, the output shows snapshots that were automatically created by ElastiCache. If set to <code>user</code> the output shows snapshots that were manually created. If omitted, the output shows both automatically and manually created snapshots.</p>"]
     pub snapshot_source: Option<String>,
 }
-
+impl DescribeSnapshotsMessage {
+    /// Sets `cache_cluster_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSnapshotsMessage.cache_cluster_id = Some(value.into());`.
+    pub fn cache_cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_cluster_id = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSnapshotsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSnapshotsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `replication_group_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSnapshotsMessage.replication_group_id = Some(value.into());`.
+    pub fn replication_group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_group_id = Some(value.into());
+        self
+    }
+    /// Sets `show_node_group_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSnapshotsMessage.show_node_group_config = Some(value.into());`.
+    pub fn show_node_group_config<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.show_node_group_config = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSnapshotsMessage.snapshot_name = Some(value.into());`.
+    pub fn snapshot_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_name = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_source`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSnapshotsMessage.snapshot_source = Some(value.into());`.
+    pub fn snapshot_source<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_source = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeSnapshotsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeSnapshotsMessage {
+        DescribeSnapshotsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeSnapshotsMessage` contents to a `SignedRequest`.
 struct DescribeSnapshotsMessageSerializer;
@@ -3834,7 +5020,6 @@ pub struct EC2SecurityGroup {
     #[doc="<p>The status of the Amazon EC2 security group.</p>"]
     pub status: Option<String>,
 }
-
 struct EC2SecurityGroupDeserializer;
 impl EC2SecurityGroupDeserializer {
     #[allow(unused_variables)]
@@ -3937,7 +5122,6 @@ pub struct Endpoint {
     #[doc="<p>The port number that the cache engine is listening on.</p>"]
     pub port: Option<i64>,
 }
-
 struct EndpointDeserializer;
 impl EndpointDeserializer {
     #[allow(unused_variables)]
@@ -3995,7 +5179,6 @@ pub struct EngineDefaults {
     #[doc="<p>Contains a list of engine default parameters.</p>"]
     pub parameters: Option<Vec<Parameter>>,
 }
-
 struct EngineDefaultsDeserializer;
 impl EngineDefaultsDeserializer {
     #[allow(unused_variables)]
@@ -4063,7 +5246,6 @@ pub struct Event {
     #[doc="<p>Specifies the origin of this event - a cache cluster, a parameter group, a security group, etc.</p>"]
     pub source_type: Option<String>,
 }
-
 struct EventDeserializer;
 impl EventDeserializer {
     #[allow(unused_variables)]
@@ -4168,7 +5350,6 @@ pub struct EventsMessage {
     #[doc="<p>Provides an identifier to allow retrieval of paginated results.</p>"]
     pub marker: Option<String>,
 }
-
 struct EventsMessageDeserializer;
 impl EventsMessageDeserializer {
     #[allow(unused_variables)]
@@ -4263,7 +5444,26 @@ pub struct ListAllowedNodeTypeModificationsMessage {
     #[doc="<p>The name of the replication group want to scale up to a larger node type. ElastiCache uses the replication group id to identify the current node type being used by this replication group, and from that to create a list of node types you can scale up to.</p> <important> <p>You must provide a value for either the <code>CacheClusterId</code> or the <code>ReplicationGroupId</code>.</p> </important>"]
     pub replication_group_id: Option<String>,
 }
-
+impl ListAllowedNodeTypeModificationsMessage {
+    /// Sets `cache_cluster_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAllowedNodeTypeModificationsMessage.cache_cluster_id = Some(value.into());`.
+    pub fn cache_cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_cluster_id = Some(value.into());
+        self
+    }
+    /// Sets `replication_group_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAllowedNodeTypeModificationsMessage.replication_group_id = Some(value.into());`.
+    pub fn replication_group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_group_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListAllowedNodeTypeModificationsMessage with optional fields set to `None`.
+    pub fn new() -> ListAllowedNodeTypeModificationsMessage {
+        ListAllowedNodeTypeModificationsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `ListAllowedNodeTypeModificationsMessage` contents to a `SignedRequest`.
 struct ListAllowedNodeTypeModificationsMessageSerializer;
@@ -4290,7 +5490,23 @@ pub struct ListTagsForResourceMessage {
     #[doc="<p>The Amazon Resource Name (ARN) of the resource for which you want the list of tags, for example <code>arn:aws:elasticache:us-west-2:0123456789:cluster:myCluster</code> or <code>arn:aws:elasticache:us-west-2:0123456789:snapshot:mySnapshot</code>.</p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a>.</p>"]
     pub resource_name: String,
 }
-
+impl ListTagsForResourceMessage {
+    /// Sets `resource_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForResourceMessage.resource_name = value.into();`.
+    pub fn resource_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListTagsForResourceMessage with optional fields set to `None`.
+    pub fn new<ResourceNameType: Into<String>>(resource_name: ResourceNameType)
+                                               -> ListTagsForResourceMessage {
+        ListTagsForResourceMessage {
+            resource_name: resource_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ListTagsForResourceMessage` contents to a `SignedRequest`.
 struct ListTagsForResourceMessageSerializer;
@@ -4344,7 +5560,143 @@ pub struct ModifyCacheClusterMessage {
     #[doc="<p>The daily time range (in UTC) during which ElastiCache begins taking a daily snapshot of your cache cluster. </p>"]
     pub snapshot_window: Option<String>,
 }
-
+impl ModifyCacheClusterMessage {
+    /// Sets `az_mode`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyCacheClusterMessage.az_mode = Some(value.into());`.
+    pub fn az_mode<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.az_mode = Some(value.into());
+        self
+    }
+    /// Sets `apply_immediately`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyCacheClusterMessage.apply_immediately = Some(value.into());`.
+    pub fn apply_immediately<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.apply_immediately = Some(value.into());
+        self
+    }
+    /// Sets `auto_minor_version_upgrade`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyCacheClusterMessage.auto_minor_version_upgrade = Some(value.into());`.
+    pub fn auto_minor_version_upgrade<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.auto_minor_version_upgrade = Some(value.into());
+        self
+    }
+    /// Sets `cache_cluster_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyCacheClusterMessage.cache_cluster_id = value.into();`.
+    pub fn cache_cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_cluster_id = value.into();
+        self
+    }
+    /// Sets `cache_node_ids_to_remove`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyCacheClusterMessage.cache_node_ids_to_remove = Some(value.into());`.
+    pub fn cache_node_ids_to_remove<ValueType: Into<Vec<String>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.cache_node_ids_to_remove = Some(value.into());
+        self
+    }
+    /// Sets `cache_node_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyCacheClusterMessage.cache_node_type = Some(value.into());`.
+    pub fn cache_node_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_node_type = Some(value.into());
+        self
+    }
+    /// Sets `cache_parameter_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyCacheClusterMessage.cache_parameter_group_name = Some(value.into());`.
+    pub fn cache_parameter_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_parameter_group_name = Some(value.into());
+        self
+    }
+    /// Sets `cache_security_group_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyCacheClusterMessage.cache_security_group_names = Some(value.into());`.
+    pub fn cache_security_group_names<ValueType: Into<Vec<String>>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.cache_security_group_names = Some(value.into());
+        self
+    }
+    /// Sets `engine_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyCacheClusterMessage.engine_version = Some(value.into());`.
+    pub fn engine_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine_version = Some(value.into());
+        self
+    }
+    /// Sets `new_availability_zones`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyCacheClusterMessage.new_availability_zones = Some(value.into());`.
+    pub fn new_availability_zones<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.new_availability_zones = Some(value.into());
+        self
+    }
+    /// Sets `notification_topic_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyCacheClusterMessage.notification_topic_arn = Some(value.into());`.
+    pub fn notification_topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.notification_topic_arn = Some(value.into());
+        self
+    }
+    /// Sets `notification_topic_status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyCacheClusterMessage.notification_topic_status = Some(value.into());`.
+    pub fn notification_topic_status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.notification_topic_status = Some(value.into());
+        self
+    }
+    /// Sets `num_cache_nodes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyCacheClusterMessage.num_cache_nodes = Some(value.into());`.
+    pub fn num_cache_nodes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.num_cache_nodes = Some(value.into());
+        self
+    }
+    /// Sets `preferred_maintenance_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyCacheClusterMessage.preferred_maintenance_window = Some(value.into());`.
+    pub fn preferred_maintenance_window<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.preferred_maintenance_window = Some(value.into());
+        self
+    }
+    /// Sets `security_group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyCacheClusterMessage.security_group_ids = Some(value.into());`.
+    pub fn security_group_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.security_group_ids = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_retention_limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyCacheClusterMessage.snapshot_retention_limit = Some(value.into());`.
+    pub fn snapshot_retention_limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.snapshot_retention_limit = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyCacheClusterMessage.snapshot_window = Some(value.into());`.
+    pub fn snapshot_window<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_window = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifyCacheClusterMessage with optional fields set to `None`.
+    pub fn new<CacheClusterIdType: Into<String>>(cache_cluster_id: CacheClusterIdType)
+                                                 -> ModifyCacheClusterMessage {
+        ModifyCacheClusterMessage {
+            cache_cluster_id: cache_cluster_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyCacheClusterMessage` contents to a `SignedRequest`.
 struct ModifyCacheClusterMessageSerializer;
@@ -4433,7 +5785,6 @@ impl ModifyCacheClusterMessageSerializer {
 pub struct ModifyCacheClusterResult {
     pub cache_cluster: Option<CacheCluster>,
 }
-
 struct ModifyCacheClusterResultDeserializer;
 impl ModifyCacheClusterResultDeserializer {
     #[allow(unused_variables)]
@@ -4485,7 +5836,36 @@ pub struct ModifyCacheParameterGroupMessage {
     #[doc="<p>An array of parameter names and values for the parameter update. You must supply at least one parameter name and value; subsequent arguments are optional. A maximum of 20 parameters may be modified per request.</p>"]
     pub parameter_name_values: Vec<ParameterNameValue>,
 }
-
+impl ModifyCacheParameterGroupMessage {
+    /// Sets `cache_parameter_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyCacheParameterGroupMessage.cache_parameter_group_name = value.into();`.
+    pub fn cache_parameter_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_parameter_group_name = value.into();
+        self
+    }
+    /// Sets `parameter_name_values`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyCacheParameterGroupMessage.parameter_name_values = value.into();`.
+    pub fn parameter_name_values<ValueType: Into<Vec<ParameterNameValue>>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.parameter_name_values = value.into();
+        self
+    }
+    /// Returns a new instance of ModifyCacheParameterGroupMessage with optional fields set to `None`.
+    pub fn new<CacheParameterGroupNameType: Into<String>,
+               ParameterNameValuesType: Into<Vec<ParameterNameValue>>>
+        (cache_parameter_group_name: CacheParameterGroupNameType,
+         parameter_name_values: ParameterNameValuesType)
+         -> ModifyCacheParameterGroupMessage {
+        ModifyCacheParameterGroupMessage {
+            cache_parameter_group_name: cache_parameter_group_name.into(),
+            parameter_name_values: parameter_name_values.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyCacheParameterGroupMessage` contents to a `SignedRequest`.
 struct ModifyCacheParameterGroupMessageSerializer;
@@ -4517,7 +5897,38 @@ pub struct ModifyCacheSubnetGroupMessage {
     #[doc="<p>The EC2 subnet IDs for the cache subnet group.</p>"]
     pub subnet_ids: Option<Vec<String>>,
 }
-
+impl ModifyCacheSubnetGroupMessage {
+    /// Sets `cache_subnet_group_description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyCacheSubnetGroupMessage.cache_subnet_group_description = Some(value.into());`.
+    pub fn cache_subnet_group_description<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.cache_subnet_group_description = Some(value.into());
+        self
+    }
+    /// Sets `cache_subnet_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyCacheSubnetGroupMessage.cache_subnet_group_name = value.into();`.
+    pub fn cache_subnet_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_subnet_group_name = value.into();
+        self
+    }
+    /// Sets `subnet_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyCacheSubnetGroupMessage.subnet_ids = Some(value.into());`.
+    pub fn subnet_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.subnet_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifyCacheSubnetGroupMessage with optional fields set to `None`.
+pub fn new<CacheSubnetGroupNameType: Into<String>>(cache_subnet_group_name: CacheSubnetGroupNameType) -> ModifyCacheSubnetGroupMessage{
+        ModifyCacheSubnetGroupMessage {
+            cache_subnet_group_name: cache_subnet_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyCacheSubnetGroupMessage` contents to a `SignedRequest`.
 struct ModifyCacheSubnetGroupMessageSerializer;
@@ -4547,7 +5958,6 @@ impl ModifyCacheSubnetGroupMessageSerializer {
 pub struct ModifyCacheSubnetGroupResult {
     pub cache_subnet_group: Option<CacheSubnetGroup>,
 }
-
 struct ModifyCacheSubnetGroupResultDeserializer;
 impl ModifyCacheSubnetGroupResultDeserializer {
     #[allow(unused_variables)]
@@ -4631,7 +6041,148 @@ pub struct ModifyReplicationGroupMessage {
     #[doc="<p>The cache cluster ID that is used as the daily snapshot source for the replication group. This parameter cannot be set for Redis (cluster mode enabled) replication groups.</p>"]
     pub snapshotting_cluster_id: Option<String>,
 }
-
+impl ModifyReplicationGroupMessage {
+    /// Sets `apply_immediately`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationGroupMessage.apply_immediately = Some(value.into());`.
+    pub fn apply_immediately<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.apply_immediately = Some(value.into());
+        self
+    }
+    /// Sets `auto_minor_version_upgrade`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationGroupMessage.auto_minor_version_upgrade = Some(value.into());`.
+    pub fn auto_minor_version_upgrade<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.auto_minor_version_upgrade = Some(value.into());
+        self
+    }
+    /// Sets `automatic_failover_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationGroupMessage.automatic_failover_enabled = Some(value.into());`.
+    pub fn automatic_failover_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.automatic_failover_enabled = Some(value.into());
+        self
+    }
+    /// Sets `cache_node_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationGroupMessage.cache_node_type = Some(value.into());`.
+    pub fn cache_node_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_node_type = Some(value.into());
+        self
+    }
+    /// Sets `cache_parameter_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationGroupMessage.cache_parameter_group_name = Some(value.into());`.
+    pub fn cache_parameter_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_parameter_group_name = Some(value.into());
+        self
+    }
+    /// Sets `cache_security_group_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationGroupMessage.cache_security_group_names = Some(value.into());`.
+    pub fn cache_security_group_names<ValueType: Into<Vec<String>>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.cache_security_group_names = Some(value.into());
+        self
+    }
+    /// Sets `engine_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationGroupMessage.engine_version = Some(value.into());`.
+    pub fn engine_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine_version = Some(value.into());
+        self
+    }
+    /// Sets `node_group_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationGroupMessage.node_group_id = Some(value.into());`.
+    pub fn node_group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.node_group_id = Some(value.into());
+        self
+    }
+    /// Sets `notification_topic_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationGroupMessage.notification_topic_arn = Some(value.into());`.
+    pub fn notification_topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.notification_topic_arn = Some(value.into());
+        self
+    }
+    /// Sets `notification_topic_status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationGroupMessage.notification_topic_status = Some(value.into());`.
+    pub fn notification_topic_status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.notification_topic_status = Some(value.into());
+        self
+    }
+    /// Sets `preferred_maintenance_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationGroupMessage.preferred_maintenance_window = Some(value.into());`.
+    pub fn preferred_maintenance_window<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.preferred_maintenance_window = Some(value.into());
+        self
+    }
+    /// Sets `primary_cluster_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationGroupMessage.primary_cluster_id = Some(value.into());`.
+    pub fn primary_cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.primary_cluster_id = Some(value.into());
+        self
+    }
+    /// Sets `replication_group_description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationGroupMessage.replication_group_description = Some(value.into());`.
+    pub fn replication_group_description<ValueType: Into<String>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.replication_group_description = Some(value.into());
+        self
+    }
+    /// Sets `replication_group_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationGroupMessage.replication_group_id = value.into();`.
+    pub fn replication_group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_group_id = value.into();
+        self
+    }
+    /// Sets `security_group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationGroupMessage.security_group_ids = Some(value.into());`.
+    pub fn security_group_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.security_group_ids = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_retention_limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationGroupMessage.snapshot_retention_limit = Some(value.into());`.
+    pub fn snapshot_retention_limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.snapshot_retention_limit = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationGroupMessage.snapshot_window = Some(value.into());`.
+    pub fn snapshot_window<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_window = Some(value.into());
+        self
+    }
+    /// Sets `snapshotting_cluster_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyReplicationGroupMessage.snapshotting_cluster_id = Some(value.into());`.
+    pub fn snapshotting_cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshotting_cluster_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifyReplicationGroupMessage with optional fields set to `None`.
+    pub fn new<ReplicationGroupIdType: Into<String>>(replication_group_id: ReplicationGroupIdType)
+                                                     -> ModifyReplicationGroupMessage {
+        ModifyReplicationGroupMessage {
+            replication_group_id: replication_group_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyReplicationGroupMessage` contents to a `SignedRequest`.
 struct ModifyReplicationGroupMessageSerializer;
@@ -4719,7 +6270,6 @@ impl ModifyReplicationGroupMessageSerializer {
 pub struct ModifyReplicationGroupResult {
     pub replication_group: Option<ReplicationGroup>,
 }
-
 struct ModifyReplicationGroupResultDeserializer;
 impl ModifyReplicationGroupResultDeserializer {
     #[allow(unused_variables)]
@@ -4777,7 +6327,6 @@ pub struct NodeGroup {
     #[doc="<p>The current state of this replication group - <code>creating</code>, <code>available</code>, etc.</p>"]
     pub status: Option<String>,
 }
-
 struct NodeGroupDeserializer;
 impl NodeGroupDeserializer {
     #[allow(unused_variables)]
@@ -4849,7 +6398,42 @@ pub struct NodeGroupConfiguration {
     #[doc="<p>A string that specifies the keyspace for a particular node group. Keyspaces range from 0 to 16,383. The string is in the format <code>startkey-endkey</code>.</p> <p>Example: <code>\"0-3999\"</code> </p>"]
     pub slots: Option<String>,
 }
-
+impl NodeGroupConfiguration {
+    /// Sets `primary_availability_zone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NodeGroupConfiguration.primary_availability_zone = Some(value.into());`.
+    pub fn primary_availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.primary_availability_zone = Some(value.into());
+        self
+    }
+    /// Sets `replica_availability_zones`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NodeGroupConfiguration.replica_availability_zones = Some(value.into());`.
+    pub fn replica_availability_zones<ValueType: Into<Vec<String>>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.replica_availability_zones = Some(value.into());
+        self
+    }
+    /// Sets `replica_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NodeGroupConfiguration.replica_count = Some(value.into());`.
+    pub fn replica_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.replica_count = Some(value.into());
+        self
+    }
+    /// Sets `slots`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NodeGroupConfiguration.slots = Some(value.into());`.
+    pub fn slots<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.slots = Some(value.into());
+        self
+    }
+    /// Returns a new instance of NodeGroupConfiguration with optional fields set to `None`.
+    pub fn new() -> NodeGroupConfiguration {
+        NodeGroupConfiguration { ..Default::default() }
+    }
+}
 struct NodeGroupConfigurationDeserializer;
 impl NodeGroupConfigurationDeserializer {
     #[allow(unused_variables)]
@@ -5004,7 +6588,6 @@ pub struct NodeGroupMember {
     pub preferred_availability_zone: Option<String>,
     pub read_endpoint: Option<Endpoint>,
 }
-
 struct NodeGroupMemberDeserializer;
 impl NodeGroupMemberDeserializer {
     #[allow(unused_variables)]
@@ -5126,7 +6709,6 @@ pub struct NodeSnapshot {
     #[doc="<p>The date and time when the source node's metadata and cache data set was obtained for the snapshot.</p>"]
     pub snapshot_create_time: Option<String>,
 }
-
 struct NodeSnapshotDeserializer;
 impl NodeSnapshotDeserializer {
     #[allow(unused_variables)]
@@ -5288,7 +6870,6 @@ pub struct NotificationConfiguration {
     #[doc="<p>The current state of the topic.</p>"]
     pub topic_status: Option<String>,
 }
-
 struct NotificationConfigurationDeserializer;
 impl NotificationConfigurationDeserializer {
     #[allow(unused_variables)]
@@ -5357,7 +6938,6 @@ pub struct Parameter {
     #[doc="<p>The source of the parameter.</p>"]
     pub source: Option<String>,
 }
-
 struct ParameterDeserializer;
 impl ParameterDeserializer {
     #[allow(unused_variables)]
@@ -5443,7 +7023,26 @@ pub struct ParameterNameValue {
     #[doc="<p>The value of the parameter.</p>"]
     pub parameter_value: Option<String>,
 }
-
+impl ParameterNameValue {
+    /// Sets `parameter_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ParameterNameValue.parameter_name = Some(value.into());`.
+    pub fn parameter_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.parameter_name = Some(value.into());
+        self
+    }
+    /// Sets `parameter_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ParameterNameValue.parameter_value = Some(value.into());`.
+    pub fn parameter_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.parameter_value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ParameterNameValue with optional fields set to `None`.
+    pub fn new() -> ParameterNameValue {
+        ParameterNameValue { ..Default::default() }
+    }
+}
 
 /// Serialize `ParameterNameValue` contents to a `SignedRequest`.
 struct ParameterNameValueSerializer;
@@ -5543,7 +7142,6 @@ pub struct PendingModifiedValues {
     #[doc="<p>The new number of cache nodes for the cache cluster.</p> <p>For clusters running Redis, this value must be 1. For clusters running Memcached, this value must be between 1 and 20.</p>"]
     pub num_cache_nodes: Option<i64>,
 }
-
 struct PendingModifiedValuesDeserializer;
 impl PendingModifiedValuesDeserializer {
     #[allow(unused_variables)]
@@ -5622,7 +7220,40 @@ pub struct PurchaseReservedCacheNodesOfferingMessage {
     #[doc="<p>The ID of the reserved cache node offering to purchase.</p> <p>Example: <code>438012d3-4052-4cc7-b2e3-8d3372e0e706</code> </p>"]
     pub reserved_cache_nodes_offering_id: String,
 }
-
+impl PurchaseReservedCacheNodesOfferingMessage {
+    /// Sets `cache_node_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseReservedCacheNodesOfferingMessage.cache_node_count = Some(value.into());`.
+    pub fn cache_node_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.cache_node_count = Some(value.into());
+        self
+    }
+    /// Sets `reserved_cache_node_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseReservedCacheNodesOfferingMessage.reserved_cache_node_id = Some(value.into());`.
+    pub fn reserved_cache_node_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reserved_cache_node_id = Some(value.into());
+        self
+    }
+    /// Sets `reserved_cache_nodes_offering_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseReservedCacheNodesOfferingMessage.reserved_cache_nodes_offering_id = value.into();`.
+    pub fn reserved_cache_nodes_offering_id<ValueType: Into<String>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.reserved_cache_nodes_offering_id = value.into();
+        self
+    }
+    /// Returns a new instance of PurchaseReservedCacheNodesOfferingMessage with optional fields set to `None`.
+    pub fn new<ReservedCacheNodesOfferingIdType: Into<String>>
+        (reserved_cache_nodes_offering_id: ReservedCacheNodesOfferingIdType)
+         -> PurchaseReservedCacheNodesOfferingMessage {
+        PurchaseReservedCacheNodesOfferingMessage {
+            reserved_cache_nodes_offering_id: reserved_cache_nodes_offering_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `PurchaseReservedCacheNodesOfferingMessage` contents to a `SignedRequest`.
 struct PurchaseReservedCacheNodesOfferingMessageSerializer;
@@ -5653,7 +7284,6 @@ impl PurchaseReservedCacheNodesOfferingMessageSerializer {
 pub struct PurchaseReservedCacheNodesOfferingResult {
     pub reserved_cache_node: Option<ReservedCacheNode>,
 }
-
 struct PurchaseReservedCacheNodesOfferingResultDeserializer;
 impl PurchaseReservedCacheNodesOfferingResultDeserializer {
     #[allow(unused_variables)]
@@ -5706,7 +7336,35 @@ pub struct RebootCacheClusterMessage {
     #[doc="<p>A list of cache node IDs to reboot. A node ID is a numeric identifier (0001, 0002, etc.). To reboot an entire cache cluster, specify all of the cache node IDs.</p>"]
     pub cache_node_ids_to_reboot: Vec<String>,
 }
-
+impl RebootCacheClusterMessage {
+    /// Sets `cache_cluster_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RebootCacheClusterMessage.cache_cluster_id = value.into();`.
+    pub fn cache_cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_cluster_id = value.into();
+        self
+    }
+    /// Sets `cache_node_ids_to_reboot`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RebootCacheClusterMessage.cache_node_ids_to_reboot = value.into();`.
+    pub fn cache_node_ids_to_reboot<ValueType: Into<Vec<String>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.cache_node_ids_to_reboot = value.into();
+        self
+    }
+    /// Returns a new instance of RebootCacheClusterMessage with optional fields set to `None`.
+    pub fn new<CacheClusterIdType: Into<String>, CacheNodeIdsToRebootType: Into<Vec<String>>>
+        (cache_cluster_id: CacheClusterIdType,
+         cache_node_ids_to_reboot: CacheNodeIdsToRebootType)
+         -> RebootCacheClusterMessage {
+        RebootCacheClusterMessage {
+            cache_cluster_id: cache_cluster_id.into(),
+            cache_node_ids_to_reboot: cache_node_ids_to_reboot.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RebootCacheClusterMessage` contents to a `SignedRequest`.
 struct RebootCacheClusterMessageSerializer;
@@ -5730,7 +7388,6 @@ impl RebootCacheClusterMessageSerializer {
 pub struct RebootCacheClusterResult {
     pub cache_cluster: Option<CacheCluster>,
 }
-
 struct RebootCacheClusterResultDeserializer;
 impl RebootCacheClusterResultDeserializer {
     #[allow(unused_variables)]
@@ -5782,7 +7439,6 @@ pub struct RecurringCharge {
     #[doc="<p>The frequency of the recurring charge.</p>"]
     pub recurring_charge_frequency: Option<String>,
 }
-
 struct RecurringChargeDeserializer;
 impl RecurringChargeDeserializer {
     #[allow(unused_variables)]
@@ -5881,7 +7537,33 @@ pub struct RemoveTagsFromResourceMessage {
     #[doc="<p>A list of <code>TagKeys</code> identifying the tags you want removed from the named resource.</p>"]
     pub tag_keys: Vec<String>,
 }
-
+impl RemoveTagsFromResourceMessage {
+    /// Sets `resource_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromResourceMessage.resource_name = value.into();`.
+    pub fn resource_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_name = value.into();
+        self
+    }
+    /// Sets `tag_keys`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromResourceMessage.tag_keys = value.into();`.
+    pub fn tag_keys<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tag_keys = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveTagsFromResourceMessage with optional fields set to `None`.
+    pub fn new<ResourceNameType: Into<String>, TagKeysType: Into<Vec<String>>>
+        (resource_name: ResourceNameType,
+         tag_keys: TagKeysType)
+         -> RemoveTagsFromResourceMessage {
+        RemoveTagsFromResourceMessage {
+            resource_name: resource_name.into(),
+            tag_keys: tag_keys.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RemoveTagsFromResourceMessage` contents to a `SignedRequest`.
 struct RemoveTagsFromResourceMessageSerializer;
@@ -5928,7 +7610,6 @@ pub struct ReplicationGroup {
     #[doc="<p>The current state of this replication group - <code>creating</code>, <code>available</code>, <code>modifying</code>, <code>deleting</code>, <code>create-failed</code>, <code>snapshotting</code>.</p>"]
     pub status: Option<String>,
 }
-
 struct ReplicationGroupDeserializer;
 impl ReplicationGroupDeserializer {
     #[allow(unused_variables)]
@@ -6077,7 +7758,6 @@ pub struct ReplicationGroupMessage {
     #[doc="<p>A list of replication groups. Each item in the list contains detailed information about one replication group.</p>"]
     pub replication_groups: Option<Vec<ReplicationGroup>>,
 }
-
 struct ReplicationGroupMessageDeserializer;
 impl ReplicationGroupMessageDeserializer {
     #[allow(unused_variables)]
@@ -6133,7 +7813,6 @@ pub struct ReplicationGroupPendingModifiedValues {
     #[doc="<p>The primary cluster ID that is applied immediately (if <code>--apply-immediately</code> was specified), or during the next maintenance window.</p>"]
     pub primary_cluster_id: Option<String>,
 }
-
 struct ReplicationGroupPendingModifiedValuesDeserializer;
 impl ReplicationGroupPendingModifiedValuesDeserializer {
     #[allow(unused_variables)]
@@ -6209,7 +7888,6 @@ pub struct ReservedCacheNode {
     #[doc="<p>The hourly price charged for this reserved cache node.</p>"]
     pub usage_price: Option<f64>,
 }
-
 struct ReservedCacheNodeDeserializer;
 impl ReservedCacheNodeDeserializer {
     #[allow(unused_variables)]
@@ -6349,7 +8027,6 @@ pub struct ReservedCacheNodeMessage {
     #[doc="<p>A list of reserved cache nodes. Each element in the list contains detailed information about one node.</p>"]
     pub reserved_cache_nodes: Option<Vec<ReservedCacheNode>>,
 }
-
 struct ReservedCacheNodeMessageDeserializer;
 impl ReservedCacheNodeMessageDeserializer {
     #[allow(unused_variables)]
@@ -6417,7 +8094,6 @@ pub struct ReservedCacheNodesOffering {
     #[doc="<p>The hourly price charged for this offering.</p>"]
     pub usage_price: Option<f64>,
 }
-
 struct ReservedCacheNodesOfferingDeserializer;
 impl ReservedCacheNodesOfferingDeserializer {
     #[allow(unused_variables)]
@@ -6541,7 +8217,6 @@ pub struct ReservedCacheNodesOfferingMessage {
     #[doc="<p>A list of reserved cache node offerings. Each element in the list contains detailed information about one offering.</p>"]
     pub reserved_cache_nodes_offerings: Option<Vec<ReservedCacheNodesOffering>>,
 }
-
 struct ReservedCacheNodesOfferingMessageDeserializer;
 impl ReservedCacheNodesOfferingMessageDeserializer {
     #[allow(unused_variables)]
@@ -6598,7 +8273,38 @@ pub struct ResetCacheParameterGroupMessage {
     #[doc="<p>If <code>true</code>, all parameters in the cache parameter group are reset to their default values. If <code>false</code>, only the parameters listed by <code>ParameterNameValues</code> are reset to their default values.</p> <p>Valid values: <code>true</code> | <code>false</code> </p>"]
     pub reset_all_parameters: Option<bool>,
 }
-
+impl ResetCacheParameterGroupMessage {
+    /// Sets `cache_parameter_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetCacheParameterGroupMessage.cache_parameter_group_name = value.into();`.
+    pub fn cache_parameter_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_parameter_group_name = value.into();
+        self
+    }
+    /// Sets `parameter_name_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetCacheParameterGroupMessage.parameter_name_values = Some(value.into());`.
+    pub fn parameter_name_values<ValueType: Into<Vec<ParameterNameValue>>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.parameter_name_values = Some(value.into());
+        self
+    }
+    /// Sets `reset_all_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetCacheParameterGroupMessage.reset_all_parameters = Some(value.into());`.
+    pub fn reset_all_parameters<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.reset_all_parameters = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ResetCacheParameterGroupMessage with optional fields set to `None`.
+pub fn new<CacheParameterGroupNameType: Into<String>>(cache_parameter_group_name: CacheParameterGroupNameType) -> ResetCacheParameterGroupMessage{
+        ResetCacheParameterGroupMessage {
+            cache_parameter_group_name: cache_parameter_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ResetCacheParameterGroupMessage` contents to a `SignedRequest`.
 struct ResetCacheParameterGroupMessageSerializer;
@@ -6636,7 +8342,46 @@ pub struct RevokeCacheSecurityGroupIngressMessage {
     #[doc="<p>The AWS account number of the Amazon EC2 security group owner. Note that this is not the same thing as an AWS access key ID - you must provide a valid AWS account number for this parameter.</p>"]
     pub ec2_security_group_owner_id: String,
 }
-
+impl RevokeCacheSecurityGroupIngressMessage {
+    /// Sets `cache_security_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeCacheSecurityGroupIngressMessage.cache_security_group_name = value.into();`.
+    pub fn cache_security_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_security_group_name = value.into();
+        self
+    }
+    /// Sets `ec2_security_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeCacheSecurityGroupIngressMessage.ec2_security_group_name = value.into();`.
+    pub fn ec2_security_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ec2_security_group_name = value.into();
+        self
+    }
+    /// Sets `ec2_security_group_owner_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeCacheSecurityGroupIngressMessage.ec2_security_group_owner_id = value.into();`.
+    pub fn ec2_security_group_owner_id<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.ec2_security_group_owner_id = value.into();
+        self
+    }
+    /// Returns a new instance of RevokeCacheSecurityGroupIngressMessage with optional fields set to `None`.
+    pub fn new<CacheSecurityGroupNameType: Into<String>,
+               EC2SecurityGroupNameType: Into<String>,
+               EC2SecurityGroupOwnerIdType: Into<String>>
+        (cache_security_group_name: CacheSecurityGroupNameType,
+         ec2_security_group_name: EC2SecurityGroupNameType,
+         ec2_security_group_owner_id: EC2SecurityGroupOwnerIdType)
+         -> RevokeCacheSecurityGroupIngressMessage {
+        RevokeCacheSecurityGroupIngressMessage {
+            cache_security_group_name: cache_security_group_name.into(),
+            ec2_security_group_name: ec2_security_group_name.into(),
+            ec2_security_group_owner_id: ec2_security_group_owner_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RevokeCacheSecurityGroupIngressMessage` contents to a `SignedRequest`.
 struct RevokeCacheSecurityGroupIngressMessageSerializer;
@@ -6661,7 +8406,6 @@ impl RevokeCacheSecurityGroupIngressMessageSerializer {
 pub struct RevokeCacheSecurityGroupIngressResult {
     pub cache_security_group: Option<CacheSecurityGroup>,
 }
-
 struct RevokeCacheSecurityGroupIngressResultDeserializer;
 impl RevokeCacheSecurityGroupIngressResultDeserializer {
     #[allow(unused_variables)]
@@ -6726,7 +8470,6 @@ pub struct SecurityGroupMembership {
     #[doc="<p>The status of the cache security group membership. The status changes whenever a cache security group is modified, or when the cache security groups assigned to a cache cluster are modified.</p>"]
     pub status: Option<String>,
 }
-
 struct SecurityGroupMembershipDeserializer;
 impl SecurityGroupMembershipDeserializer {
     #[allow(unused_variables)]
@@ -6868,7 +8611,6 @@ pub struct Snapshot {
     #[doc="<p>The Amazon Virtual Private Cloud identifier (VPC ID) of the cache subnet group for the source cache cluster.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct SnapshotDeserializer;
 impl SnapshotDeserializer {
     #[allow(unused_variables)]
@@ -7109,7 +8851,6 @@ pub struct Subnet {
     #[doc="<p>The unique identifier for the subnet.</p>"]
     pub subnet_identifier: Option<String>,
 }
-
 struct SubnetDeserializer;
 impl SubnetDeserializer {
     #[allow(unused_variables)]
@@ -7233,7 +8974,26 @@ pub struct Tag {
     #[doc="<p>The tag's value. May be null.</p>"]
     pub value: Option<String>,
 }
-
+impl Tag {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new() -> Tag {
+        Tag { ..Default::default() }
+    }
+}
 struct TagDeserializer;
 impl TagDeserializer {
     #[allow(unused_variables)]
@@ -7357,7 +9117,6 @@ pub struct TagListMessage {
     #[doc="<p>A list of cost allocation tags as key-value pairs.</p>"]
     pub tag_list: Option<Vec<Tag>>,
 }
-
 struct TagListMessageDeserializer;
 impl TagListMessageDeserializer {
     #[allow(unused_variables)]
@@ -7407,7 +9166,33 @@ pub struct TestFailoverMessage {
     #[doc="<p>The name of the replication group (console: cluster) whose automatic failover is being tested by this operation.</p>"]
     pub replication_group_id: String,
 }
-
+impl TestFailoverMessage {
+    /// Sets `node_group_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestFailoverMessage.node_group_id = value.into();`.
+    pub fn node_group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.node_group_id = value.into();
+        self
+    }
+    /// Sets `replication_group_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestFailoverMessage.replication_group_id = value.into();`.
+    pub fn replication_group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_group_id = value.into();
+        self
+    }
+    /// Returns a new instance of TestFailoverMessage with optional fields set to `None`.
+    pub fn new<NodeGroupIdType: Into<String>, ReplicationGroupIdType: Into<String>>
+        (node_group_id: NodeGroupIdType,
+         replication_group_id: ReplicationGroupIdType)
+         -> TestFailoverMessage {
+        TestFailoverMessage {
+            node_group_id: node_group_id.into(),
+            replication_group_id: replication_group_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `TestFailoverMessage` contents to a `SignedRequest`.
 struct TestFailoverMessageSerializer;
@@ -7429,7 +9214,6 @@ impl TestFailoverMessageSerializer {
 pub struct TestFailoverResult {
     pub replication_group: Option<ReplicationGroup>,
 }
-
 struct TestFailoverResultDeserializer;
 impl TestFailoverResultDeserializer {
     #[allow(unused_variables)]

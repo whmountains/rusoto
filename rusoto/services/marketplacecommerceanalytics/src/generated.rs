@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -55,7 +56,81 @@ pub struct GenerateDataSetRequest {
     #[serde(rename="snsTopicArn")]
     pub sns_topic_arn: String,
 }
-
+impl GenerateDataSetRequest {
+    /// Sets `customer_defined_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GenerateDataSetRequest.customer_defined_values = Some(value.into());`.
+    pub fn customer_defined_values<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.customer_defined_values = Some(value.into());
+        self
+    }
+    /// Sets `data_set_publication_date`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GenerateDataSetRequest.data_set_publication_date = value.into();`.
+    pub fn data_set_publication_date<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.data_set_publication_date = value.into();
+        self
+    }
+    /// Sets `data_set_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GenerateDataSetRequest.data_set_type = value.into();`.
+    pub fn data_set_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_set_type = value.into();
+        self
+    }
+    /// Sets `destination_s3_bucket_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GenerateDataSetRequest.destination_s3_bucket_name = value.into();`.
+    pub fn destination_s3_bucket_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination_s3_bucket_name = value.into();
+        self
+    }
+    /// Sets `destination_s3_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GenerateDataSetRequest.destination_s3_prefix = Some(value.into());`.
+    pub fn destination_s3_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination_s3_prefix = Some(value.into());
+        self
+    }
+    /// Sets `role_name_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GenerateDataSetRequest.role_name_arn = value.into();`.
+    pub fn role_name_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_name_arn = value.into();
+        self
+    }
+    /// Sets `sns_topic_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GenerateDataSetRequest.sns_topic_arn = value.into();`.
+    pub fn sns_topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sns_topic_arn = value.into();
+        self
+    }
+    /// Returns a new instance of GenerateDataSetRequest with optional fields set to `None`.
+    pub fn new<dataSetPublicationDateType: Into<f64>,
+               dataSetTypeType: Into<String>,
+               destinationS3BucketNameType: Into<String>,
+               roleNameArnType: Into<String>,
+               snsTopicArnType: Into<String>>
+        (data_set_publication_date: dataSetPublicationDateType,
+         data_set_type: dataSetTypeType,
+         destination_s3_bucket_name: destinationS3BucketNameType,
+         role_name_arn: roleNameArnType,
+         sns_topic_arn: snsTopicArnType)
+         -> GenerateDataSetRequest {
+        GenerateDataSetRequest {
+            data_set_publication_date: data_set_publication_date.into(),
+            data_set_type: data_set_type.into(),
+            destination_s3_bucket_name: destination_s3_bucket_name.into(),
+            role_name_arn: role_name_arn.into(),
+            sns_topic_arn: sns_topic_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="Container for the result of the GenerateDataSet operation."]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GenerateDataSetResult {
@@ -64,7 +139,6 @@ pub struct GenerateDataSetResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub data_set_request_id: Option<String>,
 }
-
 #[doc="Container for the parameters to the StartSupportDataExport operation."]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartSupportDataExportRequest {
@@ -92,7 +166,81 @@ pub struct StartSupportDataExportRequest {
     #[serde(rename="snsTopicArn")]
     pub sns_topic_arn: String,
 }
-
+impl StartSupportDataExportRequest {
+    /// Sets `customer_defined_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartSupportDataExportRequest.customer_defined_values = Some(value.into());`.
+    pub fn customer_defined_values<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.customer_defined_values = Some(value.into());
+        self
+    }
+    /// Sets `data_set_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartSupportDataExportRequest.data_set_type = value.into();`.
+    pub fn data_set_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_set_type = value.into();
+        self
+    }
+    /// Sets `destination_s3_bucket_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartSupportDataExportRequest.destination_s3_bucket_name = value.into();`.
+    pub fn destination_s3_bucket_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination_s3_bucket_name = value.into();
+        self
+    }
+    /// Sets `destination_s3_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartSupportDataExportRequest.destination_s3_prefix = Some(value.into());`.
+    pub fn destination_s3_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination_s3_prefix = Some(value.into());
+        self
+    }
+    /// Sets `from_date`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartSupportDataExportRequest.from_date = value.into();`.
+    pub fn from_date<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.from_date = value.into();
+        self
+    }
+    /// Sets `role_name_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartSupportDataExportRequest.role_name_arn = value.into();`.
+    pub fn role_name_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_name_arn = value.into();
+        self
+    }
+    /// Sets `sns_topic_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartSupportDataExportRequest.sns_topic_arn = value.into();`.
+    pub fn sns_topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sns_topic_arn = value.into();
+        self
+    }
+    /// Returns a new instance of StartSupportDataExportRequest with optional fields set to `None`.
+    pub fn new<dataSetTypeType: Into<String>,
+               destinationS3BucketNameType: Into<String>,
+               fromDateType: Into<f64>,
+               roleNameArnType: Into<String>,
+               snsTopicArnType: Into<String>>
+        (data_set_type: dataSetTypeType,
+         destination_s3_bucket_name: destinationS3BucketNameType,
+         from_date: fromDateType,
+         role_name_arn: roleNameArnType,
+         sns_topic_arn: snsTopicArnType)
+         -> StartSupportDataExportRequest {
+        StartSupportDataExportRequest {
+            data_set_type: data_set_type.into(),
+            destination_s3_bucket_name: destination_s3_bucket_name.into(),
+            from_date: from_date.into(),
+            role_name_arn: role_name_arn.into(),
+            sns_topic_arn: sns_topic_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="Container for the result of the StartSupportDataExport operation."]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartSupportDataExportResult {
@@ -101,7 +249,6 @@ pub struct StartSupportDataExportResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub data_set_request_id: Option<String>,
 }
-
 /// Errors returned by GenerateDataSet
 #[derive(Debug, PartialEq)]
 pub enum GenerateDataSetError {

@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -44,7 +45,6 @@ pub struct AccountAttribute {
     #[serde(skip_serializing_if="Option::is_none")]
     pub used: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AssociateNodeRequest {
     #[doc="<p>Engine attributes used for associating the node. </p> <p class=\"title\"> <b>Attributes accepted in a AssociateNode request:</b> </p> <ul> <li> <p> <code>CHEF_ORGANIZATION</code>: The Chef organization with which the node is associated. By default only one organization named <code>default</code> can exist. </p> </li> <li> <p> <code>CHEF_NODE_PUBLIC_KEY</code>: A PEM-formatted public key. This key is required for the <code>chef-client</code> agent to access the Chef API. </p> </li> </ul>"]
@@ -57,7 +57,46 @@ pub struct AssociateNodeRequest {
     #[serde(rename="ServerName")]
     pub server_name: String,
 }
-
+impl AssociateNodeRequest {
+    /// Sets `engine_attributes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateNodeRequest.engine_attributes = value.into();`.
+    pub fn engine_attributes<ValueType: Into<Vec<EngineAttribute>>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.engine_attributes = value.into();
+        self
+    }
+    /// Sets `node_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateNodeRequest.node_name = value.into();`.
+    pub fn node_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.node_name = value.into();
+        self
+    }
+    /// Sets `server_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateNodeRequest.server_name = value.into();`.
+    pub fn server_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_name = value.into();
+        self
+    }
+    /// Returns a new instance of AssociateNodeRequest with optional fields set to `None`.
+    pub fn new<EngineAttributesType: Into<Vec<EngineAttribute>>,
+               NodeNameType: Into<String>,
+               ServerNameType: Into<String>>
+        (engine_attributes: EngineAttributesType,
+         node_name: NodeNameType,
+         server_name: ServerNameType)
+         -> AssociateNodeRequest {
+        AssociateNodeRequest {
+            engine_attributes: engine_attributes.into(),
+            node_name: node_name.into(),
+            server_name: server_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AssociateNodeResponse {
     #[doc="<p>Contains a token which can be passed to the <code>DescribeNodeAssociationStatus</code> API call to get the status of the association request. </p>"]
@@ -65,7 +104,6 @@ pub struct AssociateNodeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub node_association_status_token: Option<String>,
 }
-
 #[doc="<p>Describes a single backup. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Backup {
@@ -158,7 +196,6 @@ pub struct Backup {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateBackupRequest {
     #[doc="<p> A user-defined description of the backup. </p>"]
@@ -169,7 +206,29 @@ pub struct CreateBackupRequest {
     #[serde(rename="ServerName")]
     pub server_name: String,
 }
-
+impl CreateBackupRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBackupRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `server_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBackupRequest.server_name = value.into();`.
+    pub fn server_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateBackupRequest with optional fields set to `None`.
+    pub fn new<ServerNameType: Into<String>>(server_name: ServerNameType) -> CreateBackupRequest {
+        CreateBackupRequest {
+            server_name: server_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateBackupResponse {
     #[doc="<p>Backup created by request.</p>"]
@@ -177,7 +236,6 @@ pub struct CreateBackupResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub backup: Option<Backup>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateServerRequest {
     #[doc="<p> Associate a public IP address with a server that you are launching. Valid values are <code>true</code> or <code>false</code>. The default value is <code>true</code>. </p>"]
@@ -245,7 +303,149 @@ pub struct CreateServerRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub subnet_ids: Option<Vec<String>>,
 }
-
+impl CreateServerRequest {
+    /// Sets `associate_public_ip_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServerRequest.associate_public_ip_address = Some(value.into());`.
+    pub fn associate_public_ip_address<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.associate_public_ip_address = Some(value.into());
+        self
+    }
+    /// Sets `backup_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServerRequest.backup_id = Some(value.into());`.
+    pub fn backup_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.backup_id = Some(value.into());
+        self
+    }
+    /// Sets `backup_retention_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServerRequest.backup_retention_count = Some(value.into());`.
+    pub fn backup_retention_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.backup_retention_count = Some(value.into());
+        self
+    }
+    /// Sets `disable_automated_backup`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServerRequest.disable_automated_backup = Some(value.into());`.
+    pub fn disable_automated_backup<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.disable_automated_backup = Some(value.into());
+        self
+    }
+    /// Sets `engine`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServerRequest.engine = Some(value.into());`.
+    pub fn engine<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine = Some(value.into());
+        self
+    }
+    /// Sets `engine_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServerRequest.engine_attributes = Some(value.into());`.
+    pub fn engine_attributes<ValueType: Into<Vec<EngineAttribute>>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.engine_attributes = Some(value.into());
+        self
+    }
+    /// Sets `engine_model`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServerRequest.engine_model = Some(value.into());`.
+    pub fn engine_model<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine_model = Some(value.into());
+        self
+    }
+    /// Sets `engine_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServerRequest.engine_version = Some(value.into());`.
+    pub fn engine_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine_version = Some(value.into());
+        self
+    }
+    /// Sets `instance_profile_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServerRequest.instance_profile_arn = value.into();`.
+    pub fn instance_profile_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_profile_arn = value.into();
+        self
+    }
+    /// Sets `instance_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServerRequest.instance_type = value.into();`.
+    pub fn instance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_type = value.into();
+        self
+    }
+    /// Sets `key_pair`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServerRequest.key_pair = Some(value.into());`.
+    pub fn key_pair<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_pair = Some(value.into());
+        self
+    }
+    /// Sets `preferred_backup_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServerRequest.preferred_backup_window = Some(value.into());`.
+    pub fn preferred_backup_window<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.preferred_backup_window = Some(value.into());
+        self
+    }
+    /// Sets `preferred_maintenance_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServerRequest.preferred_maintenance_window = Some(value.into());`.
+    pub fn preferred_maintenance_window<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.preferred_maintenance_window = Some(value.into());
+        self
+    }
+    /// Sets `security_group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServerRequest.security_group_ids = Some(value.into());`.
+    pub fn security_group_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.security_group_ids = Some(value.into());
+        self
+    }
+    /// Sets `server_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServerRequest.server_name = value.into();`.
+    pub fn server_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_name = value.into();
+        self
+    }
+    /// Sets `service_role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServerRequest.service_role_arn = value.into();`.
+    pub fn service_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_role_arn = value.into();
+        self
+    }
+    /// Sets `subnet_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServerRequest.subnet_ids = Some(value.into());`.
+    pub fn subnet_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.subnet_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateServerRequest with optional fields set to `None`.
+    pub fn new<InstanceProfileArnType: Into<String>,
+               InstanceTypeType: Into<String>,
+               ServerNameType: Into<String>,
+               ServiceRoleArnType: Into<String>>
+        (instance_profile_arn: InstanceProfileArnType,
+         instance_type: InstanceTypeType,
+         server_name: ServerNameType,
+         service_role_arn: ServiceRoleArnType)
+         -> CreateServerRequest {
+        CreateServerRequest {
+            instance_profile_arn: instance_profile_arn.into(),
+            instance_type: instance_type.into(),
+            server_name: server_name.into(),
+            service_role_arn: service_role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateServerResponse {
     #[doc="<p>The server that is created by the request. </p>"]
@@ -253,14 +453,28 @@ pub struct CreateServerResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub server: Option<Server>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteBackupRequest {
     #[doc="<p>The ID of the backup to delete. Run the DescribeBackups command to get a list of backup IDs. Backup IDs are in the format <code>ServerName-yyyyMMddHHmmssSSS</code>. </p>"]
     #[serde(rename="BackupId")]
     pub backup_id: String,
 }
-
+impl DeleteBackupRequest {
+    /// Sets `backup_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBackupRequest.backup_id = value.into();`.
+    pub fn backup_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.backup_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteBackupRequest with optional fields set to `None`.
+    pub fn new<BackupIdType: Into<String>>(backup_id: BackupIdType) -> DeleteBackupRequest {
+        DeleteBackupRequest {
+            backup_id: backup_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteBackupResponse;
 
@@ -270,7 +484,22 @@ pub struct DeleteServerRequest {
     #[serde(rename="ServerName")]
     pub server_name: String,
 }
-
+impl DeleteServerRequest {
+    /// Sets `server_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteServerRequest.server_name = value.into();`.
+    pub fn server_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteServerRequest with optional fields set to `None`.
+    pub fn new<ServerNameType: Into<String>>(server_name: ServerNameType) -> DeleteServerRequest {
+        DeleteServerRequest {
+            server_name: server_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteServerResponse;
 
@@ -284,7 +513,6 @@ pub struct DescribeAccountAttributesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub attributes: Option<Vec<AccountAttribute>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeBackupsRequest {
     #[doc="<p>Describes a single backup. </p>"]
@@ -304,7 +532,40 @@ pub struct DescribeBackupsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub server_name: Option<String>,
 }
-
+impl DescribeBackupsRequest {
+    /// Sets `backup_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeBackupsRequest.backup_id = Some(value.into());`.
+    pub fn backup_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.backup_id = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeBackupsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeBackupsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `server_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeBackupsRequest.server_name = Some(value.into());`.
+    pub fn server_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeBackupsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeBackupsRequest {
+        DescribeBackupsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeBackupsResponse {
     #[doc="<p>Contains the response to a <code>DescribeBackups</code> request. </p>"]
@@ -316,7 +577,6 @@ pub struct DescribeBackupsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeEventsRequest {
     #[doc="<p>To receive a paginated response, use this parameter to specify the maximum number of results to be returned with a single call. If the number of available results exceeds this maximum, the response includes a <code>NextToken</code> value that you can assign to the <code>NextToken</code> request parameter to get the next set of results. </p>"]
@@ -331,7 +591,36 @@ pub struct DescribeEventsRequest {
     #[serde(rename="ServerName")]
     pub server_name: String,
 }
-
+impl DescribeEventsRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `server_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsRequest.server_name = value.into();`.
+    pub fn server_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeEventsRequest with optional fields set to `None`.
+    pub fn new<ServerNameType: Into<String>>(server_name: ServerNameType) -> DescribeEventsRequest {
+        DescribeEventsRequest {
+            server_name: server_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeEventsResponse {
     #[doc="<p>NextToken is a string that is returned in some command responses. It indicates that not all entries have been returned, and that you must run at least one more request to get remaining items. To get remaining results, call <code>DescribeEvents</code> again, and assign the token from the previous results as the value of the <code>nextToken</code> parameter. If there are no more results, the response object's <code>nextToken</code> parameter value is <code>null</code>. Setting a <code>nextToken</code> value that was not returned in your previous results causes an <code>InvalidNextTokenException</code> to occur. </p>"]
@@ -343,7 +632,6 @@ pub struct DescribeEventsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub server_events: Option<Vec<ServerEvent>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeNodeAssociationStatusRequest {
     #[serde(rename="NodeAssociationStatusToken")]
@@ -352,7 +640,35 @@ pub struct DescribeNodeAssociationStatusRequest {
     #[serde(rename="ServerName")]
     pub server_name: String,
 }
-
+impl DescribeNodeAssociationStatusRequest {
+    /// Sets `node_association_status_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNodeAssociationStatusRequest.node_association_status_token = value.into();`.
+    pub fn node_association_status_token<ValueType: Into<String>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.node_association_status_token = value.into();
+        self
+    }
+    /// Sets `server_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNodeAssociationStatusRequest.server_name = value.into();`.
+    pub fn server_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeNodeAssociationStatusRequest with optional fields set to `None`.
+    pub fn new<NodeAssociationStatusTokenType: Into<String>, ServerNameType: Into<String>>
+        (node_association_status_token: NodeAssociationStatusTokenType,
+         server_name: ServerNameType)
+         -> DescribeNodeAssociationStatusRequest {
+        DescribeNodeAssociationStatusRequest {
+            node_association_status_token: node_association_status_token.into(),
+            server_name: server_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeNodeAssociationStatusResponse {
     #[doc="<p>The status of the association or disassociation request. </p> <p class=\"title\"> <b>Possible values:</b> </p> <ul> <li> <p> <code>SUCCESS</code>: The association or disassociation succeeded. </p> </li> <li> <p> <code>FAILED</code>: The association or disassociation failed. </p> </li> <li> <p> <code>IN_PROGRESS</code>: The association or disassociation is still in progress. </p> </li> </ul>"]
@@ -360,7 +676,6 @@ pub struct DescribeNodeAssociationStatusResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub node_association_status: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeServersRequest {
     #[doc="<p>To receive a paginated response, use this parameter to specify the maximum number of results to be returned with a single call. If the number of available results exceeds this maximum, the response includes a <code>NextToken</code> value that you can assign to the <code>NextToken</code> request parameter to get the next set of results. </p>"]
@@ -376,7 +691,33 @@ pub struct DescribeServersRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub server_name: Option<String>,
 }
-
+impl DescribeServersRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeServersRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeServersRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `server_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeServersRequest.server_name = Some(value.into());`.
+    pub fn server_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeServersRequest with optional fields set to `None`.
+    pub fn new() -> DescribeServersRequest {
+        DescribeServersRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeServersResponse {
     #[doc="<p>NextToken is a string that is returned in some command responses. It indicates that not all entries have been returned, and that you must run at least one more request to get remaining items. To get remaining results, call <code>DescribeServers</code> again, and assign the token from the previous results as the value of the <code>nextToken</code> parameter. If there are no more results, the response object's <code>nextToken</code> parameter value is <code>null</code>. Setting a <code>nextToken</code> value that was not returned in your previous results causes an <code>InvalidNextTokenException</code> to occur. </p>"]
@@ -388,7 +729,6 @@ pub struct DescribeServersResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub servers: Option<Vec<Server>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DisassociateNodeRequest {
     #[doc="<p>Engine attributes used for disassociating the node. </p> <p class=\"title\"> <b>Attributes accepted in a DisassociateNode request:</b> </p> <ul> <li> <p> <code>CHEF_ORGANIZATION</code>: The Chef organization with which the node was associated. By default only one organization named <code>default</code> can exist. </p> </li> </ul>"]
@@ -402,7 +742,42 @@ pub struct DisassociateNodeRequest {
     #[serde(rename="ServerName")]
     pub server_name: String,
 }
-
+impl DisassociateNodeRequest {
+    /// Sets `engine_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateNodeRequest.engine_attributes = Some(value.into());`.
+    pub fn engine_attributes<ValueType: Into<Vec<EngineAttribute>>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.engine_attributes = Some(value.into());
+        self
+    }
+    /// Sets `node_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateNodeRequest.node_name = value.into();`.
+    pub fn node_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.node_name = value.into();
+        self
+    }
+    /// Sets `server_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateNodeRequest.server_name = value.into();`.
+    pub fn server_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_name = value.into();
+        self
+    }
+    /// Returns a new instance of DisassociateNodeRequest with optional fields set to `None`.
+    pub fn new<NodeNameType: Into<String>, ServerNameType: Into<String>>
+        (node_name: NodeNameType,
+         server_name: ServerNameType)
+         -> DisassociateNodeRequest {
+        DisassociateNodeRequest {
+            node_name: node_name.into(),
+            server_name: server_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DisassociateNodeResponse {
     #[doc="<p>Contains a token which can be passed to the <code>DescribeNodeAssociationStatus</code> API call to get the status of the disassociation request. </p>"]
@@ -410,7 +785,6 @@ pub struct DisassociateNodeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub node_association_status_token: Option<String>,
 }
-
 #[doc="<p>A name and value pair that is specific to the engine of the server. </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct EngineAttribute {
@@ -423,7 +797,26 @@ pub struct EngineAttribute {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl EngineAttribute {
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EngineAttribute.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EngineAttribute.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of EngineAttribute with optional fields set to `None`.
+    pub fn new() -> EngineAttribute {
+        EngineAttribute { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RestoreServerRequest {
     #[doc="<p> The ID of the backup that you want to use to restore a server. </p>"]
@@ -441,7 +834,47 @@ pub struct RestoreServerRequest {
     #[serde(rename="ServerName")]
     pub server_name: String,
 }
-
+impl RestoreServerRequest {
+    /// Sets `backup_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreServerRequest.backup_id = value.into();`.
+    pub fn backup_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.backup_id = value.into();
+        self
+    }
+    /// Sets `instance_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreServerRequest.instance_type = Some(value.into());`.
+    pub fn instance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_type = Some(value.into());
+        self
+    }
+    /// Sets `key_pair`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreServerRequest.key_pair = Some(value.into());`.
+    pub fn key_pair<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_pair = Some(value.into());
+        self
+    }
+    /// Sets `server_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreServerRequest.server_name = value.into();`.
+    pub fn server_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_name = value.into();
+        self
+    }
+    /// Returns a new instance of RestoreServerRequest with optional fields set to `None`.
+    pub fn new<BackupIdType: Into<String>, ServerNameType: Into<String>>
+        (backup_id: BackupIdType,
+         server_name: ServerNameType)
+         -> RestoreServerRequest {
+        RestoreServerRequest {
+            backup_id: backup_id.into(),
+            server_name: server_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RestoreServerResponse;
 
@@ -541,7 +974,6 @@ pub struct Server {
     #[serde(skip_serializing_if="Option::is_none")]
     pub subnet_ids: Option<Vec<String>>,
 }
-
 #[doc="<p>An event that is related to the server, such as the start of maintenance or backup. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ServerEvent {
@@ -562,14 +994,29 @@ pub struct ServerEvent {
     #[serde(skip_serializing_if="Option::is_none")]
     pub server_name: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartMaintenanceRequest {
     #[doc="<p>The name of the server on which to run maintenance. </p>"]
     #[serde(rename="ServerName")]
     pub server_name: String,
 }
-
+impl StartMaintenanceRequest {
+    /// Sets `server_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartMaintenanceRequest.server_name = value.into();`.
+    pub fn server_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_name = value.into();
+        self
+    }
+    /// Returns a new instance of StartMaintenanceRequest with optional fields set to `None`.
+    pub fn new<ServerNameType: Into<String>>(server_name: ServerNameType)
+                                             -> StartMaintenanceRequest {
+        StartMaintenanceRequest {
+            server_name: server_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartMaintenanceResponse {
     #[doc="<p>Contains the response to a <code>StartMaintenance</code> request. </p>"]
@@ -577,7 +1024,6 @@ pub struct StartMaintenanceResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub server: Option<Server>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateServerEngineAttributesRequest {
     #[doc="<p>The name of the engine attribute to update. </p>"]
@@ -591,7 +1037,40 @@ pub struct UpdateServerEngineAttributesRequest {
     #[serde(rename="ServerName")]
     pub server_name: String,
 }
-
+impl UpdateServerEngineAttributesRequest {
+    /// Sets `attribute_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateServerEngineAttributesRequest.attribute_name = value.into();`.
+    pub fn attribute_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute_name = value.into();
+        self
+    }
+    /// Sets `attribute_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateServerEngineAttributesRequest.attribute_value = Some(value.into());`.
+    pub fn attribute_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute_value = Some(value.into());
+        self
+    }
+    /// Sets `server_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateServerEngineAttributesRequest.server_name = value.into();`.
+    pub fn server_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateServerEngineAttributesRequest with optional fields set to `None`.
+    pub fn new<AttributeNameType: Into<String>, ServerNameType: Into<String>>
+        (attribute_name: AttributeNameType,
+         server_name: ServerNameType)
+         -> UpdateServerEngineAttributesRequest {
+        UpdateServerEngineAttributesRequest {
+            attribute_name: attribute_name.into(),
+            server_name: server_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateServerEngineAttributesResponse {
     #[doc="<p>Contains the response to an <code>UpdateServerEngineAttributes</code> request. </p>"]
@@ -599,7 +1078,6 @@ pub struct UpdateServerEngineAttributesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub server: Option<Server>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateServerRequest {
     #[doc="<p>Sets the number of automated backups that you want to keep. </p>"]
@@ -620,7 +1098,52 @@ pub struct UpdateServerRequest {
     #[serde(rename="ServerName")]
     pub server_name: String,
 }
-
+impl UpdateServerRequest {
+    /// Sets `backup_retention_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateServerRequest.backup_retention_count = Some(value.into());`.
+    pub fn backup_retention_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.backup_retention_count = Some(value.into());
+        self
+    }
+    /// Sets `disable_automated_backup`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateServerRequest.disable_automated_backup = Some(value.into());`.
+    pub fn disable_automated_backup<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.disable_automated_backup = Some(value.into());
+        self
+    }
+    /// Sets `preferred_backup_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateServerRequest.preferred_backup_window = Some(value.into());`.
+    pub fn preferred_backup_window<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.preferred_backup_window = Some(value.into());
+        self
+    }
+    /// Sets `preferred_maintenance_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateServerRequest.preferred_maintenance_window = Some(value.into());`.
+    pub fn preferred_maintenance_window<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.preferred_maintenance_window = Some(value.into());
+        self
+    }
+    /// Sets `server_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateServerRequest.server_name = value.into();`.
+    pub fn server_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateServerRequest with optional fields set to `None`.
+    pub fn new<ServerNameType: Into<String>>(server_name: ServerNameType) -> UpdateServerRequest {
+        UpdateServerRequest {
+            server_name: server_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateServerResponse {
     #[doc="<p>Contains the response to a <code>UpdateServer</code> request. </p>"]
@@ -628,7 +1151,6 @@ pub struct UpdateServerResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub server: Option<Server>,
 }
-
 /// Errors returned by AssociateNode
 #[derive(Debug, PartialEq)]
 pub enum AssociateNodeError {

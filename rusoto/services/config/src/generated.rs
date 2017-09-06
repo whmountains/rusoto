@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -40,7 +41,6 @@ pub struct Compliance {
     #[serde(skip_serializing_if="Option::is_none")]
     pub compliance_type: Option<String>,
 }
-
 #[doc="<p>Indicates whether an AWS Config rule is compliant. A rule is compliant if all of the resources that the rule evaluated comply with it, and it is noncompliant if any of these resources do not comply.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ComplianceByConfigRule {
@@ -53,7 +53,6 @@ pub struct ComplianceByConfigRule {
     #[serde(skip_serializing_if="Option::is_none")]
     pub config_rule_name: Option<String>,
 }
-
 #[doc="<p>Indicates whether an AWS resource that is evaluated according to one or more AWS Config rules is compliant. A resource is compliant if it complies with all of the rules that evaluate it, and it is noncompliant if it does not comply with one or more of these rules.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ComplianceByResource {
@@ -70,7 +69,6 @@ pub struct ComplianceByResource {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_type: Option<String>,
 }
-
 #[doc="<p>The number of AWS resources or AWS Config rules responsible for the current compliance of the item, up to a maximum number.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ComplianceContributorCount {
@@ -83,7 +81,6 @@ pub struct ComplianceContributorCount {
     #[serde(skip_serializing_if="Option::is_none")]
     pub capped_count: Option<i64>,
 }
-
 #[doc="<p>The number of AWS Config rules or AWS resources that are compliant and noncompliant.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ComplianceSummary {
@@ -100,7 +97,6 @@ pub struct ComplianceSummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub non_compliant_resource_count: Option<ComplianceContributorCount>,
 }
-
 #[doc="<p>The number of AWS resources of a specific type that are compliant or noncompliant, up to a maximum of 100 for each compliance.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ComplianceSummaryByResourceType {
@@ -113,7 +109,6 @@ pub struct ComplianceSummaryByResourceType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_type: Option<String>,
 }
-
 #[doc="<p>A list that contains the status of the delivery of either the snapshot or the configuration history to the specified Amazon S3 bucket.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ConfigExportDeliveryInfo {
@@ -142,7 +137,6 @@ pub struct ConfigExportDeliveryInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_delivery_time: Option<f64>,
 }
-
 #[doc="<p>An AWS Config rule represents an AWS Lambda function that you create for a custom rule or a predefined function for an AWS managed rule. The function evaluates configuration items to assess whether your AWS resources comply with your desired configurations. This function can run when AWS Config detects a configuration change to an AWS resource and at a periodic frequency that you choose (for example, every 24 hours).</p> <note> <p>You can use the AWS CLI and AWS SDKs if you want to create a rule that triggers evaluations for your resources when AWS Config delivers the configuration snapshot. For more information, see <a>ConfigSnapshotDeliveryProperties</a>.</p> </note> <p>For more information about developing and using AWS Config rules, see <a href=\"http://docs.aws.amazon.com/config/latest/developerguide/evaluate-config.html\">Evaluating AWS Resource Configurations with AWS Config</a> in the <i>AWS Config Developer Guide</i>.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ConfigRule {
@@ -182,7 +176,80 @@ pub struct ConfigRule {
     #[serde(rename="Source")]
     pub source: Source,
 }
-
+impl ConfigRule {
+    /// Sets `config_rule_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfigRule.config_rule_arn = Some(value.into());`.
+    pub fn config_rule_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.config_rule_arn = Some(value.into());
+        self
+    }
+    /// Sets `config_rule_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfigRule.config_rule_id = Some(value.into());`.
+    pub fn config_rule_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.config_rule_id = Some(value.into());
+        self
+    }
+    /// Sets `config_rule_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfigRule.config_rule_name = Some(value.into());`.
+    pub fn config_rule_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.config_rule_name = Some(value.into());
+        self
+    }
+    /// Sets `config_rule_state`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfigRule.config_rule_state = Some(value.into());`.
+    pub fn config_rule_state<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.config_rule_state = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfigRule.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `input_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfigRule.input_parameters = Some(value.into());`.
+    pub fn input_parameters<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.input_parameters = Some(value.into());
+        self
+    }
+    /// Sets `maximum_execution_frequency`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfigRule.maximum_execution_frequency = Some(value.into());`.
+    pub fn maximum_execution_frequency<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.maximum_execution_frequency = Some(value.into());
+        self
+    }
+    /// Sets `scope`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfigRule.scope = Some(value.into());`.
+    pub fn scope<ValueType: Into<Scope>>(mut self, value: ValueType) -> Self {
+        self.scope = Some(value.into());
+        self
+    }
+    /// Sets `source`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfigRule.source = value.into();`.
+    pub fn source<ValueType: Into<Source>>(mut self, value: ValueType) -> Self {
+        self.source = value.into();
+        self
+    }
+    /// Returns a new instance of ConfigRule with optional fields set to `None`.
+    pub fn new<SourceType: Into<Source>>(source: SourceType) -> ConfigRule {
+        ConfigRule {
+            source: source.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Status information for your AWS managed Config rules. The status includes information such as the last time the rule ran, the last time it failed, and the related error for the last failure.</p> <p>This action does not return status information about custom Config rules.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ConfigRuleEvaluationStatus {
@@ -231,7 +298,6 @@ pub struct ConfigRuleEvaluationStatus {
     #[serde(skip_serializing_if="Option::is_none")]
     pub last_successful_invocation_time: Option<f64>,
 }
-
 #[doc="<p>Provides options for how often AWS Config delivers configuration snapshots to the Amazon S3 bucket in your delivery channel.</p> <note> <p>If you want to create a rule that triggers evaluations for your resources when AWS Config delivers the configuration snapshot, see the following:</p> </note> <p>The frequency for a rule that triggers evaluations for your resources when AWS Config delivers the configuration snapshot is set by one of two values, depending on which is less frequent:</p> <ul> <li> <p>The value for the <code>deliveryFrequency</code> parameter within the delivery channel configuration, which sets how often AWS Config delivers configuration snapshots. This value also sets how often AWS Config invokes evaluations for Config rules.</p> </li> <li> <p>The value for the <code>MaximumExecutionFrequency</code> parameter, which sets the maximum frequency with which AWS Config invokes evaluations for the rule. For more information, see <a>ConfigRule</a>.</p> </li> </ul> <p>If the <code>deliveryFrequency</code> value is less frequent than the <code>MaximumExecutionFrequency</code> value for a rule, AWS Config invokes the rule only as often as the <code>deliveryFrequency</code> value.</p> <ol> <li> <p>For example, you want your rule to run evaluations when AWS Config delivers the configuration snapshot.</p> </li> <li> <p>You specify the <code>MaximumExecutionFrequency</code> value for <code>Six_Hours</code>. </p> </li> <li> <p>You then specify the delivery channel <code>deliveryFrequency</code> value for <code>TwentyFour_Hours</code>.</p> </li> <li> <p>Because the value for <code>deliveryFrequency</code> is less frequent than <code>MaximumExecutionFrequency</code>, AWS Config invokes evaluations for the rule every 24 hours. </p> </li> </ol> <p>You should set the <code>MaximumExecutionFrequency</code> value to be at least as frequent as the <code>deliveryFrequency</code> value. You can view the <code>deliveryFrequency</code> value by using the <code>DescribeDeliveryChannnels</code> action.</p> <p>To update the <code>deliveryFrequency</code> with which AWS Config delivers your configuration snapshots, use the <code>PutDeliveryChannel</code> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ConfigSnapshotDeliveryProperties {
@@ -240,7 +306,19 @@ pub struct ConfigSnapshotDeliveryProperties {
     #[serde(skip_serializing_if="Option::is_none")]
     pub delivery_frequency: Option<String>,
 }
-
+impl ConfigSnapshotDeliveryProperties {
+    /// Sets `delivery_frequency`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfigSnapshotDeliveryProperties.delivery_frequency = Some(value.into());`.
+    pub fn delivery_frequency<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.delivery_frequency = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ConfigSnapshotDeliveryProperties with optional fields set to `None`.
+    pub fn new() -> ConfigSnapshotDeliveryProperties {
+        ConfigSnapshotDeliveryProperties { ..Default::default() }
+    }
+}
 #[doc="<p>A list that contains the status of the delivery of the configuration stream notification to the Amazon SNS topic.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ConfigStreamDeliveryInfo {
@@ -261,7 +339,6 @@ pub struct ConfigStreamDeliveryInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub last_status_change_time: Option<f64>,
 }
-
 #[doc="<p>A list that contains detailed configurations of a specified resource.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ConfigurationItem {
@@ -338,7 +415,6 @@ pub struct ConfigurationItem {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<String>,
 }
-
 #[doc="<p>An object that represents the recording of configuration changes of an AWS resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ConfigurationRecorder {
@@ -355,7 +431,33 @@ pub struct ConfigurationRecorder {
     #[serde(skip_serializing_if="Option::is_none")]
     pub role_arn: Option<String>,
 }
-
+impl ConfigurationRecorder {
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfigurationRecorder.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `recording_group`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfigurationRecorder.recording_group = Some(value.into());`.
+    pub fn recording_group<ValueType: Into<RecordingGroup>>(mut self, value: ValueType) -> Self {
+        self.recording_group = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfigurationRecorder.role_arn = Some(value.into());`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ConfigurationRecorder with optional fields set to `None`.
+    pub fn new() -> ConfigurationRecorder {
+        ConfigurationRecorder { ..Default::default() }
+    }
+}
 #[doc="<p>The current status of the configuration recorder.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ConfigurationRecorderStatus {
@@ -392,7 +494,6 @@ pub struct ConfigurationRecorderStatus {
     #[serde(skip_serializing_if="Option::is_none")]
     pub recording: Option<bool>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteConfigRuleRequest {
@@ -400,7 +501,23 @@ pub struct DeleteConfigRuleRequest {
     #[serde(rename="ConfigRuleName")]
     pub config_rule_name: String,
 }
-
+impl DeleteConfigRuleRequest {
+    /// Sets `config_rule_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteConfigRuleRequest.config_rule_name = value.into();`.
+    pub fn config_rule_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.config_rule_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteConfigRuleRequest with optional fields set to `None`.
+    pub fn new<ConfigRuleNameType: Into<String>>(config_rule_name: ConfigRuleNameType)
+                                                 -> DeleteConfigRuleRequest {
+        DeleteConfigRuleRequest {
+            config_rule_name: config_rule_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The request object for the <code>DeleteConfigurationRecorder</code> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteConfigurationRecorderRequest {
@@ -408,7 +525,26 @@ pub struct DeleteConfigurationRecorderRequest {
     #[serde(rename="ConfigurationRecorderName")]
     pub configuration_recorder_name: String,
 }
-
+impl DeleteConfigurationRecorderRequest {
+    /// Sets `configuration_recorder_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteConfigurationRecorderRequest.configuration_recorder_name = value.into();`.
+    pub fn configuration_recorder_name<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.configuration_recorder_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteConfigurationRecorderRequest with optional fields set to `None`.
+    pub fn new<ConfigurationRecorderNameType: Into<String>>
+        (configuration_recorder_name: ConfigurationRecorderNameType)
+         -> DeleteConfigurationRecorderRequest {
+        DeleteConfigurationRecorderRequest {
+            configuration_recorder_name: configuration_recorder_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input for the <a>DeleteDeliveryChannel</a> action. The action accepts the following data in JSON format. </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteDeliveryChannelRequest {
@@ -416,7 +552,22 @@ pub struct DeleteDeliveryChannelRequest {
     #[serde(rename="DeliveryChannelName")]
     pub delivery_channel_name: String,
 }
-
+impl DeleteDeliveryChannelRequest {
+    /// Sets `delivery_channel_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDeliveryChannelRequest.delivery_channel_name = value.into();`.
+    pub fn delivery_channel_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.delivery_channel_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDeliveryChannelRequest with optional fields set to `None`.
+pub fn new<DeliveryChannelNameType: Into<String>>(delivery_channel_name: DeliveryChannelNameType) -> DeleteDeliveryChannelRequest{
+        DeleteDeliveryChannelRequest {
+            delivery_channel_name: delivery_channel_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteEvaluationResultsRequest {
@@ -424,7 +575,23 @@ pub struct DeleteEvaluationResultsRequest {
     #[serde(rename="ConfigRuleName")]
     pub config_rule_name: String,
 }
-
+impl DeleteEvaluationResultsRequest {
+    /// Sets `config_rule_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteEvaluationResultsRequest.config_rule_name = value.into();`.
+    pub fn config_rule_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.config_rule_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteEvaluationResultsRequest with optional fields set to `None`.
+    pub fn new<ConfigRuleNameType: Into<String>>(config_rule_name: ConfigRuleNameType)
+                                                 -> DeleteEvaluationResultsRequest {
+        DeleteEvaluationResultsRequest {
+            config_rule_name: config_rule_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output when you delete the evaluation results for the specified Config rule.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteEvaluationResultsResponse;
@@ -436,7 +603,22 @@ pub struct DeliverConfigSnapshotRequest {
     #[serde(rename="deliveryChannelName")]
     pub delivery_channel_name: String,
 }
-
+impl DeliverConfigSnapshotRequest {
+    /// Sets `delivery_channel_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeliverConfigSnapshotRequest.delivery_channel_name = value.into();`.
+    pub fn delivery_channel_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.delivery_channel_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeliverConfigSnapshotRequest with optional fields set to `None`.
+pub fn new<deliveryChannelNameType: Into<String>>(delivery_channel_name: deliveryChannelNameType) -> DeliverConfigSnapshotRequest{
+        DeliverConfigSnapshotRequest {
+            delivery_channel_name: delivery_channel_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output for the <a>DeliverConfigSnapshot</a> action in JSON format.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeliverConfigSnapshotResponse {
@@ -445,7 +627,6 @@ pub struct DeliverConfigSnapshotResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub config_snapshot_id: Option<String>,
 }
-
 #[doc="<p>The channel through which AWS Config delivers notifications and updated configuration states.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct DeliveryChannel {
@@ -470,7 +651,50 @@ pub struct DeliveryChannel {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sns_topic_arn: Option<String>,
 }
-
+impl DeliveryChannel {
+    /// Sets `config_snapshot_delivery_properties`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeliveryChannel.config_snapshot_delivery_properties = Some(value.into());`.
+    pub fn config_snapshot_delivery_properties<ValueType: Into<ConfigSnapshotDeliveryProperties>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.config_snapshot_delivery_properties = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeliveryChannel.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `s_3_bucket_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeliveryChannel.s_3_bucket_name = Some(value.into());`.
+    pub fn s_3_bucket_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s_3_bucket_name = Some(value.into());
+        self
+    }
+    /// Sets `s_3_key_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeliveryChannel.s_3_key_prefix = Some(value.into());`.
+    pub fn s_3_key_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s_3_key_prefix = Some(value.into());
+        self
+    }
+    /// Sets `sns_topic_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeliveryChannel.sns_topic_arn = Some(value.into());`.
+    pub fn sns_topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sns_topic_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeliveryChannel with optional fields set to `None`.
+    pub fn new() -> DeliveryChannel {
+        DeliveryChannel { ..Default::default() }
+    }
+}
 #[doc="<p>The status of a specified delivery channel.</p> <p>Valid values: <code>Success</code> | <code>Failure</code> </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeliveryChannelStatus {
@@ -491,7 +715,6 @@ pub struct DeliveryChannelStatus {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeComplianceByConfigRuleRequest {
@@ -508,7 +731,33 @@ pub struct DescribeComplianceByConfigRuleRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeComplianceByConfigRuleRequest {
+    /// Sets `compliance_types`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeComplianceByConfigRuleRequest.compliance_types = Some(value.into());`.
+    pub fn compliance_types<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.compliance_types = Some(value.into());
+        self
+    }
+    /// Sets `config_rule_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeComplianceByConfigRuleRequest.config_rule_names = Some(value.into());`.
+    pub fn config_rule_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.config_rule_names = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeComplianceByConfigRuleRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeComplianceByConfigRuleRequest with optional fields set to `None`.
+    pub fn new() -> DescribeComplianceByConfigRuleRequest {
+        DescribeComplianceByConfigRuleRequest { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeComplianceByConfigRuleResponse {
@@ -521,7 +770,6 @@ pub struct DescribeComplianceByConfigRuleResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeComplianceByResourceRequest {
@@ -546,7 +794,47 @@ pub struct DescribeComplianceByResourceRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_type: Option<String>,
 }
-
+impl DescribeComplianceByResourceRequest {
+    /// Sets `compliance_types`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeComplianceByResourceRequest.compliance_types = Some(value.into());`.
+    pub fn compliance_types<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.compliance_types = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeComplianceByResourceRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeComplianceByResourceRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `resource_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeComplianceByResourceRequest.resource_id = Some(value.into());`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = Some(value.into());
+        self
+    }
+    /// Sets `resource_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeComplianceByResourceRequest.resource_type = Some(value.into());`.
+    pub fn resource_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeComplianceByResourceRequest with optional fields set to `None`.
+    pub fn new() -> DescribeComplianceByResourceRequest {
+        DescribeComplianceByResourceRequest { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeComplianceByResourceResponse {
@@ -559,7 +847,6 @@ pub struct DescribeComplianceByResourceResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeConfigRuleEvaluationStatusRequest {
@@ -576,7 +863,33 @@ pub struct DescribeConfigRuleEvaluationStatusRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeConfigRuleEvaluationStatusRequest {
+    /// Sets `config_rule_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConfigRuleEvaluationStatusRequest.config_rule_names = Some(value.into());`.
+    pub fn config_rule_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.config_rule_names = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConfigRuleEvaluationStatusRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConfigRuleEvaluationStatusRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeConfigRuleEvaluationStatusRequest with optional fields set to `None`.
+    pub fn new() -> DescribeConfigRuleEvaluationStatusRequest {
+        DescribeConfigRuleEvaluationStatusRequest { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeConfigRuleEvaluationStatusResponse {
@@ -589,7 +902,6 @@ pub struct DescribeConfigRuleEvaluationStatusResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeConfigRulesRequest {
@@ -602,7 +914,26 @@ pub struct DescribeConfigRulesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeConfigRulesRequest {
+    /// Sets `config_rule_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConfigRulesRequest.config_rule_names = Some(value.into());`.
+    pub fn config_rule_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.config_rule_names = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConfigRulesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeConfigRulesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeConfigRulesRequest {
+        DescribeConfigRulesRequest { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeConfigRulesResponse {
@@ -615,7 +946,6 @@ pub struct DescribeConfigRulesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>The input for the <a>DescribeConfigurationRecorderStatus</a> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeConfigurationRecorderStatusRequest {
@@ -624,7 +954,21 @@ pub struct DescribeConfigurationRecorderStatusRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub configuration_recorder_names: Option<Vec<String>>,
 }
-
+impl DescribeConfigurationRecorderStatusRequest {
+    /// Sets `configuration_recorder_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConfigurationRecorderStatusRequest.configuration_recorder_names = Some(value.into());`.
+    pub fn configuration_recorder_names<ValueType: Into<Vec<String>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.configuration_recorder_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeConfigurationRecorderStatusRequest with optional fields set to `None`.
+    pub fn new() -> DescribeConfigurationRecorderStatusRequest {
+        DescribeConfigurationRecorderStatusRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The output for the <a>DescribeConfigurationRecorderStatus</a> action in JSON format.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeConfigurationRecorderStatusResponse {
@@ -633,7 +977,6 @@ pub struct DescribeConfigurationRecorderStatusResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub configuration_recorders_status: Option<Vec<ConfigurationRecorderStatus>>,
 }
-
 #[doc="<p>The input for the <a>DescribeConfigurationRecorders</a> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeConfigurationRecordersRequest {
@@ -642,7 +985,21 @@ pub struct DescribeConfigurationRecordersRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub configuration_recorder_names: Option<Vec<String>>,
 }
-
+impl DescribeConfigurationRecordersRequest {
+    /// Sets `configuration_recorder_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConfigurationRecordersRequest.configuration_recorder_names = Some(value.into());`.
+    pub fn configuration_recorder_names<ValueType: Into<Vec<String>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.configuration_recorder_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeConfigurationRecordersRequest with optional fields set to `None`.
+    pub fn new() -> DescribeConfigurationRecordersRequest {
+        DescribeConfigurationRecordersRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The output for the <a>DescribeConfigurationRecorders</a> action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeConfigurationRecordersResponse {
@@ -651,7 +1008,6 @@ pub struct DescribeConfigurationRecordersResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub configuration_recorders: Option<Vec<ConfigurationRecorder>>,
 }
-
 #[doc="<p>The input for the <a>DeliveryChannelStatus</a> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeDeliveryChannelStatusRequest {
@@ -660,7 +1016,21 @@ pub struct DescribeDeliveryChannelStatusRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub delivery_channel_names: Option<Vec<String>>,
 }
-
+impl DescribeDeliveryChannelStatusRequest {
+    /// Sets `delivery_channel_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDeliveryChannelStatusRequest.delivery_channel_names = Some(value.into());`.
+    pub fn delivery_channel_names<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.delivery_channel_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDeliveryChannelStatusRequest with optional fields set to `None`.
+    pub fn new() -> DescribeDeliveryChannelStatusRequest {
+        DescribeDeliveryChannelStatusRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The output for the <a>DescribeDeliveryChannelStatus</a> action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeDeliveryChannelStatusResponse {
@@ -669,7 +1039,6 @@ pub struct DescribeDeliveryChannelStatusResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub delivery_channels_status: Option<Vec<DeliveryChannelStatus>>,
 }
-
 #[doc="<p>The input for the <a>DescribeDeliveryChannels</a> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeDeliveryChannelsRequest {
@@ -678,7 +1047,21 @@ pub struct DescribeDeliveryChannelsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub delivery_channel_names: Option<Vec<String>>,
 }
-
+impl DescribeDeliveryChannelsRequest {
+    /// Sets `delivery_channel_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDeliveryChannelsRequest.delivery_channel_names = Some(value.into());`.
+    pub fn delivery_channel_names<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.delivery_channel_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDeliveryChannelsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeDeliveryChannelsRequest {
+        DescribeDeliveryChannelsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The output for the <a>DescribeDeliveryChannels</a> action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeDeliveryChannelsResponse {
@@ -687,7 +1070,6 @@ pub struct DescribeDeliveryChannelsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub delivery_channels: Option<Vec<DeliveryChannel>>,
 }
-
 #[doc="<p>Identifies an AWS resource and indicates whether it complies with the AWS Config rule that it was evaluated against.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Evaluation {
@@ -708,7 +1090,61 @@ pub struct Evaluation {
     #[serde(rename="OrderingTimestamp")]
     pub ordering_timestamp: f64,
 }
-
+impl Evaluation {
+    /// Sets `annotation`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Evaluation.annotation = Some(value.into());`.
+    pub fn annotation<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.annotation = Some(value.into());
+        self
+    }
+    /// Sets `compliance_resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Evaluation.compliance_resource_id = value.into();`.
+    pub fn compliance_resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.compliance_resource_id = value.into();
+        self
+    }
+    /// Sets `compliance_resource_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Evaluation.compliance_resource_type = value.into();`.
+    pub fn compliance_resource_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.compliance_resource_type = value.into();
+        self
+    }
+    /// Sets `compliance_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Evaluation.compliance_type = value.into();`.
+    pub fn compliance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.compliance_type = value.into();
+        self
+    }
+    /// Sets `ordering_timestamp`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Evaluation.ordering_timestamp = value.into();`.
+    pub fn ordering_timestamp<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.ordering_timestamp = value.into();
+        self
+    }
+    /// Returns a new instance of Evaluation with optional fields set to `None`.
+    pub fn new<ComplianceResourceIdType: Into<String>,
+               ComplianceResourceTypeType: Into<String>,
+               ComplianceTypeType: Into<String>,
+               OrderingTimestampType: Into<f64>>
+        (compliance_resource_id: ComplianceResourceIdType,
+         compliance_resource_type: ComplianceResourceTypeType,
+         compliance_type: ComplianceTypeType,
+         ordering_timestamp: OrderingTimestampType)
+         -> Evaluation {
+        Evaluation {
+            compliance_resource_id: compliance_resource_id.into(),
+            compliance_resource_type: compliance_resource_type.into(),
+            compliance_type: compliance_type.into(),
+            ordering_timestamp: ordering_timestamp.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The details of an AWS Config evaluation. Provides the AWS resource that was evaluated, the compliance of the resource, related timestamps, and supplementary information.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EvaluationResult {
@@ -737,7 +1173,6 @@ pub struct EvaluationResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub result_token: Option<String>,
 }
-
 #[doc="<p>Uniquely identifies an evaluation result.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EvaluationResultIdentifier {
@@ -750,7 +1185,6 @@ pub struct EvaluationResultIdentifier {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ordering_timestamp: Option<f64>,
 }
-
 #[doc="<p>Identifies an AWS Config rule that evaluated an AWS resource, and provides the type and ID of the resource that the rule evaluated.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EvaluationResultQualifier {
@@ -767,7 +1201,6 @@ pub struct EvaluationResultQualifier {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_type: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetComplianceDetailsByConfigRuleRequest {
@@ -787,7 +1220,44 @@ pub struct GetComplianceDetailsByConfigRuleRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl GetComplianceDetailsByConfigRuleRequest {
+    /// Sets `compliance_types`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetComplianceDetailsByConfigRuleRequest.compliance_types = Some(value.into());`.
+    pub fn compliance_types<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.compliance_types = Some(value.into());
+        self
+    }
+    /// Sets `config_rule_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetComplianceDetailsByConfigRuleRequest.config_rule_name = value.into();`.
+    pub fn config_rule_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.config_rule_name = value.into();
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetComplianceDetailsByConfigRuleRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetComplianceDetailsByConfigRuleRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetComplianceDetailsByConfigRuleRequest with optional fields set to `None`.
+    pub fn new<ConfigRuleNameType: Into<String>>(config_rule_name: ConfigRuleNameType)
+                                                 -> GetComplianceDetailsByConfigRuleRequest {
+        GetComplianceDetailsByConfigRuleRequest {
+            config_rule_name: config_rule_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetComplianceDetailsByConfigRuleResponse {
@@ -800,7 +1270,6 @@ pub struct GetComplianceDetailsByConfigRuleResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetComplianceDetailsByResourceRequest {
@@ -819,7 +1288,47 @@ pub struct GetComplianceDetailsByResourceRequest {
     #[serde(rename="ResourceType")]
     pub resource_type: String,
 }
-
+impl GetComplianceDetailsByResourceRequest {
+    /// Sets `compliance_types`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetComplianceDetailsByResourceRequest.compliance_types = Some(value.into());`.
+    pub fn compliance_types<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.compliance_types = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetComplianceDetailsByResourceRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetComplianceDetailsByResourceRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `resource_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetComplianceDetailsByResourceRequest.resource_type = value.into();`.
+    pub fn resource_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_type = value.into();
+        self
+    }
+    /// Returns a new instance of GetComplianceDetailsByResourceRequest with optional fields set to `None`.
+    pub fn new<ResourceIdType: Into<String>, ResourceTypeType: Into<String>>
+        (resource_id: ResourceIdType,
+         resource_type: ResourceTypeType)
+         -> GetComplianceDetailsByResourceRequest {
+        GetComplianceDetailsByResourceRequest {
+            resource_id: resource_id.into(),
+            resource_type: resource_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetComplianceDetailsByResourceResponse {
@@ -832,7 +1341,6 @@ pub struct GetComplianceDetailsByResourceResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetComplianceSummaryByConfigRuleResponse {
@@ -841,7 +1349,6 @@ pub struct GetComplianceSummaryByConfigRuleResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub compliance_summary: Option<ComplianceSummary>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetComplianceSummaryByResourceTypeRequest {
@@ -850,7 +1357,19 @@ pub struct GetComplianceSummaryByResourceTypeRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_types: Option<Vec<String>>,
 }
-
+impl GetComplianceSummaryByResourceTypeRequest {
+    /// Sets `resource_types`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetComplianceSummaryByResourceTypeRequest.resource_types = Some(value.into());`.
+    pub fn resource_types<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resource_types = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetComplianceSummaryByResourceTypeRequest with optional fields set to `None`.
+    pub fn new() -> GetComplianceSummaryByResourceTypeRequest {
+        GetComplianceSummaryByResourceTypeRequest { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetComplianceSummaryByResourceTypeResponse {
@@ -859,7 +1378,6 @@ pub struct GetComplianceSummaryByResourceTypeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub compliance_summaries_by_resource_type: Option<Vec<ComplianceSummaryByResourceType>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDiscoveredResourceCountsRequest {
     #[doc="<p>The maximum number of <a>ResourceCount</a> objects returned on each page. The default is 100. You cannot specify a limit greater than 100. If you specify 0, AWS Config uses the default.</p>"]
@@ -875,7 +1393,33 @@ pub struct GetDiscoveredResourceCountsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_types: Option<Vec<String>>,
 }
-
+impl GetDiscoveredResourceCountsRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDiscoveredResourceCountsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDiscoveredResourceCountsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `resource_types`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDiscoveredResourceCountsRequest.resource_types = Some(value.into());`.
+    pub fn resource_types<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resource_types = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetDiscoveredResourceCountsRequest with optional fields set to `None`.
+    pub fn new() -> GetDiscoveredResourceCountsRequest {
+        GetDiscoveredResourceCountsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetDiscoveredResourceCountsResponse {
     #[doc="<p>The string that you use in a subsequent request to get the next page of results in a paginated response.</p>"]
@@ -891,7 +1435,6 @@ pub struct GetDiscoveredResourceCountsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub total_discovered_resources: Option<i64>,
 }
-
 #[doc="<p>The input for the <a>GetResourceConfigHistory</a> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetResourceConfigHistoryRequest {
@@ -922,7 +1465,68 @@ pub struct GetResourceConfigHistoryRequest {
     #[serde(rename="resourceType")]
     pub resource_type: String,
 }
-
+impl GetResourceConfigHistoryRequest {
+    /// Sets `chronological_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetResourceConfigHistoryRequest.chronological_order = Some(value.into());`.
+    pub fn chronological_order<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.chronological_order = Some(value.into());
+        self
+    }
+    /// Sets `earlier_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetResourceConfigHistoryRequest.earlier_time = Some(value.into());`.
+    pub fn earlier_time<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.earlier_time = Some(value.into());
+        self
+    }
+    /// Sets `later_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetResourceConfigHistoryRequest.later_time = Some(value.into());`.
+    pub fn later_time<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.later_time = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetResourceConfigHistoryRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetResourceConfigHistoryRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetResourceConfigHistoryRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `resource_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetResourceConfigHistoryRequest.resource_type = value.into();`.
+    pub fn resource_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_type = value.into();
+        self
+    }
+    /// Returns a new instance of GetResourceConfigHistoryRequest with optional fields set to `None`.
+    pub fn new<resourceIdType: Into<String>, resourceTypeType: Into<String>>
+        (resource_id: resourceIdType,
+         resource_type: resourceTypeType)
+         -> GetResourceConfigHistoryRequest {
+        GetResourceConfigHistoryRequest {
+            resource_id: resource_id.into(),
+            resource_type: resource_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output for the <a>GetResourceConfigHistory</a> action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetResourceConfigHistoryResponse {
@@ -935,7 +1539,6 @@ pub struct GetResourceConfigHistoryResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListDiscoveredResourcesRequest {
@@ -963,7 +1566,58 @@ pub struct ListDiscoveredResourcesRequest {
     #[serde(rename="resourceType")]
     pub resource_type: String,
 }
-
+impl ListDiscoveredResourcesRequest {
+    /// Sets `include_deleted_resources`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDiscoveredResourcesRequest.include_deleted_resources = Some(value.into());`.
+    pub fn include_deleted_resources<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.include_deleted_resources = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDiscoveredResourcesRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDiscoveredResourcesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `resource_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDiscoveredResourcesRequest.resource_ids = Some(value.into());`.
+    pub fn resource_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resource_ids = Some(value.into());
+        self
+    }
+    /// Sets `resource_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDiscoveredResourcesRequest.resource_name = Some(value.into());`.
+    pub fn resource_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_name = Some(value.into());
+        self
+    }
+    /// Sets `resource_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDiscoveredResourcesRequest.resource_type = value.into();`.
+    pub fn resource_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_type = value.into();
+        self
+    }
+    /// Returns a new instance of ListDiscoveredResourcesRequest with optional fields set to `None`.
+    pub fn new<resourceTypeType: Into<String>>(resource_type: resourceTypeType)
+                                               -> ListDiscoveredResourcesRequest {
+        ListDiscoveredResourcesRequest {
+            resource_type: resource_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListDiscoveredResourcesResponse {
@@ -976,14 +1630,29 @@ pub struct ListDiscoveredResourcesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_identifiers: Option<Vec<ResourceIdentifier>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutConfigRuleRequest {
     #[doc="<p>The rule that you want to add to your account.</p>"]
     #[serde(rename="ConfigRule")]
     pub config_rule: ConfigRule,
 }
-
+impl PutConfigRuleRequest {
+    /// Sets `config_rule`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutConfigRuleRequest.config_rule = value.into();`.
+    pub fn config_rule<ValueType: Into<ConfigRule>>(mut self, value: ValueType) -> Self {
+        self.config_rule = value.into();
+        self
+    }
+    /// Returns a new instance of PutConfigRuleRequest with optional fields set to `None`.
+    pub fn new<ConfigRuleType: Into<ConfigRule>>(config_rule: ConfigRuleType)
+                                                 -> PutConfigRuleRequest {
+        PutConfigRuleRequest {
+            config_rule: config_rule.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input for the <a>PutConfigurationRecorder</a> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutConfigurationRecorderRequest {
@@ -991,7 +1660,26 @@ pub struct PutConfigurationRecorderRequest {
     #[serde(rename="ConfigurationRecorder")]
     pub configuration_recorder: ConfigurationRecorder,
 }
-
+impl PutConfigurationRecorderRequest {
+    /// Sets `configuration_recorder`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutConfigurationRecorderRequest.configuration_recorder = value.into();`.
+    pub fn configuration_recorder<ValueType: Into<ConfigurationRecorder>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.configuration_recorder = value.into();
+        self
+    }
+    /// Returns a new instance of PutConfigurationRecorderRequest with optional fields set to `None`.
+    pub fn new<ConfigurationRecorderType: Into<ConfigurationRecorder>>
+        (configuration_recorder: ConfigurationRecorderType)
+         -> PutConfigurationRecorderRequest {
+        PutConfigurationRecorderRequest {
+            configuration_recorder: configuration_recorder.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input for the <a>PutDeliveryChannel</a> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutDeliveryChannelRequest {
@@ -999,7 +1687,23 @@ pub struct PutDeliveryChannelRequest {
     #[serde(rename="DeliveryChannel")]
     pub delivery_channel: DeliveryChannel,
 }
-
+impl PutDeliveryChannelRequest {
+    /// Sets `delivery_channel`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutDeliveryChannelRequest.delivery_channel = value.into();`.
+    pub fn delivery_channel<ValueType: Into<DeliveryChannel>>(mut self, value: ValueType) -> Self {
+        self.delivery_channel = value.into();
+        self
+    }
+    /// Returns a new instance of PutDeliveryChannelRequest with optional fields set to `None`.
+    pub fn new<DeliveryChannelType: Into<DeliveryChannel>>(delivery_channel: DeliveryChannelType)
+                                                           -> PutDeliveryChannelRequest {
+        PutDeliveryChannelRequest {
+            delivery_channel: delivery_channel.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutEvaluationsRequest {
@@ -1015,7 +1719,37 @@ pub struct PutEvaluationsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub test_mode: Option<bool>,
 }
-
+impl PutEvaluationsRequest {
+    /// Sets `evaluations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutEvaluationsRequest.evaluations = Some(value.into());`.
+    pub fn evaluations<ValueType: Into<Vec<Evaluation>>>(mut self, value: ValueType) -> Self {
+        self.evaluations = Some(value.into());
+        self
+    }
+    /// Sets `result_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutEvaluationsRequest.result_token = value.into();`.
+    pub fn result_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.result_token = value.into();
+        self
+    }
+    /// Sets `test_mode`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutEvaluationsRequest.test_mode = Some(value.into());`.
+    pub fn test_mode<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.test_mode = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PutEvaluationsRequest with optional fields set to `None`.
+    pub fn new<ResultTokenType: Into<String>>(result_token: ResultTokenType)
+                                              -> PutEvaluationsRequest {
+        PutEvaluationsRequest {
+            result_token: result_token.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutEvaluationsResponse {
@@ -1024,7 +1758,6 @@ pub struct PutEvaluationsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub failed_evaluations: Option<Vec<Evaluation>>,
 }
-
 #[doc="<p>Specifies the types of AWS resource for which AWS Config records configuration changes.</p> <p>In the recording group, you specify whether all supported types or specific types of resources are recorded.</p> <p>By default, AWS Config records configuration changes for all supported types of regional resources that AWS Config discovers in the region in which it is running. Regional resources are tied to a region and can be used only in that region. Examples of regional resources are EC2 instances and EBS volumes.</p> <p>You can also have AWS Config record configuration changes for supported types of global resources (for example, IAM resources). Global resources are not tied to an individual region and can be used in all regions.</p> <important> <p>The configuration details for any global resource are the same in all regions. If you customize AWS Config in multiple regions to record global resources, it will create multiple configuration items each time a global resource changes: one configuration item for each region. These configuration items will contain identical data. To prevent duplicate configuration items, you should consider customizing AWS Config in only one region to record global resources, unless you want the configuration items to be available in multiple regions.</p> </important> <p>If you don't want AWS Config to record all resources, you can specify which types of resources it will record with the <code>resourceTypes</code> parameter.</p> <p>For a list of supported resource types, see <a href=\"http://docs.aws.amazon.com/config/latest/developerguide/resource-config-reference.html#supported-resources\">Supported resource types</a>.</p> <p>For more information, see <a href=\"http://docs.aws.amazon.com/config/latest/developerguide/select-resources.html\">Selecting Which Resources AWS Config Records</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct RecordingGroup {
@@ -1041,7 +1774,35 @@ pub struct RecordingGroup {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_types: Option<Vec<String>>,
 }
-
+impl RecordingGroup {
+    /// Sets `all_supported`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecordingGroup.all_supported = Some(value.into());`.
+    pub fn all_supported<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.all_supported = Some(value.into());
+        self
+    }
+    /// Sets `include_global_resource_types`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecordingGroup.include_global_resource_types = Some(value.into());`.
+    pub fn include_global_resource_types<ValueType: Into<bool>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.include_global_resource_types = Some(value.into());
+        self
+    }
+    /// Sets `resource_types`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecordingGroup.resource_types = Some(value.into());`.
+    pub fn resource_types<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resource_types = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RecordingGroup with optional fields set to `None`.
+    pub fn new() -> RecordingGroup {
+        RecordingGroup { ..Default::default() }
+    }
+}
 #[doc="<p>The relationship of the related resource to the main resource.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Relationship {
@@ -1062,7 +1823,6 @@ pub struct Relationship {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_type: Option<String>,
 }
-
 #[doc="<p>An object that contains the resource type and the number of resources.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ResourceCount {
@@ -1075,7 +1835,6 @@ pub struct ResourceCount {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_type: Option<String>,
 }
-
 #[doc="<p>The details that identify a resource that is discovered by AWS Config, including the resource type, ID, and (if available) the custom resource name.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ResourceIdentifier {
@@ -1096,7 +1855,6 @@ pub struct ResourceIdentifier {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_type: Option<String>,
 }
-
 #[doc="<p>Defines which resources trigger an evaluation for an AWS Config rule. The scope can include one or more resource types, a combination of a tag key and value, or a combination of one resource type and one resource ID. Specify a scope to constrain which resources trigger an evaluation for a rule. Otherwise, evaluations for the rule are triggered when any resource in your recording group changes in configuration.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Scope {
@@ -1117,7 +1875,42 @@ pub struct Scope {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tag_value: Option<String>,
 }
-
+impl Scope {
+    /// Sets `compliance_resource_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Scope.compliance_resource_id = Some(value.into());`.
+    pub fn compliance_resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.compliance_resource_id = Some(value.into());
+        self
+    }
+    /// Sets `compliance_resource_types`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Scope.compliance_resource_types = Some(value.into());`.
+    pub fn compliance_resource_types<ValueType: Into<Vec<String>>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.compliance_resource_types = Some(value.into());
+        self
+    }
+    /// Sets `tag_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Scope.tag_key = Some(value.into());`.
+    pub fn tag_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tag_key = Some(value.into());
+        self
+    }
+    /// Sets `tag_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Scope.tag_value = Some(value.into());`.
+    pub fn tag_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tag_value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Scope with optional fields set to `None`.
+    pub fn new() -> Scope {
+        Scope { ..Default::default() }
+    }
+}
 #[doc="<p>Provides the AWS Config rule owner (AWS or customer), the rule identifier, and the events that trigger the evaluation of your AWS resources.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Source {
@@ -1132,7 +1925,37 @@ pub struct Source {
     #[serde(rename="SourceIdentifier")]
     pub source_identifier: String,
 }
-
+impl Source {
+    /// Sets `owner`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Source.owner = value.into();`.
+    pub fn owner<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.owner = value.into();
+        self
+    }
+    /// Sets `source_details`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Source.source_details = Some(value.into());`.
+    pub fn source_details<ValueType: Into<Vec<SourceDetail>>>(mut self, value: ValueType) -> Self {
+        self.source_details = Some(value.into());
+        self
+    }
+    /// Sets `source_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Source.source_identifier = value.into();`.
+    pub fn source_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_identifier = value.into();
+        self
+    }
+    /// Returns a new instance of Source with optional fields set to `None`.
+pub fn new<OwnerType: Into<String>, SourceIdentifierType: Into<String>>(owner: OwnerType, source_identifier: SourceIdentifierType) -> Source{
+        Source {
+            owner: owner.into(),
+            source_identifier: source_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides the source and the message types that trigger AWS Config to evaluate your AWS resources against a rule. It also provides the frequency with which you want AWS Config to run evaluations for the rule if the trigger type is periodic. You can specify the parameter values for <code>SourceDetail</code> only for custom rules. </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct SourceDetail {
@@ -1149,7 +1972,35 @@ pub struct SourceDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub message_type: Option<String>,
 }
-
+impl SourceDetail {
+    /// Sets `event_source`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SourceDetail.event_source = Some(value.into());`.
+    pub fn event_source<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.event_source = Some(value.into());
+        self
+    }
+    /// Sets `maximum_execution_frequency`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SourceDetail.maximum_execution_frequency = Some(value.into());`.
+    pub fn maximum_execution_frequency<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.maximum_execution_frequency = Some(value.into());
+        self
+    }
+    /// Sets `message_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SourceDetail.message_type = Some(value.into());`.
+    pub fn message_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.message_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SourceDetail with optional fields set to `None`.
+    pub fn new() -> SourceDetail {
+        SourceDetail { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartConfigRulesEvaluationRequest {
@@ -1158,7 +2009,19 @@ pub struct StartConfigRulesEvaluationRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub config_rule_names: Option<Vec<String>>,
 }
-
+impl StartConfigRulesEvaluationRequest {
+    /// Sets `config_rule_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartConfigRulesEvaluationRequest.config_rule_names = Some(value.into());`.
+    pub fn config_rule_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.config_rule_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of StartConfigRulesEvaluationRequest with optional fields set to `None`.
+    pub fn new() -> StartConfigRulesEvaluationRequest {
+        StartConfigRulesEvaluationRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The output when you start the evaluation for the specified Config rule.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartConfigRulesEvaluationResponse;
@@ -1170,7 +2033,26 @@ pub struct StartConfigurationRecorderRequest {
     #[serde(rename="ConfigurationRecorderName")]
     pub configuration_recorder_name: String,
 }
-
+impl StartConfigurationRecorderRequest {
+    /// Sets `configuration_recorder_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartConfigurationRecorderRequest.configuration_recorder_name = value.into();`.
+    pub fn configuration_recorder_name<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.configuration_recorder_name = value.into();
+        self
+    }
+    /// Returns a new instance of StartConfigurationRecorderRequest with optional fields set to `None`.
+    pub fn new<ConfigurationRecorderNameType: Into<String>>
+        (configuration_recorder_name: ConfigurationRecorderNameType)
+         -> StartConfigurationRecorderRequest {
+        StartConfigurationRecorderRequest {
+            configuration_recorder_name: configuration_recorder_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input for the <a>StopConfigurationRecorder</a> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StopConfigurationRecorderRequest {
@@ -1178,7 +2060,24 @@ pub struct StopConfigurationRecorderRequest {
     #[serde(rename="ConfigurationRecorderName")]
     pub configuration_recorder_name: String,
 }
-
+impl StopConfigurationRecorderRequest {
+    /// Sets `configuration_recorder_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopConfigurationRecorderRequest.configuration_recorder_name = value.into();`.
+    pub fn configuration_recorder_name<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.configuration_recorder_name = value.into();
+        self
+    }
+    /// Returns a new instance of StopConfigurationRecorderRequest with optional fields set to `None`.
+pub fn new<ConfigurationRecorderNameType: Into<String>>(configuration_recorder_name: ConfigurationRecorderNameType) -> StopConfigurationRecorderRequest{
+        StopConfigurationRecorderRequest {
+            configuration_recorder_name: configuration_recorder_name.into(),
+            ..Default::default()
+        }
+    }
+}
 /// Errors returned by DeleteConfigRule
 #[derive(Debug, PartialEq)]
 pub enum DeleteConfigRuleError {

@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -34,7 +35,23 @@ pub struct AcceptHandshakeRequest {
     #[serde(rename="HandshakeId")]
     pub handshake_id: String,
 }
-
+impl AcceptHandshakeRequest {
+    /// Sets `handshake_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AcceptHandshakeRequest.handshake_id = value.into();`.
+    pub fn handshake_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.handshake_id = value.into();
+        self
+    }
+    /// Returns a new instance of AcceptHandshakeRequest with optional fields set to `None`.
+    pub fn new<HandshakeIdType: Into<String>>(handshake_id: HandshakeIdType)
+                                              -> AcceptHandshakeRequest {
+        AcceptHandshakeRequest {
+            handshake_id: handshake_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AcceptHandshakeResponse {
     #[doc="<p>A structure that contains details about the accepted handshake.</p>"]
@@ -42,7 +59,6 @@ pub struct AcceptHandshakeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub handshake: Option<Handshake>,
 }
-
 #[doc="<p>Contains information about an AWS account that is a member of an organization.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Account {
@@ -75,7 +91,6 @@ pub struct Account {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AttachPolicyRequest {
     #[doc="<p>The unique identifier (ID) of the policy that you want to attach to the target. You can get the ID for the policy by calling the <a>ListPolicies</a> operation.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> for a policy ID string requires \"p-\" followed by from 8 to 128 lower-case letters or digits.</p>"]
@@ -85,14 +100,55 @@ pub struct AttachPolicyRequest {
     #[serde(rename="TargetId")]
     pub target_id: String,
 }
-
+impl AttachPolicyRequest {
+    /// Sets `policy_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachPolicyRequest.policy_id = value.into();`.
+    pub fn policy_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_id = value.into();
+        self
+    }
+    /// Sets `target_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachPolicyRequest.target_id = value.into();`.
+    pub fn target_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_id = value.into();
+        self
+    }
+    /// Returns a new instance of AttachPolicyRequest with optional fields set to `None`.
+    pub fn new<PolicyIdType: Into<String>, TargetIdType: Into<String>>(policy_id: PolicyIdType,
+                                                                       target_id: TargetIdType)
+                                                                       -> AttachPolicyRequest {
+        AttachPolicyRequest {
+            policy_id: policy_id.into(),
+            target_id: target_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CancelHandshakeRequest {
     #[doc="<p>The unique identifier (ID) of the handshake that you want to cancel. You can get the ID from the <a>ListHandshakesForOrganization</a> operation.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> for handshake ID string requires \"h-\" followed by from 8 to 32 lower-case letters or digits.</p>"]
     #[serde(rename="HandshakeId")]
     pub handshake_id: String,
 }
-
+impl CancelHandshakeRequest {
+    /// Sets `handshake_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelHandshakeRequest.handshake_id = value.into();`.
+    pub fn handshake_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.handshake_id = value.into();
+        self
+    }
+    /// Returns a new instance of CancelHandshakeRequest with optional fields set to `None`.
+    pub fn new<HandshakeIdType: Into<String>>(handshake_id: HandshakeIdType)
+                                              -> CancelHandshakeRequest {
+        CancelHandshakeRequest {
+            handshake_id: handshake_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CancelHandshakeResponse {
     #[doc="<p>A structure that contains details about the handshake that you canceled.</p>"]
@@ -100,7 +156,6 @@ pub struct CancelHandshakeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub handshake: Option<Handshake>,
 }
-
 #[doc="<p>Contains a list of child entities, either OUs or accounts.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Child {
@@ -113,7 +168,6 @@ pub struct Child {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateAccountRequest {
     #[doc="<p>The friendly name of the member account.</p>"]
@@ -131,7 +185,44 @@ pub struct CreateAccountRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub role_name: Option<String>,
 }
-
+impl CreateAccountRequest {
+    /// Sets `account_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAccountRequest.account_name = value.into();`.
+    pub fn account_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_name = value.into();
+        self
+    }
+    /// Sets `email`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAccountRequest.email = value.into();`.
+    pub fn email<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.email = value.into();
+        self
+    }
+    /// Sets `iam_user_access_to_billing`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAccountRequest.iam_user_access_to_billing = Some(value.into());`.
+    pub fn iam_user_access_to_billing<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.iam_user_access_to_billing = Some(value.into());
+        self
+    }
+    /// Sets `role_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAccountRequest.role_name = Some(value.into());`.
+    pub fn role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateAccountRequest with optional fields set to `None`.
+pub fn new<AccountNameType: Into<String>, EmailType: Into<String>>(account_name: AccountNameType, email: EmailType) -> CreateAccountRequest{
+        CreateAccountRequest {
+            account_name: account_name.into(),
+            email: email.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateAccountResponse {
     #[doc="<p>A structure that contains details about the request to create an account. This response structure might not be fully populated when you first receive it because account creation is an asynchronous process. You can pass the returned CreateAccountStatus ID as a parameter to <code> <a>DescribeCreateAccountStatus</a> </code> to get status about the progress of the request at later times. </p>"]
@@ -139,7 +230,6 @@ pub struct CreateAccountResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub create_account_status: Option<CreateAccountStatus>,
 }
-
 #[doc="<p>Contains the status about a <a>CreateAccount</a> request to create an AWS account in an organization.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateAccountStatus {
@@ -172,7 +262,6 @@ pub struct CreateAccountStatus {
     #[serde(skip_serializing_if="Option::is_none")]
     pub state: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateOrganizationRequest {
     #[doc="<p>Specifies the feature set supported by the new organization. Each feature set supports different levels of functionality.</p> <ul> <li> <p> <i>CONSOLIDATED_BILLING</i>: All member accounts have their bills consolidated to and paid by the master account. For more information, see <a href=\"http://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#feature-set-cb-only\">Consolidated Billing</a> in the <i>AWS Organizations User Guide</i>.</p> </li> <li> <p> <i>ALL</i>: In addition to all the features supported by the consolidated billing feature set, the master account can also apply any type of policy to any member account in the organization. For more information, see <a href=\"http://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#feature-set-all\">All features</a> in the <i>AWS Organizations User Guide</i>.</p> </li> </ul>"]
@@ -180,7 +269,19 @@ pub struct CreateOrganizationRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub feature_set: Option<String>,
 }
-
+impl CreateOrganizationRequest {
+    /// Sets `feature_set`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateOrganizationRequest.feature_set = Some(value.into());`.
+    pub fn feature_set<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.feature_set = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateOrganizationRequest with optional fields set to `None`.
+    pub fn new() -> CreateOrganizationRequest {
+        CreateOrganizationRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateOrganizationResponse {
     #[doc="<p>A structure that contains details about the newly created organization.</p>"]
@@ -188,7 +289,6 @@ pub struct CreateOrganizationResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub organization: Option<Organization>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateOrganizationalUnitRequest {
     #[doc="<p>The friendly name to assign to the new OU.</p>"]
@@ -198,7 +298,33 @@ pub struct CreateOrganizationalUnitRequest {
     #[serde(rename="ParentId")]
     pub parent_id: String,
 }
-
+impl CreateOrganizationalUnitRequest {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateOrganizationalUnitRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `parent_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateOrganizationalUnitRequest.parent_id = value.into();`.
+    pub fn parent_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.parent_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateOrganizationalUnitRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, ParentIdType: Into<String>>
+        (name: NameType,
+         parent_id: ParentIdType)
+         -> CreateOrganizationalUnitRequest {
+        CreateOrganizationalUnitRequest {
+            name: name.into(),
+            parent_id: parent_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateOrganizationalUnitResponse {
     #[doc="<p>A structure that contains details about the newly created OU.</p>"]
@@ -206,7 +332,6 @@ pub struct CreateOrganizationalUnitResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub organizational_unit: Option<OrganizationalUnit>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreatePolicyRequest {
     #[doc="<p>The policy content to add to the new policy. For example, if you create a <a href=\"http://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scp.html\">service control policy</a> (SCP), this string must be JSON text that specifies the permissions that admins in attached accounts can delegate to their users, groups, and roles. For more information about the SCP syntax, see <a href=\"http://docs.aws.amazon.com/organizations/latest/userguide/orgs_reference_scp-syntax.html\">Service Control Policy Syntax</a> in the <i>AWS Organizations User Guide</i>.</p>"]
@@ -222,7 +347,54 @@ pub struct CreatePolicyRequest {
     #[serde(rename="Type")]
     pub type_: String,
 }
-
+impl CreatePolicyRequest {
+    /// Sets `content`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePolicyRequest.content = value.into();`.
+    pub fn content<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content = value.into();
+        self
+    }
+    /// Sets `description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePolicyRequest.description = value.into();`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePolicyRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePolicyRequest.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of CreatePolicyRequest with optional fields set to `None`.
+    pub fn new<ContentType: Into<String>,
+               DescriptionType: Into<String>,
+               NameType: Into<String>,
+               TypeType: Into<String>>
+        (content: ContentType,
+         description: DescriptionType,
+         name: NameType,
+         type_: TypeType)
+         -> CreatePolicyRequest {
+        CreatePolicyRequest {
+            content: content.into(),
+            description: description.into(),
+            name: name.into(),
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreatePolicyResponse {
     #[doc="<p>A structure that contains details about the newly created policy.</p>"]
@@ -230,14 +402,29 @@ pub struct CreatePolicyResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policy: Option<Policy>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeclineHandshakeRequest {
     #[doc="<p>The unique identifier (ID) of the handshake that you want to decline. You can get the ID from the <a>ListHandshakesForAccount</a> operation.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> for handshake ID string requires \"h-\" followed by from 8 to 32 lower-case letters or digits.</p>"]
     #[serde(rename="HandshakeId")]
     pub handshake_id: String,
 }
-
+impl DeclineHandshakeRequest {
+    /// Sets `handshake_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeclineHandshakeRequest.handshake_id = value.into();`.
+    pub fn handshake_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.handshake_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeclineHandshakeRequest with optional fields set to `None`.
+    pub fn new<HandshakeIdType: Into<String>>(handshake_id: HandshakeIdType)
+                                              -> DeclineHandshakeRequest {
+        DeclineHandshakeRequest {
+            handshake_id: handshake_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeclineHandshakeResponse {
     #[doc="<p>A structure that contains details about the declined handshake. The state is updated to show the value <code>DECLINED</code>.</p>"]
@@ -245,28 +432,72 @@ pub struct DeclineHandshakeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub handshake: Option<Handshake>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteOrganizationalUnitRequest {
     #[doc="<p>The unique identifier (ID) of the organizational unit that you want to delete. You can get the ID from the <a>ListOrganizationalUnitsForParent</a> operation.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> for an organizational unit ID string requires \"ou-\" followed by from 4 to 32 lower-case letters or digits (the ID of the root that contains the OU) followed by a second \"-\" dash and from 8 to 32 additional lower-case letters or digits.</p>"]
     #[serde(rename="OrganizationalUnitId")]
     pub organizational_unit_id: String,
 }
-
+impl DeleteOrganizationalUnitRequest {
+    /// Sets `organizational_unit_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteOrganizationalUnitRequest.organizational_unit_id = value.into();`.
+    pub fn organizational_unit_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.organizational_unit_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteOrganizationalUnitRequest with optional fields set to `None`.
+pub fn new<OrganizationalUnitIdType: Into<String>>(organizational_unit_id: OrganizationalUnitIdType) -> DeleteOrganizationalUnitRequest{
+        DeleteOrganizationalUnitRequest {
+            organizational_unit_id: organizational_unit_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeletePolicyRequest {
     #[doc="<p>The unique identifier (ID) of the policy that you want to delete. You can get the ID from the <a>ListPolicies</a> or <a>ListPoliciesForTarget</a> operations.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> for a policy ID string requires \"p-\" followed by from 8 to 128 lower-case letters or digits.</p>"]
     #[serde(rename="PolicyId")]
     pub policy_id: String,
 }
-
+impl DeletePolicyRequest {
+    /// Sets `policy_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePolicyRequest.policy_id = value.into();`.
+    pub fn policy_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeletePolicyRequest with optional fields set to `None`.
+    pub fn new<PolicyIdType: Into<String>>(policy_id: PolicyIdType) -> DeletePolicyRequest {
+        DeletePolicyRequest {
+            policy_id: policy_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeAccountRequest {
     #[doc="<p>The unique identifier (ID) of the AWS account that you want information about. You can get the ID from the <a>ListAccounts</a> or <a>ListAccountsForParent</a> operations.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> for an account ID string requires exactly 12 digits.</p>"]
     #[serde(rename="AccountId")]
     pub account_id: String,
 }
-
+impl DescribeAccountRequest {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAccountRequest.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeAccountRequest with optional fields set to `None`.
+    pub fn new<AccountIdType: Into<String>>(account_id: AccountIdType) -> DescribeAccountRequest {
+        DescribeAccountRequest {
+            account_id: account_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeAccountResponse {
     #[doc="<p>A structure that contains information about the requested account.</p>"]
@@ -274,14 +505,28 @@ pub struct DescribeAccountResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub account: Option<Account>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeCreateAccountStatusRequest {
     #[doc="<p>Specifies the <code>operationId</code> that uniquely identifies the request. You can get the ID from the response to an earlier <a>CreateAccount</a> request, or from the <a>ListCreateAccountStatus</a> operation.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> for an create account request ID string requires \"car-\" followed by from 8 to 32 lower-case letters or digits.</p>"]
     #[serde(rename="CreateAccountRequestId")]
     pub create_account_request_id: String,
 }
-
+impl DescribeCreateAccountStatusRequest {
+    /// Sets `create_account_request_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCreateAccountStatusRequest.create_account_request_id = value.into();`.
+    pub fn create_account_request_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.create_account_request_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeCreateAccountStatusRequest with optional fields set to `None`.
+pub fn new<CreateAccountRequestIdType: Into<String>>(create_account_request_id: CreateAccountRequestIdType) -> DescribeCreateAccountStatusRequest{
+        DescribeCreateAccountStatusRequest {
+            create_account_request_id: create_account_request_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeCreateAccountStatusResponse {
     #[doc="<p>A structure that contains the current status of an account creation request.</p>"]
@@ -289,14 +534,29 @@ pub struct DescribeCreateAccountStatusResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub create_account_status: Option<CreateAccountStatus>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeHandshakeRequest {
     #[doc="<p>The unique identifier (ID) of the handshake that you want information about. You can get the ID from the original call to <a>InviteAccountToOrganization</a>, or from a call to <a>ListHandshakesForAccount</a> or <a>ListHandshakesForOrganization</a>.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> for handshake ID string requires \"h-\" followed by from 8 to 32 lower-case letters or digits.</p>"]
     #[serde(rename="HandshakeId")]
     pub handshake_id: String,
 }
-
+impl DescribeHandshakeRequest {
+    /// Sets `handshake_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeHandshakeRequest.handshake_id = value.into();`.
+    pub fn handshake_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.handshake_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeHandshakeRequest with optional fields set to `None`.
+    pub fn new<HandshakeIdType: Into<String>>(handshake_id: HandshakeIdType)
+                                              -> DescribeHandshakeRequest {
+        DescribeHandshakeRequest {
+            handshake_id: handshake_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeHandshakeResponse {
     #[doc="<p>A structure that contains information about the specified handshake.</p>"]
@@ -304,7 +564,6 @@ pub struct DescribeHandshakeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub handshake: Option<Handshake>,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeOrganizationResponse {
     #[doc="<p>A structure that contains information about the organization.</p>"]
@@ -312,14 +571,28 @@ pub struct DescribeOrganizationResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub organization: Option<Organization>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeOrganizationalUnitRequest {
     #[doc="<p>The unique identifier (ID) of the organizational unit that you want details about. You can get the ID from the <a>ListOrganizationalUnitsForParent</a> operation.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> for an organizational unit ID string requires \"ou-\" followed by from 4 to 32 lower-case letters or digits (the ID of the root that contains the OU) followed by a second \"-\" dash and from 8 to 32 additional lower-case letters or digits.</p>"]
     #[serde(rename="OrganizationalUnitId")]
     pub organizational_unit_id: String,
 }
-
+impl DescribeOrganizationalUnitRequest {
+    /// Sets `organizational_unit_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeOrganizationalUnitRequest.organizational_unit_id = value.into();`.
+    pub fn organizational_unit_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.organizational_unit_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeOrganizationalUnitRequest with optional fields set to `None`.
+pub fn new<OrganizationalUnitIdType: Into<String>>(organizational_unit_id: OrganizationalUnitIdType) -> DescribeOrganizationalUnitRequest{
+        DescribeOrganizationalUnitRequest {
+            organizational_unit_id: organizational_unit_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeOrganizationalUnitResponse {
     #[doc="<p>A structure that contains details about the specified OU.</p>"]
@@ -327,14 +600,28 @@ pub struct DescribeOrganizationalUnitResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub organizational_unit: Option<OrganizationalUnit>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribePolicyRequest {
     #[doc="<p>The unique identifier (ID) of the policy that you want details about. You can get the ID from the <a>ListPolicies</a> or <a>ListPoliciesForTarget</a> operations.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> for a policy ID string requires \"p-\" followed by from 8 to 128 lower-case letters or digits.</p>"]
     #[serde(rename="PolicyId")]
     pub policy_id: String,
 }
-
+impl DescribePolicyRequest {
+    /// Sets `policy_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePolicyRequest.policy_id = value.into();`.
+    pub fn policy_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribePolicyRequest with optional fields set to `None`.
+    pub fn new<PolicyIdType: Into<String>>(policy_id: PolicyIdType) -> DescribePolicyRequest {
+        DescribePolicyRequest {
+            policy_id: policy_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribePolicyResponse {
     #[doc="<p>A structure that contains details about the specified policy.</p>"]
@@ -342,7 +629,6 @@ pub struct DescribePolicyResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policy: Option<Policy>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DetachPolicyRequest {
     #[doc="<p>The unique identifier (ID) of the policy you want to detach. You can get the ID from the <a>ListPolicies</a> or <a>ListPoliciesForTarget</a> operations.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> for a policy ID string requires \"p-\" followed by from 8 to 128 lower-case letters or digits.</p>"]
@@ -352,7 +638,32 @@ pub struct DetachPolicyRequest {
     #[serde(rename="TargetId")]
     pub target_id: String,
 }
-
+impl DetachPolicyRequest {
+    /// Sets `policy_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachPolicyRequest.policy_id = value.into();`.
+    pub fn policy_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_id = value.into();
+        self
+    }
+    /// Sets `target_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachPolicyRequest.target_id = value.into();`.
+    pub fn target_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_id = value.into();
+        self
+    }
+    /// Returns a new instance of DetachPolicyRequest with optional fields set to `None`.
+    pub fn new<PolicyIdType: Into<String>, TargetIdType: Into<String>>(policy_id: PolicyIdType,
+                                                                       target_id: TargetIdType)
+                                                                       -> DetachPolicyRequest {
+        DetachPolicyRequest {
+            policy_id: policy_id.into(),
+            target_id: target_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DisablePolicyTypeRequest {
     #[doc="<p>The policy type that you want to disable in this root.</p>"]
@@ -362,7 +673,33 @@ pub struct DisablePolicyTypeRequest {
     #[serde(rename="RootId")]
     pub root_id: String,
 }
-
+impl DisablePolicyTypeRequest {
+    /// Sets `policy_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisablePolicyTypeRequest.policy_type = value.into();`.
+    pub fn policy_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_type = value.into();
+        self
+    }
+    /// Sets `root_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisablePolicyTypeRequest.root_id = value.into();`.
+    pub fn root_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.root_id = value.into();
+        self
+    }
+    /// Returns a new instance of DisablePolicyTypeRequest with optional fields set to `None`.
+    pub fn new<PolicyTypeType: Into<String>, RootIdType: Into<String>>
+        (policy_type: PolicyTypeType,
+         root_id: RootIdType)
+         -> DisablePolicyTypeRequest {
+        DisablePolicyTypeRequest {
+            policy_type: policy_type.into(),
+            root_id: root_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DisablePolicyTypeResponse {
     #[doc="<p>A structure that shows the root with the updated list of enabled policy types.</p>"]
@@ -370,7 +707,6 @@ pub struct DisablePolicyTypeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub root: Option<Root>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct EnableAllFeaturesRequest;
 
@@ -381,7 +717,6 @@ pub struct EnableAllFeaturesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub handshake: Option<Handshake>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct EnablePolicyTypeRequest {
     #[doc="<p>The policy type that you want to enable.</p>"]
@@ -391,7 +726,33 @@ pub struct EnablePolicyTypeRequest {
     #[serde(rename="RootId")]
     pub root_id: String,
 }
-
+impl EnablePolicyTypeRequest {
+    /// Sets `policy_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnablePolicyTypeRequest.policy_type = value.into();`.
+    pub fn policy_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_type = value.into();
+        self
+    }
+    /// Sets `root_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnablePolicyTypeRequest.root_id = value.into();`.
+    pub fn root_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.root_id = value.into();
+        self
+    }
+    /// Returns a new instance of EnablePolicyTypeRequest with optional fields set to `None`.
+    pub fn new<PolicyTypeType: Into<String>, RootIdType: Into<String>>
+        (policy_type: PolicyTypeType,
+         root_id: RootIdType)
+         -> EnablePolicyTypeRequest {
+        EnablePolicyTypeRequest {
+            policy_type: policy_type.into(),
+            root_id: root_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EnablePolicyTypeResponse {
     #[doc="<p>A structure that shows the root with the updated list of enabled policy types.</p>"]
@@ -399,7 +760,6 @@ pub struct EnablePolicyTypeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub root: Option<Root>,
 }
-
 #[doc="<p>Contains information that must be exchanged to securely establish a relationship between two accounts (an <i>originator</i> and a <i>recipient</i>). For example, when a master account (the originator) invites another account (the recipient) to join its organization, the two accounts exchange information as a series of handshake requests and responses.</p> <p> <b>Note:</b> Handshakes that are CANCELED, ACCEPTED, or DECLINED show up in lists for only 30 days after entering that state After that they are deleted.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Handshake {
@@ -436,7 +796,6 @@ pub struct Handshake {
     #[serde(skip_serializing_if="Option::is_none")]
     pub state: Option<String>,
 }
-
 #[doc="<p>Specifies the criteria that are used to select the handshakes for the operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct HandshakeFilter {
@@ -449,7 +808,26 @@ pub struct HandshakeFilter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub parent_handshake_id: Option<String>,
 }
-
+impl HandshakeFilter {
+    /// Sets `action_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HandshakeFilter.action_type = Some(value.into());`.
+    pub fn action_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.action_type = Some(value.into());
+        self
+    }
+    /// Sets `parent_handshake_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HandshakeFilter.parent_handshake_id = Some(value.into());`.
+    pub fn parent_handshake_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.parent_handshake_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of HandshakeFilter with optional fields set to `None`.
+    pub fn new() -> HandshakeFilter {
+        HandshakeFilter { ..Default::default() }
+    }
+}
 #[doc="<p>Identifies a participant in a handshake.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct HandshakeParty {
@@ -462,7 +840,26 @@ pub struct HandshakeParty {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
+impl HandshakeParty {
+    /// Sets `id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HandshakeParty.id = Some(value.into());`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = Some(value.into());
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HandshakeParty.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Returns a new instance of HandshakeParty with optional fields set to `None`.
+    pub fn new() -> HandshakeParty {
+        HandshakeParty { ..Default::default() }
+    }
+}
 #[doc="<p>Contains additional data that is needed to process a handshake.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct HandshakeResource {
@@ -479,7 +876,6 @@ pub struct HandshakeResource {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InviteAccountToOrganizationRequest {
     #[doc="<p>Additional information that you want to include in the generated email to the recipient account owner.</p>"]
@@ -490,7 +886,30 @@ pub struct InviteAccountToOrganizationRequest {
     #[serde(rename="Target")]
     pub target: HandshakeParty,
 }
-
+impl InviteAccountToOrganizationRequest {
+    /// Sets `notes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InviteAccountToOrganizationRequest.notes = Some(value.into());`.
+    pub fn notes<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.notes = Some(value.into());
+        self
+    }
+    /// Sets `target`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InviteAccountToOrganizationRequest.target = value.into();`.
+    pub fn target<ValueType: Into<HandshakeParty>>(mut self, value: ValueType) -> Self {
+        self.target = value.into();
+        self
+    }
+    /// Returns a new instance of InviteAccountToOrganizationRequest with optional fields set to `None`.
+    pub fn new<TargetType: Into<HandshakeParty>>(target: TargetType)
+                                                 -> InviteAccountToOrganizationRequest {
+        InviteAccountToOrganizationRequest {
+            target: target.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InviteAccountToOrganizationResponse {
     #[doc="<p>A structure that contains details about the handshake that is created to support this invitation request.</p>"]
@@ -498,7 +917,6 @@ pub struct InviteAccountToOrganizationResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub handshake: Option<Handshake>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListAccountsForParentRequest {
     #[doc="<p>(Optional) Use this to limit the number of results you want included in the response. If you do not include this parameter, it defaults to a value that is specific to the operation. If additional items exist beyond the maximum you specify, the <code>NextToken</code> response element is present and has a value (is not null). Include that value as the <code>NextToken</code> request parameter in the next call to the operation to get the next part of the results. Note that Organizations might return fewer results than the maximum even when there are more results available. You should check <code>NextToken</code> after every operation to ensure that you receive all of the results.</p>"]
@@ -513,7 +931,37 @@ pub struct ListAccountsForParentRequest {
     #[serde(rename="ParentId")]
     pub parent_id: String,
 }
-
+impl ListAccountsForParentRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAccountsForParentRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAccountsForParentRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `parent_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAccountsForParentRequest.parent_id = value.into();`.
+    pub fn parent_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.parent_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListAccountsForParentRequest with optional fields set to `None`.
+    pub fn new<ParentIdType: Into<String>>(parent_id: ParentIdType)
+                                           -> ListAccountsForParentRequest {
+        ListAccountsForParentRequest {
+            parent_id: parent_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListAccountsForParentResponse {
     #[doc="<p>A list of the accounts in the specified root or OU.</p>"]
@@ -525,7 +973,6 @@ pub struct ListAccountsForParentResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListAccountsRequest {
     #[doc="<p>(Optional) Use this to limit the number of results you want included in the response. If you do not include this parameter, it defaults to a value that is specific to the operation. If additional items exist beyond the maximum you specify, the <code>NextToken</code> response element is present and has a value (is not null). Include that value as the <code>NextToken</code> request parameter in the next call to the operation to get the next part of the results. Note that Organizations might return fewer results than the maximum even when there are more results available. You should check <code>NextToken</code> after every operation to ensure that you receive all of the results.</p>"]
@@ -537,7 +984,26 @@ pub struct ListAccountsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListAccountsRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAccountsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAccountsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListAccountsRequest with optional fields set to `None`.
+    pub fn new() -> ListAccountsRequest {
+        ListAccountsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListAccountsResponse {
     #[doc="<p>A list of objects in the organization.</p>"]
@@ -549,7 +1015,6 @@ pub struct ListAccountsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListChildrenRequest {
     #[doc="<p>Filters the output to include only the specified child type.</p>"]
@@ -567,7 +1032,46 @@ pub struct ListChildrenRequest {
     #[serde(rename="ParentId")]
     pub parent_id: String,
 }
-
+impl ListChildrenRequest {
+    /// Sets `child_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListChildrenRequest.child_type = value.into();`.
+    pub fn child_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.child_type = value.into();
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListChildrenRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListChildrenRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `parent_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListChildrenRequest.parent_id = value.into();`.
+    pub fn parent_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.parent_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListChildrenRequest with optional fields set to `None`.
+    pub fn new<ChildTypeType: Into<String>, ParentIdType: Into<String>>(child_type: ChildTypeType,
+                                                                        parent_id: ParentIdType)
+                                                                        -> ListChildrenRequest {
+        ListChildrenRequest {
+            child_type: child_type.into(),
+            parent_id: parent_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListChildrenResponse {
     #[doc="<p>The list of children of the specified parent container.</p>"]
@@ -579,7 +1083,6 @@ pub struct ListChildrenResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListCreateAccountStatusRequest {
     #[doc="<p>(Optional) Use this to limit the number of results you want included in the response. If you do not include this parameter, it defaults to a value that is specific to the operation. If additional items exist beyond the maximum you specify, the <code>NextToken</code> response element is present and has a value (is not null). Include that value as the <code>NextToken</code> request parameter in the next call to the operation to get the next part of the results. Note that Organizations might return fewer results than the maximum even when there are more results available. You should check <code>NextToken</code> after every operation to ensure that you receive all of the results.</p>"]
@@ -595,7 +1098,33 @@ pub struct ListCreateAccountStatusRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub states: Option<Vec<String>>,
 }
-
+impl ListCreateAccountStatusRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCreateAccountStatusRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCreateAccountStatusRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `states`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCreateAccountStatusRequest.states = Some(value.into());`.
+    pub fn states<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.states = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListCreateAccountStatusRequest with optional fields set to `None`.
+    pub fn new() -> ListCreateAccountStatusRequest {
+        ListCreateAccountStatusRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListCreateAccountStatusResponse {
     #[doc="<p>A list of objects with details about the requests. Certain elements, such as the accountId number, are present in the output only after the account has been successfully created.</p>"]
@@ -607,7 +1136,6 @@ pub struct ListCreateAccountStatusResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListHandshakesForAccountRequest {
     #[doc="<p>Filters the handshakes that you want included in the response. The default is all types. Use the <code>ActionType</code> element to limit the output to only a specified type, such as <code>INVITE</code>, <code>ENABLE-FULL-CONTROL</code>, or <code>APPROVE-FULL-CONTROL</code>. Alternatively, for the <code>ENABLE-FULL-CONTROL</code> handshake that generates a separate child handshake for each member account, you can specify <code>ParentHandshakeId</code> to see only the handshakes that were generated by that parent request.</p>"]
@@ -623,7 +1151,33 @@ pub struct ListHandshakesForAccountRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListHandshakesForAccountRequest {
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListHandshakesForAccountRequest.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<HandshakeFilter>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListHandshakesForAccountRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListHandshakesForAccountRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListHandshakesForAccountRequest with optional fields set to `None`.
+    pub fn new() -> ListHandshakesForAccountRequest {
+        ListHandshakesForAccountRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListHandshakesForAccountResponse {
     #[doc="<p>A list of <a>Handshake</a> objects with details about each of the handshakes that is associated with the specified account.</p>"]
@@ -635,7 +1189,6 @@ pub struct ListHandshakesForAccountResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListHandshakesForOrganizationRequest {
     #[doc="<p>A filter of the handshakes that you want included in the response. The default is all types. Use the <code>ActionType</code> element to limit the output to only a specified type, such as <code>INVITE</code>, <code>ENABLE-ALL-FEATURES</code>, or <code>APPROVE-ALL-FEATURES</code>. Alternatively, for the <code>ENABLE-ALL-FEATURES</code> handshake that generates a separate child handshake for each member account, you can specify the <code>ParentHandshakeId</code> to see only the handshakes that were generated by that parent request.</p>"]
@@ -651,7 +1204,33 @@ pub struct ListHandshakesForOrganizationRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListHandshakesForOrganizationRequest {
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListHandshakesForOrganizationRequest.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<HandshakeFilter>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListHandshakesForOrganizationRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListHandshakesForOrganizationRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListHandshakesForOrganizationRequest with optional fields set to `None`.
+    pub fn new() -> ListHandshakesForOrganizationRequest {
+        ListHandshakesForOrganizationRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListHandshakesForOrganizationResponse {
     #[doc="<p>A list of <a>Handshake</a> objects with details about each of the handshakes that are associated with an organization.</p>"]
@@ -663,7 +1242,6 @@ pub struct ListHandshakesForOrganizationResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListOrganizationalUnitsForParentRequest {
     #[doc="<p>(Optional) Use this to limit the number of results you want included in the response. If you do not include this parameter, it defaults to a value that is specific to the operation. If additional items exist beyond the maximum you specify, the <code>NextToken</code> response element is present and has a value (is not null). Include that value as the <code>NextToken</code> request parameter in the next call to the operation to get the next part of the results. Note that Organizations might return fewer results than the maximum even when there are more results available. You should check <code>NextToken</code> after every operation to ensure that you receive all of the results.</p>"]
@@ -678,7 +1256,37 @@ pub struct ListOrganizationalUnitsForParentRequest {
     #[serde(rename="ParentId")]
     pub parent_id: String,
 }
-
+impl ListOrganizationalUnitsForParentRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListOrganizationalUnitsForParentRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListOrganizationalUnitsForParentRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `parent_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListOrganizationalUnitsForParentRequest.parent_id = value.into();`.
+    pub fn parent_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.parent_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListOrganizationalUnitsForParentRequest with optional fields set to `None`.
+    pub fn new<ParentIdType: Into<String>>(parent_id: ParentIdType)
+                                           -> ListOrganizationalUnitsForParentRequest {
+        ListOrganizationalUnitsForParentRequest {
+            parent_id: parent_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListOrganizationalUnitsForParentResponse {
     #[doc="<p>If present, this value indicates that there is more output available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>.</p>"]
@@ -690,7 +1298,6 @@ pub struct ListOrganizationalUnitsForParentResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub organizational_units: Option<Vec<OrganizationalUnit>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListParentsRequest {
     #[doc="<p>The unique identifier (ID) of the OU or account whose parent containers you want to list. Do not specify a root.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> for a child ID string requires one of the following:</p> <ul> <li> <p>Account: a string that consists of exactly 12 digits.</p> </li> <li> <p>Organizational unit (OU): a string that begins with \"ou-\" followed by from 4 to 32 lower-case letters or digits (the ID of the root that contains the OU) followed by a second \"-\" dash and from 8 to 32 additional lower-case letters or digits.</p> </li> </ul>"]
@@ -705,7 +1312,36 @@ pub struct ListParentsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListParentsRequest {
+    /// Sets `child_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListParentsRequest.child_id = value.into();`.
+    pub fn child_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.child_id = value.into();
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListParentsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListParentsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListParentsRequest with optional fields set to `None`.
+    pub fn new<ChildIdType: Into<String>>(child_id: ChildIdType) -> ListParentsRequest {
+        ListParentsRequest {
+            child_id: child_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListParentsResponse {
     #[doc="<p>If present, this value indicates that there is more output available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>.</p>"]
@@ -717,7 +1353,6 @@ pub struct ListParentsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub parents: Option<Vec<Parent>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListPoliciesForTargetRequest {
     #[doc="<p>The type of policy that you want to include in the returned list.</p>"]
@@ -735,7 +1370,47 @@ pub struct ListPoliciesForTargetRequest {
     #[serde(rename="TargetId")]
     pub target_id: String,
 }
-
+impl ListPoliciesForTargetRequest {
+    /// Sets `filter`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPoliciesForTargetRequest.filter = value.into();`.
+    pub fn filter<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter = value.into();
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPoliciesForTargetRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPoliciesForTargetRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `target_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPoliciesForTargetRequest.target_id = value.into();`.
+    pub fn target_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListPoliciesForTargetRequest with optional fields set to `None`.
+    pub fn new<FilterType: Into<String>, TargetIdType: Into<String>>
+        (filter: FilterType,
+         target_id: TargetIdType)
+         -> ListPoliciesForTargetRequest {
+        ListPoliciesForTargetRequest {
+            filter: filter.into(),
+            target_id: target_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListPoliciesForTargetResponse {
     #[doc="<p>If present, this value indicates that there is more output available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>.</p>"]
@@ -747,7 +1422,6 @@ pub struct ListPoliciesForTargetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policies: Option<Vec<PolicySummary>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListPoliciesRequest {
     #[doc="<p>Specifies the type of policy that you want to include in the response.</p>"]
@@ -762,7 +1436,36 @@ pub struct ListPoliciesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListPoliciesRequest {
+    /// Sets `filter`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPoliciesRequest.filter = value.into();`.
+    pub fn filter<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter = value.into();
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPoliciesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPoliciesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListPoliciesRequest with optional fields set to `None`.
+    pub fn new<FilterType: Into<String>>(filter: FilterType) -> ListPoliciesRequest {
+        ListPoliciesRequest {
+            filter: filter.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListPoliciesResponse {
     #[doc="<p>If present, this value indicates that there is more output available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>.</p>"]
@@ -774,7 +1477,6 @@ pub struct ListPoliciesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policies: Option<Vec<PolicySummary>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListRootsRequest {
     #[doc="<p>(Optional) Use this to limit the number of results you want included in the response. If you do not include this parameter, it defaults to a value that is specific to the operation. If additional items exist beyond the maximum you specify, the <code>NextToken</code> response element is present and has a value (is not null). Include that value as the <code>NextToken</code> request parameter in the next call to the operation to get the next part of the results. Note that Organizations might return fewer results than the maximum even when there are more results available. You should check <code>NextToken</code> after every operation to ensure that you receive all of the results.</p>"]
@@ -786,7 +1488,26 @@ pub struct ListRootsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListRootsRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRootsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRootsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListRootsRequest with optional fields set to `None`.
+    pub fn new() -> ListRootsRequest {
+        ListRootsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListRootsResponse {
     #[doc="<p>If present, this value indicates that there is more output available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>.</p>"]
@@ -798,7 +1519,6 @@ pub struct ListRootsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub roots: Option<Vec<Root>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTargetsForPolicyRequest {
     #[doc="<p>(Optional) Use this to limit the number of results you want included in the response. If you do not include this parameter, it defaults to a value that is specific to the operation. If additional items exist beyond the maximum you specify, the <code>NextToken</code> response element is present and has a value (is not null). Include that value as the <code>NextToken</code> request parameter in the next call to the operation to get the next part of the results. Note that Organizations might return fewer results than the maximum even when there are more results available. You should check <code>NextToken</code> after every operation to ensure that you receive all of the results.</p>"]
@@ -813,7 +1533,36 @@ pub struct ListTargetsForPolicyRequest {
     #[serde(rename="PolicyId")]
     pub policy_id: String,
 }
-
+impl ListTargetsForPolicyRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTargetsForPolicyRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTargetsForPolicyRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `policy_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTargetsForPolicyRequest.policy_id = value.into();`.
+    pub fn policy_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListTargetsForPolicyRequest with optional fields set to `None`.
+    pub fn new<PolicyIdType: Into<String>>(policy_id: PolicyIdType) -> ListTargetsForPolicyRequest {
+        ListTargetsForPolicyRequest {
+            policy_id: policy_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTargetsForPolicyResponse {
     #[doc="<p>If present, this value indicates that there is more output available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>.</p>"]
@@ -825,7 +1574,6 @@ pub struct ListTargetsForPolicyResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub targets: Option<Vec<PolicyTargetSummary>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct MoveAccountRequest {
     #[doc="<p>The unique identifier (ID) of the account that you want to move.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> for an account ID string requires exactly 12 digits.</p>"]
@@ -838,7 +1586,44 @@ pub struct MoveAccountRequest {
     #[serde(rename="SourceParentId")]
     pub source_parent_id: String,
 }
-
+impl MoveAccountRequest {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MoveAccountRequest.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `destination_parent_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MoveAccountRequest.destination_parent_id = value.into();`.
+    pub fn destination_parent_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination_parent_id = value.into();
+        self
+    }
+    /// Sets `source_parent_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MoveAccountRequest.source_parent_id = value.into();`.
+    pub fn source_parent_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_parent_id = value.into();
+        self
+    }
+    /// Returns a new instance of MoveAccountRequest with optional fields set to `None`.
+    pub fn new<AccountIdType: Into<String>,
+               DestinationParentIdType: Into<String>,
+               SourceParentIdType: Into<String>>
+        (account_id: AccountIdType,
+         destination_parent_id: DestinationParentIdType,
+         source_parent_id: SourceParentIdType)
+         -> MoveAccountRequest {
+        MoveAccountRequest {
+            account_id: account_id.into(),
+            destination_parent_id: destination_parent_id.into(),
+            source_parent_id: source_parent_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains details about an organization. An organization is a collection of accounts that are centrally managed together using consolidated billing, organized hierarchically with organizational units (OUs), and controlled with policies .</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Organization {
@@ -871,7 +1656,6 @@ pub struct Organization {
     #[serde(skip_serializing_if="Option::is_none")]
     pub master_account_id: Option<String>,
 }
-
 #[doc="<p>Contains details about an organizational unit (OU). An OU is a container of AWS accounts within a root of an organization. Policies that are attached to an OU apply to all accounts contained in that OU and in any child OUs.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct OrganizationalUnit {
@@ -888,7 +1672,6 @@ pub struct OrganizationalUnit {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p>Contains information about either a root or an organizational unit (OU) that can contain OUs or accounts in an organization.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Parent {
@@ -901,7 +1684,6 @@ pub struct Parent {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>Contains rules to be applied to the affected accounts. Policies can be attached directly to accounts, or to roots and OUs to affect all accounts in those hierarchies.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Policy {
@@ -914,7 +1696,6 @@ pub struct Policy {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policy_summary: Option<PolicySummary>,
 }
-
 #[doc="<p>Contains information about a policy, but does not include the content. To see the content of a policy, see <a>DescribePolicy</a>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PolicySummary {
@@ -943,7 +1724,6 @@ pub struct PolicySummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>Contains information about a root, OU, or account that a policy is attached to.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PolicyTargetSummary {
@@ -964,7 +1744,6 @@ pub struct PolicyTargetSummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>Contains information about a policy type and its status in the associated root.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PolicyTypeSummary {
@@ -977,14 +1756,29 @@ pub struct PolicyTypeSummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RemoveAccountFromOrganizationRequest {
     #[doc="<p>The unique identifier (ID) of the member account that you want to remove from the organization.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> for an account ID string requires exactly 12 digits.</p>"]
     #[serde(rename="AccountId")]
     pub account_id: String,
 }
-
+impl RemoveAccountFromOrganizationRequest {
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveAccountFromOrganizationRequest.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveAccountFromOrganizationRequest with optional fields set to `None`.
+    pub fn new<AccountIdType: Into<String>>(account_id: AccountIdType)
+                                            -> RemoveAccountFromOrganizationRequest {
+        RemoveAccountFromOrganizationRequest {
+            account_id: account_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains details about a root. A root is a top-level parent node in the hierarchy of an organization that can contain organizational units (OUs) and accounts. Every root contains every AWS account in the organization. Each root enables the accounts to be organized in a different way and to have different policy types enabled for use in that root.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Root {
@@ -1005,7 +1799,6 @@ pub struct Root {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policy_types: Option<Vec<PolicyTypeSummary>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateOrganizationalUnitRequest {
     #[doc="<p>The new name that you want to assign to the OU.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> that is used to validate this parameter is a string of any of the characters in the ASCII character range.</p>"]
@@ -1016,7 +1809,29 @@ pub struct UpdateOrganizationalUnitRequest {
     #[serde(rename="OrganizationalUnitId")]
     pub organizational_unit_id: String,
 }
-
+impl UpdateOrganizationalUnitRequest {
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateOrganizationalUnitRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `organizational_unit_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateOrganizationalUnitRequest.organizational_unit_id = value.into();`.
+    pub fn organizational_unit_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.organizational_unit_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateOrganizationalUnitRequest with optional fields set to `None`.
+pub fn new<OrganizationalUnitIdType: Into<String>>(organizational_unit_id: OrganizationalUnitIdType) -> UpdateOrganizationalUnitRequest{
+        UpdateOrganizationalUnitRequest {
+            organizational_unit_id: organizational_unit_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateOrganizationalUnitResponse {
     #[doc="<p>A structure that contains the details about the specified OU, including its new name.</p>"]
@@ -1024,7 +1839,6 @@ pub struct UpdateOrganizationalUnitResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub organizational_unit: Option<OrganizationalUnit>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdatePolicyRequest {
     #[doc="<p>If provided, the new content for the policy. The text must be correctly formatted JSON that complies with the syntax for the policy's type. For more information, see <a href=\"http://docs.aws.amazon.com/organizations/latest/userguide/orgs_reference_scp-syntax.html\">Service Control Policy Syntax</a> in the <i>AWS Organizations User Guide</i>.</p>"]
@@ -1043,7 +1857,43 @@ pub struct UpdatePolicyRequest {
     #[serde(rename="PolicyId")]
     pub policy_id: String,
 }
-
+impl UpdatePolicyRequest {
+    /// Sets `content`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePolicyRequest.content = Some(value.into());`.
+    pub fn content<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePolicyRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePolicyRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `policy_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePolicyRequest.policy_id = value.into();`.
+    pub fn policy_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdatePolicyRequest with optional fields set to `None`.
+    pub fn new<PolicyIdType: Into<String>>(policy_id: PolicyIdType) -> UpdatePolicyRequest {
+        UpdatePolicyRequest {
+            policy_id: policy_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdatePolicyResponse {
     #[doc="<p>A structure that contains details about the updated policy, showing the requested changes.</p>"]
@@ -1051,7 +1901,6 @@ pub struct UpdatePolicyResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policy: Option<Policy>,
 }
-
 /// Errors returned by AcceptHandshake
 #[derive(Debug, PartialEq)]
 pub enum AcceptHandshakeError {

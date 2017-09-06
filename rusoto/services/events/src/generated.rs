@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -34,7 +35,22 @@ pub struct DeleteRuleRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl DeleteRuleRequest {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRuleRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteRuleRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> DeleteRuleRequest {
+        DeleteRuleRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeEventBusRequest;
 
@@ -53,14 +69,28 @@ pub struct DescribeEventBusResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policy: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeRuleRequest {
     #[doc="<p>The name of the rule.</p>"]
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl DescribeRuleRequest {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRuleRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeRuleRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> DescribeRuleRequest {
+        DescribeRuleRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeRuleResponse {
     #[doc="<p>The Amazon Resource Name (ARN) of the rule.</p>"]
@@ -92,14 +122,28 @@ pub struct DescribeRuleResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub state: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DisableRuleRequest {
     #[doc="<p>The name of the rule.</p>"]
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl DisableRuleRequest {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableRuleRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of DisableRuleRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> DisableRuleRequest {
+        DisableRuleRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The custom parameters to be used when the target is an Amazon ECS cluster.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct EcsParameters {
@@ -111,14 +155,52 @@ pub struct EcsParameters {
     #[serde(rename="TaskDefinitionArn")]
     pub task_definition_arn: String,
 }
-
+impl EcsParameters {
+    /// Sets `task_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EcsParameters.task_count = Some(value.into());`.
+    pub fn task_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.task_count = Some(value.into());
+        self
+    }
+    /// Sets `task_definition_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EcsParameters.task_definition_arn = value.into();`.
+    pub fn task_definition_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_definition_arn = value.into();
+        self
+    }
+    /// Returns a new instance of EcsParameters with optional fields set to `None`.
+    pub fn new<TaskDefinitionArnType: Into<String>>(task_definition_arn: TaskDefinitionArnType)
+                                                    -> EcsParameters {
+        EcsParameters {
+            task_definition_arn: task_definition_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct EnableRuleRequest {
     #[doc="<p>The name of the rule.</p>"]
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl EnableRuleRequest {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableRuleRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of EnableRuleRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> EnableRuleRequest {
+        EnableRuleRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the parameters needed for you to provide custom input to a target based on one or more pieces of data extracted from the event.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct InputTransformer {
@@ -130,7 +212,33 @@ pub struct InputTransformer {
     #[serde(rename="InputTemplate")]
     pub input_template: String,
 }
-
+impl InputTransformer {
+    /// Sets `input_paths_map`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InputTransformer.input_paths_map = Some(value.into());`.
+    pub fn input_paths_map<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.input_paths_map = Some(value.into());
+        self
+    }
+    /// Sets `input_template`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InputTransformer.input_template = value.into();`.
+    pub fn input_template<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.input_template = value.into();
+        self
+    }
+    /// Returns a new instance of InputTransformer with optional fields set to `None`.
+    pub fn new<InputTemplateType: Into<String>>(input_template: InputTemplateType)
+                                                -> InputTransformer {
+        InputTransformer {
+            input_template: input_template.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>This object enables you to specify a JSON path to extract from the event and use as the partition key for the Amazon Kinesis stream, so that you can control the shard to which the event goes. If you do not include this parameter, the default is to use the <code>eventId</code> as the partition key.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct KinesisParameters {
@@ -138,7 +246,23 @@ pub struct KinesisParameters {
     #[serde(rename="PartitionKeyPath")]
     pub partition_key_path: String,
 }
-
+impl KinesisParameters {
+    /// Sets `partition_key_path`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisParameters.partition_key_path = value.into();`.
+    pub fn partition_key_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.partition_key_path = value.into();
+        self
+    }
+    /// Returns a new instance of KinesisParameters with optional fields set to `None`.
+    pub fn new<PartitionKeyPathType: Into<String>>(partition_key_path: PartitionKeyPathType)
+                                                   -> KinesisParameters {
+        KinesisParameters {
+            partition_key_path: partition_key_path.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListRuleNamesByTargetRequest {
     #[doc="<p>The maximum number of results to return.</p>"]
@@ -153,7 +277,37 @@ pub struct ListRuleNamesByTargetRequest {
     #[serde(rename="TargetArn")]
     pub target_arn: String,
 }
-
+impl ListRuleNamesByTargetRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRuleNamesByTargetRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRuleNamesByTargetRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `target_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRuleNamesByTargetRequest.target_arn = value.into();`.
+    pub fn target_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_arn = value.into();
+        self
+    }
+    /// Returns a new instance of ListRuleNamesByTargetRequest with optional fields set to `None`.
+    pub fn new<TargetArnType: Into<String>>(target_arn: TargetArnType)
+                                            -> ListRuleNamesByTargetRequest {
+        ListRuleNamesByTargetRequest {
+            target_arn: target_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListRuleNamesByTargetResponse {
     #[doc="<p>Indicates whether there are additional results to retrieve. If there are no more results, the value is null.</p>"]
@@ -165,7 +319,6 @@ pub struct ListRuleNamesByTargetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rule_names: Option<Vec<String>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListRulesRequest {
     #[doc="<p>The maximum number of results to return.</p>"]
@@ -181,7 +334,33 @@ pub struct ListRulesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListRulesRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRulesRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `name_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRulesRequest.name_prefix = Some(value.into());`.
+    pub fn name_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name_prefix = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRulesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListRulesRequest with optional fields set to `None`.
+    pub fn new() -> ListRulesRequest {
+        ListRulesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListRulesResponse {
     #[doc="<p>Indicates whether there are additional results to retrieve. If there are no more results, the value is null.</p>"]
@@ -193,7 +372,6 @@ pub struct ListRulesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rules: Option<Vec<Rule>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTargetsByRuleRequest {
     #[doc="<p>The maximum number of results to return.</p>"]
@@ -208,7 +386,36 @@ pub struct ListTargetsByRuleRequest {
     #[serde(rename="Rule")]
     pub rule: String,
 }
-
+impl ListTargetsByRuleRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTargetsByRuleRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTargetsByRuleRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `rule`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTargetsByRuleRequest.rule = value.into();`.
+    pub fn rule<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule = value.into();
+        self
+    }
+    /// Returns a new instance of ListTargetsByRuleRequest with optional fields set to `None`.
+    pub fn new<RuleType: Into<String>>(rule: RuleType) -> ListTargetsByRuleRequest {
+        ListTargetsByRuleRequest {
+            rule: rule.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTargetsByRuleResponse {
     #[doc="<p>Indicates whether there are additional results to retrieve. If there are no more results, the value is null.</p>"]
@@ -220,14 +427,31 @@ pub struct ListTargetsByRuleResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub targets: Option<Vec<Target>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutEventsRequest {
     #[doc="<p>The entry that defines an event in your system. You can specify several parameters for the entry such as the source and type of the event, resources associated with the event, and so on.</p>"]
     #[serde(rename="Entries")]
     pub entries: Vec<PutEventsRequestEntry>,
 }
-
+impl PutEventsRequest {
+    /// Sets `entries`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutEventsRequest.entries = value.into();`.
+    pub fn entries<ValueType: Into<Vec<PutEventsRequestEntry>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.entries = value.into();
+        self
+    }
+    /// Returns a new instance of PutEventsRequest with optional fields set to `None`.
+    pub fn new<EntriesType: Into<Vec<PutEventsRequestEntry>>>(entries: EntriesType)
+                                                              -> PutEventsRequest {
+        PutEventsRequest {
+            entries: entries.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents an event to be submitted.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutEventsRequestEntry {
@@ -252,7 +476,47 @@ pub struct PutEventsRequestEntry {
     #[serde(skip_serializing_if="Option::is_none")]
     pub time: Option<f64>,
 }
-
+impl PutEventsRequestEntry {
+    /// Sets `detail`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutEventsRequestEntry.detail = Some(value.into());`.
+    pub fn detail<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.detail = Some(value.into());
+        self
+    }
+    /// Sets `detail_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutEventsRequestEntry.detail_type = Some(value.into());`.
+    pub fn detail_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.detail_type = Some(value.into());
+        self
+    }
+    /// Sets `resources`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutEventsRequestEntry.resources = Some(value.into());`.
+    pub fn resources<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resources = Some(value.into());
+        self
+    }
+    /// Sets `source`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutEventsRequestEntry.source = Some(value.into());`.
+    pub fn source<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source = Some(value.into());
+        self
+    }
+    /// Sets `time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutEventsRequestEntry.time = Some(value.into());`.
+    pub fn time<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.time = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PutEventsRequestEntry with optional fields set to `None`.
+    pub fn new() -> PutEventsRequestEntry {
+        PutEventsRequestEntry { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutEventsResponse {
     #[doc="<p>The successfully and unsuccessfully ingested events results. If the ingestion was successful, the entry has the event ID in it. Otherwise, you can use the error code and error message to identify the problem with the entry.</p>"]
@@ -264,7 +528,6 @@ pub struct PutEventsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub failed_entry_count: Option<i64>,
 }
-
 #[doc="<p>Represents an event that failed to be submitted.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutEventsResultEntry {
@@ -281,7 +544,6 @@ pub struct PutEventsResultEntry {
     #[serde(skip_serializing_if="Option::is_none")]
     pub event_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutPermissionRequest {
     #[doc="<p>The action that you are enabling the other account to perform. Currently, this must be <code>events:PutEvents</code>.</p>"]
@@ -294,7 +556,42 @@ pub struct PutPermissionRequest {
     #[serde(rename="StatementId")]
     pub statement_id: String,
 }
-
+impl PutPermissionRequest {
+    /// Sets `action`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutPermissionRequest.action = value.into();`.
+    pub fn action<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.action = value.into();
+        self
+    }
+    /// Sets `principal`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutPermissionRequest.principal = value.into();`.
+    pub fn principal<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.principal = value.into();
+        self
+    }
+    /// Sets `statement_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutPermissionRequest.statement_id = value.into();`.
+    pub fn statement_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.statement_id = value.into();
+        self
+    }
+    /// Returns a new instance of PutPermissionRequest with optional fields set to `None`.
+    pub fn new<ActionType: Into<String>, PrincipalType: Into<String>, StatementIdType: Into<String>>
+        (action: ActionType,
+         principal: PrincipalType,
+         statement_id: StatementIdType)
+         -> PutPermissionRequest {
+        PutPermissionRequest {
+            action: action.into(),
+            principal: principal.into(),
+            statement_id: statement_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutRuleRequest {
     #[doc="<p>A description of the rule.</p>"]
@@ -321,7 +618,57 @@ pub struct PutRuleRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub state: Option<String>,
 }
-
+impl PutRuleRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRuleRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `event_pattern`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRuleRequest.event_pattern = Some(value.into());`.
+    pub fn event_pattern<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.event_pattern = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRuleRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRuleRequest.role_arn = Some(value.into());`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = Some(value.into());
+        self
+    }
+    /// Sets `schedule_expression`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRuleRequest.schedule_expression = Some(value.into());`.
+    pub fn schedule_expression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.schedule_expression = Some(value.into());
+        self
+    }
+    /// Sets `state`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRuleRequest.state = Some(value.into());`.
+    pub fn state<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.state = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PutRuleRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> PutRuleRequest {
+        PutRuleRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutRuleResponse {
     #[doc="<p>The Amazon Resource Name (ARN) of the rule.</p>"]
@@ -329,7 +676,6 @@ pub struct PutRuleResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rule_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutTargetsRequest {
     #[doc="<p>The name of the rule.</p>"]
@@ -339,7 +685,32 @@ pub struct PutTargetsRequest {
     #[serde(rename="Targets")]
     pub targets: Vec<Target>,
 }
-
+impl PutTargetsRequest {
+    /// Sets `rule`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutTargetsRequest.rule = value.into();`.
+    pub fn rule<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule = value.into();
+        self
+    }
+    /// Sets `targets`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutTargetsRequest.targets = value.into();`.
+    pub fn targets<ValueType: Into<Vec<Target>>>(mut self, value: ValueType) -> Self {
+        self.targets = value.into();
+        self
+    }
+    /// Returns a new instance of PutTargetsRequest with optional fields set to `None`.
+    pub fn new<RuleType: Into<String>, TargetsType: Into<Vec<Target>>>(rule: RuleType,
+                                                                       targets: TargetsType)
+                                                                       -> PutTargetsRequest {
+        PutTargetsRequest {
+            rule: rule.into(),
+            targets: targets.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutTargetsResponse {
     #[doc="<p>The failed target entries.</p>"]
@@ -351,7 +722,6 @@ pub struct PutTargetsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub failed_entry_count: Option<i64>,
 }
-
 #[doc="<p>Represents a target that failed to be added to a rule.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutTargetsResultEntry {
@@ -368,14 +738,29 @@ pub struct PutTargetsResultEntry {
     #[serde(skip_serializing_if="Option::is_none")]
     pub target_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RemovePermissionRequest {
     #[doc="<p>The statement ID corresponding to the account that is no longer allowed to put events to the default event bus.</p>"]
     #[serde(rename="StatementId")]
     pub statement_id: String,
 }
-
+impl RemovePermissionRequest {
+    /// Sets `statement_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemovePermissionRequest.statement_id = value.into();`.
+    pub fn statement_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.statement_id = value.into();
+        self
+    }
+    /// Returns a new instance of RemovePermissionRequest with optional fields set to `None`.
+    pub fn new<StatementIdType: Into<String>>(statement_id: StatementIdType)
+                                              -> RemovePermissionRequest {
+        RemovePermissionRequest {
+            statement_id: statement_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RemoveTargetsRequest {
     #[doc="<p>The IDs of the targets to remove from the rule.</p>"]
@@ -385,7 +770,32 @@ pub struct RemoveTargetsRequest {
     #[serde(rename="Rule")]
     pub rule: String,
 }
-
+impl RemoveTargetsRequest {
+    /// Sets `ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTargetsRequest.ids = value.into();`.
+    pub fn ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.ids = value.into();
+        self
+    }
+    /// Sets `rule`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTargetsRequest.rule = value.into();`.
+    pub fn rule<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveTargetsRequest with optional fields set to `None`.
+    pub fn new<IdsType: Into<Vec<String>>, RuleType: Into<String>>(ids: IdsType,
+                                                                   rule: RuleType)
+                                                                   -> RemoveTargetsRequest {
+        RemoveTargetsRequest {
+            ids: ids.into(),
+            rule: rule.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RemoveTargetsResponse {
     #[doc="<p>The failed target entries.</p>"]
@@ -397,7 +807,6 @@ pub struct RemoveTargetsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub failed_entry_count: Option<i64>,
 }
-
 #[doc="<p>Represents a target that failed to be removed from a rule.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RemoveTargetsResultEntry {
@@ -414,7 +823,6 @@ pub struct RemoveTargetsResultEntry {
     #[serde(skip_serializing_if="Option::is_none")]
     pub target_id: Option<String>,
 }
-
 #[doc="<p>Contains information about a rule in Amazon CloudWatch Events.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Rule {
@@ -447,7 +855,6 @@ pub struct Rule {
     #[serde(skip_serializing_if="Option::is_none")]
     pub state: Option<String>,
 }
-
 #[doc="<p>This parameter contains the criteria (either InstanceIds or a tag) used to specify which EC2 instances are to be sent the command. </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct RunCommandParameters {
@@ -455,7 +862,24 @@ pub struct RunCommandParameters {
     #[serde(rename="RunCommandTargets")]
     pub run_command_targets: Vec<RunCommandTarget>,
 }
-
+impl RunCommandParameters {
+    /// Sets `run_command_targets`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunCommandParameters.run_command_targets = value.into();`.
+    pub fn run_command_targets<ValueType: Into<Vec<RunCommandTarget>>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.run_command_targets = value.into();
+        self
+    }
+    /// Returns a new instance of RunCommandParameters with optional fields set to `None`.
+pub fn new<RunCommandTargetsType: Into<Vec<RunCommandTarget>>>(run_command_targets: RunCommandTargetsType) -> RunCommandParameters{
+        RunCommandParameters {
+            run_command_targets: run_command_targets.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Information about the EC2 instances that are to be sent the command, specified as key-value pairs. Each <code>RunCommandTarget</code> block can include only one key, but this key may specify multiple values.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct RunCommandTarget {
@@ -466,7 +890,32 @@ pub struct RunCommandTarget {
     #[serde(rename="Values")]
     pub values: Vec<String>,
 }
-
+impl RunCommandTarget {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunCommandTarget.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `values`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunCommandTarget.values = value.into();`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = value.into();
+        self
+    }
+    /// Returns a new instance of RunCommandTarget with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>, ValuesType: Into<Vec<String>>>(key: KeyType,
+                                                                     values: ValuesType)
+                                                                     -> RunCommandTarget {
+        RunCommandTarget {
+            key: key.into(),
+            values: values.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Targets are the resources to be invoked when a rule is triggered. Target types include EC2 instances, AWS Lambda functions, Amazon Kinesis streams, Amazon ECS tasks, AWS Step Functions state machines, Run Command, and built-in targets.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Target {
@@ -505,7 +954,85 @@ pub struct Target {
     #[serde(skip_serializing_if="Option::is_none")]
     pub run_command_parameters: Option<RunCommandParameters>,
 }
-
+impl Target {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Target.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Sets `ecs_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Target.ecs_parameters = Some(value.into());`.
+    pub fn ecs_parameters<ValueType: Into<EcsParameters>>(mut self, value: ValueType) -> Self {
+        self.ecs_parameters = Some(value.into());
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Target.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `input`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Target.input = Some(value.into());`.
+    pub fn input<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.input = Some(value.into());
+        self
+    }
+    /// Sets `input_path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Target.input_path = Some(value.into());`.
+    pub fn input_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.input_path = Some(value.into());
+        self
+    }
+    /// Sets `input_transformer`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Target.input_transformer = Some(value.into());`.
+    pub fn input_transformer<ValueType: Into<InputTransformer>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.input_transformer = Some(value.into());
+        self
+    }
+    /// Sets `kinesis_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Target.kinesis_parameters = Some(value.into());`.
+    pub fn kinesis_parameters<ValueType: Into<KinesisParameters>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.kinesis_parameters = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Target.role_arn = Some(value.into());`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = Some(value.into());
+        self
+    }
+    /// Sets `run_command_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Target.run_command_parameters = Some(value.into());`.
+    pub fn run_command_parameters<ValueType: Into<RunCommandParameters>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.run_command_parameters = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Target with optional fields set to `None`.
+    pub fn new<ArnType: Into<String>, IdType: Into<String>>(arn: ArnType, id: IdType) -> Target {
+        Target {
+            arn: arn.into(),
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TestEventPatternRequest {
     #[doc="<p>The event, in JSON format, to test against the event pattern.</p>"]
@@ -515,7 +1042,33 @@ pub struct TestEventPatternRequest {
     #[serde(rename="EventPattern")]
     pub event_pattern: String,
 }
-
+impl TestEventPatternRequest {
+    /// Sets `event`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestEventPatternRequest.event = value.into();`.
+    pub fn event<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.event = value.into();
+        self
+    }
+    /// Sets `event_pattern`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestEventPatternRequest.event_pattern = value.into();`.
+    pub fn event_pattern<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.event_pattern = value.into();
+        self
+    }
+    /// Returns a new instance of TestEventPatternRequest with optional fields set to `None`.
+    pub fn new<EventType: Into<String>, EventPatternType: Into<String>>
+        (event: EventType,
+         event_pattern: EventPatternType)
+         -> TestEventPatternRequest {
+        TestEventPatternRequest {
+            event: event.into(),
+            event_pattern: event_pattern.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TestEventPatternResponse {
     #[doc="<p>Indicates whether the event matches the event pattern.</p>"]
@@ -523,7 +1076,6 @@ pub struct TestEventPatternResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub result: Option<bool>,
 }
-
 /// Errors returned by DeleteRule
 #[derive(Debug, PartialEq)]
 pub enum DeleteRuleError {

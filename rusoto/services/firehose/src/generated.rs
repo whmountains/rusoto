@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -40,7 +41,26 @@ pub struct BufferingHints {
     #[serde(skip_serializing_if="Option::is_none")]
     pub size_in_m_bs: Option<i64>,
 }
-
+impl BufferingHints {
+    /// Sets `interval_in_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BufferingHints.interval_in_seconds = Some(value.into());`.
+    pub fn interval_in_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.interval_in_seconds = Some(value.into());
+        self
+    }
+    /// Sets `size_in_m_bs`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BufferingHints.size_in_m_bs = Some(value.into());`.
+    pub fn size_in_m_bs<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.size_in_m_bs = Some(value.into());
+        self
+    }
+    /// Returns a new instance of BufferingHints with optional fields set to `None`.
+    pub fn new() -> BufferingHints {
+        BufferingHints { ..Default::default() }
+    }
+}
 #[doc="<p>Describes the Amazon CloudWatch logging options for your delivery stream.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct CloudWatchLoggingOptions {
@@ -57,7 +77,33 @@ pub struct CloudWatchLoggingOptions {
     #[serde(skip_serializing_if="Option::is_none")]
     pub log_stream_name: Option<String>,
 }
-
+impl CloudWatchLoggingOptions {
+    /// Sets `enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchLoggingOptions.enabled = Some(value.into());`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = Some(value.into());
+        self
+    }
+    /// Sets `log_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchLoggingOptions.log_group_name = Some(value.into());`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = Some(value.into());
+        self
+    }
+    /// Sets `log_stream_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchLoggingOptions.log_stream_name = Some(value.into());`.
+    pub fn log_stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_stream_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CloudWatchLoggingOptions with optional fields set to `None`.
+    pub fn new() -> CloudWatchLoggingOptions {
+        CloudWatchLoggingOptions { ..Default::default() }
+    }
+}
 #[doc="<p>Describes a <code>COPY</code> command for Amazon Redshift.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct CopyCommand {
@@ -73,7 +119,36 @@ pub struct CopyCommand {
     #[serde(rename="DataTableName")]
     pub data_table_name: String,
 }
-
+impl CopyCommand {
+    /// Sets `copy_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyCommand.copy_options = Some(value.into());`.
+    pub fn copy_options<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.copy_options = Some(value.into());
+        self
+    }
+    /// Sets `data_table_columns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyCommand.data_table_columns = Some(value.into());`.
+    pub fn data_table_columns<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_table_columns = Some(value.into());
+        self
+    }
+    /// Sets `data_table_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyCommand.data_table_name = value.into();`.
+    pub fn data_table_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_table_name = value.into();
+        self
+    }
+    /// Returns a new instance of CopyCommand with optional fields set to `None`.
+    pub fn new<DataTableNameType: Into<String>>(data_table_name: DataTableNameType) -> CopyCommand {
+        CopyCommand {
+            data_table_name: data_table_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateDeliveryStreamInput {
     #[doc="<p>The name of the delivery stream. This name must be unique per AWS account in the same region. If the delivery streams are in different accounts or different regions, you can have multiple delivery streams with the same name.</p>"]
@@ -100,7 +175,64 @@ pub struct CreateDeliveryStreamInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub redshift_destination_configuration: Option<RedshiftDestinationConfiguration>,
 }
-
+impl CreateDeliveryStreamInput {
+    /// Sets `delivery_stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeliveryStreamInput.delivery_stream_name = value.into();`.
+    pub fn delivery_stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.delivery_stream_name = value.into();
+        self
+    }
+    /// Sets `delivery_stream_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeliveryStreamInput.delivery_stream_type = Some(value.into());`.
+    pub fn delivery_stream_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.delivery_stream_type = Some(value.into());
+        self
+    }
+    /// Sets `elasticsearch_destination_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeliveryStreamInput.elasticsearch_destination_configuration = Some(value.into());`.
+pub fn elasticsearch_destination_configuration<ValueType: Into<ElasticsearchDestinationConfiguration>>(mut self, value: ValueType) -> Self{
+        self.elasticsearch_destination_configuration = Some(value.into());
+        self
+    }
+    /// Sets `extended_s3_destination_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeliveryStreamInput.extended_s3_destination_configuration = Some(value.into());`.
+pub fn extended_s3_destination_configuration<ValueType: Into<ExtendedS3DestinationConfiguration>>(mut self, value: ValueType) -> Self{
+        self.extended_s3_destination_configuration = Some(value.into());
+        self
+    }
+    /// Sets `kinesis_stream_source_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeliveryStreamInput.kinesis_stream_source_configuration = Some(value.into());`.
+    pub fn kinesis_stream_source_configuration<ValueType: Into<KinesisStreamSourceConfiguration>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.kinesis_stream_source_configuration = Some(value.into());
+        self
+    }
+    /// Sets `redshift_destination_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeliveryStreamInput.redshift_destination_configuration = Some(value.into());`.
+    pub fn redshift_destination_configuration<ValueType: Into<RedshiftDestinationConfiguration>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.redshift_destination_configuration = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateDeliveryStreamInput with optional fields set to `None`.
+    pub fn new<DeliveryStreamNameType: Into<String>>(delivery_stream_name: DeliveryStreamNameType)
+                                                     -> CreateDeliveryStreamInput {
+        CreateDeliveryStreamInput {
+            delivery_stream_name: delivery_stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateDeliveryStreamOutput {
     #[doc="<p>The ARN of the delivery stream.</p>"]
@@ -108,14 +240,29 @@ pub struct CreateDeliveryStreamOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub delivery_stream_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteDeliveryStreamInput {
     #[doc="<p>The name of the delivery stream.</p>"]
     #[serde(rename="DeliveryStreamName")]
     pub delivery_stream_name: String,
 }
-
+impl DeleteDeliveryStreamInput {
+    /// Sets `delivery_stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDeliveryStreamInput.delivery_stream_name = value.into();`.
+    pub fn delivery_stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.delivery_stream_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDeliveryStreamInput with optional fields set to `None`.
+    pub fn new<DeliveryStreamNameType: Into<String>>(delivery_stream_name: DeliveryStreamNameType)
+                                                     -> DeleteDeliveryStreamInput {
+        DeleteDeliveryStreamInput {
+            delivery_stream_name: delivery_stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteDeliveryStreamOutput;
 
@@ -156,7 +303,6 @@ pub struct DeliveryStreamDescription {
     #[serde(rename="VersionId")]
     pub version_id: String,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeDeliveryStreamInput {
     #[doc="<p>The name of the delivery stream.</p>"]
@@ -171,14 +317,45 @@ pub struct DescribeDeliveryStreamInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub limit: Option<i64>,
 }
-
+impl DescribeDeliveryStreamInput {
+    /// Sets `delivery_stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDeliveryStreamInput.delivery_stream_name = value.into();`.
+    pub fn delivery_stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.delivery_stream_name = value.into();
+        self
+    }
+    /// Sets `exclusive_start_destination_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDeliveryStreamInput.exclusive_start_destination_id = Some(value.into());`.
+    pub fn exclusive_start_destination_id<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.exclusive_start_destination_id = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDeliveryStreamInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDeliveryStreamInput with optional fields set to `None`.
+    pub fn new<DeliveryStreamNameType: Into<String>>(delivery_stream_name: DeliveryStreamNameType)
+                                                     -> DescribeDeliveryStreamInput {
+        DescribeDeliveryStreamInput {
+            delivery_stream_name: delivery_stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeDeliveryStreamOutput {
     #[doc="<p>Information about the delivery stream.</p>"]
     #[serde(rename="DeliveryStreamDescription")]
     pub delivery_stream_description: DeliveryStreamDescription,
 }
-
 #[doc="<p>Describes the destination for a delivery stream.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DestinationDescription {
@@ -202,7 +379,6 @@ pub struct DestinationDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub s3_destination_description: Option<S3DestinationDescription>,
 }
-
 #[doc="<p>Describes the buffering to perform before delivering data to the Amazon ES destination.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ElasticsearchBufferingHints {
@@ -215,7 +391,26 @@ pub struct ElasticsearchBufferingHints {
     #[serde(skip_serializing_if="Option::is_none")]
     pub size_in_m_bs: Option<i64>,
 }
-
+impl ElasticsearchBufferingHints {
+    /// Sets `interval_in_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchBufferingHints.interval_in_seconds = Some(value.into());`.
+    pub fn interval_in_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.interval_in_seconds = Some(value.into());
+        self
+    }
+    /// Sets `size_in_m_bs`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchBufferingHints.size_in_m_bs = Some(value.into());`.
+    pub fn size_in_m_bs<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.size_in_m_bs = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ElasticsearchBufferingHints with optional fields set to `None`.
+    pub fn new() -> ElasticsearchBufferingHints {
+        ElasticsearchBufferingHints { ..Default::default() }
+    }
+}
 #[doc="<p>Describes the configuration of a destination in Amazon ES.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ElasticsearchDestinationConfiguration {
@@ -259,7 +454,114 @@ pub struct ElasticsearchDestinationConfiguration {
     #[serde(rename="TypeName")]
     pub type_name: String,
 }
-
+impl ElasticsearchDestinationConfiguration {
+    /// Sets `buffering_hints`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchDestinationConfiguration.buffering_hints = Some(value.into());`.
+    pub fn buffering_hints<ValueType: Into<ElasticsearchBufferingHints>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.buffering_hints = Some(value.into());
+        self
+    }
+    /// Sets `cloud_watch_logging_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchDestinationConfiguration.cloud_watch_logging_options = Some(value.into());`.
+pub fn cloud_watch_logging_options<ValueType: Into<CloudWatchLoggingOptions>>(mut self, value: ValueType) -> Self{
+        self.cloud_watch_logging_options = Some(value.into());
+        self
+    }
+    /// Sets `domain_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchDestinationConfiguration.domain_arn = value.into();`.
+    pub fn domain_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_arn = value.into();
+        self
+    }
+    /// Sets `index_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchDestinationConfiguration.index_name = value.into();`.
+    pub fn index_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.index_name = value.into();
+        self
+    }
+    /// Sets `index_rotation_period`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchDestinationConfiguration.index_rotation_period = Some(value.into());`.
+    pub fn index_rotation_period<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.index_rotation_period = Some(value.into());
+        self
+    }
+    /// Sets `processing_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchDestinationConfiguration.processing_configuration = Some(value.into());`.
+    pub fn processing_configuration<ValueType: Into<ProcessingConfiguration>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.processing_configuration = Some(value.into());
+        self
+    }
+    /// Sets `retry_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchDestinationConfiguration.retry_options = Some(value.into());`.
+    pub fn retry_options<ValueType: Into<ElasticsearchRetryOptions>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.retry_options = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchDestinationConfiguration.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Sets `s3_backup_mode`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchDestinationConfiguration.s3_backup_mode = Some(value.into());`.
+    pub fn s3_backup_mode<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_backup_mode = Some(value.into());
+        self
+    }
+    /// Sets `s3_configuration`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchDestinationConfiguration.s3_configuration = value.into();`.
+    pub fn s3_configuration<ValueType: Into<S3DestinationConfiguration>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.s3_configuration = value.into();
+        self
+    }
+    /// Sets `type_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchDestinationConfiguration.type_name = value.into();`.
+    pub fn type_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_name = value.into();
+        self
+    }
+    /// Returns a new instance of ElasticsearchDestinationConfiguration with optional fields set to `None`.
+    pub fn new<DomainARNType: Into<String>,
+               IndexNameType: Into<String>,
+               RoleARNType: Into<String>,
+               S3ConfigurationType: Into<S3DestinationConfiguration>,
+               TypeNameType: Into<String>>
+        (domain_arn: DomainARNType,
+         index_name: IndexNameType,
+         role_arn: RoleARNType,
+         s3_configuration: S3ConfigurationType,
+         type_name: TypeNameType)
+         -> ElasticsearchDestinationConfiguration {
+        ElasticsearchDestinationConfiguration {
+            domain_arn: domain_arn.into(),
+            index_name: index_name.into(),
+            role_arn: role_arn.into(),
+            s3_configuration: s3_configuration.into(),
+            type_name: type_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The destination description in Amazon ES.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ElasticsearchDestinationDescription {
@@ -308,7 +610,6 @@ pub struct ElasticsearchDestinationDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_name: Option<String>,
 }
-
 #[doc="<p>Describes an update for a destination in Amazon ES.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ElasticsearchDestinationUpdate {
@@ -353,7 +654,88 @@ pub struct ElasticsearchDestinationUpdate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_name: Option<String>,
 }
-
+impl ElasticsearchDestinationUpdate {
+    /// Sets `buffering_hints`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchDestinationUpdate.buffering_hints = Some(value.into());`.
+    pub fn buffering_hints<ValueType: Into<ElasticsearchBufferingHints>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.buffering_hints = Some(value.into());
+        self
+    }
+    /// Sets `cloud_watch_logging_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchDestinationUpdate.cloud_watch_logging_options = Some(value.into());`.
+pub fn cloud_watch_logging_options<ValueType: Into<CloudWatchLoggingOptions>>(mut self, value: ValueType) -> Self{
+        self.cloud_watch_logging_options = Some(value.into());
+        self
+    }
+    /// Sets `domain_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchDestinationUpdate.domain_arn = Some(value.into());`.
+    pub fn domain_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_arn = Some(value.into());
+        self
+    }
+    /// Sets `index_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchDestinationUpdate.index_name = Some(value.into());`.
+    pub fn index_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.index_name = Some(value.into());
+        self
+    }
+    /// Sets `index_rotation_period`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchDestinationUpdate.index_rotation_period = Some(value.into());`.
+    pub fn index_rotation_period<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.index_rotation_period = Some(value.into());
+        self
+    }
+    /// Sets `processing_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchDestinationUpdate.processing_configuration = Some(value.into());`.
+    pub fn processing_configuration<ValueType: Into<ProcessingConfiguration>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.processing_configuration = Some(value.into());
+        self
+    }
+    /// Sets `retry_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchDestinationUpdate.retry_options = Some(value.into());`.
+    pub fn retry_options<ValueType: Into<ElasticsearchRetryOptions>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.retry_options = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchDestinationUpdate.role_arn = Some(value.into());`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = Some(value.into());
+        self
+    }
+    /// Sets `s3_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchDestinationUpdate.s3_update = Some(value.into());`.
+    pub fn s3_update<ValueType: Into<S3DestinationUpdate>>(mut self, value: ValueType) -> Self {
+        self.s3_update = Some(value.into());
+        self
+    }
+    /// Sets `type_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchDestinationUpdate.type_name = Some(value.into());`.
+    pub fn type_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ElasticsearchDestinationUpdate with optional fields set to `None`.
+    pub fn new() -> ElasticsearchDestinationUpdate {
+        ElasticsearchDestinationUpdate { ..Default::default() }
+    }
+}
 #[doc="<p>Configures retry behavior in case Kinesis Firehose is unable to deliver documents to Amazon ES.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ElasticsearchRetryOptions {
@@ -362,7 +744,19 @@ pub struct ElasticsearchRetryOptions {
     #[serde(skip_serializing_if="Option::is_none")]
     pub duration_in_seconds: Option<i64>,
 }
-
+impl ElasticsearchRetryOptions {
+    /// Sets `duration_in_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchRetryOptions.duration_in_seconds = Some(value.into());`.
+    pub fn duration_in_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.duration_in_seconds = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ElasticsearchRetryOptions with optional fields set to `None`.
+    pub fn new() -> ElasticsearchRetryOptions {
+        ElasticsearchRetryOptions { ..Default::default() }
+    }
+}
 #[doc="<p>Describes the encryption for a destination in Amazon S3.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct EncryptionConfiguration {
@@ -375,7 +769,28 @@ pub struct EncryptionConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub no_encryption_config: Option<String>,
 }
-
+impl EncryptionConfiguration {
+    /// Sets `kms_encryption_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EncryptionConfiguration.kms_encryption_config = Some(value.into());`.
+    pub fn kms_encryption_config<ValueType: Into<KMSEncryptionConfig>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.kms_encryption_config = Some(value.into());
+        self
+    }
+    /// Sets `no_encryption_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EncryptionConfiguration.no_encryption_config = Some(value.into());`.
+    pub fn no_encryption_config<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.no_encryption_config = Some(value.into());
+        self
+    }
+    /// Returns a new instance of EncryptionConfiguration with optional fields set to `None`.
+    pub fn new() -> EncryptionConfiguration {
+        EncryptionConfiguration { ..Default::default() }
+    }
+}
 #[doc="<p>Describes the configuration of a destination in Amazon S3.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ExtendedS3DestinationConfiguration {
@@ -418,7 +833,95 @@ pub struct ExtendedS3DestinationConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub s3_backup_mode: Option<String>,
 }
-
+impl ExtendedS3DestinationConfiguration {
+    /// Sets `bucket_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtendedS3DestinationConfiguration.bucket_arn = value.into();`.
+    pub fn bucket_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket_arn = value.into();
+        self
+    }
+    /// Sets `buffering_hints`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtendedS3DestinationConfiguration.buffering_hints = Some(value.into());`.
+    pub fn buffering_hints<ValueType: Into<BufferingHints>>(mut self, value: ValueType) -> Self {
+        self.buffering_hints = Some(value.into());
+        self
+    }
+    /// Sets `cloud_watch_logging_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtendedS3DestinationConfiguration.cloud_watch_logging_options = Some(value.into());`.
+pub fn cloud_watch_logging_options<ValueType: Into<CloudWatchLoggingOptions>>(mut self, value: ValueType) -> Self{
+        self.cloud_watch_logging_options = Some(value.into());
+        self
+    }
+    /// Sets `compression_format`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtendedS3DestinationConfiguration.compression_format = Some(value.into());`.
+    pub fn compression_format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.compression_format = Some(value.into());
+        self
+    }
+    /// Sets `encryption_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtendedS3DestinationConfiguration.encryption_configuration = Some(value.into());`.
+    pub fn encryption_configuration<ValueType: Into<EncryptionConfiguration>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.encryption_configuration = Some(value.into());
+        self
+    }
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtendedS3DestinationConfiguration.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Sets `processing_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtendedS3DestinationConfiguration.processing_configuration = Some(value.into());`.
+    pub fn processing_configuration<ValueType: Into<ProcessingConfiguration>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.processing_configuration = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtendedS3DestinationConfiguration.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Sets `s3_backup_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtendedS3DestinationConfiguration.s3_backup_configuration = Some(value.into());`.
+    pub fn s3_backup_configuration<ValueType: Into<S3DestinationConfiguration>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.s3_backup_configuration = Some(value.into());
+        self
+    }
+    /// Sets `s3_backup_mode`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtendedS3DestinationConfiguration.s3_backup_mode = Some(value.into());`.
+    pub fn s3_backup_mode<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_backup_mode = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ExtendedS3DestinationConfiguration with optional fields set to `None`.
+    pub fn new<BucketARNType: Into<String>, RoleARNType: Into<String>>
+        (bucket_arn: BucketARNType,
+         role_arn: RoleARNType)
+         -> ExtendedS3DestinationConfiguration {
+        ExtendedS3DestinationConfiguration {
+            bucket_arn: bucket_arn.into(),
+            role_arn: role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes a destination in Amazon S3.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ExtendedS3DestinationDescription {
@@ -458,7 +961,6 @@ pub struct ExtendedS3DestinationDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub s3_backup_mode: Option<String>,
 }
-
 #[doc="<p>Describes an update for a destination in Amazon S3.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ExtendedS3DestinationUpdate {
@@ -503,13 +1005,110 @@ pub struct ExtendedS3DestinationUpdate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub s3_backup_update: Option<S3DestinationUpdate>,
 }
-
+impl ExtendedS3DestinationUpdate {
+    /// Sets `bucket_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtendedS3DestinationUpdate.bucket_arn = Some(value.into());`.
+    pub fn bucket_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket_arn = Some(value.into());
+        self
+    }
+    /// Sets `buffering_hints`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtendedS3DestinationUpdate.buffering_hints = Some(value.into());`.
+    pub fn buffering_hints<ValueType: Into<BufferingHints>>(mut self, value: ValueType) -> Self {
+        self.buffering_hints = Some(value.into());
+        self
+    }
+    /// Sets `cloud_watch_logging_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtendedS3DestinationUpdate.cloud_watch_logging_options = Some(value.into());`.
+pub fn cloud_watch_logging_options<ValueType: Into<CloudWatchLoggingOptions>>(mut self, value: ValueType) -> Self{
+        self.cloud_watch_logging_options = Some(value.into());
+        self
+    }
+    /// Sets `compression_format`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtendedS3DestinationUpdate.compression_format = Some(value.into());`.
+    pub fn compression_format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.compression_format = Some(value.into());
+        self
+    }
+    /// Sets `encryption_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtendedS3DestinationUpdate.encryption_configuration = Some(value.into());`.
+    pub fn encryption_configuration<ValueType: Into<EncryptionConfiguration>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.encryption_configuration = Some(value.into());
+        self
+    }
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtendedS3DestinationUpdate.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Sets `processing_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtendedS3DestinationUpdate.processing_configuration = Some(value.into());`.
+    pub fn processing_configuration<ValueType: Into<ProcessingConfiguration>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.processing_configuration = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtendedS3DestinationUpdate.role_arn = Some(value.into());`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = Some(value.into());
+        self
+    }
+    /// Sets `s3_backup_mode`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtendedS3DestinationUpdate.s3_backup_mode = Some(value.into());`.
+    pub fn s3_backup_mode<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_backup_mode = Some(value.into());
+        self
+    }
+    /// Sets `s3_backup_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtendedS3DestinationUpdate.s3_backup_update = Some(value.into());`.
+    pub fn s3_backup_update<ValueType: Into<S3DestinationUpdate>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.s3_backup_update = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ExtendedS3DestinationUpdate with optional fields set to `None`.
+    pub fn new() -> ExtendedS3DestinationUpdate {
+        ExtendedS3DestinationUpdate { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetKinesisStreamInput {
     #[serde(rename="DeliveryStreamARN")]
     pub delivery_stream_arn: String,
 }
-
+impl GetKinesisStreamInput {
+    /// Sets `delivery_stream_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetKinesisStreamInput.delivery_stream_arn = value.into();`.
+    pub fn delivery_stream_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.delivery_stream_arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetKinesisStreamInput with optional fields set to `None`.
+    pub fn new<DeliveryStreamARNType: Into<String>>(delivery_stream_arn: DeliveryStreamARNType)
+                                                    -> GetKinesisStreamInput {
+        GetKinesisStreamInput {
+            delivery_stream_arn: delivery_stream_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetKinesisStreamOutput {
     #[serde(rename="CredentialsForReadingKinesisStream")]
@@ -519,7 +1118,6 @@ pub struct GetKinesisStreamOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub kinesis_stream_arn: Option<String>,
 }
-
 #[doc="<p>Describes an encryption key for a destination in Amazon S3.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct KMSEncryptionConfig {
@@ -527,7 +1125,23 @@ pub struct KMSEncryptionConfig {
     #[serde(rename="AWSKMSKeyARN")]
     pub awskms_key_arn: String,
 }
-
+impl KMSEncryptionConfig {
+    /// Sets `awskms_key_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KMSEncryptionConfig.awskms_key_arn = value.into();`.
+    pub fn awskms_key_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.awskms_key_arn = value.into();
+        self
+    }
+    /// Returns a new instance of KMSEncryptionConfig with optional fields set to `None`.
+    pub fn new<AWSKMSKeyARNType: Into<String>>(awskms_key_arn: AWSKMSKeyARNType)
+                                               -> KMSEncryptionConfig {
+        KMSEncryptionConfig {
+            awskms_key_arn: awskms_key_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The stream and role ARNs for a Kinesis stream used as the source for a delivery stream.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct KinesisStreamSourceConfiguration {
@@ -538,7 +1152,33 @@ pub struct KinesisStreamSourceConfiguration {
     #[serde(rename="RoleARN")]
     pub role_arn: String,
 }
-
+impl KinesisStreamSourceConfiguration {
+    /// Sets `kinesis_stream_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisStreamSourceConfiguration.kinesis_stream_arn = value.into();`.
+    pub fn kinesis_stream_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kinesis_stream_arn = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisStreamSourceConfiguration.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Returns a new instance of KinesisStreamSourceConfiguration with optional fields set to `None`.
+    pub fn new<KinesisStreamARNType: Into<String>, RoleARNType: Into<String>>
+        (kinesis_stream_arn: KinesisStreamARNType,
+         role_arn: RoleARNType)
+         -> KinesisStreamSourceConfiguration {
+        KinesisStreamSourceConfiguration {
+            kinesis_stream_arn: kinesis_stream_arn.into(),
+            role_arn: role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Details about a Kinesis stream used as the source for a Kinesis Firehose delivery stream.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct KinesisStreamSourceDescription {
@@ -555,7 +1195,6 @@ pub struct KinesisStreamSourceDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub role_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListDeliveryStreamsInput {
     #[doc="<p>The delivery stream type. This can be one of the following values:</p> <ul> <li> <p> <code>DirectPut</code>: Provider applications access the delivery stream directly.</p> </li> <li> <p> <code>KinesisStreamAsSource</code>: The delivery stream uses a Kinesis stream as a source.</p> </li> </ul> <p>This parameter is optional. If this parameter is omitted, delivery streams of all types are returned.</p>"]
@@ -571,7 +1210,35 @@ pub struct ListDeliveryStreamsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub limit: Option<i64>,
 }
-
+impl ListDeliveryStreamsInput {
+    /// Sets `delivery_stream_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDeliveryStreamsInput.delivery_stream_type = Some(value.into());`.
+    pub fn delivery_stream_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.delivery_stream_type = Some(value.into());
+        self
+    }
+    /// Sets `exclusive_start_delivery_stream_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDeliveryStreamsInput.exclusive_start_delivery_stream_name = Some(value.into());`.
+    pub fn exclusive_start_delivery_stream_name<ValueType: Into<String>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.exclusive_start_delivery_stream_name = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDeliveryStreamsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListDeliveryStreamsInput with optional fields set to `None`.
+    pub fn new() -> ListDeliveryStreamsInput {
+        ListDeliveryStreamsInput { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListDeliveryStreamsOutput {
     #[doc="<p>The names of the delivery streams.</p>"]
@@ -581,7 +1248,6 @@ pub struct ListDeliveryStreamsOutput {
     #[serde(rename="HasMoreDeliveryStreams")]
     pub has_more_delivery_streams: bool,
 }
-
 #[doc="<p>Describes a data processing configuration.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ProcessingConfiguration {
@@ -594,7 +1260,26 @@ pub struct ProcessingConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub processors: Option<Vec<Processor>>,
 }
-
+impl ProcessingConfiguration {
+    /// Sets `enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProcessingConfiguration.enabled = Some(value.into());`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = Some(value.into());
+        self
+    }
+    /// Sets `processors`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProcessingConfiguration.processors = Some(value.into());`.
+    pub fn processors<ValueType: Into<Vec<Processor>>>(mut self, value: ValueType) -> Self {
+        self.processors = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ProcessingConfiguration with optional fields set to `None`.
+    pub fn new() -> ProcessingConfiguration {
+        ProcessingConfiguration { ..Default::default() }
+    }
+}
 #[doc="<p>Describes a data processor.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Processor {
@@ -606,7 +1291,31 @@ pub struct Processor {
     #[serde(rename="Type")]
     pub type_: String,
 }
-
+impl Processor {
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Processor.parameters = Some(value.into());`.
+    pub fn parameters<ValueType: Into<Vec<ProcessorParameter>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Processor.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of Processor with optional fields set to `None`.
+    pub fn new<TypeType: Into<String>>(type_: TypeType) -> Processor {
+        Processor {
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes the processor parameter.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ProcessorParameter {
@@ -617,7 +1326,33 @@ pub struct ProcessorParameter {
     #[serde(rename="ParameterValue")]
     pub parameter_value: String,
 }
-
+impl ProcessorParameter {
+    /// Sets `parameter_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProcessorParameter.parameter_name = value.into();`.
+    pub fn parameter_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.parameter_name = value.into();
+        self
+    }
+    /// Sets `parameter_value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProcessorParameter.parameter_value = value.into();`.
+    pub fn parameter_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.parameter_value = value.into();
+        self
+    }
+    /// Returns a new instance of ProcessorParameter with optional fields set to `None`.
+    pub fn new<ParameterNameType: Into<String>, ParameterValueType: Into<String>>
+        (parameter_name: ParameterNameType,
+         parameter_value: ParameterValueType)
+         -> ProcessorParameter {
+        ProcessorParameter {
+            parameter_name: parameter_name.into(),
+            parameter_value: parameter_value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutRecordBatchInput {
     #[doc="<p>The name of the delivery stream.</p>"]
@@ -627,7 +1362,33 @@ pub struct PutRecordBatchInput {
     #[serde(rename="Records")]
     pub records: Vec<Record>,
 }
-
+impl PutRecordBatchInput {
+    /// Sets `delivery_stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRecordBatchInput.delivery_stream_name = value.into();`.
+    pub fn delivery_stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.delivery_stream_name = value.into();
+        self
+    }
+    /// Sets `records`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRecordBatchInput.records = value.into();`.
+    pub fn records<ValueType: Into<Vec<Record>>>(mut self, value: ValueType) -> Self {
+        self.records = value.into();
+        self
+    }
+    /// Returns a new instance of PutRecordBatchInput with optional fields set to `None`.
+    pub fn new<DeliveryStreamNameType: Into<String>, RecordsType: Into<Vec<Record>>>
+        (delivery_stream_name: DeliveryStreamNameType,
+         records: RecordsType)
+         -> PutRecordBatchInput {
+        PutRecordBatchInput {
+            delivery_stream_name: delivery_stream_name.into(),
+            records: records.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutRecordBatchOutput {
     #[doc="<p>The number of records that might have failed processing.</p>"]
@@ -637,7 +1398,6 @@ pub struct PutRecordBatchOutput {
     #[serde(rename="RequestResponses")]
     pub request_responses: Vec<PutRecordBatchResponseEntry>,
 }
-
 #[doc="<p>Contains the result for an individual record from a <a>PutRecordBatch</a> request. If the record is successfully added to your delivery stream, it receives a record ID. If the record fails to be added to your delivery stream, the result includes an error code and an error message.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutRecordBatchResponseEntry {
@@ -654,7 +1414,6 @@ pub struct PutRecordBatchResponseEntry {
     #[serde(skip_serializing_if="Option::is_none")]
     pub record_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutRecordInput {
     #[doc="<p>The name of the delivery stream.</p>"]
@@ -664,14 +1423,39 @@ pub struct PutRecordInput {
     #[serde(rename="Record")]
     pub record: Record,
 }
-
+impl PutRecordInput {
+    /// Sets `delivery_stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRecordInput.delivery_stream_name = value.into();`.
+    pub fn delivery_stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.delivery_stream_name = value.into();
+        self
+    }
+    /// Sets `record`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRecordInput.record = value.into();`.
+    pub fn record<ValueType: Into<Record>>(mut self, value: ValueType) -> Self {
+        self.record = value.into();
+        self
+    }
+    /// Returns a new instance of PutRecordInput with optional fields set to `None`.
+    pub fn new<DeliveryStreamNameType: Into<String>, RecordType: Into<Record>>
+        (delivery_stream_name: DeliveryStreamNameType,
+         record: RecordType)
+         -> PutRecordInput {
+        PutRecordInput {
+            delivery_stream_name: delivery_stream_name.into(),
+            record: record.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutRecordOutput {
     #[doc="<p>The ID of the record.</p>"]
     #[serde(rename="RecordId")]
     pub record_id: String,
 }
-
 #[doc="<p>The unit of data in a delivery stream.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct Record {
@@ -684,7 +1468,22 @@ pub struct Record {
                         )]
     pub data: Vec<u8>,
 }
-
+impl Record {
+    /// Sets `data`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Record.data = value.into();`.
+    pub fn data<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.data = value.into();
+        self
+    }
+    /// Returns a new instance of Record with optional fields set to `None`.
+    pub fn new<DataType: Into<Vec<u8>>>(data: DataType) -> Record {
+        Record {
+            data: data.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes the configuration of a destination in Amazon Redshift.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RedshiftDestinationConfiguration {
@@ -727,7 +1526,117 @@ pub struct RedshiftDestinationConfiguration {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl RedshiftDestinationConfiguration {
+    /// Sets `cloud_watch_logging_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDestinationConfiguration.cloud_watch_logging_options = Some(value.into());`.
+pub fn cloud_watch_logging_options<ValueType: Into<CloudWatchLoggingOptions>>(mut self, value: ValueType) -> Self{
+        self.cloud_watch_logging_options = Some(value.into());
+        self
+    }
+    /// Sets `cluster_jdbcurl`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDestinationConfiguration.cluster_jdbcurl = value.into();`.
+    pub fn cluster_jdbcurl<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster_jdbcurl = value.into();
+        self
+    }
+    /// Sets `copy_command`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDestinationConfiguration.copy_command = value.into();`.
+    pub fn copy_command<ValueType: Into<CopyCommand>>(mut self, value: ValueType) -> Self {
+        self.copy_command = value.into();
+        self
+    }
+    /// Sets `password`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDestinationConfiguration.password = value.into();`.
+    pub fn password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.password = value.into();
+        self
+    }
+    /// Sets `processing_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDestinationConfiguration.processing_configuration = Some(value.into());`.
+    pub fn processing_configuration<ValueType: Into<ProcessingConfiguration>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.processing_configuration = Some(value.into());
+        self
+    }
+    /// Sets `retry_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDestinationConfiguration.retry_options = Some(value.into());`.
+    pub fn retry_options<ValueType: Into<RedshiftRetryOptions>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.retry_options = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDestinationConfiguration.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Sets `s3_backup_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDestinationConfiguration.s3_backup_configuration = Some(value.into());`.
+    pub fn s3_backup_configuration<ValueType: Into<S3DestinationConfiguration>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.s3_backup_configuration = Some(value.into());
+        self
+    }
+    /// Sets `s3_backup_mode`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDestinationConfiguration.s3_backup_mode = Some(value.into());`.
+    pub fn s3_backup_mode<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_backup_mode = Some(value.into());
+        self
+    }
+    /// Sets `s3_configuration`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDestinationConfiguration.s3_configuration = value.into();`.
+    pub fn s3_configuration<ValueType: Into<S3DestinationConfiguration>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.s3_configuration = value.into();
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDestinationConfiguration.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of RedshiftDestinationConfiguration with optional fields set to `None`.
+    pub fn new<ClusterJDBCURLType: Into<String>,
+               CopyCommandType: Into<CopyCommand>,
+               PasswordType: Into<String>,
+               RoleARNType: Into<String>,
+               S3ConfigurationType: Into<S3DestinationConfiguration>,
+               UsernameType: Into<String>>
+        (cluster_jdbcurl: ClusterJDBCURLType,
+         copy_command: CopyCommandType,
+         password: PasswordType,
+         role_arn: RoleARNType,
+         s3_configuration: S3ConfigurationType,
+         username: UsernameType)
+         -> RedshiftDestinationConfiguration {
+        RedshiftDestinationConfiguration {
+            cluster_jdbcurl: cluster_jdbcurl.into(),
+            copy_command: copy_command.into(),
+            password: password.into(),
+            role_arn: role_arn.into(),
+            s3_configuration: s3_configuration.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes a destination in Amazon Redshift.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RedshiftDestinationDescription {
@@ -767,7 +1676,6 @@ pub struct RedshiftDestinationDescription {
     #[serde(rename="Username")]
     pub username: String,
 }
-
 #[doc="<p>Describes an update for a destination in Amazon Redshift.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RedshiftDestinationUpdate {
@@ -816,7 +1724,95 @@ pub struct RedshiftDestinationUpdate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub username: Option<String>,
 }
-
+impl RedshiftDestinationUpdate {
+    /// Sets `cloud_watch_logging_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDestinationUpdate.cloud_watch_logging_options = Some(value.into());`.
+pub fn cloud_watch_logging_options<ValueType: Into<CloudWatchLoggingOptions>>(mut self, value: ValueType) -> Self{
+        self.cloud_watch_logging_options = Some(value.into());
+        self
+    }
+    /// Sets `cluster_jdbcurl`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDestinationUpdate.cluster_jdbcurl = Some(value.into());`.
+    pub fn cluster_jdbcurl<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster_jdbcurl = Some(value.into());
+        self
+    }
+    /// Sets `copy_command`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDestinationUpdate.copy_command = Some(value.into());`.
+    pub fn copy_command<ValueType: Into<CopyCommand>>(mut self, value: ValueType) -> Self {
+        self.copy_command = Some(value.into());
+        self
+    }
+    /// Sets `password`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDestinationUpdate.password = Some(value.into());`.
+    pub fn password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.password = Some(value.into());
+        self
+    }
+    /// Sets `processing_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDestinationUpdate.processing_configuration = Some(value.into());`.
+    pub fn processing_configuration<ValueType: Into<ProcessingConfiguration>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.processing_configuration = Some(value.into());
+        self
+    }
+    /// Sets `retry_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDestinationUpdate.retry_options = Some(value.into());`.
+    pub fn retry_options<ValueType: Into<RedshiftRetryOptions>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.retry_options = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDestinationUpdate.role_arn = Some(value.into());`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = Some(value.into());
+        self
+    }
+    /// Sets `s3_backup_mode`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDestinationUpdate.s3_backup_mode = Some(value.into());`.
+    pub fn s3_backup_mode<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_backup_mode = Some(value.into());
+        self
+    }
+    /// Sets `s3_backup_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDestinationUpdate.s3_backup_update = Some(value.into());`.
+    pub fn s3_backup_update<ValueType: Into<S3DestinationUpdate>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.s3_backup_update = Some(value.into());
+        self
+    }
+    /// Sets `s3_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDestinationUpdate.s3_update = Some(value.into());`.
+    pub fn s3_update<ValueType: Into<S3DestinationUpdate>>(mut self, value: ValueType) -> Self {
+        self.s3_update = Some(value.into());
+        self
+    }
+    /// Sets `username`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDestinationUpdate.username = Some(value.into());`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RedshiftDestinationUpdate with optional fields set to `None`.
+    pub fn new() -> RedshiftDestinationUpdate {
+        RedshiftDestinationUpdate { ..Default::default() }
+    }
+}
 #[doc="<p>Configures retry behavior in case Kinesis Firehose is unable to deliver documents to Amazon Redshift.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct RedshiftRetryOptions {
@@ -825,7 +1821,19 @@ pub struct RedshiftRetryOptions {
     #[serde(skip_serializing_if="Option::is_none")]
     pub duration_in_seconds: Option<i64>,
 }
-
+impl RedshiftRetryOptions {
+    /// Sets `duration_in_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftRetryOptions.duration_in_seconds = Some(value.into());`.
+    pub fn duration_in_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.duration_in_seconds = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RedshiftRetryOptions with optional fields set to `None`.
+    pub fn new() -> RedshiftRetryOptions {
+        RedshiftRetryOptions { ..Default::default() }
+    }
+}
 #[doc="<p>Describes the configuration of a destination in Amazon S3.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct S3DestinationConfiguration {
@@ -856,7 +1864,70 @@ pub struct S3DestinationConfiguration {
     #[serde(rename="RoleARN")]
     pub role_arn: String,
 }
-
+impl S3DestinationConfiguration {
+    /// Sets `bucket_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3DestinationConfiguration.bucket_arn = value.into();`.
+    pub fn bucket_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket_arn = value.into();
+        self
+    }
+    /// Sets `buffering_hints`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3DestinationConfiguration.buffering_hints = Some(value.into());`.
+    pub fn buffering_hints<ValueType: Into<BufferingHints>>(mut self, value: ValueType) -> Self {
+        self.buffering_hints = Some(value.into());
+        self
+    }
+    /// Sets `cloud_watch_logging_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3DestinationConfiguration.cloud_watch_logging_options = Some(value.into());`.
+pub fn cloud_watch_logging_options<ValueType: Into<CloudWatchLoggingOptions>>(mut self, value: ValueType) -> Self{
+        self.cloud_watch_logging_options = Some(value.into());
+        self
+    }
+    /// Sets `compression_format`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3DestinationConfiguration.compression_format = Some(value.into());`.
+    pub fn compression_format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.compression_format = Some(value.into());
+        self
+    }
+    /// Sets `encryption_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3DestinationConfiguration.encryption_configuration = Some(value.into());`.
+    pub fn encryption_configuration<ValueType: Into<EncryptionConfiguration>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.encryption_configuration = Some(value.into());
+        self
+    }
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3DestinationConfiguration.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3DestinationConfiguration.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Returns a new instance of S3DestinationConfiguration with optional fields set to `None`.
+    pub fn new<BucketARNType: Into<String>, RoleARNType: Into<String>>
+        (bucket_arn: BucketARNType,
+         role_arn: RoleARNType)
+         -> S3DestinationConfiguration {
+        S3DestinationConfiguration {
+            bucket_arn: bucket_arn.into(),
+            role_arn: role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes a destination in Amazon S3.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct S3DestinationDescription {
@@ -884,7 +1955,6 @@ pub struct S3DestinationDescription {
     #[serde(rename="RoleARN")]
     pub role_arn: String,
 }
-
 #[doc="<p>Describes an update for a destination in Amazon S3.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct S3DestinationUpdate {
@@ -917,7 +1987,63 @@ pub struct S3DestinationUpdate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub role_arn: Option<String>,
 }
-
+impl S3DestinationUpdate {
+    /// Sets `bucket_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3DestinationUpdate.bucket_arn = Some(value.into());`.
+    pub fn bucket_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket_arn = Some(value.into());
+        self
+    }
+    /// Sets `buffering_hints`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3DestinationUpdate.buffering_hints = Some(value.into());`.
+    pub fn buffering_hints<ValueType: Into<BufferingHints>>(mut self, value: ValueType) -> Self {
+        self.buffering_hints = Some(value.into());
+        self
+    }
+    /// Sets `cloud_watch_logging_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3DestinationUpdate.cloud_watch_logging_options = Some(value.into());`.
+pub fn cloud_watch_logging_options<ValueType: Into<CloudWatchLoggingOptions>>(mut self, value: ValueType) -> Self{
+        self.cloud_watch_logging_options = Some(value.into());
+        self
+    }
+    /// Sets `compression_format`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3DestinationUpdate.compression_format = Some(value.into());`.
+    pub fn compression_format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.compression_format = Some(value.into());
+        self
+    }
+    /// Sets `encryption_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3DestinationUpdate.encryption_configuration = Some(value.into());`.
+    pub fn encryption_configuration<ValueType: Into<EncryptionConfiguration>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.encryption_configuration = Some(value.into());
+        self
+    }
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3DestinationUpdate.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3DestinationUpdate.role_arn = Some(value.into());`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of S3DestinationUpdate with optional fields set to `None`.
+    pub fn new() -> S3DestinationUpdate {
+        S3DestinationUpdate { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SessionCredentials {
     #[serde(rename="AccessKeyId")]
@@ -929,7 +2055,6 @@ pub struct SessionCredentials {
     #[serde(rename="SessionToken")]
     pub session_token: String,
 }
-
 #[doc="<p>Details about a Kinesis stream used as the source for a Kinesis Firehose delivery stream.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SourceDescription {
@@ -938,7 +2063,6 @@ pub struct SourceDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub kinesis_stream_source_description: Option<KinesisStreamSourceDescription>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateDestinationInput {
     #[doc="<p>Obtain this value from the <b>VersionId</b> result of <a>DeliveryStreamDescription</a>. This value is required, and helps the service to perform conditional operations. For example, if there is an interleaving update and this value is null, then the update destination fails. After the update is successful, the <b>VersionId</b> value is updated. The service then performs a merge of the old configuration with the new configuration.</p>"]
@@ -963,7 +2087,70 @@ pub struct UpdateDestinationInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub redshift_destination_update: Option<RedshiftDestinationUpdate>,
 }
-
+impl UpdateDestinationInput {
+    /// Sets `current_delivery_stream_version_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDestinationInput.current_delivery_stream_version_id = value.into();`.
+    pub fn current_delivery_stream_version_id<ValueType: Into<String>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.current_delivery_stream_version_id = value.into();
+        self
+    }
+    /// Sets `delivery_stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDestinationInput.delivery_stream_name = value.into();`.
+    pub fn delivery_stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.delivery_stream_name = value.into();
+        self
+    }
+    /// Sets `destination_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDestinationInput.destination_id = value.into();`.
+    pub fn destination_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination_id = value.into();
+        self
+    }
+    /// Sets `elasticsearch_destination_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDestinationInput.elasticsearch_destination_update = Some(value.into());`.
+    pub fn elasticsearch_destination_update<ValueType: Into<ElasticsearchDestinationUpdate>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.elasticsearch_destination_update = Some(value.into());
+        self
+    }
+    /// Sets `extended_s3_destination_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDestinationInput.extended_s3_destination_update = Some(value.into());`.
+pub fn extended_s3_destination_update<ValueType: Into<ExtendedS3DestinationUpdate>>(mut self, value: ValueType) -> Self{
+        self.extended_s3_destination_update = Some(value.into());
+        self
+    }
+    /// Sets `redshift_destination_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDestinationInput.redshift_destination_update = Some(value.into());`.
+pub fn redshift_destination_update<ValueType: Into<RedshiftDestinationUpdate>>(mut self, value: ValueType) -> Self{
+        self.redshift_destination_update = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateDestinationInput with optional fields set to `None`.
+    pub fn new<CurrentDeliveryStreamVersionIdType: Into<String>,
+               DeliveryStreamNameType: Into<String>,
+               DestinationIdType: Into<String>>
+        (current_delivery_stream_version_id: CurrentDeliveryStreamVersionIdType,
+         delivery_stream_name: DeliveryStreamNameType,
+         destination_id: DestinationIdType)
+         -> UpdateDestinationInput {
+        UpdateDestinationInput {
+            current_delivery_stream_version_id: current_delivery_stream_version_id.into(),
+            delivery_stream_name: delivery_stream_name.into(),
+            destination_id: destination_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateDestinationOutput;
 

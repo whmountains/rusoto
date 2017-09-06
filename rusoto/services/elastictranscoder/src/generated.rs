@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -61,7 +62,61 @@ pub struct Artwork {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sizing_policy: Option<String>,
 }
-
+impl Artwork {
+    /// Sets `album_art_format`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Artwork.album_art_format = Some(value.into());`.
+    pub fn album_art_format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.album_art_format = Some(value.into());
+        self
+    }
+    /// Sets `encryption`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Artwork.encryption = Some(value.into());`.
+    pub fn encryption<ValueType: Into<Encryption>>(mut self, value: ValueType) -> Self {
+        self.encryption = Some(value.into());
+        self
+    }
+    /// Sets `input_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Artwork.input_key = Some(value.into());`.
+    pub fn input_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.input_key = Some(value.into());
+        self
+    }
+    /// Sets `max_height`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Artwork.max_height = Some(value.into());`.
+    pub fn max_height<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_height = Some(value.into());
+        self
+    }
+    /// Sets `max_width`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Artwork.max_width = Some(value.into());`.
+    pub fn max_width<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_width = Some(value.into());
+        self
+    }
+    /// Sets `padding_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Artwork.padding_policy = Some(value.into());`.
+    pub fn padding_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.padding_policy = Some(value.into());
+        self
+    }
+    /// Sets `sizing_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Artwork.sizing_policy = Some(value.into());`.
+    pub fn sizing_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sizing_policy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Artwork with optional fields set to `None`.
+    pub fn new() -> Artwork {
+        Artwork { ..Default::default() }
+    }
+}
 #[doc="<p>Options associated with your audio codec.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct AudioCodecOptions {
@@ -82,7 +137,40 @@ pub struct AudioCodecOptions {
     #[serde(skip_serializing_if="Option::is_none")]
     pub signed: Option<String>,
 }
-
+impl AudioCodecOptions {
+    /// Sets `bit_depth`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AudioCodecOptions.bit_depth = Some(value.into());`.
+    pub fn bit_depth<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bit_depth = Some(value.into());
+        self
+    }
+    /// Sets `bit_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AudioCodecOptions.bit_order = Some(value.into());`.
+    pub fn bit_order<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bit_order = Some(value.into());
+        self
+    }
+    /// Sets `profile`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AudioCodecOptions.profile = Some(value.into());`.
+    pub fn profile<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.profile = Some(value.into());
+        self
+    }
+    /// Sets `signed`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AudioCodecOptions.signed = Some(value.into());`.
+    pub fn signed<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.signed = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AudioCodecOptions with optional fields set to `None`.
+    pub fn new() -> AudioCodecOptions {
+        AudioCodecOptions { ..Default::default() }
+    }
+}
 #[doc="<p>Parameters required for transcoding audio.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct AudioParameters {
@@ -111,7 +199,54 @@ pub struct AudioParameters {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sample_rate: Option<String>,
 }
-
+impl AudioParameters {
+    /// Sets `audio_packing_mode`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AudioParameters.audio_packing_mode = Some(value.into());`.
+    pub fn audio_packing_mode<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.audio_packing_mode = Some(value.into());
+        self
+    }
+    /// Sets `bit_rate`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AudioParameters.bit_rate = Some(value.into());`.
+    pub fn bit_rate<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bit_rate = Some(value.into());
+        self
+    }
+    /// Sets `channels`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AudioParameters.channels = Some(value.into());`.
+    pub fn channels<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.channels = Some(value.into());
+        self
+    }
+    /// Sets `codec`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AudioParameters.codec = Some(value.into());`.
+    pub fn codec<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.codec = Some(value.into());
+        self
+    }
+    /// Sets `codec_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AudioParameters.codec_options = Some(value.into());`.
+    pub fn codec_options<ValueType: Into<AudioCodecOptions>>(mut self, value: ValueType) -> Self {
+        self.codec_options = Some(value.into());
+        self
+    }
+    /// Sets `sample_rate`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AudioParameters.sample_rate = Some(value.into());`.
+    pub fn sample_rate<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sample_rate = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AudioParameters with optional fields set to `None`.
+    pub fn new() -> AudioParameters {
+        AudioParameters { ..Default::default() }
+    }
+}
 #[doc="<p>The <code>CancelJobRequest</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CancelJobRequest {
@@ -119,7 +254,22 @@ pub struct CancelJobRequest {
     #[serde(rename="Id")]
     pub id: String,
 }
-
+impl CancelJobRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelJobRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of CancelJobRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> CancelJobRequest {
+        CancelJobRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response body contains a JSON object. If the job is successfully canceled, the value of <code>Success</code> is <code>true</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CancelJobResponse;
@@ -140,7 +290,33 @@ pub struct CaptionFormat {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pattern: Option<String>,
 }
-
+impl CaptionFormat {
+    /// Sets `encryption`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CaptionFormat.encryption = Some(value.into());`.
+    pub fn encryption<ValueType: Into<Encryption>>(mut self, value: ValueType) -> Self {
+        self.encryption = Some(value.into());
+        self
+    }
+    /// Sets `format`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CaptionFormat.format = Some(value.into());`.
+    pub fn format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.format = Some(value.into());
+        self
+    }
+    /// Sets `pattern`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CaptionFormat.pattern = Some(value.into());`.
+    pub fn pattern<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pattern = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CaptionFormat with optional fields set to `None`.
+    pub fn new() -> CaptionFormat {
+        CaptionFormat { ..Default::default() }
+    }
+}
 #[doc="<p>A source file for the input sidecar captions used during the transcoding process.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct CaptionSource {
@@ -165,7 +341,47 @@ pub struct CaptionSource {
     #[serde(skip_serializing_if="Option::is_none")]
     pub time_offset: Option<String>,
 }
-
+impl CaptionSource {
+    /// Sets `encryption`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CaptionSource.encryption = Some(value.into());`.
+    pub fn encryption<ValueType: Into<Encryption>>(mut self, value: ValueType) -> Self {
+        self.encryption = Some(value.into());
+        self
+    }
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CaptionSource.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `label`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CaptionSource.label = Some(value.into());`.
+    pub fn label<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.label = Some(value.into());
+        self
+    }
+    /// Sets `language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CaptionSource.language = Some(value.into());`.
+    pub fn language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.language = Some(value.into());
+        self
+    }
+    /// Sets `time_offset`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CaptionSource.time_offset = Some(value.into());`.
+    pub fn time_offset<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.time_offset = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CaptionSource with optional fields set to `None`.
+    pub fn new() -> CaptionSource {
+        CaptionSource { ..Default::default() }
+    }
+}
 #[doc="<p>The captions to be created, if any.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Captions {
@@ -174,14 +390,27 @@ pub struct Captions {
     #[serde(skip_serializing_if="Option::is_none")]
     pub caption_formats: Option<Vec<CaptionFormat>>,
 }
-
+impl Captions {
+    /// Sets `caption_formats`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Captions.caption_formats = Some(value.into());`.
+    pub fn caption_formats<ValueType: Into<Vec<CaptionFormat>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.caption_formats = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Captions with optional fields set to `None`.
+    pub fn new() -> Captions {
+        Captions { ..Default::default() }
+    }
+}
 #[doc="<p>Settings for one clip in a composition. All jobs in a playlist must have the same clip settings.</p>"]
 #[derive(Default,Debug,Clone)]
 pub struct Clip {
     #[doc="<p>Settings that determine when a clip begins and how long it lasts.</p>"]
     pub time_span: Option<TimeSpan>,
 }
-
 #[doc="<p>The <code>CreateJobOutput</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateJobOutput {
@@ -226,7 +455,82 @@ pub struct CreateJobOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub watermarks: Option<Vec<JobWatermark>>,
 }
-
+impl CreateJobOutput {
+    /// Sets `album_art`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobOutput.album_art = Some(value.into());`.
+    pub fn album_art<ValueType: Into<JobAlbumArt>>(mut self, value: ValueType) -> Self {
+        self.album_art = Some(value.into());
+        self
+    }
+    /// Sets `captions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobOutput.captions = Some(value.into());`.
+    pub fn captions<ValueType: Into<Captions>>(mut self, value: ValueType) -> Self {
+        self.captions = Some(value.into());
+        self
+    }
+    /// Sets `encryption`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobOutput.encryption = Some(value.into());`.
+    pub fn encryption<ValueType: Into<Encryption>>(mut self, value: ValueType) -> Self {
+        self.encryption = Some(value.into());
+        self
+    }
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobOutput.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `preset_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobOutput.preset_id = Some(value.into());`.
+    pub fn preset_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.preset_id = Some(value.into());
+        self
+    }
+    /// Sets `rotate`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobOutput.rotate = Some(value.into());`.
+    pub fn rotate<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rotate = Some(value.into());
+        self
+    }
+    /// Sets `segment_duration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobOutput.segment_duration = Some(value.into());`.
+    pub fn segment_duration<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.segment_duration = Some(value.into());
+        self
+    }
+    /// Sets `thumbnail_encryption`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobOutput.thumbnail_encryption = Some(value.into());`.
+    pub fn thumbnail_encryption<ValueType: Into<Encryption>>(mut self, value: ValueType) -> Self {
+        self.thumbnail_encryption = Some(value.into());
+        self
+    }
+    /// Sets `thumbnail_pattern`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobOutput.thumbnail_pattern = Some(value.into());`.
+    pub fn thumbnail_pattern<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.thumbnail_pattern = Some(value.into());
+        self
+    }
+    /// Sets `watermarks`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobOutput.watermarks = Some(value.into());`.
+    pub fn watermarks<ValueType: Into<Vec<JobWatermark>>>(mut self, value: ValueType) -> Self {
+        self.watermarks = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateJobOutput with optional fields set to `None`.
+    pub fn new() -> CreateJobOutput {
+        CreateJobOutput { ..Default::default() }
+    }
+}
 #[doc="<p>Information about the master playlist.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateJobPlaylist {
@@ -251,7 +555,49 @@ pub struct CreateJobPlaylist {
     #[serde(skip_serializing_if="Option::is_none")]
     pub play_ready_drm: Option<PlayReadyDrm>,
 }
-
+impl CreateJobPlaylist {
+    /// Sets `format`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobPlaylist.format = Some(value.into());`.
+    pub fn format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.format = Some(value.into());
+        self
+    }
+    /// Sets `hls_content_protection`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobPlaylist.hls_content_protection = Some(value.into());`.
+    pub fn hls_content_protection<ValueType: Into<HlsContentProtection>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.hls_content_protection = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobPlaylist.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `output_keys`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobPlaylist.output_keys = Some(value.into());`.
+    pub fn output_keys<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.output_keys = Some(value.into());
+        self
+    }
+    /// Sets `play_ready_drm`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobPlaylist.play_ready_drm = Some(value.into());`.
+    pub fn play_ready_drm<ValueType: Into<PlayReadyDrm>>(mut self, value: ValueType) -> Self {
+        self.play_ready_drm = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateJobPlaylist with optional fields set to `None`.
+    pub fn new() -> CreateJobPlaylist {
+        CreateJobPlaylist { ..Default::default() }
+    }
+}
 #[doc="<p>The <code>CreateJobRequest</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateJobRequest {
@@ -287,7 +633,71 @@ pub struct CreateJobRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_metadata: Option<::std::collections::HashMap<String, String>>,
 }
-
+impl CreateJobRequest {
+    /// Sets `input`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobRequest.input = Some(value.into());`.
+    pub fn input<ValueType: Into<JobInput>>(mut self, value: ValueType) -> Self {
+        self.input = Some(value.into());
+        self
+    }
+    /// Sets `inputs`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobRequest.inputs = Some(value.into());`.
+    pub fn inputs<ValueType: Into<Vec<JobInput>>>(mut self, value: ValueType) -> Self {
+        self.inputs = Some(value.into());
+        self
+    }
+    /// Sets `output`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobRequest.output = Some(value.into());`.
+    pub fn output<ValueType: Into<CreateJobOutput>>(mut self, value: ValueType) -> Self {
+        self.output = Some(value.into());
+        self
+    }
+    /// Sets `output_key_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobRequest.output_key_prefix = Some(value.into());`.
+    pub fn output_key_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.output_key_prefix = Some(value.into());
+        self
+    }
+    /// Sets `outputs`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobRequest.outputs = Some(value.into());`.
+    pub fn outputs<ValueType: Into<Vec<CreateJobOutput>>>(mut self, value: ValueType) -> Self {
+        self.outputs = Some(value.into());
+        self
+    }
+    /// Sets `pipeline_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobRequest.pipeline_id = value.into();`.
+    pub fn pipeline_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_id = value.into();
+        self
+    }
+    /// Sets `playlists`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobRequest.playlists = Some(value.into());`.
+    pub fn playlists<ValueType: Into<Vec<CreateJobPlaylist>>>(mut self, value: ValueType) -> Self {
+        self.playlists = Some(value.into());
+        self
+    }
+    /// Sets `user_metadata`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobRequest.user_metadata = Some(value.into());`.
+pub fn user_metadata<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.user_metadata = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateJobRequest with optional fields set to `None`.
+    pub fn new<PipelineIdType: Into<String>>(pipeline_id: PipelineIdType) -> CreateJobRequest {
+        CreateJobRequest {
+            pipeline_id: pipeline_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The CreateJobResponse structure.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateJobResponse {
@@ -296,7 +706,6 @@ pub struct CreateJobResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub job: Option<Job>,
 }
-
 #[doc="<p>The <code>CreatePipelineRequest</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreatePipelineRequest {
@@ -330,7 +739,81 @@ pub struct CreatePipelineRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub thumbnail_config: Option<PipelineOutputConfig>,
 }
-
+impl CreatePipelineRequest {
+    /// Sets `aws_kms_key_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePipelineRequest.aws_kms_key_arn = Some(value.into());`.
+    pub fn aws_kms_key_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.aws_kms_key_arn = Some(value.into());
+        self
+    }
+    /// Sets `content_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePipelineRequest.content_config = Some(value.into());`.
+    pub fn content_config<ValueType: Into<PipelineOutputConfig>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.content_config = Some(value.into());
+        self
+    }
+    /// Sets `input_bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePipelineRequest.input_bucket = value.into();`.
+    pub fn input_bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.input_bucket = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePipelineRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `notifications`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePipelineRequest.notifications = Some(value.into());`.
+    pub fn notifications<ValueType: Into<Notifications>>(mut self, value: ValueType) -> Self {
+        self.notifications = Some(value.into());
+        self
+    }
+    /// Sets `output_bucket`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePipelineRequest.output_bucket = Some(value.into());`.
+    pub fn output_bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.output_bucket = Some(value.into());
+        self
+    }
+    /// Sets `role`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePipelineRequest.role = value.into();`.
+    pub fn role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role = value.into();
+        self
+    }
+    /// Sets `thumbnail_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePipelineRequest.thumbnail_config = Some(value.into());`.
+    pub fn thumbnail_config<ValueType: Into<PipelineOutputConfig>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.thumbnail_config = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreatePipelineRequest with optional fields set to `None`.
+    pub fn new<InputBucketType: Into<String>, NameType: Into<String>, RoleType: Into<String>>
+        (input_bucket: InputBucketType,
+         name: NameType,
+         role: RoleType)
+         -> CreatePipelineRequest {
+        CreatePipelineRequest {
+            input_bucket: input_bucket.into(),
+            name: name.into(),
+            role: role.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>When you create a pipeline, Elastic Transcoder returns the values that you specified in the request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreatePipelineResponse {
@@ -343,7 +826,6 @@ pub struct CreatePipelineResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub warnings: Option<Vec<Warning>>,
 }
-
 #[doc="<p>The <code>CreatePresetRequest</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreatePresetRequest {
@@ -370,7 +852,60 @@ pub struct CreatePresetRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub video: Option<VideoParameters>,
 }
-
+impl CreatePresetRequest {
+    /// Sets `audio`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePresetRequest.audio = Some(value.into());`.
+    pub fn audio<ValueType: Into<AudioParameters>>(mut self, value: ValueType) -> Self {
+        self.audio = Some(value.into());
+        self
+    }
+    /// Sets `container`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePresetRequest.container = value.into();`.
+    pub fn container<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.container = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePresetRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePresetRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `thumbnails`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePresetRequest.thumbnails = Some(value.into());`.
+    pub fn thumbnails<ValueType: Into<Thumbnails>>(mut self, value: ValueType) -> Self {
+        self.thumbnails = Some(value.into());
+        self
+    }
+    /// Sets `video`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePresetRequest.video = Some(value.into());`.
+    pub fn video<ValueType: Into<VideoParameters>>(mut self, value: ValueType) -> Self {
+        self.video = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreatePresetRequest with optional fields set to `None`.
+    pub fn new<ContainerType: Into<String>, NameType: Into<String>>(container: ContainerType,
+                                                                    name: NameType)
+                                                                    -> CreatePresetRequest {
+        CreatePresetRequest {
+            container: container.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The <code>CreatePresetResponse</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreatePresetResponse {
@@ -383,7 +918,6 @@ pub struct CreatePresetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub warning: Option<String>,
 }
-
 #[doc="<p>The <code>DeletePipelineRequest</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeletePipelineRequest {
@@ -391,7 +925,22 @@ pub struct DeletePipelineRequest {
     #[serde(rename="Id")]
     pub id: String,
 }
-
+impl DeletePipelineRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePipelineRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of DeletePipelineRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> DeletePipelineRequest {
+        DeletePipelineRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The <code>DeletePipelineResponse</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeletePipelineResponse;
@@ -403,7 +952,22 @@ pub struct DeletePresetRequest {
     #[serde(rename="Id")]
     pub id: String,
 }
-
+impl DeletePresetRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePresetRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of DeletePresetRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> DeletePresetRequest {
+        DeletePresetRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The <code>DeletePresetResponse</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeletePresetResponse;
@@ -432,7 +996,47 @@ pub struct DetectedProperties {
     #[serde(skip_serializing_if="Option::is_none")]
     pub width: Option<i64>,
 }
-
+impl DetectedProperties {
+    /// Sets `duration_millis`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetectedProperties.duration_millis = Some(value.into());`.
+    pub fn duration_millis<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.duration_millis = Some(value.into());
+        self
+    }
+    /// Sets `file_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetectedProperties.file_size = Some(value.into());`.
+    pub fn file_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.file_size = Some(value.into());
+        self
+    }
+    /// Sets `frame_rate`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetectedProperties.frame_rate = Some(value.into());`.
+    pub fn frame_rate<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.frame_rate = Some(value.into());
+        self
+    }
+    /// Sets `height`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetectedProperties.height = Some(value.into());`.
+    pub fn height<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.height = Some(value.into());
+        self
+    }
+    /// Sets `width`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetectedProperties.width = Some(value.into());`.
+    pub fn width<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.width = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DetectedProperties with optional fields set to `None`.
+    pub fn new() -> DetectedProperties {
+        DetectedProperties { ..Default::default() }
+    }
+}
 #[doc="<p>The encryption settings, if any, that are used for decrypting your input files or encrypting your output files. If your input file is encrypted, you must specify the mode that Elastic Transcoder uses to decrypt your file, otherwise you must specify the mode you want Elastic Transcoder to use to encrypt your output files.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Encryption {
@@ -453,7 +1057,40 @@ pub struct Encryption {
     #[serde(skip_serializing_if="Option::is_none")]
     pub mode: Option<String>,
 }
-
+impl Encryption {
+    /// Sets `initialization_vector`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Encryption.initialization_vector = Some(value.into());`.
+    pub fn initialization_vector<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.initialization_vector = Some(value.into());
+        self
+    }
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Encryption.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `key_md_5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Encryption.key_md_5 = Some(value.into());`.
+    pub fn key_md_5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_md_5 = Some(value.into());
+        self
+    }
+    /// Sets `mode`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Encryption.mode = Some(value.into());`.
+    pub fn mode<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.mode = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Encryption with optional fields set to `None`.
+    pub fn new() -> Encryption {
+        Encryption { ..Default::default() }
+    }
+}
 #[doc="<p>The HLS content protection settings, if any, that you want Elastic Transcoder to apply to your output files.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct HlsContentProtection {
@@ -482,7 +1119,54 @@ pub struct HlsContentProtection {
     #[serde(skip_serializing_if="Option::is_none")]
     pub method: Option<String>,
 }
-
+impl HlsContentProtection {
+    /// Sets `initialization_vector`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HlsContentProtection.initialization_vector = Some(value.into());`.
+    pub fn initialization_vector<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.initialization_vector = Some(value.into());
+        self
+    }
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HlsContentProtection.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `key_md_5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HlsContentProtection.key_md_5 = Some(value.into());`.
+    pub fn key_md_5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_md_5 = Some(value.into());
+        self
+    }
+    /// Sets `key_storage_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HlsContentProtection.key_storage_policy = Some(value.into());`.
+    pub fn key_storage_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_storage_policy = Some(value.into());
+        self
+    }
+    /// Sets `license_acquisition_url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HlsContentProtection.license_acquisition_url = Some(value.into());`.
+    pub fn license_acquisition_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.license_acquisition_url = Some(value.into());
+        self
+    }
+    /// Sets `method`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HlsContentProtection.method = Some(value.into());`.
+    pub fn method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.method = Some(value.into());
+        self
+    }
+    /// Returns a new instance of HlsContentProtection with optional fields set to `None`.
+    pub fn new() -> HlsContentProtection {
+        HlsContentProtection { ..Default::default() }
+    }
+}
 #[doc="<p>The captions to be created, if any.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct InputCaptions {
@@ -495,7 +1179,28 @@ pub struct InputCaptions {
     #[serde(skip_serializing_if="Option::is_none")]
     pub merge_policy: Option<String>,
 }
-
+impl InputCaptions {
+    /// Sets `caption_sources`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InputCaptions.caption_sources = Some(value.into());`.
+    pub fn caption_sources<ValueType: Into<Vec<CaptionSource>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.caption_sources = Some(value.into());
+        self
+    }
+    /// Sets `merge_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InputCaptions.merge_policy = Some(value.into());`.
+    pub fn merge_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.merge_policy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InputCaptions with optional fields set to `None`.
+    pub fn new() -> InputCaptions {
+        InputCaptions { ..Default::default() }
+    }
+}
 #[doc="<p>A section of the response body that provides information about the job that is created.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Job {
@@ -548,7 +1253,6 @@ pub struct Job {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_metadata: Option<::std::collections::HashMap<String, String>>,
 }
-
 #[doc="<p>The .jpg or .png file associated with an audio file.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct JobAlbumArt {
@@ -561,7 +1265,26 @@ pub struct JobAlbumArt {
     #[serde(skip_serializing_if="Option::is_none")]
     pub merge_policy: Option<String>,
 }
-
+impl JobAlbumArt {
+    /// Sets `artwork`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobAlbumArt.artwork = Some(value.into());`.
+    pub fn artwork<ValueType: Into<Vec<Artwork>>>(mut self, value: ValueType) -> Self {
+        self.artwork = Some(value.into());
+        self
+    }
+    /// Sets `merge_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobAlbumArt.merge_policy = Some(value.into());`.
+    pub fn merge_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.merge_policy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of JobAlbumArt with optional fields set to `None`.
+    pub fn new() -> JobAlbumArt {
+        JobAlbumArt { ..Default::default() }
+    }
+}
 #[doc="<p>Information about the file that you're transcoding.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct JobInput {
@@ -606,7 +1329,84 @@ pub struct JobInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub time_span: Option<TimeSpan>,
 }
-
+impl JobInput {
+    /// Sets `aspect_ratio`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobInput.aspect_ratio = Some(value.into());`.
+    pub fn aspect_ratio<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.aspect_ratio = Some(value.into());
+        self
+    }
+    /// Sets `container`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobInput.container = Some(value.into());`.
+    pub fn container<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.container = Some(value.into());
+        self
+    }
+    /// Sets `detected_properties`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobInput.detected_properties = Some(value.into());`.
+    pub fn detected_properties<ValueType: Into<DetectedProperties>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.detected_properties = Some(value.into());
+        self
+    }
+    /// Sets `encryption`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobInput.encryption = Some(value.into());`.
+    pub fn encryption<ValueType: Into<Encryption>>(mut self, value: ValueType) -> Self {
+        self.encryption = Some(value.into());
+        self
+    }
+    /// Sets `frame_rate`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobInput.frame_rate = Some(value.into());`.
+    pub fn frame_rate<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.frame_rate = Some(value.into());
+        self
+    }
+    /// Sets `input_captions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobInput.input_captions = Some(value.into());`.
+    pub fn input_captions<ValueType: Into<InputCaptions>>(mut self, value: ValueType) -> Self {
+        self.input_captions = Some(value.into());
+        self
+    }
+    /// Sets `interlaced`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobInput.interlaced = Some(value.into());`.
+    pub fn interlaced<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.interlaced = Some(value.into());
+        self
+    }
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobInput.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `resolution`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobInput.resolution = Some(value.into());`.
+    pub fn resolution<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resolution = Some(value.into());
+        self
+    }
+    /// Sets `time_span`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobInput.time_span = Some(value.into());`.
+    pub fn time_span<ValueType: Into<TimeSpan>>(mut self, value: ValueType) -> Self {
+        self.time_span = Some(value.into());
+        self
+    }
+    /// Returns a new instance of JobInput with optional fields set to `None`.
+    pub fn new() -> JobInput {
+        JobInput { ..Default::default() }
+    }
+}
 #[doc="<important> <p>Outputs recommended instead.</p> </important> <p>If you specified one output for a job, information about that output. If you specified multiple outputs for a job, the <code>Output</code> object lists information about the first output. This duplicates the information that is listed for the first output in the <code>Outputs</code> object.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct JobOutput {
@@ -691,7 +1491,6 @@ pub struct JobOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub width: Option<i64>,
 }
-
 #[doc="<p>Watermarks can be in .png or .jpg format. If you want to display a watermark that is not rectangular, use the .png format, which supports transparency.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct JobWatermark {
@@ -708,7 +1507,33 @@ pub struct JobWatermark {
     #[serde(skip_serializing_if="Option::is_none")]
     pub preset_watermark_id: Option<String>,
 }
-
+impl JobWatermark {
+    /// Sets `encryption`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobWatermark.encryption = Some(value.into());`.
+    pub fn encryption<ValueType: Into<Encryption>>(mut self, value: ValueType) -> Self {
+        self.encryption = Some(value.into());
+        self
+    }
+    /// Sets `input_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobWatermark.input_key = Some(value.into());`.
+    pub fn input_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.input_key = Some(value.into());
+        self
+    }
+    /// Sets `preset_watermark_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobWatermark.preset_watermark_id = Some(value.into());`.
+    pub fn preset_watermark_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.preset_watermark_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of JobWatermark with optional fields set to `None`.
+    pub fn new() -> JobWatermark {
+        JobWatermark { ..Default::default() }
+    }
+}
 #[doc="<p>The <code>ListJobsByPipelineRequest</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListJobsByPipelineRequest {
@@ -724,7 +1549,37 @@ pub struct ListJobsByPipelineRequest {
     #[serde(rename="PipelineId")]
     pub pipeline_id: String,
 }
-
+impl ListJobsByPipelineRequest {
+    /// Sets `ascending`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsByPipelineRequest.ascending = Some(value.into());`.
+    pub fn ascending<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ascending = Some(value.into());
+        self
+    }
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsByPipelineRequest.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Sets `pipeline_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsByPipelineRequest.pipeline_id = value.into();`.
+    pub fn pipeline_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListJobsByPipelineRequest with optional fields set to `None`.
+    pub fn new<PipelineIdType: Into<String>>(pipeline_id: PipelineIdType)
+                                             -> ListJobsByPipelineRequest {
+        ListJobsByPipelineRequest {
+            pipeline_id: pipeline_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The <code>ListJobsByPipelineResponse</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListJobsByPipelineResponse {
@@ -737,7 +1592,6 @@ pub struct ListJobsByPipelineResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_page_token: Option<String>,
 }
-
 #[doc="<p>The <code>ListJobsByStatusRequest</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListJobsByStatusRequest {
@@ -753,7 +1607,36 @@ pub struct ListJobsByStatusRequest {
     #[serde(rename="Status")]
     pub status: String,
 }
-
+impl ListJobsByStatusRequest {
+    /// Sets `ascending`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsByStatusRequest.ascending = Some(value.into());`.
+    pub fn ascending<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ascending = Some(value.into());
+        self
+    }
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsByStatusRequest.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Sets `status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsByStatusRequest.status = value.into();`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = value.into();
+        self
+    }
+    /// Returns a new instance of ListJobsByStatusRequest with optional fields set to `None`.
+    pub fn new<StatusType: Into<String>>(status: StatusType) -> ListJobsByStatusRequest {
+        ListJobsByStatusRequest {
+            status: status.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> The <code>ListJobsByStatusResponse</code> structure. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListJobsByStatusResponse {
@@ -766,7 +1649,6 @@ pub struct ListJobsByStatusResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_page_token: Option<String>,
 }
-
 #[doc="<p>The <code>ListPipelineRequest</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListPipelinesRequest {
@@ -779,7 +1661,26 @@ pub struct ListPipelinesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub page_token: Option<String>,
 }
-
+impl ListPipelinesRequest {
+    /// Sets `ascending`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPipelinesRequest.ascending = Some(value.into());`.
+    pub fn ascending<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ascending = Some(value.into());
+        self
+    }
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPipelinesRequest.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListPipelinesRequest with optional fields set to `None`.
+    pub fn new() -> ListPipelinesRequest {
+        ListPipelinesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>A list of the pipelines associated with the current AWS account.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListPipelinesResponse {
@@ -792,7 +1693,6 @@ pub struct ListPipelinesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pipelines: Option<Vec<Pipeline>>,
 }
-
 #[doc="<p>The <code>ListPresetsRequest</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListPresetsRequest {
@@ -805,7 +1705,26 @@ pub struct ListPresetsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub page_token: Option<String>,
 }
-
+impl ListPresetsRequest {
+    /// Sets `ascending`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPresetsRequest.ascending = Some(value.into());`.
+    pub fn ascending<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ascending = Some(value.into());
+        self
+    }
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPresetsRequest.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListPresetsRequest with optional fields set to `None`.
+    pub fn new() -> ListPresetsRequest {
+        ListPresetsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The <code>ListPresetsResponse</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListPresetsResponse {
@@ -818,7 +1737,6 @@ pub struct ListPresetsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub presets: Option<Vec<Preset>>,
 }
-
 #[doc="<p>The Amazon Simple Notification Service (Amazon SNS) topic or topics to notify in order to report job status.</p> <important> <p>To receive notifications, you must also subscribe to the new topic in the Amazon SNS console.</p> </important>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Notifications {
@@ -839,7 +1757,40 @@ pub struct Notifications {
     #[serde(skip_serializing_if="Option::is_none")]
     pub warning: Option<String>,
 }
-
+impl Notifications {
+    /// Sets `completed`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Notifications.completed = Some(value.into());`.
+    pub fn completed<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.completed = Some(value.into());
+        self
+    }
+    /// Sets `error`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Notifications.error = Some(value.into());`.
+    pub fn error<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.error = Some(value.into());
+        self
+    }
+    /// Sets `progressing`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Notifications.progressing = Some(value.into());`.
+    pub fn progressing<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.progressing = Some(value.into());
+        self
+    }
+    /// Sets `warning`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Notifications.warning = Some(value.into());`.
+    pub fn warning<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.warning = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Notifications with optional fields set to `None`.
+    pub fn new() -> Notifications {
+        Notifications { ..Default::default() }
+    }
+}
 #[doc="<p>The <code>Permission</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Permission {
@@ -856,7 +1807,33 @@ pub struct Permission {
     #[serde(skip_serializing_if="Option::is_none")]
     pub grantee_type: Option<String>,
 }
-
+impl Permission {
+    /// Sets `access`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Permission.access = Some(value.into());`.
+    pub fn access<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.access = Some(value.into());
+        self
+    }
+    /// Sets `grantee`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Permission.grantee = Some(value.into());`.
+    pub fn grantee<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grantee = Some(value.into());
+        self
+    }
+    /// Sets `grantee_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Permission.grantee_type = Some(value.into());`.
+    pub fn grantee_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grantee_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Permission with optional fields set to `None`.
+    pub fn new() -> Permission {
+        Permission { ..Default::default() }
+    }
+}
 #[doc="<p>The pipeline (queue) that is used to manage jobs.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Pipeline {
@@ -905,7 +1882,6 @@ pub struct Pipeline {
     #[serde(skip_serializing_if="Option::is_none")]
     pub thumbnail_config: Option<PipelineOutputConfig>,
 }
-
 #[doc="<p>The <code>PipelineOutputConfig</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct PipelineOutputConfig {
@@ -922,7 +1898,33 @@ pub struct PipelineOutputConfig {
     #[serde(skip_serializing_if="Option::is_none")]
     pub storage_class: Option<String>,
 }
-
+impl PipelineOutputConfig {
+    /// Sets `bucket`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PipelineOutputConfig.bucket = Some(value.into());`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = Some(value.into());
+        self
+    }
+    /// Sets `permissions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PipelineOutputConfig.permissions = Some(value.into());`.
+    pub fn permissions<ValueType: Into<Vec<Permission>>>(mut self, value: ValueType) -> Self {
+        self.permissions = Some(value.into());
+        self
+    }
+    /// Sets `storage_class`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PipelineOutputConfig.storage_class = Some(value.into());`.
+    pub fn storage_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.storage_class = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PipelineOutputConfig with optional fields set to `None`.
+    pub fn new() -> PipelineOutputConfig {
+        PipelineOutputConfig { ..Default::default() }
+    }
+}
 #[doc="<p>The PlayReady DRM settings, if any, that you want Elastic Transcoder to apply to the output files associated with this playlist.</p> <p>PlayReady DRM encrypts your media files using <code>AES-CTR</code> encryption.</p> <p>If you use DRM for an <code>HLSv3</code> playlist, your outputs must have a master playlist.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct PlayReadyDrm {
@@ -951,7 +1953,54 @@ pub struct PlayReadyDrm {
     #[serde(skip_serializing_if="Option::is_none")]
     pub license_acquisition_url: Option<String>,
 }
-
+impl PlayReadyDrm {
+    /// Sets `format`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PlayReadyDrm.format = Some(value.into());`.
+    pub fn format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.format = Some(value.into());
+        self
+    }
+    /// Sets `initialization_vector`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PlayReadyDrm.initialization_vector = Some(value.into());`.
+    pub fn initialization_vector<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.initialization_vector = Some(value.into());
+        self
+    }
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PlayReadyDrm.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PlayReadyDrm.key_id = Some(value.into());`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = Some(value.into());
+        self
+    }
+    /// Sets `key_md_5`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PlayReadyDrm.key_md_5 = Some(value.into());`.
+    pub fn key_md_5<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_md_5 = Some(value.into());
+        self
+    }
+    /// Sets `license_acquisition_url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PlayReadyDrm.license_acquisition_url = Some(value.into());`.
+    pub fn license_acquisition_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.license_acquisition_url = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PlayReadyDrm with optional fields set to `None`.
+    pub fn new() -> PlayReadyDrm {
+        PlayReadyDrm { ..Default::default() }
+    }
+}
 #[doc="<p> Use Only for Fragmented MP4 or MPEG-TS Outputs. If you specify a preset for which the value of Container is <code>fmp4</code> (Fragmented MP4) or <code>ts</code> (MPEG-TS), Playlists contains information about the master playlists that you want Elastic Transcoder to create. We recommend that you create only one master playlist per output format. The maximum number of master playlists in a job is 30. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Playlist {
@@ -984,7 +2033,6 @@ pub struct Playlist {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status_detail: Option<String>,
 }
-
 #[doc="<p>Presets are templates that contain most of the settings for transcoding media files from one format to another. Elastic Transcoder includes some default presets for common formats, for example, several iPod and iPhone versions. You can also create your own presets for formats that aren't included among the default presets. You specify which preset you want to use when you create a job.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Preset {
@@ -1025,7 +2073,6 @@ pub struct Preset {
     #[serde(skip_serializing_if="Option::is_none")]
     pub video: Option<VideoParameters>,
 }
-
 #[doc="<p>Settings for the size, location, and opacity of graphics that you want Elastic Transcoder to overlay over videos that are transcoded using this preset. You can specify settings for up to four watermarks. Watermarks appear in the specified size and location, and with the specified opacity for the duration of the transcoded video.</p> <p>Watermarks can be in .png or .jpg format. If you want to display a watermark that is not rectangular, use the .png format, which supports transparency.</p> <p>When you create a job that uses this preset, you specify the .png or .jpg graphics that you want Elastic Transcoder to include in the transcoded videos. You can specify fewer graphics in the job than you specify watermark settings in the preset, which allows you to use the same preset for up to four watermarks that have different dimensions.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct PresetWatermark {
@@ -1070,7 +2117,82 @@ pub struct PresetWatermark {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vertical_offset: Option<String>,
 }
-
+impl PresetWatermark {
+    /// Sets `horizontal_align`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PresetWatermark.horizontal_align = Some(value.into());`.
+    pub fn horizontal_align<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.horizontal_align = Some(value.into());
+        self
+    }
+    /// Sets `horizontal_offset`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PresetWatermark.horizontal_offset = Some(value.into());`.
+    pub fn horizontal_offset<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.horizontal_offset = Some(value.into());
+        self
+    }
+    /// Sets `id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PresetWatermark.id = Some(value.into());`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = Some(value.into());
+        self
+    }
+    /// Sets `max_height`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PresetWatermark.max_height = Some(value.into());`.
+    pub fn max_height<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_height = Some(value.into());
+        self
+    }
+    /// Sets `max_width`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PresetWatermark.max_width = Some(value.into());`.
+    pub fn max_width<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_width = Some(value.into());
+        self
+    }
+    /// Sets `opacity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PresetWatermark.opacity = Some(value.into());`.
+    pub fn opacity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.opacity = Some(value.into());
+        self
+    }
+    /// Sets `sizing_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PresetWatermark.sizing_policy = Some(value.into());`.
+    pub fn sizing_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sizing_policy = Some(value.into());
+        self
+    }
+    /// Sets `target`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PresetWatermark.target = Some(value.into());`.
+    pub fn target<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target = Some(value.into());
+        self
+    }
+    /// Sets `vertical_align`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PresetWatermark.vertical_align = Some(value.into());`.
+    pub fn vertical_align<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vertical_align = Some(value.into());
+        self
+    }
+    /// Sets `vertical_offset`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PresetWatermark.vertical_offset = Some(value.into());`.
+    pub fn vertical_offset<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vertical_offset = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PresetWatermark with optional fields set to `None`.
+    pub fn new() -> PresetWatermark {
+        PresetWatermark { ..Default::default() }
+    }
+}
 #[doc="<p>The <code>ReadJobRequest</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ReadJobRequest {
@@ -1078,7 +2200,22 @@ pub struct ReadJobRequest {
     #[serde(rename="Id")]
     pub id: String,
 }
-
+impl ReadJobRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReadJobRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of ReadJobRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> ReadJobRequest {
+        ReadJobRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The <code>ReadJobResponse</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ReadJobResponse {
@@ -1087,7 +2224,6 @@ pub struct ReadJobResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub job: Option<Job>,
 }
-
 #[doc="<p>The <code>ReadPipelineRequest</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ReadPipelineRequest {
@@ -1095,7 +2231,22 @@ pub struct ReadPipelineRequest {
     #[serde(rename="Id")]
     pub id: String,
 }
-
+impl ReadPipelineRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReadPipelineRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of ReadPipelineRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> ReadPipelineRequest {
+        ReadPipelineRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The <code>ReadPipelineResponse</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ReadPipelineResponse {
@@ -1108,7 +2259,6 @@ pub struct ReadPipelineResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub warnings: Option<Vec<Warning>>,
 }
-
 #[doc="<p>The <code>ReadPresetRequest</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ReadPresetRequest {
@@ -1116,7 +2266,22 @@ pub struct ReadPresetRequest {
     #[serde(rename="Id")]
     pub id: String,
 }
-
+impl ReadPresetRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReadPresetRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of ReadPresetRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> ReadPresetRequest {
+        ReadPresetRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The <code>ReadPresetResponse</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ReadPresetResponse {
@@ -1125,7 +2290,6 @@ pub struct ReadPresetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub preset: Option<Preset>,
 }
-
 #[doc="<p> The <code>TestRoleRequest</code> structure. </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TestRoleRequest {
@@ -1142,7 +2306,54 @@ pub struct TestRoleRequest {
     #[serde(rename="Topics")]
     pub topics: Vec<String>,
 }
-
+impl TestRoleRequest {
+    /// Sets `input_bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestRoleRequest.input_bucket = value.into();`.
+    pub fn input_bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.input_bucket = value.into();
+        self
+    }
+    /// Sets `output_bucket`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestRoleRequest.output_bucket = value.into();`.
+    pub fn output_bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.output_bucket = value.into();
+        self
+    }
+    /// Sets `role`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestRoleRequest.role = value.into();`.
+    pub fn role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role = value.into();
+        self
+    }
+    /// Sets `topics`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestRoleRequest.topics = value.into();`.
+    pub fn topics<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.topics = value.into();
+        self
+    }
+    /// Returns a new instance of TestRoleRequest with optional fields set to `None`.
+    pub fn new<InputBucketType: Into<String>,
+               OutputBucketType: Into<String>,
+               RoleType: Into<String>,
+               TopicsType: Into<Vec<String>>>
+        (input_bucket: InputBucketType,
+         output_bucket: OutputBucketType,
+         role: RoleType,
+         topics: TopicsType)
+         -> TestRoleRequest {
+        TestRoleRequest {
+            input_bucket: input_bucket.into(),
+            output_bucket: output_bucket.into(),
+            role: role.into(),
+            topics: topics.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The <code>TestRoleResponse</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TestRoleResponse {
@@ -1155,7 +2366,6 @@ pub struct TestRoleResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub success: Option<String>,
 }
-
 #[doc="<p>Thumbnails for videos.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Thumbnails {
@@ -1192,7 +2402,68 @@ pub struct Thumbnails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sizing_policy: Option<String>,
 }
-
+impl Thumbnails {
+    /// Sets `aspect_ratio`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Thumbnails.aspect_ratio = Some(value.into());`.
+    pub fn aspect_ratio<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.aspect_ratio = Some(value.into());
+        self
+    }
+    /// Sets `format`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Thumbnails.format = Some(value.into());`.
+    pub fn format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.format = Some(value.into());
+        self
+    }
+    /// Sets `interval`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Thumbnails.interval = Some(value.into());`.
+    pub fn interval<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.interval = Some(value.into());
+        self
+    }
+    /// Sets `max_height`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Thumbnails.max_height = Some(value.into());`.
+    pub fn max_height<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_height = Some(value.into());
+        self
+    }
+    /// Sets `max_width`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Thumbnails.max_width = Some(value.into());`.
+    pub fn max_width<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_width = Some(value.into());
+        self
+    }
+    /// Sets `padding_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Thumbnails.padding_policy = Some(value.into());`.
+    pub fn padding_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.padding_policy = Some(value.into());
+        self
+    }
+    /// Sets `resolution`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Thumbnails.resolution = Some(value.into());`.
+    pub fn resolution<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resolution = Some(value.into());
+        self
+    }
+    /// Sets `sizing_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Thumbnails.sizing_policy = Some(value.into());`.
+    pub fn sizing_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sizing_policy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Thumbnails with optional fields set to `None`.
+    pub fn new() -> Thumbnails {
+        Thumbnails { ..Default::default() }
+    }
+}
 #[doc="<p>Settings that determine when a clip begins and how long it lasts.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct TimeSpan {
@@ -1205,7 +2476,26 @@ pub struct TimeSpan {
     #[serde(skip_serializing_if="Option::is_none")]
     pub start_time: Option<String>,
 }
-
+impl TimeSpan {
+    /// Sets `duration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TimeSpan.duration = Some(value.into());`.
+    pub fn duration<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.duration = Some(value.into());
+        self
+    }
+    /// Sets `start_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TimeSpan.start_time = Some(value.into());`.
+    pub fn start_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_time = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TimeSpan with optional fields set to `None`.
+    pub fn new() -> TimeSpan {
+        TimeSpan { ..Default::default() }
+    }
+}
 #[doc="<p>Details about the timing of a job.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Timing {
@@ -1222,7 +2512,6 @@ pub struct Timing {
     #[serde(skip_serializing_if="Option::is_none")]
     pub submit_time_millis: Option<i64>,
 }
-
 #[doc="<p>The <code>UpdatePipelineNotificationsRequest</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdatePipelineNotificationsRequest {
@@ -1233,7 +2522,33 @@ pub struct UpdatePipelineNotificationsRequest {
     #[serde(rename="Notifications")]
     pub notifications: Notifications,
 }
-
+impl UpdatePipelineNotificationsRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePipelineNotificationsRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `notifications`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePipelineNotificationsRequest.notifications = value.into();`.
+    pub fn notifications<ValueType: Into<Notifications>>(mut self, value: ValueType) -> Self {
+        self.notifications = value.into();
+        self
+    }
+    /// Returns a new instance of UpdatePipelineNotificationsRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>, NotificationsType: Into<Notifications>>
+        (id: IdType,
+         notifications: NotificationsType)
+         -> UpdatePipelineNotificationsRequest {
+        UpdatePipelineNotificationsRequest {
+            id: id.into(),
+            notifications: notifications.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The <code>UpdatePipelineNotificationsResponse</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdatePipelineNotificationsResponse {
@@ -1242,7 +2557,6 @@ pub struct UpdatePipelineNotificationsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pipeline: Option<Pipeline>,
 }
-
 #[doc="<p>The <code>UpdatePipelineRequest</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdatePipelineRequest {
@@ -1278,7 +2592,75 @@ pub struct UpdatePipelineRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub thumbnail_config: Option<PipelineOutputConfig>,
 }
-
+impl UpdatePipelineRequest {
+    /// Sets `aws_kms_key_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePipelineRequest.aws_kms_key_arn = Some(value.into());`.
+    pub fn aws_kms_key_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.aws_kms_key_arn = Some(value.into());
+        self
+    }
+    /// Sets `content_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePipelineRequest.content_config = Some(value.into());`.
+    pub fn content_config<ValueType: Into<PipelineOutputConfig>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.content_config = Some(value.into());
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePipelineRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `input_bucket`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePipelineRequest.input_bucket = Some(value.into());`.
+    pub fn input_bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.input_bucket = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePipelineRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `notifications`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePipelineRequest.notifications = Some(value.into());`.
+    pub fn notifications<ValueType: Into<Notifications>>(mut self, value: ValueType) -> Self {
+        self.notifications = Some(value.into());
+        self
+    }
+    /// Sets `role`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePipelineRequest.role = Some(value.into());`.
+    pub fn role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role = Some(value.into());
+        self
+    }
+    /// Sets `thumbnail_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePipelineRequest.thumbnail_config = Some(value.into());`.
+    pub fn thumbnail_config<ValueType: Into<PipelineOutputConfig>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.thumbnail_config = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdatePipelineRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> UpdatePipelineRequest {
+        UpdatePipelineRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>When you update a pipeline, Elastic Transcoder returns the values that you specified in the request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdatePipelineResponse {
@@ -1291,7 +2673,6 @@ pub struct UpdatePipelineResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub warnings: Option<Vec<Warning>>,
 }
-
 #[doc="<p>The <code>UpdatePipelineStatusRequest</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdatePipelineStatusRequest {
@@ -1302,7 +2683,32 @@ pub struct UpdatePipelineStatusRequest {
     #[serde(rename="Status")]
     pub status: String,
 }
-
+impl UpdatePipelineStatusRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePipelineStatusRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePipelineStatusRequest.status = value.into();`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = value.into();
+        self
+    }
+    /// Returns a new instance of UpdatePipelineStatusRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>, StatusType: Into<String>>(id: IdType,
+                                                               status: StatusType)
+                                                               -> UpdatePipelineStatusRequest {
+        UpdatePipelineStatusRequest {
+            id: id.into(),
+            status: status.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>When you update status for a pipeline, Elastic Transcoder returns the values that you specified in the request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdatePipelineStatusResponse {
@@ -1311,7 +2717,6 @@ pub struct UpdatePipelineStatusResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pipeline: Option<Pipeline>,
 }
-
 #[doc="<p>The <code>VideoParameters</code> structure.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct VideoParameters {
@@ -1376,7 +2781,117 @@ pub struct VideoParameters {
     #[serde(skip_serializing_if="Option::is_none")]
     pub watermarks: Option<Vec<PresetWatermark>>,
 }
-
+impl VideoParameters {
+    /// Sets `aspect_ratio`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VideoParameters.aspect_ratio = Some(value.into());`.
+    pub fn aspect_ratio<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.aspect_ratio = Some(value.into());
+        self
+    }
+    /// Sets `bit_rate`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VideoParameters.bit_rate = Some(value.into());`.
+    pub fn bit_rate<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bit_rate = Some(value.into());
+        self
+    }
+    /// Sets `codec`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VideoParameters.codec = Some(value.into());`.
+    pub fn codec<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.codec = Some(value.into());
+        self
+    }
+    /// Sets `codec_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VideoParameters.codec_options = Some(value.into());`.
+pub fn codec_options<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.codec_options = Some(value.into());
+        self
+    }
+    /// Sets `display_aspect_ratio`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VideoParameters.display_aspect_ratio = Some(value.into());`.
+    pub fn display_aspect_ratio<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.display_aspect_ratio = Some(value.into());
+        self
+    }
+    /// Sets `fixed_gop`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VideoParameters.fixed_gop = Some(value.into());`.
+    pub fn fixed_gop<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fixed_gop = Some(value.into());
+        self
+    }
+    /// Sets `frame_rate`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VideoParameters.frame_rate = Some(value.into());`.
+    pub fn frame_rate<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.frame_rate = Some(value.into());
+        self
+    }
+    /// Sets `keyframes_max_dist`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VideoParameters.keyframes_max_dist = Some(value.into());`.
+    pub fn keyframes_max_dist<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.keyframes_max_dist = Some(value.into());
+        self
+    }
+    /// Sets `max_frame_rate`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VideoParameters.max_frame_rate = Some(value.into());`.
+    pub fn max_frame_rate<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_frame_rate = Some(value.into());
+        self
+    }
+    /// Sets `max_height`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VideoParameters.max_height = Some(value.into());`.
+    pub fn max_height<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_height = Some(value.into());
+        self
+    }
+    /// Sets `max_width`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VideoParameters.max_width = Some(value.into());`.
+    pub fn max_width<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_width = Some(value.into());
+        self
+    }
+    /// Sets `padding_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VideoParameters.padding_policy = Some(value.into());`.
+    pub fn padding_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.padding_policy = Some(value.into());
+        self
+    }
+    /// Sets `resolution`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VideoParameters.resolution = Some(value.into());`.
+    pub fn resolution<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resolution = Some(value.into());
+        self
+    }
+    /// Sets `sizing_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VideoParameters.sizing_policy = Some(value.into());`.
+    pub fn sizing_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sizing_policy = Some(value.into());
+        self
+    }
+    /// Sets `watermarks`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VideoParameters.watermarks = Some(value.into());`.
+    pub fn watermarks<ValueType: Into<Vec<PresetWatermark>>>(mut self, value: ValueType) -> Self {
+        self.watermarks = Some(value.into());
+        self
+    }
+    /// Returns a new instance of VideoParameters with optional fields set to `None`.
+    pub fn new() -> VideoParameters {
+        VideoParameters { ..Default::default() }
+    }
+}
 #[doc="<p>Elastic Transcoder returns a warning if the resources used by your pipeline are not in the same region as the pipeline.</p> <p>Using resources in the same region, such as your Amazon S3 buckets, Amazon SNS notification topics, and AWS KMS key, reduces processing time and prevents cross-regional charges.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Warning {
@@ -1389,7 +2904,6 @@ pub struct Warning {
     #[serde(skip_serializing_if="Option::is_none")]
     pub message: Option<String>,
 }
-
 /// Errors returned by CancelJob
 #[derive(Debug, PartialEq)]
 pub enum CancelJobError {

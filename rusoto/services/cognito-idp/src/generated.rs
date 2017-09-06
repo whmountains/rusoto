@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -38,7 +39,35 @@ pub struct AddCustomAttributesRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl AddCustomAttributesRequest {
+    /// Sets `custom_attributes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddCustomAttributesRequest.custom_attributes = value.into();`.
+    pub fn custom_attributes<ValueType: Into<Vec<SchemaAttributeType>>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.custom_attributes = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddCustomAttributesRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of AddCustomAttributesRequest with optional fields set to `None`.
+    pub fn new<CustomAttributesType: Into<Vec<SchemaAttributeType>>, UserPoolIdType: Into<String>>
+        (custom_attributes: CustomAttributesType,
+         user_pool_id: UserPoolIdType)
+         -> AddCustomAttributesRequest {
+        AddCustomAttributesRequest {
+            custom_attributes: custom_attributes.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server for the request to add custom attributes.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddCustomAttributesResponse;
@@ -55,7 +84,44 @@ pub struct AdminAddUserToGroupRequest {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl AdminAddUserToGroupRequest {
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminAddUserToGroupRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminAddUserToGroupRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminAddUserToGroupRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of AdminAddUserToGroupRequest with optional fields set to `None`.
+    pub fn new<GroupNameType: Into<String>,
+               UserPoolIdType: Into<String>,
+               UsernameType: Into<String>>
+        (group_name: GroupNameType,
+         user_pool_id: UserPoolIdType,
+         username: UsernameType)
+         -> AdminAddUserToGroupRequest {
+        AdminAddUserToGroupRequest {
+            group_name: group_name.into(),
+            user_pool_id: user_pool_id.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the request to confirm user registration.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AdminConfirmSignUpRequest {
@@ -66,7 +132,33 @@ pub struct AdminConfirmSignUpRequest {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl AdminConfirmSignUpRequest {
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminConfirmSignUpRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminConfirmSignUpRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of AdminConfirmSignUpRequest with optional fields set to `None`.
+    pub fn new<UserPoolIdType: Into<String>, UsernameType: Into<String>>
+        (user_pool_id: UserPoolIdType,
+         username: UsernameType)
+         -> AdminConfirmSignUpRequest {
+        AdminConfirmSignUpRequest {
+            user_pool_id: user_pool_id.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server for the request to confirm registration.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AdminConfirmSignUpResponse;
@@ -87,7 +179,35 @@ pub struct AdminCreateUserConfigType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub unused_account_validity_days: Option<i64>,
 }
-
+impl AdminCreateUserConfigType {
+    /// Sets `allow_admin_create_user_only`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminCreateUserConfigType.allow_admin_create_user_only = Some(value.into());`.
+    pub fn allow_admin_create_user_only<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.allow_admin_create_user_only = Some(value.into());
+        self
+    }
+    /// Sets `invite_message_template`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminCreateUserConfigType.invite_message_template = Some(value.into());`.
+    pub fn invite_message_template<ValueType: Into<MessageTemplateType>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.invite_message_template = Some(value.into());
+        self
+    }
+    /// Sets `unused_account_validity_days`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminCreateUserConfigType.unused_account_validity_days = Some(value.into());`.
+    pub fn unused_account_validity_days<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.unused_account_validity_days = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AdminCreateUserConfigType with optional fields set to `None`.
+    pub fn new() -> AdminCreateUserConfigType {
+        AdminCreateUserConfigType { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the request to create a user in the specified user pool.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AdminCreateUserRequest {
@@ -122,7 +242,81 @@ pub struct AdminCreateUserRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub validation_data: Option<Vec<AttributeType>>,
 }
-
+impl AdminCreateUserRequest {
+    /// Sets `desired_delivery_mediums`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminCreateUserRequest.desired_delivery_mediums = Some(value.into());`.
+    pub fn desired_delivery_mediums<ValueType: Into<Vec<String>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.desired_delivery_mediums = Some(value.into());
+        self
+    }
+    /// Sets `force_alias_creation`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminCreateUserRequest.force_alias_creation = Some(value.into());`.
+    pub fn force_alias_creation<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.force_alias_creation = Some(value.into());
+        self
+    }
+    /// Sets `message_action`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminCreateUserRequest.message_action = Some(value.into());`.
+    pub fn message_action<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.message_action = Some(value.into());
+        self
+    }
+    /// Sets `temporary_password`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminCreateUserRequest.temporary_password = Some(value.into());`.
+    pub fn temporary_password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.temporary_password = Some(value.into());
+        self
+    }
+    /// Sets `user_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminCreateUserRequest.user_attributes = Some(value.into());`.
+    pub fn user_attributes<ValueType: Into<Vec<AttributeType>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.user_attributes = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminCreateUserRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminCreateUserRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Sets `validation_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminCreateUserRequest.validation_data = Some(value.into());`.
+    pub fn validation_data<ValueType: Into<Vec<AttributeType>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.validation_data = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AdminCreateUserRequest with optional fields set to `None`.
+    pub fn new<UserPoolIdType: Into<String>, UsernameType: Into<String>>
+        (user_pool_id: UserPoolIdType,
+         username: UsernameType)
+         -> AdminCreateUserRequest {
+        AdminCreateUserRequest {
+            user_pool_id: user_pool_id.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server to the request to create the user.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AdminCreateUserResponse {
@@ -131,7 +325,6 @@ pub struct AdminCreateUserResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user: Option<UserType>,
 }
-
 #[doc="<p>Represents the request to delete user attributes as an administrator.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AdminDeleteUserAttributesRequest {
@@ -145,7 +338,44 @@ pub struct AdminDeleteUserAttributesRequest {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl AdminDeleteUserAttributesRequest {
+    /// Sets `user_attribute_names`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminDeleteUserAttributesRequest.user_attribute_names = value.into();`.
+    pub fn user_attribute_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.user_attribute_names = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminDeleteUserAttributesRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminDeleteUserAttributesRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of AdminDeleteUserAttributesRequest with optional fields set to `None`.
+    pub fn new<UserAttributeNamesType: Into<Vec<String>>,
+               UserPoolIdType: Into<String>,
+               UsernameType: Into<String>>
+        (user_attribute_names: UserAttributeNamesType,
+         user_pool_id: UserPoolIdType,
+         username: UsernameType)
+         -> AdminDeleteUserAttributesRequest {
+        AdminDeleteUserAttributesRequest {
+            user_attribute_names: user_attribute_names.into(),
+            user_pool_id: user_pool_id.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response received from the server for a request to delete user attributes.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AdminDeleteUserAttributesResponse;
@@ -160,7 +390,33 @@ pub struct AdminDeleteUserRequest {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl AdminDeleteUserRequest {
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminDeleteUserRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminDeleteUserRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of AdminDeleteUserRequest with optional fields set to `None`.
+    pub fn new<UserPoolIdType: Into<String>, UsernameType: Into<String>>
+        (user_pool_id: UserPoolIdType,
+         username: UsernameType)
+         -> AdminDeleteUserRequest {
+        AdminDeleteUserRequest {
+            user_pool_id: user_pool_id.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AdminDisableProviderForUserRequest {
     #[doc="<p>The user to be disabled.</p>"]
@@ -170,7 +426,33 @@ pub struct AdminDisableProviderForUserRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl AdminDisableProviderForUserRequest {
+    /// Sets `user`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminDisableProviderForUserRequest.user = value.into();`.
+    pub fn user<ValueType: Into<ProviderUserIdentifierType>>(mut self, value: ValueType) -> Self {
+        self.user = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminDisableProviderForUserRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of AdminDisableProviderForUserRequest with optional fields set to `None`.
+    pub fn new<UserType: Into<ProviderUserIdentifierType>, UserPoolIdType: Into<String>>
+        (user: UserType,
+         user_pool_id: UserPoolIdType)
+         -> AdminDisableProviderForUserRequest {
+        AdminDisableProviderForUserRequest {
+            user: user.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AdminDisableProviderForUserResponse;
 
@@ -184,7 +466,33 @@ pub struct AdminDisableUserRequest {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl AdminDisableUserRequest {
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminDisableUserRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminDisableUserRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of AdminDisableUserRequest with optional fields set to `None`.
+    pub fn new<UserPoolIdType: Into<String>, UsernameType: Into<String>>
+        (user_pool_id: UserPoolIdType,
+         username: UsernameType)
+         -> AdminDisableUserRequest {
+        AdminDisableUserRequest {
+            user_pool_id: user_pool_id.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response received from the server to disable the user as an administrator.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AdminDisableUserResponse;
@@ -199,7 +507,33 @@ pub struct AdminEnableUserRequest {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl AdminEnableUserRequest {
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminEnableUserRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminEnableUserRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of AdminEnableUserRequest with optional fields set to `None`.
+    pub fn new<UserPoolIdType: Into<String>, UsernameType: Into<String>>
+        (user_pool_id: UserPoolIdType,
+         username: UsernameType)
+         -> AdminEnableUserRequest {
+        AdminEnableUserRequest {
+            user_pool_id: user_pool_id.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server for the request to enable a user as an administrator.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AdminEnableUserResponse;
@@ -217,7 +551,44 @@ pub struct AdminForgetDeviceRequest {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl AdminForgetDeviceRequest {
+    /// Sets `device_key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminForgetDeviceRequest.device_key = value.into();`.
+    pub fn device_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.device_key = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminForgetDeviceRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminForgetDeviceRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of AdminForgetDeviceRequest with optional fields set to `None`.
+    pub fn new<DeviceKeyType: Into<String>,
+               UserPoolIdType: Into<String>,
+               UsernameType: Into<String>>
+        (device_key: DeviceKeyType,
+         user_pool_id: UserPoolIdType,
+         username: UsernameType)
+         -> AdminForgetDeviceRequest {
+        AdminForgetDeviceRequest {
+            device_key: device_key.into(),
+            user_pool_id: user_pool_id.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the request to get the device, as an administrator.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AdminGetDeviceRequest {
@@ -231,7 +602,44 @@ pub struct AdminGetDeviceRequest {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl AdminGetDeviceRequest {
+    /// Sets `device_key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminGetDeviceRequest.device_key = value.into();`.
+    pub fn device_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.device_key = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminGetDeviceRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminGetDeviceRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of AdminGetDeviceRequest with optional fields set to `None`.
+    pub fn new<DeviceKeyType: Into<String>,
+               UserPoolIdType: Into<String>,
+               UsernameType: Into<String>>
+        (device_key: DeviceKeyType,
+         user_pool_id: UserPoolIdType,
+         username: UsernameType)
+         -> AdminGetDeviceRequest {
+        AdminGetDeviceRequest {
+            device_key: device_key.into(),
+            user_pool_id: user_pool_id.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Gets the device response, as an administrator.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AdminGetDeviceResponse {
@@ -239,7 +647,6 @@ pub struct AdminGetDeviceResponse {
     #[serde(rename="Device")]
     pub device: DeviceType,
 }
-
 #[doc="<p>Represents the request to get the specified user as an administrator.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AdminGetUserRequest {
@@ -250,7 +657,30 @@ pub struct AdminGetUserRequest {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl AdminGetUserRequest {
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminGetUserRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminGetUserRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of AdminGetUserRequest with optional fields set to `None`.
+pub fn new<UserPoolIdType: Into<String>, UsernameType: Into<String>>(user_pool_id: UserPoolIdType, username: UsernameType) -> AdminGetUserRequest{
+        AdminGetUserRequest {
+            user_pool_id: user_pool_id.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server from the request to get the specified user as an administrator.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AdminGetUserResponse {
@@ -282,7 +712,6 @@ pub struct AdminGetUserResponse {
     #[serde(rename="Username")]
     pub username: String,
 }
-
 #[doc="<p>Initiates the authorization request, as an administrator.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AdminInitiateAuthRequest {
@@ -304,7 +733,62 @@ pub struct AdminInitiateAuthRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl AdminInitiateAuthRequest {
+    /// Sets `auth_flow`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminInitiateAuthRequest.auth_flow = value.into();`.
+    pub fn auth_flow<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auth_flow = value.into();
+        self
+    }
+    /// Sets `auth_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminInitiateAuthRequest.auth_parameters = Some(value.into());`.
+    pub fn auth_parameters<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.auth_parameters = Some(value.into());
+        self
+    }
+    /// Sets `client_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminInitiateAuthRequest.client_id = value.into();`.
+    pub fn client_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_id = value.into();
+        self
+    }
+    /// Sets `client_metadata`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminInitiateAuthRequest.client_metadata = Some(value.into());`.
+    pub fn client_metadata<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.client_metadata = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminInitiateAuthRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of AdminInitiateAuthRequest with optional fields set to `None`.
+    pub fn new<AuthFlowType: Into<String>, ClientIdType: Into<String>, UserPoolIdType: Into<String>>
+        (auth_flow: AuthFlowType,
+         client_id: ClientIdType,
+         user_pool_id: UserPoolIdType)
+         -> AdminInitiateAuthRequest {
+        AdminInitiateAuthRequest {
+            auth_flow: auth_flow.into(),
+            client_id: client_id.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Initiates the authentication response, as an administrator.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AdminInitiateAuthResponse {
@@ -325,7 +809,6 @@ pub struct AdminInitiateAuthResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub session: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AdminLinkProviderForUserRequest {
     #[doc="<p>The existing user in the user pool to be linked to the external identity provider user account. Can be a native (Username + Password) Cognito User Pools user or a federated user (for example, a SAML or Facebook user). If the user doesn't exist, an exception is thrown. This is the user that is returned when the new user (with the linked identity provider attribute) signs in.</p> <p>The <code>ProviderAttributeValue</code> for the <code>DestinationUser</code> must match the username for the user in the user pool. The <code>ProviderAttributeName</code> will always be ignored.</p>"]
@@ -338,7 +821,48 @@ pub struct AdminLinkProviderForUserRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl AdminLinkProviderForUserRequest {
+    /// Sets `destination_user`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminLinkProviderForUserRequest.destination_user = value.into();`.
+    pub fn destination_user<ValueType: Into<ProviderUserIdentifierType>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.destination_user = value.into();
+        self
+    }
+    /// Sets `source_user`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminLinkProviderForUserRequest.source_user = value.into();`.
+    pub fn source_user<ValueType: Into<ProviderUserIdentifierType>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.source_user = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminLinkProviderForUserRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of AdminLinkProviderForUserRequest with optional fields set to `None`.
+    pub fn new<DestinationUserType: Into<ProviderUserIdentifierType>,
+               SourceUserType: Into<ProviderUserIdentifierType>,
+               UserPoolIdType: Into<String>>
+        (destination_user: DestinationUserType,
+         source_user: SourceUserType,
+         user_pool_id: UserPoolIdType)
+         -> AdminLinkProviderForUserRequest {
+        AdminLinkProviderForUserRequest {
+            destination_user: destination_user.into(),
+            source_user: source_user.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AdminLinkProviderForUserResponse;
 
@@ -360,7 +884,47 @@ pub struct AdminListDevicesRequest {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl AdminListDevicesRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminListDevicesRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `pagination_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminListDevicesRequest.pagination_token = Some(value.into());`.
+    pub fn pagination_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pagination_token = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminListDevicesRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminListDevicesRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of AdminListDevicesRequest with optional fields set to `None`.
+    pub fn new<UserPoolIdType: Into<String>, UsernameType: Into<String>>
+        (user_pool_id: UserPoolIdType,
+         username: UsernameType)
+         -> AdminListDevicesRequest {
+        AdminListDevicesRequest {
+            user_pool_id: user_pool_id.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Lists the device's response, as an administrator.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AdminListDevicesResponse {
@@ -373,7 +937,6 @@ pub struct AdminListDevicesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pagination_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AdminListGroupsForUserRequest {
     #[doc="<p>The limit of the request to list groups.</p>"]
@@ -391,7 +954,47 @@ pub struct AdminListGroupsForUserRequest {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl AdminListGroupsForUserRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminListGroupsForUserRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminListGroupsForUserRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminListGroupsForUserRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminListGroupsForUserRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of AdminListGroupsForUserRequest with optional fields set to `None`.
+    pub fn new<UserPoolIdType: Into<String>, UsernameType: Into<String>>
+        (user_pool_id: UserPoolIdType,
+         username: UsernameType)
+         -> AdminListGroupsForUserRequest {
+        AdminListGroupsForUserRequest {
+            user_pool_id: user_pool_id.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AdminListGroupsForUserResponse {
     #[doc="<p>The groups that the user belongs to.</p>"]
@@ -403,7 +1006,6 @@ pub struct AdminListGroupsForUserResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AdminRemoveUserFromGroupRequest {
     #[doc="<p>The group name.</p>"]
@@ -416,7 +1018,44 @@ pub struct AdminRemoveUserFromGroupRequest {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl AdminRemoveUserFromGroupRequest {
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminRemoveUserFromGroupRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminRemoveUserFromGroupRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminRemoveUserFromGroupRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of AdminRemoveUserFromGroupRequest with optional fields set to `None`.
+    pub fn new<GroupNameType: Into<String>,
+               UserPoolIdType: Into<String>,
+               UsernameType: Into<String>>
+        (group_name: GroupNameType,
+         user_pool_id: UserPoolIdType,
+         username: UsernameType)
+         -> AdminRemoveUserFromGroupRequest {
+        AdminRemoveUserFromGroupRequest {
+            group_name: group_name.into(),
+            user_pool_id: user_pool_id.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the request to reset a user's password as an administrator.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AdminResetUserPasswordRequest {
@@ -427,7 +1066,33 @@ pub struct AdminResetUserPasswordRequest {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl AdminResetUserPasswordRequest {
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminResetUserPasswordRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminResetUserPasswordRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of AdminResetUserPasswordRequest with optional fields set to `None`.
+    pub fn new<UserPoolIdType: Into<String>, UsernameType: Into<String>>
+        (user_pool_id: UserPoolIdType,
+         username: UsernameType)
+         -> AdminResetUserPasswordRequest {
+        AdminResetUserPasswordRequest {
+            user_pool_id: user_pool_id.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server to reset a user password as an administrator.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AdminResetUserPasswordResponse;
@@ -453,7 +1118,61 @@ pub struct AdminRespondToAuthChallengeRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl AdminRespondToAuthChallengeRequest {
+    /// Sets `challenge_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminRespondToAuthChallengeRequest.challenge_name = value.into();`.
+    pub fn challenge_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.challenge_name = value.into();
+        self
+    }
+    /// Sets `challenge_responses`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminRespondToAuthChallengeRequest.challenge_responses = Some(value.into());`.
+    pub fn challenge_responses<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.challenge_responses = Some(value.into());
+        self
+    }
+    /// Sets `client_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminRespondToAuthChallengeRequest.client_id = value.into();`.
+    pub fn client_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_id = value.into();
+        self
+    }
+    /// Sets `session`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminRespondToAuthChallengeRequest.session = Some(value.into());`.
+    pub fn session<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.session = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminRespondToAuthChallengeRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of AdminRespondToAuthChallengeRequest with optional fields set to `None`.
+    pub fn new<ChallengeNameType: Into<String>,
+               ClientIdType: Into<String>,
+               UserPoolIdType: Into<String>>
+        (challenge_name: ChallengeNameType,
+         client_id: ClientIdType,
+         user_pool_id: UserPoolIdType)
+         -> AdminRespondToAuthChallengeRequest {
+        AdminRespondToAuthChallengeRequest {
+            challenge_name: challenge_name.into(),
+            client_id: client_id.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Responds to the authentication challenge, as an administrator.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AdminRespondToAuthChallengeResponse {
@@ -474,7 +1193,6 @@ pub struct AdminRespondToAuthChallengeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub session: Option<String>,
 }
-
 #[doc="<p>Represents the request to set user settings as an administrator.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AdminSetUserSettingsRequest {
@@ -488,7 +1206,44 @@ pub struct AdminSetUserSettingsRequest {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl AdminSetUserSettingsRequest {
+    /// Sets `mfa_options`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminSetUserSettingsRequest.mfa_options = value.into();`.
+    pub fn mfa_options<ValueType: Into<Vec<MFAOptionType>>>(mut self, value: ValueType) -> Self {
+        self.mfa_options = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminSetUserSettingsRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminSetUserSettingsRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of AdminSetUserSettingsRequest with optional fields set to `None`.
+    pub fn new<MFAOptionsType: Into<Vec<MFAOptionType>>,
+               UserPoolIdType: Into<String>,
+               UsernameType: Into<String>>
+        (mfa_options: MFAOptionsType,
+         user_pool_id: UserPoolIdType,
+         username: UsernameType)
+         -> AdminSetUserSettingsRequest {
+        AdminSetUserSettingsRequest {
+            mfa_options: mfa_options.into(),
+            user_pool_id: user_pool_id.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server to set user settings as an administrator.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AdminSetUserSettingsResponse;
@@ -510,7 +1265,51 @@ pub struct AdminUpdateDeviceStatusRequest {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl AdminUpdateDeviceStatusRequest {
+    /// Sets `device_key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminUpdateDeviceStatusRequest.device_key = value.into();`.
+    pub fn device_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.device_key = value.into();
+        self
+    }
+    /// Sets `device_remembered_status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminUpdateDeviceStatusRequest.device_remembered_status = Some(value.into());`.
+    pub fn device_remembered_status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.device_remembered_status = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminUpdateDeviceStatusRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminUpdateDeviceStatusRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of AdminUpdateDeviceStatusRequest with optional fields set to `None`.
+    pub fn new<DeviceKeyType: Into<String>,
+               UserPoolIdType: Into<String>,
+               UsernameType: Into<String>>
+        (device_key: DeviceKeyType,
+         user_pool_id: UserPoolIdType,
+         username: UsernameType)
+         -> AdminUpdateDeviceStatusRequest {
+        AdminUpdateDeviceStatusRequest {
+            device_key: device_key.into(),
+            user_pool_id: user_pool_id.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The status response from the request to update the device, as an administrator.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AdminUpdateDeviceStatusResponse;
@@ -528,7 +1327,46 @@ pub struct AdminUpdateUserAttributesRequest {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl AdminUpdateUserAttributesRequest {
+    /// Sets `user_attributes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminUpdateUserAttributesRequest.user_attributes = value.into();`.
+    pub fn user_attributes<ValueType: Into<Vec<AttributeType>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.user_attributes = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminUpdateUserAttributesRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminUpdateUserAttributesRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of AdminUpdateUserAttributesRequest with optional fields set to `None`.
+    pub fn new<UserAttributesType: Into<Vec<AttributeType>>,
+               UserPoolIdType: Into<String>,
+               UsernameType: Into<String>>
+        (user_attributes: UserAttributesType,
+         user_pool_id: UserPoolIdType,
+         username: UsernameType)
+         -> AdminUpdateUserAttributesRequest {
+        AdminUpdateUserAttributesRequest {
+            user_attributes: user_attributes.into(),
+            user_pool_id: user_pool_id.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server for the request to update user attributes as an administrator.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AdminUpdateUserAttributesResponse;
@@ -543,7 +1381,33 @@ pub struct AdminUserGlobalSignOutRequest {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl AdminUserGlobalSignOutRequest {
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminUserGlobalSignOutRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AdminUserGlobalSignOutRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of AdminUserGlobalSignOutRequest with optional fields set to `None`.
+    pub fn new<UserPoolIdType: Into<String>, UsernameType: Into<String>>
+        (user_pool_id: UserPoolIdType,
+         username: UsernameType)
+         -> AdminUserGlobalSignOutRequest {
+        AdminUserGlobalSignOutRequest {
+            user_pool_id: user_pool_id.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The global sign-out response, as an administrator.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AdminUserGlobalSignOutResponse;
@@ -559,7 +1423,29 @@ pub struct AttributeType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl AttributeType {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributeType.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributeType.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AttributeType with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> AttributeType {
+        AttributeType {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The result type of the authentication result.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AuthenticationResultType {
@@ -588,7 +1474,6 @@ pub struct AuthenticationResultType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub token_type: Option<String>,
 }
-
 #[doc="<p>Represents the request to change a user password.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ChangePasswordRequest {
@@ -602,7 +1487,44 @@ pub struct ChangePasswordRequest {
     #[serde(rename="ProposedPassword")]
     pub proposed_password: String,
 }
-
+impl ChangePasswordRequest {
+    /// Sets `access_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChangePasswordRequest.access_token = value.into();`.
+    pub fn access_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.access_token = value.into();
+        self
+    }
+    /// Sets `previous_password`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChangePasswordRequest.previous_password = value.into();`.
+    pub fn previous_password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.previous_password = value.into();
+        self
+    }
+    /// Sets `proposed_password`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChangePasswordRequest.proposed_password = value.into();`.
+    pub fn proposed_password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.proposed_password = value.into();
+        self
+    }
+    /// Returns a new instance of ChangePasswordRequest with optional fields set to `None`.
+    pub fn new<AccessTokenType: Into<String>,
+               PreviousPasswordType: Into<String>,
+               ProposedPasswordType: Into<String>>
+        (access_token: AccessTokenType,
+         previous_password: PreviousPasswordType,
+         proposed_password: ProposedPasswordType)
+         -> ChangePasswordRequest {
+        ChangePasswordRequest {
+            access_token: access_token.into(),
+            previous_password: previous_password.into(),
+            proposed_password: proposed_password.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response from the server to the change password request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ChangePasswordResponse;
@@ -623,7 +1545,6 @@ pub struct CodeDeliveryDetailsType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub destination: Option<String>,
 }
-
 #[doc="<p>Confirms the device request.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ConfirmDeviceRequest {
@@ -642,7 +1563,50 @@ pub struct ConfirmDeviceRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub device_secret_verifier_config: Option<DeviceSecretVerifierConfigType>,
 }
-
+impl ConfirmDeviceRequest {
+    /// Sets `access_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmDeviceRequest.access_token = value.into();`.
+    pub fn access_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.access_token = value.into();
+        self
+    }
+    /// Sets `device_key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmDeviceRequest.device_key = value.into();`.
+    pub fn device_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.device_key = value.into();
+        self
+    }
+    /// Sets `device_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmDeviceRequest.device_name = Some(value.into());`.
+    pub fn device_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.device_name = Some(value.into());
+        self
+    }
+    /// Sets `device_secret_verifier_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmDeviceRequest.device_secret_verifier_config = Some(value.into());`.
+    pub fn device_secret_verifier_config<ValueType: Into<DeviceSecretVerifierConfigType>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.device_secret_verifier_config = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ConfirmDeviceRequest with optional fields set to `None`.
+    pub fn new<AccessTokenType: Into<String>, DeviceKeyType: Into<String>>
+        (access_token: AccessTokenType,
+         device_key: DeviceKeyType)
+         -> ConfirmDeviceRequest {
+        ConfirmDeviceRequest {
+            access_token: access_token.into(),
+            device_key: device_key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Confirms the device response.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ConfirmDeviceResponse {
@@ -651,7 +1615,6 @@ pub struct ConfirmDeviceResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_confirmation_necessary: Option<bool>,
 }
-
 #[doc="<p>The request representing the confirmation for a password reset.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ConfirmForgotPasswordRequest {
@@ -672,7 +1635,61 @@ pub struct ConfirmForgotPasswordRequest {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl ConfirmForgotPasswordRequest {
+    /// Sets `client_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmForgotPasswordRequest.client_id = value.into();`.
+    pub fn client_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_id = value.into();
+        self
+    }
+    /// Sets `confirmation_code`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmForgotPasswordRequest.confirmation_code = value.into();`.
+    pub fn confirmation_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.confirmation_code = value.into();
+        self
+    }
+    /// Sets `password`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmForgotPasswordRequest.password = value.into();`.
+    pub fn password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.password = value.into();
+        self
+    }
+    /// Sets `secret_hash`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmForgotPasswordRequest.secret_hash = Some(value.into());`.
+    pub fn secret_hash<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.secret_hash = Some(value.into());
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmForgotPasswordRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of ConfirmForgotPasswordRequest with optional fields set to `None`.
+    pub fn new<ClientIdType: Into<String>,
+               ConfirmationCodeType: Into<String>,
+               PasswordType: Into<String>,
+               UsernameType: Into<String>>
+        (client_id: ClientIdType,
+         confirmation_code: ConfirmationCodeType,
+         password: PasswordType,
+         username: UsernameType)
+         -> ConfirmForgotPasswordRequest {
+        ConfirmForgotPasswordRequest {
+            client_id: client_id.into(),
+            confirmation_code: confirmation_code.into(),
+            password: password.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response from the server that results from a user's request to retrieve a forgotten password.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ConfirmForgotPasswordResponse;
@@ -698,7 +1715,58 @@ pub struct ConfirmSignUpRequest {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl ConfirmSignUpRequest {
+    /// Sets `client_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmSignUpRequest.client_id = value.into();`.
+    pub fn client_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_id = value.into();
+        self
+    }
+    /// Sets `confirmation_code`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmSignUpRequest.confirmation_code = value.into();`.
+    pub fn confirmation_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.confirmation_code = value.into();
+        self
+    }
+    /// Sets `force_alias_creation`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmSignUpRequest.force_alias_creation = Some(value.into());`.
+    pub fn force_alias_creation<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.force_alias_creation = Some(value.into());
+        self
+    }
+    /// Sets `secret_hash`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmSignUpRequest.secret_hash = Some(value.into());`.
+    pub fn secret_hash<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.secret_hash = Some(value.into());
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmSignUpRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of ConfirmSignUpRequest with optional fields set to `None`.
+    pub fn new<ClientIdType: Into<String>,
+               ConfirmationCodeType: Into<String>,
+               UsernameType: Into<String>>
+        (client_id: ClientIdType,
+         confirmation_code: ConfirmationCodeType,
+         username: UsernameType)
+         -> ConfirmSignUpRequest {
+        ConfirmSignUpRequest {
+            client_id: client_id.into(),
+            confirmation_code: confirmation_code.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server for the registration confirmation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ConfirmSignUpResponse;
@@ -724,7 +1792,51 @@ pub struct CreateGroupRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl CreateGroupRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGroupRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGroupRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Sets `precedence`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGroupRequest.precedence = Some(value.into());`.
+    pub fn precedence<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.precedence = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGroupRequest.role_arn = Some(value.into());`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGroupRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateGroupRequest with optional fields set to `None`.
+pub fn new<GroupNameType: Into<String>, UserPoolIdType: Into<String>>(group_name: GroupNameType, user_pool_id: UserPoolIdType) -> CreateGroupRequest{
+        CreateGroupRequest {
+            group_name: group_name.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateGroupResponse {
     #[doc="<p>The group object for the group.</p>"]
@@ -732,7 +1844,6 @@ pub struct CreateGroupResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub group: Option<GroupType>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateIdentityProviderRequest {
     #[doc="<p>A mapping of identity provider attributes to standard and custom user pool attributes.</p>"]
@@ -756,14 +1867,80 @@ pub struct CreateIdentityProviderRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl CreateIdentityProviderRequest {
+    /// Sets `attribute_mapping`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateIdentityProviderRequest.attribute_mapping = Some(value.into());`.
+    pub fn attribute_mapping<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.attribute_mapping = Some(value.into());
+        self
+    }
+    /// Sets `idp_identifiers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateIdentityProviderRequest.idp_identifiers = Some(value.into());`.
+    pub fn idp_identifiers<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.idp_identifiers = Some(value.into());
+        self
+    }
+    /// Sets `provider_details`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateIdentityProviderRequest.provider_details = value.into();`.
+    pub fn provider_details<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.provider_details = value.into();
+        self
+    }
+    /// Sets `provider_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateIdentityProviderRequest.provider_name = value.into();`.
+    pub fn provider_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provider_name = value.into();
+        self
+    }
+    /// Sets `provider_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateIdentityProviderRequest.provider_type = value.into();`.
+    pub fn provider_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provider_type = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateIdentityProviderRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateIdentityProviderRequest with optional fields set to `None`.
+    pub fn new<ProviderDetailsType: Into<::std::collections::HashMap<String, String>>,
+               ProviderNameType: Into<String>,
+               ProviderTypeType: Into<String>,
+               UserPoolIdType: Into<String>>
+        (provider_details: ProviderDetailsType,
+         provider_name: ProviderNameType,
+         provider_type: ProviderTypeType,
+         user_pool_id: UserPoolIdType)
+         -> CreateIdentityProviderRequest {
+        CreateIdentityProviderRequest {
+            provider_details: provider_details.into(),
+            provider_name: provider_name.into(),
+            provider_type: provider_type.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateIdentityProviderResponse {
     #[doc="<p>The newly created identity provider object.</p>"]
     #[serde(rename="IdentityProvider")]
     pub identity_provider: IdentityProviderType,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateResourceServerRequest {
     #[doc="<p>A unique resource server identifier for the resource server. This could be an HTTPS endpoint where the resource server is located. For example, <code>https://my-weather-api.example.com</code>.</p>"]
@@ -780,14 +1957,57 @@ pub struct CreateResourceServerRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl CreateResourceServerRequest {
+    /// Sets `identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateResourceServerRequest.identifier = value.into();`.
+    pub fn identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identifier = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateResourceServerRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `scopes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateResourceServerRequest.scopes = Some(value.into());`.
+    pub fn scopes<ValueType: Into<Vec<ResourceServerScopeType>>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.scopes = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateResourceServerRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateResourceServerRequest with optional fields set to `None`.
+    pub fn new<IdentifierType: Into<String>, NameType: Into<String>, UserPoolIdType: Into<String>>
+        (identifier: IdentifierType,
+         name: NameType,
+         user_pool_id: UserPoolIdType)
+         -> CreateResourceServerRequest {
+        CreateResourceServerRequest {
+            identifier: identifier.into(),
+            name: name.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateResourceServerResponse {
     #[doc="<p>The newly created resource server.</p>"]
     #[serde(rename="ResourceServer")]
     pub resource_server: ResourceServerType,
 }
-
 #[doc="<p>Represents the request to create the user import job.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateUserImportJobRequest {
@@ -801,7 +2021,44 @@ pub struct CreateUserImportJobRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl CreateUserImportJobRequest {
+    /// Sets `cloud_watch_logs_role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserImportJobRequest.cloud_watch_logs_role_arn = value.into();`.
+    pub fn cloud_watch_logs_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cloud_watch_logs_role_arn = value.into();
+        self
+    }
+    /// Sets `job_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserImportJobRequest.job_name = value.into();`.
+    pub fn job_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_name = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserImportJobRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateUserImportJobRequest with optional fields set to `None`.
+    pub fn new<CloudWatchLogsRoleArnType: Into<String>,
+               JobNameType: Into<String>,
+               UserPoolIdType: Into<String>>
+        (cloud_watch_logs_role_arn: CloudWatchLogsRoleArnType,
+         job_name: JobNameType,
+         user_pool_id: UserPoolIdType)
+         -> CreateUserImportJobRequest {
+        CreateUserImportJobRequest {
+            cloud_watch_logs_role_arn: cloud_watch_logs_role_arn.into(),
+            job_name: job_name.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server to the request to create the user import job.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateUserImportJobResponse {
@@ -810,7 +2067,6 @@ pub struct CreateUserImportJobResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_import_job: Option<UserImportJobType>,
 }
-
 #[doc="<p>Represents the request to create a user pool client.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateUserPoolClientRequest {
@@ -869,7 +2125,121 @@ pub struct CreateUserPoolClientRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub write_attributes: Option<Vec<String>>,
 }
-
+impl CreateUserPoolClientRequest {
+    /// Sets `allowed_o_auth_flows`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolClientRequest.allowed_o_auth_flows = Some(value.into());`.
+    pub fn allowed_o_auth_flows<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.allowed_o_auth_flows = Some(value.into());
+        self
+    }
+    /// Sets `allowed_o_auth_flows_user_pool_client`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolClientRequest.allowed_o_auth_flows_user_pool_client = Some(value.into());`.
+    pub fn allowed_o_auth_flows_user_pool_client<ValueType: Into<bool>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.allowed_o_auth_flows_user_pool_client = Some(value.into());
+        self
+    }
+    /// Sets `allowed_o_auth_scopes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolClientRequest.allowed_o_auth_scopes = Some(value.into());`.
+    pub fn allowed_o_auth_scopes<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.allowed_o_auth_scopes = Some(value.into());
+        self
+    }
+    /// Sets `callback_ur_ls`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolClientRequest.callback_ur_ls = Some(value.into());`.
+    pub fn callback_ur_ls<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.callback_ur_ls = Some(value.into());
+        self
+    }
+    /// Sets `client_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolClientRequest.client_name = value.into();`.
+    pub fn client_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_name = value.into();
+        self
+    }
+    /// Sets `default_redirect_uri`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolClientRequest.default_redirect_uri = Some(value.into());`.
+    pub fn default_redirect_uri<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_redirect_uri = Some(value.into());
+        self
+    }
+    /// Sets `explicit_auth_flows`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolClientRequest.explicit_auth_flows = Some(value.into());`.
+    pub fn explicit_auth_flows<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.explicit_auth_flows = Some(value.into());
+        self
+    }
+    /// Sets `generate_secret`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolClientRequest.generate_secret = Some(value.into());`.
+    pub fn generate_secret<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.generate_secret = Some(value.into());
+        self
+    }
+    /// Sets `logout_ur_ls`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolClientRequest.logout_ur_ls = Some(value.into());`.
+    pub fn logout_ur_ls<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.logout_ur_ls = Some(value.into());
+        self
+    }
+    /// Sets `read_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolClientRequest.read_attributes = Some(value.into());`.
+    pub fn read_attributes<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.read_attributes = Some(value.into());
+        self
+    }
+    /// Sets `refresh_token_validity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolClientRequest.refresh_token_validity = Some(value.into());`.
+    pub fn refresh_token_validity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.refresh_token_validity = Some(value.into());
+        self
+    }
+    /// Sets `supported_identity_providers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolClientRequest.supported_identity_providers = Some(value.into());`.
+    pub fn supported_identity_providers<ValueType: Into<Vec<String>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.supported_identity_providers = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolClientRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Sets `write_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolClientRequest.write_attributes = Some(value.into());`.
+    pub fn write_attributes<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.write_attributes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateUserPoolClientRequest with optional fields set to `None`.
+    pub fn new<ClientNameType: Into<String>, UserPoolIdType: Into<String>>
+        (client_name: ClientNameType,
+         user_pool_id: UserPoolIdType)
+         -> CreateUserPoolClientRequest {
+        CreateUserPoolClientRequest {
+            client_name: client_name.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server to create a user pool client.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateUserPoolClientResponse {
@@ -878,7 +2248,6 @@ pub struct CreateUserPoolClientResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_pool_client: Option<UserPoolClientType>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateUserPoolDomainRequest {
     #[doc="<p>The domain string.</p>"]
@@ -888,7 +2257,33 @@ pub struct CreateUserPoolDomainRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl CreateUserPoolDomainRequest {
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolDomainRequest.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolDomainRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateUserPoolDomainRequest with optional fields set to `None`.
+    pub fn new<DomainType: Into<String>, UserPoolIdType: Into<String>>
+        (domain: DomainType,
+         user_pool_id: UserPoolIdType)
+         -> CreateUserPoolDomainRequest {
+        CreateUserPoolDomainRequest {
+            domain: domain.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateUserPoolDomainResponse;
 
@@ -967,7 +2362,154 @@ pub struct CreateUserPoolRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub verification_message_template: Option<VerificationMessageTemplateType>,
 }
-
+impl CreateUserPoolRequest {
+    /// Sets `admin_create_user_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolRequest.admin_create_user_config = Some(value.into());`.
+    pub fn admin_create_user_config<ValueType: Into<AdminCreateUserConfigType>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.admin_create_user_config = Some(value.into());
+        self
+    }
+    /// Sets `alias_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolRequest.alias_attributes = Some(value.into());`.
+    pub fn alias_attributes<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.alias_attributes = Some(value.into());
+        self
+    }
+    /// Sets `auto_verified_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolRequest.auto_verified_attributes = Some(value.into());`.
+    pub fn auto_verified_attributes<ValueType: Into<Vec<String>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.auto_verified_attributes = Some(value.into());
+        self
+    }
+    /// Sets `device_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolRequest.device_configuration = Some(value.into());`.
+    pub fn device_configuration<ValueType: Into<DeviceConfigurationType>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.device_configuration = Some(value.into());
+        self
+    }
+    /// Sets `email_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolRequest.email_configuration = Some(value.into());`.
+    pub fn email_configuration<ValueType: Into<EmailConfigurationType>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.email_configuration = Some(value.into());
+        self
+    }
+    /// Sets `email_verification_message`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolRequest.email_verification_message = Some(value.into());`.
+    pub fn email_verification_message<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.email_verification_message = Some(value.into());
+        self
+    }
+    /// Sets `email_verification_subject`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolRequest.email_verification_subject = Some(value.into());`.
+    pub fn email_verification_subject<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.email_verification_subject = Some(value.into());
+        self
+    }
+    /// Sets `lambda_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolRequest.lambda_config = Some(value.into());`.
+    pub fn lambda_config<ValueType: Into<LambdaConfigType>>(mut self, value: ValueType) -> Self {
+        self.lambda_config = Some(value.into());
+        self
+    }
+    /// Sets `mfa_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolRequest.mfa_configuration = Some(value.into());`.
+    pub fn mfa_configuration<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.mfa_configuration = Some(value.into());
+        self
+    }
+    /// Sets `policies`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolRequest.policies = Some(value.into());`.
+    pub fn policies<ValueType: Into<UserPoolPolicyType>>(mut self, value: ValueType) -> Self {
+        self.policies = Some(value.into());
+        self
+    }
+    /// Sets `pool_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolRequest.pool_name = value.into();`.
+    pub fn pool_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pool_name = value.into();
+        self
+    }
+    /// Sets `schema`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolRequest.schema = Some(value.into());`.
+    pub fn schema<ValueType: Into<Vec<SchemaAttributeType>>>(mut self, value: ValueType) -> Self {
+        self.schema = Some(value.into());
+        self
+    }
+    /// Sets `sms_authentication_message`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolRequest.sms_authentication_message = Some(value.into());`.
+    pub fn sms_authentication_message<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sms_authentication_message = Some(value.into());
+        self
+    }
+    /// Sets `sms_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolRequest.sms_configuration = Some(value.into());`.
+    pub fn sms_configuration<ValueType: Into<SmsConfigurationType>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.sms_configuration = Some(value.into());
+        self
+    }
+    /// Sets `sms_verification_message`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolRequest.sms_verification_message = Some(value.into());`.
+    pub fn sms_verification_message<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sms_verification_message = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolRequest.user_pool_tags = Some(value.into());`.
+pub fn user_pool_tags<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.user_pool_tags = Some(value.into());
+        self
+    }
+    /// Sets `username_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolRequest.username_attributes = Some(value.into());`.
+    pub fn username_attributes<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.username_attributes = Some(value.into());
+        self
+    }
+    /// Sets `verification_message_template`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserPoolRequest.verification_message_template = Some(value.into());`.
+    pub fn verification_message_template<ValueType: Into<VerificationMessageTemplateType>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.verification_message_template = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateUserPoolRequest with optional fields set to `None`.
+    pub fn new<PoolNameType: Into<String>>(pool_name: PoolNameType) -> CreateUserPoolRequest {
+        CreateUserPoolRequest {
+            pool_name: pool_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server for the request to create a user pool.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateUserPoolResponse {
@@ -976,7 +2518,6 @@ pub struct CreateUserPoolResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_pool: Option<UserPoolType>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteGroupRequest {
     #[doc="<p>The name of the group.</p>"]
@@ -986,7 +2527,30 @@ pub struct DeleteGroupRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl DeleteGroupRequest {
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteGroupRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteGroupRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteGroupRequest with optional fields set to `None`.
+pub fn new<GroupNameType: Into<String>, UserPoolIdType: Into<String>>(group_name: GroupNameType, user_pool_id: UserPoolIdType) -> DeleteGroupRequest{
+        DeleteGroupRequest {
+            group_name: group_name.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteIdentityProviderRequest {
     #[doc="<p>The identity provider name.</p>"]
@@ -996,7 +2560,33 @@ pub struct DeleteIdentityProviderRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl DeleteIdentityProviderRequest {
+    /// Sets `provider_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteIdentityProviderRequest.provider_name = value.into();`.
+    pub fn provider_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provider_name = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteIdentityProviderRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteIdentityProviderRequest with optional fields set to `None`.
+    pub fn new<ProviderNameType: Into<String>, UserPoolIdType: Into<String>>
+        (provider_name: ProviderNameType,
+         user_pool_id: UserPoolIdType)
+         -> DeleteIdentityProviderRequest {
+        DeleteIdentityProviderRequest {
+            provider_name: provider_name.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteResourceServerRequest {
     #[doc="<p>The identifier for the resource server.</p>"]
@@ -1006,7 +2596,33 @@ pub struct DeleteResourceServerRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl DeleteResourceServerRequest {
+    /// Sets `identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteResourceServerRequest.identifier = value.into();`.
+    pub fn identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identifier = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteResourceServerRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteResourceServerRequest with optional fields set to `None`.
+    pub fn new<IdentifierType: Into<String>, UserPoolIdType: Into<String>>
+        (identifier: IdentifierType,
+         user_pool_id: UserPoolIdType)
+         -> DeleteResourceServerRequest {
+        DeleteResourceServerRequest {
+            identifier: identifier.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the request to delete user attributes.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteUserAttributesRequest {
@@ -1017,7 +2633,33 @@ pub struct DeleteUserAttributesRequest {
     #[serde(rename="UserAttributeNames")]
     pub user_attribute_names: Vec<String>,
 }
-
+impl DeleteUserAttributesRequest {
+    /// Sets `access_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteUserAttributesRequest.access_token = value.into();`.
+    pub fn access_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.access_token = value.into();
+        self
+    }
+    /// Sets `user_attribute_names`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteUserAttributesRequest.user_attribute_names = value.into();`.
+    pub fn user_attribute_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.user_attribute_names = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteUserAttributesRequest with optional fields set to `None`.
+    pub fn new<AccessTokenType: Into<String>, UserAttributeNamesType: Into<Vec<String>>>
+        (access_token: AccessTokenType,
+         user_attribute_names: UserAttributeNamesType)
+         -> DeleteUserAttributesRequest {
+        DeleteUserAttributesRequest {
+            access_token: access_token.into(),
+            user_attribute_names: user_attribute_names.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server to delete user attributes.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteUserAttributesResponse;
@@ -1032,7 +2674,33 @@ pub struct DeleteUserPoolClientRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl DeleteUserPoolClientRequest {
+    /// Sets `client_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteUserPoolClientRequest.client_id = value.into();`.
+    pub fn client_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_id = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteUserPoolClientRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteUserPoolClientRequest with optional fields set to `None`.
+    pub fn new<ClientIdType: Into<String>, UserPoolIdType: Into<String>>
+        (client_id: ClientIdType,
+         user_pool_id: UserPoolIdType)
+         -> DeleteUserPoolClientRequest {
+        DeleteUserPoolClientRequest {
+            client_id: client_id.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteUserPoolDomainRequest {
     #[doc="<p>The domain string.</p>"]
@@ -1042,7 +2710,33 @@ pub struct DeleteUserPoolDomainRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl DeleteUserPoolDomainRequest {
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteUserPoolDomainRequest.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteUserPoolDomainRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteUserPoolDomainRequest with optional fields set to `None`.
+    pub fn new<DomainType: Into<String>, UserPoolIdType: Into<String>>
+        (domain: DomainType,
+         user_pool_id: UserPoolIdType)
+         -> DeleteUserPoolDomainRequest {
+        DeleteUserPoolDomainRequest {
+            domain: domain.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteUserPoolDomainResponse;
 
@@ -1053,7 +2747,23 @@ pub struct DeleteUserPoolRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl DeleteUserPoolRequest {
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteUserPoolRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteUserPoolRequest with optional fields set to `None`.
+    pub fn new<UserPoolIdType: Into<String>>(user_pool_id: UserPoolIdType)
+                                             -> DeleteUserPoolRequest {
+        DeleteUserPoolRequest {
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the request to delete a user.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteUserRequest {
@@ -1061,7 +2771,22 @@ pub struct DeleteUserRequest {
     #[serde(rename="AccessToken")]
     pub access_token: String,
 }
-
+impl DeleteUserRequest {
+    /// Sets `access_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteUserRequest.access_token = value.into();`.
+    pub fn access_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.access_token = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteUserRequest with optional fields set to `None`.
+    pub fn new<AccessTokenType: Into<String>>(access_token: AccessTokenType) -> DeleteUserRequest {
+        DeleteUserRequest {
+            access_token: access_token.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeIdentityProviderRequest {
     #[doc="<p>The identity provider name.</p>"]
@@ -1071,14 +2796,39 @@ pub struct DescribeIdentityProviderRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl DescribeIdentityProviderRequest {
+    /// Sets `provider_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeIdentityProviderRequest.provider_name = value.into();`.
+    pub fn provider_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provider_name = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeIdentityProviderRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeIdentityProviderRequest with optional fields set to `None`.
+    pub fn new<ProviderNameType: Into<String>, UserPoolIdType: Into<String>>
+        (provider_name: ProviderNameType,
+         user_pool_id: UserPoolIdType)
+         -> DescribeIdentityProviderRequest {
+        DescribeIdentityProviderRequest {
+            provider_name: provider_name.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeIdentityProviderResponse {
     #[doc="<p>The identity provider that was deleted.</p>"]
     #[serde(rename="IdentityProvider")]
     pub identity_provider: IdentityProviderType,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeResourceServerRequest {
     #[doc="<p>The identifier for the resource server</p>"]
@@ -1088,14 +2838,39 @@ pub struct DescribeResourceServerRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl DescribeResourceServerRequest {
+    /// Sets `identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeResourceServerRequest.identifier = value.into();`.
+    pub fn identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identifier = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeResourceServerRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeResourceServerRequest with optional fields set to `None`.
+    pub fn new<IdentifierType: Into<String>, UserPoolIdType: Into<String>>
+        (identifier: IdentifierType,
+         user_pool_id: UserPoolIdType)
+         -> DescribeResourceServerRequest {
+        DescribeResourceServerRequest {
+            identifier: identifier.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeResourceServerResponse {
     #[doc="<p>The resource server.</p>"]
     #[serde(rename="ResourceServer")]
     pub resource_server: ResourceServerType,
 }
-
 #[doc="<p>Represents the request to describe the user import job.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeUserImportJobRequest {
@@ -1106,7 +2881,33 @@ pub struct DescribeUserImportJobRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl DescribeUserImportJobRequest {
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeUserImportJobRequest.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeUserImportJobRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeUserImportJobRequest with optional fields set to `None`.
+    pub fn new<JobIdType: Into<String>, UserPoolIdType: Into<String>>
+        (job_id: JobIdType,
+         user_pool_id: UserPoolIdType)
+         -> DescribeUserImportJobRequest {
+        DescribeUserImportJobRequest {
+            job_id: job_id.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server to the request to describe the user import job.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeUserImportJobResponse {
@@ -1115,7 +2916,6 @@ pub struct DescribeUserImportJobResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_import_job: Option<UserImportJobType>,
 }
-
 #[doc="<p>Represents the request to describe a user pool client.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeUserPoolClientRequest {
@@ -1126,7 +2926,33 @@ pub struct DescribeUserPoolClientRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl DescribeUserPoolClientRequest {
+    /// Sets `client_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeUserPoolClientRequest.client_id = value.into();`.
+    pub fn client_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_id = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeUserPoolClientRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeUserPoolClientRequest with optional fields set to `None`.
+    pub fn new<ClientIdType: Into<String>, UserPoolIdType: Into<String>>
+        (client_id: ClientIdType,
+         user_pool_id: UserPoolIdType)
+         -> DescribeUserPoolClientRequest {
+        DescribeUserPoolClientRequest {
+            client_id: client_id.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server from a request to describe the user pool client.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeUserPoolClientResponse {
@@ -1135,14 +2961,28 @@ pub struct DescribeUserPoolClientResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_pool_client: Option<UserPoolClientType>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeUserPoolDomainRequest {
     #[doc="<p>The domain string.</p>"]
     #[serde(rename="Domain")]
     pub domain: String,
 }
-
+impl DescribeUserPoolDomainRequest {
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeUserPoolDomainRequest.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeUserPoolDomainRequest with optional fields set to `None`.
+    pub fn new<DomainType: Into<String>>(domain: DomainType) -> DescribeUserPoolDomainRequest {
+        DescribeUserPoolDomainRequest {
+            domain: domain.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeUserPoolDomainResponse {
     #[doc="<p>A domain description object containing information about the domain.</p>"]
@@ -1150,7 +2990,6 @@ pub struct DescribeUserPoolDomainResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub domain_description: Option<DomainDescriptionType>,
 }
-
 #[doc="<p>Represents the request to describe the user pool.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeUserPoolRequest {
@@ -1158,7 +2997,23 @@ pub struct DescribeUserPoolRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl DescribeUserPoolRequest {
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeUserPoolRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeUserPoolRequest with optional fields set to `None`.
+    pub fn new<UserPoolIdType: Into<String>>(user_pool_id: UserPoolIdType)
+                                             -> DescribeUserPoolRequest {
+        DescribeUserPoolRequest {
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response to describe the user pool.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeUserPoolResponse {
@@ -1167,7 +3022,6 @@ pub struct DescribeUserPoolResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_pool: Option<UserPoolType>,
 }
-
 #[doc="<p>The type of configuration for the user pool's device tracking.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct DeviceConfigurationType {
@@ -1180,7 +3034,30 @@ pub struct DeviceConfigurationType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub device_only_remembered_on_user_prompt: Option<bool>,
 }
-
+impl DeviceConfigurationType {
+    /// Sets `challenge_required_on_new_device`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeviceConfigurationType.challenge_required_on_new_device = Some(value.into());`.
+    pub fn challenge_required_on_new_device<ValueType: Into<bool>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.challenge_required_on_new_device = Some(value.into());
+        self
+    }
+    /// Sets `device_only_remembered_on_user_prompt`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeviceConfigurationType.device_only_remembered_on_user_prompt = Some(value.into());`.
+    pub fn device_only_remembered_on_user_prompt<ValueType: Into<bool>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.device_only_remembered_on_user_prompt = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeviceConfigurationType with optional fields set to `None`.
+    pub fn new() -> DeviceConfigurationType {
+        DeviceConfigurationType { ..Default::default() }
+    }
+}
 #[doc="<p>The device verifier against which it will be authenticated.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeviceSecretVerifierConfigType {
@@ -1193,7 +3070,26 @@ pub struct DeviceSecretVerifierConfigType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub salt: Option<String>,
 }
-
+impl DeviceSecretVerifierConfigType {
+    /// Sets `password_verifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeviceSecretVerifierConfigType.password_verifier = Some(value.into());`.
+    pub fn password_verifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.password_verifier = Some(value.into());
+        self
+    }
+    /// Sets `salt`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeviceSecretVerifierConfigType.salt = Some(value.into());`.
+    pub fn salt<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.salt = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeviceSecretVerifierConfigType with optional fields set to `None`.
+    pub fn new() -> DeviceSecretVerifierConfigType {
+        DeviceSecretVerifierConfigType { ..Default::default() }
+    }
+}
 #[doc="<p>The device type.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeviceType {
@@ -1218,7 +3114,6 @@ pub struct DeviceType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub device_last_modified_date: Option<f64>,
 }
-
 #[doc="<p>A container for information about a domain.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DomainDescriptionType {
@@ -1251,7 +3146,6 @@ pub struct DomainDescriptionType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<String>,
 }
-
 #[doc="<p>The email configuration type.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct EmailConfigurationType {
@@ -1264,7 +3158,26 @@ pub struct EmailConfigurationType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub source_arn: Option<String>,
 }
-
+impl EmailConfigurationType {
+    /// Sets `reply_to_email_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EmailConfigurationType.reply_to_email_address = Some(value.into());`.
+    pub fn reply_to_email_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reply_to_email_address = Some(value.into());
+        self
+    }
+    /// Sets `source_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EmailConfigurationType.source_arn = Some(value.into());`.
+    pub fn source_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of EmailConfigurationType with optional fields set to `None`.
+    pub fn new() -> EmailConfigurationType {
+        EmailConfigurationType { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the request to forget the device.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ForgetDeviceRequest {
@@ -1276,7 +3189,29 @@ pub struct ForgetDeviceRequest {
     #[serde(rename="DeviceKey")]
     pub device_key: String,
 }
-
+impl ForgetDeviceRequest {
+    /// Sets `access_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ForgetDeviceRequest.access_token = Some(value.into());`.
+    pub fn access_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.access_token = Some(value.into());
+        self
+    }
+    /// Sets `device_key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ForgetDeviceRequest.device_key = value.into();`.
+    pub fn device_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.device_key = value.into();
+        self
+    }
+    /// Returns a new instance of ForgetDeviceRequest with optional fields set to `None`.
+    pub fn new<DeviceKeyType: Into<String>>(device_key: DeviceKeyType) -> ForgetDeviceRequest {
+        ForgetDeviceRequest {
+            device_key: device_key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the request to reset a user's password.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ForgotPasswordRequest {
@@ -1291,7 +3226,39 @@ pub struct ForgotPasswordRequest {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl ForgotPasswordRequest {
+    /// Sets `client_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ForgotPasswordRequest.client_id = value.into();`.
+    pub fn client_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_id = value.into();
+        self
+    }
+    /// Sets `secret_hash`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ForgotPasswordRequest.secret_hash = Some(value.into());`.
+    pub fn secret_hash<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.secret_hash = Some(value.into());
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ForgotPasswordRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of ForgotPasswordRequest with optional fields set to `None`.
+    pub fn new<ClientIdType: Into<String>, UsernameType: Into<String>>(client_id: ClientIdType,
+                                                                       username: UsernameType)
+                                                                       -> ForgotPasswordRequest {
+        ForgotPasswordRequest {
+            client_id: client_id.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Respresents the response from the server regarding the request to reset a password.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ForgotPasswordResponse {
@@ -1300,7 +3267,6 @@ pub struct ForgotPasswordResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub code_delivery_details: Option<CodeDeliveryDetailsType>,
 }
-
 #[doc="<p>Represents the request to get the header information for the .csv file for the user import job.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetCSVHeaderRequest {
@@ -1308,7 +3274,22 @@ pub struct GetCSVHeaderRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl GetCSVHeaderRequest {
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetCSVHeaderRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetCSVHeaderRequest with optional fields set to `None`.
+    pub fn new<UserPoolIdType: Into<String>>(user_pool_id: UserPoolIdType) -> GetCSVHeaderRequest {
+        GetCSVHeaderRequest {
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server to the request to get the header information for the .csv file for the user import job.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetCSVHeaderResponse {
@@ -1321,7 +3302,6 @@ pub struct GetCSVHeaderResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_pool_id: Option<String>,
 }
-
 #[doc="<p>Represents the request to get the device.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDeviceRequest {
@@ -1333,7 +3313,29 @@ pub struct GetDeviceRequest {
     #[serde(rename="DeviceKey")]
     pub device_key: String,
 }
-
+impl GetDeviceRequest {
+    /// Sets `access_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDeviceRequest.access_token = Some(value.into());`.
+    pub fn access_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.access_token = Some(value.into());
+        self
+    }
+    /// Sets `device_key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDeviceRequest.device_key = value.into();`.
+    pub fn device_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.device_key = value.into();
+        self
+    }
+    /// Returns a new instance of GetDeviceRequest with optional fields set to `None`.
+    pub fn new<DeviceKeyType: Into<String>>(device_key: DeviceKeyType) -> GetDeviceRequest {
+        GetDeviceRequest {
+            device_key: device_key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Gets the device response.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetDeviceResponse {
@@ -1341,7 +3343,6 @@ pub struct GetDeviceResponse {
     #[serde(rename="Device")]
     pub device: DeviceType,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetGroupRequest {
     #[doc="<p>The name of the group.</p>"]
@@ -1351,7 +3352,30 @@ pub struct GetGroupRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl GetGroupRequest {
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetGroupRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetGroupRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetGroupRequest with optional fields set to `None`.
+pub fn new<GroupNameType: Into<String>, UserPoolIdType: Into<String>>(group_name: GroupNameType, user_pool_id: UserPoolIdType) -> GetGroupRequest{
+        GetGroupRequest {
+            group_name: group_name.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetGroupResponse {
     #[doc="<p>The group object for the group.</p>"]
@@ -1359,7 +3383,6 @@ pub struct GetGroupResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub group: Option<GroupType>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetIdentityProviderByIdentifierRequest {
     #[doc="<p>The identity provider ID.</p>"]
@@ -1369,14 +3392,39 @@ pub struct GetIdentityProviderByIdentifierRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl GetIdentityProviderByIdentifierRequest {
+    /// Sets `idp_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetIdentityProviderByIdentifierRequest.idp_identifier = value.into();`.
+    pub fn idp_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.idp_identifier = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetIdentityProviderByIdentifierRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetIdentityProviderByIdentifierRequest with optional fields set to `None`.
+    pub fn new<IdpIdentifierType: Into<String>, UserPoolIdType: Into<String>>
+        (idp_identifier: IdpIdentifierType,
+         user_pool_id: UserPoolIdType)
+         -> GetIdentityProviderByIdentifierRequest {
+        GetIdentityProviderByIdentifierRequest {
+            idp_identifier: idp_identifier.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetIdentityProviderByIdentifierResponse {
     #[doc="<p>The identity provider object.</p>"]
     #[serde(rename="IdentityProvider")]
     pub identity_provider: IdentityProviderType,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetUICustomizationRequest {
     #[doc="<p>The client ID for the client app.</p>"]
@@ -1387,14 +3435,36 @@ pub struct GetUICustomizationRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl GetUICustomizationRequest {
+    /// Sets `client_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUICustomizationRequest.client_id = Some(value.into());`.
+    pub fn client_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_id = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUICustomizationRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetUICustomizationRequest with optional fields set to `None`.
+    pub fn new<UserPoolIdType: Into<String>>(user_pool_id: UserPoolIdType)
+                                             -> GetUICustomizationRequest {
+        GetUICustomizationRequest {
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetUICustomizationResponse {
     #[doc="<p>The UI customization information.</p>"]
     #[serde(rename="UICustomization")]
     pub ui_customization: UICustomizationType,
 }
-
 #[doc="<p>Represents the request to get user attribute verification.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetUserAttributeVerificationCodeRequest {
@@ -1405,7 +3475,33 @@ pub struct GetUserAttributeVerificationCodeRequest {
     #[serde(rename="AttributeName")]
     pub attribute_name: String,
 }
-
+impl GetUserAttributeVerificationCodeRequest {
+    /// Sets `access_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUserAttributeVerificationCodeRequest.access_token = value.into();`.
+    pub fn access_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.access_token = value.into();
+        self
+    }
+    /// Sets `attribute_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUserAttributeVerificationCodeRequest.attribute_name = value.into();`.
+    pub fn attribute_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetUserAttributeVerificationCodeRequest with optional fields set to `None`.
+    pub fn new<AccessTokenType: Into<String>, AttributeNameType: Into<String>>
+        (access_token: AccessTokenType,
+         attribute_name: AttributeNameType)
+         -> GetUserAttributeVerificationCodeRequest {
+        GetUserAttributeVerificationCodeRequest {
+            access_token: access_token.into(),
+            attribute_name: attribute_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The verification code response returned by the server response to get the user attribute verification code.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetUserAttributeVerificationCodeResponse {
@@ -1414,7 +3510,6 @@ pub struct GetUserAttributeVerificationCodeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub code_delivery_details: Option<CodeDeliveryDetailsType>,
 }
-
 #[doc="<p>Represents the request to get information about the user.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetUserRequest {
@@ -1422,7 +3517,22 @@ pub struct GetUserRequest {
     #[serde(rename="AccessToken")]
     pub access_token: String,
 }
-
+impl GetUserRequest {
+    /// Sets `access_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUserRequest.access_token = value.into();`.
+    pub fn access_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.access_token = value.into();
+        self
+    }
+    /// Returns a new instance of GetUserRequest with optional fields set to `None`.
+    pub fn new<AccessTokenType: Into<String>>(access_token: AccessTokenType) -> GetUserRequest {
+        GetUserRequest {
+            access_token: access_token.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server from the request to get information about the user.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetUserResponse {
@@ -1437,7 +3547,6 @@ pub struct GetUserResponse {
     #[serde(rename="Username")]
     pub username: String,
 }
-
 #[doc="<p>Represents the request to sign out all devices.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GlobalSignOutRequest {
@@ -1445,7 +3554,23 @@ pub struct GlobalSignOutRequest {
     #[serde(rename="AccessToken")]
     pub access_token: String,
 }
-
+impl GlobalSignOutRequest {
+    /// Sets `access_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GlobalSignOutRequest.access_token = value.into();`.
+    pub fn access_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.access_token = value.into();
+        self
+    }
+    /// Returns a new instance of GlobalSignOutRequest with optional fields set to `None`.
+    pub fn new<AccessTokenType: Into<String>>(access_token: AccessTokenType)
+                                              -> GlobalSignOutRequest {
+        GlobalSignOutRequest {
+            access_token: access_token.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response to the request to sign out all devices.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GlobalSignOutResponse;
@@ -1482,7 +3607,6 @@ pub struct GroupType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_pool_id: Option<String>,
 }
-
 #[doc="<p>A container for information about an identity provider.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct IdentityProviderType {
@@ -1519,7 +3643,6 @@ pub struct IdentityProviderType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_pool_id: Option<String>,
 }
-
 #[doc="<p>Initiates the authentication request.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InitiateAuthRequest {
@@ -1538,7 +3661,52 @@ pub struct InitiateAuthRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub client_metadata: Option<::std::collections::HashMap<String, String>>,
 }
-
+impl InitiateAuthRequest {
+    /// Sets `auth_flow`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InitiateAuthRequest.auth_flow = value.into();`.
+    pub fn auth_flow<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auth_flow = value.into();
+        self
+    }
+    /// Sets `auth_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InitiateAuthRequest.auth_parameters = Some(value.into());`.
+    pub fn auth_parameters<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.auth_parameters = Some(value.into());
+        self
+    }
+    /// Sets `client_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InitiateAuthRequest.client_id = value.into();`.
+    pub fn client_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_id = value.into();
+        self
+    }
+    /// Sets `client_metadata`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InitiateAuthRequest.client_metadata = Some(value.into());`.
+    pub fn client_metadata<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.client_metadata = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InitiateAuthRequest with optional fields set to `None`.
+    pub fn new<AuthFlowType: Into<String>, ClientIdType: Into<String>>(auth_flow: AuthFlowType,
+                                                                       client_id: ClientIdType)
+                                                                       -> InitiateAuthRequest {
+        InitiateAuthRequest {
+            auth_flow: auth_flow.into(),
+            client_id: client_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Initiates the authentication response.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InitiateAuthResponse {
@@ -1559,7 +3727,6 @@ pub struct InitiateAuthResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub session: Option<String>,
 }
-
 #[doc="<p>Specifies the type of configuration for AWS Lambda triggers.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct LambdaConfigType {
@@ -1596,7 +3763,70 @@ pub struct LambdaConfigType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub verify_auth_challenge_response: Option<String>,
 }
-
+impl LambdaConfigType {
+    /// Sets `create_auth_challenge`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LambdaConfigType.create_auth_challenge = Some(value.into());`.
+    pub fn create_auth_challenge<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.create_auth_challenge = Some(value.into());
+        self
+    }
+    /// Sets `custom_message`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LambdaConfigType.custom_message = Some(value.into());`.
+    pub fn custom_message<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.custom_message = Some(value.into());
+        self
+    }
+    /// Sets `define_auth_challenge`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LambdaConfigType.define_auth_challenge = Some(value.into());`.
+    pub fn define_auth_challenge<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.define_auth_challenge = Some(value.into());
+        self
+    }
+    /// Sets `post_authentication`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LambdaConfigType.post_authentication = Some(value.into());`.
+    pub fn post_authentication<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.post_authentication = Some(value.into());
+        self
+    }
+    /// Sets `post_confirmation`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LambdaConfigType.post_confirmation = Some(value.into());`.
+    pub fn post_confirmation<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.post_confirmation = Some(value.into());
+        self
+    }
+    /// Sets `pre_authentication`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LambdaConfigType.pre_authentication = Some(value.into());`.
+    pub fn pre_authentication<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pre_authentication = Some(value.into());
+        self
+    }
+    /// Sets `pre_sign_up`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LambdaConfigType.pre_sign_up = Some(value.into());`.
+    pub fn pre_sign_up<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pre_sign_up = Some(value.into());
+        self
+    }
+    /// Sets `verify_auth_challenge_response`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LambdaConfigType.verify_auth_challenge_response = Some(value.into());`.
+    pub fn verify_auth_challenge_response<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.verify_auth_challenge_response = Some(value.into());
+        self
+    }
+    /// Returns a new instance of LambdaConfigType with optional fields set to `None`.
+    pub fn new() -> LambdaConfigType {
+        LambdaConfigType { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the request to list the devices.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListDevicesRequest {
@@ -1612,7 +3842,36 @@ pub struct ListDevicesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pagination_token: Option<String>,
 }
-
+impl ListDevicesRequest {
+    /// Sets `access_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDevicesRequest.access_token = value.into();`.
+    pub fn access_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.access_token = value.into();
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDevicesRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `pagination_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDevicesRequest.pagination_token = Some(value.into());`.
+    pub fn pagination_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pagination_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListDevicesRequest with optional fields set to `None`.
+    pub fn new<AccessTokenType: Into<String>>(access_token: AccessTokenType) -> ListDevicesRequest {
+        ListDevicesRequest {
+            access_token: access_token.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response to list devices.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListDevicesResponse {
@@ -1625,7 +3884,6 @@ pub struct ListDevicesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pagination_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListGroupsRequest {
     #[doc="<p>The limit of the request to list groups.</p>"]
@@ -1640,7 +3898,36 @@ pub struct ListGroupsRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl ListGroupsRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListGroupsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListGroupsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListGroupsRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListGroupsRequest with optional fields set to `None`.
+    pub fn new<UserPoolIdType: Into<String>>(user_pool_id: UserPoolIdType) -> ListGroupsRequest {
+        ListGroupsRequest {
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListGroupsResponse {
     #[doc="<p>The group objects for the groups.</p>"]
@@ -1652,7 +3939,6 @@ pub struct ListGroupsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListIdentityProvidersRequest {
     #[doc="<p>The maximum number of identity providers to return.</p>"]
@@ -1667,7 +3953,37 @@ pub struct ListIdentityProvidersRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl ListIdentityProvidersRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListIdentityProvidersRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListIdentityProvidersRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListIdentityProvidersRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListIdentityProvidersRequest with optional fields set to `None`.
+    pub fn new<UserPoolIdType: Into<String>>(user_pool_id: UserPoolIdType)
+                                             -> ListIdentityProvidersRequest {
+        ListIdentityProvidersRequest {
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListIdentityProvidersResponse {
     #[doc="<p>A pagination token.</p>"]
@@ -1678,7 +3994,6 @@ pub struct ListIdentityProvidersResponse {
     #[serde(rename="Providers")]
     pub providers: Vec<ProviderDescription>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListResourceServersRequest {
     #[doc="<p>The maximum number of resource servers to return.</p>"]
@@ -1693,7 +4008,37 @@ pub struct ListResourceServersRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl ListResourceServersRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListResourceServersRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListResourceServersRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListResourceServersRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListResourceServersRequest with optional fields set to `None`.
+    pub fn new<UserPoolIdType: Into<String>>(user_pool_id: UserPoolIdType)
+                                             -> ListResourceServersRequest {
+        ListResourceServersRequest {
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListResourceServersResponse {
     #[doc="<p>A pagination token.</p>"]
@@ -1704,7 +4049,6 @@ pub struct ListResourceServersResponse {
     #[serde(rename="ResourceServers")]
     pub resource_servers: Vec<ResourceServerType>,
 }
-
 #[doc="<p>Represents the request to list the user import jobs.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListUserImportJobsRequest {
@@ -1719,7 +4063,40 @@ pub struct ListUserImportJobsRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl ListUserImportJobsRequest {
+    /// Sets `max_results`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUserImportJobsRequest.max_results = value.into();`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = value.into();
+        self
+    }
+    /// Sets `pagination_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUserImportJobsRequest.pagination_token = Some(value.into());`.
+    pub fn pagination_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pagination_token = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUserImportJobsRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListUserImportJobsRequest with optional fields set to `None`.
+    pub fn new<MaxResultsType: Into<i64>, UserPoolIdType: Into<String>>
+        (max_results: MaxResultsType,
+         user_pool_id: UserPoolIdType)
+         -> ListUserImportJobsRequest {
+        ListUserImportJobsRequest {
+            max_results: max_results.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server to the request to list the user import jobs.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListUserImportJobsResponse {
@@ -1732,7 +4109,6 @@ pub struct ListUserImportJobsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_import_jobs: Option<Vec<UserImportJobType>>,
 }
-
 #[doc="<p>Represents the request to list the user pool clients.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListUserPoolClientsRequest {
@@ -1748,7 +4124,37 @@ pub struct ListUserPoolClientsRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl ListUserPoolClientsRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUserPoolClientsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUserPoolClientsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUserPoolClientsRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListUserPoolClientsRequest with optional fields set to `None`.
+    pub fn new<UserPoolIdType: Into<String>>(user_pool_id: UserPoolIdType)
+                                             -> ListUserPoolClientsRequest {
+        ListUserPoolClientsRequest {
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server that lists user pool clients.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListUserPoolClientsResponse {
@@ -1761,7 +4167,6 @@ pub struct ListUserPoolClientsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_pool_clients: Option<Vec<UserPoolClientDescription>>,
 }
-
 #[doc="<p>Represents the request to list user pools.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListUserPoolsRequest {
@@ -1773,7 +4178,29 @@ pub struct ListUserPoolsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListUserPoolsRequest {
+    /// Sets `max_results`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUserPoolsRequest.max_results = value.into();`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUserPoolsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListUserPoolsRequest with optional fields set to `None`.
+    pub fn new<MaxResultsType: Into<i64>>(max_results: MaxResultsType) -> ListUserPoolsRequest {
+        ListUserPoolsRequest {
+            max_results: max_results.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response to list user pools.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListUserPoolsResponse {
@@ -1786,7 +4213,6 @@ pub struct ListUserPoolsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_pools: Option<Vec<UserPoolDescriptionType>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListUsersInGroupRequest {
     #[doc="<p>The name of the group.</p>"]
@@ -1804,7 +4230,47 @@ pub struct ListUsersInGroupRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl ListUsersInGroupRequest {
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUsersInGroupRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUsersInGroupRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUsersInGroupRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUsersInGroupRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListUsersInGroupRequest with optional fields set to `None`.
+    pub fn new<GroupNameType: Into<String>, UserPoolIdType: Into<String>>
+        (group_name: GroupNameType,
+         user_pool_id: UserPoolIdType)
+         -> ListUsersInGroupRequest {
+        ListUsersInGroupRequest {
+            group_name: group_name.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListUsersInGroupResponse {
     #[doc="<p>An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list.</p>"]
@@ -1816,7 +4282,6 @@ pub struct ListUsersInGroupResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub users: Option<Vec<UserType>>,
 }
-
 #[doc="<p>Represents the request to list users.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListUsersRequest {
@@ -1840,7 +4305,50 @@ pub struct ListUsersRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl ListUsersRequest {
+    /// Sets `attributes_to_get`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUsersRequest.attributes_to_get = Some(value.into());`.
+    pub fn attributes_to_get<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.attributes_to_get = Some(value.into());
+        self
+    }
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUsersRequest.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUsersRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `pagination_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUsersRequest.pagination_token = Some(value.into());`.
+    pub fn pagination_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pagination_token = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUsersRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListUsersRequest with optional fields set to `None`.
+    pub fn new<UserPoolIdType: Into<String>>(user_pool_id: UserPoolIdType) -> ListUsersRequest {
+        ListUsersRequest {
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response from the request to list users.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListUsersResponse {
@@ -1853,7 +4361,6 @@ pub struct ListUsersResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub users: Option<Vec<UserType>>,
 }
-
 #[doc="<p>Specifies the different settings for multi-factor authentication (MFA).</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct MFAOptionType {
@@ -1866,7 +4373,26 @@ pub struct MFAOptionType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub delivery_medium: Option<String>,
 }
-
+impl MFAOptionType {
+    /// Sets `attribute_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MFAOptionType.attribute_name = Some(value.into());`.
+    pub fn attribute_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute_name = Some(value.into());
+        self
+    }
+    /// Sets `delivery_medium`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MFAOptionType.delivery_medium = Some(value.into());`.
+    pub fn delivery_medium<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.delivery_medium = Some(value.into());
+        self
+    }
+    /// Returns a new instance of MFAOptionType with optional fields set to `None`.
+    pub fn new() -> MFAOptionType {
+        MFAOptionType { ..Default::default() }
+    }
+}
 #[doc="<p>The message template structure.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct MessageTemplateType {
@@ -1883,7 +4409,33 @@ pub struct MessageTemplateType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sms_message: Option<String>,
 }
-
+impl MessageTemplateType {
+    /// Sets `email_message`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MessageTemplateType.email_message = Some(value.into());`.
+    pub fn email_message<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.email_message = Some(value.into());
+        self
+    }
+    /// Sets `email_subject`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MessageTemplateType.email_subject = Some(value.into());`.
+    pub fn email_subject<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.email_subject = Some(value.into());
+        self
+    }
+    /// Sets `sms_message`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MessageTemplateType.sms_message = Some(value.into());`.
+    pub fn sms_message<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sms_message = Some(value.into());
+        self
+    }
+    /// Returns a new instance of MessageTemplateType with optional fields set to `None`.
+    pub fn new() -> MessageTemplateType {
+        MessageTemplateType { ..Default::default() }
+    }
+}
 #[doc="<p>The new device metadata type.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct NewDeviceMetadataType {
@@ -1896,7 +4448,6 @@ pub struct NewDeviceMetadataType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub device_key: Option<String>,
 }
-
 #[doc="<p>The minimum and maximum value of an attribute that is of the number data type.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct NumberAttributeConstraintsType {
@@ -1909,7 +4460,26 @@ pub struct NumberAttributeConstraintsType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub min_value: Option<String>,
 }
-
+impl NumberAttributeConstraintsType {
+    /// Sets `max_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NumberAttributeConstraintsType.max_value = Some(value.into());`.
+    pub fn max_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_value = Some(value.into());
+        self
+    }
+    /// Sets `min_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NumberAttributeConstraintsType.min_value = Some(value.into());`.
+    pub fn min_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.min_value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of NumberAttributeConstraintsType with optional fields set to `None`.
+    pub fn new() -> NumberAttributeConstraintsType {
+        NumberAttributeConstraintsType { ..Default::default() }
+    }
+}
 #[doc="<p>The password policy type.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct PasswordPolicyType {
@@ -1934,7 +4504,47 @@ pub struct PasswordPolicyType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub require_uppercase: Option<bool>,
 }
-
+impl PasswordPolicyType {
+    /// Sets `minimum_length`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PasswordPolicyType.minimum_length = Some(value.into());`.
+    pub fn minimum_length<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.minimum_length = Some(value.into());
+        self
+    }
+    /// Sets `require_lowercase`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PasswordPolicyType.require_lowercase = Some(value.into());`.
+    pub fn require_lowercase<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.require_lowercase = Some(value.into());
+        self
+    }
+    /// Sets `require_numbers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PasswordPolicyType.require_numbers = Some(value.into());`.
+    pub fn require_numbers<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.require_numbers = Some(value.into());
+        self
+    }
+    /// Sets `require_symbols`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PasswordPolicyType.require_symbols = Some(value.into());`.
+    pub fn require_symbols<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.require_symbols = Some(value.into());
+        self
+    }
+    /// Sets `require_uppercase`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PasswordPolicyType.require_uppercase = Some(value.into());`.
+    pub fn require_uppercase<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.require_uppercase = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PasswordPolicyType with optional fields set to `None`.
+    pub fn new() -> PasswordPolicyType {
+        PasswordPolicyType { ..Default::default() }
+    }
+}
 #[doc="<p>A container for identity provider details.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ProviderDescription {
@@ -1955,7 +4565,6 @@ pub struct ProviderDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub provider_type: Option<String>,
 }
-
 #[doc="<p>A container for information about an identity provider for a user pool.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ProviderUserIdentifierType {
@@ -1972,7 +4581,33 @@ pub struct ProviderUserIdentifierType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub provider_name: Option<String>,
 }
-
+impl ProviderUserIdentifierType {
+    /// Sets `provider_attribute_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProviderUserIdentifierType.provider_attribute_name = Some(value.into());`.
+    pub fn provider_attribute_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provider_attribute_name = Some(value.into());
+        self
+    }
+    /// Sets `provider_attribute_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProviderUserIdentifierType.provider_attribute_value = Some(value.into());`.
+    pub fn provider_attribute_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provider_attribute_value = Some(value.into());
+        self
+    }
+    /// Sets `provider_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProviderUserIdentifierType.provider_name = Some(value.into());`.
+    pub fn provider_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provider_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ProviderUserIdentifierType with optional fields set to `None`.
+    pub fn new() -> ProviderUserIdentifierType {
+        ProviderUserIdentifierType { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the request to resend the confirmation code.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ResendConfirmationCodeRequest {
@@ -1987,7 +4622,40 @@ pub struct ResendConfirmationCodeRequest {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl ResendConfirmationCodeRequest {
+    /// Sets `client_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResendConfirmationCodeRequest.client_id = value.into();`.
+    pub fn client_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_id = value.into();
+        self
+    }
+    /// Sets `secret_hash`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResendConfirmationCodeRequest.secret_hash = Some(value.into());`.
+    pub fn secret_hash<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.secret_hash = Some(value.into());
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResendConfirmationCodeRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of ResendConfirmationCodeRequest with optional fields set to `None`.
+    pub fn new<ClientIdType: Into<String>, UsernameType: Into<String>>
+        (client_id: ClientIdType,
+         username: UsernameType)
+         -> ResendConfirmationCodeRequest {
+        ResendConfirmationCodeRequest {
+            client_id: client_id.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response from the server when the Amazon Cognito Your User Pools service makes the request to resend a confirmation code.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ResendConfirmationCodeResponse {
@@ -1996,7 +4664,6 @@ pub struct ResendConfirmationCodeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub code_delivery_details: Option<CodeDeliveryDetailsType>,
 }
-
 #[doc="<p>A resource server scope.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ResourceServerScopeType {
@@ -2007,7 +4674,33 @@ pub struct ResourceServerScopeType {
     #[serde(rename="ScopeName")]
     pub scope_name: String,
 }
-
+impl ResourceServerScopeType {
+    /// Sets `scope_description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceServerScopeType.scope_description = value.into();`.
+    pub fn scope_description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.scope_description = value.into();
+        self
+    }
+    /// Sets `scope_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceServerScopeType.scope_name = value.into();`.
+    pub fn scope_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.scope_name = value.into();
+        self
+    }
+    /// Returns a new instance of ResourceServerScopeType with optional fields set to `None`.
+    pub fn new<ScopeDescriptionType: Into<String>, ScopeNameType: Into<String>>
+        (scope_description: ScopeDescriptionType,
+         scope_name: ScopeNameType)
+         -> ResourceServerScopeType {
+        ResourceServerScopeType {
+            scope_description: scope_description.into(),
+            scope_name: scope_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A container for information about a resource server for a user pool.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ResourceServerType {
@@ -2028,7 +4721,6 @@ pub struct ResourceServerType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_pool_id: Option<String>,
 }
-
 #[doc="<p>The request to respond to an authentication challenge.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RespondToAuthChallengeRequest {
@@ -2047,7 +4739,50 @@ pub struct RespondToAuthChallengeRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub session: Option<String>,
 }
-
+impl RespondToAuthChallengeRequest {
+    /// Sets `challenge_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RespondToAuthChallengeRequest.challenge_name = value.into();`.
+    pub fn challenge_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.challenge_name = value.into();
+        self
+    }
+    /// Sets `challenge_responses`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RespondToAuthChallengeRequest.challenge_responses = Some(value.into());`.
+    pub fn challenge_responses<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.challenge_responses = Some(value.into());
+        self
+    }
+    /// Sets `client_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RespondToAuthChallengeRequest.client_id = value.into();`.
+    pub fn client_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_id = value.into();
+        self
+    }
+    /// Sets `session`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RespondToAuthChallengeRequest.session = Some(value.into());`.
+    pub fn session<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.session = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RespondToAuthChallengeRequest with optional fields set to `None`.
+    pub fn new<ChallengeNameType: Into<String>, ClientIdType: Into<String>>
+        (challenge_name: ChallengeNameType,
+         client_id: ClientIdType)
+         -> RespondToAuthChallengeRequest {
+        RespondToAuthChallengeRequest {
+            challenge_name: challenge_name.into(),
+            client_id: client_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response to respond to the authentication challenge.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RespondToAuthChallengeResponse {
@@ -2068,7 +4803,6 @@ pub struct RespondToAuthChallengeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub session: Option<String>,
 }
-
 #[doc="<p>Contains information about the schema attribute.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct SchemaAttributeType {
@@ -2101,7 +4835,67 @@ pub struct SchemaAttributeType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub string_attribute_constraints: Option<StringAttributeConstraintsType>,
 }
-
+impl SchemaAttributeType {
+    /// Sets `attribute_data_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SchemaAttributeType.attribute_data_type = Some(value.into());`.
+    pub fn attribute_data_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute_data_type = Some(value.into());
+        self
+    }
+    /// Sets `developer_only_attribute`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SchemaAttributeType.developer_only_attribute = Some(value.into());`.
+    pub fn developer_only_attribute<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.developer_only_attribute = Some(value.into());
+        self
+    }
+    /// Sets `mutable`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SchemaAttributeType.mutable = Some(value.into());`.
+    pub fn mutable<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.mutable = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SchemaAttributeType.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `number_attribute_constraints`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SchemaAttributeType.number_attribute_constraints = Some(value.into());`.
+    pub fn number_attribute_constraints<ValueType: Into<NumberAttributeConstraintsType>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.number_attribute_constraints = Some(value.into());
+        self
+    }
+    /// Sets `required`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SchemaAttributeType.required = Some(value.into());`.
+    pub fn required<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.required = Some(value.into());
+        self
+    }
+    /// Sets `string_attribute_constraints`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SchemaAttributeType.string_attribute_constraints = Some(value.into());`.
+    pub fn string_attribute_constraints<ValueType: Into<StringAttributeConstraintsType>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.string_attribute_constraints = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SchemaAttributeType with optional fields set to `None`.
+    pub fn new() -> SchemaAttributeType {
+        SchemaAttributeType { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SetUICustomizationRequest {
     #[doc="<p>The CSS values in the UI customization.</p>"]
@@ -2124,14 +4918,50 @@ pub struct SetUICustomizationRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl SetUICustomizationRequest {
+    /// Sets `css`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetUICustomizationRequest.css = Some(value.into());`.
+    pub fn css<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.css = Some(value.into());
+        self
+    }
+    /// Sets `client_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetUICustomizationRequest.client_id = Some(value.into());`.
+    pub fn client_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_id = Some(value.into());
+        self
+    }
+    /// Sets `image_file`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetUICustomizationRequest.image_file = Some(value.into());`.
+    pub fn image_file<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.image_file = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetUICustomizationRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of SetUICustomizationRequest with optional fields set to `None`.
+    pub fn new<UserPoolIdType: Into<String>>(user_pool_id: UserPoolIdType)
+                                             -> SetUICustomizationRequest {
+        SetUICustomizationRequest {
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SetUICustomizationResponse {
     #[doc="<p>The UI customization information.</p>"]
     #[serde(rename="UICustomization")]
     pub ui_customization: UICustomizationType,
 }
-
 #[doc="<p>Represents the request to set user settings.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SetUserSettingsRequest {
@@ -2142,7 +4972,33 @@ pub struct SetUserSettingsRequest {
     #[serde(rename="MFAOptions")]
     pub mfa_options: Vec<MFAOptionType>,
 }
-
+impl SetUserSettingsRequest {
+    /// Sets `access_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetUserSettingsRequest.access_token = value.into();`.
+    pub fn access_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.access_token = value.into();
+        self
+    }
+    /// Sets `mfa_options`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetUserSettingsRequest.mfa_options = value.into();`.
+    pub fn mfa_options<ValueType: Into<Vec<MFAOptionType>>>(mut self, value: ValueType) -> Self {
+        self.mfa_options = value.into();
+        self
+    }
+    /// Returns a new instance of SetUserSettingsRequest with optional fields set to `None`.
+    pub fn new<AccessTokenType: Into<String>, MFAOptionsType: Into<Vec<MFAOptionType>>>
+        (access_token: AccessTokenType,
+         mfa_options: MFAOptionsType)
+         -> SetUserSettingsRequest {
+        SetUserSettingsRequest {
+            access_token: access_token.into(),
+            mfa_options: mfa_options.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response from the server for a set user settings request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SetUserSettingsResponse;
@@ -2172,7 +5028,67 @@ pub struct SignUpRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub validation_data: Option<Vec<AttributeType>>,
 }
-
+impl SignUpRequest {
+    /// Sets `client_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SignUpRequest.client_id = value.into();`.
+    pub fn client_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_id = value.into();
+        self
+    }
+    /// Sets `password`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SignUpRequest.password = value.into();`.
+    pub fn password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.password = value.into();
+        self
+    }
+    /// Sets `secret_hash`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SignUpRequest.secret_hash = Some(value.into());`.
+    pub fn secret_hash<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.secret_hash = Some(value.into());
+        self
+    }
+    /// Sets `user_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SignUpRequest.user_attributes = Some(value.into());`.
+    pub fn user_attributes<ValueType: Into<Vec<AttributeType>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.user_attributes = Some(value.into());
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SignUpRequest.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Sets `validation_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SignUpRequest.validation_data = Some(value.into());`.
+    pub fn validation_data<ValueType: Into<Vec<AttributeType>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.validation_data = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SignUpRequest with optional fields set to `None`.
+    pub fn new<ClientIdType: Into<String>, PasswordType: Into<String>, UsernameType: Into<String>>
+        (client_id: ClientIdType,
+         password: PasswordType,
+         username: UsernameType)
+         -> SignUpRequest {
+        SignUpRequest {
+            client_id: client_id.into(),
+            password: password.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response from the server for a registration request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SignUpResponse {
@@ -2187,7 +5103,6 @@ pub struct SignUpResponse {
     #[serde(rename="UserSub")]
     pub user_sub: String,
 }
-
 #[doc="<p>The SMS configuration type.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct SmsConfigurationType {
@@ -2199,7 +5114,30 @@ pub struct SmsConfigurationType {
     #[serde(rename="SnsCallerArn")]
     pub sns_caller_arn: String,
 }
-
+impl SmsConfigurationType {
+    /// Sets `external_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SmsConfigurationType.external_id = Some(value.into());`.
+    pub fn external_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.external_id = Some(value.into());
+        self
+    }
+    /// Sets `sns_caller_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SmsConfigurationType.sns_caller_arn = value.into();`.
+    pub fn sns_caller_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sns_caller_arn = value.into();
+        self
+    }
+    /// Returns a new instance of SmsConfigurationType with optional fields set to `None`.
+    pub fn new<SnsCallerArnType: Into<String>>(sns_caller_arn: SnsCallerArnType)
+                                               -> SmsConfigurationType {
+        SmsConfigurationType {
+            sns_caller_arn: sns_caller_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the request to start the user import job.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartUserImportJobRequest {
@@ -2210,7 +5148,33 @@ pub struct StartUserImportJobRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl StartUserImportJobRequest {
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartUserImportJobRequest.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartUserImportJobRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of StartUserImportJobRequest with optional fields set to `None`.
+    pub fn new<JobIdType: Into<String>, UserPoolIdType: Into<String>>
+        (job_id: JobIdType,
+         user_pool_id: UserPoolIdType)
+         -> StartUserImportJobRequest {
+        StartUserImportJobRequest {
+            job_id: job_id.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server to the request to start the user import job.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartUserImportJobResponse {
@@ -2219,7 +5183,6 @@ pub struct StartUserImportJobResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_import_job: Option<UserImportJobType>,
 }
-
 #[doc="<p>Represents the request to stop the user import job.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StopUserImportJobRequest {
@@ -2230,7 +5193,33 @@ pub struct StopUserImportJobRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl StopUserImportJobRequest {
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopUserImportJobRequest.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopUserImportJobRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of StopUserImportJobRequest with optional fields set to `None`.
+    pub fn new<JobIdType: Into<String>, UserPoolIdType: Into<String>>
+        (job_id: JobIdType,
+         user_pool_id: UserPoolIdType)
+         -> StopUserImportJobRequest {
+        StopUserImportJobRequest {
+            job_id: job_id.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server to the request to stop the user import job.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StopUserImportJobResponse {
@@ -2239,7 +5228,6 @@ pub struct StopUserImportJobResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_import_job: Option<UserImportJobType>,
 }
-
 #[doc="<p>The type of constraints associated with an attribute of the string type.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct StringAttributeConstraintsType {
@@ -2252,7 +5240,26 @@ pub struct StringAttributeConstraintsType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub min_length: Option<String>,
 }
-
+impl StringAttributeConstraintsType {
+    /// Sets `max_length`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StringAttributeConstraintsType.max_length = Some(value.into());`.
+    pub fn max_length<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_length = Some(value.into());
+        self
+    }
+    /// Sets `min_length`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StringAttributeConstraintsType.min_length = Some(value.into());`.
+    pub fn min_length<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.min_length = Some(value.into());
+        self
+    }
+    /// Returns a new instance of StringAttributeConstraintsType with optional fields set to `None`.
+    pub fn new() -> StringAttributeConstraintsType {
+        StringAttributeConstraintsType { ..Default::default() }
+    }
+}
 #[doc="<p>A container for the UI customization information for a user pool's built-in app UI.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UICustomizationType {
@@ -2285,7 +5292,6 @@ pub struct UICustomizationType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_pool_id: Option<String>,
 }
-
 #[doc="<p>Represents the request to update the device status.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateDeviceStatusRequest {
@@ -2300,7 +5306,40 @@ pub struct UpdateDeviceStatusRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub device_remembered_status: Option<String>,
 }
-
+impl UpdateDeviceStatusRequest {
+    /// Sets `access_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDeviceStatusRequest.access_token = value.into();`.
+    pub fn access_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.access_token = value.into();
+        self
+    }
+    /// Sets `device_key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDeviceStatusRequest.device_key = value.into();`.
+    pub fn device_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.device_key = value.into();
+        self
+    }
+    /// Sets `device_remembered_status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDeviceStatusRequest.device_remembered_status = Some(value.into());`.
+    pub fn device_remembered_status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.device_remembered_status = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateDeviceStatusRequest with optional fields set to `None`.
+    pub fn new<AccessTokenType: Into<String>, DeviceKeyType: Into<String>>
+        (access_token: AccessTokenType,
+         device_key: DeviceKeyType)
+         -> UpdateDeviceStatusRequest {
+        UpdateDeviceStatusRequest {
+            access_token: access_token.into(),
+            device_key: device_key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response to the request to update the device status.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateDeviceStatusResponse;
@@ -2326,7 +5365,51 @@ pub struct UpdateGroupRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl UpdateGroupRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGroupRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGroupRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Sets `precedence`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGroupRequest.precedence = Some(value.into());`.
+    pub fn precedence<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.precedence = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGroupRequest.role_arn = Some(value.into());`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGroupRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateGroupRequest with optional fields set to `None`.
+pub fn new<GroupNameType: Into<String>, UserPoolIdType: Into<String>>(group_name: GroupNameType, user_pool_id: UserPoolIdType) -> UpdateGroupRequest{
+        UpdateGroupRequest {
+            group_name: group_name.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateGroupResponse {
     #[doc="<p>The group object for the group.</p>"]
@@ -2334,7 +5417,6 @@ pub struct UpdateGroupResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub group: Option<GroupType>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateIdentityProviderRequest {
     #[doc="<p>The identity provider attribute mapping to be changed.</p>"]
@@ -2356,14 +5438,66 @@ pub struct UpdateIdentityProviderRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl UpdateIdentityProviderRequest {
+    /// Sets `attribute_mapping`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateIdentityProviderRequest.attribute_mapping = Some(value.into());`.
+    pub fn attribute_mapping<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.attribute_mapping = Some(value.into());
+        self
+    }
+    /// Sets `idp_identifiers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateIdentityProviderRequest.idp_identifiers = Some(value.into());`.
+    pub fn idp_identifiers<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.idp_identifiers = Some(value.into());
+        self
+    }
+    /// Sets `provider_details`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateIdentityProviderRequest.provider_details = Some(value.into());`.
+    pub fn provider_details<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.provider_details = Some(value.into());
+        self
+    }
+    /// Sets `provider_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateIdentityProviderRequest.provider_name = value.into();`.
+    pub fn provider_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provider_name = value.into();
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateIdentityProviderRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateIdentityProviderRequest with optional fields set to `None`.
+    pub fn new<ProviderNameType: Into<String>, UserPoolIdType: Into<String>>
+        (provider_name: ProviderNameType,
+         user_pool_id: UserPoolIdType)
+         -> UpdateIdentityProviderRequest {
+        UpdateIdentityProviderRequest {
+            provider_name: provider_name.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateIdentityProviderResponse {
     #[doc="<p>The identity provider object.</p>"]
     #[serde(rename="IdentityProvider")]
     pub identity_provider: IdentityProviderType,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateResourceServerRequest {
     #[doc="<p>The identifier for the resource server.</p>"]
@@ -2380,14 +5514,57 @@ pub struct UpdateResourceServerRequest {
     #[serde(rename="UserPoolId")]
     pub user_pool_id: String,
 }
-
+impl UpdateResourceServerRequest {
+    /// Sets `identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateResourceServerRequest.identifier = value.into();`.
+    pub fn identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identifier = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateResourceServerRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `scopes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateResourceServerRequest.scopes = Some(value.into());`.
+    pub fn scopes<ValueType: Into<Vec<ResourceServerScopeType>>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.scopes = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateResourceServerRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateResourceServerRequest with optional fields set to `None`.
+    pub fn new<IdentifierType: Into<String>, NameType: Into<String>, UserPoolIdType: Into<String>>
+        (identifier: IdentifierType,
+         name: NameType,
+         user_pool_id: UserPoolIdType)
+         -> UpdateResourceServerRequest {
+        UpdateResourceServerRequest {
+            identifier: identifier.into(),
+            name: name.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateResourceServerResponse {
     #[doc="<p>The resource server.</p>"]
     #[serde(rename="ResourceServer")]
     pub resource_server: ResourceServerType,
 }
-
 #[doc="<p>Represents the request to update user attributes.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateUserAttributesRequest {
@@ -2398,7 +5575,35 @@ pub struct UpdateUserAttributesRequest {
     #[serde(rename="UserAttributes")]
     pub user_attributes: Vec<AttributeType>,
 }
-
+impl UpdateUserAttributesRequest {
+    /// Sets `access_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserAttributesRequest.access_token = value.into();`.
+    pub fn access_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.access_token = value.into();
+        self
+    }
+    /// Sets `user_attributes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserAttributesRequest.user_attributes = value.into();`.
+    pub fn user_attributes<ValueType: Into<Vec<AttributeType>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.user_attributes = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateUserAttributesRequest with optional fields set to `None`.
+    pub fn new<AccessTokenType: Into<String>, UserAttributesType: Into<Vec<AttributeType>>>
+        (access_token: AccessTokenType,
+         user_attributes: UserAttributesType)
+         -> UpdateUserAttributesRequest {
+        UpdateUserAttributesRequest {
+            access_token: access_token.into(),
+            user_attributes: user_attributes.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server for the request to update user attributes.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateUserAttributesResponse {
@@ -2407,7 +5612,6 @@ pub struct UpdateUserAttributesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub code_delivery_details_list: Option<Vec<CodeDeliveryDetailsType>>,
 }
-
 #[doc="<p>Represents the request to update the user pool client.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateUserPoolClientRequest {
@@ -2466,7 +5670,121 @@ pub struct UpdateUserPoolClientRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub write_attributes: Option<Vec<String>>,
 }
-
+impl UpdateUserPoolClientRequest {
+    /// Sets `allowed_o_auth_flows`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolClientRequest.allowed_o_auth_flows = Some(value.into());`.
+    pub fn allowed_o_auth_flows<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.allowed_o_auth_flows = Some(value.into());
+        self
+    }
+    /// Sets `allowed_o_auth_flows_user_pool_client`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolClientRequest.allowed_o_auth_flows_user_pool_client = Some(value.into());`.
+    pub fn allowed_o_auth_flows_user_pool_client<ValueType: Into<bool>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.allowed_o_auth_flows_user_pool_client = Some(value.into());
+        self
+    }
+    /// Sets `allowed_o_auth_scopes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolClientRequest.allowed_o_auth_scopes = Some(value.into());`.
+    pub fn allowed_o_auth_scopes<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.allowed_o_auth_scopes = Some(value.into());
+        self
+    }
+    /// Sets `callback_ur_ls`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolClientRequest.callback_ur_ls = Some(value.into());`.
+    pub fn callback_ur_ls<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.callback_ur_ls = Some(value.into());
+        self
+    }
+    /// Sets `client_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolClientRequest.client_id = value.into();`.
+    pub fn client_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_id = value.into();
+        self
+    }
+    /// Sets `client_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolClientRequest.client_name = Some(value.into());`.
+    pub fn client_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_name = Some(value.into());
+        self
+    }
+    /// Sets `default_redirect_uri`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolClientRequest.default_redirect_uri = Some(value.into());`.
+    pub fn default_redirect_uri<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_redirect_uri = Some(value.into());
+        self
+    }
+    /// Sets `explicit_auth_flows`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolClientRequest.explicit_auth_flows = Some(value.into());`.
+    pub fn explicit_auth_flows<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.explicit_auth_flows = Some(value.into());
+        self
+    }
+    /// Sets `logout_ur_ls`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolClientRequest.logout_ur_ls = Some(value.into());`.
+    pub fn logout_ur_ls<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.logout_ur_ls = Some(value.into());
+        self
+    }
+    /// Sets `read_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolClientRequest.read_attributes = Some(value.into());`.
+    pub fn read_attributes<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.read_attributes = Some(value.into());
+        self
+    }
+    /// Sets `refresh_token_validity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolClientRequest.refresh_token_validity = Some(value.into());`.
+    pub fn refresh_token_validity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.refresh_token_validity = Some(value.into());
+        self
+    }
+    /// Sets `supported_identity_providers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolClientRequest.supported_identity_providers = Some(value.into());`.
+    pub fn supported_identity_providers<ValueType: Into<Vec<String>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.supported_identity_providers = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolClientRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Sets `write_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolClientRequest.write_attributes = Some(value.into());`.
+    pub fn write_attributes<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.write_attributes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateUserPoolClientRequest with optional fields set to `None`.
+    pub fn new<ClientIdType: Into<String>, UserPoolIdType: Into<String>>
+        (client_id: ClientIdType,
+         user_pool_id: UserPoolIdType)
+         -> UpdateUserPoolClientRequest {
+        UpdateUserPoolClientRequest {
+            client_id: client_id.into(),
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server to the request to update the user pool client.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateUserPoolClientResponse {
@@ -2475,7 +5793,6 @@ pub struct UpdateUserPoolClientResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_pool_client: Option<UserPoolClientType>,
 }
-
 #[doc="<p>Represents the request to update the user pool.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateUserPoolRequest {
@@ -2539,7 +5856,134 @@ pub struct UpdateUserPoolRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub verification_message_template: Option<VerificationMessageTemplateType>,
 }
-
+impl UpdateUserPoolRequest {
+    /// Sets `admin_create_user_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolRequest.admin_create_user_config = Some(value.into());`.
+    pub fn admin_create_user_config<ValueType: Into<AdminCreateUserConfigType>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.admin_create_user_config = Some(value.into());
+        self
+    }
+    /// Sets `auto_verified_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolRequest.auto_verified_attributes = Some(value.into());`.
+    pub fn auto_verified_attributes<ValueType: Into<Vec<String>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.auto_verified_attributes = Some(value.into());
+        self
+    }
+    /// Sets `device_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolRequest.device_configuration = Some(value.into());`.
+    pub fn device_configuration<ValueType: Into<DeviceConfigurationType>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.device_configuration = Some(value.into());
+        self
+    }
+    /// Sets `email_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolRequest.email_configuration = Some(value.into());`.
+    pub fn email_configuration<ValueType: Into<EmailConfigurationType>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.email_configuration = Some(value.into());
+        self
+    }
+    /// Sets `email_verification_message`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolRequest.email_verification_message = Some(value.into());`.
+    pub fn email_verification_message<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.email_verification_message = Some(value.into());
+        self
+    }
+    /// Sets `email_verification_subject`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolRequest.email_verification_subject = Some(value.into());`.
+    pub fn email_verification_subject<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.email_verification_subject = Some(value.into());
+        self
+    }
+    /// Sets `lambda_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolRequest.lambda_config = Some(value.into());`.
+    pub fn lambda_config<ValueType: Into<LambdaConfigType>>(mut self, value: ValueType) -> Self {
+        self.lambda_config = Some(value.into());
+        self
+    }
+    /// Sets `mfa_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolRequest.mfa_configuration = Some(value.into());`.
+    pub fn mfa_configuration<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.mfa_configuration = Some(value.into());
+        self
+    }
+    /// Sets `policies`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolRequest.policies = Some(value.into());`.
+    pub fn policies<ValueType: Into<UserPoolPolicyType>>(mut self, value: ValueType) -> Self {
+        self.policies = Some(value.into());
+        self
+    }
+    /// Sets `sms_authentication_message`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolRequest.sms_authentication_message = Some(value.into());`.
+    pub fn sms_authentication_message<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sms_authentication_message = Some(value.into());
+        self
+    }
+    /// Sets `sms_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolRequest.sms_configuration = Some(value.into());`.
+    pub fn sms_configuration<ValueType: Into<SmsConfigurationType>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.sms_configuration = Some(value.into());
+        self
+    }
+    /// Sets `sms_verification_message`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolRequest.sms_verification_message = Some(value.into());`.
+    pub fn sms_verification_message<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sms_verification_message = Some(value.into());
+        self
+    }
+    /// Sets `user_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolRequest.user_pool_id = value.into();`.
+    pub fn user_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_pool_id = value.into();
+        self
+    }
+    /// Sets `user_pool_tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolRequest.user_pool_tags = Some(value.into());`.
+pub fn user_pool_tags<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.user_pool_tags = Some(value.into());
+        self
+    }
+    /// Sets `verification_message_template`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserPoolRequest.verification_message_template = Some(value.into());`.
+    pub fn verification_message_template<ValueType: Into<VerificationMessageTemplateType>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.verification_message_template = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateUserPoolRequest with optional fields set to `None`.
+    pub fn new<UserPoolIdType: Into<String>>(user_pool_id: UserPoolIdType)
+                                             -> UpdateUserPoolRequest {
+        UpdateUserPoolRequest {
+            user_pool_id: user_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server when you make a request to update the user pool.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateUserPoolResponse;
@@ -2600,7 +6044,6 @@ pub struct UserImportJobType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_pool_id: Option<String>,
 }
-
 #[doc="<p>The description of the user pool client.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UserPoolClientDescription {
@@ -2617,7 +6060,6 @@ pub struct UserPoolClientDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_pool_id: Option<String>,
 }
-
 #[doc="<p>Contains information about a user pool client.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UserPoolClientType {
@@ -2690,7 +6132,6 @@ pub struct UserPoolClientType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub write_attributes: Option<Vec<String>>,
 }
-
 #[doc="<p>A user pool description.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UserPoolDescriptionType {
@@ -2719,7 +6160,6 @@ pub struct UserPoolDescriptionType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[doc="<p>The type of policy in a user pool.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct UserPoolPolicyType {
@@ -2728,7 +6168,21 @@ pub struct UserPoolPolicyType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub password_policy: Option<PasswordPolicyType>,
 }
-
+impl UserPoolPolicyType {
+    /// Sets `password_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UserPoolPolicyType.password_policy = Some(value.into());`.
+    pub fn password_policy<ValueType: Into<PasswordPolicyType>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.password_policy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UserPoolPolicyType with optional fields set to `None`.
+    pub fn new() -> UserPoolPolicyType {
+        UserPoolPolicyType { ..Default::default() }
+    }
+}
 #[doc="<p>A container for information about the user pool type.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UserPoolType {
@@ -2833,7 +6287,6 @@ pub struct UserPoolType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub verification_message_template: Option<VerificationMessageTemplateType>,
 }
-
 #[doc="<p>The user type.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UserType {
@@ -2866,7 +6319,6 @@ pub struct UserType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub username: Option<String>,
 }
-
 #[doc="<p>The template for verification messages.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct VerificationMessageTemplateType {
@@ -2895,7 +6347,54 @@ pub struct VerificationMessageTemplateType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sms_message: Option<String>,
 }
-
+impl VerificationMessageTemplateType {
+    /// Sets `default_email_option`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VerificationMessageTemplateType.default_email_option = Some(value.into());`.
+    pub fn default_email_option<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_email_option = Some(value.into());
+        self
+    }
+    /// Sets `email_message`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VerificationMessageTemplateType.email_message = Some(value.into());`.
+    pub fn email_message<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.email_message = Some(value.into());
+        self
+    }
+    /// Sets `email_message_by_link`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VerificationMessageTemplateType.email_message_by_link = Some(value.into());`.
+    pub fn email_message_by_link<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.email_message_by_link = Some(value.into());
+        self
+    }
+    /// Sets `email_subject`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VerificationMessageTemplateType.email_subject = Some(value.into());`.
+    pub fn email_subject<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.email_subject = Some(value.into());
+        self
+    }
+    /// Sets `email_subject_by_link`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VerificationMessageTemplateType.email_subject_by_link = Some(value.into());`.
+    pub fn email_subject_by_link<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.email_subject_by_link = Some(value.into());
+        self
+    }
+    /// Sets `sms_message`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VerificationMessageTemplateType.sms_message = Some(value.into());`.
+    pub fn sms_message<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sms_message = Some(value.into());
+        self
+    }
+    /// Returns a new instance of VerificationMessageTemplateType with optional fields set to `None`.
+    pub fn new() -> VerificationMessageTemplateType {
+        VerificationMessageTemplateType { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the request to verify user attributes.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct VerifyUserAttributeRequest {
@@ -2909,7 +6408,44 @@ pub struct VerifyUserAttributeRequest {
     #[serde(rename="Code")]
     pub code: String,
 }
-
+impl VerifyUserAttributeRequest {
+    /// Sets `access_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VerifyUserAttributeRequest.access_token = value.into();`.
+    pub fn access_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.access_token = value.into();
+        self
+    }
+    /// Sets `attribute_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VerifyUserAttributeRequest.attribute_name = value.into();`.
+    pub fn attribute_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute_name = value.into();
+        self
+    }
+    /// Sets `code`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VerifyUserAttributeRequest.code = value.into();`.
+    pub fn code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.code = value.into();
+        self
+    }
+    /// Returns a new instance of VerifyUserAttributeRequest with optional fields set to `None`.
+    pub fn new<AccessTokenType: Into<String>,
+               AttributeNameType: Into<String>,
+               CodeType: Into<String>>
+        (access_token: AccessTokenType,
+         attribute_name: AttributeNameType,
+         code: CodeType)
+         -> VerifyUserAttributeRequest {
+        VerifyUserAttributeRequest {
+            access_token: access_token.into(),
+            attribute_name: attribute_name.into(),
+            code: code.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A container representing the response from the server from the request to verify user attributes.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct VerifyUserAttributeResponse;

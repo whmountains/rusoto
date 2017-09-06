@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -41,7 +42,6 @@ pub struct AWSSessionCredentials {
     #[serde(rename="sessionToken")]
     pub session_token: String,
 }
-
 #[doc="<p>Represents the input of an acknowledge job action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AcknowledgeJobInput {
@@ -52,7 +52,32 @@ pub struct AcknowledgeJobInput {
     #[serde(rename="nonce")]
     pub nonce: String,
 }
-
+impl AcknowledgeJobInput {
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AcknowledgeJobInput.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Sets `nonce`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AcknowledgeJobInput.nonce = value.into();`.
+    pub fn nonce<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.nonce = value.into();
+        self
+    }
+    /// Returns a new instance of AcknowledgeJobInput with optional fields set to `None`.
+    pub fn new<jobIdType: Into<String>, nonceType: Into<String>>(job_id: jobIdType,
+                                                                 nonce: nonceType)
+                                                                 -> AcknowledgeJobInput {
+        AcknowledgeJobInput {
+            job_id: job_id.into(),
+            nonce: nonce.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of an acknowledge job action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AcknowledgeJobOutput {
@@ -61,7 +86,6 @@ pub struct AcknowledgeJobOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[doc="<p>Represents the input of an acknowledge third party job action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AcknowledgeThirdPartyJobInput {
@@ -75,7 +99,42 @@ pub struct AcknowledgeThirdPartyJobInput {
     #[serde(rename="nonce")]
     pub nonce: String,
 }
-
+impl AcknowledgeThirdPartyJobInput {
+    /// Sets `client_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AcknowledgeThirdPartyJobInput.client_token = value.into();`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = value.into();
+        self
+    }
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AcknowledgeThirdPartyJobInput.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Sets `nonce`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AcknowledgeThirdPartyJobInput.nonce = value.into();`.
+    pub fn nonce<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.nonce = value.into();
+        self
+    }
+    /// Returns a new instance of AcknowledgeThirdPartyJobInput with optional fields set to `None`.
+    pub fn new<clientTokenType: Into<String>, jobIdType: Into<String>, nonceType: Into<String>>
+        (client_token: clientTokenType,
+         job_id: jobIdType,
+         nonce: nonceType)
+         -> AcknowledgeThirdPartyJobInput {
+        AcknowledgeThirdPartyJobInput {
+            client_token: client_token.into(),
+            job_id: job_id.into(),
+            nonce: nonce.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of an acknowledge third party job action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AcknowledgeThirdPartyJobOutput {
@@ -84,7 +143,6 @@ pub struct AcknowledgeThirdPartyJobOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[doc="<p>Represents information about an action configuration.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActionConfiguration {
@@ -93,7 +151,6 @@ pub struct ActionConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub configuration: Option<::std::collections::HashMap<String, String>>,
 }
-
 #[doc="<p>Represents information about an action configuration property.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ActionConfigurationProperty {
@@ -122,7 +179,75 @@ pub struct ActionConfigurationProperty {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
+impl ActionConfigurationProperty {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionConfigurationProperty.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionConfigurationProperty.key = value.into();`.
+    pub fn key<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionConfigurationProperty.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `queryable`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionConfigurationProperty.queryable = Some(value.into());`.
+    pub fn queryable<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.queryable = Some(value.into());
+        self
+    }
+    /// Sets `required`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionConfigurationProperty.required = value.into();`.
+    pub fn required<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.required = value.into();
+        self
+    }
+    /// Sets `secret`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionConfigurationProperty.secret = value.into();`.
+    pub fn secret<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.secret = value.into();
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionConfigurationProperty.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ActionConfigurationProperty with optional fields set to `None`.
+    pub fn new<keyType: Into<bool>,
+               nameType: Into<String>,
+               requiredType: Into<bool>,
+               secretType: Into<bool>>
+        (key: keyType,
+         name: nameType,
+         required: requiredType,
+         secret: secretType)
+         -> ActionConfigurationProperty {
+        ActionConfigurationProperty {
+            key: key.into(),
+            name: name.into(),
+            required: required.into(),
+            secret: secret.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the context of an action within the stage of a pipeline to a job worker.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActionContext {
@@ -131,7 +256,6 @@ pub struct ActionContext {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p>Represents information about an action declaration.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ActionDeclaration {
@@ -162,7 +286,72 @@ pub struct ActionDeclaration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub run_order: Option<i64>,
 }
-
+impl ActionDeclaration {
+    /// Sets `action_type_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionDeclaration.action_type_id = value.into();`.
+    pub fn action_type_id<ValueType: Into<ActionTypeId>>(mut self, value: ValueType) -> Self {
+        self.action_type_id = value.into();
+        self
+    }
+    /// Sets `configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionDeclaration.configuration = Some(value.into());`.
+pub fn configuration<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.configuration = Some(value.into());
+        self
+    }
+    /// Sets `input_artifacts`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionDeclaration.input_artifacts = Some(value.into());`.
+    pub fn input_artifacts<ValueType: Into<Vec<InputArtifact>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.input_artifacts = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionDeclaration.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `output_artifacts`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionDeclaration.output_artifacts = Some(value.into());`.
+    pub fn output_artifacts<ValueType: Into<Vec<OutputArtifact>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.output_artifacts = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionDeclaration.role_arn = Some(value.into());`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = Some(value.into());
+        self
+    }
+    /// Sets `run_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionDeclaration.run_order = Some(value.into());`.
+    pub fn run_order<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.run_order = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ActionDeclaration with optional fields set to `None`.
+    pub fn new<actionTypeIdType: Into<ActionTypeId>, nameType: Into<String>>
+        (action_type_id: actionTypeIdType,
+         name: nameType)
+         -> ActionDeclaration {
+        ActionDeclaration {
+            action_type_id: action_type_id.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents information about the run of an action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActionExecution {
@@ -203,7 +392,6 @@ pub struct ActionExecution {
     #[serde(skip_serializing_if="Option::is_none")]
     pub token: Option<String>,
 }
-
 #[doc="<p>Represents information about the version (or revision) of an action.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ActionRevision {
@@ -217,7 +405,44 @@ pub struct ActionRevision {
     #[serde(rename="revisionId")]
     pub revision_id: String,
 }
-
+impl ActionRevision {
+    /// Sets `created`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionRevision.created = value.into();`.
+    pub fn created<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.created = value.into();
+        self
+    }
+    /// Sets `revision_change_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionRevision.revision_change_id = value.into();`.
+    pub fn revision_change_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.revision_change_id = value.into();
+        self
+    }
+    /// Sets `revision_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionRevision.revision_id = value.into();`.
+    pub fn revision_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.revision_id = value.into();
+        self
+    }
+    /// Returns a new instance of ActionRevision with optional fields set to `None`.
+    pub fn new<createdType: Into<f64>,
+               revisionChangeIdType: Into<String>,
+               revisionIdType: Into<String>>
+        (created: createdType,
+         revision_change_id: revisionChangeIdType,
+         revision_id: revisionIdType)
+         -> ActionRevision {
+        ActionRevision {
+            created: created.into(),
+            revision_change_id: revision_change_id.into(),
+            revision_id: revision_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents information about the state of an action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActionState {
@@ -242,7 +467,6 @@ pub struct ActionState {
     #[serde(skip_serializing_if="Option::is_none")]
     pub revision_url: Option<String>,
 }
-
 #[doc="<p>Returns information about the details of an action type.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActionType {
@@ -264,7 +488,6 @@ pub struct ActionType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub settings: Option<ActionTypeSettings>,
 }
-
 #[doc="<p>Represents information about an action type.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ActionTypeId {
@@ -281,7 +504,54 @@ pub struct ActionTypeId {
     #[serde(rename="version")]
     pub version: String,
 }
-
+impl ActionTypeId {
+    /// Sets `category`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionTypeId.category = value.into();`.
+    pub fn category<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.category = value.into();
+        self
+    }
+    /// Sets `owner`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionTypeId.owner = value.into();`.
+    pub fn owner<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.owner = value.into();
+        self
+    }
+    /// Sets `provider`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionTypeId.provider = value.into();`.
+    pub fn provider<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provider = value.into();
+        self
+    }
+    /// Sets `version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionTypeId.version = value.into();`.
+    pub fn version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version = value.into();
+        self
+    }
+    /// Returns a new instance of ActionTypeId with optional fields set to `None`.
+    pub fn new<categoryType: Into<String>,
+               ownerType: Into<String>,
+               providerType: Into<String>,
+               versionType: Into<String>>
+        (category: categoryType,
+         owner: ownerType,
+         provider: providerType,
+         version: versionType)
+         -> ActionTypeId {
+        ActionTypeId {
+            category: category.into(),
+            owner: owner.into(),
+            provider: provider.into(),
+            version: version.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Returns information about the settings for an action type.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ActionTypeSettings {
@@ -302,7 +572,42 @@ pub struct ActionTypeSettings {
     #[serde(skip_serializing_if="Option::is_none")]
     pub third_party_configuration_url: Option<String>,
 }
-
+impl ActionTypeSettings {
+    /// Sets `entity_url_template`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionTypeSettings.entity_url_template = Some(value.into());`.
+    pub fn entity_url_template<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.entity_url_template = Some(value.into());
+        self
+    }
+    /// Sets `execution_url_template`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionTypeSettings.execution_url_template = Some(value.into());`.
+    pub fn execution_url_template<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.execution_url_template = Some(value.into());
+        self
+    }
+    /// Sets `revision_url_template`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionTypeSettings.revision_url_template = Some(value.into());`.
+    pub fn revision_url_template<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.revision_url_template = Some(value.into());
+        self
+    }
+    /// Sets `third_party_configuration_url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActionTypeSettings.third_party_configuration_url = Some(value.into());`.
+    pub fn third_party_configuration_url<ValueType: Into<String>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.third_party_configuration_url = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ActionTypeSettings with optional fields set to `None`.
+    pub fn new() -> ActionTypeSettings {
+        ActionTypeSettings { ..Default::default() }
+    }
+}
 #[doc="<p>Represents information about the result of an approval request.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ApprovalResult {
@@ -313,7 +618,32 @@ pub struct ApprovalResult {
     #[serde(rename="summary")]
     pub summary: String,
 }
-
+impl ApprovalResult {
+    /// Sets `status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ApprovalResult.status = value.into();`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = value.into();
+        self
+    }
+    /// Sets `summary`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ApprovalResult.summary = value.into();`.
+    pub fn summary<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.summary = value.into();
+        self
+    }
+    /// Returns a new instance of ApprovalResult with optional fields set to `None`.
+    pub fn new<statusType: Into<String>, summaryType: Into<String>>(status: statusType,
+                                                                    summary: summaryType)
+                                                                    -> ApprovalResult {
+        ApprovalResult {
+            status: status.into(),
+            summary: summary.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents information about an artifact that will be worked upon by actions in the pipeline.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Artifact {
@@ -330,7 +660,6 @@ pub struct Artifact {
     #[serde(skip_serializing_if="Option::is_none")]
     pub revision: Option<String>,
 }
-
 #[doc="<p>Returns information about the details of an artifact.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ArtifactDetails {
@@ -341,7 +670,30 @@ pub struct ArtifactDetails {
     #[serde(rename="minimumCount")]
     pub minimum_count: i64,
 }
-
+impl ArtifactDetails {
+    /// Sets `maximum_count`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ArtifactDetails.maximum_count = value.into();`.
+    pub fn maximum_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.maximum_count = value.into();
+        self
+    }
+    /// Sets `minimum_count`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ArtifactDetails.minimum_count = value.into();`.
+    pub fn minimum_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.minimum_count = value.into();
+        self
+    }
+    /// Returns a new instance of ArtifactDetails with optional fields set to `None`.
+pub fn new<maximumCountType: Into<i64>, minimumCountType: Into<i64>>(maximum_count: maximumCountType, minimum_count: minimumCountType) -> ArtifactDetails{
+        ArtifactDetails {
+            maximum_count: maximum_count.into(),
+            minimum_count: minimum_count.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents information about the location of an artifact.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ArtifactLocation {
@@ -354,7 +706,6 @@ pub struct ArtifactLocation {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>Represents revision details of an artifact. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ArtifactRevision {
@@ -383,7 +734,6 @@ pub struct ArtifactRevision {
     #[serde(skip_serializing_if="Option::is_none")]
     pub revision_url: Option<String>,
 }
-
 #[doc="<p>The Amazon S3 bucket where artifacts are stored for the pipeline.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ArtifactStore {
@@ -398,7 +748,39 @@ pub struct ArtifactStore {
     #[serde(rename="type")]
     pub type_: String,
 }
-
+impl ArtifactStore {
+    /// Sets `encryption_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ArtifactStore.encryption_key = Some(value.into());`.
+    pub fn encryption_key<ValueType: Into<EncryptionKey>>(mut self, value: ValueType) -> Self {
+        self.encryption_key = Some(value.into());
+        self
+    }
+    /// Sets `location`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ArtifactStore.location = value.into();`.
+    pub fn location<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.location = value.into();
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ArtifactStore.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of ArtifactStore with optional fields set to `None`.
+    pub fn new<locationType: Into<String>, typeType: Into<String>>(location: locationType,
+                                                                   type_: typeType)
+                                                                   -> ArtifactStore {
+        ArtifactStore {
+            location: location.into(),
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Reserved for future use.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct BlockerDeclaration {
@@ -409,7 +791,32 @@ pub struct BlockerDeclaration {
     #[serde(rename="type")]
     pub type_: String,
 }
-
+impl BlockerDeclaration {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BlockerDeclaration.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BlockerDeclaration.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of BlockerDeclaration with optional fields set to `None`.
+    pub fn new<nameType: Into<String>, typeType: Into<String>>(name: nameType,
+                                                               type_: typeType)
+                                                               -> BlockerDeclaration {
+        BlockerDeclaration {
+            name: name.into(),
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of a create custom action operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateCustomActionTypeInput {
@@ -437,7 +844,82 @@ pub struct CreateCustomActionTypeInput {
     #[serde(rename="version")]
     pub version: String,
 }
-
+impl CreateCustomActionTypeInput {
+    /// Sets `category`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCustomActionTypeInput.category = value.into();`.
+    pub fn category<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.category = value.into();
+        self
+    }
+    /// Sets `configuration_properties`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCustomActionTypeInput.configuration_properties = Some(value.into());`.
+pub fn configuration_properties<ValueType: Into<Vec<ActionConfigurationProperty>>>(mut self, value: ValueType) -> Self{
+        self.configuration_properties = Some(value.into());
+        self
+    }
+    /// Sets `input_artifact_details`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCustomActionTypeInput.input_artifact_details = value.into();`.
+    pub fn input_artifact_details<ValueType: Into<ArtifactDetails>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.input_artifact_details = value.into();
+        self
+    }
+    /// Sets `output_artifact_details`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCustomActionTypeInput.output_artifact_details = value.into();`.
+    pub fn output_artifact_details<ValueType: Into<ArtifactDetails>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.output_artifact_details = value.into();
+        self
+    }
+    /// Sets `provider`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCustomActionTypeInput.provider = value.into();`.
+    pub fn provider<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provider = value.into();
+        self
+    }
+    /// Sets `settings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCustomActionTypeInput.settings = Some(value.into());`.
+    pub fn settings<ValueType: Into<ActionTypeSettings>>(mut self, value: ValueType) -> Self {
+        self.settings = Some(value.into());
+        self
+    }
+    /// Sets `version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCustomActionTypeInput.version = value.into();`.
+    pub fn version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version = value.into();
+        self
+    }
+    /// Returns a new instance of CreateCustomActionTypeInput with optional fields set to `None`.
+    pub fn new<categoryType: Into<String>,
+               inputArtifactDetailsType: Into<ArtifactDetails>,
+               outputArtifactDetailsType: Into<ArtifactDetails>,
+               providerType: Into<String>,
+               versionType: Into<String>>
+        (category: categoryType,
+         input_artifact_details: inputArtifactDetailsType,
+         output_artifact_details: outputArtifactDetailsType,
+         provider: providerType,
+         version: versionType)
+         -> CreateCustomActionTypeInput {
+        CreateCustomActionTypeInput {
+            category: category.into(),
+            input_artifact_details: input_artifact_details.into(),
+            output_artifact_details: output_artifact_details.into(),
+            provider: provider.into(),
+            version: version.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a create custom action operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateCustomActionTypeOutput {
@@ -445,7 +927,6 @@ pub struct CreateCustomActionTypeOutput {
     #[serde(rename="actionType")]
     pub action_type: ActionType,
 }
-
 #[doc="<p>Represents the input of a create pipeline action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreatePipelineInput {
@@ -453,7 +934,23 @@ pub struct CreatePipelineInput {
     #[serde(rename="pipeline")]
     pub pipeline: PipelineDeclaration,
 }
-
+impl CreatePipelineInput {
+    /// Sets `pipeline`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePipelineInput.pipeline = value.into();`.
+    pub fn pipeline<ValueType: Into<PipelineDeclaration>>(mut self, value: ValueType) -> Self {
+        self.pipeline = value.into();
+        self
+    }
+    /// Returns a new instance of CreatePipelineInput with optional fields set to `None`.
+    pub fn new<pipelineType: Into<PipelineDeclaration>>(pipeline: pipelineType)
+                                                        -> CreatePipelineInput {
+        CreatePipelineInput {
+            pipeline: pipeline.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a create pipeline action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreatePipelineOutput {
@@ -462,7 +959,6 @@ pub struct CreatePipelineOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pipeline: Option<PipelineDeclaration>,
 }
-
 #[doc="<p>Represents information about a current revision.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CurrentRevision {
@@ -481,7 +977,47 @@ pub struct CurrentRevision {
     #[serde(skip_serializing_if="Option::is_none")]
     pub revision_summary: Option<String>,
 }
-
+impl CurrentRevision {
+    /// Sets `change_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CurrentRevision.change_identifier = value.into();`.
+    pub fn change_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_identifier = value.into();
+        self
+    }
+    /// Sets `created`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CurrentRevision.created = Some(value.into());`.
+    pub fn created<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.created = Some(value.into());
+        self
+    }
+    /// Sets `revision`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CurrentRevision.revision = value.into();`.
+    pub fn revision<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.revision = value.into();
+        self
+    }
+    /// Sets `revision_summary`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CurrentRevision.revision_summary = Some(value.into());`.
+    pub fn revision_summary<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.revision_summary = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CurrentRevision with optional fields set to `None`.
+    pub fn new<changeIdentifierType: Into<String>, revisionType: Into<String>>
+        (change_identifier: changeIdentifierType,
+         revision: revisionType)
+         -> CurrentRevision {
+        CurrentRevision {
+            change_identifier: change_identifier.into(),
+            revision: revision.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of a delete custom action operation. The custom action will be marked as deleted.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteCustomActionTypeInput {
@@ -495,7 +1031,42 @@ pub struct DeleteCustomActionTypeInput {
     #[serde(rename="version")]
     pub version: String,
 }
-
+impl DeleteCustomActionTypeInput {
+    /// Sets `category`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteCustomActionTypeInput.category = value.into();`.
+    pub fn category<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.category = value.into();
+        self
+    }
+    /// Sets `provider`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteCustomActionTypeInput.provider = value.into();`.
+    pub fn provider<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provider = value.into();
+        self
+    }
+    /// Sets `version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteCustomActionTypeInput.version = value.into();`.
+    pub fn version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteCustomActionTypeInput with optional fields set to `None`.
+    pub fn new<categoryType: Into<String>, providerType: Into<String>, versionType: Into<String>>
+        (category: categoryType,
+         provider: providerType,
+         version: versionType)
+         -> DeleteCustomActionTypeInput {
+        DeleteCustomActionTypeInput {
+            category: category.into(),
+            provider: provider.into(),
+            version: version.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of a delete pipeline action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeletePipelineInput {
@@ -503,7 +1074,22 @@ pub struct DeletePipelineInput {
     #[serde(rename="name")]
     pub name: String,
 }
-
+impl DeletePipelineInput {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePipelineInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of DeletePipelineInput with optional fields set to `None`.
+    pub fn new<nameType: Into<String>>(name: nameType) -> DeletePipelineInput {
+        DeletePipelineInput {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of a disable stage transition input action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DisableStageTransitionInput {
@@ -520,7 +1106,54 @@ pub struct DisableStageTransitionInput {
     #[serde(rename="transitionType")]
     pub transition_type: String,
 }
-
+impl DisableStageTransitionInput {
+    /// Sets `pipeline_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableStageTransitionInput.pipeline_name = value.into();`.
+    pub fn pipeline_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_name = value.into();
+        self
+    }
+    /// Sets `reason`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableStageTransitionInput.reason = value.into();`.
+    pub fn reason<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reason = value.into();
+        self
+    }
+    /// Sets `stage_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableStageTransitionInput.stage_name = value.into();`.
+    pub fn stage_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stage_name = value.into();
+        self
+    }
+    /// Sets `transition_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableStageTransitionInput.transition_type = value.into();`.
+    pub fn transition_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.transition_type = value.into();
+        self
+    }
+    /// Returns a new instance of DisableStageTransitionInput with optional fields set to `None`.
+    pub fn new<pipelineNameType: Into<String>,
+               reasonType: Into<String>,
+               stageNameType: Into<String>,
+               transitionTypeType: Into<String>>
+        (pipeline_name: pipelineNameType,
+         reason: reasonType,
+         stage_name: stageNameType,
+         transition_type: transitionTypeType)
+         -> DisableStageTransitionInput {
+        DisableStageTransitionInput {
+            pipeline_name: pipeline_name.into(),
+            reason: reason.into(),
+            stage_name: stage_name.into(),
+            transition_type: transition_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of an enable stage transition action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct EnableStageTransitionInput {
@@ -534,7 +1167,44 @@ pub struct EnableStageTransitionInput {
     #[serde(rename="transitionType")]
     pub transition_type: String,
 }
-
+impl EnableStageTransitionInput {
+    /// Sets `pipeline_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableStageTransitionInput.pipeline_name = value.into();`.
+    pub fn pipeline_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_name = value.into();
+        self
+    }
+    /// Sets `stage_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableStageTransitionInput.stage_name = value.into();`.
+    pub fn stage_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stage_name = value.into();
+        self
+    }
+    /// Sets `transition_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableStageTransitionInput.transition_type = value.into();`.
+    pub fn transition_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.transition_type = value.into();
+        self
+    }
+    /// Returns a new instance of EnableStageTransitionInput with optional fields set to `None`.
+    pub fn new<pipelineNameType: Into<String>,
+               stageNameType: Into<String>,
+               transitionTypeType: Into<String>>
+        (pipeline_name: pipelineNameType,
+         stage_name: stageNameType,
+         transition_type: transitionTypeType)
+         -> EnableStageTransitionInput {
+        EnableStageTransitionInput {
+            pipeline_name: pipeline_name.into(),
+            stage_name: stage_name.into(),
+            transition_type: transition_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents information about the key used to encrypt data in the artifact store, such as an AWS Key Management Service (AWS KMS) key.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct EncryptionKey {
@@ -545,7 +1215,32 @@ pub struct EncryptionKey {
     #[serde(rename="type")]
     pub type_: String,
 }
-
+impl EncryptionKey {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EncryptionKey.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EncryptionKey.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of EncryptionKey with optional fields set to `None`.
+    pub fn new<idType: Into<String>, typeType: Into<String>>(id: idType,
+                                                             type_: typeType)
+                                                             -> EncryptionKey {
+        EncryptionKey {
+            id: id.into(),
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents information about an error in AWS CodePipeline.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ErrorDetails {
@@ -558,7 +1253,6 @@ pub struct ErrorDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub message: Option<String>,
 }
-
 #[doc="<p>The details of the actions taken and results produced on an artifact as it passes through stages in the pipeline.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ExecutionDetails {
@@ -575,7 +1269,33 @@ pub struct ExecutionDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub summary: Option<String>,
 }
-
+impl ExecutionDetails {
+    /// Sets `external_execution_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExecutionDetails.external_execution_id = Some(value.into());`.
+    pub fn external_execution_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.external_execution_id = Some(value.into());
+        self
+    }
+    /// Sets `percent_complete`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExecutionDetails.percent_complete = Some(value.into());`.
+    pub fn percent_complete<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.percent_complete = Some(value.into());
+        self
+    }
+    /// Sets `summary`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExecutionDetails.summary = Some(value.into());`.
+    pub fn summary<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.summary = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ExecutionDetails with optional fields set to `None`.
+    pub fn new() -> ExecutionDetails {
+        ExecutionDetails { ..Default::default() }
+    }
+}
 #[doc="<p>Represents information about failure details.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct FailureDetails {
@@ -590,7 +1310,39 @@ pub struct FailureDetails {
     #[serde(rename="type")]
     pub type_: String,
 }
-
+impl FailureDetails {
+    /// Sets `external_execution_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FailureDetails.external_execution_id = Some(value.into());`.
+    pub fn external_execution_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.external_execution_id = Some(value.into());
+        self
+    }
+    /// Sets `message`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FailureDetails.message = value.into();`.
+    pub fn message<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.message = value.into();
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FailureDetails.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of FailureDetails with optional fields set to `None`.
+    pub fn new<messageType: Into<String>, typeType: Into<String>>(message: messageType,
+                                                                  type_: typeType)
+                                                                  -> FailureDetails {
+        FailureDetails {
+            message: message.into(),
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of a get job details action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetJobDetailsInput {
@@ -598,7 +1350,22 @@ pub struct GetJobDetailsInput {
     #[serde(rename="jobId")]
     pub job_id: String,
 }
-
+impl GetJobDetailsInput {
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetJobDetailsInput.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetJobDetailsInput with optional fields set to `None`.
+    pub fn new<jobIdType: Into<String>>(job_id: jobIdType) -> GetJobDetailsInput {
+        GetJobDetailsInput {
+            job_id: job_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a get job details action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetJobDetailsOutput {
@@ -607,7 +1374,6 @@ pub struct GetJobDetailsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub job_details: Option<JobDetails>,
 }
-
 #[doc="<p>Represents the input of a get pipeline execution action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetPipelineExecutionInput {
@@ -618,7 +1384,33 @@ pub struct GetPipelineExecutionInput {
     #[serde(rename="pipelineName")]
     pub pipeline_name: String,
 }
-
+impl GetPipelineExecutionInput {
+    /// Sets `pipeline_execution_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetPipelineExecutionInput.pipeline_execution_id = value.into();`.
+    pub fn pipeline_execution_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_execution_id = value.into();
+        self
+    }
+    /// Sets `pipeline_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetPipelineExecutionInput.pipeline_name = value.into();`.
+    pub fn pipeline_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetPipelineExecutionInput with optional fields set to `None`.
+    pub fn new<pipelineExecutionIdType: Into<String>, pipelineNameType: Into<String>>
+        (pipeline_execution_id: pipelineExecutionIdType,
+         pipeline_name: pipelineNameType)
+         -> GetPipelineExecutionInput {
+        GetPipelineExecutionInput {
+            pipeline_execution_id: pipeline_execution_id.into(),
+            pipeline_name: pipeline_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a get pipeline execution action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetPipelineExecutionOutput {
@@ -627,7 +1419,6 @@ pub struct GetPipelineExecutionOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pipeline_execution: Option<PipelineExecution>,
 }
-
 #[doc="<p>Represents the input of a get pipeline action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetPipelineInput {
@@ -639,7 +1430,29 @@ pub struct GetPipelineInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<i64>,
 }
-
+impl GetPipelineInput {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetPipelineInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetPipelineInput.version = Some(value.into());`.
+    pub fn version<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.version = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetPipelineInput with optional fields set to `None`.
+    pub fn new<nameType: Into<String>>(name: nameType) -> GetPipelineInput {
+        GetPipelineInput {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a get pipeline action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetPipelineOutput {
@@ -648,7 +1461,6 @@ pub struct GetPipelineOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pipeline: Option<PipelineDeclaration>,
 }
-
 #[doc="<p>Represents the input of a get pipeline state action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetPipelineStateInput {
@@ -656,7 +1468,22 @@ pub struct GetPipelineStateInput {
     #[serde(rename="name")]
     pub name: String,
 }
-
+impl GetPipelineStateInput {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetPipelineStateInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of GetPipelineStateInput with optional fields set to `None`.
+    pub fn new<nameType: Into<String>>(name: nameType) -> GetPipelineStateInput {
+        GetPipelineStateInput {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a get pipeline state action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetPipelineStateOutput {
@@ -681,7 +1508,6 @@ pub struct GetPipelineStateOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub updated: Option<f64>,
 }
-
 #[doc="<p>Represents the input of a get third party job details action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetThirdPartyJobDetailsInput {
@@ -692,7 +1518,33 @@ pub struct GetThirdPartyJobDetailsInput {
     #[serde(rename="jobId")]
     pub job_id: String,
 }
-
+impl GetThirdPartyJobDetailsInput {
+    /// Sets `client_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetThirdPartyJobDetailsInput.client_token = value.into();`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = value.into();
+        self
+    }
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetThirdPartyJobDetailsInput.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetThirdPartyJobDetailsInput with optional fields set to `None`.
+    pub fn new<clientTokenType: Into<String>, jobIdType: Into<String>>
+        (client_token: clientTokenType,
+         job_id: jobIdType)
+         -> GetThirdPartyJobDetailsInput {
+        GetThirdPartyJobDetailsInput {
+            client_token: client_token.into(),
+            job_id: job_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a get third party job details action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetThirdPartyJobDetailsOutput {
@@ -701,7 +1553,6 @@ pub struct GetThirdPartyJobDetailsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub job_details: Option<ThirdPartyJobDetails>,
 }
-
 #[doc="<p>Represents information about an artifact to be worked on, such as a test or build artifact.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct InputArtifact {
@@ -709,7 +1560,22 @@ pub struct InputArtifact {
     #[serde(rename="name")]
     pub name: String,
 }
-
+impl InputArtifact {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InputArtifact.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of InputArtifact with optional fields set to `None`.
+    pub fn new<nameType: Into<String>>(name: nameType) -> InputArtifact {
+        InputArtifact {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents information about a job.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Job {
@@ -730,7 +1596,6 @@ pub struct Job {
     #[serde(skip_serializing_if="Option::is_none")]
     pub nonce: Option<String>,
 }
-
 #[doc="<p>Represents additional information about a job required for a job worker to complete the job.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct JobData {
@@ -767,7 +1632,6 @@ pub struct JobData {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pipeline_context: Option<PipelineContext>,
 }
-
 #[doc="<p>Represents information about the details of a job.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct JobDetails {
@@ -784,7 +1648,6 @@ pub struct JobDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub id: Option<String>,
 }
-
 #[doc="<p>Represents the input of a list action types action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListActionTypesInput {
@@ -797,7 +1660,26 @@ pub struct ListActionTypesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListActionTypesInput {
+    /// Sets `action_owner_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListActionTypesInput.action_owner_filter = Some(value.into());`.
+    pub fn action_owner_filter<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.action_owner_filter = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListActionTypesInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListActionTypesInput with optional fields set to `None`.
+    pub fn new() -> ListActionTypesInput {
+        ListActionTypesInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the output of a list action types action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListActionTypesOutput {
@@ -809,7 +1691,6 @@ pub struct ListActionTypesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Represents the input of a list pipeline executions action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListPipelineExecutionsInput {
@@ -825,7 +1706,37 @@ pub struct ListPipelineExecutionsInput {
     #[serde(rename="pipelineName")]
     pub pipeline_name: String,
 }
-
+impl ListPipelineExecutionsInput {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPipelineExecutionsInput.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPipelineExecutionsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `pipeline_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPipelineExecutionsInput.pipeline_name = value.into();`.
+    pub fn pipeline_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListPipelineExecutionsInput with optional fields set to `None`.
+    pub fn new<pipelineNameType: Into<String>>(pipeline_name: pipelineNameType)
+                                               -> ListPipelineExecutionsInput {
+        ListPipelineExecutionsInput {
+            pipeline_name: pipeline_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a list pipeline executions action. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListPipelineExecutionsOutput {
@@ -838,7 +1749,6 @@ pub struct ListPipelineExecutionsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pipeline_execution_summaries: Option<Vec<PipelineExecutionSummary>>,
 }
-
 #[doc="<p>Represents the input of a list pipelines action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListPipelinesInput {
@@ -847,7 +1757,19 @@ pub struct ListPipelinesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListPipelinesInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPipelinesInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListPipelinesInput with optional fields set to `None`.
+    pub fn new() -> ListPipelinesInput {
+        ListPipelinesInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the output of a list pipelines action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListPipelinesOutput {
@@ -860,7 +1782,6 @@ pub struct ListPipelinesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pipelines: Option<Vec<PipelineSummary>>,
 }
-
 #[doc="<p>Represents information about the output of an action.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct OutputArtifact {
@@ -868,7 +1789,22 @@ pub struct OutputArtifact {
     #[serde(rename="name")]
     pub name: String,
 }
-
+impl OutputArtifact {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OutputArtifact.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of OutputArtifact with optional fields set to `None`.
+    pub fn new<nameType: Into<String>>(name: nameType) -> OutputArtifact {
+        OutputArtifact {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents information about a pipeline to a job worker.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PipelineContext {
@@ -885,7 +1821,6 @@ pub struct PipelineContext {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stage: Option<StageContext>,
 }
-
 #[doc="<p>Represents the structure of actions and stages to be performed in the pipeline.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct PipelineDeclaration {
@@ -906,7 +1841,61 @@ pub struct PipelineDeclaration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<i64>,
 }
-
+impl PipelineDeclaration {
+    /// Sets `artifact_store`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PipelineDeclaration.artifact_store = value.into();`.
+    pub fn artifact_store<ValueType: Into<ArtifactStore>>(mut self, value: ValueType) -> Self {
+        self.artifact_store = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PipelineDeclaration.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PipelineDeclaration.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Sets `stages`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PipelineDeclaration.stages = value.into();`.
+    pub fn stages<ValueType: Into<Vec<StageDeclaration>>>(mut self, value: ValueType) -> Self {
+        self.stages = value.into();
+        self
+    }
+    /// Sets `version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PipelineDeclaration.version = Some(value.into());`.
+    pub fn version<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.version = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PipelineDeclaration with optional fields set to `None`.
+    pub fn new<artifactStoreType: Into<ArtifactStore>,
+               nameType: Into<String>,
+               roleArnType: Into<String>,
+               stagesType: Into<Vec<StageDeclaration>>>
+        (artifact_store: artifactStoreType,
+         name: nameType,
+         role_arn: roleArnType,
+         stages: stagesType)
+         -> PipelineDeclaration {
+        PipelineDeclaration {
+            artifact_store: artifact_store.into(),
+            name: name.into(),
+            role_arn: role_arn.into(),
+            stages: stages.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents information about an execution of a pipeline.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PipelineExecution {
@@ -931,7 +1920,6 @@ pub struct PipelineExecution {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[doc="<p>Summary information about a pipeline execution.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PipelineExecutionSummary {
@@ -952,7 +1940,6 @@ pub struct PipelineExecutionSummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[doc="<p>Returns a summary of a pipeline.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PipelineSummary {
@@ -973,7 +1960,6 @@ pub struct PipelineSummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<i64>,
 }
-
 #[doc="<p>Represents the input of a poll for jobs action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PollForJobsInput {
@@ -989,7 +1975,37 @@ pub struct PollForJobsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub query_param: Option<::std::collections::HashMap<String, String>>,
 }
-
+impl PollForJobsInput {
+    /// Sets `action_type_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PollForJobsInput.action_type_id = value.into();`.
+    pub fn action_type_id<ValueType: Into<ActionTypeId>>(mut self, value: ValueType) -> Self {
+        self.action_type_id = value.into();
+        self
+    }
+    /// Sets `max_batch_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PollForJobsInput.max_batch_size = Some(value.into());`.
+    pub fn max_batch_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_batch_size = Some(value.into());
+        self
+    }
+    /// Sets `query_param`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PollForJobsInput.query_param = Some(value.into());`.
+pub fn query_param<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.query_param = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PollForJobsInput with optional fields set to `None`.
+    pub fn new<actionTypeIdType: Into<ActionTypeId>>(action_type_id: actionTypeIdType)
+                                                     -> PollForJobsInput {
+        PollForJobsInput {
+            action_type_id: action_type_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a poll for jobs action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PollForJobsOutput {
@@ -998,7 +2014,6 @@ pub struct PollForJobsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub jobs: Option<Vec<Job>>,
 }
-
 #[doc="<p>Represents the input of a poll for third party jobs action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PollForThirdPartyJobsInput {
@@ -1010,7 +2025,30 @@ pub struct PollForThirdPartyJobsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub max_batch_size: Option<i64>,
 }
-
+impl PollForThirdPartyJobsInput {
+    /// Sets `action_type_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PollForThirdPartyJobsInput.action_type_id = value.into();`.
+    pub fn action_type_id<ValueType: Into<ActionTypeId>>(mut self, value: ValueType) -> Self {
+        self.action_type_id = value.into();
+        self
+    }
+    /// Sets `max_batch_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PollForThirdPartyJobsInput.max_batch_size = Some(value.into());`.
+    pub fn max_batch_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_batch_size = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PollForThirdPartyJobsInput with optional fields set to `None`.
+    pub fn new<actionTypeIdType: Into<ActionTypeId>>(action_type_id: actionTypeIdType)
+                                                     -> PollForThirdPartyJobsInput {
+        PollForThirdPartyJobsInput {
+            action_type_id: action_type_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a poll for third party jobs action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PollForThirdPartyJobsOutput {
@@ -1019,7 +2057,6 @@ pub struct PollForThirdPartyJobsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub jobs: Option<Vec<ThirdPartyJob>>,
 }
-
 #[doc="<p>Represents the input of a put action revision action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutActionRevisionInput {
@@ -1036,7 +2073,54 @@ pub struct PutActionRevisionInput {
     #[serde(rename="stageName")]
     pub stage_name: String,
 }
-
+impl PutActionRevisionInput {
+    /// Sets `action_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutActionRevisionInput.action_name = value.into();`.
+    pub fn action_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.action_name = value.into();
+        self
+    }
+    /// Sets `action_revision`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutActionRevisionInput.action_revision = value.into();`.
+    pub fn action_revision<ValueType: Into<ActionRevision>>(mut self, value: ValueType) -> Self {
+        self.action_revision = value.into();
+        self
+    }
+    /// Sets `pipeline_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutActionRevisionInput.pipeline_name = value.into();`.
+    pub fn pipeline_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_name = value.into();
+        self
+    }
+    /// Sets `stage_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutActionRevisionInput.stage_name = value.into();`.
+    pub fn stage_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stage_name = value.into();
+        self
+    }
+    /// Returns a new instance of PutActionRevisionInput with optional fields set to `None`.
+    pub fn new<actionNameType: Into<String>,
+               actionRevisionType: Into<ActionRevision>,
+               pipelineNameType: Into<String>,
+               stageNameType: Into<String>>
+        (action_name: actionNameType,
+         action_revision: actionRevisionType,
+         pipeline_name: pipelineNameType,
+         stage_name: stageNameType)
+         -> PutActionRevisionInput {
+        PutActionRevisionInput {
+            action_name: action_name.into(),
+            action_revision: action_revision.into(),
+            pipeline_name: pipeline_name.into(),
+            stage_name: stage_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a put action revision action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutActionRevisionOutput {
@@ -1049,7 +2133,6 @@ pub struct PutActionRevisionOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pipeline_execution_id: Option<String>,
 }
-
 #[doc="<p>Represents the input of a put approval result action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutApprovalResultInput {
@@ -1069,7 +2152,64 @@ pub struct PutApprovalResultInput {
     #[serde(rename="token")]
     pub token: String,
 }
-
+impl PutApprovalResultInput {
+    /// Sets `action_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutApprovalResultInput.action_name = value.into();`.
+    pub fn action_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.action_name = value.into();
+        self
+    }
+    /// Sets `pipeline_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutApprovalResultInput.pipeline_name = value.into();`.
+    pub fn pipeline_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_name = value.into();
+        self
+    }
+    /// Sets `result`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutApprovalResultInput.result = value.into();`.
+    pub fn result<ValueType: Into<ApprovalResult>>(mut self, value: ValueType) -> Self {
+        self.result = value.into();
+        self
+    }
+    /// Sets `stage_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutApprovalResultInput.stage_name = value.into();`.
+    pub fn stage_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stage_name = value.into();
+        self
+    }
+    /// Sets `token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutApprovalResultInput.token = value.into();`.
+    pub fn token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.token = value.into();
+        self
+    }
+    /// Returns a new instance of PutApprovalResultInput with optional fields set to `None`.
+    pub fn new<actionNameType: Into<String>,
+               pipelineNameType: Into<String>,
+               resultType: Into<ApprovalResult>,
+               stageNameType: Into<String>,
+               tokenType: Into<String>>
+        (action_name: actionNameType,
+         pipeline_name: pipelineNameType,
+         result: resultType,
+         stage_name: stageNameType,
+         token: tokenType)
+         -> PutApprovalResultInput {
+        PutApprovalResultInput {
+            action_name: action_name.into(),
+            pipeline_name: pipeline_name.into(),
+            result: result.into(),
+            stage_name: stage_name.into(),
+            token: token.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a put approval result action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutApprovalResultOutput {
@@ -1078,7 +2218,6 @@ pub struct PutApprovalResultOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub approved_at: Option<f64>,
 }
-
 #[doc="<p>Represents the input of a put job failure result action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutJobFailureResultInput {
@@ -1089,7 +2228,33 @@ pub struct PutJobFailureResultInput {
     #[serde(rename="jobId")]
     pub job_id: String,
 }
-
+impl PutJobFailureResultInput {
+    /// Sets `failure_details`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutJobFailureResultInput.failure_details = value.into();`.
+    pub fn failure_details<ValueType: Into<FailureDetails>>(mut self, value: ValueType) -> Self {
+        self.failure_details = value.into();
+        self
+    }
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutJobFailureResultInput.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Returns a new instance of PutJobFailureResultInput with optional fields set to `None`.
+    pub fn new<failureDetailsType: Into<FailureDetails>, jobIdType: Into<String>>
+        (failure_details: failureDetailsType,
+         job_id: jobIdType)
+         -> PutJobFailureResultInput {
+        PutJobFailureResultInput {
+            failure_details: failure_details.into(),
+            job_id: job_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of a put job success result action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutJobSuccessResultInput {
@@ -1109,7 +2274,45 @@ pub struct PutJobSuccessResultInput {
     #[serde(rename="jobId")]
     pub job_id: String,
 }
-
+impl PutJobSuccessResultInput {
+    /// Sets `continuation_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutJobSuccessResultInput.continuation_token = Some(value.into());`.
+    pub fn continuation_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.continuation_token = Some(value.into());
+        self
+    }
+    /// Sets `current_revision`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutJobSuccessResultInput.current_revision = Some(value.into());`.
+    pub fn current_revision<ValueType: Into<CurrentRevision>>(mut self, value: ValueType) -> Self {
+        self.current_revision = Some(value.into());
+        self
+    }
+    /// Sets `execution_details`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutJobSuccessResultInput.execution_details = Some(value.into());`.
+    pub fn execution_details<ValueType: Into<ExecutionDetails>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.execution_details = Some(value.into());
+        self
+    }
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutJobSuccessResultInput.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Returns a new instance of PutJobSuccessResultInput with optional fields set to `None`.
+    pub fn new<jobIdType: Into<String>>(job_id: jobIdType) -> PutJobSuccessResultInput {
+        PutJobSuccessResultInput {
+            job_id: job_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of a third party job failure result action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutThirdPartyJobFailureResultInput {
@@ -1123,7 +2326,44 @@ pub struct PutThirdPartyJobFailureResultInput {
     #[serde(rename="jobId")]
     pub job_id: String,
 }
-
+impl PutThirdPartyJobFailureResultInput {
+    /// Sets `client_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutThirdPartyJobFailureResultInput.client_token = value.into();`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = value.into();
+        self
+    }
+    /// Sets `failure_details`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutThirdPartyJobFailureResultInput.failure_details = value.into();`.
+    pub fn failure_details<ValueType: Into<FailureDetails>>(mut self, value: ValueType) -> Self {
+        self.failure_details = value.into();
+        self
+    }
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutThirdPartyJobFailureResultInput.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Returns a new instance of PutThirdPartyJobFailureResultInput with optional fields set to `None`.
+    pub fn new<clientTokenType: Into<String>,
+               failureDetailsType: Into<FailureDetails>,
+               jobIdType: Into<String>>
+        (client_token: clientTokenType,
+         failure_details: failureDetailsType,
+         job_id: jobIdType)
+         -> PutThirdPartyJobFailureResultInput {
+        PutThirdPartyJobFailureResultInput {
+            client_token: client_token.into(),
+            failure_details: failure_details.into(),
+            job_id: job_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of a put third party job success result action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutThirdPartyJobSuccessResultInput {
@@ -1146,7 +2386,56 @@ pub struct PutThirdPartyJobSuccessResultInput {
     #[serde(rename="jobId")]
     pub job_id: String,
 }
-
+impl PutThirdPartyJobSuccessResultInput {
+    /// Sets `client_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutThirdPartyJobSuccessResultInput.client_token = value.into();`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = value.into();
+        self
+    }
+    /// Sets `continuation_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutThirdPartyJobSuccessResultInput.continuation_token = Some(value.into());`.
+    pub fn continuation_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.continuation_token = Some(value.into());
+        self
+    }
+    /// Sets `current_revision`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutThirdPartyJobSuccessResultInput.current_revision = Some(value.into());`.
+    pub fn current_revision<ValueType: Into<CurrentRevision>>(mut self, value: ValueType) -> Self {
+        self.current_revision = Some(value.into());
+        self
+    }
+    /// Sets `execution_details`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutThirdPartyJobSuccessResultInput.execution_details = Some(value.into());`.
+    pub fn execution_details<ValueType: Into<ExecutionDetails>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.execution_details = Some(value.into());
+        self
+    }
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutThirdPartyJobSuccessResultInput.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Returns a new instance of PutThirdPartyJobSuccessResultInput with optional fields set to `None`.
+    pub fn new<clientTokenType: Into<String>, jobIdType: Into<String>>
+        (client_token: clientTokenType,
+         job_id: jobIdType)
+         -> PutThirdPartyJobSuccessResultInput {
+        PutThirdPartyJobSuccessResultInput {
+            client_token: client_token.into(),
+            job_id: job_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of a retry stage execution action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RetryStageExecutionInput {
@@ -1163,7 +2452,54 @@ pub struct RetryStageExecutionInput {
     #[serde(rename="stageName")]
     pub stage_name: String,
 }
-
+impl RetryStageExecutionInput {
+    /// Sets `pipeline_execution_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RetryStageExecutionInput.pipeline_execution_id = value.into();`.
+    pub fn pipeline_execution_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_execution_id = value.into();
+        self
+    }
+    /// Sets `pipeline_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RetryStageExecutionInput.pipeline_name = value.into();`.
+    pub fn pipeline_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pipeline_name = value.into();
+        self
+    }
+    /// Sets `retry_mode`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RetryStageExecutionInput.retry_mode = value.into();`.
+    pub fn retry_mode<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.retry_mode = value.into();
+        self
+    }
+    /// Sets `stage_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RetryStageExecutionInput.stage_name = value.into();`.
+    pub fn stage_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stage_name = value.into();
+        self
+    }
+    /// Returns a new instance of RetryStageExecutionInput with optional fields set to `None`.
+    pub fn new<pipelineExecutionIdType: Into<String>,
+               pipelineNameType: Into<String>,
+               retryModeType: Into<String>,
+               stageNameType: Into<String>>
+        (pipeline_execution_id: pipelineExecutionIdType,
+         pipeline_name: pipelineNameType,
+         retry_mode: retryModeType,
+         stage_name: stageNameType)
+         -> RetryStageExecutionInput {
+        RetryStageExecutionInput {
+            pipeline_execution_id: pipeline_execution_id.into(),
+            pipeline_name: pipeline_name.into(),
+            retry_mode: retry_mode.into(),
+            stage_name: stage_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a retry stage execution action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RetryStageExecutionOutput {
@@ -1172,7 +2508,6 @@ pub struct RetryStageExecutionOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pipeline_execution_id: Option<String>,
 }
-
 #[doc="<p>The location of the Amazon S3 bucket that contains a revision.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct S3ArtifactLocation {
@@ -1183,7 +2518,6 @@ pub struct S3ArtifactLocation {
     #[serde(rename="objectKey")]
     pub object_key: String,
 }
-
 #[doc="<p>Represents information about a stage to a job worker.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StageContext {
@@ -1192,7 +2526,6 @@ pub struct StageContext {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p>Represents information about a stage and its definition.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct StageDeclaration {
@@ -1207,7 +2540,40 @@ pub struct StageDeclaration {
     #[serde(rename="name")]
     pub name: String,
 }
-
+impl StageDeclaration {
+    /// Sets `actions`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StageDeclaration.actions = value.into();`.
+    pub fn actions<ValueType: Into<Vec<ActionDeclaration>>>(mut self, value: ValueType) -> Self {
+        self.actions = value.into();
+        self
+    }
+    /// Sets `blockers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StageDeclaration.blockers = Some(value.into());`.
+    pub fn blockers<ValueType: Into<Vec<BlockerDeclaration>>>(mut self, value: ValueType) -> Self {
+        self.blockers = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StageDeclaration.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of StageDeclaration with optional fields set to `None`.
+    pub fn new<actionsType: Into<Vec<ActionDeclaration>>, nameType: Into<String>>
+        (actions: actionsType,
+         name: nameType)
+         -> StageDeclaration {
+        StageDeclaration {
+            actions: actions.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents information about the run of a stage.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StageExecution {
@@ -1218,7 +2584,6 @@ pub struct StageExecution {
     #[serde(rename="status")]
     pub status: String,
 }
-
 #[doc="<p>Represents information about the state of the stage.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StageState {
@@ -1239,7 +2604,6 @@ pub struct StageState {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stage_name: Option<String>,
 }
-
 #[doc="<p>Represents the input of a start pipeline execution action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartPipelineExecutionInput {
@@ -1247,7 +2611,22 @@ pub struct StartPipelineExecutionInput {
     #[serde(rename="name")]
     pub name: String,
 }
-
+impl StartPipelineExecutionInput {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartPipelineExecutionInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of StartPipelineExecutionInput with optional fields set to `None`.
+    pub fn new<nameType: Into<String>>(name: nameType) -> StartPipelineExecutionInput {
+        StartPipelineExecutionInput {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a start pipeline execution action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartPipelineExecutionOutput {
@@ -1256,7 +2635,6 @@ pub struct StartPipelineExecutionOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pipeline_execution_id: Option<String>,
 }
-
 #[doc="<p>A response to a PollForThirdPartyJobs request returned by AWS CodePipeline when there is a job to be worked upon by a partner action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ThirdPartyJob {
@@ -1269,7 +2647,6 @@ pub struct ThirdPartyJob {
     #[serde(skip_serializing_if="Option::is_none")]
     pub job_id: Option<String>,
 }
-
 #[doc="<p>Represents information about the job data for a partner action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ThirdPartyJobData {
@@ -1306,7 +2683,6 @@ pub struct ThirdPartyJobData {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pipeline_context: Option<PipelineContext>,
 }
-
 #[doc="<p>The details of a job sent in response to a GetThirdPartyJobDetails request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ThirdPartyJobDetails {
@@ -1323,7 +2699,6 @@ pub struct ThirdPartyJobDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub nonce: Option<String>,
 }
-
 #[doc="<p>Represents information about the state of transitions between one stage and another stage.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TransitionState {
@@ -1344,7 +2719,6 @@ pub struct TransitionState {
     #[serde(skip_serializing_if="Option::is_none")]
     pub last_changed_by: Option<String>,
 }
-
 #[doc="<p>Represents the input of an update pipeline action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdatePipelineInput {
@@ -1352,7 +2726,23 @@ pub struct UpdatePipelineInput {
     #[serde(rename="pipeline")]
     pub pipeline: PipelineDeclaration,
 }
-
+impl UpdatePipelineInput {
+    /// Sets `pipeline`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePipelineInput.pipeline = value.into();`.
+    pub fn pipeline<ValueType: Into<PipelineDeclaration>>(mut self, value: ValueType) -> Self {
+        self.pipeline = value.into();
+        self
+    }
+    /// Returns a new instance of UpdatePipelineInput with optional fields set to `None`.
+    pub fn new<pipelineType: Into<PipelineDeclaration>>(pipeline: pipelineType)
+                                                        -> UpdatePipelineInput {
+        UpdatePipelineInput {
+            pipeline: pipeline.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of an update pipeline action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdatePipelineOutput {
@@ -1361,7 +2751,6 @@ pub struct UpdatePipelineOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pipeline: Option<PipelineDeclaration>,
 }
-
 /// Errors returned by AcknowledgeJob
 #[derive(Debug, PartialEq)]
 pub enum AcknowledgeJobError {

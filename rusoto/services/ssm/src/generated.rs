@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -68,7 +69,6 @@ pub struct Activation {
     #[serde(skip_serializing_if="Option::is_none")]
     pub registrations_count: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AddTagsToResourceRequest {
     #[doc="<p>The resource ID you want to tag.</p>"]
@@ -81,7 +81,44 @@ pub struct AddTagsToResourceRequest {
     #[serde(rename="Tags")]
     pub tags: Vec<Tag>,
 }
-
+impl AddTagsToResourceRequest {
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToResourceRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `resource_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToResourceRequest.resource_type = value.into();`.
+    pub fn resource_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_type = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToResourceRequest.tags = value.into();`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of AddTagsToResourceRequest with optional fields set to `None`.
+    pub fn new<ResourceIdType: Into<String>,
+               ResourceTypeType: Into<String>,
+               TagsType: Into<Vec<Tag>>>
+        (resource_id: ResourceIdType,
+         resource_type: ResourceTypeType,
+         tags: TagsType)
+         -> AddTagsToResourceRequest {
+        AddTagsToResourceRequest {
+            resource_id: resource_id.into(),
+            resource_type: resource_type.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddTagsToResourceResult;
 
@@ -129,7 +166,6 @@ pub struct Association {
     #[serde(skip_serializing_if="Option::is_none")]
     pub targets: Option<Vec<Target>>,
 }
-
 #[doc="<p>Describes the parameters for a document.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AssociationDescription {
@@ -198,7 +234,6 @@ pub struct AssociationDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub targets: Option<Vec<Target>>,
 }
-
 #[doc="<p>Describes a filter.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AssociationFilter {
@@ -209,7 +244,32 @@ pub struct AssociationFilter {
     #[serde(rename="value")]
     pub value: String,
 }
-
+impl AssociationFilter {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociationFilter.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociationFilter.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of AssociationFilter with optional fields set to `None`.
+    pub fn new<keyType: Into<String>, valueType: Into<String>>(key: keyType,
+                                                               value: valueType)
+                                                               -> AssociationFilter {
+        AssociationFilter {
+            key: key.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Information about the association.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AssociationOverview {
@@ -226,7 +286,6 @@ pub struct AssociationOverview {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[doc="<p>Describes an association status.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct AssociationStatus {
@@ -244,7 +303,49 @@ pub struct AssociationStatus {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl AssociationStatus {
+    /// Sets `additional_info`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociationStatus.additional_info = Some(value.into());`.
+    pub fn additional_info<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.additional_info = Some(value.into());
+        self
+    }
+    /// Sets `date`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociationStatus.date = value.into();`.
+    pub fn date<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.date = value.into();
+        self
+    }
+    /// Sets `message`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociationStatus.message = value.into();`.
+    pub fn message<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.message = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociationStatus.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of AssociationStatus with optional fields set to `None`.
+    pub fn new<DateType: Into<f64>, MessageType: Into<String>, NameType: Into<String>>
+        (date: DateType,
+         message: MessageType,
+         name: NameType)
+         -> AssociationStatus {
+        AssociationStatus {
+            date: date.into(),
+            message: message.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Information about the association version.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AssociationVersionInfo {
@@ -289,7 +390,6 @@ pub struct AssociationVersionInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub targets: Option<Vec<Target>>,
 }
-
 #[doc="<p>Detailed information about the current state of an individual Automation execution.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AutomationExecution {
@@ -334,7 +434,6 @@ pub struct AutomationExecution {
     #[serde(skip_serializing_if="Option::is_none")]
     pub step_executions: Option<Vec<StepExecution>>,
 }
-
 #[doc="<p>A filter used to match specific automation executions. This is used to limit the scope of Automation execution information returned.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AutomationExecutionFilter {
@@ -345,7 +444,33 @@ pub struct AutomationExecutionFilter {
     #[serde(rename="Values")]
     pub values: Vec<String>,
 }
-
+impl AutomationExecutionFilter {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AutomationExecutionFilter.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `values`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AutomationExecutionFilter.values = value.into();`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = value.into();
+        self
+    }
+    /// Returns a new instance of AutomationExecutionFilter with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>, ValuesType: Into<Vec<String>>>
+        (key: KeyType,
+         values: ValuesType)
+         -> AutomationExecutionFilter {
+        AutomationExecutionFilter {
+            key: key.into(),
+            values: values.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Details about a specific Automation execution.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AutomationExecutionMetadata {
@@ -386,7 +511,6 @@ pub struct AutomationExecutionMetadata {
     #[serde(skip_serializing_if="Option::is_none")]
     pub outputs: Option<::std::collections::HashMap<String, Vec<String>>>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CancelCommandRequest {
@@ -398,7 +522,29 @@ pub struct CancelCommandRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instance_ids: Option<Vec<String>>,
 }
-
+impl CancelCommandRequest {
+    /// Sets `command_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelCommandRequest.command_id = value.into();`.
+    pub fn command_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.command_id = value.into();
+        self
+    }
+    /// Sets `instance_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelCommandRequest.instance_ids = Some(value.into());`.
+    pub fn instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CancelCommandRequest with optional fields set to `None`.
+    pub fn new<CommandIdType: Into<String>>(command_id: CommandIdType) -> CancelCommandRequest {
+        CancelCommandRequest {
+            command_id: command_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Whether or not the command was successfully canceled. There is no guarantee that a request can be canceled.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CancelCommandResult;
@@ -487,7 +633,6 @@ pub struct Command {
     #[serde(skip_serializing_if="Option::is_none")]
     pub targets: Option<Vec<Target>>,
 }
-
 #[doc="<p>Describes a command filter.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CommandFilter {
@@ -498,7 +643,32 @@ pub struct CommandFilter {
     #[serde(rename="value")]
     pub value: String,
 }
-
+impl CommandFilter {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CommandFilter.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CommandFilter.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of CommandFilter with optional fields set to `None`.
+    pub fn new<keyType: Into<String>, valueType: Into<String>>(key: keyType,
+                                                               value: valueType)
+                                                               -> CommandFilter {
+        CommandFilter {
+            key: key.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>An invocation is copy of a command sent to a specific instance. A command can apply to one or more instances. A command invocation applies to one instance. For example, if a user executes SendCommand against three instances, then a command invocation is created for each requested instance ID. A command invocation returns status and detail information about a command you executed. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CommandInvocation {
@@ -558,7 +728,6 @@ pub struct CommandInvocation {
     #[serde(skip_serializing_if="Option::is_none")]
     pub trace_output: Option<String>,
 }
-
 #[doc="<p>Describes plugin details.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CommandPlugin {
@@ -611,7 +780,6 @@ pub struct CommandPlugin {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status_details: Option<String>,
 }
-
 #[doc="<p>A summary of the call execution that includes an execution ID, the type of execution (for example, <code>Command</code>), and the date/time of the execution using a datetime object that is saved in the following format: yyyy-MM-dd'T'HH:mm:ss'Z'.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ComplianceExecutionSummary {
@@ -627,7 +795,37 @@ pub struct ComplianceExecutionSummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub execution_type: Option<String>,
 }
-
+impl ComplianceExecutionSummary {
+    /// Sets `execution_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComplianceExecutionSummary.execution_id = Some(value.into());`.
+    pub fn execution_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.execution_id = Some(value.into());
+        self
+    }
+    /// Sets `execution_time`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComplianceExecutionSummary.execution_time = value.into();`.
+    pub fn execution_time<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.execution_time = value.into();
+        self
+    }
+    /// Sets `execution_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComplianceExecutionSummary.execution_type = Some(value.into());`.
+    pub fn execution_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.execution_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ComplianceExecutionSummary with optional fields set to `None`.
+    pub fn new<ExecutionTimeType: Into<f64>>(execution_time: ExecutionTimeType)
+                                             -> ComplianceExecutionSummary {
+        ComplianceExecutionSummary {
+            execution_time: execution_time.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Information about the compliance as defined by the resource type. For example, for a patch resource type, <code>Items</code> includes information about the PatchSeverity, Classification, etc.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ComplianceItem {
@@ -668,7 +866,6 @@ pub struct ComplianceItem {
     #[serde(skip_serializing_if="Option::is_none")]
     pub title: Option<String>,
 }
-
 #[doc="<p>Information about a compliance item.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ComplianceItemEntry {
@@ -691,7 +888,55 @@ pub struct ComplianceItemEntry {
     #[serde(skip_serializing_if="Option::is_none")]
     pub title: Option<String>,
 }
-
+impl ComplianceItemEntry {
+    /// Sets `details`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComplianceItemEntry.details = Some(value.into());`.
+    pub fn details<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                                 value: ValueType)
+                                                                                 -> Self {
+        self.details = Some(value.into());
+        self
+    }
+    /// Sets `id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComplianceItemEntry.id = Some(value.into());`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = Some(value.into());
+        self
+    }
+    /// Sets `severity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComplianceItemEntry.severity = value.into();`.
+    pub fn severity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.severity = value.into();
+        self
+    }
+    /// Sets `status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComplianceItemEntry.status = value.into();`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = value.into();
+        self
+    }
+    /// Sets `title`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComplianceItemEntry.title = Some(value.into());`.
+    pub fn title<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.title = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ComplianceItemEntry with optional fields set to `None`.
+    pub fn new<SeverityType: Into<String>, StatusType: Into<String>>(severity: SeverityType,
+                                                                     status: StatusType)
+                                                                     -> ComplianceItemEntry {
+        ComplianceItemEntry {
+            severity: severity.into(),
+            status: status.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>One or more filters. Use a filter to return a more specific list of results.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ComplianceStringFilter {
@@ -708,7 +953,33 @@ pub struct ComplianceStringFilter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub values: Option<Vec<String>>,
 }
-
+impl ComplianceStringFilter {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComplianceStringFilter.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComplianceStringFilter.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Sets `values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComplianceStringFilter.values = Some(value.into());`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ComplianceStringFilter with optional fields set to `None`.
+    pub fn new() -> ComplianceStringFilter {
+        ComplianceStringFilter { ..Default::default() }
+    }
+}
 #[doc="<p>A summary of compliance information by compliance type.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ComplianceSummaryItem {
@@ -725,7 +996,6 @@ pub struct ComplianceSummaryItem {
     #[serde(skip_serializing_if="Option::is_none")]
     pub non_compliant_summary: Option<NonCompliantSummary>,
 }
-
 #[doc="<p>A summary of resources that are compliant. The summary is organized according to the resource count for each compliance type.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CompliantSummary {
@@ -738,7 +1008,6 @@ pub struct CompliantSummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub severity_summary: Option<SeveritySummary>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateActivationRequest {
     #[doc="<p>The name of the registered, managed instance as it will appear in the Amazon EC2 console or when you use the AWS command line tools to list EC2 resources.</p>"]
@@ -761,7 +1030,50 @@ pub struct CreateActivationRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub registration_limit: Option<i64>,
 }
-
+impl CreateActivationRequest {
+    /// Sets `default_instance_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateActivationRequest.default_instance_name = Some(value.into());`.
+    pub fn default_instance_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_instance_name = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateActivationRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `expiration_date`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateActivationRequest.expiration_date = Some(value.into());`.
+    pub fn expiration_date<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.expiration_date = Some(value.into());
+        self
+    }
+    /// Sets `iam_role`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateActivationRequest.iam_role = value.into();`.
+    pub fn iam_role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.iam_role = value.into();
+        self
+    }
+    /// Sets `registration_limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateActivationRequest.registration_limit = Some(value.into());`.
+    pub fn registration_limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.registration_limit = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateActivationRequest with optional fields set to `None`.
+    pub fn new<IamRoleType: Into<String>>(iam_role: IamRoleType) -> CreateActivationRequest {
+        CreateActivationRequest {
+            iam_role: iam_role.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateActivationResult {
     #[doc="<p>The code the system generates when it processes the activation. The activation code functions like a password to validate the activation ID. </p>"]
@@ -773,14 +1085,32 @@ pub struct CreateActivationResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub activation_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateAssociationBatchRequest {
     #[doc="<p>One or more associations.</p>"]
     #[serde(rename="Entries")]
     pub entries: Vec<CreateAssociationBatchRequestEntry>,
 }
-
+impl CreateAssociationBatchRequest {
+    /// Sets `entries`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssociationBatchRequest.entries = value.into();`.
+    pub fn entries<ValueType: Into<Vec<CreateAssociationBatchRequestEntry>>>(mut self,
+                                                                             value: ValueType)
+                                                                             -> Self {
+        self.entries = value.into();
+        self
+    }
+    /// Returns a new instance of CreateAssociationBatchRequest with optional fields set to `None`.
+    pub fn new<EntriesType: Into<Vec<CreateAssociationBatchRequestEntry>>>
+        (entries: EntriesType)
+         -> CreateAssociationBatchRequest {
+        CreateAssociationBatchRequest {
+            entries: entries.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes the association of a Systems Manager document and an instance.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct CreateAssociationBatchRequestEntry {
@@ -816,7 +1146,76 @@ pub struct CreateAssociationBatchRequestEntry {
     #[serde(skip_serializing_if="Option::is_none")]
     pub targets: Option<Vec<Target>>,
 }
-
+impl CreateAssociationBatchRequestEntry {
+    /// Sets `association_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssociationBatchRequestEntry.association_name = Some(value.into());`.
+    pub fn association_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.association_name = Some(value.into());
+        self
+    }
+    /// Sets `document_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssociationBatchRequestEntry.document_version = Some(value.into());`.
+    pub fn document_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.document_version = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssociationBatchRequestEntry.instance_id = Some(value.into());`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssociationBatchRequestEntry.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `output_location`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssociationBatchRequestEntry.output_location = Some(value.into());`.
+    pub fn output_location<ValueType: Into<InstanceAssociationOutputLocation>>(mut self,
+                                                                               value: ValueType)
+                                                                               -> Self {
+        self.output_location = Some(value.into());
+        self
+    }
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssociationBatchRequestEntry.parameters = Some(value.into());`.
+    pub fn parameters<ValueType: Into<::std::collections::HashMap<String, Vec<String>>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Sets `schedule_expression`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssociationBatchRequestEntry.schedule_expression = Some(value.into());`.
+    pub fn schedule_expression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.schedule_expression = Some(value.into());
+        self
+    }
+    /// Sets `targets`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssociationBatchRequestEntry.targets = Some(value.into());`.
+    pub fn targets<ValueType: Into<Vec<Target>>>(mut self, value: ValueType) -> Self {
+        self.targets = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateAssociationBatchRequestEntry with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> CreateAssociationBatchRequestEntry {
+        CreateAssociationBatchRequestEntry {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateAssociationBatchResult {
     #[doc="<p>Information about the associations that failed.</p>"]
@@ -828,7 +1227,6 @@ pub struct CreateAssociationBatchResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub successful: Option<Vec<AssociationDescription>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateAssociationRequest {
     #[doc="<p>Specify a descriptive name for the association.</p>"]
@@ -863,7 +1261,76 @@ pub struct CreateAssociationRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub targets: Option<Vec<Target>>,
 }
-
+impl CreateAssociationRequest {
+    /// Sets `association_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssociationRequest.association_name = Some(value.into());`.
+    pub fn association_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.association_name = Some(value.into());
+        self
+    }
+    /// Sets `document_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssociationRequest.document_version = Some(value.into());`.
+    pub fn document_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.document_version = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssociationRequest.instance_id = Some(value.into());`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssociationRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `output_location`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssociationRequest.output_location = Some(value.into());`.
+    pub fn output_location<ValueType: Into<InstanceAssociationOutputLocation>>(mut self,
+                                                                               value: ValueType)
+                                                                               -> Self {
+        self.output_location = Some(value.into());
+        self
+    }
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssociationRequest.parameters = Some(value.into());`.
+    pub fn parameters<ValueType: Into<::std::collections::HashMap<String, Vec<String>>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Sets `schedule_expression`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssociationRequest.schedule_expression = Some(value.into());`.
+    pub fn schedule_expression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.schedule_expression = Some(value.into());
+        self
+    }
+    /// Sets `targets`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAssociationRequest.targets = Some(value.into());`.
+    pub fn targets<ValueType: Into<Vec<Target>>>(mut self, value: ValueType) -> Self {
+        self.targets = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateAssociationRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> CreateAssociationRequest {
+        CreateAssociationRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateAssociationResult {
     #[doc="<p>Information about the association.</p>"]
@@ -871,7 +1338,6 @@ pub struct CreateAssociationResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub association_description: Option<AssociationDescription>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateDocumentRequest {
     #[doc="<p>A valid JSON string.</p>"]
@@ -885,7 +1351,39 @@ pub struct CreateDocumentRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl CreateDocumentRequest {
+    /// Sets `content`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDocumentRequest.content = value.into();`.
+    pub fn content<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content = value.into();
+        self
+    }
+    /// Sets `document_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDocumentRequest.document_type = Some(value.into());`.
+    pub fn document_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.document_type = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDocumentRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateDocumentRequest with optional fields set to `None`.
+    pub fn new<ContentType: Into<String>, NameType: Into<String>>(content: ContentType,
+                                                                  name: NameType)
+                                                                  -> CreateDocumentRequest {
+        CreateDocumentRequest {
+            content: content.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateDocumentResult {
     #[doc="<p>Information about the Systems Manager document.</p>"]
@@ -893,7 +1391,6 @@ pub struct CreateDocumentResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub document_description: Option<DocumentDescription>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateMaintenanceWindowRequest {
     #[doc="<p>Enables a Maintenance Window task to execute on managed instances, even if you have not registered those instances as targets. If enabled, then you must specify the unregistered instances (by instance ID) when you register a task with the Maintenance Window </p> <p>If you don't enable this option, then you must specify previously-registered targets when you register a task with the Maintenance Window. </p>"]
@@ -920,7 +1417,78 @@ pub struct CreateMaintenanceWindowRequest {
     #[serde(rename="Schedule")]
     pub schedule: String,
 }
-
+impl CreateMaintenanceWindowRequest {
+    /// Sets `allow_unassociated_targets`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMaintenanceWindowRequest.allow_unassociated_targets = value.into();`.
+    pub fn allow_unassociated_targets<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.allow_unassociated_targets = value.into();
+        self
+    }
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMaintenanceWindowRequest.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `cutoff`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMaintenanceWindowRequest.cutoff = value.into();`.
+    pub fn cutoff<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.cutoff = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMaintenanceWindowRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `duration`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMaintenanceWindowRequest.duration = value.into();`.
+    pub fn duration<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.duration = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMaintenanceWindowRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `schedule`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMaintenanceWindowRequest.schedule = value.into();`.
+    pub fn schedule<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.schedule = value.into();
+        self
+    }
+    /// Returns a new instance of CreateMaintenanceWindowRequest with optional fields set to `None`.
+    pub fn new<AllowUnassociatedTargetsType: Into<bool>,
+               CutoffType: Into<i64>,
+               DurationType: Into<i64>,
+               NameType: Into<String>,
+               ScheduleType: Into<String>>
+        (allow_unassociated_targets: AllowUnassociatedTargetsType,
+         cutoff: CutoffType,
+         duration: DurationType,
+         name: NameType,
+         schedule: ScheduleType)
+         -> CreateMaintenanceWindowRequest {
+        CreateMaintenanceWindowRequest {
+            allow_unassociated_targets: allow_unassociated_targets.into(),
+            cutoff: cutoff.into(),
+            duration: duration.into(),
+            name: name.into(),
+            schedule: schedule.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateMaintenanceWindowResult {
     #[doc="<p>The ID of the created Maintenance Window.</p>"]
@@ -928,7 +1496,6 @@ pub struct CreateMaintenanceWindowResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreatePatchBaselineRequest {
     #[doc="<p>A set of rules used to include patches in the baseline.</p>"]
@@ -967,7 +1534,80 @@ pub struct CreatePatchBaselineRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rejected_patches: Option<Vec<String>>,
 }
-
+impl CreatePatchBaselineRequest {
+    /// Sets `approval_rules`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePatchBaselineRequest.approval_rules = Some(value.into());`.
+    pub fn approval_rules<ValueType: Into<PatchRuleGroup>>(mut self, value: ValueType) -> Self {
+        self.approval_rules = Some(value.into());
+        self
+    }
+    /// Sets `approved_patches`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePatchBaselineRequest.approved_patches = Some(value.into());`.
+    pub fn approved_patches<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.approved_patches = Some(value.into());
+        self
+    }
+    /// Sets `approved_patches_compliance_level`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePatchBaselineRequest.approved_patches_compliance_level = Some(value.into());`.
+    pub fn approved_patches_compliance_level<ValueType: Into<String>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.approved_patches_compliance_level = Some(value.into());
+        self
+    }
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePatchBaselineRequest.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePatchBaselineRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `global_filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePatchBaselineRequest.global_filters = Some(value.into());`.
+    pub fn global_filters<ValueType: Into<PatchFilterGroup>>(mut self, value: ValueType) -> Self {
+        self.global_filters = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePatchBaselineRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `operating_system`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePatchBaselineRequest.operating_system = Some(value.into());`.
+    pub fn operating_system<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.operating_system = Some(value.into());
+        self
+    }
+    /// Sets `rejected_patches`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePatchBaselineRequest.rejected_patches = Some(value.into());`.
+    pub fn rejected_patches<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.rejected_patches = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreatePatchBaselineRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> CreatePatchBaselineRequest {
+        CreatePatchBaselineRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreatePatchBaselineResult {
     #[doc="<p>The ID of the created patch baseline.</p>"]
@@ -975,7 +1615,6 @@ pub struct CreatePatchBaselineResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub baseline_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateResourceDataSyncRequest {
     #[doc="<p>Amazon S3 configuration details for the sync.</p>"]
@@ -985,7 +1624,35 @@ pub struct CreateResourceDataSyncRequest {
     #[serde(rename="SyncName")]
     pub sync_name: String,
 }
-
+impl CreateResourceDataSyncRequest {
+    /// Sets `s3_destination`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateResourceDataSyncRequest.s3_destination = value.into();`.
+    pub fn s3_destination<ValueType: Into<ResourceDataSyncS3Destination>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.s3_destination = value.into();
+        self
+    }
+    /// Sets `sync_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateResourceDataSyncRequest.sync_name = value.into();`.
+    pub fn sync_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sync_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateResourceDataSyncRequest with optional fields set to `None`.
+    pub fn new<S3DestinationType: Into<ResourceDataSyncS3Destination>, SyncNameType: Into<String>>
+        (s3_destination: S3DestinationType,
+         sync_name: SyncNameType)
+         -> CreateResourceDataSyncRequest {
+        CreateResourceDataSyncRequest {
+            s3_destination: s3_destination.into(),
+            sync_name: sync_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateResourceDataSyncResult;
 
@@ -995,7 +1662,23 @@ pub struct DeleteActivationRequest {
     #[serde(rename="ActivationId")]
     pub activation_id: String,
 }
-
+impl DeleteActivationRequest {
+    /// Sets `activation_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteActivationRequest.activation_id = value.into();`.
+    pub fn activation_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.activation_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteActivationRequest with optional fields set to `None`.
+    pub fn new<ActivationIdType: Into<String>>(activation_id: ActivationIdType)
+                                               -> DeleteActivationRequest {
+        DeleteActivationRequest {
+            activation_id: activation_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteActivationResult;
 
@@ -1014,7 +1697,33 @@ pub struct DeleteAssociationRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
+impl DeleteAssociationRequest {
+    /// Sets `association_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAssociationRequest.association_id = Some(value.into());`.
+    pub fn association_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.association_id = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAssociationRequest.instance_id = Some(value.into());`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAssociationRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteAssociationRequest with optional fields set to `None`.
+    pub fn new() -> DeleteAssociationRequest {
+        DeleteAssociationRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteAssociationResult;
 
@@ -1024,7 +1733,22 @@ pub struct DeleteDocumentRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl DeleteDocumentRequest {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDocumentRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDocumentRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> DeleteDocumentRequest {
+        DeleteDocumentRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteDocumentResult;
 
@@ -1034,7 +1758,23 @@ pub struct DeleteMaintenanceWindowRequest {
     #[serde(rename="WindowId")]
     pub window_id: String,
 }
-
+impl DeleteMaintenanceWindowRequest {
+    /// Sets `window_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteMaintenanceWindowRequest.window_id = value.into();`.
+    pub fn window_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteMaintenanceWindowRequest with optional fields set to `None`.
+    pub fn new<WindowIdType: Into<String>>(window_id: WindowIdType)
+                                           -> DeleteMaintenanceWindowRequest {
+        DeleteMaintenanceWindowRequest {
+            window_id: window_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteMaintenanceWindowResult {
     #[doc="<p>The ID of the deleted Maintenance Window.</p>"]
@@ -1042,14 +1782,28 @@ pub struct DeleteMaintenanceWindowResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteParameterRequest {
     #[doc="<p>The name of the parameter to delete.</p>"]
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl DeleteParameterRequest {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteParameterRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteParameterRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> DeleteParameterRequest {
+        DeleteParameterRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteParameterResult;
 
@@ -1059,7 +1813,22 @@ pub struct DeleteParametersRequest {
     #[serde(rename="Names")]
     pub names: Vec<String>,
 }
-
+impl DeleteParametersRequest {
+    /// Sets `names`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteParametersRequest.names = value.into();`.
+    pub fn names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.names = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteParametersRequest with optional fields set to `None`.
+    pub fn new<NamesType: Into<Vec<String>>>(names: NamesType) -> DeleteParametersRequest {
+        DeleteParametersRequest {
+            names: names.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteParametersResult {
     #[doc="<p>The names of the deleted parameters.</p>"]
@@ -1071,14 +1840,29 @@ pub struct DeleteParametersResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub invalid_parameters: Option<Vec<String>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeletePatchBaselineRequest {
     #[doc="<p>The ID of the patch baseline to delete.</p>"]
     #[serde(rename="BaselineId")]
     pub baseline_id: String,
 }
-
+impl DeletePatchBaselineRequest {
+    /// Sets `baseline_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePatchBaselineRequest.baseline_id = value.into();`.
+    pub fn baseline_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.baseline_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeletePatchBaselineRequest with optional fields set to `None`.
+    pub fn new<BaselineIdType: Into<String>>(baseline_id: BaselineIdType)
+                                             -> DeletePatchBaselineRequest {
+        DeletePatchBaselineRequest {
+            baseline_id: baseline_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeletePatchBaselineResult {
     #[doc="<p>The ID of the deleted patch baseline.</p>"]
@@ -1086,14 +1870,29 @@ pub struct DeletePatchBaselineResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub baseline_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteResourceDataSyncRequest {
     #[doc="<p>The name of the configuration to delete.</p>"]
     #[serde(rename="SyncName")]
     pub sync_name: String,
 }
-
+impl DeleteResourceDataSyncRequest {
+    /// Sets `sync_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteResourceDataSyncRequest.sync_name = value.into();`.
+    pub fn sync_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sync_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteResourceDataSyncRequest with optional fields set to `None`.
+    pub fn new<SyncNameType: Into<String>>(sync_name: SyncNameType)
+                                           -> DeleteResourceDataSyncRequest {
+        DeleteResourceDataSyncRequest {
+            sync_name: sync_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteResourceDataSyncResult;
 
@@ -1103,7 +1902,23 @@ pub struct DeregisterManagedInstanceRequest {
     #[serde(rename="InstanceId")]
     pub instance_id: String,
 }
-
+impl DeregisterManagedInstanceRequest {
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterManagedInstanceRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeregisterManagedInstanceRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>>(instance_id: InstanceIdType)
+                                             -> DeregisterManagedInstanceRequest {
+        DeregisterManagedInstanceRequest {
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeregisterManagedInstanceResult;
 
@@ -1116,7 +1931,33 @@ pub struct DeregisterPatchBaselineForPatchGroupRequest {
     #[serde(rename="PatchGroup")]
     pub patch_group: String,
 }
-
+impl DeregisterPatchBaselineForPatchGroupRequest {
+    /// Sets `baseline_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterPatchBaselineForPatchGroupRequest.baseline_id = value.into();`.
+    pub fn baseline_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.baseline_id = value.into();
+        self
+    }
+    /// Sets `patch_group`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterPatchBaselineForPatchGroupRequest.patch_group = value.into();`.
+    pub fn patch_group<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.patch_group = value.into();
+        self
+    }
+    /// Returns a new instance of DeregisterPatchBaselineForPatchGroupRequest with optional fields set to `None`.
+    pub fn new<BaselineIdType: Into<String>, PatchGroupType: Into<String>>
+        (baseline_id: BaselineIdType,
+         patch_group: PatchGroupType)
+         -> DeregisterPatchBaselineForPatchGroupRequest {
+        DeregisterPatchBaselineForPatchGroupRequest {
+            baseline_id: baseline_id.into(),
+            patch_group: patch_group.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeregisterPatchBaselineForPatchGroupResult {
     #[doc="<p>The ID of the patch baseline the patch group was deregistered from.</p>"]
@@ -1128,7 +1969,6 @@ pub struct DeregisterPatchBaselineForPatchGroupResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub patch_group: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeregisterTargetFromMaintenanceWindowRequest {
     #[doc="<p>The system checks if the target is being referenced by a task. If the target is being referenced, the system returns an error and does not deregister the target from the Maintenance Window.</p>"]
@@ -1142,7 +1982,40 @@ pub struct DeregisterTargetFromMaintenanceWindowRequest {
     #[serde(rename="WindowTargetId")]
     pub window_target_id: String,
 }
-
+impl DeregisterTargetFromMaintenanceWindowRequest {
+    /// Sets `safe`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterTargetFromMaintenanceWindowRequest.safe = Some(value.into());`.
+    pub fn safe<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.safe = Some(value.into());
+        self
+    }
+    /// Sets `window_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterTargetFromMaintenanceWindowRequest.window_id = value.into();`.
+    pub fn window_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_id = value.into();
+        self
+    }
+    /// Sets `window_target_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterTargetFromMaintenanceWindowRequest.window_target_id = value.into();`.
+    pub fn window_target_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_target_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeregisterTargetFromMaintenanceWindowRequest with optional fields set to `None`.
+    pub fn new<WindowIdType: Into<String>, WindowTargetIdType: Into<String>>
+        (window_id: WindowIdType,
+         window_target_id: WindowTargetIdType)
+         -> DeregisterTargetFromMaintenanceWindowRequest {
+        DeregisterTargetFromMaintenanceWindowRequest {
+            window_id: window_id.into(),
+            window_target_id: window_target_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeregisterTargetFromMaintenanceWindowResult {
     #[doc="<p>The ID of the Maintenance Window the target was removed from.</p>"]
@@ -1154,7 +2027,6 @@ pub struct DeregisterTargetFromMaintenanceWindowResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_target_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeregisterTaskFromMaintenanceWindowRequest {
     #[doc="<p>The ID of the Maintenance Window the task should be removed from.</p>"]
@@ -1164,7 +2036,33 @@ pub struct DeregisterTaskFromMaintenanceWindowRequest {
     #[serde(rename="WindowTaskId")]
     pub window_task_id: String,
 }
-
+impl DeregisterTaskFromMaintenanceWindowRequest {
+    /// Sets `window_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterTaskFromMaintenanceWindowRequest.window_id = value.into();`.
+    pub fn window_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_id = value.into();
+        self
+    }
+    /// Sets `window_task_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterTaskFromMaintenanceWindowRequest.window_task_id = value.into();`.
+    pub fn window_task_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_task_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeregisterTaskFromMaintenanceWindowRequest with optional fields set to `None`.
+    pub fn new<WindowIdType: Into<String>, WindowTaskIdType: Into<String>>
+        (window_id: WindowIdType,
+         window_task_id: WindowTaskIdType)
+         -> DeregisterTaskFromMaintenanceWindowRequest {
+        DeregisterTaskFromMaintenanceWindowRequest {
+            window_id: window_id.into(),
+            window_task_id: window_task_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeregisterTaskFromMaintenanceWindowResult {
     #[doc="<p>The ID of the Maintenance Window the task was removed from.</p>"]
@@ -1176,7 +2074,6 @@ pub struct DeregisterTaskFromMaintenanceWindowResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_task_id: Option<String>,
 }
-
 #[doc="<p>Filter for the DescribeActivation API.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeActivationsFilter {
@@ -1189,7 +2086,26 @@ pub struct DescribeActivationsFilter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub filter_values: Option<Vec<String>>,
 }
-
+impl DescribeActivationsFilter {
+    /// Sets `filter_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeActivationsFilter.filter_key = Some(value.into());`.
+    pub fn filter_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter_key = Some(value.into());
+        self
+    }
+    /// Sets `filter_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeActivationsFilter.filter_values = Some(value.into());`.
+    pub fn filter_values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.filter_values = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeActivationsFilter with optional fields set to `None`.
+    pub fn new() -> DescribeActivationsFilter {
+        DescribeActivationsFilter { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeActivationsRequest {
     #[doc="<p>A filter to view information about your activations.</p>"]
@@ -1205,7 +2121,35 @@ pub struct DescribeActivationsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeActivationsRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeActivationsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<DescribeActivationsFilter>>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeActivationsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeActivationsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeActivationsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeActivationsRequest {
+        DescribeActivationsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeActivationsResult {
     #[doc="<p>A list of activations for your AWS account.</p>"]
@@ -1217,7 +2161,6 @@ pub struct DescribeActivationsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeAssociationRequest {
     #[doc="<p>The association ID for which you want information.</p>"]
@@ -1237,7 +2180,40 @@ pub struct DescribeAssociationRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
+impl DescribeAssociationRequest {
+    /// Sets `association_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAssociationRequest.association_id = Some(value.into());`.
+    pub fn association_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.association_id = Some(value.into());
+        self
+    }
+    /// Sets `association_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAssociationRequest.association_version = Some(value.into());`.
+    pub fn association_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.association_version = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAssociationRequest.instance_id = Some(value.into());`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAssociationRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeAssociationRequest with optional fields set to `None`.
+    pub fn new() -> DescribeAssociationRequest {
+        DescribeAssociationRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeAssociationResult {
     #[doc="<p>Information about the association.</p>"]
@@ -1245,7 +2221,6 @@ pub struct DescribeAssociationResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub association_description: Option<AssociationDescription>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeAutomationExecutionsRequest {
     #[doc="<p>Filters used to limit the scope of executions that are requested.</p>"]
@@ -1261,7 +2236,35 @@ pub struct DescribeAutomationExecutionsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeAutomationExecutionsRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAutomationExecutionsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<AutomationExecutionFilter>>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAutomationExecutionsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAutomationExecutionsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeAutomationExecutionsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeAutomationExecutionsRequest {
+        DescribeAutomationExecutionsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeAutomationExecutionsResult {
     #[doc="<p>The list of details about each automation execution which has occurred which matches the filter specification, if any.</p>"]
@@ -1273,7 +2276,6 @@ pub struct DescribeAutomationExecutionsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeAvailablePatchesRequest {
     #[doc="<p>Filters used to scope down the returned patches.</p>"]
@@ -1289,7 +2291,35 @@ pub struct DescribeAvailablePatchesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeAvailablePatchesRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAvailablePatchesRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<PatchOrchestratorFilter>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAvailablePatchesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAvailablePatchesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeAvailablePatchesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeAvailablePatchesRequest {
+        DescribeAvailablePatchesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeAvailablePatchesResult {
     #[doc="<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>"]
@@ -1301,7 +2331,6 @@ pub struct DescribeAvailablePatchesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub patches: Option<Vec<Patch>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeDocumentPermissionRequest {
     #[doc="<p>The name of the document for which you are the owner.</p>"]
@@ -1311,7 +2340,33 @@ pub struct DescribeDocumentPermissionRequest {
     #[serde(rename="PermissionType")]
     pub permission_type: String,
 }
-
+impl DescribeDocumentPermissionRequest {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDocumentPermissionRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `permission_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDocumentPermissionRequest.permission_type = value.into();`.
+    pub fn permission_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.permission_type = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeDocumentPermissionRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, PermissionTypeType: Into<String>>
+        (name: NameType,
+         permission_type: PermissionTypeType)
+         -> DescribeDocumentPermissionRequest {
+        DescribeDocumentPermissionRequest {
+            name: name.into(),
+            permission_type: permission_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeDocumentPermissionResponse {
     #[doc="<p>The account IDs that have permission to use this document. The ID can be either an AWS account or <i>All</i>.</p>"]
@@ -1319,7 +2374,6 @@ pub struct DescribeDocumentPermissionResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub account_ids: Option<Vec<String>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeDocumentRequest {
     #[doc="<p>The document version for which you want information. Can be a specific version or the default version.</p>"]
@@ -1330,7 +2384,29 @@ pub struct DescribeDocumentRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl DescribeDocumentRequest {
+    /// Sets `document_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDocumentRequest.document_version = Some(value.into());`.
+    pub fn document_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.document_version = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDocumentRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeDocumentRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> DescribeDocumentRequest {
+        DescribeDocumentRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeDocumentResult {
     #[doc="<p>Information about the SSM document.</p>"]
@@ -1338,7 +2414,6 @@ pub struct DescribeDocumentResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub document: Option<DocumentDescription>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeEffectiveInstanceAssociationsRequest {
     #[doc="<p>The instance ID for which you want to view all associations.</p>"]
@@ -1353,7 +2428,37 @@ pub struct DescribeEffectiveInstanceAssociationsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeEffectiveInstanceAssociationsRequest {
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEffectiveInstanceAssociationsRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEffectiveInstanceAssociationsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEffectiveInstanceAssociationsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEffectiveInstanceAssociationsRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>>(instance_id: InstanceIdType)
+                                             -> DescribeEffectiveInstanceAssociationsRequest {
+        DescribeEffectiveInstanceAssociationsRequest {
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeEffectiveInstanceAssociationsResult {
     #[doc="<p>The associations for the requested instance.</p>"]
@@ -1365,7 +2470,6 @@ pub struct DescribeEffectiveInstanceAssociationsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeEffectivePatchesForPatchBaselineRequest {
     #[doc="<p>The ID of the patch baseline to retrieve the effective patches for.</p>"]
@@ -1380,7 +2484,37 @@ pub struct DescribeEffectivePatchesForPatchBaselineRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeEffectivePatchesForPatchBaselineRequest {
+    /// Sets `baseline_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEffectivePatchesForPatchBaselineRequest.baseline_id = value.into();`.
+    pub fn baseline_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.baseline_id = value.into();
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEffectivePatchesForPatchBaselineRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEffectivePatchesForPatchBaselineRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEffectivePatchesForPatchBaselineRequest with optional fields set to `None`.
+    pub fn new<BaselineIdType: Into<String>>(baseline_id: BaselineIdType)
+                                             -> DescribeEffectivePatchesForPatchBaselineRequest {
+        DescribeEffectivePatchesForPatchBaselineRequest {
+            baseline_id: baseline_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeEffectivePatchesForPatchBaselineResult {
     #[doc="<p>An array of patches and patch status.</p>"]
@@ -1392,7 +2526,6 @@ pub struct DescribeEffectivePatchesForPatchBaselineResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeInstanceAssociationsStatusRequest {
     #[doc="<p>The instance IDs for which you want association status information.</p>"]
@@ -1407,7 +2540,37 @@ pub struct DescribeInstanceAssociationsStatusRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeInstanceAssociationsStatusRequest {
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstanceAssociationsStatusRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstanceAssociationsStatusRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstanceAssociationsStatusRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeInstanceAssociationsStatusRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>>(instance_id: InstanceIdType)
+                                             -> DescribeInstanceAssociationsStatusRequest {
+        DescribeInstanceAssociationsStatusRequest {
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeInstanceAssociationsStatusResult {
     #[doc="<p>Status information about the association.</p>"]
@@ -1419,7 +2582,6 @@ pub struct DescribeInstanceAssociationsStatusResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeInstanceInformationRequest {
     #[doc="<p>One or more filters. Use a filter to return a more specific list of instances.</p>"]
@@ -1439,7 +2601,45 @@ pub struct DescribeInstanceInformationRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeInstanceInformationRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstanceInformationRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<InstanceInformationStringFilter>>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `instance_information_filter_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstanceInformationRequest.instance_information_filter_list = Some(value.into());`.
+    pub fn instance_information_filter_list<ValueType: Into<Vec<InstanceInformationFilter>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.instance_information_filter_list = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstanceInformationRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstanceInformationRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeInstanceInformationRequest with optional fields set to `None`.
+    pub fn new() -> DescribeInstanceInformationRequest {
+        DescribeInstanceInformationRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeInstanceInformationResult {
     #[doc="<p>The instance information list.</p>"]
@@ -1451,7 +2651,6 @@ pub struct DescribeInstanceInformationResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeInstancePatchStatesForPatchGroupRequest {
     #[doc="<p>Each entry in the array is a structure containing:</p> <p>Key (string between 1 and 200 characters)</p> <p> Values (array containing a single string)</p> <p> Type (string \"Equal\", \"NotEqual\", \"LessThan\", \"GreaterThan\")</p>"]
@@ -1470,7 +2669,46 @@ pub struct DescribeInstancePatchStatesForPatchGroupRequest {
     #[serde(rename="PatchGroup")]
     pub patch_group: String,
 }
-
+impl DescribeInstancePatchStatesForPatchGroupRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancePatchStatesForPatchGroupRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<InstancePatchStateFilter>>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancePatchStatesForPatchGroupRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancePatchStatesForPatchGroupRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `patch_group`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancePatchStatesForPatchGroupRequest.patch_group = value.into();`.
+    pub fn patch_group<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.patch_group = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeInstancePatchStatesForPatchGroupRequest with optional fields set to `None`.
+    pub fn new<PatchGroupType: Into<String>>(patch_group: PatchGroupType)
+                                             -> DescribeInstancePatchStatesForPatchGroupRequest {
+        DescribeInstancePatchStatesForPatchGroupRequest {
+            patch_group: patch_group.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeInstancePatchStatesForPatchGroupResult {
     #[doc="<p>The high-level patch state for the requested instances. </p>"]
@@ -1482,7 +2720,6 @@ pub struct DescribeInstancePatchStatesForPatchGroupResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeInstancePatchStatesRequest {
     #[doc="<p>The ID of the instance whose patch state information should be retrieved.</p>"]
@@ -1497,7 +2734,37 @@ pub struct DescribeInstancePatchStatesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeInstancePatchStatesRequest {
+    /// Sets `instance_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancePatchStatesRequest.instance_ids = value.into();`.
+    pub fn instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_ids = value.into();
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancePatchStatesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancePatchStatesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeInstancePatchStatesRequest with optional fields set to `None`.
+    pub fn new<InstanceIdsType: Into<Vec<String>>>(instance_ids: InstanceIdsType)
+                                                   -> DescribeInstancePatchStatesRequest {
+        DescribeInstancePatchStatesRequest {
+            instance_ids: instance_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeInstancePatchStatesResult {
     #[doc="<p>The high-level patch state for the requested instances.</p>"]
@@ -1509,7 +2776,6 @@ pub struct DescribeInstancePatchStatesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeInstancePatchesRequest {
     #[doc="<p>Each entry in the array is a structure containing:</p> <p>Key (string, between 1 and 128 characters)</p> <p>Values (array of strings, each string between 1 and 256 characters)</p>"]
@@ -1528,7 +2794,46 @@ pub struct DescribeInstancePatchesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeInstancePatchesRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancePatchesRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<PatchOrchestratorFilter>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancePatchesRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancePatchesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancePatchesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeInstancePatchesRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>>(instance_id: InstanceIdType)
+                                             -> DescribeInstancePatchesRequest {
+        DescribeInstancePatchesRequest {
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeInstancePatchesResult {
     #[doc="<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>"]
@@ -1540,7 +2845,6 @@ pub struct DescribeInstancePatchesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub patches: Option<Vec<PatchComplianceData>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeMaintenanceWindowExecutionTaskInvocationsRequest {
     #[doc="<p>Optional filters used to scope down the returned task invocations. The supported filter key is STATUS with the corresponding values PENDING, IN_PROGRESS, SUCCESS, FAILED, TIMED_OUT, CANCELLING, and CANCELLED.</p>"]
@@ -1562,7 +2866,56 @@ pub struct DescribeMaintenanceWindowExecutionTaskInvocationsRequest {
     #[serde(rename="WindowExecutionId")]
     pub window_execution_id: String,
 }
-
+impl DescribeMaintenanceWindowExecutionTaskInvocationsRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowExecutionTaskInvocationsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<MaintenanceWindowFilter>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowExecutionTaskInvocationsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowExecutionTaskInvocationsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `task_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowExecutionTaskInvocationsRequest.task_id = value.into();`.
+    pub fn task_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_id = value.into();
+        self
+    }
+    /// Sets `window_execution_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowExecutionTaskInvocationsRequest.window_execution_id = value.into();`.
+    pub fn window_execution_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_execution_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeMaintenanceWindowExecutionTaskInvocationsRequest with optional fields set to `None`.
+    pub fn new<TaskIdType: Into<String>, WindowExecutionIdType: Into<String>>
+        (task_id: TaskIdType,
+         window_execution_id: WindowExecutionIdType)
+         -> DescribeMaintenanceWindowExecutionTaskInvocationsRequest {
+        DescribeMaintenanceWindowExecutionTaskInvocationsRequest {
+            task_id: task_id.into(),
+            window_execution_id: window_execution_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeMaintenanceWindowExecutionTaskInvocationsResult {
     #[doc="<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>"]
@@ -1575,7 +2928,6 @@ pub struct DescribeMaintenanceWindowExecutionTaskInvocationsResult {
     pub window_execution_task_invocation_identities:
         Option<Vec<MaintenanceWindowExecutionTaskInvocationIdentity>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeMaintenanceWindowExecutionTasksRequest {
     #[doc="<p>Optional filters used to scope down the returned tasks. The supported filter key is STATUS with the corresponding values PENDING, IN_PROGRESS, SUCCESS, FAILED, TIMED_OUT, CANCELLING, and CANCELLED. </p>"]
@@ -1594,7 +2946,47 @@ pub struct DescribeMaintenanceWindowExecutionTasksRequest {
     #[serde(rename="WindowExecutionId")]
     pub window_execution_id: String,
 }
-
+impl DescribeMaintenanceWindowExecutionTasksRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowExecutionTasksRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<MaintenanceWindowFilter>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowExecutionTasksRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowExecutionTasksRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `window_execution_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowExecutionTasksRequest.window_execution_id = value.into();`.
+    pub fn window_execution_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_execution_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeMaintenanceWindowExecutionTasksRequest with optional fields set to `None`.
+    pub fn new<WindowExecutionIdType: Into<String>>
+        (window_execution_id: WindowExecutionIdType)
+         -> DescribeMaintenanceWindowExecutionTasksRequest {
+        DescribeMaintenanceWindowExecutionTasksRequest {
+            window_execution_id: window_execution_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeMaintenanceWindowExecutionTasksResult {
     #[doc="<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>"]
@@ -1606,7 +2998,6 @@ pub struct DescribeMaintenanceWindowExecutionTasksResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_execution_task_identities: Option<Vec<MaintenanceWindowExecutionTaskIdentity>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeMaintenanceWindowExecutionsRequest {
     #[doc="<p>Each entry in the array is a structure containing:</p> <p>Key (string, between 1 and 128 characters)</p> <p>Values (array of strings, each string is between 1 and 256 characters)</p> <p>The supported Keys are ExecutedBefore and ExecutedAfter with the value being a date/time string such as 2016-11-04T05:00:00Z.</p>"]
@@ -1625,7 +3016,46 @@ pub struct DescribeMaintenanceWindowExecutionsRequest {
     #[serde(rename="WindowId")]
     pub window_id: String,
 }
-
+impl DescribeMaintenanceWindowExecutionsRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowExecutionsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<MaintenanceWindowFilter>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowExecutionsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowExecutionsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `window_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowExecutionsRequest.window_id = value.into();`.
+    pub fn window_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeMaintenanceWindowExecutionsRequest with optional fields set to `None`.
+    pub fn new<WindowIdType: Into<String>>(window_id: WindowIdType)
+                                           -> DescribeMaintenanceWindowExecutionsRequest {
+        DescribeMaintenanceWindowExecutionsRequest {
+            window_id: window_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeMaintenanceWindowExecutionsResult {
     #[doc="<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>"]
@@ -1637,7 +3067,6 @@ pub struct DescribeMaintenanceWindowExecutionsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_executions: Option<Vec<MaintenanceWindowExecution>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeMaintenanceWindowTargetsRequest {
     #[doc="<p>Optional filters that can be used to narrow down the scope of the returned window targets. The supported filter keys are Type, WindowTargetId and OwnerInformation.</p>"]
@@ -1656,7 +3085,46 @@ pub struct DescribeMaintenanceWindowTargetsRequest {
     #[serde(rename="WindowId")]
     pub window_id: String,
 }
-
+impl DescribeMaintenanceWindowTargetsRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowTargetsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<MaintenanceWindowFilter>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowTargetsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowTargetsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `window_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowTargetsRequest.window_id = value.into();`.
+    pub fn window_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeMaintenanceWindowTargetsRequest with optional fields set to `None`.
+    pub fn new<WindowIdType: Into<String>>(window_id: WindowIdType)
+                                           -> DescribeMaintenanceWindowTargetsRequest {
+        DescribeMaintenanceWindowTargetsRequest {
+            window_id: window_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeMaintenanceWindowTargetsResult {
     #[doc="<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>"]
@@ -1668,7 +3136,6 @@ pub struct DescribeMaintenanceWindowTargetsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub targets: Option<Vec<MaintenanceWindowTarget>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeMaintenanceWindowTasksRequest {
     #[doc="<p>Optional filters used to narrow down the scope of the returned tasks. The supported filter keys are WindowTaskId, TaskArn, Priority, and TaskType.</p>"]
@@ -1687,7 +3154,46 @@ pub struct DescribeMaintenanceWindowTasksRequest {
     #[serde(rename="WindowId")]
     pub window_id: String,
 }
-
+impl DescribeMaintenanceWindowTasksRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowTasksRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<MaintenanceWindowFilter>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowTasksRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowTasksRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `window_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowTasksRequest.window_id = value.into();`.
+    pub fn window_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeMaintenanceWindowTasksRequest with optional fields set to `None`.
+    pub fn new<WindowIdType: Into<String>>(window_id: WindowIdType)
+                                           -> DescribeMaintenanceWindowTasksRequest {
+        DescribeMaintenanceWindowTasksRequest {
+            window_id: window_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeMaintenanceWindowTasksResult {
     #[doc="<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>"]
@@ -1699,7 +3205,6 @@ pub struct DescribeMaintenanceWindowTasksResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tasks: Option<Vec<MaintenanceWindowTask>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeMaintenanceWindowsRequest {
     #[doc="<p>Optional filters used to narrow down the scope of the returned Maintenance Windows. Supported filter keys are Name and Enabled.</p>"]
@@ -1715,7 +3220,35 @@ pub struct DescribeMaintenanceWindowsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeMaintenanceWindowsRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<MaintenanceWindowFilter>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceWindowsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeMaintenanceWindowsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeMaintenanceWindowsRequest {
+        DescribeMaintenanceWindowsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeMaintenanceWindowsResult {
     #[doc="<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>"]
@@ -1727,7 +3260,6 @@ pub struct DescribeMaintenanceWindowsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_identities: Option<Vec<MaintenanceWindowIdentity>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeParametersRequest {
     #[doc="<p>One or more filters. Use a filter to return a more specific list of results.</p>"]
@@ -1747,7 +3279,42 @@ pub struct DescribeParametersRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub parameter_filters: Option<Vec<ParameterStringFilter>>,
 }
-
+impl DescribeParametersRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeParametersRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<ParametersFilter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeParametersRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeParametersRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `parameter_filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeParametersRequest.parameter_filters = Some(value.into());`.
+    pub fn parameter_filters<ValueType: Into<Vec<ParameterStringFilter>>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.parameter_filters = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeParametersRequest with optional fields set to `None`.
+    pub fn new() -> DescribeParametersRequest {
+        DescribeParametersRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeParametersResult {
     #[doc="<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>"]
@@ -1759,7 +3326,6 @@ pub struct DescribeParametersResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub parameters: Option<Vec<ParameterMetadata>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribePatchBaselinesRequest {
     #[doc="<p>Each element in the array is a structure containing: </p> <p>Key: (string, \"NAME_PREFIX\" or \"OWNER\")</p> <p>Value: (array of strings, exactly 1 entry, between 1 and 255 characters)</p>"]
@@ -1775,7 +3341,35 @@ pub struct DescribePatchBaselinesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribePatchBaselinesRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePatchBaselinesRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<PatchOrchestratorFilter>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePatchBaselinesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePatchBaselinesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribePatchBaselinesRequest with optional fields set to `None`.
+    pub fn new() -> DescribePatchBaselinesRequest {
+        DescribePatchBaselinesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribePatchBaselinesResult {
     #[doc="<p>An array of PatchBaselineIdentity elements.</p>"]
@@ -1787,14 +3381,29 @@ pub struct DescribePatchBaselinesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribePatchGroupStateRequest {
     #[doc="<p>The name of the patch group whose patch snapshot should be retrieved.</p>"]
     #[serde(rename="PatchGroup")]
     pub patch_group: String,
 }
-
+impl DescribePatchGroupStateRequest {
+    /// Sets `patch_group`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePatchGroupStateRequest.patch_group = value.into();`.
+    pub fn patch_group<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.patch_group = value.into();
+        self
+    }
+    /// Returns a new instance of DescribePatchGroupStateRequest with optional fields set to `None`.
+    pub fn new<PatchGroupType: Into<String>>(patch_group: PatchGroupType)
+                                             -> DescribePatchGroupStateRequest {
+        DescribePatchGroupStateRequest {
+            patch_group: patch_group.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribePatchGroupStateResult {
     #[doc="<p>The number of instances in the patch group.</p>"]
@@ -1822,7 +3431,6 @@ pub struct DescribePatchGroupStateResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instances_with_not_applicable_patches: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribePatchGroupsRequest {
     #[doc="<p>One or more filters. Use a filter to return a more specific list of results.</p>"]
@@ -1838,7 +3446,35 @@ pub struct DescribePatchGroupsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribePatchGroupsRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePatchGroupsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<PatchOrchestratorFilter>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePatchGroupsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePatchGroupsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribePatchGroupsRequest with optional fields set to `None`.
+    pub fn new() -> DescribePatchGroupsRequest {
+        DescribePatchGroupsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribePatchGroupsResult {
     #[doc="<p>Each entry in the array contains:</p> <p>PatchGroup: string (between 1 and 256 characters, Regex: ^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$)</p> <p>PatchBaselineIdentity: A PatchBaselineIdentity element. </p>"]
@@ -1850,7 +3486,6 @@ pub struct DescribePatchGroupsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>A default version of a document.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DocumentDefaultVersionDescription {
@@ -1863,7 +3498,6 @@ pub struct DocumentDefaultVersionDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p>Describes an SSM document. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DocumentDescription {
@@ -1928,7 +3562,6 @@ pub struct DocumentDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[doc="<p>Describes a filter.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DocumentFilter {
@@ -1939,7 +3572,32 @@ pub struct DocumentFilter {
     #[serde(rename="value")]
     pub value: String,
 }
-
+impl DocumentFilter {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DocumentFilter.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DocumentFilter.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of DocumentFilter with optional fields set to `None`.
+    pub fn new<keyType: Into<String>, valueType: Into<String>>(key: keyType,
+                                                               value: valueType)
+                                                               -> DocumentFilter {
+        DocumentFilter {
+            key: key.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes the name of an SSM document.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DocumentIdentifier {
@@ -1968,7 +3626,6 @@ pub struct DocumentIdentifier {
     #[serde(skip_serializing_if="Option::is_none")]
     pub schema_version: Option<String>,
 }
-
 #[doc="<p>Parameters specified in a System Manager document that execute on the server when the command is run. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DocumentParameter {
@@ -1989,7 +3646,6 @@ pub struct DocumentParameter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>Version information about the document.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DocumentVersionInfo {
@@ -2010,7 +3666,6 @@ pub struct DocumentVersionInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p>The EffectivePatch structure defines metadata about a patch along with the approval state of the patch in a particular patch baseline. The approval state includes information about whether the patch is currently approved, due to be approved by a rule, explicitly approved, or explicitly rejected and the date the patch was or will be approved.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EffectivePatch {
@@ -2023,7 +3678,6 @@ pub struct EffectivePatch {
     #[serde(skip_serializing_if="Option::is_none")]
     pub patch_status: Option<PatchStatus>,
 }
-
 #[doc="<p>Describes a failed association.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct FailedCreateAssociation {
@@ -2040,7 +3694,6 @@ pub struct FailedCreateAssociation {
     #[serde(skip_serializing_if="Option::is_none")]
     pub message: Option<String>,
 }
-
 #[doc="<p>Information about an Automation failure.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct FailureDetails {
@@ -2057,14 +3710,28 @@ pub struct FailureDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub failure_type: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetAutomationExecutionRequest {
     #[doc="<p>The unique identifier for an existing automation execution to examine. The execution ID is returned by StartAutomationExecution when the execution of an Automation document is initiated.</p>"]
     #[serde(rename="AutomationExecutionId")]
     pub automation_execution_id: String,
 }
-
+impl GetAutomationExecutionRequest {
+    /// Sets `automation_execution_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetAutomationExecutionRequest.automation_execution_id = value.into();`.
+    pub fn automation_execution_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.automation_execution_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetAutomationExecutionRequest with optional fields set to `None`.
+pub fn new<AutomationExecutionIdType: Into<String>>(automation_execution_id: AutomationExecutionIdType) -> GetAutomationExecutionRequest{
+        GetAutomationExecutionRequest {
+            automation_execution_id: automation_execution_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetAutomationExecutionResult {
     #[doc="<p>Detailed information about the current state of an automation execution.</p>"]
@@ -2072,7 +3739,6 @@ pub struct GetAutomationExecutionResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub automation_execution: Option<AutomationExecution>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetCommandInvocationRequest {
     #[doc="<p>(Required) The parent command ID of the invocation plugin.</p>"]
@@ -2086,7 +3752,40 @@ pub struct GetCommandInvocationRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub plugin_name: Option<String>,
 }
-
+impl GetCommandInvocationRequest {
+    /// Sets `command_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetCommandInvocationRequest.command_id = value.into();`.
+    pub fn command_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.command_id = value.into();
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetCommandInvocationRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `plugin_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetCommandInvocationRequest.plugin_name = Some(value.into());`.
+    pub fn plugin_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.plugin_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetCommandInvocationRequest with optional fields set to `None`.
+    pub fn new<CommandIdType: Into<String>, InstanceIdType: Into<String>>
+        (command_id: CommandIdType,
+         instance_id: InstanceIdType)
+         -> GetCommandInvocationRequest {
+        GetCommandInvocationRequest {
+            command_id: command_id.into(),
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetCommandInvocationResult {
     #[doc="<p>The parent command ID of the invocation plugin.</p>"]
@@ -2150,7 +3849,6 @@ pub struct GetCommandInvocationResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status_details: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDefaultPatchBaselineRequest {
     #[doc="<p>Returns the default patch baseline for the specified operating system.</p>"]
@@ -2158,7 +3856,19 @@ pub struct GetDefaultPatchBaselineRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operating_system: Option<String>,
 }
-
+impl GetDefaultPatchBaselineRequest {
+    /// Sets `operating_system`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDefaultPatchBaselineRequest.operating_system = Some(value.into());`.
+    pub fn operating_system<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.operating_system = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetDefaultPatchBaselineRequest with optional fields set to `None`.
+    pub fn new() -> GetDefaultPatchBaselineRequest {
+        GetDefaultPatchBaselineRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetDefaultPatchBaselineResult {
     #[doc="<p>The ID of the default patch baseline.</p>"]
@@ -2170,7 +3880,6 @@ pub struct GetDefaultPatchBaselineResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operating_system: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDeployablePatchSnapshotForInstanceRequest {
     #[doc="<p>The ID of the instance for which the appropriate patch snapshot should be retrieved.</p>"]
@@ -2180,7 +3889,33 @@ pub struct GetDeployablePatchSnapshotForInstanceRequest {
     #[serde(rename="SnapshotId")]
     pub snapshot_id: String,
 }
-
+impl GetDeployablePatchSnapshotForInstanceRequest {
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDeployablePatchSnapshotForInstanceRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `snapshot_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDeployablePatchSnapshotForInstanceRequest.snapshot_id = value.into();`.
+    pub fn snapshot_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetDeployablePatchSnapshotForInstanceRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>, SnapshotIdType: Into<String>>
+        (instance_id: InstanceIdType,
+         snapshot_id: SnapshotIdType)
+         -> GetDeployablePatchSnapshotForInstanceRequest {
+        GetDeployablePatchSnapshotForInstanceRequest {
+            instance_id: instance_id.into(),
+            snapshot_id: snapshot_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetDeployablePatchSnapshotForInstanceResult {
     #[doc="<p>The ID of the instance.</p>"]
@@ -2200,7 +3935,6 @@ pub struct GetDeployablePatchSnapshotForInstanceResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub snapshot_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDocumentRequest {
     #[doc="<p>The document version for which you want information.</p>"]
@@ -2211,7 +3945,29 @@ pub struct GetDocumentRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl GetDocumentRequest {
+    /// Sets `document_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDocumentRequest.document_version = Some(value.into());`.
+    pub fn document_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.document_version = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDocumentRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of GetDocumentRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> GetDocumentRequest {
+        GetDocumentRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetDocumentResult {
     #[doc="<p>The contents of the SSM document.</p>"]
@@ -2231,7 +3987,6 @@ pub struct GetDocumentResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetInventoryRequest {
     #[doc="<p>One or more filters. Use a filter to return a more specific list of results.</p>"]
@@ -2251,7 +4006,42 @@ pub struct GetInventoryRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub result_attributes: Option<Vec<ResultAttribute>>,
 }
-
+impl GetInventoryRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInventoryRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<InventoryFilter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInventoryRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInventoryRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `result_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInventoryRequest.result_attributes = Some(value.into());`.
+    pub fn result_attributes<ValueType: Into<Vec<ResultAttribute>>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.result_attributes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetInventoryRequest with optional fields set to `None`.
+    pub fn new() -> GetInventoryRequest {
+        GetInventoryRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetInventoryResult {
     #[doc="<p>Collection of inventory entities such as a collection of instance inventory. </p>"]
@@ -2263,7 +4053,6 @@ pub struct GetInventoryResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetInventorySchemaRequest {
     #[doc="<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>"]
@@ -2283,7 +4072,40 @@ pub struct GetInventorySchemaRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_name: Option<String>,
 }
-
+impl GetInventorySchemaRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInventorySchemaRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInventorySchemaRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `sub_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInventorySchemaRequest.sub_type = Some(value.into());`.
+    pub fn sub_type<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.sub_type = Some(value.into());
+        self
+    }
+    /// Sets `type_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInventorySchemaRequest.type_name = Some(value.into());`.
+    pub fn type_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetInventorySchemaRequest with optional fields set to `None`.
+    pub fn new() -> GetInventorySchemaRequest {
+        GetInventorySchemaRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetInventorySchemaResult {
     #[doc="<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>"]
@@ -2295,14 +4117,29 @@ pub struct GetInventorySchemaResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub schemas: Option<Vec<InventoryItemSchema>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetMaintenanceWindowExecutionRequest {
     #[doc="<p>The ID of the Maintenance Window execution that includes the task.</p>"]
     #[serde(rename="WindowExecutionId")]
     pub window_execution_id: String,
 }
-
+impl GetMaintenanceWindowExecutionRequest {
+    /// Sets `window_execution_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMaintenanceWindowExecutionRequest.window_execution_id = value.into();`.
+    pub fn window_execution_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_execution_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetMaintenanceWindowExecutionRequest with optional fields set to `None`.
+    pub fn new<WindowExecutionIdType: Into<String>>(window_execution_id: WindowExecutionIdType)
+                                                    -> GetMaintenanceWindowExecutionRequest {
+        GetMaintenanceWindowExecutionRequest {
+            window_execution_id: window_execution_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetMaintenanceWindowExecutionResult {
     #[doc="<p>The time the Maintenance Window finished executing.</p>"]
@@ -2330,7 +4167,6 @@ pub struct GetMaintenanceWindowExecutionResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_execution_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetMaintenanceWindowExecutionTaskInvocationRequest {
     #[doc="<p>The invocation ID to retrieve.</p>"]
@@ -2343,7 +4179,44 @@ pub struct GetMaintenanceWindowExecutionTaskInvocationRequest {
     #[serde(rename="WindowExecutionId")]
     pub window_execution_id: String,
 }
-
+impl GetMaintenanceWindowExecutionTaskInvocationRequest {
+    /// Sets `invocation_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMaintenanceWindowExecutionTaskInvocationRequest.invocation_id = value.into();`.
+    pub fn invocation_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.invocation_id = value.into();
+        self
+    }
+    /// Sets `task_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMaintenanceWindowExecutionTaskInvocationRequest.task_id = value.into();`.
+    pub fn task_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_id = value.into();
+        self
+    }
+    /// Sets `window_execution_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMaintenanceWindowExecutionTaskInvocationRequest.window_execution_id = value.into();`.
+    pub fn window_execution_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_execution_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetMaintenanceWindowExecutionTaskInvocationRequest with optional fields set to `None`.
+    pub fn new<InvocationIdType: Into<String>,
+               TaskIdType: Into<String>,
+               WindowExecutionIdType: Into<String>>
+        (invocation_id: InvocationIdType,
+         task_id: TaskIdType,
+         window_execution_id: WindowExecutionIdType)
+         -> GetMaintenanceWindowExecutionTaskInvocationRequest {
+        GetMaintenanceWindowExecutionTaskInvocationRequest {
+            invocation_id: invocation_id.into(),
+            task_id: task_id.into(),
+            window_execution_id: window_execution_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetMaintenanceWindowExecutionTaskInvocationResult {
     #[doc="<p>The time that the task finished executing on the target.</p>"]
@@ -2395,7 +4268,6 @@ pub struct GetMaintenanceWindowExecutionTaskInvocationResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_target_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetMaintenanceWindowExecutionTaskRequest {
     #[doc="<p>The ID of the specific task execution in the Maintenance Window task that should be retrieved.</p>"]
@@ -2405,7 +4277,33 @@ pub struct GetMaintenanceWindowExecutionTaskRequest {
     #[serde(rename="WindowExecutionId")]
     pub window_execution_id: String,
 }
-
+impl GetMaintenanceWindowExecutionTaskRequest {
+    /// Sets `task_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMaintenanceWindowExecutionTaskRequest.task_id = value.into();`.
+    pub fn task_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_id = value.into();
+        self
+    }
+    /// Sets `window_execution_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMaintenanceWindowExecutionTaskRequest.window_execution_id = value.into();`.
+    pub fn window_execution_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_execution_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetMaintenanceWindowExecutionTaskRequest with optional fields set to `None`.
+    pub fn new<TaskIdType: Into<String>, WindowExecutionIdType: Into<String>>
+        (task_id: TaskIdType,
+         window_execution_id: WindowExecutionIdType)
+         -> GetMaintenanceWindowExecutionTaskRequest {
+        GetMaintenanceWindowExecutionTaskRequest {
+            task_id: task_id.into(),
+            window_execution_id: window_execution_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetMaintenanceWindowExecutionTaskResult {
     #[doc="<p>The time the task execution completed.</p>"]
@@ -2463,14 +4361,28 @@ pub struct GetMaintenanceWindowExecutionTaskResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_execution_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetMaintenanceWindowRequest {
     #[doc="<p>The ID of the desired Maintenance Window.</p>"]
     #[serde(rename="WindowId")]
     pub window_id: String,
 }
-
+impl GetMaintenanceWindowRequest {
+    /// Sets `window_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMaintenanceWindowRequest.window_id = value.into();`.
+    pub fn window_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetMaintenanceWindowRequest with optional fields set to `None`.
+    pub fn new<WindowIdType: Into<String>>(window_id: WindowIdType) -> GetMaintenanceWindowRequest {
+        GetMaintenanceWindowRequest {
+            window_id: window_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetMaintenanceWindowResult {
     #[doc="<p>Whether targets must be registered with the Maintenance Window before tasks can be defined for those targets.</p>"]
@@ -2514,7 +4426,6 @@ pub struct GetMaintenanceWindowResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetMaintenanceWindowTaskRequest {
     #[doc="<p>The Maintenance Window ID that includes the task to retrieve.</p>"]
@@ -2524,7 +4435,33 @@ pub struct GetMaintenanceWindowTaskRequest {
     #[serde(rename="WindowTaskId")]
     pub window_task_id: String,
 }
-
+impl GetMaintenanceWindowTaskRequest {
+    /// Sets `window_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMaintenanceWindowTaskRequest.window_id = value.into();`.
+    pub fn window_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_id = value.into();
+        self
+    }
+    /// Sets `window_task_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMaintenanceWindowTaskRequest.window_task_id = value.into();`.
+    pub fn window_task_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_task_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetMaintenanceWindowTaskRequest with optional fields set to `None`.
+    pub fn new<WindowIdType: Into<String>, WindowTaskIdType: Into<String>>
+        (window_id: WindowIdType,
+         window_task_id: WindowTaskIdType)
+         -> GetMaintenanceWindowTaskRequest {
+        GetMaintenanceWindowTaskRequest {
+            window_id: window_id.into(),
+            window_task_id: window_task_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetMaintenanceWindowTaskResult {
     #[doc="<p>The retrieved task description.</p>"]
@@ -2585,7 +4522,6 @@ pub struct GetMaintenanceWindowTaskResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_task_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetParameterHistoryRequest {
     #[doc="<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>"]
@@ -2604,7 +4540,43 @@ pub struct GetParameterHistoryRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub with_decryption: Option<bool>,
 }
-
+impl GetParameterHistoryRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetParameterHistoryRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetParameterHistoryRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetParameterHistoryRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `with_decryption`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetParameterHistoryRequest.with_decryption = Some(value.into());`.
+    pub fn with_decryption<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.with_decryption = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetParameterHistoryRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> GetParameterHistoryRequest {
+        GetParameterHistoryRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetParameterHistoryResult {
     #[doc="<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>"]
@@ -2616,7 +4588,6 @@ pub struct GetParameterHistoryResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub parameters: Option<Vec<ParameterHistory>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetParameterRequest {
     #[doc="<p>The name of the parameter you want to query.</p>"]
@@ -2627,7 +4598,29 @@ pub struct GetParameterRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub with_decryption: Option<bool>,
 }
-
+impl GetParameterRequest {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetParameterRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `with_decryption`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetParameterRequest.with_decryption = Some(value.into());`.
+    pub fn with_decryption<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.with_decryption = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetParameterRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> GetParameterRequest {
+        GetParameterRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetParameterResult {
     #[doc="<p>Information about a parameter.</p>"]
@@ -2635,7 +4628,6 @@ pub struct GetParameterResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub parameter: Option<Parameter>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetParametersByPathRequest {
     #[doc="<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>"]
@@ -2662,7 +4654,59 @@ pub struct GetParametersByPathRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub with_decryption: Option<bool>,
 }
-
+impl GetParametersByPathRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetParametersByPathRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetParametersByPathRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `parameter_filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetParametersByPathRequest.parameter_filters = Some(value.into());`.
+    pub fn parameter_filters<ValueType: Into<Vec<ParameterStringFilter>>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.parameter_filters = Some(value.into());
+        self
+    }
+    /// Sets `path`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetParametersByPathRequest.path = value.into();`.
+    pub fn path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path = value.into();
+        self
+    }
+    /// Sets `recursive`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetParametersByPathRequest.recursive = Some(value.into());`.
+    pub fn recursive<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.recursive = Some(value.into());
+        self
+    }
+    /// Sets `with_decryption`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetParametersByPathRequest.with_decryption = Some(value.into());`.
+    pub fn with_decryption<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.with_decryption = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetParametersByPathRequest with optional fields set to `None`.
+    pub fn new<PathType: Into<String>>(path: PathType) -> GetParametersByPathRequest {
+        GetParametersByPathRequest {
+            path: path.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetParametersByPathResult {
     #[doc="<p>The token for the next set of items to return. Use this token to get the next set of results.</p>"]
@@ -2674,7 +4718,6 @@ pub struct GetParametersByPathResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub parameters: Option<Vec<Parameter>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetParametersRequest {
     #[doc="<p>Names of the parameters for which you want to query information.</p>"]
@@ -2685,7 +4728,29 @@ pub struct GetParametersRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub with_decryption: Option<bool>,
 }
-
+impl GetParametersRequest {
+    /// Sets `names`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetParametersRequest.names = value.into();`.
+    pub fn names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.names = value.into();
+        self
+    }
+    /// Sets `with_decryption`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetParametersRequest.with_decryption = Some(value.into());`.
+    pub fn with_decryption<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.with_decryption = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetParametersRequest with optional fields set to `None`.
+    pub fn new<NamesType: Into<Vec<String>>>(names: NamesType) -> GetParametersRequest {
+        GetParametersRequest {
+            names: names.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetParametersResult {
     #[doc="<p>A list of parameters that are not formatted correctly or do not run when executed.</p>"]
@@ -2697,7 +4762,6 @@ pub struct GetParametersResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub parameters: Option<Vec<Parameter>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetPatchBaselineForPatchGroupRequest {
     #[doc="<p>Returns he operating system rule specified for patch groups using the patch baseline.</p>"]
@@ -2708,7 +4772,30 @@ pub struct GetPatchBaselineForPatchGroupRequest {
     #[serde(rename="PatchGroup")]
     pub patch_group: String,
 }
-
+impl GetPatchBaselineForPatchGroupRequest {
+    /// Sets `operating_system`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetPatchBaselineForPatchGroupRequest.operating_system = Some(value.into());`.
+    pub fn operating_system<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.operating_system = Some(value.into());
+        self
+    }
+    /// Sets `patch_group`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetPatchBaselineForPatchGroupRequest.patch_group = value.into();`.
+    pub fn patch_group<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.patch_group = value.into();
+        self
+    }
+    /// Returns a new instance of GetPatchBaselineForPatchGroupRequest with optional fields set to `None`.
+    pub fn new<PatchGroupType: Into<String>>(patch_group: PatchGroupType)
+                                             -> GetPatchBaselineForPatchGroupRequest {
+        GetPatchBaselineForPatchGroupRequest {
+            patch_group: patch_group.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetPatchBaselineForPatchGroupResult {
     #[doc="<p>The ID of the patch baseline that should be used for the patch group.</p>"]
@@ -2724,14 +4811,29 @@ pub struct GetPatchBaselineForPatchGroupResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub patch_group: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetPatchBaselineRequest {
     #[doc="<p>The ID of the patch baseline to retrieve.</p>"]
     #[serde(rename="BaselineId")]
     pub baseline_id: String,
 }
-
+impl GetPatchBaselineRequest {
+    /// Sets `baseline_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetPatchBaselineRequest.baseline_id = value.into();`.
+    pub fn baseline_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.baseline_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetPatchBaselineRequest with optional fields set to `None`.
+    pub fn new<BaselineIdType: Into<String>>(baseline_id: BaselineIdType)
+                                             -> GetPatchBaselineRequest {
+        GetPatchBaselineRequest {
+            baseline_id: baseline_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetPatchBaselineResult {
     #[doc="<p>A set of rules used to include patches in the baseline.</p>"]
@@ -2783,7 +4885,6 @@ pub struct GetPatchBaselineResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rejected_patches: Option<Vec<String>>,
 }
-
 #[doc="<p>Status information about the aggregated associations.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceAggregatedAssociationOverview {
@@ -2797,7 +4898,6 @@ pub struct InstanceAggregatedAssociationOverview {
     pub instance_association_status_aggregated_count:
         Option<::std::collections::HashMap<String, i64>>,
 }
-
 #[doc="<p>One or more association documents on the instance. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceAssociation {
@@ -2818,7 +4918,6 @@ pub struct InstanceAssociation {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instance_id: Option<String>,
 }
-
 #[doc="<p>An Amazon S3 bucket where you want to store the results of this request.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct InstanceAssociationOutputLocation {
@@ -2827,7 +4926,19 @@ pub struct InstanceAssociationOutputLocation {
     #[serde(skip_serializing_if="Option::is_none")]
     pub s3_location: Option<S3OutputLocation>,
 }
-
+impl InstanceAssociationOutputLocation {
+    /// Sets `s3_location`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceAssociationOutputLocation.s3_location = Some(value.into());`.
+    pub fn s3_location<ValueType: Into<S3OutputLocation>>(mut self, value: ValueType) -> Self {
+        self.s3_location = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InstanceAssociationOutputLocation with optional fields set to `None`.
+    pub fn new() -> InstanceAssociationOutputLocation {
+        InstanceAssociationOutputLocation { ..Default::default() }
+    }
+}
 #[doc="<p>The URL of Amazon S3 bucket where you want to store the results of this request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceAssociationOutputUrl {
@@ -2836,7 +4947,6 @@ pub struct InstanceAssociationOutputUrl {
     #[serde(skip_serializing_if="Option::is_none")]
     pub s3_output_url: Option<S3OutputUrl>,
 }
-
 #[doc="<p>Status information about the instance association.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceAssociationStatusInfo {
@@ -2889,7 +4999,6 @@ pub struct InstanceAssociationStatusInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[doc="<p>Describes a filter for a specific list of instances. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceInformation {
@@ -2970,7 +5079,6 @@ pub struct InstanceInformation {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_type: Option<String>,
 }
-
 #[doc="<p>Describes a filter for a specific list of instances. </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InstanceInformationFilter {
@@ -2981,7 +5089,33 @@ pub struct InstanceInformationFilter {
     #[serde(rename="valueSet")]
     pub value_set: Vec<String>,
 }
-
+impl InstanceInformationFilter {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceInformationFilter.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value_set`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceInformationFilter.value_set = value.into();`.
+    pub fn value_set<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.value_set = value.into();
+        self
+    }
+    /// Returns a new instance of InstanceInformationFilter with optional fields set to `None`.
+    pub fn new<keyType: Into<String>, valueSetType: Into<Vec<String>>>
+        (key: keyType,
+         value_set: valueSetType)
+         -> InstanceInformationFilter {
+        InstanceInformationFilter {
+            key: key.into(),
+            value_set: value_set.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The filters to describe or get information about your managed instances.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InstanceInformationStringFilter {
@@ -2992,7 +5126,33 @@ pub struct InstanceInformationStringFilter {
     #[serde(rename="Values")]
     pub values: Vec<String>,
 }
-
+impl InstanceInformationStringFilter {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceInformationStringFilter.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `values`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceInformationStringFilter.values = value.into();`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = value.into();
+        self
+    }
+    /// Returns a new instance of InstanceInformationStringFilter with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>, ValuesType: Into<Vec<String>>>
+        (key: KeyType,
+         values: ValuesType)
+         -> InstanceInformationStringFilter {
+        InstanceInformationStringFilter {
+            key: key.into(),
+            values: values.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Defines the high-level patch compliance state for a managed instance, providing information about the number of installed, missing, not applicable, and failed patches along with metadata about the operation when this information was gathered for the instance.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstancePatchState {
@@ -3043,7 +5203,6 @@ pub struct InstancePatchState {
     #[serde(skip_serializing_if="Option::is_none")]
     pub snapshot_id: Option<String>,
 }
-
 #[doc="<p>Defines a filter used in DescribeInstancePatchStatesForPatchGroup used to scope down the information returned by the API.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InstancePatchStateFilter {
@@ -3057,7 +5216,42 @@ pub struct InstancePatchStateFilter {
     #[serde(rename="Values")]
     pub values: Vec<String>,
 }
-
+impl InstancePatchStateFilter {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstancePatchStateFilter.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstancePatchStateFilter.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Sets `values`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstancePatchStateFilter.values = value.into();`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = value.into();
+        self
+    }
+    /// Returns a new instance of InstancePatchStateFilter with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>, TypeType: Into<String>, ValuesType: Into<Vec<String>>>
+        (key: KeyType,
+         type_: TypeType,
+         values: ValuesType)
+         -> InstancePatchStateFilter {
+        InstancePatchStateFilter {
+            key: key.into(),
+            type_: type_.into(),
+            values: values.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>One or more filters. Use a filter to return a more specific list of results.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InventoryFilter {
@@ -3072,7 +5266,39 @@ pub struct InventoryFilter {
     #[serde(rename="Values")]
     pub values: Vec<String>,
 }
-
+impl InventoryFilter {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryFilter.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryFilter.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Sets `values`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryFilter.values = value.into();`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = value.into();
+        self
+    }
+    /// Returns a new instance of InventoryFilter with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>, ValuesType: Into<Vec<String>>>(key: KeyType,
+                                                                     values: ValuesType)
+                                                                     -> InventoryFilter {
+        InventoryFilter {
+            key: key.into(),
+            values: values.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Information collected from managed instances based on your inventory policy document</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InventoryItem {
@@ -3098,7 +5324,67 @@ pub struct InventoryItem {
     #[serde(rename="TypeName")]
     pub type_name: String,
 }
-
+impl InventoryItem {
+    /// Sets `capture_time`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryItem.capture_time = value.into();`.
+    pub fn capture_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.capture_time = value.into();
+        self
+    }
+    /// Sets `content`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryItem.content = Some(value.into());`.
+pub fn content<ValueType: Into<Vec<::std::collections::HashMap<String, String>>>>(mut self, value: ValueType) -> Self{
+        self.content = Some(value.into());
+        self
+    }
+    /// Sets `content_hash`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryItem.content_hash = Some(value.into());`.
+    pub fn content_hash<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_hash = Some(value.into());
+        self
+    }
+    /// Sets `context`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryItem.context = Some(value.into());`.
+    pub fn context<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                                 value: ValueType)
+                                                                                 -> Self {
+        self.context = Some(value.into());
+        self
+    }
+    /// Sets `schema_version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryItem.schema_version = value.into();`.
+    pub fn schema_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.schema_version = value.into();
+        self
+    }
+    /// Sets `type_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InventoryItem.type_name = value.into();`.
+    pub fn type_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_name = value.into();
+        self
+    }
+    /// Returns a new instance of InventoryItem with optional fields set to `None`.
+    pub fn new<CaptureTimeType: Into<String>,
+               SchemaVersionType: Into<String>,
+               TypeNameType: Into<String>>
+        (capture_time: CaptureTimeType,
+         schema_version: SchemaVersionType,
+         type_name: TypeNameType)
+         -> InventoryItem {
+        InventoryItem {
+            capture_time: capture_time.into(),
+            schema_version: schema_version.into(),
+            type_name: type_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Attributes are the entries within the inventory item content. It contains name and value.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InventoryItemAttribute {
@@ -3109,7 +5395,6 @@ pub struct InventoryItemAttribute {
     #[serde(rename="Name")]
     pub name: String,
 }
-
 #[doc="<p>The inventory item schema definition. Users can use this to compose inventory query filters.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InventoryItemSchema {
@@ -3124,7 +5409,6 @@ pub struct InventoryItemSchema {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<String>,
 }
-
 #[doc="<p>Inventory query results.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InventoryResultEntity {
@@ -3137,7 +5421,6 @@ pub struct InventoryResultEntity {
     #[serde(skip_serializing_if="Option::is_none")]
     pub id: Option<String>,
 }
-
 #[doc="<p>The inventory result item.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InventoryResultItem {
@@ -3159,7 +5442,6 @@ pub struct InventoryResultItem {
     #[serde(rename="TypeName")]
     pub type_name: String,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListAssociationVersionsRequest {
     #[doc="<p>The association ID for which you want to view all versions.</p>"]
@@ -3174,7 +5456,37 @@ pub struct ListAssociationVersionsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListAssociationVersionsRequest {
+    /// Sets `association_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssociationVersionsRequest.association_id = value.into();`.
+    pub fn association_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.association_id = value.into();
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssociationVersionsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssociationVersionsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListAssociationVersionsRequest with optional fields set to `None`.
+    pub fn new<AssociationIdType: Into<String>>(association_id: AssociationIdType)
+                                                -> ListAssociationVersionsRequest {
+        ListAssociationVersionsRequest {
+            association_id: association_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListAssociationVersionsResult {
     #[doc="<p>Information about all versions of the association for the specified association ID.</p>"]
@@ -3186,7 +5498,6 @@ pub struct ListAssociationVersionsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListAssociationsRequest {
     #[doc="<p>One or more filters. Use a filter to return a more specific list of results.</p>"]
@@ -3202,7 +5513,35 @@ pub struct ListAssociationsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListAssociationsRequest {
+    /// Sets `association_filter_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssociationsRequest.association_filter_list = Some(value.into());`.
+    pub fn association_filter_list<ValueType: Into<Vec<AssociationFilter>>>(mut self,
+                                                                            value: ValueType)
+                                                                            -> Self {
+        self.association_filter_list = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssociationsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssociationsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListAssociationsRequest with optional fields set to `None`.
+    pub fn new() -> ListAssociationsRequest {
+        ListAssociationsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListAssociationsResult {
     #[doc="<p>The associations.</p>"]
@@ -3214,7 +5553,6 @@ pub struct ListAssociationsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListCommandInvocationsRequest {
     #[doc="<p>(Optional) The invocations for a specific command ID.</p>"]
@@ -3242,7 +5580,54 @@ pub struct ListCommandInvocationsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListCommandInvocationsRequest {
+    /// Sets `command_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCommandInvocationsRequest.command_id = Some(value.into());`.
+    pub fn command_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.command_id = Some(value.into());
+        self
+    }
+    /// Sets `details`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCommandInvocationsRequest.details = Some(value.into());`.
+    pub fn details<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.details = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCommandInvocationsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<CommandFilter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCommandInvocationsRequest.instance_id = Some(value.into());`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCommandInvocationsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCommandInvocationsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListCommandInvocationsRequest with optional fields set to `None`.
+    pub fn new() -> ListCommandInvocationsRequest {
+        ListCommandInvocationsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListCommandInvocationsResult {
     #[doc="<p>(Optional) A list of all invocations. </p>"]
@@ -3254,7 +5639,6 @@ pub struct ListCommandInvocationsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListCommandsRequest {
     #[doc="<p>(Optional) If provided, lists only the specified command.</p>"]
@@ -3278,7 +5662,47 @@ pub struct ListCommandsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListCommandsRequest {
+    /// Sets `command_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCommandsRequest.command_id = Some(value.into());`.
+    pub fn command_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.command_id = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCommandsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<CommandFilter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCommandsRequest.instance_id = Some(value.into());`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCommandsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCommandsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListCommandsRequest with optional fields set to `None`.
+    pub fn new() -> ListCommandsRequest {
+        ListCommandsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListCommandsResult {
     #[doc="<p>(Optional) The list of commands requested by the user. </p>"]
@@ -3290,7 +5714,6 @@ pub struct ListCommandsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListComplianceItemsRequest {
     #[doc="<p>One or more compliance filters. Use a filter to return a more specific list of results.</p>"]
@@ -3314,7 +5737,49 @@ pub struct ListComplianceItemsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_types: Option<Vec<String>>,
 }
-
+impl ListComplianceItemsRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListComplianceItemsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<ComplianceStringFilter>>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListComplianceItemsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListComplianceItemsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `resource_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListComplianceItemsRequest.resource_ids = Some(value.into());`.
+    pub fn resource_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resource_ids = Some(value.into());
+        self
+    }
+    /// Sets `resource_types`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListComplianceItemsRequest.resource_types = Some(value.into());`.
+    pub fn resource_types<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resource_types = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListComplianceItemsRequest with optional fields set to `None`.
+    pub fn new() -> ListComplianceItemsRequest {
+        ListComplianceItemsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListComplianceItemsResult {
     #[doc="<p>A list of compliance information for the specified resource ID. </p>"]
@@ -3326,7 +5791,6 @@ pub struct ListComplianceItemsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListComplianceSummariesRequest {
     #[doc="<p>One or more compliance or inventory filters. Use a filter to return a more specific list of results.</p>"]
@@ -3342,7 +5806,35 @@ pub struct ListComplianceSummariesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListComplianceSummariesRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListComplianceSummariesRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<ComplianceStringFilter>>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListComplianceSummariesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListComplianceSummariesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListComplianceSummariesRequest with optional fields set to `None`.
+    pub fn new() -> ListComplianceSummariesRequest {
+        ListComplianceSummariesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListComplianceSummariesResult {
     #[doc="<p>A list of compliant and non-compliant summary counts based on compliance types. For example, this call returns State Manager associations, patches, or custom compliance types according to the filter criteria that you specified.</p>"]
@@ -3354,7 +5846,6 @@ pub struct ListComplianceSummariesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListDocumentVersionsRequest {
     #[doc="<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>"]
@@ -3369,7 +5860,36 @@ pub struct ListDocumentVersionsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListDocumentVersionsRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDocumentVersionsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDocumentVersionsRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDocumentVersionsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListDocumentVersionsRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> ListDocumentVersionsRequest {
+        ListDocumentVersionsRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListDocumentVersionsResult {
     #[doc="<p>The document versions.</p>"]
@@ -3381,7 +5901,6 @@ pub struct ListDocumentVersionsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListDocumentsRequest {
     #[doc="<p>One or more filters. Use a filter to return a more specific list of results.</p>"]
@@ -3397,7 +5916,35 @@ pub struct ListDocumentsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListDocumentsRequest {
+    /// Sets `document_filter_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDocumentsRequest.document_filter_list = Some(value.into());`.
+    pub fn document_filter_list<ValueType: Into<Vec<DocumentFilter>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.document_filter_list = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDocumentsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDocumentsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListDocumentsRequest with optional fields set to `None`.
+    pub fn new() -> ListDocumentsRequest {
+        ListDocumentsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListDocumentsResult {
     #[doc="<p>The names of the SSM documents.</p>"]
@@ -3409,7 +5956,6 @@ pub struct ListDocumentsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListInventoryEntriesRequest {
     #[doc="<p>One or more filters. Use a filter to return a more specific list of results.</p>"]
@@ -3431,7 +5977,54 @@ pub struct ListInventoryEntriesRequest {
     #[serde(rename="TypeName")]
     pub type_name: String,
 }
-
+impl ListInventoryEntriesRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInventoryEntriesRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<InventoryFilter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInventoryEntriesRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInventoryEntriesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInventoryEntriesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `type_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInventoryEntriesRequest.type_name = value.into();`.
+    pub fn type_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListInventoryEntriesRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>, TypeNameType: Into<String>>
+        (instance_id: InstanceIdType,
+         type_name: TypeNameType)
+         -> ListInventoryEntriesRequest {
+        ListInventoryEntriesRequest {
+            instance_id: instance_id.into(),
+            type_name: type_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListInventoryEntriesResult {
     #[doc="<p>The time that inventory information was collected for the instance(s).</p>"]
@@ -3459,7 +6052,6 @@ pub struct ListInventoryEntriesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_name: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListResourceComplianceSummariesRequest {
     #[doc="<p>One or more filters. Use a filter to return a more specific list of results.</p>"]
@@ -3475,7 +6067,35 @@ pub struct ListResourceComplianceSummariesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListResourceComplianceSummariesRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListResourceComplianceSummariesRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<ComplianceStringFilter>>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListResourceComplianceSummariesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListResourceComplianceSummariesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListResourceComplianceSummariesRequest with optional fields set to `None`.
+    pub fn new() -> ListResourceComplianceSummariesRequest {
+        ListResourceComplianceSummariesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListResourceComplianceSummariesResult {
     #[doc="<p>The token for the next set of items to return. Use this token to get the next set of results.</p>"]
@@ -3487,7 +6107,6 @@ pub struct ListResourceComplianceSummariesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_compliance_summary_items: Option<Vec<ResourceComplianceSummaryItem>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListResourceDataSyncRequest {
     #[doc="<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>"]
@@ -3499,7 +6118,26 @@ pub struct ListResourceDataSyncRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListResourceDataSyncRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListResourceDataSyncRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListResourceDataSyncRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListResourceDataSyncRequest with optional fields set to `None`.
+    pub fn new() -> ListResourceDataSyncRequest {
+        ListResourceDataSyncRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListResourceDataSyncResult {
     #[doc="<p>The token for the next set of items to return. Use this token to get the next set of results.</p>"]
@@ -3511,7 +6149,6 @@ pub struct ListResourceDataSyncResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_data_sync_items: Option<Vec<ResourceDataSyncItem>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTagsForResourceRequest {
     #[doc="<p>The resource ID for which you want to see a list of tags.</p>"]
@@ -3521,7 +6158,33 @@ pub struct ListTagsForResourceRequest {
     #[serde(rename="ResourceType")]
     pub resource_type: String,
 }
-
+impl ListTagsForResourceRequest {
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForResourceRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `resource_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForResourceRequest.resource_type = value.into();`.
+    pub fn resource_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_type = value.into();
+        self
+    }
+    /// Returns a new instance of ListTagsForResourceRequest with optional fields set to `None`.
+    pub fn new<ResourceIdType: Into<String>, ResourceTypeType: Into<String>>
+        (resource_id: ResourceIdType,
+         resource_type: ResourceTypeType)
+         -> ListTagsForResourceRequest {
+        ListTagsForResourceRequest {
+            resource_id: resource_id.into(),
+            resource_type: resource_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTagsForResourceResult {
     #[doc="<p>A list of tags.</p>"]
@@ -3529,7 +6192,6 @@ pub struct ListTagsForResourceResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tag_list: Option<Vec<Tag>>,
 }
-
 #[doc="<p>Information about an Amazon S3 bucket to write instance-level logs to.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct LoggingInfo {
@@ -3544,7 +6206,37 @@ pub struct LoggingInfo {
     #[serde(rename="S3Region")]
     pub s3_region: String,
 }
-
+impl LoggingInfo {
+    /// Sets `s3_bucket_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LoggingInfo.s3_bucket_name = value.into();`.
+    pub fn s3_bucket_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_bucket_name = value.into();
+        self
+    }
+    /// Sets `s3_key_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LoggingInfo.s3_key_prefix = Some(value.into());`.
+    pub fn s3_key_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_key_prefix = Some(value.into());
+        self
+    }
+    /// Sets `s3_region`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LoggingInfo.s3_region = value.into();`.
+    pub fn s3_region<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_region = value.into();
+        self
+    }
+    /// Returns a new instance of LoggingInfo with optional fields set to `None`.
+pub fn new<S3BucketNameType: Into<String>, S3RegionType: Into<String>>(s3_bucket_name: S3BucketNameType, s3_region: S3RegionType) -> LoggingInfo{
+        LoggingInfo {
+            s3_bucket_name: s3_bucket_name.into(),
+            s3_region: s3_region.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The parameters for an AUTOMATION task type.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct MaintenanceWindowAutomationParameters {
@@ -3557,7 +6249,29 @@ pub struct MaintenanceWindowAutomationParameters {
     #[serde(skip_serializing_if="Option::is_none")]
     pub parameters: Option<::std::collections::HashMap<String, Vec<String>>>,
 }
-
+impl MaintenanceWindowAutomationParameters {
+    /// Sets `document_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowAutomationParameters.document_version = Some(value.into());`.
+    pub fn document_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.document_version = Some(value.into());
+        self
+    }
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowAutomationParameters.parameters = Some(value.into());`.
+    pub fn parameters<ValueType: Into<::std::collections::HashMap<String, Vec<String>>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Returns a new instance of MaintenanceWindowAutomationParameters with optional fields set to `None`.
+    pub fn new() -> MaintenanceWindowAutomationParameters {
+        MaintenanceWindowAutomationParameters { ..Default::default() }
+    }
+}
 #[doc="<p>Describes the information about an execution of a Maintenance Window. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MaintenanceWindowExecution {
@@ -3586,7 +6300,6 @@ pub struct MaintenanceWindowExecution {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_id: Option<String>,
 }
-
 #[doc="<p>Information about a task execution performed as part of a Maintenance Window execution.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MaintenanceWindowExecutionTaskIdentity {
@@ -3623,7 +6336,6 @@ pub struct MaintenanceWindowExecutionTaskIdentity {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_execution_id: Option<String>,
 }
-
 #[doc="<p>Describes the information about a task invocation for a particular target as part of a task execution performed as part of a Maintenance Window execution.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MaintenanceWindowExecutionTaskInvocationIdentity {
@@ -3676,7 +6388,6 @@ pub struct MaintenanceWindowExecutionTaskInvocationIdentity {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_target_id: Option<String>,
 }
-
 #[doc="<p>Filter used in the request.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct MaintenanceWindowFilter {
@@ -3689,7 +6400,26 @@ pub struct MaintenanceWindowFilter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub values: Option<Vec<String>>,
 }
-
+impl MaintenanceWindowFilter {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowFilter.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowFilter.values = Some(value.into());`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = Some(value.into());
+        self
+    }
+    /// Returns a new instance of MaintenanceWindowFilter with optional fields set to `None`.
+    pub fn new() -> MaintenanceWindowFilter {
+        MaintenanceWindowFilter { ..Default::default() }
+    }
+}
 #[doc="<p>Information about the Maintenance Window.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MaintenanceWindowIdentity {
@@ -3718,7 +6448,6 @@ pub struct MaintenanceWindowIdentity {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_id: Option<String>,
 }
-
 #[doc="<p>The parameters for a LAMBDA task type.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct MaintenanceWindowLambdaParameters {
@@ -3739,7 +6468,33 @@ pub struct MaintenanceWindowLambdaParameters {
     #[serde(skip_serializing_if="Option::is_none")]
     pub qualifier: Option<String>,
 }
-
+impl MaintenanceWindowLambdaParameters {
+    /// Sets `client_context`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowLambdaParameters.client_context = Some(value.into());`.
+    pub fn client_context<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_context = Some(value.into());
+        self
+    }
+    /// Sets `payload`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowLambdaParameters.payload = Some(value.into());`.
+    pub fn payload<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.payload = Some(value.into());
+        self
+    }
+    /// Sets `qualifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowLambdaParameters.qualifier = Some(value.into());`.
+    pub fn qualifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.qualifier = Some(value.into());
+        self
+    }
+    /// Returns a new instance of MaintenanceWindowLambdaParameters with optional fields set to `None`.
+    pub fn new() -> MaintenanceWindowLambdaParameters {
+        MaintenanceWindowLambdaParameters { ..Default::default() }
+    }
+}
 #[doc="<p>The parameters for a RUN_COMMAND task type.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct MaintenanceWindowRunCommandParameters {
@@ -3780,7 +6535,80 @@ pub struct MaintenanceWindowRunCommandParameters {
     #[serde(skip_serializing_if="Option::is_none")]
     pub timeout_seconds: Option<i64>,
 }
-
+impl MaintenanceWindowRunCommandParameters {
+    /// Sets `comment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowRunCommandParameters.comment = Some(value.into());`.
+    pub fn comment<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.comment = Some(value.into());
+        self
+    }
+    /// Sets `document_hash`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowRunCommandParameters.document_hash = Some(value.into());`.
+    pub fn document_hash<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.document_hash = Some(value.into());
+        self
+    }
+    /// Sets `document_hash_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowRunCommandParameters.document_hash_type = Some(value.into());`.
+    pub fn document_hash_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.document_hash_type = Some(value.into());
+        self
+    }
+    /// Sets `notification_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowRunCommandParameters.notification_config = Some(value.into());`.
+    pub fn notification_config<ValueType: Into<NotificationConfig>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.notification_config = Some(value.into());
+        self
+    }
+    /// Sets `output_s3_bucket_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowRunCommandParameters.output_s3_bucket_name = Some(value.into());`.
+    pub fn output_s3_bucket_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.output_s3_bucket_name = Some(value.into());
+        self
+    }
+    /// Sets `output_s3_key_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowRunCommandParameters.output_s3_key_prefix = Some(value.into());`.
+    pub fn output_s3_key_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.output_s3_key_prefix = Some(value.into());
+        self
+    }
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowRunCommandParameters.parameters = Some(value.into());`.
+    pub fn parameters<ValueType: Into<::std::collections::HashMap<String, Vec<String>>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Sets `service_role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowRunCommandParameters.service_role_arn = Some(value.into());`.
+    pub fn service_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_role_arn = Some(value.into());
+        self
+    }
+    /// Sets `timeout_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowRunCommandParameters.timeout_seconds = Some(value.into());`.
+    pub fn timeout_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.timeout_seconds = Some(value.into());
+        self
+    }
+    /// Returns a new instance of MaintenanceWindowRunCommandParameters with optional fields set to `None`.
+    pub fn new() -> MaintenanceWindowRunCommandParameters {
+        MaintenanceWindowRunCommandParameters { ..Default::default() }
+    }
+}
 #[doc="<p>The parameters for the STEP_FUNCTION execution.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct MaintenanceWindowStepFunctionsParameters {
@@ -3793,7 +6621,26 @@ pub struct MaintenanceWindowStepFunctionsParameters {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
+impl MaintenanceWindowStepFunctionsParameters {
+    /// Sets `input`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowStepFunctionsParameters.input = Some(value.into());`.
+    pub fn input<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.input = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowStepFunctionsParameters.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of MaintenanceWindowStepFunctionsParameters with optional fields set to `None`.
+    pub fn new() -> MaintenanceWindowStepFunctionsParameters {
+        MaintenanceWindowStepFunctionsParameters { ..Default::default() }
+    }
+}
 #[doc="<p>The target registered with the Maintenance Window.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MaintenanceWindowTarget {
@@ -3826,7 +6673,6 @@ pub struct MaintenanceWindowTarget {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_target_id: Option<String>,
 }
-
 #[doc="<p>Information about a task defined for a Maintenance Window.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MaintenanceWindowTask {
@@ -3884,7 +6730,6 @@ pub struct MaintenanceWindowTask {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_task_id: Option<String>,
 }
-
 #[doc="<p>The parameters for task execution.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct MaintenanceWindowTaskInvocationParameters {
@@ -3905,7 +6750,46 @@ pub struct MaintenanceWindowTaskInvocationParameters {
     #[serde(skip_serializing_if="Option::is_none")]
     pub step_functions: Option<MaintenanceWindowStepFunctionsParameters>,
 }
-
+impl MaintenanceWindowTaskInvocationParameters {
+    /// Sets `automation`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowTaskInvocationParameters.automation = Some(value.into());`.
+    pub fn automation<ValueType: Into<MaintenanceWindowAutomationParameters>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.automation = Some(value.into());
+        self
+    }
+    /// Sets `lambda`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowTaskInvocationParameters.lambda = Some(value.into());`.
+    pub fn lambda<ValueType: Into<MaintenanceWindowLambdaParameters>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.lambda = Some(value.into());
+        self
+    }
+    /// Sets `run_command`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowTaskInvocationParameters.run_command = Some(value.into());`.
+    pub fn run_command<ValueType: Into<MaintenanceWindowRunCommandParameters>>(mut self,
+                                                                               value: ValueType)
+                                                                               -> Self {
+        self.run_command = Some(value.into());
+        self
+    }
+    /// Sets `step_functions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowTaskInvocationParameters.step_functions = Some(value.into());`.
+pub fn step_functions<ValueType: Into<MaintenanceWindowStepFunctionsParameters>>(mut self, value: ValueType) -> Self{
+        self.step_functions = Some(value.into());
+        self
+    }
+    /// Returns a new instance of MaintenanceWindowTaskInvocationParameters with optional fields set to `None`.
+    pub fn new() -> MaintenanceWindowTaskInvocationParameters {
+        MaintenanceWindowTaskInvocationParameters { ..Default::default() }
+    }
+}
 #[doc="<p>Defines the values for a task parameter.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct MaintenanceWindowTaskParameterValueExpression {
@@ -3914,7 +6798,19 @@ pub struct MaintenanceWindowTaskParameterValueExpression {
     #[serde(skip_serializing_if="Option::is_none")]
     pub values: Option<Vec<String>>,
 }
-
+impl MaintenanceWindowTaskParameterValueExpression {
+    /// Sets `values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaintenanceWindowTaskParameterValueExpression.values = Some(value.into());`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = Some(value.into());
+        self
+    }
+    /// Returns a new instance of MaintenanceWindowTaskParameterValueExpression with optional fields set to `None`.
+    pub fn new() -> MaintenanceWindowTaskParameterValueExpression {
+        MaintenanceWindowTaskParameterValueExpression { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ModifyDocumentPermissionRequest {
     #[doc="<p>The AWS user accounts that should have access to the document. The account IDs can either be a group of account IDs or <i>All</i>.</p>"]
@@ -3932,7 +6828,47 @@ pub struct ModifyDocumentPermissionRequest {
     #[serde(rename="PermissionType")]
     pub permission_type: String,
 }
-
+impl ModifyDocumentPermissionRequest {
+    /// Sets `account_ids_to_add`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDocumentPermissionRequest.account_ids_to_add = Some(value.into());`.
+    pub fn account_ids_to_add<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.account_ids_to_add = Some(value.into());
+        self
+    }
+    /// Sets `account_ids_to_remove`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDocumentPermissionRequest.account_ids_to_remove = Some(value.into());`.
+    pub fn account_ids_to_remove<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.account_ids_to_remove = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDocumentPermissionRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `permission_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDocumentPermissionRequest.permission_type = value.into();`.
+    pub fn permission_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.permission_type = value.into();
+        self
+    }
+    /// Returns a new instance of ModifyDocumentPermissionRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, PermissionTypeType: Into<String>>
+        (name: NameType,
+         permission_type: PermissionTypeType)
+         -> ModifyDocumentPermissionRequest {
+        ModifyDocumentPermissionRequest {
+            name: name.into(),
+            permission_type: permission_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ModifyDocumentPermissionResponse;
 
@@ -3948,7 +6884,6 @@ pub struct NonCompliantSummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub severity_summary: Option<SeveritySummary>,
 }
-
 #[doc="<p>Configurations for sending notifications.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct NotificationConfig {
@@ -3965,7 +6900,33 @@ pub struct NotificationConfig {
     #[serde(skip_serializing_if="Option::is_none")]
     pub notification_type: Option<String>,
 }
-
+impl NotificationConfig {
+    /// Sets `notification_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NotificationConfig.notification_arn = Some(value.into());`.
+    pub fn notification_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.notification_arn = Some(value.into());
+        self
+    }
+    /// Sets `notification_events`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NotificationConfig.notification_events = Some(value.into());`.
+    pub fn notification_events<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.notification_events = Some(value.into());
+        self
+    }
+    /// Sets `notification_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NotificationConfig.notification_type = Some(value.into());`.
+    pub fn notification_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.notification_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of NotificationConfig with optional fields set to `None`.
+    pub fn new() -> NotificationConfig {
+        NotificationConfig { ..Default::default() }
+    }
+}
 #[doc="<p>An Amazon EC2 Systems Manager parameter in Parameter Store.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Parameter {
@@ -3982,7 +6943,6 @@ pub struct Parameter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
 #[doc="<p>Information about parameter usage.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ParameterHistory {
@@ -4019,7 +6979,6 @@ pub struct ParameterHistory {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
 #[doc="<p>Metada includes information like the ARN of the last user and the date/time the parameter was last used.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ParameterMetadata {
@@ -4052,7 +7011,6 @@ pub struct ParameterMetadata {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>One or more filters. Use a filter to return a more specific list of results.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ParameterStringFilter {
@@ -4068,7 +7026,36 @@ pub struct ParameterStringFilter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub values: Option<Vec<String>>,
 }
-
+impl ParameterStringFilter {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ParameterStringFilter.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `option`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ParameterStringFilter.option = Some(value.into());`.
+    pub fn option<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.option = Some(value.into());
+        self
+    }
+    /// Sets `values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ParameterStringFilter.values = Some(value.into());`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ParameterStringFilter with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>>(key: KeyType) -> ParameterStringFilter {
+        ParameterStringFilter {
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>One or more filters. Use a filter to return a more specific list of results.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ParametersFilter {
@@ -4079,7 +7066,32 @@ pub struct ParametersFilter {
     #[serde(rename="Values")]
     pub values: Vec<String>,
 }
-
+impl ParametersFilter {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ParametersFilter.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `values`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ParametersFilter.values = value.into();`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = value.into();
+        self
+    }
+    /// Returns a new instance of ParametersFilter with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>, ValuesType: Into<Vec<String>>>(key: KeyType,
+                                                                     values: ValuesType)
+                                                                     -> ParametersFilter {
+        ParametersFilter {
+            key: key.into(),
+            values: values.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents metadata about a patch.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Patch {
@@ -4136,7 +7148,6 @@ pub struct Patch {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vendor: Option<String>,
 }
-
 #[doc="<p>Defines the basic information about a patch baseline.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PatchBaselineIdentity {
@@ -4161,7 +7172,6 @@ pub struct PatchBaselineIdentity {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operating_system: Option<String>,
 }
-
 #[doc="<p>Information about the state of a patch on a particular instance as it relates to the patch baseline used to patch the instance.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PatchComplianceData {
@@ -4184,7 +7194,6 @@ pub struct PatchComplianceData {
     #[serde(rename="Title")]
     pub title: String,
 }
-
 #[doc="<p>Defines a patch filter.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct PatchFilter {
@@ -4195,7 +7204,32 @@ pub struct PatchFilter {
     #[serde(rename="Values")]
     pub values: Vec<String>,
 }
-
+impl PatchFilter {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PatchFilter.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `values`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PatchFilter.values = value.into();`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = value.into();
+        self
+    }
+    /// Returns a new instance of PatchFilter with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>, ValuesType: Into<Vec<String>>>(key: KeyType,
+                                                                     values: ValuesType)
+                                                                     -> PatchFilter {
+        PatchFilter {
+            key: key.into(),
+            values: values.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A set of patch filters, typically used for approval rules.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct PatchFilterGroup {
@@ -4203,7 +7237,23 @@ pub struct PatchFilterGroup {
     #[serde(rename="PatchFilters")]
     pub patch_filters: Vec<PatchFilter>,
 }
-
+impl PatchFilterGroup {
+    /// Sets `patch_filters`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PatchFilterGroup.patch_filters = value.into();`.
+    pub fn patch_filters<ValueType: Into<Vec<PatchFilter>>>(mut self, value: ValueType) -> Self {
+        self.patch_filters = value.into();
+        self
+    }
+    /// Returns a new instance of PatchFilterGroup with optional fields set to `None`.
+    pub fn new<PatchFiltersType: Into<Vec<PatchFilter>>>(patch_filters: PatchFiltersType)
+                                                         -> PatchFilterGroup {
+        PatchFilterGroup {
+            patch_filters: patch_filters.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The mapping between a patch group and the patch baseline the patch group is registered with.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PatchGroupPatchBaselineMapping {
@@ -4216,7 +7266,6 @@ pub struct PatchGroupPatchBaselineMapping {
     #[serde(skip_serializing_if="Option::is_none")]
     pub patch_group: Option<String>,
 }
-
 #[doc="<p>Defines a filter used in Patch Manager APIs.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PatchOrchestratorFilter {
@@ -4229,7 +7278,26 @@ pub struct PatchOrchestratorFilter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub values: Option<Vec<String>>,
 }
-
+impl PatchOrchestratorFilter {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PatchOrchestratorFilter.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PatchOrchestratorFilter.values = Some(value.into());`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PatchOrchestratorFilter with optional fields set to `None`.
+    pub fn new() -> PatchOrchestratorFilter {
+        PatchOrchestratorFilter { ..Default::default() }
+    }
+}
 #[doc="<p>Defines an approval rule for a patch baseline.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct PatchRule {
@@ -4244,7 +7312,42 @@ pub struct PatchRule {
     #[serde(rename="PatchFilterGroup")]
     pub patch_filter_group: PatchFilterGroup,
 }
-
+impl PatchRule {
+    /// Sets `approve_after_days`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PatchRule.approve_after_days = value.into();`.
+    pub fn approve_after_days<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.approve_after_days = value.into();
+        self
+    }
+    /// Sets `compliance_level`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PatchRule.compliance_level = Some(value.into());`.
+    pub fn compliance_level<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.compliance_level = Some(value.into());
+        self
+    }
+    /// Sets `patch_filter_group`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PatchRule.patch_filter_group = value.into();`.
+    pub fn patch_filter_group<ValueType: Into<PatchFilterGroup>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.patch_filter_group = value.into();
+        self
+    }
+    /// Returns a new instance of PatchRule with optional fields set to `None`.
+    pub fn new<ApproveAfterDaysType: Into<i64>, PatchFilterGroupType: Into<PatchFilterGroup>>
+        (approve_after_days: ApproveAfterDaysType,
+         patch_filter_group: PatchFilterGroupType)
+         -> PatchRule {
+        PatchRule {
+            approve_after_days: approve_after_days.into(),
+            patch_filter_group: patch_filter_group.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A set of rules defining the approval rules for a patch baseline.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct PatchRuleGroup {
@@ -4252,7 +7355,23 @@ pub struct PatchRuleGroup {
     #[serde(rename="PatchRules")]
     pub patch_rules: Vec<PatchRule>,
 }
-
+impl PatchRuleGroup {
+    /// Sets `patch_rules`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PatchRuleGroup.patch_rules = value.into();`.
+    pub fn patch_rules<ValueType: Into<Vec<PatchRule>>>(mut self, value: ValueType) -> Self {
+        self.patch_rules = value.into();
+        self
+    }
+    /// Returns a new instance of PatchRuleGroup with optional fields set to `None`.
+    pub fn new<PatchRulesType: Into<Vec<PatchRule>>>(patch_rules: PatchRulesType)
+                                                     -> PatchRuleGroup {
+        PatchRuleGroup {
+            patch_rules: patch_rules.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Information about the approval status of a patch.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PatchStatus {
@@ -4269,7 +7388,6 @@ pub struct PatchStatus {
     #[serde(skip_serializing_if="Option::is_none")]
     pub deployment_status: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutComplianceItemsRequest {
     #[doc="<p>Specify the compliance type. For example, specify Association (for a State Manager association), Patch, or Custom:<code>string</code>.</p>"]
@@ -4292,7 +7410,73 @@ pub struct PutComplianceItemsRequest {
     #[serde(rename="ResourceType")]
     pub resource_type: String,
 }
-
+impl PutComplianceItemsRequest {
+    /// Sets `compliance_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutComplianceItemsRequest.compliance_type = value.into();`.
+    pub fn compliance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.compliance_type = value.into();
+        self
+    }
+    /// Sets `execution_summary`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutComplianceItemsRequest.execution_summary = value.into();`.
+    pub fn execution_summary<ValueType: Into<ComplianceExecutionSummary>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.execution_summary = value.into();
+        self
+    }
+    /// Sets `item_content_hash`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutComplianceItemsRequest.item_content_hash = Some(value.into());`.
+    pub fn item_content_hash<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.item_content_hash = Some(value.into());
+        self
+    }
+    /// Sets `items`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutComplianceItemsRequest.items = value.into();`.
+    pub fn items<ValueType: Into<Vec<ComplianceItemEntry>>>(mut self, value: ValueType) -> Self {
+        self.items = value.into();
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutComplianceItemsRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `resource_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutComplianceItemsRequest.resource_type = value.into();`.
+    pub fn resource_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_type = value.into();
+        self
+    }
+    /// Returns a new instance of PutComplianceItemsRequest with optional fields set to `None`.
+    pub fn new<ComplianceTypeType: Into<String>,
+               ExecutionSummaryType: Into<ComplianceExecutionSummary>,
+               ItemsType: Into<Vec<ComplianceItemEntry>>,
+               ResourceIdType: Into<String>,
+               ResourceTypeType: Into<String>>
+        (compliance_type: ComplianceTypeType,
+         execution_summary: ExecutionSummaryType,
+         items: ItemsType,
+         resource_id: ResourceIdType,
+         resource_type: ResourceTypeType)
+         -> PutComplianceItemsRequest {
+        PutComplianceItemsRequest {
+            compliance_type: compliance_type.into(),
+            execution_summary: execution_summary.into(),
+            items: items.into(),
+            resource_id: resource_id.into(),
+            resource_type: resource_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutComplianceItemsResult;
 
@@ -4305,7 +7489,33 @@ pub struct PutInventoryRequest {
     #[serde(rename="Items")]
     pub items: Vec<InventoryItem>,
 }
-
+impl PutInventoryRequest {
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutInventoryRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `items`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutInventoryRequest.items = value.into();`.
+    pub fn items<ValueType: Into<Vec<InventoryItem>>>(mut self, value: ValueType) -> Self {
+        self.items = value.into();
+        self
+    }
+    /// Returns a new instance of PutInventoryRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>, ItemsType: Into<Vec<InventoryItem>>>
+        (instance_id: InstanceIdType,
+         items: ItemsType)
+         -> PutInventoryRequest {
+        PutInventoryRequest {
+            instance_id: instance_id.into(),
+            items: items.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutInventoryResult;
 
@@ -4337,7 +7547,70 @@ pub struct PutParameterRequest {
     #[serde(rename="Value")]
     pub value: String,
 }
-
+impl PutParameterRequest {
+    /// Sets `allowed_pattern`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutParameterRequest.allowed_pattern = Some(value.into());`.
+    pub fn allowed_pattern<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.allowed_pattern = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutParameterRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutParameterRequest.key_id = Some(value.into());`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutParameterRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `overwrite`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutParameterRequest.overwrite = Some(value.into());`.
+    pub fn overwrite<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.overwrite = Some(value.into());
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutParameterRequest.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutParameterRequest.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of PutParameterRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, TypeType: Into<String>, ValueType: Into<String>>
+        (name: NameType,
+         type_: TypeType,
+         value: ValueType)
+         -> PutParameterRequest {
+        PutParameterRequest {
+            name: name.into(),
+            type_: type_.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutParameterResult;
 
@@ -4347,7 +7620,23 @@ pub struct RegisterDefaultPatchBaselineRequest {
     #[serde(rename="BaselineId")]
     pub baseline_id: String,
 }
-
+impl RegisterDefaultPatchBaselineRequest {
+    /// Sets `baseline_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterDefaultPatchBaselineRequest.baseline_id = value.into();`.
+    pub fn baseline_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.baseline_id = value.into();
+        self
+    }
+    /// Returns a new instance of RegisterDefaultPatchBaselineRequest with optional fields set to `None`.
+    pub fn new<BaselineIdType: Into<String>>(baseline_id: BaselineIdType)
+                                             -> RegisterDefaultPatchBaselineRequest {
+        RegisterDefaultPatchBaselineRequest {
+            baseline_id: baseline_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RegisterDefaultPatchBaselineResult {
     #[doc="<p>The ID of the default patch baseline.</p>"]
@@ -4355,7 +7644,6 @@ pub struct RegisterDefaultPatchBaselineResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub baseline_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RegisterPatchBaselineForPatchGroupRequest {
     #[doc="<p>The ID of the patch baseline to register the patch group with.</p>"]
@@ -4365,7 +7653,33 @@ pub struct RegisterPatchBaselineForPatchGroupRequest {
     #[serde(rename="PatchGroup")]
     pub patch_group: String,
 }
-
+impl RegisterPatchBaselineForPatchGroupRequest {
+    /// Sets `baseline_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterPatchBaselineForPatchGroupRequest.baseline_id = value.into();`.
+    pub fn baseline_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.baseline_id = value.into();
+        self
+    }
+    /// Sets `patch_group`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterPatchBaselineForPatchGroupRequest.patch_group = value.into();`.
+    pub fn patch_group<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.patch_group = value.into();
+        self
+    }
+    /// Returns a new instance of RegisterPatchBaselineForPatchGroupRequest with optional fields set to `None`.
+    pub fn new<BaselineIdType: Into<String>, PatchGroupType: Into<String>>
+        (baseline_id: BaselineIdType,
+         patch_group: PatchGroupType)
+         -> RegisterPatchBaselineForPatchGroupRequest {
+        RegisterPatchBaselineForPatchGroupRequest {
+            baseline_id: baseline_id.into(),
+            patch_group: patch_group.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RegisterPatchBaselineForPatchGroupResult {
     #[doc="<p>The ID of the patch baseline the patch group was registered with.</p>"]
@@ -4377,7 +7691,6 @@ pub struct RegisterPatchBaselineForPatchGroupResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub patch_group: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RegisterTargetWithMaintenanceWindowRequest {
     #[doc="<p>User-provided idempotency token.</p>"]
@@ -4406,7 +7719,72 @@ pub struct RegisterTargetWithMaintenanceWindowRequest {
     #[serde(rename="WindowId")]
     pub window_id: String,
 }
-
+impl RegisterTargetWithMaintenanceWindowRequest {
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTargetWithMaintenanceWindowRequest.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTargetWithMaintenanceWindowRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTargetWithMaintenanceWindowRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `owner_information`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTargetWithMaintenanceWindowRequest.owner_information = Some(value.into());`.
+    pub fn owner_information<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.owner_information = Some(value.into());
+        self
+    }
+    /// Sets `resource_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTargetWithMaintenanceWindowRequest.resource_type = value.into();`.
+    pub fn resource_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_type = value.into();
+        self
+    }
+    /// Sets `targets`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTargetWithMaintenanceWindowRequest.targets = value.into();`.
+    pub fn targets<ValueType: Into<Vec<Target>>>(mut self, value: ValueType) -> Self {
+        self.targets = value.into();
+        self
+    }
+    /// Sets `window_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTargetWithMaintenanceWindowRequest.window_id = value.into();`.
+    pub fn window_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_id = value.into();
+        self
+    }
+    /// Returns a new instance of RegisterTargetWithMaintenanceWindowRequest with optional fields set to `None`.
+    pub fn new<ResourceTypeType: Into<String>,
+               TargetsType: Into<Vec<Target>>,
+               WindowIdType: Into<String>>
+        (resource_type: ResourceTypeType,
+         targets: TargetsType,
+         window_id: WindowIdType)
+         -> RegisterTargetWithMaintenanceWindowRequest {
+        RegisterTargetWithMaintenanceWindowRequest {
+            resource_type: resource_type.into(),
+            targets: targets.into(),
+            window_id: window_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RegisterTargetWithMaintenanceWindowResult {
     #[doc="<p>The ID of the target definition in this Maintenance Window.</p>"]
@@ -4414,7 +7792,6 @@ pub struct RegisterTargetWithMaintenanceWindowResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_target_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RegisterTaskWithMaintenanceWindowRequest {
     #[doc="<p>User-provided idempotency token.</p>"]
@@ -4468,7 +7845,136 @@ pub struct RegisterTaskWithMaintenanceWindowRequest {
     #[serde(rename="WindowId")]
     pub window_id: String,
 }
-
+impl RegisterTaskWithMaintenanceWindowRequest {
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTaskWithMaintenanceWindowRequest.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTaskWithMaintenanceWindowRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `logging_info`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTaskWithMaintenanceWindowRequest.logging_info = Some(value.into());`.
+    pub fn logging_info<ValueType: Into<LoggingInfo>>(mut self, value: ValueType) -> Self {
+        self.logging_info = Some(value.into());
+        self
+    }
+    /// Sets `max_concurrency`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTaskWithMaintenanceWindowRequest.max_concurrency = value.into();`.
+    pub fn max_concurrency<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_concurrency = value.into();
+        self
+    }
+    /// Sets `max_errors`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTaskWithMaintenanceWindowRequest.max_errors = value.into();`.
+    pub fn max_errors<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_errors = value.into();
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTaskWithMaintenanceWindowRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `priority`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTaskWithMaintenanceWindowRequest.priority = Some(value.into());`.
+    pub fn priority<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.priority = Some(value.into());
+        self
+    }
+    /// Sets `service_role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTaskWithMaintenanceWindowRequest.service_role_arn = value.into();`.
+    pub fn service_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_role_arn = value.into();
+        self
+    }
+    /// Sets `targets`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTaskWithMaintenanceWindowRequest.targets = value.into();`.
+    pub fn targets<ValueType: Into<Vec<Target>>>(mut self, value: ValueType) -> Self {
+        self.targets = value.into();
+        self
+    }
+    /// Sets `task_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTaskWithMaintenanceWindowRequest.task_arn = value.into();`.
+    pub fn task_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_arn = value.into();
+        self
+    }
+    /// Sets `task_invocation_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTaskWithMaintenanceWindowRequest.task_invocation_parameters = Some(value.into());`.
+    pub fn task_invocation_parameters<ValueType: Into<MaintenanceWindowTaskInvocationParameters>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.task_invocation_parameters = Some(value.into());
+        self
+    }
+    /// Sets `task_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTaskWithMaintenanceWindowRequest.task_parameters = Some(value.into());`.
+pub fn task_parameters<ValueType: Into<::std::collections::HashMap<String, MaintenanceWindowTaskParameterValueExpression>>>(mut self, value: ValueType) -> Self{
+        self.task_parameters = Some(value.into());
+        self
+    }
+    /// Sets `task_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTaskWithMaintenanceWindowRequest.task_type = value.into();`.
+    pub fn task_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_type = value.into();
+        self
+    }
+    /// Sets `window_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTaskWithMaintenanceWindowRequest.window_id = value.into();`.
+    pub fn window_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_id = value.into();
+        self
+    }
+    /// Returns a new instance of RegisterTaskWithMaintenanceWindowRequest with optional fields set to `None`.
+    pub fn new<MaxConcurrencyType: Into<String>,
+               MaxErrorsType: Into<String>,
+               ServiceRoleArnType: Into<String>,
+               TargetsType: Into<Vec<Target>>,
+               TaskArnType: Into<String>,
+               TaskTypeType: Into<String>,
+               WindowIdType: Into<String>>
+        (max_concurrency: MaxConcurrencyType,
+         max_errors: MaxErrorsType,
+         service_role_arn: ServiceRoleArnType,
+         targets: TargetsType,
+         task_arn: TaskArnType,
+         task_type: TaskTypeType,
+         window_id: WindowIdType)
+         -> RegisterTaskWithMaintenanceWindowRequest {
+        RegisterTaskWithMaintenanceWindowRequest {
+            max_concurrency: max_concurrency.into(),
+            max_errors: max_errors.into(),
+            service_role_arn: service_role_arn.into(),
+            targets: targets.into(),
+            task_arn: task_arn.into(),
+            task_type: task_type.into(),
+            window_id: window_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RegisterTaskWithMaintenanceWindowResult {
     #[doc="<p>The id of the task in the Maintenance Window.</p>"]
@@ -4476,7 +7982,6 @@ pub struct RegisterTaskWithMaintenanceWindowResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_task_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RemoveTagsFromResourceRequest {
     #[doc="<p>The resource ID for which you want to remove tags.</p>"]
@@ -4489,7 +7994,44 @@ pub struct RemoveTagsFromResourceRequest {
     #[serde(rename="TagKeys")]
     pub tag_keys: Vec<String>,
 }
-
+impl RemoveTagsFromResourceRequest {
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromResourceRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `resource_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromResourceRequest.resource_type = value.into();`.
+    pub fn resource_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_type = value.into();
+        self
+    }
+    /// Sets `tag_keys`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromResourceRequest.tag_keys = value.into();`.
+    pub fn tag_keys<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tag_keys = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveTagsFromResourceRequest with optional fields set to `None`.
+    pub fn new<ResourceIdType: Into<String>,
+               ResourceTypeType: Into<String>,
+               TagKeysType: Into<Vec<String>>>
+        (resource_id: ResourceIdType,
+         resource_type: ResourceTypeType,
+         tag_keys: TagKeysType)
+         -> RemoveTagsFromResourceRequest {
+        RemoveTagsFromResourceRequest {
+            resource_id: resource_id.into(),
+            resource_type: resource_type.into(),
+            tag_keys: tag_keys.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RemoveTagsFromResourceResult;
 
@@ -4529,7 +8071,6 @@ pub struct ResourceComplianceSummaryItem {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[doc="<p>Information about a Resource Data Sync configuration, including its current status and last successful sync.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ResourceDataSyncItem {
@@ -4558,7 +8099,6 @@ pub struct ResourceDataSyncItem {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sync_name: Option<String>,
 }
-
 #[doc="<p>Information about the target Amazon S3 bucket for the Resource Data Sync.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ResourceDataSyncS3Destination {
@@ -4576,7 +8116,49 @@ pub struct ResourceDataSyncS3Destination {
     #[serde(rename="SyncFormat")]
     pub sync_format: String,
 }
-
+impl ResourceDataSyncS3Destination {
+    /// Sets `bucket_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceDataSyncS3Destination.bucket_name = value.into();`.
+    pub fn bucket_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket_name = value.into();
+        self
+    }
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceDataSyncS3Destination.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Sets `region`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceDataSyncS3Destination.region = value.into();`.
+    pub fn region<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.region = value.into();
+        self
+    }
+    /// Sets `sync_format`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceDataSyncS3Destination.sync_format = value.into();`.
+    pub fn sync_format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sync_format = value.into();
+        self
+    }
+    /// Returns a new instance of ResourceDataSyncS3Destination with optional fields set to `None`.
+    pub fn new<BucketNameType: Into<String>, RegionType: Into<String>, SyncFormatType: Into<String>>
+        (bucket_name: BucketNameType,
+         region: RegionType,
+         sync_format: SyncFormatType)
+         -> ResourceDataSyncS3Destination {
+        ResourceDataSyncS3Destination {
+            bucket_name: bucket_name.into(),
+            region: region.into(),
+            sync_format: sync_format.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The inventory item result attribute.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ResultAttribute {
@@ -4584,7 +8166,22 @@ pub struct ResultAttribute {
     #[serde(rename="TypeName")]
     pub type_name: String,
 }
-
+impl ResultAttribute {
+    /// Sets `type_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResultAttribute.type_name = value.into();`.
+    pub fn type_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_name = value.into();
+        self
+    }
+    /// Returns a new instance of ResultAttribute with optional fields set to `None`.
+    pub fn new<TypeNameType: Into<String>>(type_name: TypeNameType) -> ResultAttribute {
+        ResultAttribute {
+            type_name: type_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>An Amazon S3 bucket where you want to store the results of this request.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct S3OutputLocation {
@@ -4601,7 +8198,33 @@ pub struct S3OutputLocation {
     #[serde(skip_serializing_if="Option::is_none")]
     pub output_s3_region: Option<String>,
 }
-
+impl S3OutputLocation {
+    /// Sets `output_s3_bucket_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3OutputLocation.output_s3_bucket_name = Some(value.into());`.
+    pub fn output_s3_bucket_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.output_s3_bucket_name = Some(value.into());
+        self
+    }
+    /// Sets `output_s3_key_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3OutputLocation.output_s3_key_prefix = Some(value.into());`.
+    pub fn output_s3_key_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.output_s3_key_prefix = Some(value.into());
+        self
+    }
+    /// Sets `output_s3_region`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3OutputLocation.output_s3_region = Some(value.into());`.
+    pub fn output_s3_region<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.output_s3_region = Some(value.into());
+        self
+    }
+    /// Returns a new instance of S3OutputLocation with optional fields set to `None`.
+    pub fn new() -> S3OutputLocation {
+        S3OutputLocation { ..Default::default() }
+    }
+}
 #[doc="<p>A URL for the Amazon S3 bucket where you want to store the results of this request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct S3OutputUrl {
@@ -4610,7 +8233,6 @@ pub struct S3OutputUrl {
     #[serde(skip_serializing_if="Option::is_none")]
     pub output_url: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SendAutomationSignalRequest {
     #[doc="<p>The unique identifier for an existing Automation execution that you want to send the signal to.</p>"]
@@ -4624,7 +8246,40 @@ pub struct SendAutomationSignalRequest {
     #[serde(rename="SignalType")]
     pub signal_type: String,
 }
-
+impl SendAutomationSignalRequest {
+    /// Sets `automation_execution_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendAutomationSignalRequest.automation_execution_id = value.into();`.
+    pub fn automation_execution_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.automation_execution_id = value.into();
+        self
+    }
+    /// Sets `payload`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendAutomationSignalRequest.payload = Some(value.into());`.
+pub fn payload<ValueType: Into<::std::collections::HashMap<String, Vec<String>>>>(mut self, value: ValueType) -> Self{
+        self.payload = Some(value.into());
+        self
+    }
+    /// Sets `signal_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendAutomationSignalRequest.signal_type = value.into();`.
+    pub fn signal_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.signal_type = value.into();
+        self
+    }
+    /// Returns a new instance of SendAutomationSignalRequest with optional fields set to `None`.
+    pub fn new<AutomationExecutionIdType: Into<String>, SignalTypeType: Into<String>>
+        (automation_execution_id: AutomationExecutionIdType,
+         signal_type: SignalTypeType)
+         -> SendAutomationSignalRequest {
+        SendAutomationSignalRequest {
+            automation_execution_id: automation_execution_id.into(),
+            signal_type: signal_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SendAutomationSignalResult;
 
@@ -4690,7 +8345,126 @@ pub struct SendCommandRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub timeout_seconds: Option<i64>,
 }
-
+impl SendCommandRequest {
+    /// Sets `comment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendCommandRequest.comment = Some(value.into());`.
+    pub fn comment<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.comment = Some(value.into());
+        self
+    }
+    /// Sets `document_hash`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendCommandRequest.document_hash = Some(value.into());`.
+    pub fn document_hash<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.document_hash = Some(value.into());
+        self
+    }
+    /// Sets `document_hash_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendCommandRequest.document_hash_type = Some(value.into());`.
+    pub fn document_hash_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.document_hash_type = Some(value.into());
+        self
+    }
+    /// Sets `document_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendCommandRequest.document_name = value.into();`.
+    pub fn document_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.document_name = value.into();
+        self
+    }
+    /// Sets `instance_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendCommandRequest.instance_ids = Some(value.into());`.
+    pub fn instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_ids = Some(value.into());
+        self
+    }
+    /// Sets `max_concurrency`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendCommandRequest.max_concurrency = Some(value.into());`.
+    pub fn max_concurrency<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_concurrency = Some(value.into());
+        self
+    }
+    /// Sets `max_errors`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendCommandRequest.max_errors = Some(value.into());`.
+    pub fn max_errors<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_errors = Some(value.into());
+        self
+    }
+    /// Sets `notification_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendCommandRequest.notification_config = Some(value.into());`.
+    pub fn notification_config<ValueType: Into<NotificationConfig>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.notification_config = Some(value.into());
+        self
+    }
+    /// Sets `output_s3_bucket_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendCommandRequest.output_s3_bucket_name = Some(value.into());`.
+    pub fn output_s3_bucket_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.output_s3_bucket_name = Some(value.into());
+        self
+    }
+    /// Sets `output_s3_key_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendCommandRequest.output_s3_key_prefix = Some(value.into());`.
+    pub fn output_s3_key_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.output_s3_key_prefix = Some(value.into());
+        self
+    }
+    /// Sets `output_s3_region`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendCommandRequest.output_s3_region = Some(value.into());`.
+    pub fn output_s3_region<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.output_s3_region = Some(value.into());
+        self
+    }
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendCommandRequest.parameters = Some(value.into());`.
+    pub fn parameters<ValueType: Into<::std::collections::HashMap<String, Vec<String>>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Sets `service_role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendCommandRequest.service_role_arn = Some(value.into());`.
+    pub fn service_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_role_arn = Some(value.into());
+        self
+    }
+    /// Sets `targets`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendCommandRequest.targets = Some(value.into());`.
+    pub fn targets<ValueType: Into<Vec<Target>>>(mut self, value: ValueType) -> Self {
+        self.targets = Some(value.into());
+        self
+    }
+    /// Sets `timeout_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendCommandRequest.timeout_seconds = Some(value.into());`.
+    pub fn timeout_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.timeout_seconds = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SendCommandRequest with optional fields set to `None`.
+    pub fn new<DocumentNameType: Into<String>>(document_name: DocumentNameType)
+                                               -> SendCommandRequest {
+        SendCommandRequest {
+            document_name: document_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SendCommandResult {
     #[doc="<p>The request as it was received by Systems Manager. Also provides the command ID which can be used future references to this request.</p>"]
@@ -4698,7 +8472,6 @@ pub struct SendCommandResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub command: Option<Command>,
 }
-
 #[doc="<p>The number of managed instances found for each patch severity level defined in the request filter.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SeveritySummary {
@@ -4727,7 +8500,6 @@ pub struct SeveritySummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub unspecified_count: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartAutomationExecutionRequest {
     #[doc="<p>The name of the Automation document to use for this execution.</p>"]
@@ -4742,7 +8514,40 @@ pub struct StartAutomationExecutionRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub parameters: Option<::std::collections::HashMap<String, Vec<String>>>,
 }
-
+impl StartAutomationExecutionRequest {
+    /// Sets `document_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartAutomationExecutionRequest.document_name = value.into();`.
+    pub fn document_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.document_name = value.into();
+        self
+    }
+    /// Sets `document_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartAutomationExecutionRequest.document_version = Some(value.into());`.
+    pub fn document_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.document_version = Some(value.into());
+        self
+    }
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartAutomationExecutionRequest.parameters = Some(value.into());`.
+    pub fn parameters<ValueType: Into<::std::collections::HashMap<String, Vec<String>>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Returns a new instance of StartAutomationExecutionRequest with optional fields set to `None`.
+    pub fn new<DocumentNameType: Into<String>>(document_name: DocumentNameType)
+                                               -> StartAutomationExecutionRequest {
+        StartAutomationExecutionRequest {
+            document_name: document_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartAutomationExecutionResult {
     #[doc="<p>The unique ID of a newly scheduled automation execution.</p>"]
@@ -4750,7 +8555,6 @@ pub struct StartAutomationExecutionResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub automation_execution_id: Option<String>,
 }
-
 #[doc="<p>Detailed information about an the execution state of an Automation step.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StepExecution {
@@ -4799,14 +8603,28 @@ pub struct StepExecution {
     #[serde(skip_serializing_if="Option::is_none")]
     pub step_status: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StopAutomationExecutionRequest {
     #[doc="<p>The execution ID of the Automation to stop.</p>"]
     #[serde(rename="AutomationExecutionId")]
     pub automation_execution_id: String,
 }
-
+impl StopAutomationExecutionRequest {
+    /// Sets `automation_execution_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopAutomationExecutionRequest.automation_execution_id = value.into();`.
+    pub fn automation_execution_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.automation_execution_id = value.into();
+        self
+    }
+    /// Returns a new instance of StopAutomationExecutionRequest with optional fields set to `None`.
+pub fn new<AutomationExecutionIdType: Into<String>>(automation_execution_id: AutomationExecutionIdType) -> StopAutomationExecutionRequest{
+        StopAutomationExecutionRequest {
+            automation_execution_id: automation_execution_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StopAutomationExecutionResult;
 
@@ -4820,7 +8638,32 @@ pub struct Tag {
     #[serde(rename="Value")]
     pub value: String,
 }
-
+impl Tag {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>, ValueType: Into<String>>(key: KeyType,
+                                                               value: ValueType)
+                                                               -> Tag {
+        Tag {
+            key: key.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>An array of search criteria that targets instances using a Key,Value combination that you specify. <code>Targets</code> is required if you don't provide one or more instance IDs in the call.</p> <p/>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Target {
@@ -4833,7 +8676,26 @@ pub struct Target {
     #[serde(skip_serializing_if="Option::is_none")]
     pub values: Option<Vec<String>>,
 }
-
+impl Target {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Target.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Target.values = Some(value.into());`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Target with optional fields set to `None`.
+    pub fn new() -> Target {
+        Target { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateAssociationRequest {
     #[doc="<p>The ID of the association you want to update. </p>"]
@@ -4872,7 +8734,84 @@ pub struct UpdateAssociationRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub targets: Option<Vec<Target>>,
 }
-
+impl UpdateAssociationRequest {
+    /// Sets `association_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAssociationRequest.association_id = value.into();`.
+    pub fn association_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.association_id = value.into();
+        self
+    }
+    /// Sets `association_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAssociationRequest.association_name = Some(value.into());`.
+    pub fn association_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.association_name = Some(value.into());
+        self
+    }
+    /// Sets `association_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAssociationRequest.association_version = Some(value.into());`.
+    pub fn association_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.association_version = Some(value.into());
+        self
+    }
+    /// Sets `document_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAssociationRequest.document_version = Some(value.into());`.
+    pub fn document_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.document_version = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAssociationRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `output_location`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAssociationRequest.output_location = Some(value.into());`.
+    pub fn output_location<ValueType: Into<InstanceAssociationOutputLocation>>(mut self,
+                                                                               value: ValueType)
+                                                                               -> Self {
+        self.output_location = Some(value.into());
+        self
+    }
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAssociationRequest.parameters = Some(value.into());`.
+    pub fn parameters<ValueType: Into<::std::collections::HashMap<String, Vec<String>>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Sets `schedule_expression`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAssociationRequest.schedule_expression = Some(value.into());`.
+    pub fn schedule_expression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.schedule_expression = Some(value.into());
+        self
+    }
+    /// Sets `targets`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAssociationRequest.targets = Some(value.into());`.
+    pub fn targets<ValueType: Into<Vec<Target>>>(mut self, value: ValueType) -> Self {
+        self.targets = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateAssociationRequest with optional fields set to `None`.
+    pub fn new<AssociationIdType: Into<String>>(association_id: AssociationIdType)
+                                                -> UpdateAssociationRequest {
+        UpdateAssociationRequest {
+            association_id: association_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateAssociationResult {
     #[doc="<p>The description of the association that was updated.</p>"]
@@ -4880,7 +8819,6 @@ pub struct UpdateAssociationResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub association_description: Option<AssociationDescription>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateAssociationStatusRequest {
     #[doc="<p>The association status.</p>"]
@@ -4893,7 +8831,46 @@ pub struct UpdateAssociationStatusRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl UpdateAssociationStatusRequest {
+    /// Sets `association_status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAssociationStatusRequest.association_status = value.into();`.
+    pub fn association_status<ValueType: Into<AssociationStatus>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.association_status = value.into();
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAssociationStatusRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAssociationStatusRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateAssociationStatusRequest with optional fields set to `None`.
+    pub fn new<AssociationStatusType: Into<AssociationStatus>,
+               InstanceIdType: Into<String>,
+               NameType: Into<String>>
+        (association_status: AssociationStatusType,
+         instance_id: InstanceIdType,
+         name: NameType)
+         -> UpdateAssociationStatusRequest {
+        UpdateAssociationStatusRequest {
+            association_status: association_status.into(),
+            instance_id: instance_id.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateAssociationStatusResult {
     #[doc="<p>Information about the association.</p>"]
@@ -4901,7 +8878,6 @@ pub struct UpdateAssociationStatusResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub association_description: Option<AssociationDescription>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateDocumentDefaultVersionRequest {
     #[doc="<p>The version of a custom document that you want to set as the default version.</p>"]
@@ -4911,7 +8887,33 @@ pub struct UpdateDocumentDefaultVersionRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl UpdateDocumentDefaultVersionRequest {
+    /// Sets `document_version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDocumentDefaultVersionRequest.document_version = value.into();`.
+    pub fn document_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.document_version = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDocumentDefaultVersionRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateDocumentDefaultVersionRequest with optional fields set to `None`.
+    pub fn new<DocumentVersionType: Into<String>, NameType: Into<String>>
+        (document_version: DocumentVersionType,
+         name: NameType)
+         -> UpdateDocumentDefaultVersionRequest {
+        UpdateDocumentDefaultVersionRequest {
+            document_version: document_version.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateDocumentDefaultVersionResult {
     #[doc="<p>The description of a custom document that you want to set as the default version.</p>"]
@@ -4919,7 +8921,6 @@ pub struct UpdateDocumentDefaultVersionResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub description: Option<DocumentDefaultVersionDescription>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateDocumentRequest {
     #[doc="<p>The content in a document that you want to update.</p>"]
@@ -4933,7 +8934,39 @@ pub struct UpdateDocumentRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl UpdateDocumentRequest {
+    /// Sets `content`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDocumentRequest.content = value.into();`.
+    pub fn content<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content = value.into();
+        self
+    }
+    /// Sets `document_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDocumentRequest.document_version = Some(value.into());`.
+    pub fn document_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.document_version = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDocumentRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateDocumentRequest with optional fields set to `None`.
+    pub fn new<ContentType: Into<String>, NameType: Into<String>>(content: ContentType,
+                                                                  name: NameType)
+                                                                  -> UpdateDocumentRequest {
+        UpdateDocumentRequest {
+            content: content.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateDocumentResult {
     #[doc="<p>A description of the document that was updated.</p>"]
@@ -4941,7 +8974,6 @@ pub struct UpdateDocumentResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub document_description: Option<DocumentDescription>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateMaintenanceWindowRequest {
     #[doc="<p>Whether targets must be registered with the Maintenance Window before tasks can be defined for those targets.</p>"]
@@ -4980,7 +9012,79 @@ pub struct UpdateMaintenanceWindowRequest {
     #[serde(rename="WindowId")]
     pub window_id: String,
 }
-
+impl UpdateMaintenanceWindowRequest {
+    /// Sets `allow_unassociated_targets`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowRequest.allow_unassociated_targets = Some(value.into());`.
+    pub fn allow_unassociated_targets<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.allow_unassociated_targets = Some(value.into());
+        self
+    }
+    /// Sets `cutoff`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowRequest.cutoff = Some(value.into());`.
+    pub fn cutoff<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.cutoff = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `duration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowRequest.duration = Some(value.into());`.
+    pub fn duration<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.duration = Some(value.into());
+        self
+    }
+    /// Sets `enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowRequest.enabled = Some(value.into());`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `replace`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowRequest.replace = Some(value.into());`.
+    pub fn replace<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.replace = Some(value.into());
+        self
+    }
+    /// Sets `schedule`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowRequest.schedule = Some(value.into());`.
+    pub fn schedule<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.schedule = Some(value.into());
+        self
+    }
+    /// Sets `window_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowRequest.window_id = value.into();`.
+    pub fn window_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateMaintenanceWindowRequest with optional fields set to `None`.
+    pub fn new<WindowIdType: Into<String>>(window_id: WindowIdType)
+                                           -> UpdateMaintenanceWindowRequest {
+        UpdateMaintenanceWindowRequest {
+            window_id: window_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateMaintenanceWindowResult {
     #[doc="<p>Whether targets must be registered with the Maintenance Window before tasks can be defined for those targets.</p>"]
@@ -5016,7 +9120,6 @@ pub struct UpdateMaintenanceWindowResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateMaintenanceWindowTargetRequest {
     #[doc="<p>An optional description for the update.</p>"]
@@ -5046,7 +9149,68 @@ pub struct UpdateMaintenanceWindowTargetRequest {
     #[serde(rename="WindowTargetId")]
     pub window_target_id: String,
 }
-
+impl UpdateMaintenanceWindowTargetRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowTargetRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowTargetRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `owner_information`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowTargetRequest.owner_information = Some(value.into());`.
+    pub fn owner_information<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.owner_information = Some(value.into());
+        self
+    }
+    /// Sets `replace`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowTargetRequest.replace = Some(value.into());`.
+    pub fn replace<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.replace = Some(value.into());
+        self
+    }
+    /// Sets `targets`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowTargetRequest.targets = Some(value.into());`.
+    pub fn targets<ValueType: Into<Vec<Target>>>(mut self, value: ValueType) -> Self {
+        self.targets = Some(value.into());
+        self
+    }
+    /// Sets `window_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowTargetRequest.window_id = value.into();`.
+    pub fn window_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_id = value.into();
+        self
+    }
+    /// Sets `window_target_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowTargetRequest.window_target_id = value.into();`.
+    pub fn window_target_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_target_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateMaintenanceWindowTargetRequest with optional fields set to `None`.
+    pub fn new<WindowIdType: Into<String>, WindowTargetIdType: Into<String>>
+        (window_id: WindowIdType,
+         window_target_id: WindowTargetIdType)
+         -> UpdateMaintenanceWindowTargetRequest {
+        UpdateMaintenanceWindowTargetRequest {
+            window_id: window_id.into(),
+            window_target_id: window_target_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateMaintenanceWindowTargetResult {
     #[doc="<p>The updated description.</p>"]
@@ -5074,7 +9238,6 @@ pub struct UpdateMaintenanceWindowTargetResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_target_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateMaintenanceWindowTaskRequest {
     #[doc="<p>The new task description to specify.</p>"]
@@ -5133,7 +9296,120 @@ pub struct UpdateMaintenanceWindowTaskRequest {
     #[serde(rename="WindowTaskId")]
     pub window_task_id: String,
 }
-
+impl UpdateMaintenanceWindowTaskRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowTaskRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `logging_info`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowTaskRequest.logging_info = Some(value.into());`.
+    pub fn logging_info<ValueType: Into<LoggingInfo>>(mut self, value: ValueType) -> Self {
+        self.logging_info = Some(value.into());
+        self
+    }
+    /// Sets `max_concurrency`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowTaskRequest.max_concurrency = Some(value.into());`.
+    pub fn max_concurrency<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_concurrency = Some(value.into());
+        self
+    }
+    /// Sets `max_errors`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowTaskRequest.max_errors = Some(value.into());`.
+    pub fn max_errors<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_errors = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowTaskRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `priority`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowTaskRequest.priority = Some(value.into());`.
+    pub fn priority<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.priority = Some(value.into());
+        self
+    }
+    /// Sets `replace`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowTaskRequest.replace = Some(value.into());`.
+    pub fn replace<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.replace = Some(value.into());
+        self
+    }
+    /// Sets `service_role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowTaskRequest.service_role_arn = Some(value.into());`.
+    pub fn service_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_role_arn = Some(value.into());
+        self
+    }
+    /// Sets `targets`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowTaskRequest.targets = Some(value.into());`.
+    pub fn targets<ValueType: Into<Vec<Target>>>(mut self, value: ValueType) -> Self {
+        self.targets = Some(value.into());
+        self
+    }
+    /// Sets `task_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowTaskRequest.task_arn = Some(value.into());`.
+    pub fn task_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_arn = Some(value.into());
+        self
+    }
+    /// Sets `task_invocation_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowTaskRequest.task_invocation_parameters = Some(value.into());`.
+    pub fn task_invocation_parameters<ValueType: Into<MaintenanceWindowTaskInvocationParameters>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.task_invocation_parameters = Some(value.into());
+        self
+    }
+    /// Sets `task_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowTaskRequest.task_parameters = Some(value.into());`.
+pub fn task_parameters<ValueType: Into<::std::collections::HashMap<String, MaintenanceWindowTaskParameterValueExpression>>>(mut self, value: ValueType) -> Self{
+        self.task_parameters = Some(value.into());
+        self
+    }
+    /// Sets `window_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowTaskRequest.window_id = value.into();`.
+    pub fn window_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_id = value.into();
+        self
+    }
+    /// Sets `window_task_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceWindowTaskRequest.window_task_id = value.into();`.
+    pub fn window_task_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.window_task_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateMaintenanceWindowTaskRequest with optional fields set to `None`.
+    pub fn new<WindowIdType: Into<String>, WindowTaskIdType: Into<String>>
+        (window_id: WindowIdType,
+         window_task_id: WindowTaskIdType)
+         -> UpdateMaintenanceWindowTaskRequest {
+        UpdateMaintenanceWindowTaskRequest {
+            window_id: window_id.into(),
+            window_task_id: window_task_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateMaintenanceWindowTaskResult {
     #[doc="<p>The updated task description.</p>"]
@@ -5190,7 +9466,6 @@ pub struct UpdateMaintenanceWindowTaskResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub window_task_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateManagedInstanceRoleRequest {
     #[doc="<p>The IAM role you want to assign or change.</p>"]
@@ -5200,7 +9475,33 @@ pub struct UpdateManagedInstanceRoleRequest {
     #[serde(rename="InstanceId")]
     pub instance_id: String,
 }
-
+impl UpdateManagedInstanceRoleRequest {
+    /// Sets `iam_role`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateManagedInstanceRoleRequest.iam_role = value.into();`.
+    pub fn iam_role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.iam_role = value.into();
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateManagedInstanceRoleRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateManagedInstanceRoleRequest with optional fields set to `None`.
+    pub fn new<IamRoleType: Into<String>, InstanceIdType: Into<String>>
+        (iam_role: IamRoleType,
+         instance_id: InstanceIdType)
+         -> UpdateManagedInstanceRoleRequest {
+        UpdateManagedInstanceRoleRequest {
+            iam_role: iam_role.into(),
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateManagedInstanceRoleResult;
 
@@ -5238,7 +9539,74 @@ pub struct UpdatePatchBaselineRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rejected_patches: Option<Vec<String>>,
 }
-
+impl UpdatePatchBaselineRequest {
+    /// Sets `approval_rules`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePatchBaselineRequest.approval_rules = Some(value.into());`.
+    pub fn approval_rules<ValueType: Into<PatchRuleGroup>>(mut self, value: ValueType) -> Self {
+        self.approval_rules = Some(value.into());
+        self
+    }
+    /// Sets `approved_patches`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePatchBaselineRequest.approved_patches = Some(value.into());`.
+    pub fn approved_patches<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.approved_patches = Some(value.into());
+        self
+    }
+    /// Sets `approved_patches_compliance_level`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePatchBaselineRequest.approved_patches_compliance_level = Some(value.into());`.
+    pub fn approved_patches_compliance_level<ValueType: Into<String>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.approved_patches_compliance_level = Some(value.into());
+        self
+    }
+    /// Sets `baseline_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePatchBaselineRequest.baseline_id = value.into();`.
+    pub fn baseline_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.baseline_id = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePatchBaselineRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `global_filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePatchBaselineRequest.global_filters = Some(value.into());`.
+    pub fn global_filters<ValueType: Into<PatchFilterGroup>>(mut self, value: ValueType) -> Self {
+        self.global_filters = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePatchBaselineRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `rejected_patches`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePatchBaselineRequest.rejected_patches = Some(value.into());`.
+    pub fn rejected_patches<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.rejected_patches = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdatePatchBaselineRequest with optional fields set to `None`.
+    pub fn new<BaselineIdType: Into<String>>(baseline_id: BaselineIdType)
+                                             -> UpdatePatchBaselineRequest {
+        UpdatePatchBaselineRequest {
+            baseline_id: baseline_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdatePatchBaselineResult {
     #[doc="<p>A set of rules used to include patches in the baseline.</p>"]
@@ -5286,7 +9654,6 @@ pub struct UpdatePatchBaselineResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rejected_patches: Option<Vec<String>>,
 }
-
 /// Errors returned by AddTagsToResource
 #[derive(Debug, PartialEq)]
 pub enum AddTagsToResourceError {

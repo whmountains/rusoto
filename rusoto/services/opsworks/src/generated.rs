@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -40,7 +41,6 @@ pub struct AgentVersion {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<String>,
 }
-
 #[doc="<p>A description of the app.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct App {
@@ -101,7 +101,6 @@ pub struct App {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AssignInstanceRequest {
     #[doc="<p>The instance ID.</p>"]
@@ -111,7 +110,33 @@ pub struct AssignInstanceRequest {
     #[serde(rename="LayerIds")]
     pub layer_ids: Vec<String>,
 }
-
+impl AssignInstanceRequest {
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssignInstanceRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `layer_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssignInstanceRequest.layer_ids = value.into();`.
+    pub fn layer_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.layer_ids = value.into();
+        self
+    }
+    /// Returns a new instance of AssignInstanceRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>, LayerIdsType: Into<Vec<String>>>
+        (instance_id: InstanceIdType,
+         layer_ids: LayerIdsType)
+         -> AssignInstanceRequest {
+        AssignInstanceRequest {
+            instance_id: instance_id.into(),
+            layer_ids: layer_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AssignVolumeRequest {
     #[doc="<p>The instance ID.</p>"]
@@ -122,7 +147,29 @@ pub struct AssignVolumeRequest {
     #[serde(rename="VolumeId")]
     pub volume_id: String,
 }
-
+impl AssignVolumeRequest {
+    /// Sets `instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssignVolumeRequest.instance_id = Some(value.into());`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = Some(value.into());
+        self
+    }
+    /// Sets `volume_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssignVolumeRequest.volume_id = value.into();`.
+    pub fn volume_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_id = value.into();
+        self
+    }
+    /// Returns a new instance of AssignVolumeRequest with optional fields set to `None`.
+    pub fn new<VolumeIdType: Into<String>>(volume_id: VolumeIdType) -> AssignVolumeRequest {
+        AssignVolumeRequest {
+            volume_id: volume_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AssociateElasticIpRequest {
     #[doc="<p>The Elastic IP address.</p>"]
@@ -133,7 +180,30 @@ pub struct AssociateElasticIpRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instance_id: Option<String>,
 }
-
+impl AssociateElasticIpRequest {
+    /// Sets `elastic_ip`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateElasticIpRequest.elastic_ip = value.into();`.
+    pub fn elastic_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.elastic_ip = value.into();
+        self
+    }
+    /// Sets `instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateElasticIpRequest.instance_id = Some(value.into());`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AssociateElasticIpRequest with optional fields set to `None`.
+    pub fn new<ElasticIpType: Into<String>>(elastic_ip: ElasticIpType)
+                                            -> AssociateElasticIpRequest {
+        AssociateElasticIpRequest {
+            elastic_ip: elastic_ip.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AttachElasticLoadBalancerRequest {
     #[doc="<p>The Elastic Load Balancing instance's name.</p>"]
@@ -143,7 +213,33 @@ pub struct AttachElasticLoadBalancerRequest {
     #[serde(rename="LayerId")]
     pub layer_id: String,
 }
-
+impl AttachElasticLoadBalancerRequest {
+    /// Sets `elastic_load_balancer_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachElasticLoadBalancerRequest.elastic_load_balancer_name = value.into();`.
+    pub fn elastic_load_balancer_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.elastic_load_balancer_name = value.into();
+        self
+    }
+    /// Sets `layer_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachElasticLoadBalancerRequest.layer_id = value.into();`.
+    pub fn layer_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.layer_id = value.into();
+        self
+    }
+    /// Returns a new instance of AttachElasticLoadBalancerRequest with optional fields set to `None`.
+    pub fn new<ElasticLoadBalancerNameType: Into<String>, LayerIdType: Into<String>>
+        (elastic_load_balancer_name: ElasticLoadBalancerNameType,
+         layer_id: LayerIdType)
+         -> AttachElasticLoadBalancerRequest {
+        AttachElasticLoadBalancerRequest {
+            elastic_load_balancer_name: elastic_load_balancer_name.into(),
+            layer_id: layer_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes a load-based auto scaling upscaling or downscaling threshold configuration, which specifies when AWS OpsWorks Stacks starts or stops load-based instances.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct AutoScalingThresholds {
@@ -176,7 +272,61 @@ pub struct AutoScalingThresholds {
     #[serde(skip_serializing_if="Option::is_none")]
     pub thresholds_wait_time: Option<i64>,
 }
-
+impl AutoScalingThresholds {
+    /// Sets `alarms`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AutoScalingThresholds.alarms = Some(value.into());`.
+    pub fn alarms<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.alarms = Some(value.into());
+        self
+    }
+    /// Sets `cpu_threshold`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AutoScalingThresholds.cpu_threshold = Some(value.into());`.
+    pub fn cpu_threshold<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.cpu_threshold = Some(value.into());
+        self
+    }
+    /// Sets `ignore_metrics_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AutoScalingThresholds.ignore_metrics_time = Some(value.into());`.
+    pub fn ignore_metrics_time<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.ignore_metrics_time = Some(value.into());
+        self
+    }
+    /// Sets `instance_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AutoScalingThresholds.instance_count = Some(value.into());`.
+    pub fn instance_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.instance_count = Some(value.into());
+        self
+    }
+    /// Sets `load_threshold`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AutoScalingThresholds.load_threshold = Some(value.into());`.
+    pub fn load_threshold<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.load_threshold = Some(value.into());
+        self
+    }
+    /// Sets `memory_threshold`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AutoScalingThresholds.memory_threshold = Some(value.into());`.
+    pub fn memory_threshold<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.memory_threshold = Some(value.into());
+        self
+    }
+    /// Sets `thresholds_wait_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AutoScalingThresholds.thresholds_wait_time = Some(value.into());`.
+    pub fn thresholds_wait_time<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.thresholds_wait_time = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AutoScalingThresholds with optional fields set to `None`.
+    pub fn new() -> AutoScalingThresholds {
+        AutoScalingThresholds { ..Default::default() }
+    }
+}
 #[doc="<p>Describes a block device mapping. This data type maps directly to the Amazon EC2 <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_BlockDeviceMapping.html\">BlockDeviceMapping</a> data type. </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct BlockDeviceMapping {
@@ -197,7 +347,40 @@ pub struct BlockDeviceMapping {
     #[serde(skip_serializing_if="Option::is_none")]
     pub virtual_name: Option<String>,
 }
-
+impl BlockDeviceMapping {
+    /// Sets `device_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BlockDeviceMapping.device_name = Some(value.into());`.
+    pub fn device_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.device_name = Some(value.into());
+        self
+    }
+    /// Sets `ebs`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BlockDeviceMapping.ebs = Some(value.into());`.
+    pub fn ebs<ValueType: Into<EbsBlockDevice>>(mut self, value: ValueType) -> Self {
+        self.ebs = Some(value.into());
+        self
+    }
+    /// Sets `no_device`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BlockDeviceMapping.no_device = Some(value.into());`.
+    pub fn no_device<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.no_device = Some(value.into());
+        self
+    }
+    /// Sets `virtual_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BlockDeviceMapping.virtual_name = Some(value.into());`.
+    pub fn virtual_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.virtual_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of BlockDeviceMapping with optional fields set to `None`.
+    pub fn new() -> BlockDeviceMapping {
+        BlockDeviceMapping { ..Default::default() }
+    }
+}
 #[doc="<p>Describes the Chef configuration.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ChefConfiguration {
@@ -210,7 +393,26 @@ pub struct ChefConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub manage_berkshelf: Option<bool>,
 }
-
+impl ChefConfiguration {
+    /// Sets `berkshelf_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChefConfiguration.berkshelf_version = Some(value.into());`.
+    pub fn berkshelf_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.berkshelf_version = Some(value.into());
+        self
+    }
+    /// Sets `manage_berkshelf`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChefConfiguration.manage_berkshelf = Some(value.into());`.
+    pub fn manage_berkshelf<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.manage_berkshelf = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ChefConfiguration with optional fields set to `None`.
+    pub fn new() -> ChefConfiguration {
+        ChefConfiguration { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CloneStackRequest {
     #[doc="<p>The default AWS OpsWorks Stacks agent version. You have the following options:</p> <ul> <li> <p>Auto-update - Set this parameter to <code>LATEST</code>. AWS OpsWorks Stacks automatically installs new agent versions on the stack's instances as soon as they are available.</p> </li> <li> <p>Fixed version - Set this parameter to your preferred agent version. To update the agent version, you must edit the stack configuration and specify a new version. AWS OpsWorks Stacks then automatically installs that version on the stack's instances.</p> </li> </ul> <p>The default setting is <code>LATEST</code>. To specify an agent version, you must use the complete version number, not the abbreviated number shown on the console. For a list of available agent version numbers, call <a>DescribeAgentVersions</a>. AgentVersion cannot be set to Chef 12.2.</p> <note> <p>You can also specify an agent version when you create or update an instance, which overrides the stack's default setting.</p> </note>"]
@@ -299,7 +501,179 @@ pub struct CloneStackRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vpc_id: Option<String>,
 }
-
+impl CloneStackRequest {
+    /// Sets `agent_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneStackRequest.agent_version = Some(value.into());`.
+    pub fn agent_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.agent_version = Some(value.into());
+        self
+    }
+    /// Sets `attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneStackRequest.attributes = Some(value.into());`.
+pub fn attributes<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.attributes = Some(value.into());
+        self
+    }
+    /// Sets `chef_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneStackRequest.chef_configuration = Some(value.into());`.
+    pub fn chef_configuration<ValueType: Into<ChefConfiguration>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.chef_configuration = Some(value.into());
+        self
+    }
+    /// Sets `clone_app_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneStackRequest.clone_app_ids = Some(value.into());`.
+    pub fn clone_app_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.clone_app_ids = Some(value.into());
+        self
+    }
+    /// Sets `clone_permissions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneStackRequest.clone_permissions = Some(value.into());`.
+    pub fn clone_permissions<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.clone_permissions = Some(value.into());
+        self
+    }
+    /// Sets `configuration_manager`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneStackRequest.configuration_manager = Some(value.into());`.
+    pub fn configuration_manager<ValueType: Into<StackConfigurationManager>>(mut self,
+                                                                             value: ValueType)
+                                                                             -> Self {
+        self.configuration_manager = Some(value.into());
+        self
+    }
+    /// Sets `custom_cookbooks_source`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneStackRequest.custom_cookbooks_source = Some(value.into());`.
+    pub fn custom_cookbooks_source<ValueType: Into<Source>>(mut self, value: ValueType) -> Self {
+        self.custom_cookbooks_source = Some(value.into());
+        self
+    }
+    /// Sets `custom_json`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneStackRequest.custom_json = Some(value.into());`.
+    pub fn custom_json<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.custom_json = Some(value.into());
+        self
+    }
+    /// Sets `default_availability_zone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneStackRequest.default_availability_zone = Some(value.into());`.
+    pub fn default_availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_availability_zone = Some(value.into());
+        self
+    }
+    /// Sets `default_instance_profile_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneStackRequest.default_instance_profile_arn = Some(value.into());`.
+    pub fn default_instance_profile_arn<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.default_instance_profile_arn = Some(value.into());
+        self
+    }
+    /// Sets `default_os`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneStackRequest.default_os = Some(value.into());`.
+    pub fn default_os<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_os = Some(value.into());
+        self
+    }
+    /// Sets `default_root_device_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneStackRequest.default_root_device_type = Some(value.into());`.
+    pub fn default_root_device_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_root_device_type = Some(value.into());
+        self
+    }
+    /// Sets `default_ssh_key_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneStackRequest.default_ssh_key_name = Some(value.into());`.
+    pub fn default_ssh_key_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_ssh_key_name = Some(value.into());
+        self
+    }
+    /// Sets `default_subnet_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneStackRequest.default_subnet_id = Some(value.into());`.
+    pub fn default_subnet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_subnet_id = Some(value.into());
+        self
+    }
+    /// Sets `hostname_theme`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneStackRequest.hostname_theme = Some(value.into());`.
+    pub fn hostname_theme<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hostname_theme = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneStackRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `region`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneStackRequest.region = Some(value.into());`.
+    pub fn region<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.region = Some(value.into());
+        self
+    }
+    /// Sets `service_role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneStackRequest.service_role_arn = value.into();`.
+    pub fn service_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_role_arn = value.into();
+        self
+    }
+    /// Sets `source_stack_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneStackRequest.source_stack_id = value.into();`.
+    pub fn source_stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_stack_id = value.into();
+        self
+    }
+    /// Sets `use_custom_cookbooks`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneStackRequest.use_custom_cookbooks = Some(value.into());`.
+    pub fn use_custom_cookbooks<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.use_custom_cookbooks = Some(value.into());
+        self
+    }
+    /// Sets `use_opsworks_security_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneStackRequest.use_opsworks_security_groups = Some(value.into());`.
+    pub fn use_opsworks_security_groups<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.use_opsworks_security_groups = Some(value.into());
+        self
+    }
+    /// Sets `vpc_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloneStackRequest.vpc_id = Some(value.into());`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CloneStackRequest with optional fields set to `None`.
+    pub fn new<ServiceRoleArnType: Into<String>, SourceStackIdType: Into<String>>
+        (service_role_arn: ServiceRoleArnType,
+         source_stack_id: SourceStackIdType)
+         -> CloneStackRequest {
+        CloneStackRequest {
+            service_role_arn: service_role_arn.into(),
+            source_stack_id: source_stack_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the response to a <code>CloneStack</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CloneStackResult {
@@ -308,7 +682,6 @@ pub struct CloneStackResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stack_id: Option<String>,
 }
-
 #[doc="<p>Describes the Amazon CloudWatch logs configuration for a layer.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct CloudWatchLogsConfiguration {
@@ -321,7 +694,28 @@ pub struct CloudWatchLogsConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub log_streams: Option<Vec<CloudWatchLogsLogStream>>,
 }
-
+impl CloudWatchLogsConfiguration {
+    /// Sets `enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchLogsConfiguration.enabled = Some(value.into());`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = Some(value.into());
+        self
+    }
+    /// Sets `log_streams`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchLogsConfiguration.log_streams = Some(value.into());`.
+    pub fn log_streams<ValueType: Into<Vec<CloudWatchLogsLogStream>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.log_streams = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CloudWatchLogsConfiguration with optional fields set to `None`.
+    pub fn new() -> CloudWatchLogsConfiguration {
+        CloudWatchLogsConfiguration { ..Default::default() }
+    }
+}
 #[doc="<p>Describes the Amazon CloudWatch logs configuration for a layer. For detailed information about members of this data type, see the <a href=\"http://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AgentReference.html\">CloudWatch Logs Agent Reference</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct CloudWatchLogsLogStream {
@@ -370,7 +764,89 @@ pub struct CloudWatchLogsLogStream {
     #[serde(skip_serializing_if="Option::is_none")]
     pub time_zone: Option<String>,
 }
-
+impl CloudWatchLogsLogStream {
+    /// Sets `batch_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchLogsLogStream.batch_count = Some(value.into());`.
+    pub fn batch_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.batch_count = Some(value.into());
+        self
+    }
+    /// Sets `batch_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchLogsLogStream.batch_size = Some(value.into());`.
+    pub fn batch_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.batch_size = Some(value.into());
+        self
+    }
+    /// Sets `buffer_duration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchLogsLogStream.buffer_duration = Some(value.into());`.
+    pub fn buffer_duration<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.buffer_duration = Some(value.into());
+        self
+    }
+    /// Sets `datetime_format`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchLogsLogStream.datetime_format = Some(value.into());`.
+    pub fn datetime_format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.datetime_format = Some(value.into());
+        self
+    }
+    /// Sets `encoding`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchLogsLogStream.encoding = Some(value.into());`.
+    pub fn encoding<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.encoding = Some(value.into());
+        self
+    }
+    /// Sets `file`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchLogsLogStream.file = Some(value.into());`.
+    pub fn file<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.file = Some(value.into());
+        self
+    }
+    /// Sets `file_fingerprint_lines`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchLogsLogStream.file_fingerprint_lines = Some(value.into());`.
+    pub fn file_fingerprint_lines<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.file_fingerprint_lines = Some(value.into());
+        self
+    }
+    /// Sets `initial_position`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchLogsLogStream.initial_position = Some(value.into());`.
+    pub fn initial_position<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.initial_position = Some(value.into());
+        self
+    }
+    /// Sets `log_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchLogsLogStream.log_group_name = Some(value.into());`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = Some(value.into());
+        self
+    }
+    /// Sets `multi_line_start_pattern`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchLogsLogStream.multi_line_start_pattern = Some(value.into());`.
+    pub fn multi_line_start_pattern<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.multi_line_start_pattern = Some(value.into());
+        self
+    }
+    /// Sets `time_zone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchLogsLogStream.time_zone = Some(value.into());`.
+    pub fn time_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.time_zone = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CloudWatchLogsLogStream with optional fields set to `None`.
+    pub fn new() -> CloudWatchLogsLogStream {
+        CloudWatchLogsLogStream { ..Default::default() }
+    }
+}
 #[doc="<p>Describes a command.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Command {
@@ -415,7 +891,6 @@ pub struct Command {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateAppRequest {
     #[doc="<p>A <code>Source</code> object that specifies the app repository.</p>"]
@@ -464,7 +939,109 @@ pub struct CreateAppRequest {
     #[serde(rename="Type")]
     pub type_: String,
 }
-
+impl CreateAppRequest {
+    /// Sets `app_source`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAppRequest.app_source = Some(value.into());`.
+    pub fn app_source<ValueType: Into<Source>>(mut self, value: ValueType) -> Self {
+        self.app_source = Some(value.into());
+        self
+    }
+    /// Sets `attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAppRequest.attributes = Some(value.into());`.
+pub fn attributes<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.attributes = Some(value.into());
+        self
+    }
+    /// Sets `data_sources`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAppRequest.data_sources = Some(value.into());`.
+    pub fn data_sources<ValueType: Into<Vec<DataSource>>>(mut self, value: ValueType) -> Self {
+        self.data_sources = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAppRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `domains`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAppRequest.domains = Some(value.into());`.
+    pub fn domains<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.domains = Some(value.into());
+        self
+    }
+    /// Sets `enable_ssl`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAppRequest.enable_ssl = Some(value.into());`.
+    pub fn enable_ssl<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enable_ssl = Some(value.into());
+        self
+    }
+    /// Sets `environment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAppRequest.environment = Some(value.into());`.
+    pub fn environment<ValueType: Into<Vec<EnvironmentVariable>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.environment = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAppRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `shortname`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAppRequest.shortname = Some(value.into());`.
+    pub fn shortname<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.shortname = Some(value.into());
+        self
+    }
+    /// Sets `ssl_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAppRequest.ssl_configuration = Some(value.into());`.
+    pub fn ssl_configuration<ValueType: Into<SslConfiguration>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.ssl_configuration = Some(value.into());
+        self
+    }
+    /// Sets `stack_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAppRequest.stack_id = value.into();`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = value.into();
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAppRequest.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of CreateAppRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, StackIdType: Into<String>, TypeType: Into<String>>
+        (name: NameType,
+         stack_id: StackIdType,
+         type_: TypeType)
+         -> CreateAppRequest {
+        CreateAppRequest {
+            name: name.into(),
+            stack_id: stack_id.into(),
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the response to a <code>CreateApp</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateAppResult {
@@ -473,7 +1050,6 @@ pub struct CreateAppResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub app_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateDeploymentRequest {
     #[doc="<p>The app ID. This parameter is required for app deployments, but not for other deployment commands.</p>"]
@@ -503,7 +1079,68 @@ pub struct CreateDeploymentRequest {
     #[serde(rename="StackId")]
     pub stack_id: String,
 }
-
+impl CreateDeploymentRequest {
+    /// Sets `app_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentRequest.app_id = Some(value.into());`.
+    pub fn app_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.app_id = Some(value.into());
+        self
+    }
+    /// Sets `command`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentRequest.command = value.into();`.
+    pub fn command<ValueType: Into<DeploymentCommand>>(mut self, value: ValueType) -> Self {
+        self.command = value.into();
+        self
+    }
+    /// Sets `comment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentRequest.comment = Some(value.into());`.
+    pub fn comment<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.comment = Some(value.into());
+        self
+    }
+    /// Sets `custom_json`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentRequest.custom_json = Some(value.into());`.
+    pub fn custom_json<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.custom_json = Some(value.into());
+        self
+    }
+    /// Sets `instance_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentRequest.instance_ids = Some(value.into());`.
+    pub fn instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_ids = Some(value.into());
+        self
+    }
+    /// Sets `layer_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentRequest.layer_ids = Some(value.into());`.
+    pub fn layer_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.layer_ids = Some(value.into());
+        self
+    }
+    /// Sets `stack_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentRequest.stack_id = value.into();`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateDeploymentRequest with optional fields set to `None`.
+    pub fn new<CommandType: Into<DeploymentCommand>, StackIdType: Into<String>>
+        (command: CommandType,
+         stack_id: StackIdType)
+         -> CreateDeploymentRequest {
+        CreateDeploymentRequest {
+            command: command.into(),
+            stack_id: stack_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the response to a <code>CreateDeployment</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateDeploymentResult {
@@ -512,7 +1149,6 @@ pub struct CreateDeploymentResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub deployment_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateInstanceRequest {
     #[doc="<p>The default AWS OpsWorks Stacks agent version. You have the following options:</p> <ul> <li> <p> <code>INHERIT</code> - Use the stack's default agent version setting.</p> </li> <li> <p> <i>version_number</i> - Use the specified agent version. This value overrides the stack's default setting. To update the agent version, edit the instance configuration and specify a new version. AWS OpsWorks Stacks then automatically installs that version on the instance.</p> </li> </ul> <p>The default setting is <code>INHERIT</code>. To specify an agent version, you must use the complete version number, not the abbreviated number shown on the console. For a list of available agent version numbers, call <a>DescribeAgentVersions</a>. AgentVersion cannot be set to Chef 12.2.</p>"]
@@ -585,7 +1221,151 @@ pub struct CreateInstanceRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub virtualization_type: Option<String>,
 }
-
+impl CreateInstanceRequest {
+    /// Sets `agent_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceRequest.agent_version = Some(value.into());`.
+    pub fn agent_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.agent_version = Some(value.into());
+        self
+    }
+    /// Sets `ami_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceRequest.ami_id = Some(value.into());`.
+    pub fn ami_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ami_id = Some(value.into());
+        self
+    }
+    /// Sets `architecture`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceRequest.architecture = Some(value.into());`.
+    pub fn architecture<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.architecture = Some(value.into());
+        self
+    }
+    /// Sets `auto_scaling_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceRequest.auto_scaling_type = Some(value.into());`.
+    pub fn auto_scaling_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_type = Some(value.into());
+        self
+    }
+    /// Sets `availability_zone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceRequest.availability_zone = Some(value.into());`.
+    pub fn availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.availability_zone = Some(value.into());
+        self
+    }
+    /// Sets `block_device_mappings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceRequest.block_device_mappings = Some(value.into());`.
+    pub fn block_device_mappings<ValueType: Into<Vec<BlockDeviceMapping>>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.block_device_mappings = Some(value.into());
+        self
+    }
+    /// Sets `ebs_optimized`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceRequest.ebs_optimized = Some(value.into());`.
+    pub fn ebs_optimized<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.ebs_optimized = Some(value.into());
+        self
+    }
+    /// Sets `hostname`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceRequest.hostname = Some(value.into());`.
+    pub fn hostname<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hostname = Some(value.into());
+        self
+    }
+    /// Sets `install_updates_on_boot`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceRequest.install_updates_on_boot = Some(value.into());`.
+    pub fn install_updates_on_boot<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.install_updates_on_boot = Some(value.into());
+        self
+    }
+    /// Sets `instance_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceRequest.instance_type = value.into();`.
+    pub fn instance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_type = value.into();
+        self
+    }
+    /// Sets `layer_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceRequest.layer_ids = value.into();`.
+    pub fn layer_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.layer_ids = value.into();
+        self
+    }
+    /// Sets `os`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceRequest.os = Some(value.into());`.
+    pub fn os<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.os = Some(value.into());
+        self
+    }
+    /// Sets `root_device_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceRequest.root_device_type = Some(value.into());`.
+    pub fn root_device_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.root_device_type = Some(value.into());
+        self
+    }
+    /// Sets `ssh_key_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceRequest.ssh_key_name = Some(value.into());`.
+    pub fn ssh_key_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ssh_key_name = Some(value.into());
+        self
+    }
+    /// Sets `stack_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceRequest.stack_id = value.into();`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = value.into();
+        self
+    }
+    /// Sets `subnet_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceRequest.subnet_id = Some(value.into());`.
+    pub fn subnet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subnet_id = Some(value.into());
+        self
+    }
+    /// Sets `tenancy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceRequest.tenancy = Some(value.into());`.
+    pub fn tenancy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tenancy = Some(value.into());
+        self
+    }
+    /// Sets `virtualization_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceRequest.virtualization_type = Some(value.into());`.
+    pub fn virtualization_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.virtualization_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateInstanceRequest with optional fields set to `None`.
+    pub fn new<InstanceTypeType: Into<String>,
+               LayerIdsType: Into<Vec<String>>,
+               StackIdType: Into<String>>
+        (instance_type: InstanceTypeType,
+         layer_ids: LayerIdsType,
+         stack_id: StackIdType)
+         -> CreateInstanceRequest {
+        CreateInstanceRequest {
+            instance_type: instance_type.into(),
+            layer_ids: layer_ids.into(),
+            stack_id: stack_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the response to a <code>CreateInstance</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateInstanceResult {
@@ -594,7 +1374,6 @@ pub struct CreateInstanceResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instance_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateLayerRequest {
     #[doc="<p>One or more user-defined key-value pairs to be added to the stack attributes.</p> <p>To create a cluster layer, set the <code>EcsClusterArn</code> attribute to the cluster's ARN.</p>"]
@@ -666,7 +1445,158 @@ pub struct CreateLayerRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_configurations: Option<Vec<VolumeConfiguration>>,
 }
-
+impl CreateLayerRequest {
+    /// Sets `attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLayerRequest.attributes = Some(value.into());`.
+pub fn attributes<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.attributes = Some(value.into());
+        self
+    }
+    /// Sets `auto_assign_elastic_ips`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLayerRequest.auto_assign_elastic_ips = Some(value.into());`.
+    pub fn auto_assign_elastic_ips<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.auto_assign_elastic_ips = Some(value.into());
+        self
+    }
+    /// Sets `auto_assign_public_ips`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLayerRequest.auto_assign_public_ips = Some(value.into());`.
+    pub fn auto_assign_public_ips<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.auto_assign_public_ips = Some(value.into());
+        self
+    }
+    /// Sets `cloud_watch_logs_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLayerRequest.cloud_watch_logs_configuration = Some(value.into());`.
+pub fn cloud_watch_logs_configuration<ValueType: Into<CloudWatchLogsConfiguration>>(mut self, value: ValueType) -> Self{
+        self.cloud_watch_logs_configuration = Some(value.into());
+        self
+    }
+    /// Sets `custom_instance_profile_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLayerRequest.custom_instance_profile_arn = Some(value.into());`.
+    pub fn custom_instance_profile_arn<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.custom_instance_profile_arn = Some(value.into());
+        self
+    }
+    /// Sets `custom_json`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLayerRequest.custom_json = Some(value.into());`.
+    pub fn custom_json<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.custom_json = Some(value.into());
+        self
+    }
+    /// Sets `custom_recipes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLayerRequest.custom_recipes = Some(value.into());`.
+    pub fn custom_recipes<ValueType: Into<Recipes>>(mut self, value: ValueType) -> Self {
+        self.custom_recipes = Some(value.into());
+        self
+    }
+    /// Sets `custom_security_group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLayerRequest.custom_security_group_ids = Some(value.into());`.
+    pub fn custom_security_group_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.custom_security_group_ids = Some(value.into());
+        self
+    }
+    /// Sets `enable_auto_healing`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLayerRequest.enable_auto_healing = Some(value.into());`.
+    pub fn enable_auto_healing<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enable_auto_healing = Some(value.into());
+        self
+    }
+    /// Sets `install_updates_on_boot`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLayerRequest.install_updates_on_boot = Some(value.into());`.
+    pub fn install_updates_on_boot<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.install_updates_on_boot = Some(value.into());
+        self
+    }
+    /// Sets `lifecycle_event_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLayerRequest.lifecycle_event_configuration = Some(value.into());`.
+pub fn lifecycle_event_configuration<ValueType: Into<LifecycleEventConfiguration>>(mut self, value: ValueType) -> Self{
+        self.lifecycle_event_configuration = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLayerRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `packages`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLayerRequest.packages = Some(value.into());`.
+    pub fn packages<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.packages = Some(value.into());
+        self
+    }
+    /// Sets `shortname`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLayerRequest.shortname = value.into();`.
+    pub fn shortname<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.shortname = value.into();
+        self
+    }
+    /// Sets `stack_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLayerRequest.stack_id = value.into();`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = value.into();
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLayerRequest.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Sets `use_ebs_optimized_instances`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLayerRequest.use_ebs_optimized_instances = Some(value.into());`.
+    pub fn use_ebs_optimized_instances<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.use_ebs_optimized_instances = Some(value.into());
+        self
+    }
+    /// Sets `volume_configurations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLayerRequest.volume_configurations = Some(value.into());`.
+    pub fn volume_configurations<ValueType: Into<Vec<VolumeConfiguration>>>(mut self,
+                                                                            value: ValueType)
+                                                                            -> Self {
+        self.volume_configurations = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateLayerRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>,
+               ShortnameType: Into<String>,
+               StackIdType: Into<String>,
+               TypeType: Into<String>>
+        (name: NameType,
+         shortname: ShortnameType,
+         stack_id: StackIdType,
+         type_: TypeType)
+         -> CreateLayerRequest {
+        CreateLayerRequest {
+            name: name.into(),
+            shortname: shortname.into(),
+            stack_id: stack_id.into(),
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the response to a <code>CreateLayer</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateLayerResult {
@@ -675,7 +1605,6 @@ pub struct CreateLayerResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub layer_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateStackRequest {
     #[doc="<p>The default AWS OpsWorks Stacks agent version. You have the following options:</p> <ul> <li> <p>Auto-update - Set this parameter to <code>LATEST</code>. AWS OpsWorks Stacks automatically installs new agent versions on the stack's instances as soon as they are available.</p> </li> <li> <p>Fixed version - Set this parameter to your preferred agent version. To update the agent version, you must edit the stack configuration and specify a new version. AWS OpsWorks Stacks then automatically installs that version on the stack's instances.</p> </li> </ul> <p>The default setting is the most recent release of the agent. To specify an agent version, you must use the complete version number, not the abbreviated number shown on the console. For a list of available agent version numbers, call <a>DescribeAgentVersions</a>. AgentVersion cannot be set to Chef 12.2.</p> <note> <p>You can also specify an agent version when you create or update an instance, which overrides the stack's default setting.</p> </note>"]
@@ -750,7 +1679,165 @@ pub struct CreateStackRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vpc_id: Option<String>,
 }
-
+impl CreateStackRequest {
+    /// Sets `agent_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.agent_version = Some(value.into());`.
+    pub fn agent_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.agent_version = Some(value.into());
+        self
+    }
+    /// Sets `attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.attributes = Some(value.into());`.
+pub fn attributes<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.attributes = Some(value.into());
+        self
+    }
+    /// Sets `chef_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.chef_configuration = Some(value.into());`.
+    pub fn chef_configuration<ValueType: Into<ChefConfiguration>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.chef_configuration = Some(value.into());
+        self
+    }
+    /// Sets `configuration_manager`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.configuration_manager = Some(value.into());`.
+    pub fn configuration_manager<ValueType: Into<StackConfigurationManager>>(mut self,
+                                                                             value: ValueType)
+                                                                             -> Self {
+        self.configuration_manager = Some(value.into());
+        self
+    }
+    /// Sets `custom_cookbooks_source`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.custom_cookbooks_source = Some(value.into());`.
+    pub fn custom_cookbooks_source<ValueType: Into<Source>>(mut self, value: ValueType) -> Self {
+        self.custom_cookbooks_source = Some(value.into());
+        self
+    }
+    /// Sets `custom_json`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.custom_json = Some(value.into());`.
+    pub fn custom_json<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.custom_json = Some(value.into());
+        self
+    }
+    /// Sets `default_availability_zone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.default_availability_zone = Some(value.into());`.
+    pub fn default_availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_availability_zone = Some(value.into());
+        self
+    }
+    /// Sets `default_instance_profile_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.default_instance_profile_arn = value.into();`.
+    pub fn default_instance_profile_arn<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.default_instance_profile_arn = value.into();
+        self
+    }
+    /// Sets `default_os`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.default_os = Some(value.into());`.
+    pub fn default_os<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_os = Some(value.into());
+        self
+    }
+    /// Sets `default_root_device_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.default_root_device_type = Some(value.into());`.
+    pub fn default_root_device_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_root_device_type = Some(value.into());
+        self
+    }
+    /// Sets `default_ssh_key_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.default_ssh_key_name = Some(value.into());`.
+    pub fn default_ssh_key_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_ssh_key_name = Some(value.into());
+        self
+    }
+    /// Sets `default_subnet_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.default_subnet_id = Some(value.into());`.
+    pub fn default_subnet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_subnet_id = Some(value.into());
+        self
+    }
+    /// Sets `hostname_theme`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.hostname_theme = Some(value.into());`.
+    pub fn hostname_theme<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hostname_theme = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `region`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.region = value.into();`.
+    pub fn region<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.region = value.into();
+        self
+    }
+    /// Sets `service_role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.service_role_arn = value.into();`.
+    pub fn service_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_role_arn = value.into();
+        self
+    }
+    /// Sets `use_custom_cookbooks`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.use_custom_cookbooks = Some(value.into());`.
+    pub fn use_custom_cookbooks<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.use_custom_cookbooks = Some(value.into());
+        self
+    }
+    /// Sets `use_opsworks_security_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.use_opsworks_security_groups = Some(value.into());`.
+    pub fn use_opsworks_security_groups<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.use_opsworks_security_groups = Some(value.into());
+        self
+    }
+    /// Sets `vpc_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.vpc_id = Some(value.into());`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateStackRequest with optional fields set to `None`.
+    pub fn new<DefaultInstanceProfileArnType: Into<String>,
+               NameType: Into<String>,
+               RegionType: Into<String>,
+               ServiceRoleArnType: Into<String>>
+        (default_instance_profile_arn: DefaultInstanceProfileArnType,
+         name: NameType,
+         region: RegionType,
+         service_role_arn: ServiceRoleArnType)
+         -> CreateStackRequest {
+        CreateStackRequest {
+            default_instance_profile_arn: default_instance_profile_arn.into(),
+            name: name.into(),
+            region: region.into(),
+            service_role_arn: service_role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the response to a <code>CreateStack</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateStackResult {
@@ -759,7 +1846,6 @@ pub struct CreateStackResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stack_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateUserProfileRequest {
     #[doc="<p>Whether users can specify their own SSH public key through the My Settings page. For more information, see <a href=\"http://docs.aws.amazon.com/opsworks/latest/userguide/security-settingsshkey.html\">Setting an IAM User's Public SSH Key</a>.</p>"]
@@ -778,7 +1864,44 @@ pub struct CreateUserProfileRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ssh_username: Option<String>,
 }
-
+impl CreateUserProfileRequest {
+    /// Sets `allow_self_management`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserProfileRequest.allow_self_management = Some(value.into());`.
+    pub fn allow_self_management<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.allow_self_management = Some(value.into());
+        self
+    }
+    /// Sets `iam_user_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserProfileRequest.iam_user_arn = value.into();`.
+    pub fn iam_user_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.iam_user_arn = value.into();
+        self
+    }
+    /// Sets `ssh_public_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserProfileRequest.ssh_public_key = Some(value.into());`.
+    pub fn ssh_public_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ssh_public_key = Some(value.into());
+        self
+    }
+    /// Sets `ssh_username`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserProfileRequest.ssh_username = Some(value.into());`.
+    pub fn ssh_username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ssh_username = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateUserProfileRequest with optional fields set to `None`.
+    pub fn new<IamUserArnType: Into<String>>(iam_user_arn: IamUserArnType)
+                                             -> CreateUserProfileRequest {
+        CreateUserProfileRequest {
+            iam_user_arn: iam_user_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the response to a <code>CreateUserProfile</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateUserProfileResult {
@@ -787,7 +1910,6 @@ pub struct CreateUserProfileResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub iam_user_arn: Option<String>,
 }
-
 #[doc="<p>Describes an app's data source.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct DataSource {
@@ -804,14 +1926,55 @@ pub struct DataSource {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
+impl DataSource {
+    /// Sets `arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DataSource.arn = Some(value.into());`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = Some(value.into());
+        self
+    }
+    /// Sets `database_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DataSource.database_name = Some(value.into());`.
+    pub fn database_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.database_name = Some(value.into());
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DataSource.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DataSource with optional fields set to `None`.
+    pub fn new() -> DataSource {
+        DataSource { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteAppRequest {
     #[doc="<p>The app ID.</p>"]
     #[serde(rename="AppId")]
     pub app_id: String,
 }
-
+impl DeleteAppRequest {
+    /// Sets `app_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAppRequest.app_id = value.into();`.
+    pub fn app_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.app_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteAppRequest with optional fields set to `None`.
+    pub fn new<AppIdType: Into<String>>(app_id: AppIdType) -> DeleteAppRequest {
+        DeleteAppRequest {
+            app_id: app_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteInstanceRequest {
     #[doc="<p>Whether to delete the instance Elastic IP address.</p>"]
@@ -826,28 +1989,103 @@ pub struct DeleteInstanceRequest {
     #[serde(rename="InstanceId")]
     pub instance_id: String,
 }
-
+impl DeleteInstanceRequest {
+    /// Sets `delete_elastic_ip`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteInstanceRequest.delete_elastic_ip = Some(value.into());`.
+    pub fn delete_elastic_ip<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.delete_elastic_ip = Some(value.into());
+        self
+    }
+    /// Sets `delete_volumes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteInstanceRequest.delete_volumes = Some(value.into());`.
+    pub fn delete_volumes<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.delete_volumes = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteInstanceRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteInstanceRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>>(instance_id: InstanceIdType) -> DeleteInstanceRequest {
+        DeleteInstanceRequest {
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteLayerRequest {
     #[doc="<p>The layer ID.</p>"]
     #[serde(rename="LayerId")]
     pub layer_id: String,
 }
-
+impl DeleteLayerRequest {
+    /// Sets `layer_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteLayerRequest.layer_id = value.into();`.
+    pub fn layer_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.layer_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteLayerRequest with optional fields set to `None`.
+    pub fn new<LayerIdType: Into<String>>(layer_id: LayerIdType) -> DeleteLayerRequest {
+        DeleteLayerRequest {
+            layer_id: layer_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteStackRequest {
     #[doc="<p>The stack ID.</p>"]
     #[serde(rename="StackId")]
     pub stack_id: String,
 }
-
+impl DeleteStackRequest {
+    /// Sets `stack_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteStackRequest.stack_id = value.into();`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteStackRequest with optional fields set to `None`.
+    pub fn new<StackIdType: Into<String>>(stack_id: StackIdType) -> DeleteStackRequest {
+        DeleteStackRequest {
+            stack_id: stack_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteUserProfileRequest {
     #[doc="<p>The user's IAM ARN. This can also be a federated user's ARN.</p>"]
     #[serde(rename="IamUserArn")]
     pub iam_user_arn: String,
 }
-
+impl DeleteUserProfileRequest {
+    /// Sets `iam_user_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteUserProfileRequest.iam_user_arn = value.into();`.
+    pub fn iam_user_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.iam_user_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteUserProfileRequest with optional fields set to `None`.
+    pub fn new<IamUserArnType: Into<String>>(iam_user_arn: IamUserArnType)
+                                             -> DeleteUserProfileRequest {
+        DeleteUserProfileRequest {
+            iam_user_arn: iam_user_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes a deployment of a stack or app.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Deployment {
@@ -899,7 +2137,6 @@ pub struct Deployment {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[doc="<p>Used to specify a stack or deployment command.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct DeploymentCommand {
@@ -911,42 +2148,143 @@ pub struct DeploymentCommand {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl DeploymentCommand {
+    /// Sets `args`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeploymentCommand.args = Some(value.into());`.
+pub fn args<ValueType: Into<::std::collections::HashMap<String, Vec<String>>>>(mut self, value: ValueType) -> Self{
+        self.args = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeploymentCommand.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of DeploymentCommand with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> DeploymentCommand {
+        DeploymentCommand {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeregisterEcsClusterRequest {
     #[doc="<p>The cluster's ARN.</p>"]
     #[serde(rename="EcsClusterArn")]
     pub ecs_cluster_arn: String,
 }
-
+impl DeregisterEcsClusterRequest {
+    /// Sets `ecs_cluster_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterEcsClusterRequest.ecs_cluster_arn = value.into();`.
+    pub fn ecs_cluster_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ecs_cluster_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeregisterEcsClusterRequest with optional fields set to `None`.
+    pub fn new<EcsClusterArnType: Into<String>>(ecs_cluster_arn: EcsClusterArnType)
+                                                -> DeregisterEcsClusterRequest {
+        DeregisterEcsClusterRequest {
+            ecs_cluster_arn: ecs_cluster_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeregisterElasticIpRequest {
     #[doc="<p>The Elastic IP address.</p>"]
     #[serde(rename="ElasticIp")]
     pub elastic_ip: String,
 }
-
+impl DeregisterElasticIpRequest {
+    /// Sets `elastic_ip`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterElasticIpRequest.elastic_ip = value.into();`.
+    pub fn elastic_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.elastic_ip = value.into();
+        self
+    }
+    /// Returns a new instance of DeregisterElasticIpRequest with optional fields set to `None`.
+    pub fn new<ElasticIpType: Into<String>>(elastic_ip: ElasticIpType)
+                                            -> DeregisterElasticIpRequest {
+        DeregisterElasticIpRequest {
+            elastic_ip: elastic_ip.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeregisterInstanceRequest {
     #[doc="<p>The instance ID.</p>"]
     #[serde(rename="InstanceId")]
     pub instance_id: String,
 }
-
+impl DeregisterInstanceRequest {
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterInstanceRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeregisterInstanceRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>>(instance_id: InstanceIdType)
+                                             -> DeregisterInstanceRequest {
+        DeregisterInstanceRequest {
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeregisterRdsDbInstanceRequest {
     #[doc="<p>The Amazon RDS instance's ARN.</p>"]
     #[serde(rename="RdsDbInstanceArn")]
     pub rds_db_instance_arn: String,
 }
-
+impl DeregisterRdsDbInstanceRequest {
+    /// Sets `rds_db_instance_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterRdsDbInstanceRequest.rds_db_instance_arn = value.into();`.
+    pub fn rds_db_instance_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rds_db_instance_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeregisterRdsDbInstanceRequest with optional fields set to `None`.
+    pub fn new<RdsDbInstanceArnType: Into<String>>(rds_db_instance_arn: RdsDbInstanceArnType)
+                                                   -> DeregisterRdsDbInstanceRequest {
+        DeregisterRdsDbInstanceRequest {
+            rds_db_instance_arn: rds_db_instance_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeregisterVolumeRequest {
     #[doc="<p>The AWS OpsWorks Stacks volume ID, which is the GUID that AWS OpsWorks Stacks assigned to the instance when you registered the volume with the stack, not the Amazon EC2 volume ID.</p>"]
     #[serde(rename="VolumeId")]
     pub volume_id: String,
 }
-
+impl DeregisterVolumeRequest {
+    /// Sets `volume_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterVolumeRequest.volume_id = value.into();`.
+    pub fn volume_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeregisterVolumeRequest with optional fields set to `None`.
+    pub fn new<VolumeIdType: Into<String>>(volume_id: VolumeIdType) -> DeregisterVolumeRequest {
+        DeregisterVolumeRequest {
+            volume_id: volume_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeAgentVersionsRequest {
     #[doc="<p>The configuration manager.</p>"]
@@ -958,7 +2296,28 @@ pub struct DescribeAgentVersionsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stack_id: Option<String>,
 }
-
+impl DescribeAgentVersionsRequest {
+    /// Sets `configuration_manager`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAgentVersionsRequest.configuration_manager = Some(value.into());`.
+    pub fn configuration_manager<ValueType: Into<StackConfigurationManager>>(mut self,
+                                                                             value: ValueType)
+                                                                             -> Self {
+        self.configuration_manager = Some(value.into());
+        self
+    }
+    /// Sets `stack_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAgentVersionsRequest.stack_id = Some(value.into());`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeAgentVersionsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeAgentVersionsRequest {
+        DescribeAgentVersionsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the response to a <code>DescribeAgentVersions</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeAgentVersionsResult {
@@ -967,7 +2326,6 @@ pub struct DescribeAgentVersionsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub agent_versions: Option<Vec<AgentVersion>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeAppsRequest {
     #[doc="<p>An array of app IDs for the apps to be described. If you use this parameter, <code>DescribeApps</code> returns a description of the specified apps. Otherwise, it returns a description of every app.</p>"]
@@ -979,7 +2337,26 @@ pub struct DescribeAppsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stack_id: Option<String>,
 }
-
+impl DescribeAppsRequest {
+    /// Sets `app_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAppsRequest.app_ids = Some(value.into());`.
+    pub fn app_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.app_ids = Some(value.into());
+        self
+    }
+    /// Sets `stack_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAppsRequest.stack_id = Some(value.into());`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeAppsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeAppsRequest {
+        DescribeAppsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the response to a <code>DescribeApps</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeAppsResult {
@@ -988,7 +2365,6 @@ pub struct DescribeAppsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub apps: Option<Vec<App>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeCommandsRequest {
     #[doc="<p>An array of command IDs. If you include this parameter, <code>DescribeCommands</code> returns a description of the specified commands. Otherwise, it returns a description of every command.</p>"]
@@ -1004,7 +2380,33 @@ pub struct DescribeCommandsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instance_id: Option<String>,
 }
-
+impl DescribeCommandsRequest {
+    /// Sets `command_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCommandsRequest.command_ids = Some(value.into());`.
+    pub fn command_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.command_ids = Some(value.into());
+        self
+    }
+    /// Sets `deployment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCommandsRequest.deployment_id = Some(value.into());`.
+    pub fn deployment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_id = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCommandsRequest.instance_id = Some(value.into());`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeCommandsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeCommandsRequest {
+        DescribeCommandsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the response to a <code>DescribeCommands</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeCommandsResult {
@@ -1013,7 +2415,6 @@ pub struct DescribeCommandsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub commands: Option<Vec<Command>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeDeploymentsRequest {
     #[doc="<p>The app ID. If you include this parameter, <code>DescribeDeployments</code> returns a description of the commands associated with the specified app.</p>"]
@@ -1029,7 +2430,33 @@ pub struct DescribeDeploymentsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stack_id: Option<String>,
 }
-
+impl DescribeDeploymentsRequest {
+    /// Sets `app_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDeploymentsRequest.app_id = Some(value.into());`.
+    pub fn app_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.app_id = Some(value.into());
+        self
+    }
+    /// Sets `deployment_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDeploymentsRequest.deployment_ids = Some(value.into());`.
+    pub fn deployment_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.deployment_ids = Some(value.into());
+        self
+    }
+    /// Sets `stack_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDeploymentsRequest.stack_id = Some(value.into());`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDeploymentsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeDeploymentsRequest {
+        DescribeDeploymentsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the response to a <code>DescribeDeployments</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeDeploymentsResult {
@@ -1038,7 +2465,6 @@ pub struct DescribeDeploymentsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub deployments: Option<Vec<Deployment>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeEcsClustersRequest {
     #[doc="<p>A list of ARNs, one for each cluster to be described.</p>"]
@@ -1058,7 +2484,40 @@ pub struct DescribeEcsClustersRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stack_id: Option<String>,
 }
-
+impl DescribeEcsClustersRequest {
+    /// Sets `ecs_cluster_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEcsClustersRequest.ecs_cluster_arns = Some(value.into());`.
+    pub fn ecs_cluster_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.ecs_cluster_arns = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEcsClustersRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEcsClustersRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `stack_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEcsClustersRequest.stack_id = Some(value.into());`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEcsClustersRequest with optional fields set to `None`.
+    pub fn new() -> DescribeEcsClustersRequest {
+        DescribeEcsClustersRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the response to a <code>DescribeEcsClusters</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeEcsClustersResult {
@@ -1071,7 +2530,6 @@ pub struct DescribeEcsClustersResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeElasticIpsRequest {
     #[doc="<p>The instance ID. If you include this parameter, <code>DescribeElasticIps</code> returns a description of the Elastic IP addresses associated with the specified instance.</p>"]
@@ -1087,7 +2545,33 @@ pub struct DescribeElasticIpsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stack_id: Option<String>,
 }
-
+impl DescribeElasticIpsRequest {
+    /// Sets `instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeElasticIpsRequest.instance_id = Some(value.into());`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = Some(value.into());
+        self
+    }
+    /// Sets `ips`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeElasticIpsRequest.ips = Some(value.into());`.
+    pub fn ips<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.ips = Some(value.into());
+        self
+    }
+    /// Sets `stack_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeElasticIpsRequest.stack_id = Some(value.into());`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeElasticIpsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeElasticIpsRequest {
+        DescribeElasticIpsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the response to a <code>DescribeElasticIps</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeElasticIpsResult {
@@ -1096,7 +2580,6 @@ pub struct DescribeElasticIpsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub elastic_ips: Option<Vec<ElasticIp>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeElasticLoadBalancersRequest {
     #[doc="<p>A list of layer IDs. The action describes the Elastic Load Balancing instances for the specified layers.</p>"]
@@ -1108,7 +2591,26 @@ pub struct DescribeElasticLoadBalancersRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stack_id: Option<String>,
 }
-
+impl DescribeElasticLoadBalancersRequest {
+    /// Sets `layer_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeElasticLoadBalancersRequest.layer_ids = Some(value.into());`.
+    pub fn layer_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.layer_ids = Some(value.into());
+        self
+    }
+    /// Sets `stack_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeElasticLoadBalancersRequest.stack_id = Some(value.into());`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeElasticLoadBalancersRequest with optional fields set to `None`.
+    pub fn new() -> DescribeElasticLoadBalancersRequest {
+        DescribeElasticLoadBalancersRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the response to a <code>DescribeElasticLoadBalancers</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeElasticLoadBalancersResult {
@@ -1117,7 +2619,6 @@ pub struct DescribeElasticLoadBalancersResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub elastic_load_balancers: Option<Vec<ElasticLoadBalancer>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeInstancesRequest {
     #[doc="<p>An array of instance IDs to be described. If you use this parameter, <code>DescribeInstances</code> returns a description of the specified instances. Otherwise, it returns a description of every instance.</p>"]
@@ -1133,7 +2634,33 @@ pub struct DescribeInstancesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stack_id: Option<String>,
 }
-
+impl DescribeInstancesRequest {
+    /// Sets `instance_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancesRequest.instance_ids = Some(value.into());`.
+    pub fn instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_ids = Some(value.into());
+        self
+    }
+    /// Sets `layer_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancesRequest.layer_id = Some(value.into());`.
+    pub fn layer_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.layer_id = Some(value.into());
+        self
+    }
+    /// Sets `stack_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancesRequest.stack_id = Some(value.into());`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeInstancesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeInstancesRequest {
+        DescribeInstancesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the response to a <code>DescribeInstances</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeInstancesResult {
@@ -1142,7 +2669,6 @@ pub struct DescribeInstancesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instances: Option<Vec<Instance>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeLayersRequest {
     #[doc="<p>An array of layer IDs that specify the layers to be described. If you omit this parameter, <code>DescribeLayers</code> returns a description of every layer in the specified stack.</p>"]
@@ -1154,7 +2680,26 @@ pub struct DescribeLayersRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stack_id: Option<String>,
 }
-
+impl DescribeLayersRequest {
+    /// Sets `layer_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLayersRequest.layer_ids = Some(value.into());`.
+    pub fn layer_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.layer_ids = Some(value.into());
+        self
+    }
+    /// Sets `stack_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLayersRequest.stack_id = Some(value.into());`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeLayersRequest with optional fields set to `None`.
+    pub fn new() -> DescribeLayersRequest {
+        DescribeLayersRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the response to a <code>DescribeLayers</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeLayersResult {
@@ -1163,14 +2708,29 @@ pub struct DescribeLayersResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub layers: Option<Vec<Layer>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeLoadBasedAutoScalingRequest {
     #[doc="<p>An array of layer IDs.</p>"]
     #[serde(rename="LayerIds")]
     pub layer_ids: Vec<String>,
 }
-
+impl DescribeLoadBasedAutoScalingRequest {
+    /// Sets `layer_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLoadBasedAutoScalingRequest.layer_ids = value.into();`.
+    pub fn layer_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.layer_ids = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeLoadBasedAutoScalingRequest with optional fields set to `None`.
+    pub fn new<LayerIdsType: Into<Vec<String>>>(layer_ids: LayerIdsType)
+                                                -> DescribeLoadBasedAutoScalingRequest {
+        DescribeLoadBasedAutoScalingRequest {
+            layer_ids: layer_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the response to a <code>DescribeLoadBasedAutoScaling</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeLoadBasedAutoScalingResult {
@@ -1179,7 +2739,6 @@ pub struct DescribeLoadBasedAutoScalingResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub load_based_auto_scaling_configurations: Option<Vec<LoadBasedAutoScalingConfiguration>>,
 }
-
 #[doc="<p>Contains the response to a <code>DescribeMyUserProfile</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeMyUserProfileResult {
@@ -1188,7 +2747,6 @@ pub struct DescribeMyUserProfileResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_profile: Option<SelfUserProfile>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribePermissionsRequest {
     #[doc="<p>The user's IAM ARN. This can also be a federated user's ARN. For more information about IAM ARNs, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html\">Using Identifiers</a>.</p>"]
@@ -1200,7 +2758,26 @@ pub struct DescribePermissionsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stack_id: Option<String>,
 }
-
+impl DescribePermissionsRequest {
+    /// Sets `iam_user_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePermissionsRequest.iam_user_arn = Some(value.into());`.
+    pub fn iam_user_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.iam_user_arn = Some(value.into());
+        self
+    }
+    /// Sets `stack_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePermissionsRequest.stack_id = Some(value.into());`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribePermissionsRequest with optional fields set to `None`.
+    pub fn new() -> DescribePermissionsRequest {
+        DescribePermissionsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the response to a <code>DescribePermissions</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribePermissionsResult {
@@ -1209,7 +2786,6 @@ pub struct DescribePermissionsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub permissions: Option<Vec<Permission>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeRaidArraysRequest {
     #[doc="<p>The instance ID. If you use this parameter, <code>DescribeRaidArrays</code> returns descriptions of the RAID arrays associated with the specified instance. </p>"]
@@ -1225,7 +2801,33 @@ pub struct DescribeRaidArraysRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stack_id: Option<String>,
 }
-
+impl DescribeRaidArraysRequest {
+    /// Sets `instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRaidArraysRequest.instance_id = Some(value.into());`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = Some(value.into());
+        self
+    }
+    /// Sets `raid_array_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRaidArraysRequest.raid_array_ids = Some(value.into());`.
+    pub fn raid_array_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.raid_array_ids = Some(value.into());
+        self
+    }
+    /// Sets `stack_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRaidArraysRequest.stack_id = Some(value.into());`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeRaidArraysRequest with optional fields set to `None`.
+    pub fn new() -> DescribeRaidArraysRequest {
+        DescribeRaidArraysRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the response to a <code>DescribeRaidArrays</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeRaidArraysResult {
@@ -1234,7 +2836,6 @@ pub struct DescribeRaidArraysResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub raid_arrays: Option<Vec<RaidArray>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeRdsDbInstancesRequest {
     #[doc="<p>An array containing the ARNs of the instances to be described.</p>"]
@@ -1245,7 +2846,29 @@ pub struct DescribeRdsDbInstancesRequest {
     #[serde(rename="StackId")]
     pub stack_id: String,
 }
-
+impl DescribeRdsDbInstancesRequest {
+    /// Sets `rds_db_instance_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRdsDbInstancesRequest.rds_db_instance_arns = Some(value.into());`.
+    pub fn rds_db_instance_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.rds_db_instance_arns = Some(value.into());
+        self
+    }
+    /// Sets `stack_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRdsDbInstancesRequest.stack_id = value.into();`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeRdsDbInstancesRequest with optional fields set to `None`.
+    pub fn new<StackIdType: Into<String>>(stack_id: StackIdType) -> DescribeRdsDbInstancesRequest {
+        DescribeRdsDbInstancesRequest {
+            stack_id: stack_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the response to a <code>DescribeRdsDbInstances</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeRdsDbInstancesResult {
@@ -1254,7 +2877,6 @@ pub struct DescribeRdsDbInstancesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rds_db_instances: Option<Vec<RdsDbInstance>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeServiceErrorsRequest {
     #[doc="<p>The instance ID. If you use this parameter, <code>DescribeServiceErrors</code> returns descriptions of the errors associated with the specified instance.</p>"]
@@ -1270,7 +2892,33 @@ pub struct DescribeServiceErrorsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stack_id: Option<String>,
 }
-
+impl DescribeServiceErrorsRequest {
+    /// Sets `instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeServiceErrorsRequest.instance_id = Some(value.into());`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = Some(value.into());
+        self
+    }
+    /// Sets `service_error_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeServiceErrorsRequest.service_error_ids = Some(value.into());`.
+    pub fn service_error_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.service_error_ids = Some(value.into());
+        self
+    }
+    /// Sets `stack_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeServiceErrorsRequest.stack_id = Some(value.into());`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeServiceErrorsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeServiceErrorsRequest {
+        DescribeServiceErrorsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the response to a <code>DescribeServiceErrors</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeServiceErrorsResult {
@@ -1279,14 +2927,29 @@ pub struct DescribeServiceErrorsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub service_errors: Option<Vec<ServiceError>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeStackProvisioningParametersRequest {
     #[doc="<p>The stack ID</p>"]
     #[serde(rename="StackId")]
     pub stack_id: String,
 }
-
+impl DescribeStackProvisioningParametersRequest {
+    /// Sets `stack_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStackProvisioningParametersRequest.stack_id = value.into();`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeStackProvisioningParametersRequest with optional fields set to `None`.
+    pub fn new<StackIdType: Into<String>>(stack_id: StackIdType)
+                                          -> DescribeStackProvisioningParametersRequest {
+        DescribeStackProvisioningParametersRequest {
+            stack_id: stack_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the response to a <code>DescribeStackProvisioningParameters</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeStackProvisioningParametersResult {
@@ -1299,14 +2962,28 @@ pub struct DescribeStackProvisioningParametersResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub parameters: Option<::std::collections::HashMap<String, String>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeStackSummaryRequest {
     #[doc="<p>The stack ID.</p>"]
     #[serde(rename="StackId")]
     pub stack_id: String,
 }
-
+impl DescribeStackSummaryRequest {
+    /// Sets `stack_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStackSummaryRequest.stack_id = value.into();`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeStackSummaryRequest with optional fields set to `None`.
+    pub fn new<StackIdType: Into<String>>(stack_id: StackIdType) -> DescribeStackSummaryRequest {
+        DescribeStackSummaryRequest {
+            stack_id: stack_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the response to a <code>DescribeStackSummary</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeStackSummaryResult {
@@ -1315,7 +2992,6 @@ pub struct DescribeStackSummaryResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stack_summary: Option<StackSummary>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeStacksRequest {
     #[doc="<p>An array of stack IDs that specify the stacks to be described. If you omit this parameter, <code>DescribeStacks</code> returns a description of every stack.</p>"]
@@ -1323,7 +2999,19 @@ pub struct DescribeStacksRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stack_ids: Option<Vec<String>>,
 }
-
+impl DescribeStacksRequest {
+    /// Sets `stack_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStacksRequest.stack_ids = Some(value.into());`.
+    pub fn stack_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.stack_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeStacksRequest with optional fields set to `None`.
+    pub fn new() -> DescribeStacksRequest {
+        DescribeStacksRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the response to a <code>DescribeStacks</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeStacksResult {
@@ -1332,14 +3020,29 @@ pub struct DescribeStacksResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stacks: Option<Vec<Stack>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeTimeBasedAutoScalingRequest {
     #[doc="<p>An array of instance IDs.</p>"]
     #[serde(rename="InstanceIds")]
     pub instance_ids: Vec<String>,
 }
-
+impl DescribeTimeBasedAutoScalingRequest {
+    /// Sets `instance_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTimeBasedAutoScalingRequest.instance_ids = value.into();`.
+    pub fn instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_ids = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeTimeBasedAutoScalingRequest with optional fields set to `None`.
+    pub fn new<InstanceIdsType: Into<Vec<String>>>(instance_ids: InstanceIdsType)
+                                                   -> DescribeTimeBasedAutoScalingRequest {
+        DescribeTimeBasedAutoScalingRequest {
+            instance_ids: instance_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the response to a <code>DescribeTimeBasedAutoScaling</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeTimeBasedAutoScalingResult {
@@ -1348,7 +3051,6 @@ pub struct DescribeTimeBasedAutoScalingResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub time_based_auto_scaling_configurations: Option<Vec<TimeBasedAutoScalingConfiguration>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeUserProfilesRequest {
     #[doc="<p>An array of IAM or federated user ARNs that identify the users to be described.</p>"]
@@ -1356,7 +3058,19 @@ pub struct DescribeUserProfilesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub iam_user_arns: Option<Vec<String>>,
 }
-
+impl DescribeUserProfilesRequest {
+    /// Sets `iam_user_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeUserProfilesRequest.iam_user_arns = Some(value.into());`.
+    pub fn iam_user_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.iam_user_arns = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeUserProfilesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeUserProfilesRequest {
+        DescribeUserProfilesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the response to a <code>DescribeUserProfiles</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeUserProfilesResult {
@@ -1365,7 +3079,6 @@ pub struct DescribeUserProfilesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_profiles: Option<Vec<UserProfile>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeVolumesRequest {
     #[doc="<p>The instance ID. If you use this parameter, <code>DescribeVolumes</code> returns descriptions of the volumes associated with the specified instance.</p>"]
@@ -1385,7 +3098,40 @@ pub struct DescribeVolumesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_ids: Option<Vec<String>>,
 }
-
+impl DescribeVolumesRequest {
+    /// Sets `instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVolumesRequest.instance_id = Some(value.into());`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = Some(value.into());
+        self
+    }
+    /// Sets `raid_array_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVolumesRequest.raid_array_id = Some(value.into());`.
+    pub fn raid_array_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.raid_array_id = Some(value.into());
+        self
+    }
+    /// Sets `stack_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVolumesRequest.stack_id = Some(value.into());`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = Some(value.into());
+        self
+    }
+    /// Sets `volume_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVolumesRequest.volume_ids = Some(value.into());`.
+    pub fn volume_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.volume_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeVolumesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeVolumesRequest {
+        DescribeVolumesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the response to a <code>DescribeVolumes</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeVolumesResult {
@@ -1394,7 +3140,6 @@ pub struct DescribeVolumesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volumes: Option<Vec<Volume>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DetachElasticLoadBalancerRequest {
     #[doc="<p>The Elastic Load Balancing instance's name.</p>"]
@@ -1404,14 +3149,56 @@ pub struct DetachElasticLoadBalancerRequest {
     #[serde(rename="LayerId")]
     pub layer_id: String,
 }
-
+impl DetachElasticLoadBalancerRequest {
+    /// Sets `elastic_load_balancer_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachElasticLoadBalancerRequest.elastic_load_balancer_name = value.into();`.
+    pub fn elastic_load_balancer_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.elastic_load_balancer_name = value.into();
+        self
+    }
+    /// Sets `layer_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachElasticLoadBalancerRequest.layer_id = value.into();`.
+    pub fn layer_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.layer_id = value.into();
+        self
+    }
+    /// Returns a new instance of DetachElasticLoadBalancerRequest with optional fields set to `None`.
+    pub fn new<ElasticLoadBalancerNameType: Into<String>, LayerIdType: Into<String>>
+        (elastic_load_balancer_name: ElasticLoadBalancerNameType,
+         layer_id: LayerIdType)
+         -> DetachElasticLoadBalancerRequest {
+        DetachElasticLoadBalancerRequest {
+            elastic_load_balancer_name: elastic_load_balancer_name.into(),
+            layer_id: layer_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DisassociateElasticIpRequest {
     #[doc="<p>The Elastic IP address.</p>"]
     #[serde(rename="ElasticIp")]
     pub elastic_ip: String,
 }
-
+impl DisassociateElasticIpRequest {
+    /// Sets `elastic_ip`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateElasticIpRequest.elastic_ip = value.into();`.
+    pub fn elastic_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.elastic_ip = value.into();
+        self
+    }
+    /// Returns a new instance of DisassociateElasticIpRequest with optional fields set to `None`.
+    pub fn new<ElasticIpType: Into<String>>(elastic_ip: ElasticIpType)
+                                            -> DisassociateElasticIpRequest {
+        DisassociateElasticIpRequest {
+            elastic_ip: elastic_ip.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes an Amazon EBS volume. This data type maps directly to the Amazon EC2 <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_EbsBlockDevice.html\">EbsBlockDevice</a> data type.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct EbsBlockDevice {
@@ -1436,7 +3223,47 @@ pub struct EbsBlockDevice {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_type: Option<String>,
 }
-
+impl EbsBlockDevice {
+    /// Sets `delete_on_termination`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EbsBlockDevice.delete_on_termination = Some(value.into());`.
+    pub fn delete_on_termination<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.delete_on_termination = Some(value.into());
+        self
+    }
+    /// Sets `iops`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EbsBlockDevice.iops = Some(value.into());`.
+    pub fn iops<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.iops = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EbsBlockDevice.snapshot_id = Some(value.into());`.
+    pub fn snapshot_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_id = Some(value.into());
+        self
+    }
+    /// Sets `volume_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EbsBlockDevice.volume_size = Some(value.into());`.
+    pub fn volume_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.volume_size = Some(value.into());
+        self
+    }
+    /// Sets `volume_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EbsBlockDevice.volume_type = Some(value.into());`.
+    pub fn volume_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of EbsBlockDevice with optional fields set to `None`.
+    pub fn new() -> EbsBlockDevice {
+        EbsBlockDevice { ..Default::default() }
+    }
+}
 #[doc="<p>Describes a registered Amazon ECS cluster.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EcsCluster {
@@ -1457,7 +3284,6 @@ pub struct EcsCluster {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stack_id: Option<String>,
 }
-
 #[doc="<p>Describes an Elastic IP address.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ElasticIp {
@@ -1482,7 +3308,6 @@ pub struct ElasticIp {
     #[serde(skip_serializing_if="Option::is_none")]
     pub region: Option<String>,
 }
-
 #[doc="<p>Describes an Elastic Load Balancing instance.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ElasticLoadBalancer {
@@ -1523,7 +3348,6 @@ pub struct ElasticLoadBalancer {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vpc_id: Option<String>,
 }
-
 #[doc="<p>Represents an app's environment variable.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct EnvironmentVariable {
@@ -1538,14 +3362,61 @@ pub struct EnvironmentVariable {
     #[serde(rename="Value")]
     pub value: String,
 }
-
+impl EnvironmentVariable {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnvironmentVariable.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `secure`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnvironmentVariable.secure = Some(value.into());`.
+    pub fn secure<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.secure = Some(value.into());
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnvironmentVariable.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of EnvironmentVariable with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>, ValueType: Into<String>>(key: KeyType,
+                                                               value: ValueType)
+                                                               -> EnvironmentVariable {
+        EnvironmentVariable {
+            key: key.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetHostnameSuggestionRequest {
     #[doc="<p>The layer ID.</p>"]
     #[serde(rename="LayerId")]
     pub layer_id: String,
 }
-
+impl GetHostnameSuggestionRequest {
+    /// Sets `layer_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetHostnameSuggestionRequest.layer_id = value.into();`.
+    pub fn layer_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.layer_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetHostnameSuggestionRequest with optional fields set to `None`.
+    pub fn new<LayerIdType: Into<String>>(layer_id: LayerIdType) -> GetHostnameSuggestionRequest {
+        GetHostnameSuggestionRequest {
+            layer_id: layer_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the response to a <code>GetHostnameSuggestion</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetHostnameSuggestionResult {
@@ -1558,7 +3429,6 @@ pub struct GetHostnameSuggestionResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub layer_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GrantAccessRequest {
     #[doc="<p>The instance's AWS OpsWorks Stacks ID.</p>"]
@@ -1569,7 +3439,29 @@ pub struct GrantAccessRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub valid_for_in_minutes: Option<i64>,
 }
-
+impl GrantAccessRequest {
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GrantAccessRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `valid_for_in_minutes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GrantAccessRequest.valid_for_in_minutes = Some(value.into());`.
+    pub fn valid_for_in_minutes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.valid_for_in_minutes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GrantAccessRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>>(instance_id: InstanceIdType) -> GrantAccessRequest {
+        GrantAccessRequest {
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the response to a <code>GrantAccess</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GrantAccessResult {
@@ -1578,7 +3470,6 @@ pub struct GrantAccessResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub temporary_credential: Option<TemporaryCredential>,
 }
-
 #[doc="<p>Describes an instance.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Instance {
@@ -1746,7 +3637,6 @@ pub struct Instance {
     #[serde(skip_serializing_if="Option::is_none")]
     pub virtualization_type: Option<String>,
 }
-
 #[doc="<p>Contains a description of an Amazon EC2 instance from the Amazon EC2 metadata service. For more information, see <a href=\"http://docs.aws.amazon.com/sdkfornet/latest/apidocs/Index.html\">Instance Metadata and User Data</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InstanceIdentity {
@@ -1759,7 +3649,26 @@ pub struct InstanceIdentity {
     #[serde(skip_serializing_if="Option::is_none")]
     pub signature: Option<String>,
 }
-
+impl InstanceIdentity {
+    /// Sets `document`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceIdentity.document = Some(value.into());`.
+    pub fn document<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.document = Some(value.into());
+        self
+    }
+    /// Sets `signature`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceIdentity.signature = Some(value.into());`.
+    pub fn signature<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.signature = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InstanceIdentity with optional fields set to `None`.
+    pub fn new() -> InstanceIdentity {
+        InstanceIdentity { ..Default::default() }
+    }
+}
 #[doc="<p>Describes how many instances a stack has for each status.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstancesCount {
@@ -1840,7 +3749,6 @@ pub struct InstancesCount {
     #[serde(skip_serializing_if="Option::is_none")]
     pub unassigning: Option<i64>,
 }
-
 #[doc="<p>Describes a layer.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Layer {
@@ -1935,7 +3843,6 @@ pub struct Layer {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_configurations: Option<Vec<VolumeConfiguration>>,
 }
-
 #[doc="<p>Specifies the lifecycle event configuration</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct LifecycleEventConfiguration {
@@ -1944,7 +3851,21 @@ pub struct LifecycleEventConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub shutdown: Option<ShutdownEventConfiguration>,
 }
-
+impl LifecycleEventConfiguration {
+    /// Sets `shutdown`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LifecycleEventConfiguration.shutdown = Some(value.into());`.
+    pub fn shutdown<ValueType: Into<ShutdownEventConfiguration>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.shutdown = Some(value.into());
+        self
+    }
+    /// Returns a new instance of LifecycleEventConfiguration with optional fields set to `None`.
+    pub fn new() -> LifecycleEventConfiguration {
+        LifecycleEventConfiguration { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTagsRequest {
     #[doc="<p>Do not use. A validation exception occurs if you add a <code>MaxResults</code> parameter to a <code>ListTagsRequest</code> call. </p>"]
@@ -1959,7 +3880,36 @@ pub struct ListTagsRequest {
     #[serde(rename="ResourceArn")]
     pub resource_arn: String,
 }
-
+impl ListTagsRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsRequest.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Returns a new instance of ListTagsRequest with optional fields set to `None`.
+    pub fn new<ResourceArnType: Into<String>>(resource_arn: ResourceArnType) -> ListTagsRequest {
+        ListTagsRequest {
+            resource_arn: resource_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the response to a <code>ListTags</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTagsResult {
@@ -1972,7 +3922,6 @@ pub struct ListTagsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<::std::collections::HashMap<String, String>>,
 }
-
 #[doc="<p>Describes a layer's load-based auto scaling configuration.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LoadBasedAutoScalingConfiguration {
@@ -1993,7 +3942,6 @@ pub struct LoadBasedAutoScalingConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub up_scaling: Option<AutoScalingThresholds>,
 }
-
 #[doc="<p>Describes stack or user permissions.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Permission {
@@ -2018,7 +3966,6 @@ pub struct Permission {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stack_id: Option<String>,
 }
-
 #[doc="<p>Describes an instance's RAID array.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RaidArray {
@@ -2075,7 +4022,6 @@ pub struct RaidArray {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_type: Option<String>,
 }
-
 #[doc="<p>Describes an Amazon RDS instance.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RdsDbInstance {
@@ -2116,14 +4062,28 @@ pub struct RdsDbInstance {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stack_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RebootInstanceRequest {
     #[doc="<p>The instance ID.</p>"]
     #[serde(rename="InstanceId")]
     pub instance_id: String,
 }
-
+impl RebootInstanceRequest {
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RebootInstanceRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Returns a new instance of RebootInstanceRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>>(instance_id: InstanceIdType) -> RebootInstanceRequest {
+        RebootInstanceRequest {
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>AWS OpsWorks Stacks supports five lifecycle events: <b>setup</b>, <b>configuration</b>, <b>deploy</b>, <b>undeploy</b>, and <b>shutdown</b>. For each layer, AWS OpsWorks Stacks runs a set of standard recipes for each event. In addition, you can provide custom recipes for any or all layers and events. AWS OpsWorks Stacks runs custom event recipes after the standard recipes. <code>LayerCustomRecipes</code> specifies the custom recipes for a particular layer to be run in response to each of the five events. </p> <p>To specify a recipe, use the cookbook's directory name in the repository followed by two colons and the recipe name, which is the recipe's file name without the .rb extension. For example: phpapp2::dbsetup specifies the dbsetup.rb recipe in the repository's phpapp2 folder.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Recipes {
@@ -2148,7 +4108,47 @@ pub struct Recipes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub undeploy: Option<Vec<String>>,
 }
-
+impl Recipes {
+    /// Sets `configure`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Recipes.configure = Some(value.into());`.
+    pub fn configure<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.configure = Some(value.into());
+        self
+    }
+    /// Sets `deploy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Recipes.deploy = Some(value.into());`.
+    pub fn deploy<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.deploy = Some(value.into());
+        self
+    }
+    /// Sets `setup`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Recipes.setup = Some(value.into());`.
+    pub fn setup<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.setup = Some(value.into());
+        self
+    }
+    /// Sets `shutdown`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Recipes.shutdown = Some(value.into());`.
+    pub fn shutdown<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.shutdown = Some(value.into());
+        self
+    }
+    /// Sets `undeploy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Recipes.undeploy = Some(value.into());`.
+    pub fn undeploy<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.undeploy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Recipes with optional fields set to `None`.
+    pub fn new() -> Recipes {
+        Recipes { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RegisterEcsClusterRequest {
     #[doc="<p>The cluster's ARN.</p>"]
@@ -2158,7 +4158,33 @@ pub struct RegisterEcsClusterRequest {
     #[serde(rename="StackId")]
     pub stack_id: String,
 }
-
+impl RegisterEcsClusterRequest {
+    /// Sets `ecs_cluster_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterEcsClusterRequest.ecs_cluster_arn = value.into();`.
+    pub fn ecs_cluster_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ecs_cluster_arn = value.into();
+        self
+    }
+    /// Sets `stack_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterEcsClusterRequest.stack_id = value.into();`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = value.into();
+        self
+    }
+    /// Returns a new instance of RegisterEcsClusterRequest with optional fields set to `None`.
+    pub fn new<EcsClusterArnType: Into<String>, StackIdType: Into<String>>
+        (ecs_cluster_arn: EcsClusterArnType,
+         stack_id: StackIdType)
+         -> RegisterEcsClusterRequest {
+        RegisterEcsClusterRequest {
+            ecs_cluster_arn: ecs_cluster_arn.into(),
+            stack_id: stack_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the response to a <code>RegisterEcsCluster</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RegisterEcsClusterResult {
@@ -2167,7 +4193,6 @@ pub struct RegisterEcsClusterResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ecs_cluster_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RegisterElasticIpRequest {
     #[doc="<p>The Elastic IP address.</p>"]
@@ -2177,7 +4202,33 @@ pub struct RegisterElasticIpRequest {
     #[serde(rename="StackId")]
     pub stack_id: String,
 }
-
+impl RegisterElasticIpRequest {
+    /// Sets `elastic_ip`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterElasticIpRequest.elastic_ip = value.into();`.
+    pub fn elastic_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.elastic_ip = value.into();
+        self
+    }
+    /// Sets `stack_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterElasticIpRequest.stack_id = value.into();`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = value.into();
+        self
+    }
+    /// Returns a new instance of RegisterElasticIpRequest with optional fields set to `None`.
+    pub fn new<ElasticIpType: Into<String>, StackIdType: Into<String>>
+        (elastic_ip: ElasticIpType,
+         stack_id: StackIdType)
+         -> RegisterElasticIpRequest {
+        RegisterElasticIpRequest {
+            elastic_ip: elastic_ip.into(),
+            stack_id: stack_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the response to a <code>RegisterElasticIp</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RegisterElasticIpResult {
@@ -2186,7 +4237,6 @@ pub struct RegisterElasticIpResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub elastic_ip: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RegisterInstanceRequest {
     #[doc="<p>The instance's hostname.</p>"]
@@ -2217,7 +4267,66 @@ pub struct RegisterInstanceRequest {
     #[serde(rename="StackId")]
     pub stack_id: String,
 }
-
+impl RegisterInstanceRequest {
+    /// Sets `hostname`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterInstanceRequest.hostname = Some(value.into());`.
+    pub fn hostname<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hostname = Some(value.into());
+        self
+    }
+    /// Sets `instance_identity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterInstanceRequest.instance_identity = Some(value.into());`.
+    pub fn instance_identity<ValueType: Into<InstanceIdentity>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.instance_identity = Some(value.into());
+        self
+    }
+    /// Sets `private_ip`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterInstanceRequest.private_ip = Some(value.into());`.
+    pub fn private_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.private_ip = Some(value.into());
+        self
+    }
+    /// Sets `public_ip`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterInstanceRequest.public_ip = Some(value.into());`.
+    pub fn public_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.public_ip = Some(value.into());
+        self
+    }
+    /// Sets `rsa_public_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterInstanceRequest.rsa_public_key = Some(value.into());`.
+    pub fn rsa_public_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rsa_public_key = Some(value.into());
+        self
+    }
+    /// Sets `rsa_public_key_fingerprint`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterInstanceRequest.rsa_public_key_fingerprint = Some(value.into());`.
+    pub fn rsa_public_key_fingerprint<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rsa_public_key_fingerprint = Some(value.into());
+        self
+    }
+    /// Sets `stack_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterInstanceRequest.stack_id = value.into();`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = value.into();
+        self
+    }
+    /// Returns a new instance of RegisterInstanceRequest with optional fields set to `None`.
+    pub fn new<StackIdType: Into<String>>(stack_id: StackIdType) -> RegisterInstanceRequest {
+        RegisterInstanceRequest {
+            stack_id: stack_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the response to a <code>RegisterInstanceResult</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RegisterInstanceResult {
@@ -2226,7 +4335,6 @@ pub struct RegisterInstanceResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instance_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RegisterRdsDbInstanceRequest {
     #[doc="<p>The database password.</p>"]
@@ -2242,7 +4350,54 @@ pub struct RegisterRdsDbInstanceRequest {
     #[serde(rename="StackId")]
     pub stack_id: String,
 }
-
+impl RegisterRdsDbInstanceRequest {
+    /// Sets `db_password`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterRdsDbInstanceRequest.db_password = value.into();`.
+    pub fn db_password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_password = value.into();
+        self
+    }
+    /// Sets `db_user`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterRdsDbInstanceRequest.db_user = value.into();`.
+    pub fn db_user<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_user = value.into();
+        self
+    }
+    /// Sets `rds_db_instance_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterRdsDbInstanceRequest.rds_db_instance_arn = value.into();`.
+    pub fn rds_db_instance_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rds_db_instance_arn = value.into();
+        self
+    }
+    /// Sets `stack_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterRdsDbInstanceRequest.stack_id = value.into();`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = value.into();
+        self
+    }
+    /// Returns a new instance of RegisterRdsDbInstanceRequest with optional fields set to `None`.
+    pub fn new<DbPasswordType: Into<String>,
+               DbUserType: Into<String>,
+               RdsDbInstanceArnType: Into<String>,
+               StackIdType: Into<String>>
+        (db_password: DbPasswordType,
+         db_user: DbUserType,
+         rds_db_instance_arn: RdsDbInstanceArnType,
+         stack_id: StackIdType)
+         -> RegisterRdsDbInstanceRequest {
+        RegisterRdsDbInstanceRequest {
+            db_password: db_password.into(),
+            db_user: db_user.into(),
+            rds_db_instance_arn: rds_db_instance_arn.into(),
+            stack_id: stack_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RegisterVolumeRequest {
     #[doc="<p>The Amazon EBS volume ID.</p>"]
@@ -2253,7 +4408,29 @@ pub struct RegisterVolumeRequest {
     #[serde(rename="StackId")]
     pub stack_id: String,
 }
-
+impl RegisterVolumeRequest {
+    /// Sets `ec_2_volume_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterVolumeRequest.ec_2_volume_id = Some(value.into());`.
+    pub fn ec_2_volume_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ec_2_volume_id = Some(value.into());
+        self
+    }
+    /// Sets `stack_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterVolumeRequest.stack_id = value.into();`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = value.into();
+        self
+    }
+    /// Returns a new instance of RegisterVolumeRequest with optional fields set to `None`.
+    pub fn new<StackIdType: Into<String>>(stack_id: StackIdType) -> RegisterVolumeRequest {
+        RegisterVolumeRequest {
+            stack_id: stack_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the response to a <code>RegisterVolume</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RegisterVolumeResult {
@@ -2262,7 +4439,6 @@ pub struct RegisterVolumeResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_id: Option<String>,
 }
-
 #[doc="<p>A registered instance's reported operating system.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ReportedOs {
@@ -2279,7 +4455,6 @@ pub struct ReportedOs {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<String>,
 }
-
 #[doc="<p>Describes a user's SSH information.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SelfUserProfile {
@@ -2300,7 +4475,6 @@ pub struct SelfUserProfile {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ssh_username: Option<String>,
 }
-
 #[doc="<p>Describes an AWS OpsWorks Stacks service error.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ServiceError {
@@ -2329,7 +4503,6 @@ pub struct ServiceError {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SetLoadBasedAutoScalingRequest {
     #[doc="<p>An <code>AutoScalingThresholds</code> object with the downscaling threshold configuration. If the load falls below these thresholds for a specified amount of time, AWS OpsWorks Stacks stops a specified number of instances.</p>"]
@@ -2348,7 +4521,45 @@ pub struct SetLoadBasedAutoScalingRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub up_scaling: Option<AutoScalingThresholds>,
 }
-
+impl SetLoadBasedAutoScalingRequest {
+    /// Sets `down_scaling`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetLoadBasedAutoScalingRequest.down_scaling = Some(value.into());`.
+    pub fn down_scaling<ValueType: Into<AutoScalingThresholds>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.down_scaling = Some(value.into());
+        self
+    }
+    /// Sets `enable`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetLoadBasedAutoScalingRequest.enable = Some(value.into());`.
+    pub fn enable<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enable = Some(value.into());
+        self
+    }
+    /// Sets `layer_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetLoadBasedAutoScalingRequest.layer_id = value.into();`.
+    pub fn layer_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.layer_id = value.into();
+        self
+    }
+    /// Sets `up_scaling`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetLoadBasedAutoScalingRequest.up_scaling = Some(value.into());`.
+    pub fn up_scaling<ValueType: Into<AutoScalingThresholds>>(mut self, value: ValueType) -> Self {
+        self.up_scaling = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SetLoadBasedAutoScalingRequest with optional fields set to `None`.
+    pub fn new<LayerIdType: Into<String>>(layer_id: LayerIdType) -> SetLoadBasedAutoScalingRequest {
+        SetLoadBasedAutoScalingRequest {
+            layer_id: layer_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SetPermissionRequest {
     #[doc="<p>The user is allowed to use SSH to communicate with the instance.</p>"]
@@ -2370,7 +4581,51 @@ pub struct SetPermissionRequest {
     #[serde(rename="StackId")]
     pub stack_id: String,
 }
-
+impl SetPermissionRequest {
+    /// Sets `allow_ssh`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetPermissionRequest.allow_ssh = Some(value.into());`.
+    pub fn allow_ssh<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.allow_ssh = Some(value.into());
+        self
+    }
+    /// Sets `allow_sudo`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetPermissionRequest.allow_sudo = Some(value.into());`.
+    pub fn allow_sudo<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.allow_sudo = Some(value.into());
+        self
+    }
+    /// Sets `iam_user_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetPermissionRequest.iam_user_arn = value.into();`.
+    pub fn iam_user_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.iam_user_arn = value.into();
+        self
+    }
+    /// Sets `level`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetPermissionRequest.level = Some(value.into());`.
+    pub fn level<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.level = Some(value.into());
+        self
+    }
+    /// Sets `stack_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetPermissionRequest.stack_id = value.into();`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = value.into();
+        self
+    }
+    /// Returns a new instance of SetPermissionRequest with optional fields set to `None`.
+pub fn new<IamUserArnType: Into<String>, StackIdType: Into<String>>(iam_user_arn: IamUserArnType, stack_id: StackIdType) -> SetPermissionRequest{
+        SetPermissionRequest {
+            iam_user_arn: iam_user_arn.into(),
+            stack_id: stack_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SetTimeBasedAutoScalingRequest {
     #[doc="<p>An <code>AutoScalingSchedule</code> with the instance schedule.</p>"]
@@ -2381,7 +4636,32 @@ pub struct SetTimeBasedAutoScalingRequest {
     #[serde(rename="InstanceId")]
     pub instance_id: String,
 }
-
+impl SetTimeBasedAutoScalingRequest {
+    /// Sets `auto_scaling_schedule`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetTimeBasedAutoScalingRequest.auto_scaling_schedule = Some(value.into());`.
+    pub fn auto_scaling_schedule<ValueType: Into<WeeklyAutoScalingSchedule>>(mut self,
+                                                                             value: ValueType)
+                                                                             -> Self {
+        self.auto_scaling_schedule = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetTimeBasedAutoScalingRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Returns a new instance of SetTimeBasedAutoScalingRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>>(instance_id: InstanceIdType)
+                                             -> SetTimeBasedAutoScalingRequest {
+        SetTimeBasedAutoScalingRequest {
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The Shutdown event configuration.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ShutdownEventConfiguration {
@@ -2394,7 +4674,28 @@ pub struct ShutdownEventConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub execution_timeout: Option<i64>,
 }
-
+impl ShutdownEventConfiguration {
+    /// Sets `delay_until_elb_connections_drained`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ShutdownEventConfiguration.delay_until_elb_connections_drained = Some(value.into());`.
+    pub fn delay_until_elb_connections_drained<ValueType: Into<bool>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.delay_until_elb_connections_drained = Some(value.into());
+        self
+    }
+    /// Sets `execution_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ShutdownEventConfiguration.execution_timeout = Some(value.into());`.
+    pub fn execution_timeout<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.execution_timeout = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ShutdownEventConfiguration with optional fields set to `None`.
+    pub fn new() -> ShutdownEventConfiguration {
+        ShutdownEventConfiguration { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the information required to retrieve an app or cookbook from a repository. For more information, see <a href=\"http://docs.aws.amazon.com/opsworks/latest/userguide/workingapps-creating.html\">Creating Apps</a> or <a href=\"http://docs.aws.amazon.com/opsworks/latest/userguide/workingcookbook.html\">Custom Recipes and Cookbooks</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Source {
@@ -2423,7 +4724,54 @@ pub struct Source {
     #[serde(skip_serializing_if="Option::is_none")]
     pub username: Option<String>,
 }
-
+impl Source {
+    /// Sets `password`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Source.password = Some(value.into());`.
+    pub fn password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.password = Some(value.into());
+        self
+    }
+    /// Sets `revision`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Source.revision = Some(value.into());`.
+    pub fn revision<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.revision = Some(value.into());
+        self
+    }
+    /// Sets `ssh_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Source.ssh_key = Some(value.into());`.
+    pub fn ssh_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ssh_key = Some(value.into());
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Source.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Sets `url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Source.url = Some(value.into());`.
+    pub fn url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.url = Some(value.into());
+        self
+    }
+    /// Sets `username`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Source.username = Some(value.into());`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Source with optional fields set to `None`.
+    pub fn new() -> Source {
+        Source { ..Default::default() }
+    }
+}
 #[doc="<p>Describes an app's SSL configuration.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct SslConfiguration {
@@ -2438,7 +4786,37 @@ pub struct SslConfiguration {
     #[serde(rename="PrivateKey")]
     pub private_key: String,
 }
-
+impl SslConfiguration {
+    /// Sets `certificate`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SslConfiguration.certificate = value.into();`.
+    pub fn certificate<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate = value.into();
+        self
+    }
+    /// Sets `chain`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SslConfiguration.chain = Some(value.into());`.
+    pub fn chain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.chain = Some(value.into());
+        self
+    }
+    /// Sets `private_key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SslConfiguration.private_key = value.into();`.
+    pub fn private_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.private_key = value.into();
+        self
+    }
+    /// Returns a new instance of SslConfiguration with optional fields set to `None`.
+pub fn new<CertificateType: Into<String>, PrivateKeyType: Into<String>>(certificate: CertificateType, private_key: PrivateKeyType) -> SslConfiguration{
+        SslConfiguration {
+            certificate: certificate.into(),
+            private_key: private_key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes a stack.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Stack {
@@ -2530,7 +4908,6 @@ pub struct Stack {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vpc_id: Option<String>,
 }
-
 #[doc="<p>Describes the configuration manager.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct StackConfigurationManager {
@@ -2543,7 +4920,26 @@ pub struct StackConfigurationManager {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<String>,
 }
-
+impl StackConfigurationManager {
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StackConfigurationManager.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StackConfigurationManager.version = Some(value.into());`.
+    pub fn version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version = Some(value.into());
+        self
+    }
+    /// Returns a new instance of StackConfigurationManager with optional fields set to `None`.
+    pub fn new() -> StackConfigurationManager {
+        StackConfigurationManager { ..Default::default() }
+    }
+}
 #[doc="<p>Summarizes the number of layers, instances, and apps in a stack.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StackSummary {
@@ -2572,35 +4968,94 @@ pub struct StackSummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stack_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartInstanceRequest {
     #[doc="<p>The instance ID.</p>"]
     #[serde(rename="InstanceId")]
     pub instance_id: String,
 }
-
+impl StartInstanceRequest {
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartInstanceRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Returns a new instance of StartInstanceRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>>(instance_id: InstanceIdType) -> StartInstanceRequest {
+        StartInstanceRequest {
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartStackRequest {
     #[doc="<p>The stack ID.</p>"]
     #[serde(rename="StackId")]
     pub stack_id: String,
 }
-
+impl StartStackRequest {
+    /// Sets `stack_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartStackRequest.stack_id = value.into();`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = value.into();
+        self
+    }
+    /// Returns a new instance of StartStackRequest with optional fields set to `None`.
+    pub fn new<StackIdType: Into<String>>(stack_id: StackIdType) -> StartStackRequest {
+        StartStackRequest {
+            stack_id: stack_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StopInstanceRequest {
     #[doc="<p>The instance ID.</p>"]
     #[serde(rename="InstanceId")]
     pub instance_id: String,
 }
-
+impl StopInstanceRequest {
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopInstanceRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Returns a new instance of StopInstanceRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>>(instance_id: InstanceIdType) -> StopInstanceRequest {
+        StopInstanceRequest {
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StopStackRequest {
     #[doc="<p>The stack ID.</p>"]
     #[serde(rename="StackId")]
     pub stack_id: String,
 }
-
+impl StopStackRequest {
+    /// Sets `stack_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopStackRequest.stack_id = value.into();`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = value.into();
+        self
+    }
+    /// Returns a new instance of StopStackRequest with optional fields set to `None`.
+    pub fn new<StackIdType: Into<String>>(stack_id: StackIdType) -> StopStackRequest {
+        StopStackRequest {
+            stack_id: stack_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TagResourceRequest {
     #[doc="<p>The stack or layer's Amazon Resource Number (ARN).</p>"]
@@ -2610,7 +5065,36 @@ pub struct TagResourceRequest {
     #[serde(rename="Tags")]
     pub tags: ::std::collections::HashMap<String, String>,
 }
-
+impl TagResourceRequest {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TagResourceRequest.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TagResourceRequest.tags = value.into();`.
+    pub fn tags<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of TagResourceRequest with optional fields set to `None`.
+    pub fn new<ResourceArnType: Into<String>,
+               TagsType: Into<::std::collections::HashMap<String, String>>>
+        (resource_arn: ResourceArnType,
+         tags: TagsType)
+         -> TagResourceRequest {
+        TagResourceRequest {
+            resource_arn: resource_arn.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the data needed by RDP clients such as the Microsoft Remote Desktop Connection to log in to the instance.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TemporaryCredential {
@@ -2631,7 +5115,6 @@ pub struct TemporaryCredential {
     #[serde(skip_serializing_if="Option::is_none")]
     pub valid_for_in_minutes: Option<i64>,
 }
-
 #[doc="<p>Describes an instance's time-based auto scaling configuration.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TimeBasedAutoScalingConfiguration {
@@ -2644,21 +5127,51 @@ pub struct TimeBasedAutoScalingConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instance_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UnassignInstanceRequest {
     #[doc="<p>The instance ID.</p>"]
     #[serde(rename="InstanceId")]
     pub instance_id: String,
 }
-
+impl UnassignInstanceRequest {
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UnassignInstanceRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Returns a new instance of UnassignInstanceRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>>(instance_id: InstanceIdType)
+                                             -> UnassignInstanceRequest {
+        UnassignInstanceRequest {
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UnassignVolumeRequest {
     #[doc="<p>The volume ID.</p>"]
     #[serde(rename="VolumeId")]
     pub volume_id: String,
 }
-
+impl UnassignVolumeRequest {
+    /// Sets `volume_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UnassignVolumeRequest.volume_id = value.into();`.
+    pub fn volume_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_id = value.into();
+        self
+    }
+    /// Returns a new instance of UnassignVolumeRequest with optional fields set to `None`.
+    pub fn new<VolumeIdType: Into<String>>(volume_id: VolumeIdType) -> UnassignVolumeRequest {
+        UnassignVolumeRequest {
+            volume_id: volume_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UntagResourceRequest {
     #[doc="<p>The stack or layer's Amazon Resource Number (ARN).</p>"]
@@ -2668,7 +5181,33 @@ pub struct UntagResourceRequest {
     #[serde(rename="TagKeys")]
     pub tag_keys: Vec<String>,
 }
-
+impl UntagResourceRequest {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UntagResourceRequest.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Sets `tag_keys`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UntagResourceRequest.tag_keys = value.into();`.
+    pub fn tag_keys<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tag_keys = value.into();
+        self
+    }
+    /// Returns a new instance of UntagResourceRequest with optional fields set to `None`.
+    pub fn new<ResourceArnType: Into<String>, TagKeysType: Into<Vec<String>>>
+        (resource_arn: ResourceArnType,
+         tag_keys: TagKeysType)
+         -> UntagResourceRequest {
+        UntagResourceRequest {
+            resource_arn: resource_arn.into(),
+            tag_keys: tag_keys.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateAppRequest {
     #[doc="<p>The app ID.</p>"]
@@ -2715,7 +5254,96 @@ pub struct UpdateAppRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
+impl UpdateAppRequest {
+    /// Sets `app_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAppRequest.app_id = value.into();`.
+    pub fn app_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.app_id = value.into();
+        self
+    }
+    /// Sets `app_source`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAppRequest.app_source = Some(value.into());`.
+    pub fn app_source<ValueType: Into<Source>>(mut self, value: ValueType) -> Self {
+        self.app_source = Some(value.into());
+        self
+    }
+    /// Sets `attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAppRequest.attributes = Some(value.into());`.
+pub fn attributes<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.attributes = Some(value.into());
+        self
+    }
+    /// Sets `data_sources`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAppRequest.data_sources = Some(value.into());`.
+    pub fn data_sources<ValueType: Into<Vec<DataSource>>>(mut self, value: ValueType) -> Self {
+        self.data_sources = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAppRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `domains`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAppRequest.domains = Some(value.into());`.
+    pub fn domains<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.domains = Some(value.into());
+        self
+    }
+    /// Sets `enable_ssl`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAppRequest.enable_ssl = Some(value.into());`.
+    pub fn enable_ssl<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enable_ssl = Some(value.into());
+        self
+    }
+    /// Sets `environment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAppRequest.environment = Some(value.into());`.
+    pub fn environment<ValueType: Into<Vec<EnvironmentVariable>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.environment = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAppRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `ssl_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAppRequest.ssl_configuration = Some(value.into());`.
+    pub fn ssl_configuration<ValueType: Into<SslConfiguration>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.ssl_configuration = Some(value.into());
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAppRequest.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateAppRequest with optional fields set to `None`.
+    pub fn new<AppIdType: Into<String>>(app_id: AppIdType) -> UpdateAppRequest {
+        UpdateAppRequest {
+            app_id: app_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateElasticIpRequest {
     #[doc="<p>The address.</p>"]
@@ -2726,7 +5354,29 @@ pub struct UpdateElasticIpRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
+impl UpdateElasticIpRequest {
+    /// Sets `elastic_ip`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateElasticIpRequest.elastic_ip = value.into();`.
+    pub fn elastic_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.elastic_ip = value.into();
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateElasticIpRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateElasticIpRequest with optional fields set to `None`.
+    pub fn new<ElasticIpType: Into<String>>(elastic_ip: ElasticIpType) -> UpdateElasticIpRequest {
+        UpdateElasticIpRequest {
+            elastic_ip: elastic_ip.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateInstanceRequest {
     #[doc="<p>The default AWS OpsWorks Stacks agent version. You have the following options:</p> <ul> <li> <p> <code>INHERIT</code> - Use the stack's default agent version setting.</p> </li> <li> <p> <i>version_number</i> - Use the specified agent version. This value overrides the stack's default setting. To update the agent version, you must edit the instance configuration and specify a new version. AWS OpsWorks Stacks then automatically installs that version on the instance.</p> </li> </ul> <p>The default setting is <code>INHERIT</code>. To specify an agent version, you must use the complete version number, not the abbreviated number shown on the console. For a list of available agent version numbers, call <a>DescribeAgentVersions</a>.</p> <p>AgentVersion cannot be set to Chef 12.2.</p>"]
@@ -2777,7 +5427,99 @@ pub struct UpdateInstanceRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ssh_key_name: Option<String>,
 }
-
+impl UpdateInstanceRequest {
+    /// Sets `agent_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateInstanceRequest.agent_version = Some(value.into());`.
+    pub fn agent_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.agent_version = Some(value.into());
+        self
+    }
+    /// Sets `ami_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateInstanceRequest.ami_id = Some(value.into());`.
+    pub fn ami_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ami_id = Some(value.into());
+        self
+    }
+    /// Sets `architecture`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateInstanceRequest.architecture = Some(value.into());`.
+    pub fn architecture<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.architecture = Some(value.into());
+        self
+    }
+    /// Sets `auto_scaling_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateInstanceRequest.auto_scaling_type = Some(value.into());`.
+    pub fn auto_scaling_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_type = Some(value.into());
+        self
+    }
+    /// Sets `ebs_optimized`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateInstanceRequest.ebs_optimized = Some(value.into());`.
+    pub fn ebs_optimized<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.ebs_optimized = Some(value.into());
+        self
+    }
+    /// Sets `hostname`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateInstanceRequest.hostname = Some(value.into());`.
+    pub fn hostname<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hostname = Some(value.into());
+        self
+    }
+    /// Sets `install_updates_on_boot`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateInstanceRequest.install_updates_on_boot = Some(value.into());`.
+    pub fn install_updates_on_boot<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.install_updates_on_boot = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateInstanceRequest.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `instance_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateInstanceRequest.instance_type = Some(value.into());`.
+    pub fn instance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_type = Some(value.into());
+        self
+    }
+    /// Sets `layer_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateInstanceRequest.layer_ids = Some(value.into());`.
+    pub fn layer_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.layer_ids = Some(value.into());
+        self
+    }
+    /// Sets `os`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateInstanceRequest.os = Some(value.into());`.
+    pub fn os<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.os = Some(value.into());
+        self
+    }
+    /// Sets `ssh_key_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateInstanceRequest.ssh_key_name = Some(value.into());`.
+    pub fn ssh_key_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ssh_key_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateInstanceRequest with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>>(instance_id: InstanceIdType) -> UpdateInstanceRequest {
+        UpdateInstanceRequest {
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateLayerRequest {
     #[doc="<p>One or more user-defined key/value pairs to be added to the stack attributes.</p>"]
@@ -2848,7 +5590,140 @@ pub struct UpdateLayerRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_configurations: Option<Vec<VolumeConfiguration>>,
 }
-
+impl UpdateLayerRequest {
+    /// Sets `attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLayerRequest.attributes = Some(value.into());`.
+pub fn attributes<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.attributes = Some(value.into());
+        self
+    }
+    /// Sets `auto_assign_elastic_ips`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLayerRequest.auto_assign_elastic_ips = Some(value.into());`.
+    pub fn auto_assign_elastic_ips<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.auto_assign_elastic_ips = Some(value.into());
+        self
+    }
+    /// Sets `auto_assign_public_ips`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLayerRequest.auto_assign_public_ips = Some(value.into());`.
+    pub fn auto_assign_public_ips<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.auto_assign_public_ips = Some(value.into());
+        self
+    }
+    /// Sets `cloud_watch_logs_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLayerRequest.cloud_watch_logs_configuration = Some(value.into());`.
+pub fn cloud_watch_logs_configuration<ValueType: Into<CloudWatchLogsConfiguration>>(mut self, value: ValueType) -> Self{
+        self.cloud_watch_logs_configuration = Some(value.into());
+        self
+    }
+    /// Sets `custom_instance_profile_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLayerRequest.custom_instance_profile_arn = Some(value.into());`.
+    pub fn custom_instance_profile_arn<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.custom_instance_profile_arn = Some(value.into());
+        self
+    }
+    /// Sets `custom_json`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLayerRequest.custom_json = Some(value.into());`.
+    pub fn custom_json<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.custom_json = Some(value.into());
+        self
+    }
+    /// Sets `custom_recipes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLayerRequest.custom_recipes = Some(value.into());`.
+    pub fn custom_recipes<ValueType: Into<Recipes>>(mut self, value: ValueType) -> Self {
+        self.custom_recipes = Some(value.into());
+        self
+    }
+    /// Sets `custom_security_group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLayerRequest.custom_security_group_ids = Some(value.into());`.
+    pub fn custom_security_group_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.custom_security_group_ids = Some(value.into());
+        self
+    }
+    /// Sets `enable_auto_healing`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLayerRequest.enable_auto_healing = Some(value.into());`.
+    pub fn enable_auto_healing<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enable_auto_healing = Some(value.into());
+        self
+    }
+    /// Sets `install_updates_on_boot`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLayerRequest.install_updates_on_boot = Some(value.into());`.
+    pub fn install_updates_on_boot<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.install_updates_on_boot = Some(value.into());
+        self
+    }
+    /// Sets `layer_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLayerRequest.layer_id = value.into();`.
+    pub fn layer_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.layer_id = value.into();
+        self
+    }
+    /// Sets `lifecycle_event_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLayerRequest.lifecycle_event_configuration = Some(value.into());`.
+pub fn lifecycle_event_configuration<ValueType: Into<LifecycleEventConfiguration>>(mut self, value: ValueType) -> Self{
+        self.lifecycle_event_configuration = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLayerRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `packages`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLayerRequest.packages = Some(value.into());`.
+    pub fn packages<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.packages = Some(value.into());
+        self
+    }
+    /// Sets `shortname`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLayerRequest.shortname = Some(value.into());`.
+    pub fn shortname<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.shortname = Some(value.into());
+        self
+    }
+    /// Sets `use_ebs_optimized_instances`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLayerRequest.use_ebs_optimized_instances = Some(value.into());`.
+    pub fn use_ebs_optimized_instances<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.use_ebs_optimized_instances = Some(value.into());
+        self
+    }
+    /// Sets `volume_configurations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLayerRequest.volume_configurations = Some(value.into());`.
+    pub fn volume_configurations<ValueType: Into<Vec<VolumeConfiguration>>>(mut self,
+                                                                            value: ValueType)
+                                                                            -> Self {
+        self.volume_configurations = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateLayerRequest with optional fields set to `None`.
+    pub fn new<LayerIdType: Into<String>>(layer_id: LayerIdType) -> UpdateLayerRequest {
+        UpdateLayerRequest {
+            layer_id: layer_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateMyUserProfileRequest {
     #[doc="<p>The user's SSH public key.</p>"]
@@ -2856,7 +5731,19 @@ pub struct UpdateMyUserProfileRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ssh_public_key: Option<String>,
 }
-
+impl UpdateMyUserProfileRequest {
+    /// Sets `ssh_public_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMyUserProfileRequest.ssh_public_key = Some(value.into());`.
+    pub fn ssh_public_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ssh_public_key = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateMyUserProfileRequest with optional fields set to `None`.
+    pub fn new() -> UpdateMyUserProfileRequest {
+        UpdateMyUserProfileRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateRdsDbInstanceRequest {
     #[doc="<p>The database password.</p>"]
@@ -2871,7 +5758,37 @@ pub struct UpdateRdsDbInstanceRequest {
     #[serde(rename="RdsDbInstanceArn")]
     pub rds_db_instance_arn: String,
 }
-
+impl UpdateRdsDbInstanceRequest {
+    /// Sets `db_password`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRdsDbInstanceRequest.db_password = Some(value.into());`.
+    pub fn db_password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_password = Some(value.into());
+        self
+    }
+    /// Sets `db_user`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRdsDbInstanceRequest.db_user = Some(value.into());`.
+    pub fn db_user<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_user = Some(value.into());
+        self
+    }
+    /// Sets `rds_db_instance_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRdsDbInstanceRequest.rds_db_instance_arn = value.into();`.
+    pub fn rds_db_instance_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rds_db_instance_arn = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateRdsDbInstanceRequest with optional fields set to `None`.
+    pub fn new<RdsDbInstanceArnType: Into<String>>(rds_db_instance_arn: RdsDbInstanceArnType)
+                                                   -> UpdateRdsDbInstanceRequest {
+        UpdateRdsDbInstanceRequest {
+            rds_db_instance_arn: rds_db_instance_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateStackRequest {
     #[doc="<p>The default AWS OpsWorks Stacks agent version. You have the following options:</p> <ul> <li> <p>Auto-update - Set this parameter to <code>LATEST</code>. AWS OpsWorks Stacks automatically installs new agent versions on the stack's instances as soon as they are available.</p> </li> <li> <p>Fixed version - Set this parameter to your preferred agent version. To update the agent version, you must edit the stack configuration and specify a new version. AWS OpsWorks Stacks then automatically installs that version on the stack's instances.</p> </li> </ul> <p>The default setting is <code>LATEST</code>. To specify an agent version, you must use the complete version number, not the abbreviated number shown on the console. For a list of available agent version numbers, call <a>DescribeAgentVersions</a>. AgentVersion cannot be set to Chef 12.2.</p> <note> <p>You can also specify an agent version when you create or update an instance, which overrides the stack's default setting.</p> </note>"]
@@ -2945,7 +5862,147 @@ pub struct UpdateStackRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub use_opsworks_security_groups: Option<bool>,
 }
-
+impl UpdateStackRequest {
+    /// Sets `agent_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.agent_version = Some(value.into());`.
+    pub fn agent_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.agent_version = Some(value.into());
+        self
+    }
+    /// Sets `attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.attributes = Some(value.into());`.
+pub fn attributes<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.attributes = Some(value.into());
+        self
+    }
+    /// Sets `chef_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.chef_configuration = Some(value.into());`.
+    pub fn chef_configuration<ValueType: Into<ChefConfiguration>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.chef_configuration = Some(value.into());
+        self
+    }
+    /// Sets `configuration_manager`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.configuration_manager = Some(value.into());`.
+    pub fn configuration_manager<ValueType: Into<StackConfigurationManager>>(mut self,
+                                                                             value: ValueType)
+                                                                             -> Self {
+        self.configuration_manager = Some(value.into());
+        self
+    }
+    /// Sets `custom_cookbooks_source`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.custom_cookbooks_source = Some(value.into());`.
+    pub fn custom_cookbooks_source<ValueType: Into<Source>>(mut self, value: ValueType) -> Self {
+        self.custom_cookbooks_source = Some(value.into());
+        self
+    }
+    /// Sets `custom_json`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.custom_json = Some(value.into());`.
+    pub fn custom_json<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.custom_json = Some(value.into());
+        self
+    }
+    /// Sets `default_availability_zone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.default_availability_zone = Some(value.into());`.
+    pub fn default_availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_availability_zone = Some(value.into());
+        self
+    }
+    /// Sets `default_instance_profile_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.default_instance_profile_arn = Some(value.into());`.
+    pub fn default_instance_profile_arn<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.default_instance_profile_arn = Some(value.into());
+        self
+    }
+    /// Sets `default_os`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.default_os = Some(value.into());`.
+    pub fn default_os<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_os = Some(value.into());
+        self
+    }
+    /// Sets `default_root_device_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.default_root_device_type = Some(value.into());`.
+    pub fn default_root_device_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_root_device_type = Some(value.into());
+        self
+    }
+    /// Sets `default_ssh_key_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.default_ssh_key_name = Some(value.into());`.
+    pub fn default_ssh_key_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_ssh_key_name = Some(value.into());
+        self
+    }
+    /// Sets `default_subnet_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.default_subnet_id = Some(value.into());`.
+    pub fn default_subnet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_subnet_id = Some(value.into());
+        self
+    }
+    /// Sets `hostname_theme`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.hostname_theme = Some(value.into());`.
+    pub fn hostname_theme<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hostname_theme = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `service_role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.service_role_arn = Some(value.into());`.
+    pub fn service_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_role_arn = Some(value.into());
+        self
+    }
+    /// Sets `stack_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.stack_id = value.into();`.
+    pub fn stack_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_id = value.into();
+        self
+    }
+    /// Sets `use_custom_cookbooks`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.use_custom_cookbooks = Some(value.into());`.
+    pub fn use_custom_cookbooks<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.use_custom_cookbooks = Some(value.into());
+        self
+    }
+    /// Sets `use_opsworks_security_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.use_opsworks_security_groups = Some(value.into());`.
+    pub fn use_opsworks_security_groups<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.use_opsworks_security_groups = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateStackRequest with optional fields set to `None`.
+    pub fn new<StackIdType: Into<String>>(stack_id: StackIdType) -> UpdateStackRequest {
+        UpdateStackRequest {
+            stack_id: stack_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateUserProfileRequest {
     #[doc="<p>Whether users can specify their own SSH public key through the My Settings page. For more information, see <a href=\"http://docs.aws.amazon.com/opsworks/latest/userguide/security-settingsshkey.html\">Managing User Permissions</a>.</p>"]
@@ -2964,7 +6021,44 @@ pub struct UpdateUserProfileRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ssh_username: Option<String>,
 }
-
+impl UpdateUserProfileRequest {
+    /// Sets `allow_self_management`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserProfileRequest.allow_self_management = Some(value.into());`.
+    pub fn allow_self_management<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.allow_self_management = Some(value.into());
+        self
+    }
+    /// Sets `iam_user_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserProfileRequest.iam_user_arn = value.into();`.
+    pub fn iam_user_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.iam_user_arn = value.into();
+        self
+    }
+    /// Sets `ssh_public_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserProfileRequest.ssh_public_key = Some(value.into());`.
+    pub fn ssh_public_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ssh_public_key = Some(value.into());
+        self
+    }
+    /// Sets `ssh_username`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserProfileRequest.ssh_username = Some(value.into());`.
+    pub fn ssh_username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ssh_username = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateUserProfileRequest with optional fields set to `None`.
+    pub fn new<IamUserArnType: Into<String>>(iam_user_arn: IamUserArnType)
+                                             -> UpdateUserProfileRequest {
+        UpdateUserProfileRequest {
+            iam_user_arn: iam_user_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateVolumeRequest {
     #[doc="<p>The new mount point.</p>"]
@@ -2979,7 +6073,36 @@ pub struct UpdateVolumeRequest {
     #[serde(rename="VolumeId")]
     pub volume_id: String,
 }
-
+impl UpdateVolumeRequest {
+    /// Sets `mount_point`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateVolumeRequest.mount_point = Some(value.into());`.
+    pub fn mount_point<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.mount_point = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateVolumeRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `volume_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateVolumeRequest.volume_id = value.into();`.
+    pub fn volume_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateVolumeRequest with optional fields set to `None`.
+    pub fn new<VolumeIdType: Into<String>>(volume_id: VolumeIdType) -> UpdateVolumeRequest {
+        UpdateVolumeRequest {
+            volume_id: volume_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes a user's SSH information.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UserProfile {
@@ -3004,7 +6127,6 @@ pub struct UserProfile {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ssh_username: Option<String>,
 }
-
 #[doc="<p>Describes an instance's Amazon EBS volume.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Volume {
@@ -3061,7 +6183,6 @@ pub struct Volume {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_type: Option<String>,
 }
-
 #[doc="<p>Describes an Amazon EBS volume configuration.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct VolumeConfiguration {
@@ -3087,7 +6208,63 @@ pub struct VolumeConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_type: Option<String>,
 }
-
+impl VolumeConfiguration {
+    /// Sets `iops`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VolumeConfiguration.iops = Some(value.into());`.
+    pub fn iops<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.iops = Some(value.into());
+        self
+    }
+    /// Sets `mount_point`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VolumeConfiguration.mount_point = value.into();`.
+    pub fn mount_point<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.mount_point = value.into();
+        self
+    }
+    /// Sets `number_of_disks`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VolumeConfiguration.number_of_disks = value.into();`.
+    pub fn number_of_disks<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.number_of_disks = value.into();
+        self
+    }
+    /// Sets `raid_level`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VolumeConfiguration.raid_level = Some(value.into());`.
+    pub fn raid_level<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.raid_level = Some(value.into());
+        self
+    }
+    /// Sets `size`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VolumeConfiguration.size = value.into();`.
+    pub fn size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.size = value.into();
+        self
+    }
+    /// Sets `volume_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VolumeConfiguration.volume_type = Some(value.into());`.
+    pub fn volume_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of VolumeConfiguration with optional fields set to `None`.
+    pub fn new<MountPointType: Into<String>, NumberOfDisksType: Into<i64>, SizeType: Into<i64>>
+        (mount_point: MountPointType,
+         number_of_disks: NumberOfDisksType,
+         size: SizeType)
+         -> VolumeConfiguration {
+        VolumeConfiguration {
+            mount_point: mount_point.into(),
+            number_of_disks: number_of_disks.into(),
+            size: size.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes a time-based instance's auto scaling schedule. The schedule consists of a set of key-value pairs.</p> <ul> <li> <p>The key is the time period (a UTC hour) and must be an integer from 0 - 23.</p> </li> <li> <p>The value indicates whether the instance should be online or offline for the specified period, and must be set to \"on\" or \"off\"</p> </li> </ul> <p>The default setting for all time periods is off, so you use the following parameters primarily to specify the online periods. You don't have to explicitly specify offline periods unless you want to change an online period to an offline period.</p> <p>The following example specifies that the instance should be online for four hours, from UTC 1200 - 1600. It will be off for the remainder of the day.</p> <p> <code> { \"12\":\"on\", \"13\":\"on\", \"14\":\"on\", \"15\":\"on\" } </code> </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct WeeklyAutoScalingSchedule {
@@ -3120,7 +6297,69 @@ pub struct WeeklyAutoScalingSchedule {
     #[serde(skip_serializing_if="Option::is_none")]
     pub wednesday: Option<::std::collections::HashMap<String, String>>,
 }
-
+impl WeeklyAutoScalingSchedule {
+    /// Sets `friday`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WeeklyAutoScalingSchedule.friday = Some(value.into());`.
+    pub fn friday<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.friday = Some(value.into());
+        self
+    }
+    /// Sets `monday`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WeeklyAutoScalingSchedule.monday = Some(value.into());`.
+    pub fn monday<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.monday = Some(value.into());
+        self
+    }
+    /// Sets `saturday`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WeeklyAutoScalingSchedule.saturday = Some(value.into());`.
+pub fn saturday<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.saturday = Some(value.into());
+        self
+    }
+    /// Sets `sunday`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WeeklyAutoScalingSchedule.sunday = Some(value.into());`.
+    pub fn sunday<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.sunday = Some(value.into());
+        self
+    }
+    /// Sets `thursday`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WeeklyAutoScalingSchedule.thursday = Some(value.into());`.
+pub fn thursday<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.thursday = Some(value.into());
+        self
+    }
+    /// Sets `tuesday`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WeeklyAutoScalingSchedule.tuesday = Some(value.into());`.
+    pub fn tuesday<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                                 value: ValueType)
+                                                                                 -> Self {
+        self.tuesday = Some(value.into());
+        self
+    }
+    /// Sets `wednesday`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WeeklyAutoScalingSchedule.wednesday = Some(value.into());`.
+pub fn wednesday<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.wednesday = Some(value.into());
+        self
+    }
+    /// Returns a new instance of WeeklyAutoScalingSchedule with optional fields set to `None`.
+    pub fn new() -> WeeklyAutoScalingSchedule {
+        WeeklyAutoScalingSchedule { ..Default::default() }
+    }
+}
 /// Errors returned by AssignInstance
 #[derive(Debug, PartialEq)]
 pub enum AssignInstanceError {

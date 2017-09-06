@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -53,7 +54,6 @@ pub struct AccessKey {
     #[doc="<p>The name of the IAM user that the access key is associated with.</p>"]
     pub user_name: String,
 }
-
 struct AccessKeyDeserializer;
 impl AccessKeyDeserializer {
     #[allow(unused_variables)]
@@ -137,7 +137,6 @@ pub struct AccessKeyLastUsed {
     #[doc="<p>The name of the AWS service with which this access key was most recently used. This field displays \"N/A\" when:</p> <ul> <li> <p>The user does not have an access key.</p> </li> <li> <p>An access key exists but has never been used, at least not since IAM started tracking this information on April 22nd, 2015.</p> </li> <li> <p>There is no sign-in data associated with the user</p> </li> </ul>"]
     pub service_name: String,
 }
-
 struct AccessKeyLastUsedDeserializer;
 impl AccessKeyLastUsedDeserializer {
     #[allow(unused_variables)]
@@ -199,7 +198,6 @@ pub struct AccessKeyMetadata {
     #[doc="<p>The name of the IAM user that the key is associated with.</p>"]
     pub user_name: Option<String>,
 }
-
 struct AccessKeyMetadataDeserializer;
 impl AccessKeyMetadataDeserializer {
     #[allow(unused_variables)]
@@ -399,7 +397,35 @@ pub struct AddClientIDToOpenIDConnectProviderRequest {
     #[doc="<p>The Amazon Resource Name (ARN) of the IAM OpenID Connect (OIDC) provider resource to add the client ID to. You can get a list of OIDC provider ARNs by using the <a>ListOpenIDConnectProviders</a> action.</p>"]
     pub open_id_connect_provider_arn: String,
 }
-
+impl AddClientIDToOpenIDConnectProviderRequest {
+    /// Sets `client_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddClientIDToOpenIDConnectProviderRequest.client_id = value.into();`.
+    pub fn client_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_id = value.into();
+        self
+    }
+    /// Sets `open_id_connect_provider_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddClientIDToOpenIDConnectProviderRequest.open_id_connect_provider_arn = value.into();`.
+    pub fn open_id_connect_provider_arn<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.open_id_connect_provider_arn = value.into();
+        self
+    }
+    /// Returns a new instance of AddClientIDToOpenIDConnectProviderRequest with optional fields set to `None`.
+    pub fn new<ClientIDType: Into<String>, OpenIDConnectProviderArnType: Into<String>>
+        (client_id: ClientIDType,
+         open_id_connect_provider_arn: OpenIDConnectProviderArnType)
+         -> AddClientIDToOpenIDConnectProviderRequest {
+        AddClientIDToOpenIDConnectProviderRequest {
+            client_id: client_id.into(),
+            open_id_connect_provider_arn: open_id_connect_provider_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AddClientIDToOpenIDConnectProviderRequest` contents to a `SignedRequest`.
 struct AddClientIDToOpenIDConnectProviderRequestSerializer;
@@ -426,7 +452,33 @@ pub struct AddRoleToInstanceProfileRequest {
     #[doc="<p>The name of the role to add.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
     pub role_name: String,
 }
-
+impl AddRoleToInstanceProfileRequest {
+    /// Sets `instance_profile_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddRoleToInstanceProfileRequest.instance_profile_name = value.into();`.
+    pub fn instance_profile_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_profile_name = value.into();
+        self
+    }
+    /// Sets `role_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddRoleToInstanceProfileRequest.role_name = value.into();`.
+    pub fn role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_name = value.into();
+        self
+    }
+    /// Returns a new instance of AddRoleToInstanceProfileRequest with optional fields set to `None`.
+    pub fn new<InstanceProfileNameType: Into<String>, RoleNameType: Into<String>>
+        (instance_profile_name: InstanceProfileNameType,
+         role_name: RoleNameType)
+         -> AddRoleToInstanceProfileRequest {
+        AddRoleToInstanceProfileRequest {
+            instance_profile_name: instance_profile_name.into(),
+            role_name: role_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AddRoleToInstanceProfileRequest` contents to a `SignedRequest`.
 struct AddRoleToInstanceProfileRequestSerializer;
@@ -451,7 +503,33 @@ pub struct AddUserToGroupRequest {
     #[doc="<p>The name of the user to add.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl AddUserToGroupRequest {
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddUserToGroupRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddUserToGroupRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of AddUserToGroupRequest with optional fields set to `None`.
+    pub fn new<GroupNameType: Into<String>, UserNameType: Into<String>>
+        (group_name: GroupNameType,
+         user_name: UserNameType)
+         -> AddUserToGroupRequest {
+        AddUserToGroupRequest {
+            group_name: group_name.into(),
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AddUserToGroupRequest` contents to a `SignedRequest`.
 struct AddUserToGroupRequestSerializer;
@@ -489,7 +567,33 @@ pub struct AttachGroupPolicyRequest {
     #[doc="<p>The Amazon Resource Name (ARN) of the IAM policy you want to attach.</p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a> in the <i>AWS General Reference</i>.</p>"]
     pub policy_arn: String,
 }
-
+impl AttachGroupPolicyRequest {
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachGroupPolicyRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Sets `policy_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachGroupPolicyRequest.policy_arn = value.into();`.
+    pub fn policy_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_arn = value.into();
+        self
+    }
+    /// Returns a new instance of AttachGroupPolicyRequest with optional fields set to `None`.
+    pub fn new<GroupNameType: Into<String>, PolicyArnType: Into<String>>
+        (group_name: GroupNameType,
+         policy_arn: PolicyArnType)
+         -> AttachGroupPolicyRequest {
+        AttachGroupPolicyRequest {
+            group_name: group_name.into(),
+            policy_arn: policy_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AttachGroupPolicyRequest` contents to a `SignedRequest`.
 struct AttachGroupPolicyRequestSerializer;
@@ -513,7 +617,33 @@ pub struct AttachRolePolicyRequest {
     #[doc="<p>The name (friendly name, not ARN) of the role to attach the policy to.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
     pub role_name: String,
 }
-
+impl AttachRolePolicyRequest {
+    /// Sets `policy_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachRolePolicyRequest.policy_arn = value.into();`.
+    pub fn policy_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_arn = value.into();
+        self
+    }
+    /// Sets `role_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachRolePolicyRequest.role_name = value.into();`.
+    pub fn role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_name = value.into();
+        self
+    }
+    /// Returns a new instance of AttachRolePolicyRequest with optional fields set to `None`.
+    pub fn new<PolicyArnType: Into<String>, RoleNameType: Into<String>>
+        (policy_arn: PolicyArnType,
+         role_name: RoleNameType)
+         -> AttachRolePolicyRequest {
+        AttachRolePolicyRequest {
+            policy_arn: policy_arn.into(),
+            role_name: role_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AttachRolePolicyRequest` contents to a `SignedRequest`.
 struct AttachRolePolicyRequestSerializer;
@@ -537,7 +667,33 @@ pub struct AttachUserPolicyRequest {
     #[doc="<p>The name (friendly name, not ARN) of the IAM user to attach the policy to.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl AttachUserPolicyRequest {
+    /// Sets `policy_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachUserPolicyRequest.policy_arn = value.into();`.
+    pub fn policy_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_arn = value.into();
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachUserPolicyRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of AttachUserPolicyRequest with optional fields set to `None`.
+    pub fn new<PolicyArnType: Into<String>, UserNameType: Into<String>>
+        (policy_arn: PolicyArnType,
+         user_name: UserNameType)
+         -> AttachUserPolicyRequest {
+        AttachUserPolicyRequest {
+            policy_arn: policy_arn.into(),
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AttachUserPolicyRequest` contents to a `SignedRequest`.
 struct AttachUserPolicyRequestSerializer;
@@ -602,7 +758,6 @@ pub struct AttachedPolicy {
     #[doc="<p>The friendly name of the attached policy.</p>"]
     pub policy_name: Option<String>,
 }
-
 struct AttachedPolicyDeserializer;
 impl AttachedPolicyDeserializer {
     #[allow(unused_variables)]
@@ -797,7 +952,33 @@ pub struct ChangePasswordRequest {
     #[doc="<p>The IAM user's current password.</p>"]
     pub old_password: String,
 }
-
+impl ChangePasswordRequest {
+    /// Sets `new_password`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChangePasswordRequest.new_password = value.into();`.
+    pub fn new_password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.new_password = value.into();
+        self
+    }
+    /// Sets `old_password`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChangePasswordRequest.old_password = value.into();`.
+    pub fn old_password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.old_password = value.into();
+        self
+    }
+    /// Returns a new instance of ChangePasswordRequest with optional fields set to `None`.
+    pub fn new<NewPasswordType: Into<String>, OldPasswordType: Into<String>>
+        (new_password: NewPasswordType,
+         old_password: OldPasswordType)
+         -> ChangePasswordRequest {
+        ChangePasswordRequest {
+            new_password: new_password.into(),
+            old_password: old_password.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ChangePasswordRequest` contents to a `SignedRequest`.
 struct ChangePasswordRequestSerializer;
@@ -905,7 +1086,33 @@ pub struct ContextEntry {
     #[doc="<p>The value (or values, if the condition context key supports multiple values) to provide to the simulation for use when the key is referenced by a <code>Condition</code> element in an input policy.</p>"]
     pub context_key_values: Option<Vec<String>>,
 }
-
+impl ContextEntry {
+    /// Sets `context_key_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContextEntry.context_key_name = Some(value.into());`.
+    pub fn context_key_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.context_key_name = Some(value.into());
+        self
+    }
+    /// Sets `context_key_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContextEntry.context_key_type = Some(value.into());`.
+    pub fn context_key_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.context_key_type = Some(value.into());
+        self
+    }
+    /// Sets `context_key_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContextEntry.context_key_values = Some(value.into());`.
+    pub fn context_key_values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.context_key_values = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ContextEntry with optional fields set to `None`.
+    pub fn new() -> ContextEntry {
+        ContextEntry { ..Default::default() }
+    }
+}
 
 /// Serialize `ContextEntry` contents to a `SignedRequest`.
 struct ContextEntrySerializer;
@@ -1018,7 +1225,19 @@ pub struct CreateAccessKeyRequest {
     #[doc="<p>The name of the IAM user that the new key will belong to.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: Option<String>,
 }
-
+impl CreateAccessKeyRequest {
+    /// Sets `user_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAccessKeyRequest.user_name = Some(value.into());`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateAccessKeyRequest with optional fields set to `None`.
+    pub fn new() -> CreateAccessKeyRequest {
+        CreateAccessKeyRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `CreateAccessKeyRequest` contents to a `SignedRequest`.
 struct CreateAccessKeyRequestSerializer;
@@ -1042,7 +1261,6 @@ pub struct CreateAccessKeyResponse {
     #[doc="<p>A structure with details about the access key.</p>"]
     pub access_key: AccessKey,
 }
-
 struct CreateAccessKeyResponseDeserializer;
 impl CreateAccessKeyResponseDeserializer {
     #[allow(unused_variables)]
@@ -1090,7 +1308,23 @@ pub struct CreateAccountAliasRequest {
     #[doc="<p>The account alias to create.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of lowercase letters, digits, and dashes. You cannot start or finish with a dash, nor can you have two dashes in a row.</p>"]
     pub account_alias: String,
 }
-
+impl CreateAccountAliasRequest {
+    /// Sets `account_alias`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAccountAliasRequest.account_alias = value.into();`.
+    pub fn account_alias<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_alias = value.into();
+        self
+    }
+    /// Returns a new instance of CreateAccountAliasRequest with optional fields set to `None`.
+    pub fn new<AccountAliasType: Into<String>>(account_alias: AccountAliasType)
+                                               -> CreateAccountAliasRequest {
+        CreateAccountAliasRequest {
+            account_alias: account_alias.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateAccountAliasRequest` contents to a `SignedRequest`.
 struct CreateAccountAliasRequestSerializer;
@@ -1113,7 +1347,29 @@ pub struct CreateGroupRequest {
     #[doc="<p> The path to the group. For more information about paths, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html\">IAM Identifiers</a> in the <i>IAM User Guide</i>.</p> <p>This parameter is optional. If it is not included, it defaults to a slash (/).</p> <p>This paramater allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of either a forward slash (/) by itself or a string that must begin and end with forward slashes, containing any ASCII character from the ! (\\u0021) thru the DEL character (\\u007F), including most punctuation characters, digits, and upper and lowercased letters.</p>"]
     pub path: Option<String>,
 }
-
+impl CreateGroupRequest {
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGroupRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Sets `path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGroupRequest.path = Some(value.into());`.
+    pub fn path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateGroupRequest with optional fields set to `None`.
+    pub fn new<GroupNameType: Into<String>>(group_name: GroupNameType) -> CreateGroupRequest {
+        CreateGroupRequest {
+            group_name: group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateGroupRequest` contents to a `SignedRequest`.
 struct CreateGroupRequestSerializer;
@@ -1138,7 +1394,6 @@ pub struct CreateGroupResponse {
     #[doc="<p>A structure containing details about the new group.</p>"]
     pub group: Group,
 }
-
 struct CreateGroupResponseDeserializer;
 impl CreateGroupResponseDeserializer {
     #[allow(unused_variables)]
@@ -1187,7 +1442,29 @@ pub struct CreateInstanceProfileRequest {
     #[doc="<p> The path to the instance profile. For more information about paths, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html\">IAM Identifiers</a> in the <i>IAM User Guide</i>.</p> <p>This parameter is optional. If it is not included, it defaults to a slash (/).</p> <p>This paramater allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of either a forward slash (/) by itself or a string that must begin and end with forward slashes, containing any ASCII character from the ! (\\u0021) thru the DEL character (\\u007F), including most punctuation characters, digits, and upper and lowercased letters.</p>"]
     pub path: Option<String>,
 }
-
+impl CreateInstanceProfileRequest {
+    /// Sets `instance_profile_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceProfileRequest.instance_profile_name = value.into();`.
+    pub fn instance_profile_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_profile_name = value.into();
+        self
+    }
+    /// Sets `path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInstanceProfileRequest.path = Some(value.into());`.
+    pub fn path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateInstanceProfileRequest with optional fields set to `None`.
+pub fn new<InstanceProfileNameType: Into<String>>(instance_profile_name: InstanceProfileNameType) -> CreateInstanceProfileRequest{
+        CreateInstanceProfileRequest {
+            instance_profile_name: instance_profile_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateInstanceProfileRequest` contents to a `SignedRequest`.
 struct CreateInstanceProfileRequestSerializer;
@@ -1213,7 +1490,6 @@ pub struct CreateInstanceProfileResponse {
     #[doc="<p>A structure containing details about the new instance profile.</p>"]
     pub instance_profile: InstanceProfile,
 }
-
 struct CreateInstanceProfileResponseDeserializer;
 impl CreateInstanceProfileResponseDeserializer {
     #[allow(unused_variables)]
@@ -1266,7 +1542,40 @@ pub struct CreateLoginProfileRequest {
     #[doc="<p>The name of the IAM user to create a password for. The user must already exist.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl CreateLoginProfileRequest {
+    /// Sets `password`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLoginProfileRequest.password = value.into();`.
+    pub fn password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.password = value.into();
+        self
+    }
+    /// Sets `password_reset_required`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLoginProfileRequest.password_reset_required = Some(value.into());`.
+    pub fn password_reset_required<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.password_reset_required = Some(value.into());
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLoginProfileRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateLoginProfileRequest with optional fields set to `None`.
+    pub fn new<PasswordType: Into<String>, UserNameType: Into<String>>
+        (password: PasswordType,
+         user_name: UserNameType)
+         -> CreateLoginProfileRequest {
+        CreateLoginProfileRequest {
+            password: password.into(),
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateLoginProfileRequest` contents to a `SignedRequest`.
 struct CreateLoginProfileRequestSerializer;
@@ -1293,7 +1602,6 @@ pub struct CreateLoginProfileResponse {
     #[doc="<p>A structure containing the user name and password create date.</p>"]
     pub login_profile: LoginProfile,
 }
-
 struct CreateLoginProfileResponseDeserializer;
 impl CreateLoginProfileResponseDeserializer {
     #[allow(unused_variables)]
@@ -1345,7 +1653,40 @@ pub struct CreateOpenIDConnectProviderRequest {
     #[doc="<p>The URL of the identity provider. The URL must begin with \"https://\" and should correspond to the <code>iss</code> claim in the provider's OpenID Connect ID tokens. Per the OIDC standard, path components are allowed but query parameters are not. Typically the URL consists of only a host name, like \"https://server.example.org\" or \"https://example.com\".</p> <p>You cannot register the same provider multiple times in a single AWS account. If you try to submit a URL that has already been used for an OpenID Connect provider in the AWS account, you will get an error.</p>"]
     pub url: String,
 }
-
+impl CreateOpenIDConnectProviderRequest {
+    /// Sets `client_id_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateOpenIDConnectProviderRequest.client_id_list = Some(value.into());`.
+    pub fn client_id_list<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.client_id_list = Some(value.into());
+        self
+    }
+    /// Sets `thumbprint_list`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateOpenIDConnectProviderRequest.thumbprint_list = value.into();`.
+    pub fn thumbprint_list<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.thumbprint_list = value.into();
+        self
+    }
+    /// Sets `url`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateOpenIDConnectProviderRequest.url = value.into();`.
+    pub fn url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.url = value.into();
+        self
+    }
+    /// Returns a new instance of CreateOpenIDConnectProviderRequest with optional fields set to `None`.
+    pub fn new<ThumbprintListType: Into<Vec<String>>, UrlType: Into<String>>
+        (thumbprint_list: ThumbprintListType,
+         url: UrlType)
+         -> CreateOpenIDConnectProviderRequest {
+        CreateOpenIDConnectProviderRequest {
+            thumbprint_list: thumbprint_list.into(),
+            url: url.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateOpenIDConnectProviderRequest` contents to a `SignedRequest`.
 struct CreateOpenIDConnectProviderRequestSerializer;
@@ -1375,7 +1716,6 @@ pub struct CreateOpenIDConnectProviderResponse {
     #[doc="<p>The Amazon Resource Name (ARN) of the new IAM OpenID Connect provider that is created. For more information, see <a>OpenIDConnectProviderListEntry</a>. </p>"]
     pub open_id_connect_provider_arn: Option<String>,
 }
-
 struct CreateOpenIDConnectProviderResponseDeserializer;
 impl CreateOpenIDConnectProviderResponseDeserializer {
     #[allow(unused_variables)]
@@ -1431,7 +1771,47 @@ pub struct CreatePolicyRequest {
     #[doc="<p>The friendly name of the policy.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub policy_name: String,
 }
-
+impl CreatePolicyRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePolicyRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePolicyRequest.path = Some(value.into());`.
+    pub fn path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path = Some(value.into());
+        self
+    }
+    /// Sets `policy_document`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePolicyRequest.policy_document = value.into();`.
+    pub fn policy_document<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_document = value.into();
+        self
+    }
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePolicyRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreatePolicyRequest with optional fields set to `None`.
+    pub fn new<PolicyDocumentType: Into<String>, PolicyNameType: Into<String>>
+        (policy_document: PolicyDocumentType,
+         policy_name: PolicyNameType)
+         -> CreatePolicyRequest {
+        CreatePolicyRequest {
+            policy_document: policy_document.into(),
+            policy_name: policy_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreatePolicyRequest` contents to a `SignedRequest`.
 struct CreatePolicyRequestSerializer;
@@ -1461,7 +1841,6 @@ pub struct CreatePolicyResponse {
     #[doc="<p>A structure containing details about the new policy.</p>"]
     pub policy: Option<Policy>,
 }
-
 struct CreatePolicyResponseDeserializer;
 impl CreatePolicyResponseDeserializer {
     #[allow(unused_variables)]
@@ -1513,7 +1892,40 @@ pub struct CreatePolicyVersionRequest {
     #[doc="<p>Specifies whether to set this version as the policy's default version.</p> <p>When this parameter is <code>true</code>, the new policy version becomes the operative version; that is, the version that is in effect for the IAM users, groups, and roles that the policy is attached to.</p> <p>For more information about managed policy versions, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/policies-managed-versions.html\">Versioning for Managed Policies</a> in the <i>IAM User Guide</i>.</p>"]
     pub set_as_default: Option<bool>,
 }
-
+impl CreatePolicyVersionRequest {
+    /// Sets `policy_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePolicyVersionRequest.policy_arn = value.into();`.
+    pub fn policy_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_arn = value.into();
+        self
+    }
+    /// Sets `policy_document`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePolicyVersionRequest.policy_document = value.into();`.
+    pub fn policy_document<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_document = value.into();
+        self
+    }
+    /// Sets `set_as_default`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePolicyVersionRequest.set_as_default = Some(value.into());`.
+    pub fn set_as_default<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.set_as_default = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreatePolicyVersionRequest with optional fields set to `None`.
+    pub fn new<PolicyArnType: Into<String>, PolicyDocumentType: Into<String>>
+        (policy_arn: PolicyArnType,
+         policy_document: PolicyDocumentType)
+         -> CreatePolicyVersionRequest {
+        CreatePolicyVersionRequest {
+            policy_arn: policy_arn.into(),
+            policy_document: policy_document.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreatePolicyVersionRequest` contents to a `SignedRequest`.
 struct CreatePolicyVersionRequestSerializer;
@@ -1541,7 +1953,6 @@ pub struct CreatePolicyVersionResponse {
     #[doc="<p>A structure containing details about the new policy version.</p>"]
     pub policy_version: Option<PolicyVersion>,
 }
-
 struct CreatePolicyVersionResponseDeserializer;
 impl CreatePolicyVersionResponseDeserializer {
     #[allow(unused_variables)]
@@ -1596,7 +2007,49 @@ pub struct CreateRoleRequest {
     #[doc="<p>The name of the role to create.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p> <p>Role names are not distinguished by case. For example, you cannot create roles named both \"PRODROLE\" and \"prodrole\".</p>"]
     pub role_name: String,
 }
-
+impl CreateRoleRequest {
+    /// Sets `assume_role_policy_document`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRoleRequest.assume_role_policy_document = value.into();`.
+    pub fn assume_role_policy_document<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.assume_role_policy_document = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRoleRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRoleRequest.path = Some(value.into());`.
+    pub fn path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path = Some(value.into());
+        self
+    }
+    /// Sets `role_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRoleRequest.role_name = value.into();`.
+    pub fn role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateRoleRequest with optional fields set to `None`.
+    pub fn new<AssumeRolePolicyDocumentType: Into<String>, RoleNameType: Into<String>>
+        (assume_role_policy_document: AssumeRolePolicyDocumentType,
+         role_name: RoleNameType)
+         -> CreateRoleRequest {
+        CreateRoleRequest {
+            assume_role_policy_document: assume_role_policy_document.into(),
+            role_name: role_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateRoleRequest` contents to a `SignedRequest`.
 struct CreateRoleRequestSerializer;
@@ -1626,7 +2079,6 @@ pub struct CreateRoleResponse {
     #[doc="<p>A structure containing details about the new role.</p>"]
     pub role: Role,
 }
-
 struct CreateRoleResponseDeserializer;
 impl CreateRoleResponseDeserializer {
     #[allow(unused_variables)]
@@ -1675,7 +2127,33 @@ pub struct CreateSAMLProviderRequest {
     #[doc="<p>An XML document generated by an identity provider (IdP) that supports SAML 2.0. The document includes the issuer's name, expiration information, and keys that can be used to validate the SAML authentication response (assertions) that are received from the IdP. You must generate the metadata document using the identity management software that is used as your organization's IdP.</p> <p>For more information, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_saml.html\">About SAML 2.0-based Federation</a> in the <i>IAM User Guide</i> </p>"]
     pub saml_metadata_document: String,
 }
-
+impl CreateSAMLProviderRequest {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSAMLProviderRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `saml_metadata_document`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSAMLProviderRequest.saml_metadata_document = value.into();`.
+    pub fn saml_metadata_document<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.saml_metadata_document = value.into();
+        self
+    }
+    /// Returns a new instance of CreateSAMLProviderRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, SAMLMetadataDocumentType: Into<String>>
+        (name: NameType,
+         saml_metadata_document: SAMLMetadataDocumentType)
+         -> CreateSAMLProviderRequest {
+        CreateSAMLProviderRequest {
+            name: name.into(),
+            saml_metadata_document: saml_metadata_document.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateSAMLProviderRequest` contents to a `SignedRequest`.
 struct CreateSAMLProviderRequestSerializer;
@@ -1699,7 +2177,6 @@ pub struct CreateSAMLProviderResponse {
     #[doc="<p>The Amazon Resource Name (ARN) of the new SAML provider resource in IAM.</p>"]
     pub saml_provider_arn: Option<String>,
 }
-
 struct CreateSAMLProviderResponseDeserializer;
 impl CreateSAMLProviderResponseDeserializer {
     #[allow(unused_variables)]
@@ -1752,7 +2229,37 @@ pub struct CreateServiceLinkedRoleRequest {
     #[doc="<p>The description of the role.</p>"]
     pub description: Option<String>,
 }
-
+impl CreateServiceLinkedRoleRequest {
+    /// Sets `aws_service_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServiceLinkedRoleRequest.aws_service_name = value.into();`.
+    pub fn aws_service_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.aws_service_name = value.into();
+        self
+    }
+    /// Sets `custom_suffix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServiceLinkedRoleRequest.custom_suffix = Some(value.into());`.
+    pub fn custom_suffix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.custom_suffix = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServiceLinkedRoleRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateServiceLinkedRoleRequest with optional fields set to `None`.
+    pub fn new<AWSServiceNameType: Into<String>>(aws_service_name: AWSServiceNameType)
+                                                 -> CreateServiceLinkedRoleRequest {
+        CreateServiceLinkedRoleRequest {
+            aws_service_name: aws_service_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateServiceLinkedRoleRequest` contents to a `SignedRequest`.
 struct CreateServiceLinkedRoleRequestSerializer;
@@ -1780,7 +2287,6 @@ pub struct CreateServiceLinkedRoleResponse {
     #[doc="<p>A <a>Role</a> object that contains details about the newly created role.</p>"]
     pub role: Option<Role>,
 }
-
 struct CreateServiceLinkedRoleResponseDeserializer;
 impl CreateServiceLinkedRoleResponseDeserializer {
     #[allow(unused_variables)]
@@ -1830,7 +2336,33 @@ pub struct CreateServiceSpecificCredentialRequest {
     #[doc="<p>The name of the IAM user that is to be associated with the credentials. The new service-specific credentials have the same permissions as the associated user except that they can be used only to access the specified service.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl CreateServiceSpecificCredentialRequest {
+    /// Sets `service_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServiceSpecificCredentialRequest.service_name = value.into();`.
+    pub fn service_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_name = value.into();
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServiceSpecificCredentialRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateServiceSpecificCredentialRequest with optional fields set to `None`.
+    pub fn new<ServiceNameType: Into<String>, UserNameType: Into<String>>
+        (service_name: ServiceNameType,
+         user_name: UserNameType)
+         -> CreateServiceSpecificCredentialRequest {
+        CreateServiceSpecificCredentialRequest {
+            service_name: service_name.into(),
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateServiceSpecificCredentialRequest` contents to a `SignedRequest`.
 struct CreateServiceSpecificCredentialRequestSerializer;
@@ -1852,7 +2384,6 @@ pub struct CreateServiceSpecificCredentialResponse {
     #[doc="<p>A structure that contains information about the newly created service-specific credential.</p> <important> <p>This is the only time that the password for this credential set is available. It cannot be recovered later. Instead, you will have to reset the password with <a>ResetServiceSpecificCredential</a>.</p> </important>"]
     pub service_specific_credential: Option<ServiceSpecificCredential>,
 }
-
 struct CreateServiceSpecificCredentialResponseDeserializer;
 impl CreateServiceSpecificCredentialResponseDeserializer {
     #[allow(unused_variables)]
@@ -1902,7 +2433,29 @@ pub struct CreateUserRequest {
     #[doc="<p>The name of the user to create.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-. User names are not distinguished by case. For example, you cannot create users named both \"TESTUSER\" and \"testuser\".</p>"]
     pub user_name: String,
 }
-
+impl CreateUserRequest {
+    /// Sets `path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserRequest.path = Some(value.into());`.
+    pub fn path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path = Some(value.into());
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUserRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateUserRequest with optional fields set to `None`.
+    pub fn new<UserNameType: Into<String>>(user_name: UserNameType) -> CreateUserRequest {
+        CreateUserRequest {
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateUserRequest` contents to a `SignedRequest`.
 struct CreateUserRequestSerializer;
@@ -1927,7 +2480,6 @@ pub struct CreateUserResponse {
     #[doc="<p>A structure with details about the new IAM user.</p>"]
     pub user: Option<User>,
 }
-
 struct CreateUserResponseDeserializer;
 impl CreateUserResponseDeserializer {
     #[allow(unused_variables)]
@@ -1976,7 +2528,29 @@ pub struct CreateVirtualMFADeviceRequest {
     #[doc="<p>The name of the virtual MFA device. Use with path to uniquely identify a virtual MFA device.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub virtual_mfa_device_name: String,
 }
-
+impl CreateVirtualMFADeviceRequest {
+    /// Sets `path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVirtualMFADeviceRequest.path = Some(value.into());`.
+    pub fn path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path = Some(value.into());
+        self
+    }
+    /// Sets `virtual_mfa_device_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVirtualMFADeviceRequest.virtual_mfa_device_name = value.into();`.
+    pub fn virtual_mfa_device_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.virtual_mfa_device_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateVirtualMFADeviceRequest with optional fields set to `None`.
+pub fn new<VirtualMFADeviceNameType: Into<String>>(virtual_mfa_device_name: VirtualMFADeviceNameType) -> CreateVirtualMFADeviceRequest{
+        CreateVirtualMFADeviceRequest {
+            virtual_mfa_device_name: virtual_mfa_device_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateVirtualMFADeviceRequest` contents to a `SignedRequest`.
 struct CreateVirtualMFADeviceRequestSerializer;
@@ -2002,7 +2576,6 @@ pub struct CreateVirtualMFADeviceResponse {
     #[doc="<p>A structure containing details about the new virtual MFA device.</p>"]
     pub virtual_mfa_device: VirtualMFADevice,
 }
-
 struct CreateVirtualMFADeviceResponseDeserializer;
 impl CreateVirtualMFADeviceResponseDeserializer {
     #[allow(unused_variables)]
@@ -2067,7 +2640,33 @@ pub struct DeactivateMFADeviceRequest {
     #[doc="<p>The name of the user whose MFA device you want to deactivate.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl DeactivateMFADeviceRequest {
+    /// Sets `serial_number`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeactivateMFADeviceRequest.serial_number = value.into();`.
+    pub fn serial_number<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.serial_number = value.into();
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeactivateMFADeviceRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeactivateMFADeviceRequest with optional fields set to `None`.
+    pub fn new<SerialNumberType: Into<String>, UserNameType: Into<String>>
+        (serial_number: SerialNumberType,
+         user_name: UserNameType)
+         -> DeactivateMFADeviceRequest {
+        DeactivateMFADeviceRequest {
+            serial_number: serial_number.into(),
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeactivateMFADeviceRequest` contents to a `SignedRequest`.
 struct DeactivateMFADeviceRequestSerializer;
@@ -2091,7 +2690,30 @@ pub struct DeleteAccessKeyRequest {
     #[doc="<p>The name of the user whose access key pair you want to delete.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: Option<String>,
 }
-
+impl DeleteAccessKeyRequest {
+    /// Sets `access_key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAccessKeyRequest.access_key_id = value.into();`.
+    pub fn access_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.access_key_id = value.into();
+        self
+    }
+    /// Sets `user_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAccessKeyRequest.user_name = Some(value.into());`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteAccessKeyRequest with optional fields set to `None`.
+    pub fn new<AccessKeyIdType: Into<String>>(access_key_id: AccessKeyIdType)
+                                              -> DeleteAccessKeyRequest {
+        DeleteAccessKeyRequest {
+            access_key_id: access_key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteAccessKeyRequest` contents to a `SignedRequest`.
 struct DeleteAccessKeyRequestSerializer;
@@ -2115,7 +2737,23 @@ pub struct DeleteAccountAliasRequest {
     #[doc="<p>The name of the account alias to delete.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of lowercase letters, digits, and dashes. You cannot start or finish with a dash, nor can you have two dashes in a row.</p>"]
     pub account_alias: String,
 }
-
+impl DeleteAccountAliasRequest {
+    /// Sets `account_alias`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAccountAliasRequest.account_alias = value.into();`.
+    pub fn account_alias<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_alias = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteAccountAliasRequest with optional fields set to `None`.
+    pub fn new<AccountAliasType: Into<String>>(account_alias: AccountAliasType)
+                                               -> DeleteAccountAliasRequest {
+        DeleteAccountAliasRequest {
+            account_alias: account_alias.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteAccountAliasRequest` contents to a `SignedRequest`.
 struct DeleteAccountAliasRequestSerializer;
@@ -2138,7 +2776,33 @@ pub struct DeleteGroupPolicyRequest {
     #[doc="<p>The name identifying the policy document to delete.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub policy_name: String,
 }
-
+impl DeleteGroupPolicyRequest {
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteGroupPolicyRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteGroupPolicyRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteGroupPolicyRequest with optional fields set to `None`.
+    pub fn new<GroupNameType: Into<String>, PolicyNameType: Into<String>>
+        (group_name: GroupNameType,
+         policy_name: PolicyNameType)
+         -> DeleteGroupPolicyRequest {
+        DeleteGroupPolicyRequest {
+            group_name: group_name.into(),
+            policy_name: policy_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteGroupPolicyRequest` contents to a `SignedRequest`.
 struct DeleteGroupPolicyRequestSerializer;
@@ -2160,7 +2824,22 @@ pub struct DeleteGroupRequest {
     #[doc="<p>The name of the IAM group to delete.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub group_name: String,
 }
-
+impl DeleteGroupRequest {
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteGroupRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteGroupRequest with optional fields set to `None`.
+    pub fn new<GroupNameType: Into<String>>(group_name: GroupNameType) -> DeleteGroupRequest {
+        DeleteGroupRequest {
+            group_name: group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteGroupRequest` contents to a `SignedRequest`.
 struct DeleteGroupRequestSerializer;
@@ -2181,7 +2860,22 @@ pub struct DeleteInstanceProfileRequest {
     #[doc="<p>The name of the instance profile to delete.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub instance_profile_name: String,
 }
-
+impl DeleteInstanceProfileRequest {
+    /// Sets `instance_profile_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteInstanceProfileRequest.instance_profile_name = value.into();`.
+    pub fn instance_profile_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_profile_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteInstanceProfileRequest with optional fields set to `None`.
+pub fn new<InstanceProfileNameType: Into<String>>(instance_profile_name: InstanceProfileNameType) -> DeleteInstanceProfileRequest{
+        DeleteInstanceProfileRequest {
+            instance_profile_name: instance_profile_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteInstanceProfileRequest` contents to a `SignedRequest`.
 struct DeleteInstanceProfileRequestSerializer;
@@ -2203,7 +2897,22 @@ pub struct DeleteLoginProfileRequest {
     #[doc="<p>The name of the user whose password you want to delete.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl DeleteLoginProfileRequest {
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteLoginProfileRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteLoginProfileRequest with optional fields set to `None`.
+    pub fn new<UserNameType: Into<String>>(user_name: UserNameType) -> DeleteLoginProfileRequest {
+        DeleteLoginProfileRequest {
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteLoginProfileRequest` contents to a `SignedRequest`.
 struct DeleteLoginProfileRequestSerializer;
@@ -2224,7 +2933,26 @@ pub struct DeleteOpenIDConnectProviderRequest {
     #[doc="<p>The Amazon Resource Name (ARN) of the IAM OpenID Connect provider resource object to delete. You can get a list of OpenID Connect provider resource ARNs by using the <a>ListOpenIDConnectProviders</a> action.</p>"]
     pub open_id_connect_provider_arn: String,
 }
-
+impl DeleteOpenIDConnectProviderRequest {
+    /// Sets `open_id_connect_provider_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteOpenIDConnectProviderRequest.open_id_connect_provider_arn = value.into();`.
+    pub fn open_id_connect_provider_arn<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.open_id_connect_provider_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteOpenIDConnectProviderRequest with optional fields set to `None`.
+    pub fn new<OpenIDConnectProviderArnType: Into<String>>
+        (open_id_connect_provider_arn: OpenIDConnectProviderArnType)
+         -> DeleteOpenIDConnectProviderRequest {
+        DeleteOpenIDConnectProviderRequest {
+            open_id_connect_provider_arn: open_id_connect_provider_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteOpenIDConnectProviderRequest` contents to a `SignedRequest`.
 struct DeleteOpenIDConnectProviderRequestSerializer;
@@ -2246,7 +2974,22 @@ pub struct DeletePolicyRequest {
     #[doc="<p>The Amazon Resource Name (ARN) of the IAM policy you want to delete.</p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a> in the <i>AWS General Reference</i>.</p>"]
     pub policy_arn: String,
 }
-
+impl DeletePolicyRequest {
+    /// Sets `policy_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePolicyRequest.policy_arn = value.into();`.
+    pub fn policy_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeletePolicyRequest with optional fields set to `None`.
+    pub fn new<PolicyArnType: Into<String>>(policy_arn: PolicyArnType) -> DeletePolicyRequest {
+        DeletePolicyRequest {
+            policy_arn: policy_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeletePolicyRequest` contents to a `SignedRequest`.
 struct DeletePolicyRequestSerializer;
@@ -2269,7 +3012,33 @@ pub struct DeletePolicyVersionRequest {
     #[doc="<p>The policy version to delete.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters that consists of the lowercase letter 'v' followed by one or two digits, and optionally followed by a period '.' and a string of letters and digits.</p> <p>For more information about managed policy versions, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/policies-managed-versions.html\">Versioning for Managed Policies</a> in the <i>IAM User Guide</i>.</p>"]
     pub version_id: String,
 }
-
+impl DeletePolicyVersionRequest {
+    /// Sets `policy_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePolicyVersionRequest.policy_arn = value.into();`.
+    pub fn policy_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_arn = value.into();
+        self
+    }
+    /// Sets `version_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePolicyVersionRequest.version_id = value.into();`.
+    pub fn version_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeletePolicyVersionRequest with optional fields set to `None`.
+    pub fn new<PolicyArnType: Into<String>, VersionIdType: Into<String>>
+        (policy_arn: PolicyArnType,
+         version_id: VersionIdType)
+         -> DeletePolicyVersionRequest {
+        DeletePolicyVersionRequest {
+            policy_arn: policy_arn.into(),
+            version_id: version_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeletePolicyVersionRequest` contents to a `SignedRequest`.
 struct DeletePolicyVersionRequestSerializer;
@@ -2293,7 +3062,33 @@ pub struct DeleteRolePolicyRequest {
     #[doc="<p>The name (friendly name, not ARN) identifying the role that the policy is embedded in.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
     pub role_name: String,
 }
-
+impl DeleteRolePolicyRequest {
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRolePolicyRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Sets `role_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRolePolicyRequest.role_name = value.into();`.
+    pub fn role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteRolePolicyRequest with optional fields set to `None`.
+    pub fn new<PolicyNameType: Into<String>, RoleNameType: Into<String>>
+        (policy_name: PolicyNameType,
+         role_name: RoleNameType)
+         -> DeleteRolePolicyRequest {
+        DeleteRolePolicyRequest {
+            policy_name: policy_name.into(),
+            role_name: role_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteRolePolicyRequest` contents to a `SignedRequest`.
 struct DeleteRolePolicyRequestSerializer;
@@ -2315,7 +3110,22 @@ pub struct DeleteRoleRequest {
     #[doc="<p>The name of the role to delete.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
     pub role_name: String,
 }
-
+impl DeleteRoleRequest {
+    /// Sets `role_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRoleRequest.role_name = value.into();`.
+    pub fn role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteRoleRequest with optional fields set to `None`.
+    pub fn new<RoleNameType: Into<String>>(role_name: RoleNameType) -> DeleteRoleRequest {
+        DeleteRoleRequest {
+            role_name: role_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteRoleRequest` contents to a `SignedRequest`.
 struct DeleteRoleRequestSerializer;
@@ -2336,7 +3146,23 @@ pub struct DeleteSAMLProviderRequest {
     #[doc="<p>The Amazon Resource Name (ARN) of the SAML provider to delete.</p>"]
     pub saml_provider_arn: String,
 }
-
+impl DeleteSAMLProviderRequest {
+    /// Sets `saml_provider_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSAMLProviderRequest.saml_provider_arn = value.into();`.
+    pub fn saml_provider_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.saml_provider_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteSAMLProviderRequest with optional fields set to `None`.
+    pub fn new<SAMLProviderArnType: Into<String>>(saml_provider_arn: SAMLProviderArnType)
+                                                  -> DeleteSAMLProviderRequest {
+        DeleteSAMLProviderRequest {
+            saml_provider_arn: saml_provider_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteSAMLProviderRequest` contents to a `SignedRequest`.
 struct DeleteSAMLProviderRequestSerializer;
@@ -2360,7 +3186,33 @@ pub struct DeleteSSHPublicKeyRequest {
     #[doc="<p>The name of the IAM user associated with the SSH public key.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl DeleteSSHPublicKeyRequest {
+    /// Sets `ssh_public_key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSSHPublicKeyRequest.ssh_public_key_id = value.into();`.
+    pub fn ssh_public_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ssh_public_key_id = value.into();
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSSHPublicKeyRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteSSHPublicKeyRequest with optional fields set to `None`.
+    pub fn new<SSHPublicKeyIdType: Into<String>, UserNameType: Into<String>>
+        (ssh_public_key_id: SSHPublicKeyIdType,
+         user_name: UserNameType)
+         -> DeleteSSHPublicKeyRequest {
+        DeleteSSHPublicKeyRequest {
+            ssh_public_key_id: ssh_public_key_id.into(),
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteSSHPublicKeyRequest` contents to a `SignedRequest`.
 struct DeleteSSHPublicKeyRequestSerializer;
@@ -2383,7 +3235,22 @@ pub struct DeleteServerCertificateRequest {
     #[doc="<p>The name of the server certificate you want to delete.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub server_certificate_name: String,
 }
-
+impl DeleteServerCertificateRequest {
+    /// Sets `server_certificate_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteServerCertificateRequest.server_certificate_name = value.into();`.
+    pub fn server_certificate_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_certificate_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteServerCertificateRequest with optional fields set to `None`.
+pub fn new<ServerCertificateNameType: Into<String>>(server_certificate_name: ServerCertificateNameType) -> DeleteServerCertificateRequest{
+        DeleteServerCertificateRequest {
+            server_certificate_name: server_certificate_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteServerCertificateRequest` contents to a `SignedRequest`.
 struct DeleteServerCertificateRequestSerializer;
@@ -2407,7 +3274,33 @@ pub struct DeleteServiceSpecificCredentialRequest {
     #[doc="<p>The name of the IAM user associated with the service-specific credential. If this value is not specified, then the operation assumes the user whose credentials are used to call the operation.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: Option<String>,
 }
-
+impl DeleteServiceSpecificCredentialRequest {
+    /// Sets `service_specific_credential_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteServiceSpecificCredentialRequest.service_specific_credential_id = value.into();`.
+    pub fn service_specific_credential_id<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.service_specific_credential_id = value.into();
+        self
+    }
+    /// Sets `user_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteServiceSpecificCredentialRequest.user_name = Some(value.into());`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteServiceSpecificCredentialRequest with optional fields set to `None`.
+    pub fn new<ServiceSpecificCredentialIdType: Into<String>>
+        (service_specific_credential_id: ServiceSpecificCredentialIdType)
+         -> DeleteServiceSpecificCredentialRequest {
+        DeleteServiceSpecificCredentialRequest {
+            service_specific_credential_id: service_specific_credential_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteServiceSpecificCredentialRequest` contents to a `SignedRequest`.
 struct DeleteServiceSpecificCredentialRequestSerializer;
@@ -2434,7 +3327,30 @@ pub struct DeleteSigningCertificateRequest {
     #[doc="<p>The name of the user the signing certificate belongs to.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: Option<String>,
 }
-
+impl DeleteSigningCertificateRequest {
+    /// Sets `certificate_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSigningCertificateRequest.certificate_id = value.into();`.
+    pub fn certificate_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_id = value.into();
+        self
+    }
+    /// Sets `user_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSigningCertificateRequest.user_name = Some(value.into());`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteSigningCertificateRequest with optional fields set to `None`.
+    pub fn new<CertificateIdType: Into<String>>(certificate_id: CertificateIdType)
+                                                -> DeleteSigningCertificateRequest {
+        DeleteSigningCertificateRequest {
+            certificate_id: certificate_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteSigningCertificateRequest` contents to a `SignedRequest`.
 struct DeleteSigningCertificateRequestSerializer;
@@ -2461,7 +3377,33 @@ pub struct DeleteUserPolicyRequest {
     #[doc="<p>The name (friendly name, not ARN) identifying the user that the policy is embedded in.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl DeleteUserPolicyRequest {
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteUserPolicyRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteUserPolicyRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteUserPolicyRequest with optional fields set to `None`.
+    pub fn new<PolicyNameType: Into<String>, UserNameType: Into<String>>
+        (policy_name: PolicyNameType,
+         user_name: UserNameType)
+         -> DeleteUserPolicyRequest {
+        DeleteUserPolicyRequest {
+            policy_name: policy_name.into(),
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteUserPolicyRequest` contents to a `SignedRequest`.
 struct DeleteUserPolicyRequestSerializer;
@@ -2483,7 +3425,22 @@ pub struct DeleteUserRequest {
     #[doc="<p>The name of the user to delete.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl DeleteUserRequest {
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteUserRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteUserRequest with optional fields set to `None`.
+    pub fn new<UserNameType: Into<String>>(user_name: UserNameType) -> DeleteUserRequest {
+        DeleteUserRequest {
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteUserRequest` contents to a `SignedRequest`.
 struct DeleteUserRequestSerializer;
@@ -2504,7 +3461,23 @@ pub struct DeleteVirtualMFADeviceRequest {
     #[doc="<p>The serial number that uniquely identifies the MFA device. For virtual MFA devices, the serial number is the same as the ARN.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@:/-</p>"]
     pub serial_number: String,
 }
-
+impl DeleteVirtualMFADeviceRequest {
+    /// Sets `serial_number`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVirtualMFADeviceRequest.serial_number = value.into();`.
+    pub fn serial_number<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.serial_number = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteVirtualMFADeviceRequest with optional fields set to `None`.
+    pub fn new<SerialNumberType: Into<String>>(serial_number: SerialNumberType)
+                                               -> DeleteVirtualMFADeviceRequest {
+        DeleteVirtualMFADeviceRequest {
+            serial_number: serial_number.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteVirtualMFADeviceRequest` contents to a `SignedRequest`.
 struct DeleteVirtualMFADeviceRequestSerializer;
@@ -2527,7 +3500,33 @@ pub struct DetachGroupPolicyRequest {
     #[doc="<p>The Amazon Resource Name (ARN) of the IAM policy you want to detach.</p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a> in the <i>AWS General Reference</i>.</p>"]
     pub policy_arn: String,
 }
-
+impl DetachGroupPolicyRequest {
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachGroupPolicyRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Sets `policy_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachGroupPolicyRequest.policy_arn = value.into();`.
+    pub fn policy_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DetachGroupPolicyRequest with optional fields set to `None`.
+    pub fn new<GroupNameType: Into<String>, PolicyArnType: Into<String>>
+        (group_name: GroupNameType,
+         policy_arn: PolicyArnType)
+         -> DetachGroupPolicyRequest {
+        DetachGroupPolicyRequest {
+            group_name: group_name.into(),
+            policy_arn: policy_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DetachGroupPolicyRequest` contents to a `SignedRequest`.
 struct DetachGroupPolicyRequestSerializer;
@@ -2551,7 +3550,33 @@ pub struct DetachRolePolicyRequest {
     #[doc="<p>The name (friendly name, not ARN) of the IAM role to detach the policy from.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
     pub role_name: String,
 }
-
+impl DetachRolePolicyRequest {
+    /// Sets `policy_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachRolePolicyRequest.policy_arn = value.into();`.
+    pub fn policy_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_arn = value.into();
+        self
+    }
+    /// Sets `role_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachRolePolicyRequest.role_name = value.into();`.
+    pub fn role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_name = value.into();
+        self
+    }
+    /// Returns a new instance of DetachRolePolicyRequest with optional fields set to `None`.
+    pub fn new<PolicyArnType: Into<String>, RoleNameType: Into<String>>
+        (policy_arn: PolicyArnType,
+         role_name: RoleNameType)
+         -> DetachRolePolicyRequest {
+        DetachRolePolicyRequest {
+            policy_arn: policy_arn.into(),
+            role_name: role_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DetachRolePolicyRequest` contents to a `SignedRequest`.
 struct DetachRolePolicyRequestSerializer;
@@ -2575,7 +3600,33 @@ pub struct DetachUserPolicyRequest {
     #[doc="<p>The name (friendly name, not ARN) of the IAM user to detach the policy from.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl DetachUserPolicyRequest {
+    /// Sets `policy_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachUserPolicyRequest.policy_arn = value.into();`.
+    pub fn policy_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_arn = value.into();
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachUserPolicyRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of DetachUserPolicyRequest with optional fields set to `None`.
+    pub fn new<PolicyArnType: Into<String>, UserNameType: Into<String>>
+        (policy_arn: PolicyArnType,
+         user_name: UserNameType)
+         -> DetachUserPolicyRequest {
+        DetachUserPolicyRequest {
+            policy_arn: policy_arn.into(),
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DetachUserPolicyRequest` contents to a `SignedRequest`.
 struct DetachUserPolicyRequestSerializer;
@@ -2603,7 +3654,54 @@ pub struct EnableMFADeviceRequest {
     #[doc="<p>The name of the IAM user for whom you want to enable the MFA device.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl EnableMFADeviceRequest {
+    /// Sets `authentication_code_1`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableMFADeviceRequest.authentication_code_1 = value.into();`.
+    pub fn authentication_code_1<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.authentication_code_1 = value.into();
+        self
+    }
+    /// Sets `authentication_code_2`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableMFADeviceRequest.authentication_code_2 = value.into();`.
+    pub fn authentication_code_2<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.authentication_code_2 = value.into();
+        self
+    }
+    /// Sets `serial_number`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableMFADeviceRequest.serial_number = value.into();`.
+    pub fn serial_number<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.serial_number = value.into();
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableMFADeviceRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of EnableMFADeviceRequest with optional fields set to `None`.
+    pub fn new<AuthenticationCode1Type: Into<String>,
+               AuthenticationCode2Type: Into<String>,
+               SerialNumberType: Into<String>,
+               UserNameType: Into<String>>
+        (authentication_code_1: AuthenticationCode1Type,
+         authentication_code_2: AuthenticationCode2Type,
+         serial_number: SerialNumberType,
+         user_name: UserNameType)
+         -> EnableMFADeviceRequest {
+        EnableMFADeviceRequest {
+            authentication_code_1: authentication_code_1.into(),
+            authentication_code_2: authentication_code_2.into(),
+            serial_number: serial_number.into(),
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `EnableMFADeviceRequest` contents to a `SignedRequest`.
 struct EnableMFADeviceRequestSerializer;
@@ -2694,7 +3792,6 @@ pub struct EvaluationResult {
     #[doc="<p>The individual results of the simulation of the API action specified in EvalActionName on each resource.</p>"]
     pub resource_specific_results: Option<Vec<ResourceSpecificResult>>,
 }
-
 struct EvaluationResultDeserializer;
 impl EvaluationResultDeserializer {
     #[allow(unused_variables)]
@@ -2830,7 +3927,6 @@ pub struct GenerateCredentialReportResponse {
     #[doc="<p>Information about the state of the credential report.</p>"]
     pub state: Option<String>,
 }
-
 struct GenerateCredentialReportResponseDeserializer;
 impl GenerateCredentialReportResponseDeserializer {
     #[allow(unused_variables)]
@@ -2882,7 +3978,23 @@ pub struct GetAccessKeyLastUsedRequest {
     #[doc="<p>The identifier of an access key.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters that can consist of any upper or lowercased letter or digit.</p>"]
     pub access_key_id: String,
 }
-
+impl GetAccessKeyLastUsedRequest {
+    /// Sets `access_key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetAccessKeyLastUsedRequest.access_key_id = value.into();`.
+    pub fn access_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.access_key_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetAccessKeyLastUsedRequest with optional fields set to `None`.
+    pub fn new<AccessKeyIdType: Into<String>>(access_key_id: AccessKeyIdType)
+                                              -> GetAccessKeyLastUsedRequest {
+        GetAccessKeyLastUsedRequest {
+            access_key_id: access_key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetAccessKeyLastUsedRequest` contents to a `SignedRequest`.
 struct GetAccessKeyLastUsedRequestSerializer;
@@ -2906,7 +4018,6 @@ pub struct GetAccessKeyLastUsedResponse {
     #[doc="<p>The name of the AWS IAM user that owns this access key.</p> <p/>"]
     pub user_name: Option<String>,
 }
-
 struct GetAccessKeyLastUsedResponseDeserializer;
 impl GetAccessKeyLastUsedResponseDeserializer {
     #[allow(unused_variables)]
@@ -2964,7 +4075,33 @@ pub struct GetAccountAuthorizationDetailsRequest {
     #[doc="<p>(Optional) Use this only when paginating results to indicate the maximum number of items you want in the response. If additional items exist beyond the maximum you specify, the <code>IsTruncated</code> response element is <code>true</code>.</p> <p>If you do not include this parameter, it defaults to 100. Note that IAM might return fewer results, even when there are more results available. In that case, the <code>IsTruncated</code> response element returns <code>true</code> and <code>Marker</code> contains a value to include in the subsequent call that tells the service where to continue from.</p>"]
     pub max_items: Option<i64>,
 }
-
+impl GetAccountAuthorizationDetailsRequest {
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetAccountAuthorizationDetailsRequest.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetAccountAuthorizationDetailsRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetAccountAuthorizationDetailsRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetAccountAuthorizationDetailsRequest with optional fields set to `None`.
+    pub fn new() -> GetAccountAuthorizationDetailsRequest {
+        GetAccountAuthorizationDetailsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `GetAccountAuthorizationDetailsRequest` contents to a `SignedRequest`.
 struct GetAccountAuthorizationDetailsRequestSerializer;
@@ -3007,7 +4144,6 @@ pub struct GetAccountAuthorizationDetailsResponse {
     #[doc="<p>A list containing information about IAM users.</p>"]
     pub user_detail_list: Option<Vec<UserDetail>>,
 }
-
 struct GetAccountAuthorizationDetailsResponseDeserializer;
 impl GetAccountAuthorizationDetailsResponseDeserializer {
     #[allow(unused_variables)]
@@ -3080,7 +4216,6 @@ pub struct GetAccountPasswordPolicyResponse {
     #[doc="<p>A structure that contains details about the account's password policy.</p>"]
     pub password_policy: PasswordPolicy,
 }
-
 struct GetAccountPasswordPolicyResponseDeserializer;
 impl GetAccountPasswordPolicyResponseDeserializer {
     #[allow(unused_variables)]
@@ -3131,7 +4266,6 @@ pub struct GetAccountSummaryResponse {
     #[doc="<p>A set of key value pairs containing information about IAM entity usage and IAM quotas.</p>"]
     pub summary_map: Option<::std::collections::HashMap<String, i64>>,
 }
-
 struct GetAccountSummaryResponseDeserializer;
 impl GetAccountSummaryResponseDeserializer {
     #[allow(unused_variables)]
@@ -3180,7 +4314,23 @@ pub struct GetContextKeysForCustomPolicyRequest {
     #[doc="<p>A list of policies for which you want the list of context keys referenced in those policies. Each document is specified as a string containing the complete, valid JSON text of an IAM policy.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> used to validate this parameter is a string of characters consisting of any printable ASCII character ranging from the space character (\\u0020) through end of the ASCII character range as well as the printable characters in the Basic Latin and Latin-1 Supplement character set (through \\u00FF). It also includes the special characters tab (\\u0009), line feed (\\u000A), and carriage return (\\u000D).</p>"]
     pub policy_input_list: Vec<String>,
 }
-
+impl GetContextKeysForCustomPolicyRequest {
+    /// Sets `policy_input_list`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetContextKeysForCustomPolicyRequest.policy_input_list = value.into();`.
+    pub fn policy_input_list<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.policy_input_list = value.into();
+        self
+    }
+    /// Returns a new instance of GetContextKeysForCustomPolicyRequest with optional fields set to `None`.
+    pub fn new<PolicyInputListType: Into<Vec<String>>>(policy_input_list: PolicyInputListType)
+                                                       -> GetContextKeysForCustomPolicyRequest {
+        GetContextKeysForCustomPolicyRequest {
+            policy_input_list: policy_input_list.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetContextKeysForCustomPolicyRequest` contents to a `SignedRequest`.
 struct GetContextKeysForCustomPolicyRequestSerializer;
@@ -3204,7 +4354,6 @@ pub struct GetContextKeysForPolicyResponse {
     #[doc="<p>The list of context keys that are referenced in the input policies.</p>"]
     pub context_key_names: Option<Vec<String>>,
 }
-
 struct GetContextKeysForPolicyResponseDeserializer;
 impl GetContextKeysForPolicyResponseDeserializer {
     #[allow(unused_variables)]
@@ -3254,7 +4403,30 @@ pub struct GetContextKeysForPrincipalPolicyRequest {
     #[doc="<p>The ARN of a user, group, or role whose policies contain the context keys that you want listed. If you specify a user, the list includes context keys that are found in all policies attached to the user as well as to all groups that the user is a member of. If you pick a group or a role, then it includes only those context keys that are found in policies attached to that entity. Note that all parameters are shown in unencoded form here for clarity, but must be URL encoded to be included as a part of a real HTML request.</p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a> in the <i>AWS General Reference</i>.</p>"]
     pub policy_source_arn: String,
 }
-
+impl GetContextKeysForPrincipalPolicyRequest {
+    /// Sets `policy_input_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetContextKeysForPrincipalPolicyRequest.policy_input_list = Some(value.into());`.
+    pub fn policy_input_list<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.policy_input_list = Some(value.into());
+        self
+    }
+    /// Sets `policy_source_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetContextKeysForPrincipalPolicyRequest.policy_source_arn = value.into();`.
+    pub fn policy_source_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_source_arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetContextKeysForPrincipalPolicyRequest with optional fields set to `None`.
+    pub fn new<PolicySourceArnType: Into<String>>(policy_source_arn: PolicySourceArnType)
+                                                  -> GetContextKeysForPrincipalPolicyRequest {
+        GetContextKeysForPrincipalPolicyRequest {
+            policy_source_arn: policy_source_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetContextKeysForPrincipalPolicyRequest` contents to a `SignedRequest`.
 struct GetContextKeysForPrincipalPolicyRequestSerializer;
@@ -3288,7 +4460,6 @@ pub struct GetCredentialReportResponse {
     #[doc="<p>The format (MIME type) of the credential report.</p>"]
     pub report_format: Option<String>,
 }
-
 struct GetCredentialReportResponseDeserializer;
 impl GetCredentialReportResponseDeserializer {
     #[allow(unused_variables)]
@@ -3349,7 +4520,33 @@ pub struct GetGroupPolicyRequest {
     #[doc="<p>The name of the policy document to get.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub policy_name: String,
 }
-
+impl GetGroupPolicyRequest {
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetGroupPolicyRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetGroupPolicyRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetGroupPolicyRequest with optional fields set to `None`.
+    pub fn new<GroupNameType: Into<String>, PolicyNameType: Into<String>>
+        (group_name: GroupNameType,
+         policy_name: PolicyNameType)
+         -> GetGroupPolicyRequest {
+        GetGroupPolicyRequest {
+            group_name: group_name.into(),
+            policy_name: policy_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetGroupPolicyRequest` contents to a `SignedRequest`.
 struct GetGroupPolicyRequestSerializer;
@@ -3376,7 +4573,6 @@ pub struct GetGroupPolicyResponse {
     #[doc="<p>The name of the policy.</p>"]
     pub policy_name: String,
 }
-
 struct GetGroupPolicyResponseDeserializer;
 impl GetGroupPolicyResponseDeserializer {
     #[allow(unused_variables)]
@@ -3437,7 +4633,36 @@ pub struct GetGroupRequest {
     #[doc="<p>(Optional) Use this only when paginating results to indicate the maximum number of items you want in the response. If additional items exist beyond the maximum you specify, the <code>IsTruncated</code> response element is <code>true</code>.</p> <p>If you do not include this parameter, it defaults to 100. Note that IAM might return fewer results, even when there are more results available. In that case, the <code>IsTruncated</code> response element returns <code>true</code> and <code>Marker</code> contains a value to include in the subsequent call that tells the service where to continue from.</p>"]
     pub max_items: Option<i64>,
 }
-
+impl GetGroupRequest {
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetGroupRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetGroupRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetGroupRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetGroupRequest with optional fields set to `None`.
+    pub fn new<GroupNameType: Into<String>>(group_name: GroupNameType) -> GetGroupRequest {
+        GetGroupRequest {
+            group_name: group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetGroupRequest` contents to a `SignedRequest`.
 struct GetGroupRequestSerializer;
@@ -3472,7 +4697,6 @@ pub struct GetGroupResponse {
     #[doc="<p>A list of users in the group.</p>"]
     pub users: Vec<User>,
 }
-
 struct GetGroupResponseDeserializer;
 impl GetGroupResponseDeserializer {
     #[allow(unused_variables)]
@@ -3531,7 +4755,22 @@ pub struct GetInstanceProfileRequest {
     #[doc="<p>The name of the instance profile to get information about.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub instance_profile_name: String,
 }
-
+impl GetInstanceProfileRequest {
+    /// Sets `instance_profile_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInstanceProfileRequest.instance_profile_name = value.into();`.
+    pub fn instance_profile_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_profile_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetInstanceProfileRequest with optional fields set to `None`.
+pub fn new<InstanceProfileNameType: Into<String>>(instance_profile_name: InstanceProfileNameType) -> GetInstanceProfileRequest{
+        GetInstanceProfileRequest {
+            instance_profile_name: instance_profile_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetInstanceProfileRequest` contents to a `SignedRequest`.
 struct GetInstanceProfileRequestSerializer;
@@ -3554,7 +4793,6 @@ pub struct GetInstanceProfileResponse {
     #[doc="<p>A structure containing details about the instance profile.</p>"]
     pub instance_profile: InstanceProfile,
 }
-
 struct GetInstanceProfileResponseDeserializer;
 impl GetInstanceProfileResponseDeserializer {
     #[allow(unused_variables)]
@@ -3603,7 +4841,22 @@ pub struct GetLoginProfileRequest {
     #[doc="<p>The name of the user whose login profile you want to retrieve.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl GetLoginProfileRequest {
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetLoginProfileRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetLoginProfileRequest with optional fields set to `None`.
+    pub fn new<UserNameType: Into<String>>(user_name: UserNameType) -> GetLoginProfileRequest {
+        GetLoginProfileRequest {
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetLoginProfileRequest` contents to a `SignedRequest`.
 struct GetLoginProfileRequestSerializer;
@@ -3625,7 +4878,6 @@ pub struct GetLoginProfileResponse {
     #[doc="<p>A structure containing the user name and password create date for the user.</p>"]
     pub login_profile: LoginProfile,
 }
-
 struct GetLoginProfileResponseDeserializer;
 impl GetLoginProfileResponseDeserializer {
     #[allow(unused_variables)]
@@ -3673,7 +4925,24 @@ pub struct GetOpenIDConnectProviderRequest {
     #[doc="<p>The Amazon Resource Name (ARN) of the OIDC provider resource object in IAM to get information for. You can get a list of OIDC provider resource ARNs by using the <a>ListOpenIDConnectProviders</a> action.</p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a> in the <i>AWS General Reference</i>.</p>"]
     pub open_id_connect_provider_arn: String,
 }
-
+impl GetOpenIDConnectProviderRequest {
+    /// Sets `open_id_connect_provider_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetOpenIDConnectProviderRequest.open_id_connect_provider_arn = value.into();`.
+    pub fn open_id_connect_provider_arn<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.open_id_connect_provider_arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetOpenIDConnectProviderRequest with optional fields set to `None`.
+pub fn new<OpenIDConnectProviderArnType: Into<String>>(open_id_connect_provider_arn: OpenIDConnectProviderArnType) -> GetOpenIDConnectProviderRequest{
+        GetOpenIDConnectProviderRequest {
+            open_id_connect_provider_arn: open_id_connect_provider_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetOpenIDConnectProviderRequest` contents to a `SignedRequest`.
 struct GetOpenIDConnectProviderRequestSerializer;
@@ -3702,7 +4971,6 @@ pub struct GetOpenIDConnectProviderResponse {
     #[doc="<p>The URL that the IAM OIDC provider resource object is associated with. For more information, see <a>CreateOpenIDConnectProvider</a>.</p>"]
     pub url: Option<String>,
 }
-
 struct GetOpenIDConnectProviderResponseDeserializer;
 impl GetOpenIDConnectProviderResponseDeserializer {
     #[allow(unused_variables)]
@@ -3764,7 +5032,22 @@ pub struct GetPolicyRequest {
     #[doc="<p>The Amazon Resource Name (ARN) of the managed policy that you want information about.</p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a> in the <i>AWS General Reference</i>.</p>"]
     pub policy_arn: String,
 }
-
+impl GetPolicyRequest {
+    /// Sets `policy_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetPolicyRequest.policy_arn = value.into();`.
+    pub fn policy_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetPolicyRequest with optional fields set to `None`.
+    pub fn new<PolicyArnType: Into<String>>(policy_arn: PolicyArnType) -> GetPolicyRequest {
+        GetPolicyRequest {
+            policy_arn: policy_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetPolicyRequest` contents to a `SignedRequest`.
 struct GetPolicyRequestSerializer;
@@ -3786,7 +5069,6 @@ pub struct GetPolicyResponse {
     #[doc="<p>A structure containing details about the policy.</p>"]
     pub policy: Option<Policy>,
 }
-
 struct GetPolicyResponseDeserializer;
 impl GetPolicyResponseDeserializer {
     #[allow(unused_variables)]
@@ -3836,7 +5118,33 @@ pub struct GetPolicyVersionRequest {
     #[doc="<p>Identifies the policy version to retrieve.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters that consists of the lowercase letter 'v' followed by one or two digits, and optionally followed by a period '.' and a string of letters and digits.</p>"]
     pub version_id: String,
 }
-
+impl GetPolicyVersionRequest {
+    /// Sets `policy_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetPolicyVersionRequest.policy_arn = value.into();`.
+    pub fn policy_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_arn = value.into();
+        self
+    }
+    /// Sets `version_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetPolicyVersionRequest.version_id = value.into();`.
+    pub fn version_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetPolicyVersionRequest with optional fields set to `None`.
+    pub fn new<PolicyArnType: Into<String>, VersionIdType: Into<String>>
+        (policy_arn: PolicyArnType,
+         version_id: VersionIdType)
+         -> GetPolicyVersionRequest {
+        GetPolicyVersionRequest {
+            policy_arn: policy_arn.into(),
+            version_id: version_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetPolicyVersionRequest` contents to a `SignedRequest`.
 struct GetPolicyVersionRequestSerializer;
@@ -3859,7 +5167,6 @@ pub struct GetPolicyVersionResponse {
     #[doc="<p>A structure containing details about the policy version.</p>"]
     pub policy_version: Option<PolicyVersion>,
 }
-
 struct GetPolicyVersionResponseDeserializer;
 impl GetPolicyVersionResponseDeserializer {
     #[allow(unused_variables)]
@@ -3910,7 +5217,33 @@ pub struct GetRolePolicyRequest {
     #[doc="<p>The name of the role associated with the policy.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
     pub role_name: String,
 }
-
+impl GetRolePolicyRequest {
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRolePolicyRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Sets `role_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRolePolicyRequest.role_name = value.into();`.
+    pub fn role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetRolePolicyRequest with optional fields set to `None`.
+    pub fn new<PolicyNameType: Into<String>, RoleNameType: Into<String>>
+        (policy_name: PolicyNameType,
+         role_name: RoleNameType)
+         -> GetRolePolicyRequest {
+        GetRolePolicyRequest {
+            policy_name: policy_name.into(),
+            role_name: role_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetRolePolicyRequest` contents to a `SignedRequest`.
 struct GetRolePolicyRequestSerializer;
@@ -3937,7 +5270,6 @@ pub struct GetRolePolicyResponse {
     #[doc="<p>The role the policy is associated with.</p>"]
     pub role_name: String,
 }
-
 struct GetRolePolicyResponseDeserializer;
 impl GetRolePolicyResponseDeserializer {
     #[allow(unused_variables)]
@@ -3994,7 +5326,22 @@ pub struct GetRoleRequest {
     #[doc="<p>The name of the IAM role to get information about.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
     pub role_name: String,
 }
-
+impl GetRoleRequest {
+    /// Sets `role_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRoleRequest.role_name = value.into();`.
+    pub fn role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetRoleRequest with optional fields set to `None`.
+    pub fn new<RoleNameType: Into<String>>(role_name: RoleNameType) -> GetRoleRequest {
+        GetRoleRequest {
+            role_name: role_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetRoleRequest` contents to a `SignedRequest`.
 struct GetRoleRequestSerializer;
@@ -4016,7 +5363,6 @@ pub struct GetRoleResponse {
     #[doc="<p>A structure containing details about the IAM role.</p>"]
     pub role: Role,
 }
-
 struct GetRoleResponseDeserializer;
 impl GetRoleResponseDeserializer {
     #[allow(unused_variables)]
@@ -4063,7 +5409,23 @@ pub struct GetSAMLProviderRequest {
     #[doc="<p>The Amazon Resource Name (ARN) of the SAML provider resource object in IAM to get information about.</p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a> in the <i>AWS General Reference</i>.</p>"]
     pub saml_provider_arn: String,
 }
-
+impl GetSAMLProviderRequest {
+    /// Sets `saml_provider_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSAMLProviderRequest.saml_provider_arn = value.into();`.
+    pub fn saml_provider_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.saml_provider_arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetSAMLProviderRequest with optional fields set to `None`.
+    pub fn new<SAMLProviderArnType: Into<String>>(saml_provider_arn: SAMLProviderArnType)
+                                                  -> GetSAMLProviderRequest {
+        GetSAMLProviderRequest {
+            saml_provider_arn: saml_provider_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetSAMLProviderRequest` contents to a `SignedRequest`.
 struct GetSAMLProviderRequestSerializer;
@@ -4090,7 +5452,6 @@ pub struct GetSAMLProviderResponse {
     #[doc="<p>The expiration date and time for the SAML provider.</p>"]
     pub valid_until: Option<String>,
 }
-
 struct GetSAMLProviderResponseDeserializer;
 impl GetSAMLProviderResponseDeserializer {
     #[allow(unused_variables)]
@@ -4149,7 +5510,44 @@ pub struct GetSSHPublicKeyRequest {
     #[doc="<p>The name of the IAM user associated with the SSH public key.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl GetSSHPublicKeyRequest {
+    /// Sets `encoding`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSSHPublicKeyRequest.encoding = value.into();`.
+    pub fn encoding<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.encoding = value.into();
+        self
+    }
+    /// Sets `ssh_public_key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSSHPublicKeyRequest.ssh_public_key_id = value.into();`.
+    pub fn ssh_public_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ssh_public_key_id = value.into();
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSSHPublicKeyRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetSSHPublicKeyRequest with optional fields set to `None`.
+    pub fn new<EncodingType: Into<String>,
+               SSHPublicKeyIdType: Into<String>,
+               UserNameType: Into<String>>
+        (encoding: EncodingType,
+         ssh_public_key_id: SSHPublicKeyIdType,
+         user_name: UserNameType)
+         -> GetSSHPublicKeyRequest {
+        GetSSHPublicKeyRequest {
+            encoding: encoding.into(),
+            ssh_public_key_id: ssh_public_key_id.into(),
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetSSHPublicKeyRequest` contents to a `SignedRequest`.
 struct GetSSHPublicKeyRequestSerializer;
@@ -4174,7 +5572,6 @@ pub struct GetSSHPublicKeyResponse {
     #[doc="<p>A structure containing details about the SSH public key.</p>"]
     pub ssh_public_key: Option<SSHPublicKey>,
 }
-
 struct GetSSHPublicKeyResponseDeserializer;
 impl GetSSHPublicKeyResponseDeserializer {
     #[allow(unused_variables)]
@@ -4223,7 +5620,22 @@ pub struct GetServerCertificateRequest {
     #[doc="<p>The name of the server certificate you want to retrieve information about.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub server_certificate_name: String,
 }
-
+impl GetServerCertificateRequest {
+    /// Sets `server_certificate_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetServerCertificateRequest.server_certificate_name = value.into();`.
+    pub fn server_certificate_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_certificate_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetServerCertificateRequest with optional fields set to `None`.
+pub fn new<ServerCertificateNameType: Into<String>>(server_certificate_name: ServerCertificateNameType) -> GetServerCertificateRequest{
+        GetServerCertificateRequest {
+            server_certificate_name: server_certificate_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetServerCertificateRequest` contents to a `SignedRequest`.
 struct GetServerCertificateRequestSerializer;
@@ -4246,7 +5658,6 @@ pub struct GetServerCertificateResponse {
     #[doc="<p>A structure containing details about the server certificate.</p>"]
     pub server_certificate: ServerCertificate,
 }
-
 struct GetServerCertificateResponseDeserializer;
 impl GetServerCertificateResponseDeserializer {
     #[allow(unused_variables)]
@@ -4297,7 +5708,33 @@ pub struct GetUserPolicyRequest {
     #[doc="<p>The name of the user who the policy is associated with.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl GetUserPolicyRequest {
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUserPolicyRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUserPolicyRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetUserPolicyRequest with optional fields set to `None`.
+    pub fn new<PolicyNameType: Into<String>, UserNameType: Into<String>>
+        (policy_name: PolicyNameType,
+         user_name: UserNameType)
+         -> GetUserPolicyRequest {
+        GetUserPolicyRequest {
+            policy_name: policy_name.into(),
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetUserPolicyRequest` contents to a `SignedRequest`.
 struct GetUserPolicyRequestSerializer;
@@ -4324,7 +5761,6 @@ pub struct GetUserPolicyResponse {
     #[doc="<p>The user the policy is associated with.</p>"]
     pub user_name: String,
 }
-
 struct GetUserPolicyResponseDeserializer;
 impl GetUserPolicyResponseDeserializer {
     #[allow(unused_variables)]
@@ -4382,7 +5818,19 @@ pub struct GetUserRequest {
     #[doc="<p>The name of the user to get information about.</p> <p>This parameter is optional. If it is not included, it defaults to the user making the request. This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: Option<String>,
 }
-
+impl GetUserRequest {
+    /// Sets `user_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUserRequest.user_name = Some(value.into());`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetUserRequest with optional fields set to `None`.
+    pub fn new() -> GetUserRequest {
+        GetUserRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `GetUserRequest` contents to a `SignedRequest`.
 struct GetUserRequestSerializer;
@@ -4406,7 +5854,6 @@ pub struct GetUserResponse {
     #[doc="<p>A structure containing details about the IAM user.</p>"]
     pub user: User,
 }
-
 struct GetUserResponseDeserializer;
 impl GetUserResponseDeserializer {
     #[allow(unused_variables)]
@@ -4462,7 +5909,6 @@ pub struct Group {
     #[doc="<p>The path to the group. For more information about paths, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html\">IAM Identifiers</a> in the <i>Using IAM</i> guide. </p>"]
     pub path: String,
 }
-
 struct GroupDeserializer;
 impl GroupDeserializer {
     #[allow(unused_variables)]
@@ -4535,7 +5981,6 @@ pub struct GroupDetail {
     #[doc="<p>The path to the group. For more information about paths, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html\">IAM Identifiers</a> in the <i>Using IAM</i> guide.</p>"]
     pub path: Option<String>,
 }
-
 struct GroupDetailDeserializer;
 impl GroupDetailDeserializer {
     #[allow(unused_variables)]
@@ -4768,7 +6213,6 @@ pub struct InstanceProfile {
     #[doc="<p>The role associated with the instance profile.</p>"]
     pub roles: Vec<Role>,
 }
-
 struct InstanceProfileDeserializer;
 impl InstanceProfileDeserializer {
     #[allow(unused_variables)]
@@ -4907,7 +6351,33 @@ pub struct ListAccessKeysRequest {
     #[doc="<p>The name of the user.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: Option<String>,
 }
-
+impl ListAccessKeysRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAccessKeysRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAccessKeysRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `user_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAccessKeysRequest.user_name = Some(value.into());`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListAccessKeysRequest with optional fields set to `None`.
+    pub fn new() -> ListAccessKeysRequest {
+        ListAccessKeysRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ListAccessKeysRequest` contents to a `SignedRequest`.
 struct ListAccessKeysRequestSerializer;
@@ -4942,7 +6412,6 @@ pub struct ListAccessKeysResponse {
     #[doc="<p>When <code>IsTruncated</code> is <code>true</code>, this element is present and contains the value to use for the <code>Marker</code> parameter in a subsequent pagination request.</p>"]
     pub marker: Option<String>,
 }
-
 struct ListAccessKeysResponseDeserializer;
 impl ListAccessKeysResponseDeserializer {
     #[allow(unused_variables)]
@@ -5002,7 +6471,26 @@ pub struct ListAccountAliasesRequest {
     #[doc="<p>(Optional) Use this only when paginating results to indicate the maximum number of items you want in the response. If additional items exist beyond the maximum you specify, the <code>IsTruncated</code> response element is <code>true</code>.</p> <p>If you do not include this parameter, it defaults to 100. Note that IAM might return fewer results, even when there are more results available. In that case, the <code>IsTruncated</code> response element returns <code>true</code> and <code>Marker</code> contains a value to include in the subsequent call that tells the service where to continue from.</p>"]
     pub max_items: Option<i64>,
 }
-
+impl ListAccountAliasesRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAccountAliasesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAccountAliasesRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListAccountAliasesRequest with optional fields set to `None`.
+    pub fn new() -> ListAccountAliasesRequest {
+        ListAccountAliasesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ListAccountAliasesRequest` contents to a `SignedRequest`.
 struct ListAccountAliasesRequestSerializer;
@@ -5034,7 +6522,6 @@ pub struct ListAccountAliasesResponse {
     #[doc="<p>When <code>IsTruncated</code> is <code>true</code>, this element is present and contains the value to use for the <code>Marker</code> parameter in a subsequent pagination request.</p>"]
     pub marker: Option<String>,
 }
-
 struct ListAccountAliasesResponseDeserializer;
 impl ListAccountAliasesResponseDeserializer {
     #[allow(unused_variables)]
@@ -5098,7 +6585,44 @@ pub struct ListAttachedGroupPoliciesRequest {
     #[doc="<p>The path prefix for filtering the results. This parameter is optional. If it is not included, it defaults to a slash (/), listing all policies.</p> <p>This paramater allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of either a forward slash (/) by itself or a string that must begin and end with forward slashes, containing any ASCII character from the ! (\\u0021) thru the DEL character (\\u007F), including most punctuation characters, digits, and upper and lowercased letters.</p>"]
     pub path_prefix: Option<String>,
 }
-
+impl ListAttachedGroupPoliciesRequest {
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAttachedGroupPoliciesRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAttachedGroupPoliciesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAttachedGroupPoliciesRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `path_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAttachedGroupPoliciesRequest.path_prefix = Some(value.into());`.
+    pub fn path_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path_prefix = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListAttachedGroupPoliciesRequest with optional fields set to `None`.
+    pub fn new<GroupNameType: Into<String>>(group_name: GroupNameType)
+                                            -> ListAttachedGroupPoliciesRequest {
+        ListAttachedGroupPoliciesRequest {
+            group_name: group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ListAttachedGroupPoliciesRequest` contents to a `SignedRequest`.
 struct ListAttachedGroupPoliciesRequestSerializer;
@@ -5134,7 +6658,6 @@ pub struct ListAttachedGroupPoliciesResponse {
     #[doc="<p>When <code>IsTruncated</code> is <code>true</code>, this element is present and contains the value to use for the <code>Marker</code> parameter in a subsequent pagination request.</p>"]
     pub marker: Option<String>,
 }
-
 struct ListAttachedGroupPoliciesResponseDeserializer;
 impl ListAttachedGroupPoliciesResponseDeserializer {
     #[allow(unused_variables)]
@@ -5197,7 +6720,44 @@ pub struct ListAttachedRolePoliciesRequest {
     #[doc="<p>The name (friendly name, not ARN) of the role to list attached policies for.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
     pub role_name: String,
 }
-
+impl ListAttachedRolePoliciesRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAttachedRolePoliciesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAttachedRolePoliciesRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `path_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAttachedRolePoliciesRequest.path_prefix = Some(value.into());`.
+    pub fn path_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path_prefix = Some(value.into());
+        self
+    }
+    /// Sets `role_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAttachedRolePoliciesRequest.role_name = value.into();`.
+    pub fn role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListAttachedRolePoliciesRequest with optional fields set to `None`.
+    pub fn new<RoleNameType: Into<String>>(role_name: RoleNameType)
+                                           -> ListAttachedRolePoliciesRequest {
+        ListAttachedRolePoliciesRequest {
+            role_name: role_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ListAttachedRolePoliciesRequest` contents to a `SignedRequest`.
 struct ListAttachedRolePoliciesRequestSerializer;
@@ -5233,7 +6793,6 @@ pub struct ListAttachedRolePoliciesResponse {
     #[doc="<p>When <code>IsTruncated</code> is <code>true</code>, this element is present and contains the value to use for the <code>Marker</code> parameter in a subsequent pagination request.</p>"]
     pub marker: Option<String>,
 }
-
 struct ListAttachedRolePoliciesResponseDeserializer;
 impl ListAttachedRolePoliciesResponseDeserializer {
     #[allow(unused_variables)]
@@ -5296,7 +6855,44 @@ pub struct ListAttachedUserPoliciesRequest {
     #[doc="<p>The name (friendly name, not ARN) of the user to list attached policies for.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl ListAttachedUserPoliciesRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAttachedUserPoliciesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAttachedUserPoliciesRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `path_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAttachedUserPoliciesRequest.path_prefix = Some(value.into());`.
+    pub fn path_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path_prefix = Some(value.into());
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAttachedUserPoliciesRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListAttachedUserPoliciesRequest with optional fields set to `None`.
+    pub fn new<UserNameType: Into<String>>(user_name: UserNameType)
+                                           -> ListAttachedUserPoliciesRequest {
+        ListAttachedUserPoliciesRequest {
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ListAttachedUserPoliciesRequest` contents to a `SignedRequest`.
 struct ListAttachedUserPoliciesRequestSerializer;
@@ -5332,7 +6928,6 @@ pub struct ListAttachedUserPoliciesResponse {
     #[doc="<p>When <code>IsTruncated</code> is <code>true</code>, this element is present and contains the value to use for the <code>Marker</code> parameter in a subsequent pagination request.</p>"]
     pub marker: Option<String>,
 }
-
 struct ListAttachedUserPoliciesResponseDeserializer;
 impl ListAttachedUserPoliciesResponseDeserializer {
     #[allow(unused_variables)]
@@ -5397,7 +6992,51 @@ pub struct ListEntitiesForPolicyRequest {
     #[doc="<p>The Amazon Resource Name (ARN) of the IAM policy for which you want the versions.</p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a> in the <i>AWS General Reference</i>.</p>"]
     pub policy_arn: String,
 }
-
+impl ListEntitiesForPolicyRequest {
+    /// Sets `entity_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListEntitiesForPolicyRequest.entity_filter = Some(value.into());`.
+    pub fn entity_filter<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.entity_filter = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListEntitiesForPolicyRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListEntitiesForPolicyRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `path_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListEntitiesForPolicyRequest.path_prefix = Some(value.into());`.
+    pub fn path_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path_prefix = Some(value.into());
+        self
+    }
+    /// Sets `policy_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListEntitiesForPolicyRequest.policy_arn = value.into();`.
+    pub fn policy_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_arn = value.into();
+        self
+    }
+    /// Returns a new instance of ListEntitiesForPolicyRequest with optional fields set to `None`.
+    pub fn new<PolicyArnType: Into<String>>(policy_arn: PolicyArnType)
+                                            -> ListEntitiesForPolicyRequest {
+        ListEntitiesForPolicyRequest {
+            policy_arn: policy_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ListEntitiesForPolicyRequest` contents to a `SignedRequest`.
 struct ListEntitiesForPolicyRequestSerializer;
@@ -5440,7 +7079,6 @@ pub struct ListEntitiesForPolicyResponse {
     #[doc="<p>A list of IAM users that the policy is attached to.</p>"]
     pub policy_users: Option<Vec<PolicyUser>>,
 }
-
 struct ListEntitiesForPolicyResponseDeserializer;
 impl ListEntitiesForPolicyResponseDeserializer {
     #[allow(unused_variables)]
@@ -5512,7 +7150,36 @@ pub struct ListGroupPoliciesRequest {
     #[doc="<p>(Optional) Use this only when paginating results to indicate the maximum number of items you want in the response. If additional items exist beyond the maximum you specify, the <code>IsTruncated</code> response element is <code>true</code>.</p> <p>If you do not include this parameter, it defaults to 100. Note that IAM might return fewer results, even when there are more results available. In that case, the <code>IsTruncated</code> response element returns <code>true</code> and <code>Marker</code> contains a value to include in the subsequent call that tells the service where to continue from.</p>"]
     pub max_items: Option<i64>,
 }
-
+impl ListGroupPoliciesRequest {
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListGroupPoliciesRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListGroupPoliciesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListGroupPoliciesRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListGroupPoliciesRequest with optional fields set to `None`.
+    pub fn new<GroupNameType: Into<String>>(group_name: GroupNameType) -> ListGroupPoliciesRequest {
+        ListGroupPoliciesRequest {
+            group_name: group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ListGroupPoliciesRequest` contents to a `SignedRequest`.
 struct ListGroupPoliciesRequestSerializer;
@@ -5545,7 +7212,6 @@ pub struct ListGroupPoliciesResponse {
     #[doc="<p>A list of policy names.</p>"]
     pub policy_names: Vec<String>,
 }
-
 struct ListGroupPoliciesResponseDeserializer;
 impl ListGroupPoliciesResponseDeserializer {
     #[allow(unused_variables)]
@@ -5607,7 +7273,36 @@ pub struct ListGroupsForUserRequest {
     #[doc="<p>The name of the user to list groups for.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl ListGroupsForUserRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListGroupsForUserRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListGroupsForUserRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListGroupsForUserRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListGroupsForUserRequest with optional fields set to `None`.
+    pub fn new<UserNameType: Into<String>>(user_name: UserNameType) -> ListGroupsForUserRequest {
+        ListGroupsForUserRequest {
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ListGroupsForUserRequest` contents to a `SignedRequest`.
 struct ListGroupsForUserRequestSerializer;
@@ -5640,7 +7335,6 @@ pub struct ListGroupsForUserResponse {
     #[doc="<p>When <code>IsTruncated</code> is <code>true</code>, this element is present and contains the value to use for the <code>Marker</code> parameter in a subsequent pagination request.</p>"]
     pub marker: Option<String>,
 }
-
 struct ListGroupsForUserResponseDeserializer;
 impl ListGroupsForUserResponseDeserializer {
     #[allow(unused_variables)]
@@ -5701,7 +7395,33 @@ pub struct ListGroupsRequest {
     #[doc="<p> The path prefix for filtering the results. For example, the prefix <code>/division_abc/subdivision_xyz/</code> gets all groups whose path starts with <code>/division_abc/subdivision_xyz/</code>.</p> <p>This parameter is optional. If it is not included, it defaults to a slash (/), listing all groups. This paramater allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of either a forward slash (/) by itself or a string that must begin and end with forward slashes, containing any ASCII character from the ! (\\u0021) thru the DEL character (\\u007F), including most punctuation characters, digits, and upper and lowercased letters.</p>"]
     pub path_prefix: Option<String>,
 }
-
+impl ListGroupsRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListGroupsRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListGroupsRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `path_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListGroupsRequest.path_prefix = Some(value.into());`.
+    pub fn path_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path_prefix = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListGroupsRequest with optional fields set to `None`.
+    pub fn new() -> ListGroupsRequest {
+        ListGroupsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ListGroupsRequest` contents to a `SignedRequest`.
 struct ListGroupsRequestSerializer;
@@ -5736,7 +7456,6 @@ pub struct ListGroupsResponse {
     #[doc="<p>When <code>IsTruncated</code> is <code>true</code>, this element is present and contains the value to use for the <code>Marker</code> parameter in a subsequent pagination request.</p>"]
     pub marker: Option<String>,
 }
-
 struct ListGroupsResponseDeserializer;
 impl ListGroupsResponseDeserializer {
     #[allow(unused_variables)]
@@ -5797,7 +7516,37 @@ pub struct ListInstanceProfilesForRoleRequest {
     #[doc="<p>The name of the role to list instance profiles for.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
     pub role_name: String,
 }
-
+impl ListInstanceProfilesForRoleRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInstanceProfilesForRoleRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInstanceProfilesForRoleRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `role_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInstanceProfilesForRoleRequest.role_name = value.into();`.
+    pub fn role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListInstanceProfilesForRoleRequest with optional fields set to `None`.
+    pub fn new<RoleNameType: Into<String>>(role_name: RoleNameType)
+                                           -> ListInstanceProfilesForRoleRequest {
+        ListInstanceProfilesForRoleRequest {
+            role_name: role_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ListInstanceProfilesForRoleRequest` contents to a `SignedRequest`.
 struct ListInstanceProfilesForRoleRequestSerializer;
@@ -5830,7 +7579,6 @@ pub struct ListInstanceProfilesForRoleResponse {
     #[doc="<p>When <code>IsTruncated</code> is <code>true</code>, this element is present and contains the value to use for the <code>Marker</code> parameter in a subsequent pagination request.</p>"]
     pub marker: Option<String>,
 }
-
 struct ListInstanceProfilesForRoleResponseDeserializer;
 impl ListInstanceProfilesForRoleResponseDeserializer {
     #[allow(unused_variables)]
@@ -5893,7 +7641,33 @@ pub struct ListInstanceProfilesRequest {
     #[doc="<p> The path prefix for filtering the results. For example, the prefix <code>/application_abc/component_xyz/</code> gets all instance profiles whose path starts with <code>/application_abc/component_xyz/</code>.</p> <p>This parameter is optional. If it is not included, it defaults to a slash (/), listing all instance profiles. This paramater allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of either a forward slash (/) by itself or a string that must begin and end with forward slashes, containing any ASCII character from the ! (\\u0021) thru the DEL character (\\u007F), including most punctuation characters, digits, and upper and lowercased letters.</p>"]
     pub path_prefix: Option<String>,
 }
-
+impl ListInstanceProfilesRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInstanceProfilesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInstanceProfilesRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `path_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInstanceProfilesRequest.path_prefix = Some(value.into());`.
+    pub fn path_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path_prefix = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListInstanceProfilesRequest with optional fields set to `None`.
+    pub fn new() -> ListInstanceProfilesRequest {
+        ListInstanceProfilesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ListInstanceProfilesRequest` contents to a `SignedRequest`.
 struct ListInstanceProfilesRequestSerializer;
@@ -5928,7 +7702,6 @@ pub struct ListInstanceProfilesResponse {
     #[doc="<p>When <code>IsTruncated</code> is <code>true</code>, this element is present and contains the value to use for the <code>Marker</code> parameter in a subsequent pagination request.</p>"]
     pub marker: Option<String>,
 }
-
 struct ListInstanceProfilesResponseDeserializer;
 impl ListInstanceProfilesResponseDeserializer {
     #[allow(unused_variables)]
@@ -5990,7 +7763,33 @@ pub struct ListMFADevicesRequest {
     #[doc="<p>The name of the user whose MFA devices you want to list.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: Option<String>,
 }
-
+impl ListMFADevicesRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListMFADevicesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListMFADevicesRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `user_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListMFADevicesRequest.user_name = Some(value.into());`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListMFADevicesRequest with optional fields set to `None`.
+    pub fn new() -> ListMFADevicesRequest {
+        ListMFADevicesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ListMFADevicesRequest` contents to a `SignedRequest`.
 struct ListMFADevicesRequestSerializer;
@@ -6025,7 +7824,6 @@ pub struct ListMFADevicesResponse {
     #[doc="<p>When <code>IsTruncated</code> is <code>true</code>, this element is present and contains the value to use for the <code>Marker</code> parameter in a subsequent pagination request.</p>"]
     pub marker: Option<String>,
 }
-
 struct ListMFADevicesResponseDeserializer;
 impl ListMFADevicesResponseDeserializer {
     #[allow(unused_variables)]
@@ -6102,7 +7900,6 @@ pub struct ListOpenIDConnectProvidersResponse {
     #[doc="<p>The list of IAM OIDC provider resource objects defined in the AWS account.</p>"]
     pub open_id_connect_provider_list: Option<Vec<OpenIDConnectProviderListEntry>>,
 }
-
 struct ListOpenIDConnectProvidersResponseDeserializer;
 impl ListOpenIDConnectProvidersResponseDeserializer {
     #[allow(unused_variables)]
@@ -6158,7 +7955,47 @@ pub struct ListPoliciesRequest {
     #[doc="<p>The scope to use for filtering the results.</p> <p>To list only AWS managed policies, set <code>Scope</code> to <code>AWS</code>. To list only the customer managed policies in your AWS account, set <code>Scope</code> to <code>Local</code>.</p> <p>This parameter is optional. If it is not included, or if it is set to <code>All</code>, all policies are returned.</p>"]
     pub scope: Option<String>,
 }
-
+impl ListPoliciesRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPoliciesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPoliciesRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `only_attached`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPoliciesRequest.only_attached = Some(value.into());`.
+    pub fn only_attached<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.only_attached = Some(value.into());
+        self
+    }
+    /// Sets `path_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPoliciesRequest.path_prefix = Some(value.into());`.
+    pub fn path_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path_prefix = Some(value.into());
+        self
+    }
+    /// Sets `scope`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPoliciesRequest.scope = Some(value.into());`.
+    pub fn scope<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.scope = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListPoliciesRequest with optional fields set to `None`.
+    pub fn new() -> ListPoliciesRequest {
+        ListPoliciesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ListPoliciesRequest` contents to a `SignedRequest`.
 struct ListPoliciesRequestSerializer;
@@ -6200,7 +8037,6 @@ pub struct ListPoliciesResponse {
     #[doc="<p>A list of policies.</p>"]
     pub policies: Option<Vec<Policy>>,
 }
-
 struct ListPoliciesResponseDeserializer;
 impl ListPoliciesResponseDeserializer {
     #[allow(unused_variables)]
@@ -6262,7 +8098,37 @@ pub struct ListPolicyVersionsRequest {
     #[doc="<p>The Amazon Resource Name (ARN) of the IAM policy for which you want the versions.</p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a> in the <i>AWS General Reference</i>.</p>"]
     pub policy_arn: String,
 }
-
+impl ListPolicyVersionsRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPolicyVersionsRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPolicyVersionsRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `policy_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPolicyVersionsRequest.policy_arn = value.into();`.
+    pub fn policy_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_arn = value.into();
+        self
+    }
+    /// Returns a new instance of ListPolicyVersionsRequest with optional fields set to `None`.
+    pub fn new<PolicyArnType: Into<String>>(policy_arn: PolicyArnType)
+                                            -> ListPolicyVersionsRequest {
+        ListPolicyVersionsRequest {
+            policy_arn: policy_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ListPolicyVersionsRequest` contents to a `SignedRequest`.
 struct ListPolicyVersionsRequestSerializer;
@@ -6295,7 +8161,6 @@ pub struct ListPolicyVersionsResponse {
     #[doc="<p>A list of policy versions.</p> <p>For more information about managed policy versions, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/policies-managed-versions.html\">Versioning for Managed Policies</a> in the <i>IAM User Guide</i>.</p>"]
     pub versions: Option<Vec<PolicyVersion>>,
 }
-
 struct ListPolicyVersionsResponseDeserializer;
 impl ListPolicyVersionsResponseDeserializer {
     #[allow(unused_variables)]
@@ -6355,7 +8220,36 @@ pub struct ListRolePoliciesRequest {
     #[doc="<p>The name of the role to list policies for.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
     pub role_name: String,
 }
-
+impl ListRolePoliciesRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRolePoliciesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRolePoliciesRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `role_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRolePoliciesRequest.role_name = value.into();`.
+    pub fn role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListRolePoliciesRequest with optional fields set to `None`.
+    pub fn new<RoleNameType: Into<String>>(role_name: RoleNameType) -> ListRolePoliciesRequest {
+        ListRolePoliciesRequest {
+            role_name: role_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ListRolePoliciesRequest` contents to a `SignedRequest`.
 struct ListRolePoliciesRequestSerializer;
@@ -6388,7 +8282,6 @@ pub struct ListRolePoliciesResponse {
     #[doc="<p>A list of policy names.</p>"]
     pub policy_names: Vec<String>,
 }
-
 struct ListRolePoliciesResponseDeserializer;
 impl ListRolePoliciesResponseDeserializer {
     #[allow(unused_variables)]
@@ -6450,7 +8343,33 @@ pub struct ListRolesRequest {
     #[doc="<p> The path prefix for filtering the results. For example, the prefix <code>/application_abc/component_xyz/</code> gets all roles whose path starts with <code>/application_abc/component_xyz/</code>.</p> <p>This parameter is optional. If it is not included, it defaults to a slash (/), listing all roles. This paramater allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of either a forward slash (/) by itself or a string that must begin and end with forward slashes, containing any ASCII character from the ! (\\u0021) thru the DEL character (\\u007F), including most punctuation characters, digits, and upper and lowercased letters.</p>"]
     pub path_prefix: Option<String>,
 }
-
+impl ListRolesRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRolesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRolesRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `path_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRolesRequest.path_prefix = Some(value.into());`.
+    pub fn path_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path_prefix = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListRolesRequest with optional fields set to `None`.
+    pub fn new() -> ListRolesRequest {
+        ListRolesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ListRolesRequest` contents to a `SignedRequest`.
 struct ListRolesRequestSerializer;
@@ -6485,7 +8404,6 @@ pub struct ListRolesResponse {
     #[doc="<p>A list of roles.</p>"]
     pub roles: Vec<Role>,
 }
-
 struct ListRolesResponseDeserializer;
 impl ListRolesResponseDeserializer {
     #[allow(unused_variables)]
@@ -6560,7 +8478,6 @@ pub struct ListSAMLProvidersResponse {
     #[doc="<p>The list of SAML provider resource objects defined in IAM for this AWS account.</p>"]
     pub saml_provider_list: Option<Vec<SAMLProviderListEntry>>,
 }
-
 struct ListSAMLProvidersResponseDeserializer;
 impl ListSAMLProvidersResponseDeserializer {
     #[allow(unused_variables)]
@@ -6613,7 +8530,33 @@ pub struct ListSSHPublicKeysRequest {
     #[doc="<p>The name of the IAM user to list SSH public keys for. If none is specified, the UserName field is determined implicitly based on the AWS access key used to sign the request.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: Option<String>,
 }
-
+impl ListSSHPublicKeysRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListSSHPublicKeysRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListSSHPublicKeysRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `user_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListSSHPublicKeysRequest.user_name = Some(value.into());`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListSSHPublicKeysRequest with optional fields set to `None`.
+    pub fn new() -> ListSSHPublicKeysRequest {
+        ListSSHPublicKeysRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ListSSHPublicKeysRequest` contents to a `SignedRequest`.
 struct ListSSHPublicKeysRequestSerializer;
@@ -6648,7 +8591,6 @@ pub struct ListSSHPublicKeysResponse {
     #[doc="<p>A list of the SSH public keys assigned to IAM user.</p>"]
     pub ssh_public_keys: Option<Vec<SSHPublicKeyMetadata>>,
 }
-
 struct ListSSHPublicKeysResponseDeserializer;
 impl ListSSHPublicKeysResponseDeserializer {
     #[allow(unused_variables)]
@@ -6710,7 +8652,33 @@ pub struct ListServerCertificatesRequest {
     #[doc="<p> The path prefix for filtering the results. For example: <code>/company/servercerts</code> would get all server certificates for which the path starts with <code>/company/servercerts</code>.</p> <p>This parameter is optional. If it is not included, it defaults to a slash (/), listing all server certificates. This paramater allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of either a forward slash (/) by itself or a string that must begin and end with forward slashes, containing any ASCII character from the ! (\\u0021) thru the DEL character (\\u007F), including most punctuation characters, digits, and upper and lowercased letters.</p>"]
     pub path_prefix: Option<String>,
 }
-
+impl ListServerCertificatesRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListServerCertificatesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListServerCertificatesRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `path_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListServerCertificatesRequest.path_prefix = Some(value.into());`.
+    pub fn path_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path_prefix = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListServerCertificatesRequest with optional fields set to `None`.
+    pub fn new() -> ListServerCertificatesRequest {
+        ListServerCertificatesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ListServerCertificatesRequest` contents to a `SignedRequest`.
 struct ListServerCertificatesRequestSerializer;
@@ -6745,7 +8713,6 @@ pub struct ListServerCertificatesResponse {
     #[doc="<p>A list of server certificates.</p>"]
     pub server_certificate_metadata_list: Vec<ServerCertificateMetadata>,
 }
-
 struct ListServerCertificatesResponseDeserializer;
 impl ListServerCertificatesResponseDeserializer {
     #[allow(unused_variables)]
@@ -6803,7 +8770,26 @@ pub struct ListServiceSpecificCredentialsRequest {
     #[doc="<p>The name of the user whose service-specific credentials you want information about. If this value is not specified then the operation assumes the user whose credentials are used to call the operation.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: Option<String>,
 }
-
+impl ListServiceSpecificCredentialsRequest {
+    /// Sets `service_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListServiceSpecificCredentialsRequest.service_name = Some(value.into());`.
+    pub fn service_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_name = Some(value.into());
+        self
+    }
+    /// Sets `user_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListServiceSpecificCredentialsRequest.user_name = Some(value.into());`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListServiceSpecificCredentialsRequest with optional fields set to `None`.
+    pub fn new() -> ListServiceSpecificCredentialsRequest {
+        ListServiceSpecificCredentialsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ListServiceSpecificCredentialsRequest` contents to a `SignedRequest`.
 struct ListServiceSpecificCredentialsRequestSerializer;
@@ -6829,7 +8815,6 @@ pub struct ListServiceSpecificCredentialsResponse {
     #[doc="<p>A list of structures that each contain details about a service-specific credential.</p>"]
     pub service_specific_credentials: Option<Vec<ServiceSpecificCredentialMetadata>>,
 }
-
 struct ListServiceSpecificCredentialsResponseDeserializer;
 impl ListServiceSpecificCredentialsResponseDeserializer {
     #[allow(unused_variables)]
@@ -6881,7 +8866,33 @@ pub struct ListSigningCertificatesRequest {
     #[doc="<p>The name of the IAM user whose signing certificates you want to examine.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: Option<String>,
 }
-
+impl ListSigningCertificatesRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListSigningCertificatesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListSigningCertificatesRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `user_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListSigningCertificatesRequest.user_name = Some(value.into());`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListSigningCertificatesRequest with optional fields set to `None`.
+    pub fn new() -> ListSigningCertificatesRequest {
+        ListSigningCertificatesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ListSigningCertificatesRequest` contents to a `SignedRequest`.
 struct ListSigningCertificatesRequestSerializer;
@@ -6916,7 +8927,6 @@ pub struct ListSigningCertificatesResponse {
     #[doc="<p>When <code>IsTruncated</code> is <code>true</code>, this element is present and contains the value to use for the <code>Marker</code> parameter in a subsequent pagination request.</p>"]
     pub marker: Option<String>,
 }
-
 struct ListSigningCertificatesResponseDeserializer;
 impl ListSigningCertificatesResponseDeserializer {
     #[allow(unused_variables)]
@@ -6979,7 +8989,36 @@ pub struct ListUserPoliciesRequest {
     #[doc="<p>The name of the user to list policies for.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl ListUserPoliciesRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUserPoliciesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUserPoliciesRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUserPoliciesRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListUserPoliciesRequest with optional fields set to `None`.
+    pub fn new<UserNameType: Into<String>>(user_name: UserNameType) -> ListUserPoliciesRequest {
+        ListUserPoliciesRequest {
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ListUserPoliciesRequest` contents to a `SignedRequest`.
 struct ListUserPoliciesRequestSerializer;
@@ -7012,7 +9051,6 @@ pub struct ListUserPoliciesResponse {
     #[doc="<p>A list of policy names.</p>"]
     pub policy_names: Vec<String>,
 }
-
 struct ListUserPoliciesResponseDeserializer;
 impl ListUserPoliciesResponseDeserializer {
     #[allow(unused_variables)]
@@ -7074,7 +9112,33 @@ pub struct ListUsersRequest {
     #[doc="<p> The path prefix for filtering the results. For example: <code>/division_abc/subdivision_xyz/</code>, which would get all user names whose path starts with <code>/division_abc/subdivision_xyz/</code>.</p> <p>This parameter is optional. If it is not included, it defaults to a slash (/), listing all user names. This paramater allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of either a forward slash (/) by itself or a string that must begin and end with forward slashes, containing any ASCII character from the ! (\\u0021) thru the DEL character (\\u007F), including most punctuation characters, digits, and upper and lowercased letters.</p>"]
     pub path_prefix: Option<String>,
 }
-
+impl ListUsersRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUsersRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUsersRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `path_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUsersRequest.path_prefix = Some(value.into());`.
+    pub fn path_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path_prefix = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListUsersRequest with optional fields set to `None`.
+    pub fn new() -> ListUsersRequest {
+        ListUsersRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ListUsersRequest` contents to a `SignedRequest`.
 struct ListUsersRequestSerializer;
@@ -7109,7 +9173,6 @@ pub struct ListUsersResponse {
     #[doc="<p>A list of users.</p>"]
     pub users: Vec<User>,
 }
-
 struct ListUsersResponseDeserializer;
 impl ListUsersResponseDeserializer {
     #[allow(unused_variables)]
@@ -7169,7 +9232,33 @@ pub struct ListVirtualMFADevicesRequest {
     #[doc="<p>(Optional) Use this only when paginating results to indicate the maximum number of items you want in the response. If additional items exist beyond the maximum you specify, the <code>IsTruncated</code> response element is <code>true</code>.</p> <p>If you do not include this parameter, it defaults to 100. Note that IAM might return fewer results, even when there are more results available. In that case, the <code>IsTruncated</code> response element returns <code>true</code> and <code>Marker</code> contains a value to include in the subsequent call that tells the service where to continue from.</p>"]
     pub max_items: Option<i64>,
 }
-
+impl ListVirtualMFADevicesRequest {
+    /// Sets `assignment_status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListVirtualMFADevicesRequest.assignment_status = Some(value.into());`.
+    pub fn assignment_status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.assignment_status = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListVirtualMFADevicesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListVirtualMFADevicesRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListVirtualMFADevicesRequest with optional fields set to `None`.
+    pub fn new() -> ListVirtualMFADevicesRequest {
+        ListVirtualMFADevicesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ListVirtualMFADevicesRequest` contents to a `SignedRequest`.
 struct ListVirtualMFADevicesRequestSerializer;
@@ -7204,7 +9293,6 @@ pub struct ListVirtualMFADevicesResponse {
     #[doc="<p> The list of virtual MFA devices in the current account that match the <code>AssignmentStatus</code> value that was passed in the request.</p>"]
     pub virtual_mfa_devices: Vec<VirtualMFADevice>,
 }
-
 struct ListVirtualMFADevicesResponseDeserializer;
 impl ListVirtualMFADevicesResponseDeserializer {
     #[allow(unused_variables)]
@@ -7267,7 +9355,6 @@ pub struct LoginProfile {
     #[doc="<p>The name of the user, which can be used for signing in to the AWS Management Console.</p>"]
     pub user_name: String,
 }
-
 struct LoginProfileDeserializer;
 impl LoginProfileDeserializer {
     #[allow(unused_variables)]
@@ -7329,7 +9416,6 @@ pub struct MFADevice {
     #[doc="<p>The user with whom the MFA device is associated.</p>"]
     pub user_name: String,
 }
-
 struct MFADeviceDeserializer;
 impl MFADeviceDeserializer {
     #[allow(unused_variables)]
@@ -7406,7 +9492,6 @@ pub struct ManagedPolicyDetail {
     #[doc="<p>The date and time, in <a href=\"http://www.iso.org/iso/iso8601\">ISO 8601 date-time format</a>, when the policy was last updated.</p> <p>When a policy has only one version, this field contains the date and time when the policy was created. When a policy has more than one version, this field contains the date and time when the most recent policy version was created.</p>"]
     pub update_date: Option<String>,
 }
-
 struct ManagedPolicyDetailDeserializer;
 impl ManagedPolicyDetailDeserializer {
     #[allow(unused_variables)]
@@ -7622,7 +9707,6 @@ impl MinimumPasswordLengthTypeDeserializer {
 pub struct OpenIDConnectProviderListEntry {
     pub arn: Option<String>,
 }
-
 struct OpenIDConnectProviderListEntryDeserializer;
 impl OpenIDConnectProviderListEntryDeserializer {
     #[allow(unused_variables)]
@@ -7726,7 +9810,6 @@ pub struct OrganizationsDecisionDetail {
     #[doc="<p>Specifies whether the simulated action is allowed by the AWS Organizations service control policies that impact the simulated user's account.</p>"]
     pub allowed_by_organizations: Option<bool>,
 }
-
 struct OrganizationsDecisionDetailDeserializer;
 impl OrganizationsDecisionDetailDeserializer {
     #[allow(unused_variables)]
@@ -7794,7 +9877,6 @@ pub struct PasswordPolicy {
     #[doc="<p>Specifies whether to require uppercase characters for IAM user passwords.</p>"]
     pub require_uppercase_characters: Option<bool>,
 }
-
 struct PasswordPolicyDeserializer;
 impl PasswordPolicyDeserializer {
     #[allow(unused_variables)]
@@ -7930,7 +10012,6 @@ pub struct Policy {
     #[doc="<p>The date and time, in <a href=\"http://www.iso.org/iso/iso8601\">ISO 8601 date-time format</a>, when the policy was last updated.</p> <p>When a policy has only one version, this field contains the date and time when the policy was created. When a policy has more than one version, this field contains the date and time when the most recent policy version was created.</p>"]
     pub update_date: Option<String>,
 }
-
 struct PolicyDeserializer;
 impl PolicyDeserializer {
     #[allow(unused_variables)]
@@ -8035,7 +10116,6 @@ pub struct PolicyDetail {
     #[doc="<p>The name of the policy.</p>"]
     pub policy_name: Option<String>,
 }
-
 struct PolicyDetailDeserializer;
 impl PolicyDetailDeserializer {
     #[allow(unused_variables)]
@@ -8202,7 +10282,6 @@ pub struct PolicyGroup {
     #[doc="<p>The name (friendly name, not ARN) identifying the group.</p>"]
     pub group_name: Option<String>,
 }
-
 struct PolicyGroupDeserializer;
 impl PolicyGroupDeserializer {
     #[allow(unused_variables)]
@@ -8423,7 +10502,6 @@ pub struct PolicyRole {
     #[doc="<p>The name (friendly name, not ARN) identifying the role.</p>"]
     pub role_name: Option<String>,
 }
-
 struct PolicyRoleDeserializer;
 impl PolicyRoleDeserializer {
     #[allow(unused_variables)]
@@ -8534,7 +10612,6 @@ pub struct PolicyUser {
     #[doc="<p>The name (friendly name, not ARN) identifying the user.</p>"]
     pub user_name: Option<String>,
 }
-
 struct PolicyUserDeserializer;
 impl PolicyUserDeserializer {
     #[allow(unused_variables)]
@@ -8635,7 +10712,6 @@ pub struct PolicyVersion {
     #[doc="<p>The identifier for the policy version.</p> <p>Policy version identifiers always begin with <code>v</code> (always lowercase). When a policy is created, the first policy version is <code>v1</code>. </p>"]
     pub version_id: Option<String>,
 }
-
 struct PolicyVersionDeserializer;
 impl PolicyVersionDeserializer {
     #[allow(unused_variables)]
@@ -8715,7 +10791,6 @@ pub struct Position {
     #[doc="<p>The line containing the specified position in the document.</p>"]
     pub line: Option<i64>,
 }
-
 struct PositionDeserializer;
 impl PositionDeserializer {
     #[allow(unused_variables)]
@@ -8813,7 +10888,44 @@ pub struct PutGroupPolicyRequest {
     #[doc="<p>The name of the policy document.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub policy_name: String,
 }
-
+impl PutGroupPolicyRequest {
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutGroupPolicyRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Sets `policy_document`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutGroupPolicyRequest.policy_document = value.into();`.
+    pub fn policy_document<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_document = value.into();
+        self
+    }
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutGroupPolicyRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Returns a new instance of PutGroupPolicyRequest with optional fields set to `None`.
+    pub fn new<GroupNameType: Into<String>,
+               PolicyDocumentType: Into<String>,
+               PolicyNameType: Into<String>>
+        (group_name: GroupNameType,
+         policy_document: PolicyDocumentType,
+         policy_name: PolicyNameType)
+         -> PutGroupPolicyRequest {
+        PutGroupPolicyRequest {
+            group_name: group_name.into(),
+            policy_document: policy_document.into(),
+            policy_name: policy_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `PutGroupPolicyRequest` contents to a `SignedRequest`.
 struct PutGroupPolicyRequestSerializer;
@@ -8841,7 +10953,44 @@ pub struct PutRolePolicyRequest {
     #[doc="<p>The name of the role to associate the policy with.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
     pub role_name: String,
 }
-
+impl PutRolePolicyRequest {
+    /// Sets `policy_document`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRolePolicyRequest.policy_document = value.into();`.
+    pub fn policy_document<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_document = value.into();
+        self
+    }
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRolePolicyRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Sets `role_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRolePolicyRequest.role_name = value.into();`.
+    pub fn role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_name = value.into();
+        self
+    }
+    /// Returns a new instance of PutRolePolicyRequest with optional fields set to `None`.
+    pub fn new<PolicyDocumentType: Into<String>,
+               PolicyNameType: Into<String>,
+               RoleNameType: Into<String>>
+        (policy_document: PolicyDocumentType,
+         policy_name: PolicyNameType,
+         role_name: RoleNameType)
+         -> PutRolePolicyRequest {
+        PutRolePolicyRequest {
+            policy_document: policy_document.into(),
+            policy_name: policy_name.into(),
+            role_name: role_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `PutRolePolicyRequest` contents to a `SignedRequest`.
 struct PutRolePolicyRequestSerializer;
@@ -8869,7 +11018,44 @@ pub struct PutUserPolicyRequest {
     #[doc="<p>The name of the user to associate the policy with.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl PutUserPolicyRequest {
+    /// Sets `policy_document`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutUserPolicyRequest.policy_document = value.into();`.
+    pub fn policy_document<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_document = value.into();
+        self
+    }
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutUserPolicyRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutUserPolicyRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of PutUserPolicyRequest with optional fields set to `None`.
+    pub fn new<PolicyDocumentType: Into<String>,
+               PolicyNameType: Into<String>,
+               UserNameType: Into<String>>
+        (policy_document: PolicyDocumentType,
+         policy_name: PolicyNameType,
+         user_name: UserNameType)
+         -> PutUserPolicyRequest {
+        PutUserPolicyRequest {
+            policy_document: policy_document.into(),
+            policy_name: policy_name.into(),
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `PutUserPolicyRequest` contents to a `SignedRequest`.
 struct PutUserPolicyRequestSerializer;
@@ -8895,7 +11081,35 @@ pub struct RemoveClientIDFromOpenIDConnectProviderRequest {
     #[doc="<p>The Amazon Resource Name (ARN) of the IAM OIDC provider resource to remove the client ID from. You can get a list of OIDC provider ARNs by using the <a>ListOpenIDConnectProviders</a> action.</p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a> in the <i>AWS General Reference</i>.</p>"]
     pub open_id_connect_provider_arn: String,
 }
-
+impl RemoveClientIDFromOpenIDConnectProviderRequest {
+    /// Sets `client_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveClientIDFromOpenIDConnectProviderRequest.client_id = value.into();`.
+    pub fn client_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_id = value.into();
+        self
+    }
+    /// Sets `open_id_connect_provider_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveClientIDFromOpenIDConnectProviderRequest.open_id_connect_provider_arn = value.into();`.
+    pub fn open_id_connect_provider_arn<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.open_id_connect_provider_arn = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveClientIDFromOpenIDConnectProviderRequest with optional fields set to `None`.
+    pub fn new<ClientIDType: Into<String>, OpenIDConnectProviderArnType: Into<String>>
+        (client_id: ClientIDType,
+         open_id_connect_provider_arn: OpenIDConnectProviderArnType)
+         -> RemoveClientIDFromOpenIDConnectProviderRequest {
+        RemoveClientIDFromOpenIDConnectProviderRequest {
+            client_id: client_id.into(),
+            open_id_connect_provider_arn: open_id_connect_provider_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RemoveClientIDFromOpenIDConnectProviderRequest` contents to a `SignedRequest`.
 struct RemoveClientIDFromOpenIDConnectProviderRequestSerializer;
@@ -8922,7 +11136,33 @@ pub struct RemoveRoleFromInstanceProfileRequest {
     #[doc="<p>The name of the role to remove.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
     pub role_name: String,
 }
-
+impl RemoveRoleFromInstanceProfileRequest {
+    /// Sets `instance_profile_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveRoleFromInstanceProfileRequest.instance_profile_name = value.into();`.
+    pub fn instance_profile_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_profile_name = value.into();
+        self
+    }
+    /// Sets `role_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveRoleFromInstanceProfileRequest.role_name = value.into();`.
+    pub fn role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_name = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveRoleFromInstanceProfileRequest with optional fields set to `None`.
+    pub fn new<InstanceProfileNameType: Into<String>, RoleNameType: Into<String>>
+        (instance_profile_name: InstanceProfileNameType,
+         role_name: RoleNameType)
+         -> RemoveRoleFromInstanceProfileRequest {
+        RemoveRoleFromInstanceProfileRequest {
+            instance_profile_name: instance_profile_name.into(),
+            role_name: role_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RemoveRoleFromInstanceProfileRequest` contents to a `SignedRequest`.
 struct RemoveRoleFromInstanceProfileRequestSerializer;
@@ -8947,7 +11187,33 @@ pub struct RemoveUserFromGroupRequest {
     #[doc="<p>The name of the user to remove.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl RemoveUserFromGroupRequest {
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveUserFromGroupRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveUserFromGroupRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveUserFromGroupRequest with optional fields set to `None`.
+    pub fn new<GroupNameType: Into<String>, UserNameType: Into<String>>
+        (group_name: GroupNameType,
+         user_name: UserNameType)
+         -> RemoveUserFromGroupRequest {
+        RemoveUserFromGroupRequest {
+            group_name: group_name.into(),
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RemoveUserFromGroupRequest` contents to a `SignedRequest`.
 struct RemoveUserFromGroupRequestSerializer;
@@ -9027,7 +11293,33 @@ pub struct ResetServiceSpecificCredentialRequest {
     #[doc="<p>The name of the IAM user associated with the service-specific credential. If this value is not specified, then the operation assumes the user whose credentials are used to call the operation.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: Option<String>,
 }
-
+impl ResetServiceSpecificCredentialRequest {
+    /// Sets `service_specific_credential_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetServiceSpecificCredentialRequest.service_specific_credential_id = value.into();`.
+    pub fn service_specific_credential_id<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.service_specific_credential_id = value.into();
+        self
+    }
+    /// Sets `user_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetServiceSpecificCredentialRequest.user_name = Some(value.into());`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ResetServiceSpecificCredentialRequest with optional fields set to `None`.
+    pub fn new<ServiceSpecificCredentialIdType: Into<String>>
+        (service_specific_credential_id: ServiceSpecificCredentialIdType)
+         -> ResetServiceSpecificCredentialRequest {
+        ResetServiceSpecificCredentialRequest {
+            service_specific_credential_id: service_specific_credential_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ResetServiceSpecificCredentialRequest` contents to a `SignedRequest`.
 struct ResetServiceSpecificCredentialRequestSerializer;
@@ -9052,7 +11344,6 @@ pub struct ResetServiceSpecificCredentialResponse {
     #[doc="<p>A structure with details about the updated service-specific credential, including the new password.</p> <important> <p>This is the <b>only</b> time that you can access the password. You cannot recover the password later, but you can reset it again.</p> </important>"]
     pub service_specific_credential: Option<ServiceSpecificCredential>,
 }
-
 struct ResetServiceSpecificCredentialResponseDeserializer;
 impl ResetServiceSpecificCredentialResponseDeserializer {
     #[allow(unused_variables)]
@@ -9135,7 +11426,6 @@ pub struct ResourceSpecificResult {
     #[doc="<p>A list of context keys that are required by the included input policies but that were not provided by one of the input parameters. This list is used when a list of ARNs is included in the <code>ResourceArns</code> parameter instead of \"*\". If you do not specify individual resources, by setting <code>ResourceArns</code> to \"*\" or by not including the <code>ResourceArns</code> parameter, then any missing context values are instead included under the <code>EvaluationResults</code> section. To discover the context keys used by a set of policies, you can call <a>GetContextKeysForCustomPolicy</a> or <a>GetContextKeysForPrincipalPolicy</a>.</p>"]
     pub missing_context_values: Option<Vec<String>>,
 }
-
 struct ResourceSpecificResultDeserializer;
 impl ResourceSpecificResultDeserializer {
     #[allow(unused_variables)]
@@ -9250,7 +11540,54 @@ pub struct ResyncMFADeviceRequest {
     #[doc="<p>The name of the user whose MFA device you want to resynchronize.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl ResyncMFADeviceRequest {
+    /// Sets `authentication_code_1`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResyncMFADeviceRequest.authentication_code_1 = value.into();`.
+    pub fn authentication_code_1<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.authentication_code_1 = value.into();
+        self
+    }
+    /// Sets `authentication_code_2`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResyncMFADeviceRequest.authentication_code_2 = value.into();`.
+    pub fn authentication_code_2<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.authentication_code_2 = value.into();
+        self
+    }
+    /// Sets `serial_number`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResyncMFADeviceRequest.serial_number = value.into();`.
+    pub fn serial_number<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.serial_number = value.into();
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResyncMFADeviceRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of ResyncMFADeviceRequest with optional fields set to `None`.
+    pub fn new<AuthenticationCode1Type: Into<String>,
+               AuthenticationCode2Type: Into<String>,
+               SerialNumberType: Into<String>,
+               UserNameType: Into<String>>
+        (authentication_code_1: AuthenticationCode1Type,
+         authentication_code_2: AuthenticationCode2Type,
+         serial_number: SerialNumberType,
+         user_name: UserNameType)
+         -> ResyncMFADeviceRequest {
+        ResyncMFADeviceRequest {
+            authentication_code_1: authentication_code_1.into(),
+            authentication_code_2: authentication_code_2.into(),
+            serial_number: serial_number.into(),
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ResyncMFADeviceRequest` contents to a `SignedRequest`.
 struct ResyncMFADeviceRequestSerializer;
@@ -9289,7 +11626,6 @@ pub struct Role {
     #[doc="<p>The friendly name that identifies the role.</p>"]
     pub role_name: String,
 }
-
 struct RoleDeserializer;
 impl RoleDeserializer {
     #[allow(unused_variables)]
@@ -9390,7 +11726,6 @@ pub struct RoleDetail {
     #[doc="<p>A list of inline policies embedded in the role. These policies are the role's access (permissions) policies.</p>"]
     pub role_policy_list: Option<Vec<PolicyDetail>>,
 }
-
 struct RoleDetailDeserializer;
 impl RoleDetailDeserializer {
     #[allow(unused_variables)]
@@ -9586,7 +11921,6 @@ pub struct SAMLProviderListEntry {
     #[doc="<p>The expiration date and time for the SAML provider.</p>"]
     pub valid_until: Option<String>,
 }
-
 struct SAMLProviderListEntryDeserializer;
 impl SAMLProviderListEntryDeserializer {
     #[allow(unused_variables)]
@@ -9694,7 +12028,6 @@ pub struct SSHPublicKey {
     #[doc="<p>The name of the IAM user associated with the SSH public key.</p>"]
     pub user_name: String,
 }
-
 struct SSHPublicKeyDeserializer;
 impl SSHPublicKeyDeserializer {
     #[allow(unused_variables)]
@@ -9813,7 +12146,6 @@ pub struct SSHPublicKeyMetadata {
     #[doc="<p>The name of the IAM user associated with the SSH public key.</p>"]
     pub user_name: String,
 }
-
 struct SSHPublicKeyMetadataDeserializer;
 impl SSHPublicKeyMetadataDeserializer {
     #[allow(unused_variables)]
@@ -9892,7 +12224,6 @@ pub struct ServerCertificate {
     #[doc="<p>The meta information of the server certificate, such as its name, path, ID, and ARN.</p>"]
     pub server_certificate_metadata: ServerCertificateMetadata,
 }
-
 struct ServerCertificateDeserializer;
 impl ServerCertificateDeserializer {
     #[allow(unused_variables)]
@@ -9962,7 +12293,6 @@ pub struct ServerCertificateMetadata {
     #[doc="<p>The date when the server certificate was uploaded.</p>"]
     pub upload_date: Option<String>,
 }
-
 struct ServerCertificateMetadataDeserializer;
 impl ServerCertificateMetadataDeserializer {
     #[allow(unused_variables)]
@@ -10126,7 +12456,6 @@ pub struct ServiceSpecificCredential {
     #[doc="<p>The name of the IAM user associated with the service-specific credential.</p>"]
     pub user_name: String,
 }
-
 struct ServiceSpecificCredentialDeserializer;
 impl ServiceSpecificCredentialDeserializer {
     #[allow(unused_variables)]
@@ -10225,7 +12554,6 @@ pub struct ServiceSpecificCredentialMetadata {
     #[doc="<p>The name of the IAM user associated with the service-specific credential.</p>"]
     pub user_name: String,
 }
-
 struct ServiceSpecificCredentialMetadataDeserializer;
 impl ServiceSpecificCredentialMetadataDeserializer {
     #[allow(unused_variables)]
@@ -10353,7 +12681,33 @@ pub struct SetDefaultPolicyVersionRequest {
     #[doc="<p>The version of the policy to set as the default (operative) version.</p> <p>For more information about managed policy versions, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/policies-managed-versions.html\">Versioning for Managed Policies</a> in the <i>IAM User Guide</i>.</p>"]
     pub version_id: String,
 }
-
+impl SetDefaultPolicyVersionRequest {
+    /// Sets `policy_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetDefaultPolicyVersionRequest.policy_arn = value.into();`.
+    pub fn policy_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_arn = value.into();
+        self
+    }
+    /// Sets `version_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetDefaultPolicyVersionRequest.version_id = value.into();`.
+    pub fn version_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version_id = value.into();
+        self
+    }
+    /// Returns a new instance of SetDefaultPolicyVersionRequest with optional fields set to `None`.
+    pub fn new<PolicyArnType: Into<String>, VersionIdType: Into<String>>
+        (policy_arn: PolicyArnType,
+         version_id: VersionIdType)
+         -> SetDefaultPolicyVersionRequest {
+        SetDefaultPolicyVersionRequest {
+            policy_arn: policy_arn.into(),
+            version_id: version_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SetDefaultPolicyVersionRequest` contents to a `SignedRequest`.
 struct SetDefaultPolicyVersionRequestSerializer;
@@ -10384,7 +12738,6 @@ pub struct SigningCertificate {
     #[doc="<p>The name of the user the signing certificate is associated with.</p>"]
     pub user_name: String,
 }
-
 struct SigningCertificateDeserializer;
 impl SigningCertificateDeserializer {
     #[allow(unused_variables)]
@@ -10467,7 +12820,89 @@ pub struct SimulateCustomPolicyRequest {
     #[doc="<p>A resource-based policy to include in the simulation provided as a string. Each resource in the simulation is treated as if it had this policy attached. You can include only one resource-based policy in a simulation.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> used to validate this parameter is a string of characters consisting of any printable ASCII character ranging from the space character (\\u0020) through end of the ASCII character range as well as the printable characters in the Basic Latin and Latin-1 Supplement character set (through \\u00FF). It also includes the special characters tab (\\u0009), line feed (\\u000A), and carriage return (\\u000D).</p>"]
     pub resource_policy: Option<String>,
 }
-
+impl SimulateCustomPolicyRequest {
+    /// Sets `action_names`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimulateCustomPolicyRequest.action_names = value.into();`.
+    pub fn action_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.action_names = value.into();
+        self
+    }
+    /// Sets `caller_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimulateCustomPolicyRequest.caller_arn = Some(value.into());`.
+    pub fn caller_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.caller_arn = Some(value.into());
+        self
+    }
+    /// Sets `context_entries`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimulateCustomPolicyRequest.context_entries = Some(value.into());`.
+    pub fn context_entries<ValueType: Into<Vec<ContextEntry>>>(mut self, value: ValueType) -> Self {
+        self.context_entries = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimulateCustomPolicyRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimulateCustomPolicyRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `policy_input_list`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimulateCustomPolicyRequest.policy_input_list = value.into();`.
+    pub fn policy_input_list<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.policy_input_list = value.into();
+        self
+    }
+    /// Sets `resource_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimulateCustomPolicyRequest.resource_arns = Some(value.into());`.
+    pub fn resource_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resource_arns = Some(value.into());
+        self
+    }
+    /// Sets `resource_handling_option`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimulateCustomPolicyRequest.resource_handling_option = Some(value.into());`.
+    pub fn resource_handling_option<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_handling_option = Some(value.into());
+        self
+    }
+    /// Sets `resource_owner`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimulateCustomPolicyRequest.resource_owner = Some(value.into());`.
+    pub fn resource_owner<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_owner = Some(value.into());
+        self
+    }
+    /// Sets `resource_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimulateCustomPolicyRequest.resource_policy = Some(value.into());`.
+    pub fn resource_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_policy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SimulateCustomPolicyRequest with optional fields set to `None`.
+    pub fn new<ActionNamesType: Into<Vec<String>>, PolicyInputListType: Into<Vec<String>>>
+        (action_names: ActionNamesType,
+         policy_input_list: PolicyInputListType)
+         -> SimulateCustomPolicyRequest {
+        SimulateCustomPolicyRequest {
+            action_names: action_names.into(),
+            policy_input_list: policy_input_list.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SimulateCustomPolicyRequest` contents to a `SignedRequest`.
 struct SimulateCustomPolicyRequestSerializer;
@@ -10528,7 +12963,6 @@ pub struct SimulatePolicyResponse {
     #[doc="<p>When <code>IsTruncated</code> is <code>true</code>, this element is present and contains the value to use for the <code>Marker</code> parameter in a subsequent pagination request.</p>"]
     pub marker: Option<String>,
 }
-
 struct SimulatePolicyResponseDeserializer;
 impl SimulatePolicyResponseDeserializer {
     #[allow(unused_variables)]
@@ -10604,7 +13038,96 @@ pub struct SimulatePrincipalPolicyRequest {
     #[doc="<p>A resource-based policy to include in the simulation provided as a string. Each resource in the simulation is treated as if it had this policy attached. You can include only one resource-based policy in a simulation.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> used to validate this parameter is a string of characters consisting of any printable ASCII character ranging from the space character (\\u0020) through end of the ASCII character range as well as the printable characters in the Basic Latin and Latin-1 Supplement character set (through \\u00FF). It also includes the special characters tab (\\u0009), line feed (\\u000A), and carriage return (\\u000D).</p>"]
     pub resource_policy: Option<String>,
 }
-
+impl SimulatePrincipalPolicyRequest {
+    /// Sets `action_names`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimulatePrincipalPolicyRequest.action_names = value.into();`.
+    pub fn action_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.action_names = value.into();
+        self
+    }
+    /// Sets `caller_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimulatePrincipalPolicyRequest.caller_arn = Some(value.into());`.
+    pub fn caller_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.caller_arn = Some(value.into());
+        self
+    }
+    /// Sets `context_entries`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimulatePrincipalPolicyRequest.context_entries = Some(value.into());`.
+    pub fn context_entries<ValueType: Into<Vec<ContextEntry>>>(mut self, value: ValueType) -> Self {
+        self.context_entries = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimulatePrincipalPolicyRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimulatePrincipalPolicyRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `policy_input_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimulatePrincipalPolicyRequest.policy_input_list = Some(value.into());`.
+    pub fn policy_input_list<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.policy_input_list = Some(value.into());
+        self
+    }
+    /// Sets `policy_source_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimulatePrincipalPolicyRequest.policy_source_arn = value.into();`.
+    pub fn policy_source_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_source_arn = value.into();
+        self
+    }
+    /// Sets `resource_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimulatePrincipalPolicyRequest.resource_arns = Some(value.into());`.
+    pub fn resource_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resource_arns = Some(value.into());
+        self
+    }
+    /// Sets `resource_handling_option`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimulatePrincipalPolicyRequest.resource_handling_option = Some(value.into());`.
+    pub fn resource_handling_option<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_handling_option = Some(value.into());
+        self
+    }
+    /// Sets `resource_owner`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimulatePrincipalPolicyRequest.resource_owner = Some(value.into());`.
+    pub fn resource_owner<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_owner = Some(value.into());
+        self
+    }
+    /// Sets `resource_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimulatePrincipalPolicyRequest.resource_policy = Some(value.into());`.
+    pub fn resource_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_policy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SimulatePrincipalPolicyRequest with optional fields set to `None`.
+    pub fn new<ActionNamesType: Into<Vec<String>>, PolicySourceArnType: Into<String>>
+        (action_names: ActionNamesType,
+         policy_source_arn: PolicySourceArnType)
+         -> SimulatePrincipalPolicyRequest {
+        SimulatePrincipalPolicyRequest {
+            action_names: action_names.into(),
+            policy_source_arn: policy_source_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SimulatePrincipalPolicyRequest` contents to a `SignedRequest`.
 struct SimulatePrincipalPolicyRequestSerializer;
@@ -10685,7 +13208,6 @@ pub struct Statement {
     #[doc="<p>The row and column of the beginning of the <code>Statement</code> in an IAM policy.</p>"]
     pub start_position: Option<Position>,
 }
-
 struct StatementDeserializer;
 impl StatementDeserializer {
     #[allow(unused_variables)]
@@ -10940,7 +13462,40 @@ pub struct UpdateAccessKeyRequest {
     #[doc="<p>The name of the user whose key you want to update.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: Option<String>,
 }
-
+impl UpdateAccessKeyRequest {
+    /// Sets `access_key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAccessKeyRequest.access_key_id = value.into();`.
+    pub fn access_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.access_key_id = value.into();
+        self
+    }
+    /// Sets `status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAccessKeyRequest.status = value.into();`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = value.into();
+        self
+    }
+    /// Sets `user_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAccessKeyRequest.user_name = Some(value.into());`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateAccessKeyRequest with optional fields set to `None`.
+    pub fn new<AccessKeyIdType: Into<String>, StatusType: Into<String>>
+        (access_key_id: AccessKeyIdType,
+         status: StatusType)
+         -> UpdateAccessKeyRequest {
+        UpdateAccessKeyRequest {
+            access_key_id: access_key_id.into(),
+            status: status.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateAccessKeyRequest` contents to a `SignedRequest`.
 struct UpdateAccessKeyRequestSerializer;
@@ -10981,7 +13536,77 @@ pub struct UpdateAccountPasswordPolicyRequest {
     #[doc="<p>Specifies whether IAM user passwords must contain at least one uppercase character from the ISO basic Latin alphabet (A to Z).</p> <p>Default value: false</p>"]
     pub require_uppercase_characters: Option<bool>,
 }
-
+impl UpdateAccountPasswordPolicyRequest {
+    /// Sets `allow_users_to_change_password`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAccountPasswordPolicyRequest.allow_users_to_change_password = Some(value.into());`.
+    pub fn allow_users_to_change_password<ValueType: Into<bool>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.allow_users_to_change_password = Some(value.into());
+        self
+    }
+    /// Sets `hard_expiry`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAccountPasswordPolicyRequest.hard_expiry = Some(value.into());`.
+    pub fn hard_expiry<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.hard_expiry = Some(value.into());
+        self
+    }
+    /// Sets `max_password_age`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAccountPasswordPolicyRequest.max_password_age = Some(value.into());`.
+    pub fn max_password_age<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_password_age = Some(value.into());
+        self
+    }
+    /// Sets `minimum_password_length`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAccountPasswordPolicyRequest.minimum_password_length = Some(value.into());`.
+    pub fn minimum_password_length<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.minimum_password_length = Some(value.into());
+        self
+    }
+    /// Sets `password_reuse_prevention`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAccountPasswordPolicyRequest.password_reuse_prevention = Some(value.into());`.
+    pub fn password_reuse_prevention<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.password_reuse_prevention = Some(value.into());
+        self
+    }
+    /// Sets `require_lowercase_characters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAccountPasswordPolicyRequest.require_lowercase_characters = Some(value.into());`.
+    pub fn require_lowercase_characters<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.require_lowercase_characters = Some(value.into());
+        self
+    }
+    /// Sets `require_numbers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAccountPasswordPolicyRequest.require_numbers = Some(value.into());`.
+    pub fn require_numbers<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.require_numbers = Some(value.into());
+        self
+    }
+    /// Sets `require_symbols`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAccountPasswordPolicyRequest.require_symbols = Some(value.into());`.
+    pub fn require_symbols<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.require_symbols = Some(value.into());
+        self
+    }
+    /// Sets `require_uppercase_characters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAccountPasswordPolicyRequest.require_uppercase_characters = Some(value.into());`.
+    pub fn require_uppercase_characters<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.require_uppercase_characters = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateAccountPasswordPolicyRequest with optional fields set to `None`.
+    pub fn new() -> UpdateAccountPasswordPolicyRequest {
+        UpdateAccountPasswordPolicyRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `UpdateAccountPasswordPolicyRequest` contents to a `SignedRequest`.
 struct UpdateAccountPasswordPolicyRequestSerializer;
@@ -11039,7 +13664,33 @@ pub struct UpdateAssumeRolePolicyRequest {
     #[doc="<p>The name of the role to update with the new policy.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
     pub role_name: String,
 }
-
+impl UpdateAssumeRolePolicyRequest {
+    /// Sets `policy_document`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAssumeRolePolicyRequest.policy_document = value.into();`.
+    pub fn policy_document<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_document = value.into();
+        self
+    }
+    /// Sets `role_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAssumeRolePolicyRequest.role_name = value.into();`.
+    pub fn role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateAssumeRolePolicyRequest with optional fields set to `None`.
+    pub fn new<PolicyDocumentType: Into<String>, RoleNameType: Into<String>>
+        (policy_document: PolicyDocumentType,
+         role_name: RoleNameType)
+         -> UpdateAssumeRolePolicyRequest {
+        UpdateAssumeRolePolicyRequest {
+            policy_document: policy_document.into(),
+            role_name: role_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateAssumeRolePolicyRequest` contents to a `SignedRequest`.
 struct UpdateAssumeRolePolicyRequestSerializer;
@@ -11066,7 +13717,36 @@ pub struct UpdateGroupRequest {
     #[doc="<p>New path for the IAM group. Only include this if changing the group's path.</p> <p>This paramater allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of either a forward slash (/) by itself or a string that must begin and end with forward slashes, containing any ASCII character from the ! (\\u0021) thru the DEL character (\\u007F), including most punctuation characters, digits, and upper and lowercased letters.</p>"]
     pub new_path: Option<String>,
 }
-
+impl UpdateGroupRequest {
+    /// Sets `group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGroupRequest.group_name = value.into();`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = value.into();
+        self
+    }
+    /// Sets `new_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGroupRequest.new_group_name = Some(value.into());`.
+    pub fn new_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.new_group_name = Some(value.into());
+        self
+    }
+    /// Sets `new_path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGroupRequest.new_path = Some(value.into());`.
+    pub fn new_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.new_path = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateGroupRequest with optional fields set to `None`.
+    pub fn new<GroupNameType: Into<String>>(group_name: GroupNameType) -> UpdateGroupRequest {
+        UpdateGroupRequest {
+            group_name: group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateGroupRequest` contents to a `SignedRequest`.
 struct UpdateGroupRequestSerializer;
@@ -11097,7 +13777,36 @@ pub struct UpdateLoginProfileRequest {
     #[doc="<p>The name of the user whose password you want to update.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl UpdateLoginProfileRequest {
+    /// Sets `password`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLoginProfileRequest.password = Some(value.into());`.
+    pub fn password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.password = Some(value.into());
+        self
+    }
+    /// Sets `password_reset_required`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLoginProfileRequest.password_reset_required = Some(value.into());`.
+    pub fn password_reset_required<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.password_reset_required = Some(value.into());
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLoginProfileRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateLoginProfileRequest with optional fields set to `None`.
+    pub fn new<UserNameType: Into<String>>(user_name: UserNameType) -> UpdateLoginProfileRequest {
+        UpdateLoginProfileRequest {
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateLoginProfileRequest` contents to a `SignedRequest`.
 struct UpdateLoginProfileRequestSerializer;
@@ -11127,7 +13836,35 @@ pub struct UpdateOpenIDConnectProviderThumbprintRequest {
     #[doc="<p>A list of certificate thumbprints that are associated with the specified IAM OpenID Connect provider. For more information, see <a>CreateOpenIDConnectProvider</a>. </p>"]
     pub thumbprint_list: Vec<String>,
 }
-
+impl UpdateOpenIDConnectProviderThumbprintRequest {
+    /// Sets `open_id_connect_provider_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateOpenIDConnectProviderThumbprintRequest.open_id_connect_provider_arn = value.into();`.
+    pub fn open_id_connect_provider_arn<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.open_id_connect_provider_arn = value.into();
+        self
+    }
+    /// Sets `thumbprint_list`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateOpenIDConnectProviderThumbprintRequest.thumbprint_list = value.into();`.
+    pub fn thumbprint_list<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.thumbprint_list = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateOpenIDConnectProviderThumbprintRequest with optional fields set to `None`.
+    pub fn new<OpenIDConnectProviderArnType: Into<String>, ThumbprintListType: Into<Vec<String>>>
+        (open_id_connect_provider_arn: OpenIDConnectProviderArnType,
+         thumbprint_list: ThumbprintListType)
+         -> UpdateOpenIDConnectProviderThumbprintRequest {
+        UpdateOpenIDConnectProviderThumbprintRequest {
+            open_id_connect_provider_arn: open_id_connect_provider_arn.into(),
+            thumbprint_list: thumbprint_list.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateOpenIDConnectProviderThumbprintRequest` contents to a `SignedRequest`.
 struct UpdateOpenIDConnectProviderThumbprintRequestSerializer;
@@ -11156,7 +13893,33 @@ pub struct UpdateRoleDescriptionRequest {
     #[doc="<p>The name of the role that you want to modify.</p>"]
     pub role_name: String,
 }
-
+impl UpdateRoleDescriptionRequest {
+    /// Sets `description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRoleDescriptionRequest.description = value.into();`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = value.into();
+        self
+    }
+    /// Sets `role_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRoleDescriptionRequest.role_name = value.into();`.
+    pub fn role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateRoleDescriptionRequest with optional fields set to `None`.
+    pub fn new<DescriptionType: Into<String>, RoleNameType: Into<String>>
+        (description: DescriptionType,
+         role_name: RoleNameType)
+         -> UpdateRoleDescriptionRequest {
+        UpdateRoleDescriptionRequest {
+            description: description.into(),
+            role_name: role_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateRoleDescriptionRequest` contents to a `SignedRequest`.
 struct UpdateRoleDescriptionRequestSerializer;
@@ -11178,7 +13941,6 @@ pub struct UpdateRoleDescriptionResponse {
     #[doc="<p>A structure that contains details about the modified role.</p>"]
     pub role: Option<Role>,
 }
-
 struct UpdateRoleDescriptionResponseDeserializer;
 impl UpdateRoleDescriptionResponseDeserializer {
     #[allow(unused_variables)]
@@ -11227,7 +13989,33 @@ pub struct UpdateSAMLProviderRequest {
     #[doc="<p>The Amazon Resource Name (ARN) of the SAML provider to update.</p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a> in the <i>AWS General Reference</i>.</p>"]
     pub saml_provider_arn: String,
 }
-
+impl UpdateSAMLProviderRequest {
+    /// Sets `saml_metadata_document`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateSAMLProviderRequest.saml_metadata_document = value.into();`.
+    pub fn saml_metadata_document<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.saml_metadata_document = value.into();
+        self
+    }
+    /// Sets `saml_provider_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateSAMLProviderRequest.saml_provider_arn = value.into();`.
+    pub fn saml_provider_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.saml_provider_arn = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateSAMLProviderRequest with optional fields set to `None`.
+    pub fn new<SAMLMetadataDocumentType: Into<String>, SAMLProviderArnType: Into<String>>
+        (saml_metadata_document: SAMLMetadataDocumentType,
+         saml_provider_arn: SAMLProviderArnType)
+         -> UpdateSAMLProviderRequest {
+        UpdateSAMLProviderRequest {
+            saml_metadata_document: saml_metadata_document.into(),
+            saml_provider_arn: saml_provider_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateSAMLProviderRequest` contents to a `SignedRequest`.
 struct UpdateSAMLProviderRequestSerializer;
@@ -11252,7 +14040,6 @@ pub struct UpdateSAMLProviderResponse {
     #[doc="<p>The Amazon Resource Name (ARN) of the SAML provider that was updated.</p>"]
     pub saml_provider_arn: Option<String>,
 }
-
 struct UpdateSAMLProviderResponseDeserializer;
 impl UpdateSAMLProviderResponseDeserializer {
     #[allow(unused_variables)]
@@ -11305,7 +14092,44 @@ pub struct UpdateSSHPublicKeyRequest {
     #[doc="<p>The name of the IAM user associated with the SSH public key.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl UpdateSSHPublicKeyRequest {
+    /// Sets `ssh_public_key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateSSHPublicKeyRequest.ssh_public_key_id = value.into();`.
+    pub fn ssh_public_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ssh_public_key_id = value.into();
+        self
+    }
+    /// Sets `status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateSSHPublicKeyRequest.status = value.into();`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = value.into();
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateSSHPublicKeyRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateSSHPublicKeyRequest with optional fields set to `None`.
+    pub fn new<SSHPublicKeyIdType: Into<String>,
+               StatusType: Into<String>,
+               UserNameType: Into<String>>
+        (ssh_public_key_id: SSHPublicKeyIdType,
+         status: StatusType,
+         user_name: UserNameType)
+         -> UpdateSSHPublicKeyRequest {
+        UpdateSSHPublicKeyRequest {
+            ssh_public_key_id: ssh_public_key_id.into(),
+            status: status.into(),
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateSSHPublicKeyRequest` contents to a `SignedRequest`.
 struct UpdateSSHPublicKeyRequestSerializer;
@@ -11333,7 +14157,38 @@ pub struct UpdateServerCertificateRequest {
     #[doc="<p>The name of the server certificate that you want to update.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub server_certificate_name: String,
 }
-
+impl UpdateServerCertificateRequest {
+    /// Sets `new_path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateServerCertificateRequest.new_path = Some(value.into());`.
+    pub fn new_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.new_path = Some(value.into());
+        self
+    }
+    /// Sets `new_server_certificate_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateServerCertificateRequest.new_server_certificate_name = Some(value.into());`.
+    pub fn new_server_certificate_name<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.new_server_certificate_name = Some(value.into());
+        self
+    }
+    /// Sets `server_certificate_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateServerCertificateRequest.server_certificate_name = value.into();`.
+    pub fn server_certificate_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_certificate_name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateServerCertificateRequest with optional fields set to `None`.
+pub fn new<ServerCertificateNameType: Into<String>>(server_certificate_name: ServerCertificateNameType) -> UpdateServerCertificateRequest{
+        UpdateServerCertificateRequest {
+            server_certificate_name: server_certificate_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateServerCertificateRequest` contents to a `SignedRequest`.
 struct UpdateServerCertificateRequestSerializer;
@@ -11366,7 +14221,42 @@ pub struct UpdateServiceSpecificCredentialRequest {
     #[doc="<p>The name of the IAM user associated with the service-specific credential. If you do not specify this value, then the operation assumes the user whose credentials are used to call the operation.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: Option<String>,
 }
-
+impl UpdateServiceSpecificCredentialRequest {
+    /// Sets `service_specific_credential_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateServiceSpecificCredentialRequest.service_specific_credential_id = value.into();`.
+    pub fn service_specific_credential_id<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.service_specific_credential_id = value.into();
+        self
+    }
+    /// Sets `status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateServiceSpecificCredentialRequest.status = value.into();`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = value.into();
+        self
+    }
+    /// Sets `user_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateServiceSpecificCredentialRequest.user_name = Some(value.into());`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateServiceSpecificCredentialRequest with optional fields set to `None`.
+    pub fn new<ServiceSpecificCredentialIdType: Into<String>, StatusType: Into<String>>
+        (service_specific_credential_id: ServiceSpecificCredentialIdType,
+         status: StatusType)
+         -> UpdateServiceSpecificCredentialRequest {
+        UpdateServiceSpecificCredentialRequest {
+            service_specific_credential_id: service_specific_credential_id.into(),
+            status: status.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateServiceSpecificCredentialRequest` contents to a `SignedRequest`.
 struct UpdateServiceSpecificCredentialRequestSerializer;
@@ -11396,7 +14286,40 @@ pub struct UpdateSigningCertificateRequest {
     #[doc="<p>The name of the IAM user the signing certificate belongs to.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: Option<String>,
 }
-
+impl UpdateSigningCertificateRequest {
+    /// Sets `certificate_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateSigningCertificateRequest.certificate_id = value.into();`.
+    pub fn certificate_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_id = value.into();
+        self
+    }
+    /// Sets `status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateSigningCertificateRequest.status = value.into();`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = value.into();
+        self
+    }
+    /// Sets `user_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateSigningCertificateRequest.user_name = Some(value.into());`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateSigningCertificateRequest with optional fields set to `None`.
+    pub fn new<CertificateIdType: Into<String>, StatusType: Into<String>>
+        (certificate_id: CertificateIdType,
+         status: StatusType)
+         -> UpdateSigningCertificateRequest {
+        UpdateSigningCertificateRequest {
+            certificate_id: certificate_id.into(),
+            status: status.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateSigningCertificateRequest` contents to a `SignedRequest`.
 struct UpdateSigningCertificateRequestSerializer;
@@ -11426,7 +14349,36 @@ pub struct UpdateUserRequest {
     #[doc="<p>Name of the user to update. If you're changing the name of the user, this is the original user name.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl UpdateUserRequest {
+    /// Sets `new_path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserRequest.new_path = Some(value.into());`.
+    pub fn new_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.new_path = Some(value.into());
+        self
+    }
+    /// Sets `new_user_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserRequest.new_user_name = Some(value.into());`.
+    pub fn new_user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.new_user_name = Some(value.into());
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUserRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateUserRequest with optional fields set to `None`.
+    pub fn new<UserNameType: Into<String>>(user_name: UserNameType) -> UpdateUserRequest {
+        UpdateUserRequest {
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateUserRequest` contents to a `SignedRequest`.
 struct UpdateUserRequestSerializer;
@@ -11455,7 +14407,33 @@ pub struct UploadSSHPublicKeyRequest {
     #[doc="<p>The name of the IAM user to associate the SSH public key with.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: String,
 }
-
+impl UploadSSHPublicKeyRequest {
+    /// Sets `ssh_public_key_body`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadSSHPublicKeyRequest.ssh_public_key_body = value.into();`.
+    pub fn ssh_public_key_body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ssh_public_key_body = value.into();
+        self
+    }
+    /// Sets `user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadSSHPublicKeyRequest.user_name = value.into();`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = value.into();
+        self
+    }
+    /// Returns a new instance of UploadSSHPublicKeyRequest with optional fields set to `None`.
+    pub fn new<SSHPublicKeyBodyType: Into<String>, UserNameType: Into<String>>
+        (ssh_public_key_body: SSHPublicKeyBodyType,
+         user_name: UserNameType)
+         -> UploadSSHPublicKeyRequest {
+        UploadSSHPublicKeyRequest {
+            ssh_public_key_body: ssh_public_key_body.into(),
+            user_name: user_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UploadSSHPublicKeyRequest` contents to a `SignedRequest`.
 struct UploadSSHPublicKeyRequestSerializer;
@@ -11479,7 +14457,6 @@ pub struct UploadSSHPublicKeyResponse {
     #[doc="<p>Contains information about the SSH public key.</p>"]
     pub ssh_public_key: Option<SSHPublicKey>,
 }
-
 struct UploadSSHPublicKeyResponseDeserializer;
 impl UploadSSHPublicKeyResponseDeserializer {
     #[allow(unused_variables)]
@@ -11536,7 +14513,58 @@ pub struct UploadServerCertificateRequest {
     #[doc="<p>The name for the server certificate. Do not include the path in this value. The name of the certificate cannot contain any spaces.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub server_certificate_name: String,
 }
-
+impl UploadServerCertificateRequest {
+    /// Sets `certificate_body`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadServerCertificateRequest.certificate_body = value.into();`.
+    pub fn certificate_body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_body = value.into();
+        self
+    }
+    /// Sets `certificate_chain`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadServerCertificateRequest.certificate_chain = Some(value.into());`.
+    pub fn certificate_chain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_chain = Some(value.into());
+        self
+    }
+    /// Sets `path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadServerCertificateRequest.path = Some(value.into());`.
+    pub fn path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path = Some(value.into());
+        self
+    }
+    /// Sets `private_key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadServerCertificateRequest.private_key = value.into();`.
+    pub fn private_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.private_key = value.into();
+        self
+    }
+    /// Sets `server_certificate_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadServerCertificateRequest.server_certificate_name = value.into();`.
+    pub fn server_certificate_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_certificate_name = value.into();
+        self
+    }
+    /// Returns a new instance of UploadServerCertificateRequest with optional fields set to `None`.
+    pub fn new<CertificateBodyType: Into<String>,
+               PrivateKeyType: Into<String>,
+               ServerCertificateNameType: Into<String>>
+        (certificate_body: CertificateBodyType,
+         private_key: PrivateKeyType,
+         server_certificate_name: ServerCertificateNameType)
+         -> UploadServerCertificateRequest {
+        UploadServerCertificateRequest {
+            certificate_body: certificate_body.into(),
+            private_key: private_key.into(),
+            server_certificate_name: server_certificate_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UploadServerCertificateRequest` contents to a `SignedRequest`.
 struct UploadServerCertificateRequestSerializer;
@@ -11568,7 +14596,6 @@ pub struct UploadServerCertificateResponse {
     #[doc="<p>The meta information of the uploaded server certificate without its certificate body, certificate chain, and private key.</p>"]
     pub server_certificate_metadata: Option<ServerCertificateMetadata>,
 }
-
 struct UploadServerCertificateResponseDeserializer;
 impl UploadServerCertificateResponseDeserializer {
     #[allow(unused_variables)]
@@ -11618,7 +14645,30 @@ pub struct UploadSigningCertificateRequest {
     #[doc="<p>The name of the user the signing certificate is for.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
     pub user_name: Option<String>,
 }
-
+impl UploadSigningCertificateRequest {
+    /// Sets `certificate_body`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadSigningCertificateRequest.certificate_body = value.into();`.
+    pub fn certificate_body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_body = value.into();
+        self
+    }
+    /// Sets `user_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadSigningCertificateRequest.user_name = Some(value.into());`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UploadSigningCertificateRequest with optional fields set to `None`.
+    pub fn new<CertificateBodyType: Into<String>>(certificate_body: CertificateBodyType)
+                                                  -> UploadSigningCertificateRequest {
+        UploadSigningCertificateRequest {
+            certificate_body: certificate_body.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UploadSigningCertificateRequest` contents to a `SignedRequest`.
 struct UploadSigningCertificateRequestSerializer;
@@ -11644,7 +14694,6 @@ pub struct UploadSigningCertificateResponse {
     #[doc="<p>Information about the certificate.</p>"]
     pub certificate: SigningCertificate,
 }
-
 struct UploadSigningCertificateResponseDeserializer;
 impl UploadSigningCertificateResponseDeserializer {
     #[allow(unused_variables)]
@@ -11705,7 +14754,6 @@ pub struct User {
     #[doc="<p>The friendly name identifying the user.</p>"]
     pub user_name: String,
 }
-
 struct UserDeserializer;
 impl UserDeserializer {
     #[allow(unused_variables)]
@@ -11785,7 +14833,6 @@ pub struct UserDetail {
     #[doc="<p>A list of the inline policies embedded in the user.</p>"]
     pub user_policy_list: Option<Vec<PolicyDetail>>,
 }
-
 struct UserDetailDeserializer;
 impl UserDetailDeserializer {
     #[allow(unused_variables)]
@@ -11966,7 +15013,6 @@ pub struct VirtualMFADevice {
     #[doc="<p>The IAM user associated with this virtual MFA device.</p>"]
     pub user: Option<User>,
 }
-
 struct VirtualMFADeviceDeserializer;
 impl VirtualMFADeviceDeserializer {
     #[allow(unused_variables)]

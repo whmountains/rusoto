@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -60,7 +61,6 @@ pub struct Application {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AssociateFleetRequest {
     #[doc="<p>The name of the fleet to associate.</p>"]
@@ -70,7 +70,33 @@ pub struct AssociateFleetRequest {
     #[serde(rename="StackName")]
     pub stack_name: String,
 }
-
+impl AssociateFleetRequest {
+    /// Sets `fleet_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateFleetRequest.fleet_name = value.into();`.
+    pub fn fleet_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_name = value.into();
+        self
+    }
+    /// Sets `stack_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateFleetRequest.stack_name = value.into();`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = value.into();
+        self
+    }
+    /// Returns a new instance of AssociateFleetRequest with optional fields set to `None`.
+    pub fn new<FleetNameType: Into<String>, StackNameType: Into<String>>
+        (fleet_name: FleetNameType,
+         stack_name: StackNameType)
+         -> AssociateFleetRequest {
+        AssociateFleetRequest {
+            fleet_name: fleet_name.into(),
+            stack_name: stack_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AssociateFleetResult;
 
@@ -81,7 +107,23 @@ pub struct ComputeCapacity {
     #[serde(rename="DesiredInstances")]
     pub desired_instances: i64,
 }
-
+impl ComputeCapacity {
+    /// Sets `desired_instances`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComputeCapacity.desired_instances = value.into();`.
+    pub fn desired_instances<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.desired_instances = value.into();
+        self
+    }
+    /// Returns a new instance of ComputeCapacity with optional fields set to `None`.
+    pub fn new<DesiredInstancesType: Into<i64>>(desired_instances: DesiredInstancesType)
+                                                -> ComputeCapacity {
+        ComputeCapacity {
+            desired_instances: desired_instances.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The capacity information for the fleet.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ComputeCapacityStatus {
@@ -101,7 +143,6 @@ pub struct ComputeCapacityStatus {
     #[serde(skip_serializing_if="Option::is_none")]
     pub running: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateDirectoryConfigRequest {
     #[doc="<p>The fully qualified name of the directory, such as corp.example.com</p>"]
@@ -114,7 +155,46 @@ pub struct CreateDirectoryConfigRequest {
     #[serde(rename="ServiceAccountCredentials")]
     pub service_account_credentials: ServiceAccountCredentials,
 }
-
+impl CreateDirectoryConfigRequest {
+    /// Sets `directory_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDirectoryConfigRequest.directory_name = value.into();`.
+    pub fn directory_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_name = value.into();
+        self
+    }
+    /// Sets `organizational_unit_distinguished_names`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDirectoryConfigRequest.organizational_unit_distinguished_names = value.into();`.
+    pub fn organizational_unit_distinguished_names<ValueType: Into<Vec<String>>>(mut self,
+                                                                                 value: ValueType)
+                                                                                 -> Self {
+        self.organizational_unit_distinguished_names = value.into();
+        self
+    }
+    /// Sets `service_account_credentials`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDirectoryConfigRequest.service_account_credentials = value.into();`.
+pub fn service_account_credentials<ValueType: Into<ServiceAccountCredentials>>(mut self, value: ValueType) -> Self{
+        self.service_account_credentials = value.into();
+        self
+    }
+    /// Returns a new instance of CreateDirectoryConfigRequest with optional fields set to `None`.
+    pub fn new<DirectoryNameType: Into<String>,
+               OrganizationalUnitDistinguishedNamesType: Into<Vec<String>>,
+               ServiceAccountCredentialsType: Into<ServiceAccountCredentials>>
+        (directory_name: DirectoryNameType,
+         organizational_unit_distinguished_names: OrganizationalUnitDistinguishedNamesType,
+         service_account_credentials: ServiceAccountCredentialsType)
+         -> CreateDirectoryConfigRequest {
+        CreateDirectoryConfigRequest {
+            directory_name: directory_name.into(),
+            organizational_unit_distinguished_names: organizational_unit_distinguished_names.into(),
+            service_account_credentials: service_account_credentials.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateDirectoryConfigResult {
     #[doc="<p>Directory configuration details.</p>"]
@@ -122,7 +202,6 @@ pub struct CreateDirectoryConfigResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub directory_config: Option<DirectoryConfig>,
 }
-
 #[doc="<p>Contains the parameters for the new fleet to create.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateFleetRequest {
@@ -167,7 +246,105 @@ pub struct CreateFleetRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vpc_config: Option<VpcConfig>,
 }
-
+impl CreateFleetRequest {
+    /// Sets `compute_capacity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetRequest.compute_capacity = value.into();`.
+    pub fn compute_capacity<ValueType: Into<ComputeCapacity>>(mut self, value: ValueType) -> Self {
+        self.compute_capacity = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `disconnect_timeout_in_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetRequest.disconnect_timeout_in_seconds = Some(value.into());`.
+    pub fn disconnect_timeout_in_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.disconnect_timeout_in_seconds = Some(value.into());
+        self
+    }
+    /// Sets `display_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetRequest.display_name = Some(value.into());`.
+    pub fn display_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.display_name = Some(value.into());
+        self
+    }
+    /// Sets `domain_join_info`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetRequest.domain_join_info = Some(value.into());`.
+    pub fn domain_join_info<ValueType: Into<DomainJoinInfo>>(mut self, value: ValueType) -> Self {
+        self.domain_join_info = Some(value.into());
+        self
+    }
+    /// Sets `enable_default_internet_access`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetRequest.enable_default_internet_access = Some(value.into());`.
+    pub fn enable_default_internet_access<ValueType: Into<bool>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.enable_default_internet_access = Some(value.into());
+        self
+    }
+    /// Sets `image_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetRequest.image_name = value.into();`.
+    pub fn image_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.image_name = value.into();
+        self
+    }
+    /// Sets `instance_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetRequest.instance_type = value.into();`.
+    pub fn instance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_type = value.into();
+        self
+    }
+    /// Sets `max_user_duration_in_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetRequest.max_user_duration_in_seconds = Some(value.into());`.
+    pub fn max_user_duration_in_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_user_duration_in_seconds = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `vpc_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetRequest.vpc_config = Some(value.into());`.
+    pub fn vpc_config<ValueType: Into<VpcConfig>>(mut self, value: ValueType) -> Self {
+        self.vpc_config = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateFleetRequest with optional fields set to `None`.
+    pub fn new<ComputeCapacityType: Into<ComputeCapacity>,
+               ImageNameType: Into<String>,
+               InstanceTypeType: Into<String>,
+               NameType: Into<String>>
+        (compute_capacity: ComputeCapacityType,
+         image_name: ImageNameType,
+         instance_type: InstanceTypeType,
+         name: NameType)
+         -> CreateFleetRequest {
+        CreateFleetRequest {
+            compute_capacity: compute_capacity.into(),
+            image_name: image_name.into(),
+            instance_type: instance_type.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateFleetResult {
     #[doc="<p>The details for the created fleet.</p>"]
@@ -175,7 +352,6 @@ pub struct CreateFleetResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub fleet: Option<Fleet>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateStackRequest {
     #[doc="<p>The description displayed to end users on the AppStream 2.0 portal.</p>"]
@@ -194,7 +370,45 @@ pub struct CreateStackRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub storage_connectors: Option<Vec<StorageConnector>>,
 }
-
+impl CreateStackRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `display_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.display_name = Some(value.into());`.
+    pub fn display_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.display_name = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `storage_connectors`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStackRequest.storage_connectors = Some(value.into());`.
+    pub fn storage_connectors<ValueType: Into<Vec<StorageConnector>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.storage_connectors = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateStackRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> CreateStackRequest {
+        CreateStackRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateStackResult {
     #[doc="<p>The details for the created stack.</p>"]
@@ -202,7 +416,6 @@ pub struct CreateStackResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stack: Option<Stack>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateStreamingURLRequest {
     #[doc="<p>The ID of the application that must be launched after the session starts.</p>"]
@@ -227,7 +440,63 @@ pub struct CreateStreamingURLRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub validity: Option<i64>,
 }
-
+impl CreateStreamingURLRequest {
+    /// Sets `application_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStreamingURLRequest.application_id = Some(value.into());`.
+    pub fn application_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_id = Some(value.into());
+        self
+    }
+    /// Sets `fleet_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStreamingURLRequest.fleet_name = value.into();`.
+    pub fn fleet_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_name = value.into();
+        self
+    }
+    /// Sets `session_context`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStreamingURLRequest.session_context = Some(value.into());`.
+    pub fn session_context<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.session_context = Some(value.into());
+        self
+    }
+    /// Sets `stack_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStreamingURLRequest.stack_name = value.into();`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = value.into();
+        self
+    }
+    /// Sets `user_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStreamingURLRequest.user_id = value.into();`.
+    pub fn user_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_id = value.into();
+        self
+    }
+    /// Sets `validity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStreamingURLRequest.validity = Some(value.into());`.
+    pub fn validity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.validity = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateStreamingURLRequest with optional fields set to `None`.
+    pub fn new<FleetNameType: Into<String>, StackNameType: Into<String>, UserIdType: Into<String>>
+        (fleet_name: FleetNameType,
+         stack_name: StackNameType,
+         user_id: UserIdType)
+         -> CreateStreamingURLRequest {
+        CreateStreamingURLRequest {
+            fleet_name: fleet_name.into(),
+            stack_name: stack_name.into(),
+            user_id: user_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateStreamingURLResult {
     #[doc="<p>Elapsed seconds after the Unix epoch, when this URL expires.</p>"]
@@ -239,14 +508,29 @@ pub struct CreateStreamingURLResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub streaming_url: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteDirectoryConfigRequest {
     #[doc="<p>The name of the directory configuration to be deleted.</p>"]
     #[serde(rename="DirectoryName")]
     pub directory_name: String,
 }
-
+impl DeleteDirectoryConfigRequest {
+    /// Sets `directory_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDirectoryConfigRequest.directory_name = value.into();`.
+    pub fn directory_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDirectoryConfigRequest with optional fields set to `None`.
+    pub fn new<DirectoryNameType: Into<String>>(directory_name: DirectoryNameType)
+                                                -> DeleteDirectoryConfigRequest {
+        DeleteDirectoryConfigRequest {
+            directory_name: directory_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteDirectoryConfigResult;
 
@@ -256,7 +540,22 @@ pub struct DeleteFleetRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl DeleteFleetRequest {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteFleetRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteFleetRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> DeleteFleetRequest {
+        DeleteFleetRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteFleetResult;
 
@@ -266,7 +565,22 @@ pub struct DeleteStackRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl DeleteStackRequest {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteStackRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteStackRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> DeleteStackRequest {
+        DeleteStackRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteStackResult;
 
@@ -285,7 +599,33 @@ pub struct DescribeDirectoryConfigsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeDirectoryConfigsRequest {
+    /// Sets `directory_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDirectoryConfigsRequest.directory_names = Some(value.into());`.
+    pub fn directory_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.directory_names = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDirectoryConfigsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDirectoryConfigsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDirectoryConfigsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeDirectoryConfigsRequest {
+        DescribeDirectoryConfigsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeDirectoryConfigsResult {
     #[doc="<p>The list of directory configurations.</p>"]
@@ -297,7 +637,6 @@ pub struct DescribeDirectoryConfigsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeFleetsRequest {
     #[doc="<p>The fleet names to describe. Use null to describe all the fleets for the AWS account.</p>"]
@@ -309,7 +648,26 @@ pub struct DescribeFleetsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeFleetsRequest {
+    /// Sets `names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFleetsRequest.names = Some(value.into());`.
+    pub fn names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.names = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFleetsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeFleetsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeFleetsRequest {
+        DescribeFleetsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeFleetsResult {
     #[doc="<p>The list of fleet details.</p>"]
@@ -321,7 +679,6 @@ pub struct DescribeFleetsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeImagesRequest {
     #[doc="<p>A specific list of images to describe.</p>"]
@@ -329,7 +686,19 @@ pub struct DescribeImagesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub names: Option<Vec<String>>,
 }
-
+impl DescribeImagesRequest {
+    /// Sets `names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImagesRequest.names = Some(value.into());`.
+    pub fn names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeImagesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeImagesRequest {
+        DescribeImagesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeImagesResult {
     #[doc="<p>The list of images.</p>"]
@@ -337,7 +706,6 @@ pub struct DescribeImagesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub images: Option<Vec<Image>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeSessionsRequest {
     #[doc="<p>The authentication method of the user. It can be <code>API</code> for a user authenticated using a streaming URL, or <code>SAML</code> for a SAML federated user. If an authentication type is not provided, the operation defaults to users authenticated using a streaming URL.</p>"]
@@ -363,7 +731,61 @@ pub struct DescribeSessionsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_id: Option<String>,
 }
-
+impl DescribeSessionsRequest {
+    /// Sets `authentication_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSessionsRequest.authentication_type = Some(value.into());`.
+    pub fn authentication_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.authentication_type = Some(value.into());
+        self
+    }
+    /// Sets `fleet_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSessionsRequest.fleet_name = value.into();`.
+    pub fn fleet_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_name = value.into();
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSessionsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSessionsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `stack_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSessionsRequest.stack_name = value.into();`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = value.into();
+        self
+    }
+    /// Sets `user_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSessionsRequest.user_id = Some(value.into());`.
+    pub fn user_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeSessionsRequest with optional fields set to `None`.
+    pub fn new<FleetNameType: Into<String>, StackNameType: Into<String>>
+        (fleet_name: FleetNameType,
+         stack_name: StackNameType)
+         -> DescribeSessionsRequest {
+        DescribeSessionsRequest {
+            fleet_name: fleet_name.into(),
+            stack_name: stack_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeSessionsResult {
     #[doc="<p>The pagination token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.</p>"]
@@ -375,7 +797,6 @@ pub struct DescribeSessionsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sessions: Option<Vec<Session>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeStacksRequest {
     #[doc="<p>The stack names to describe. Use null to describe all the stacks for the AWS account.</p>"]
@@ -387,7 +808,26 @@ pub struct DescribeStacksRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeStacksRequest {
+    /// Sets `names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStacksRequest.names = Some(value.into());`.
+    pub fn names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.names = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStacksRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeStacksRequest with optional fields set to `None`.
+    pub fn new() -> DescribeStacksRequest {
+        DescribeStacksRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeStacksResult {
     #[doc="<p>The pagination token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.</p>"]
@@ -399,7 +839,6 @@ pub struct DescribeStacksResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stacks: Option<Vec<Stack>>,
 }
-
 #[doc="<p>Full directory configuration details, which are used to join domains for the AppStream 2.0 streaming instances.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DirectoryConfig {
@@ -419,7 +858,6 @@ pub struct DirectoryConfig {
     #[serde(skip_serializing_if="Option::is_none")]
     pub service_account_credentials: Option<ServiceAccountCredentials>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DisassociateFleetRequest {
     #[doc="<p>The name of the fleet to disassociate.</p>"]
@@ -429,7 +867,33 @@ pub struct DisassociateFleetRequest {
     #[serde(rename="StackName")]
     pub stack_name: String,
 }
-
+impl DisassociateFleetRequest {
+    /// Sets `fleet_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateFleetRequest.fleet_name = value.into();`.
+    pub fn fleet_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_name = value.into();
+        self
+    }
+    /// Sets `stack_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateFleetRequest.stack_name = value.into();`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = value.into();
+        self
+    }
+    /// Returns a new instance of DisassociateFleetRequest with optional fields set to `None`.
+    pub fn new<FleetNameType: Into<String>, StackNameType: Into<String>>
+        (fleet_name: FleetNameType,
+         stack_name: StackNameType)
+         -> DisassociateFleetRequest {
+        DisassociateFleetRequest {
+            fleet_name: fleet_name.into(),
+            stack_name: stack_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DisassociateFleetResult;
 
@@ -445,14 +909,50 @@ pub struct DomainJoinInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub organizational_unit_distinguished_name: Option<String>,
 }
-
+impl DomainJoinInfo {
+    /// Sets `directory_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DomainJoinInfo.directory_name = Some(value.into());`.
+    pub fn directory_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_name = Some(value.into());
+        self
+    }
+    /// Sets `organizational_unit_distinguished_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DomainJoinInfo.organizational_unit_distinguished_name = Some(value.into());`.
+    pub fn organizational_unit_distinguished_name<ValueType: Into<String>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.organizational_unit_distinguished_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DomainJoinInfo with optional fields set to `None`.
+    pub fn new() -> DomainJoinInfo {
+        DomainJoinInfo { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ExpireSessionRequest {
     #[doc="<p>The unique identifier of the streaming session to be stopped.</p>"]
     #[serde(rename="SessionId")]
     pub session_id: String,
 }
-
+impl ExpireSessionRequest {
+    /// Sets `session_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExpireSessionRequest.session_id = value.into();`.
+    pub fn session_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.session_id = value.into();
+        self
+    }
+    /// Returns a new instance of ExpireSessionRequest with optional fields set to `None`.
+    pub fn new<SessionIdType: Into<String>>(session_id: SessionIdType) -> ExpireSessionRequest {
+        ExpireSessionRequest {
+            session_id: session_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ExpireSessionResult;
 
@@ -514,7 +1014,6 @@ pub struct Fleet {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vpc_config: Option<VpcConfig>,
 }
-
 #[doc="<p>The details of the fleet error.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct FleetError {
@@ -527,7 +1026,6 @@ pub struct FleetError {
     #[serde(skip_serializing_if="Option::is_none")]
     pub error_message: Option<String>,
 }
-
 #[doc="<p>New streaming instances are booted from images. The image stores the application catalog and is connected to fleets.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Image {
@@ -583,7 +1081,6 @@ pub struct Image {
     #[serde(skip_serializing_if="Option::is_none")]
     pub visibility: Option<String>,
 }
-
 #[doc="<p>The reason why the last state change occurred.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ImageStateChangeReason {
@@ -596,7 +1093,6 @@ pub struct ImageStateChangeReason {
     #[serde(skip_serializing_if="Option::is_none")]
     pub message: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListAssociatedFleetsRequest {
     #[doc="<p>The pagination token to use to retrieve the next page of results for this operation. If this value is null, it retrieves the first page.</p>"]
@@ -607,7 +1103,30 @@ pub struct ListAssociatedFleetsRequest {
     #[serde(rename="StackName")]
     pub stack_name: String,
 }
-
+impl ListAssociatedFleetsRequest {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssociatedFleetsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `stack_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssociatedFleetsRequest.stack_name = value.into();`.
+    pub fn stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stack_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListAssociatedFleetsRequest with optional fields set to `None`.
+    pub fn new<StackNameType: Into<String>>(stack_name: StackNameType)
+                                            -> ListAssociatedFleetsRequest {
+        ListAssociatedFleetsRequest {
+            stack_name: stack_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response from a successful operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListAssociatedFleetsResult {
@@ -620,7 +1139,6 @@ pub struct ListAssociatedFleetsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListAssociatedStacksRequest {
     #[doc="<p>The name of the fleet whose associated stacks are listed.</p>"]
@@ -631,7 +1149,30 @@ pub struct ListAssociatedStacksRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListAssociatedStacksRequest {
+    /// Sets `fleet_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssociatedStacksRequest.fleet_name = value.into();`.
+    pub fn fleet_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_name = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssociatedStacksRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListAssociatedStacksRequest with optional fields set to `None`.
+    pub fn new<FleetNameType: Into<String>>(fleet_name: FleetNameType)
+                                            -> ListAssociatedStacksRequest {
+        ListAssociatedStacksRequest {
+            fleet_name: fleet_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response from a successful operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListAssociatedStacksResult {
@@ -644,7 +1185,6 @@ pub struct ListAssociatedStacksResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>The <i>AccountName</i> and <i>AccountPassword</i> of the service account, to be used by the streaming instance to connect to the directory.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ServiceAccountCredentials {
@@ -655,7 +1195,33 @@ pub struct ServiceAccountCredentials {
     #[serde(rename="AccountPassword")]
     pub account_password: String,
 }
-
+impl ServiceAccountCredentials {
+    /// Sets `account_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ServiceAccountCredentials.account_name = value.into();`.
+    pub fn account_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_name = value.into();
+        self
+    }
+    /// Sets `account_password`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ServiceAccountCredentials.account_password = value.into();`.
+    pub fn account_password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_password = value.into();
+        self
+    }
+    /// Returns a new instance of ServiceAccountCredentials with optional fields set to `None`.
+    pub fn new<AccountNameType: Into<String>, AccountPasswordType: Into<String>>
+        (account_name: AccountNameType,
+         account_password: AccountPasswordType)
+         -> ServiceAccountCredentials {
+        ServiceAccountCredentials {
+            account_name: account_name.into(),
+            account_password: account_password.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the parameters for a streaming session.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Session {
@@ -679,7 +1245,6 @@ pub struct Session {
     #[serde(rename="UserId")]
     pub user_id: String,
 }
-
 #[doc="<p>Details about a stack.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Stack {
@@ -711,7 +1276,6 @@ pub struct Stack {
     #[serde(skip_serializing_if="Option::is_none")]
     pub storage_connectors: Option<Vec<StorageConnector>>,
 }
-
 #[doc="<p>Contains the parameters for a stack error.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StackError {
@@ -724,14 +1288,28 @@ pub struct StackError {
     #[serde(skip_serializing_if="Option::is_none")]
     pub error_message: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartFleetRequest {
     #[doc="<p>The name of the fleet to start.</p>"]
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl StartFleetRequest {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartFleetRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of StartFleetRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> StartFleetRequest {
+        StartFleetRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartFleetResult;
 
@@ -741,7 +1319,22 @@ pub struct StopFleetRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl StopFleetRequest {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopFleetRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of StopFleetRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> StopFleetRequest {
+        StopFleetRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StopFleetResult;
 
@@ -756,7 +1349,30 @@ pub struct StorageConnector {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_identifier: Option<String>,
 }
-
+impl StorageConnector {
+    /// Sets `connector_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StorageConnector.connector_type = value.into();`.
+    pub fn connector_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connector_type = value.into();
+        self
+    }
+    /// Sets `resource_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StorageConnector.resource_identifier = Some(value.into());`.
+    pub fn resource_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_identifier = Some(value.into());
+        self
+    }
+    /// Returns a new instance of StorageConnector with optional fields set to `None`.
+    pub fn new<ConnectorTypeType: Into<String>>(connector_type: ConnectorTypeType)
+                                                -> StorageConnector {
+        StorageConnector {
+            connector_type: connector_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateDirectoryConfigRequest {
     #[doc="<p>The name of the existing directory configuration to be updated.</p>"]
@@ -771,7 +1387,39 @@ pub struct UpdateDirectoryConfigRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub service_account_credentials: Option<ServiceAccountCredentials>,
 }
-
+impl UpdateDirectoryConfigRequest {
+    /// Sets `directory_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDirectoryConfigRequest.directory_name = value.into();`.
+    pub fn directory_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_name = value.into();
+        self
+    }
+    /// Sets `organizational_unit_distinguished_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDirectoryConfigRequest.organizational_unit_distinguished_names = Some(value.into());`.
+    pub fn organizational_unit_distinguished_names<ValueType: Into<Vec<String>>>(mut self,
+                                                                                 value: ValueType)
+                                                                                 -> Self {
+        self.organizational_unit_distinguished_names = Some(value.into());
+        self
+    }
+    /// Sets `service_account_credentials`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDirectoryConfigRequest.service_account_credentials = Some(value.into());`.
+pub fn service_account_credentials<ValueType: Into<ServiceAccountCredentials>>(mut self, value: ValueType) -> Self{
+        self.service_account_credentials = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateDirectoryConfigRequest with optional fields set to `None`.
+    pub fn new<DirectoryNameType: Into<String>>(directory_name: DirectoryNameType)
+                                                -> UpdateDirectoryConfigRequest {
+        UpdateDirectoryConfigRequest {
+            directory_name: directory_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateDirectoryConfigResult {
     #[doc="<p>The updated directory configuration details.</p>"]
@@ -779,7 +1427,6 @@ pub struct UpdateDirectoryConfigResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub directory_config: Option<DirectoryConfig>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateFleetRequest {
     #[doc="<p>Fleet attributes to be deleted.</p>"]
@@ -830,7 +1477,101 @@ pub struct UpdateFleetRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vpc_config: Option<VpcConfig>,
 }
-
+impl UpdateFleetRequest {
+    /// Sets `attributes_to_delete`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetRequest.attributes_to_delete = Some(value.into());`.
+    pub fn attributes_to_delete<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.attributes_to_delete = Some(value.into());
+        self
+    }
+    /// Sets `compute_capacity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetRequest.compute_capacity = Some(value.into());`.
+    pub fn compute_capacity<ValueType: Into<ComputeCapacity>>(mut self, value: ValueType) -> Self {
+        self.compute_capacity = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `disconnect_timeout_in_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetRequest.disconnect_timeout_in_seconds = Some(value.into());`.
+    pub fn disconnect_timeout_in_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.disconnect_timeout_in_seconds = Some(value.into());
+        self
+    }
+    /// Sets `display_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetRequest.display_name = Some(value.into());`.
+    pub fn display_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.display_name = Some(value.into());
+        self
+    }
+    /// Sets `domain_join_info`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetRequest.domain_join_info = Some(value.into());`.
+    pub fn domain_join_info<ValueType: Into<DomainJoinInfo>>(mut self, value: ValueType) -> Self {
+        self.domain_join_info = Some(value.into());
+        self
+    }
+    /// Sets `enable_default_internet_access`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetRequest.enable_default_internet_access = Some(value.into());`.
+    pub fn enable_default_internet_access<ValueType: Into<bool>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.enable_default_internet_access = Some(value.into());
+        self
+    }
+    /// Sets `image_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetRequest.image_name = Some(value.into());`.
+    pub fn image_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.image_name = Some(value.into());
+        self
+    }
+    /// Sets `instance_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetRequest.instance_type = Some(value.into());`.
+    pub fn instance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_type = Some(value.into());
+        self
+    }
+    /// Sets `max_user_duration_in_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetRequest.max_user_duration_in_seconds = Some(value.into());`.
+    pub fn max_user_duration_in_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_user_duration_in_seconds = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `vpc_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetRequest.vpc_config = Some(value.into());`.
+    pub fn vpc_config<ValueType: Into<VpcConfig>>(mut self, value: ValueType) -> Self {
+        self.vpc_config = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateFleetRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> UpdateFleetRequest {
+        UpdateFleetRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateFleetResult {
     #[doc="<p>A list of fleet details.</p>"]
@@ -838,7 +1579,6 @@ pub struct UpdateFleetResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub fleet: Option<Fleet>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateStackRequest {
     #[doc="<p>Remove all the storage connectors currently enabled for the stack.</p>"]
@@ -861,7 +1601,52 @@ pub struct UpdateStackRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub storage_connectors: Option<Vec<StorageConnector>>,
 }
-
+impl UpdateStackRequest {
+    /// Sets `delete_storage_connectors`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.delete_storage_connectors = Some(value.into());`.
+    pub fn delete_storage_connectors<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.delete_storage_connectors = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `display_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.display_name = Some(value.into());`.
+    pub fn display_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.display_name = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `storage_connectors`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStackRequest.storage_connectors = Some(value.into());`.
+    pub fn storage_connectors<ValueType: Into<Vec<StorageConnector>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.storage_connectors = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateStackRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> UpdateStackRequest {
+        UpdateStackRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateStackResult {
     #[doc="<p>A list of stack details.</p>"]
@@ -869,7 +1654,6 @@ pub struct UpdateStackResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stack: Option<Stack>,
 }
-
 #[doc="<p>VPC configuration information.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct VpcConfig {
@@ -882,7 +1666,26 @@ pub struct VpcConfig {
     #[serde(skip_serializing_if="Option::is_none")]
     pub subnet_ids: Option<Vec<String>>,
 }
-
+impl VpcConfig {
+    /// Sets `security_group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VpcConfig.security_group_ids = Some(value.into());`.
+    pub fn security_group_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.security_group_ids = Some(value.into());
+        self
+    }
+    /// Sets `subnet_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VpcConfig.subnet_ids = Some(value.into());`.
+    pub fn subnet_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.subnet_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of VpcConfig with optional fields set to `None`.
+    pub fn new() -> VpcConfig {
+        VpcConfig { ..Default::default() }
+    }
+}
 /// Errors returned by AssociateFleet
 #[derive(Debug, PartialEq)]
 pub enum AssociateFleetError {

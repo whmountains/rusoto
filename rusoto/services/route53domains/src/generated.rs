@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -52,7 +53,6 @@ pub struct BillingRecord {
     #[serde(skip_serializing_if="Option::is_none")]
     pub price: Option<f64>,
 }
-
 #[doc="<p>The CheckDomainAvailability request contains the following elements.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CheckDomainAvailabilityRequest {
@@ -64,7 +64,30 @@ pub struct CheckDomainAvailabilityRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub idn_lang_code: Option<String>,
 }
-
+impl CheckDomainAvailabilityRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CheckDomainAvailabilityRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `idn_lang_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CheckDomainAvailabilityRequest.idn_lang_code = Some(value.into());`.
+    pub fn idn_lang_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.idn_lang_code = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CheckDomainAvailabilityRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType)
+                                             -> CheckDomainAvailabilityRequest {
+        CheckDomainAvailabilityRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The CheckDomainAvailability response includes the following elements.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CheckDomainAvailabilityResponse {
@@ -72,7 +95,6 @@ pub struct CheckDomainAvailabilityResponse {
     #[serde(rename="Availability")]
     pub availability: String,
 }
-
 #[doc="<p>ContactDetail includes the following elements.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ContactDetail {
@@ -133,7 +155,110 @@ pub struct ContactDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub zip_code: Option<String>,
 }
-
+impl ContactDetail {
+    /// Sets `address_line_1`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContactDetail.address_line_1 = Some(value.into());`.
+    pub fn address_line_1<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.address_line_1 = Some(value.into());
+        self
+    }
+    /// Sets `address_line_2`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContactDetail.address_line_2 = Some(value.into());`.
+    pub fn address_line_2<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.address_line_2 = Some(value.into());
+        self
+    }
+    /// Sets `city`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContactDetail.city = Some(value.into());`.
+    pub fn city<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.city = Some(value.into());
+        self
+    }
+    /// Sets `contact_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContactDetail.contact_type = Some(value.into());`.
+    pub fn contact_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.contact_type = Some(value.into());
+        self
+    }
+    /// Sets `country_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContactDetail.country_code = Some(value.into());`.
+    pub fn country_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.country_code = Some(value.into());
+        self
+    }
+    /// Sets `email`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContactDetail.email = Some(value.into());`.
+    pub fn email<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.email = Some(value.into());
+        self
+    }
+    /// Sets `extra_params`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContactDetail.extra_params = Some(value.into());`.
+    pub fn extra_params<ValueType: Into<Vec<ExtraParam>>>(mut self, value: ValueType) -> Self {
+        self.extra_params = Some(value.into());
+        self
+    }
+    /// Sets `fax`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContactDetail.fax = Some(value.into());`.
+    pub fn fax<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fax = Some(value.into());
+        self
+    }
+    /// Sets `first_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContactDetail.first_name = Some(value.into());`.
+    pub fn first_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.first_name = Some(value.into());
+        self
+    }
+    /// Sets `last_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContactDetail.last_name = Some(value.into());`.
+    pub fn last_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.last_name = Some(value.into());
+        self
+    }
+    /// Sets `organization_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContactDetail.organization_name = Some(value.into());`.
+    pub fn organization_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.organization_name = Some(value.into());
+        self
+    }
+    /// Sets `phone_number`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContactDetail.phone_number = Some(value.into());`.
+    pub fn phone_number<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.phone_number = Some(value.into());
+        self
+    }
+    /// Sets `state`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContactDetail.state = Some(value.into());`.
+    pub fn state<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.state = Some(value.into());
+        self
+    }
+    /// Sets `zip_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContactDetail.zip_code = Some(value.into());`.
+    pub fn zip_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.zip_code = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ContactDetail with optional fields set to `None`.
+    pub fn new() -> ContactDetail {
+        ContactDetail { ..Default::default() }
+    }
+}
 #[doc="<p>The DeleteTagsForDomainRequest includes the following elements.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteTagsForDomainRequest {
@@ -144,7 +269,33 @@ pub struct DeleteTagsForDomainRequest {
     #[serde(rename="TagsToDelete")]
     pub tags_to_delete: Vec<String>,
 }
-
+impl DeleteTagsForDomainRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTagsForDomainRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `tags_to_delete`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTagsForDomainRequest.tags_to_delete = value.into();`.
+    pub fn tags_to_delete<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tags_to_delete = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteTagsForDomainRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>, TagsToDeleteType: Into<Vec<String>>>
+        (domain_name: DomainNameType,
+         tags_to_delete: TagsToDeleteType)
+         -> DeleteTagsForDomainRequest {
+        DeleteTagsForDomainRequest {
+            domain_name: domain_name.into(),
+            tags_to_delete: tags_to_delete.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteTagsForDomainResponse;
 
@@ -154,7 +305,23 @@ pub struct DisableDomainAutoRenewRequest {
     #[serde(rename="DomainName")]
     pub domain_name: String,
 }
-
+impl DisableDomainAutoRenewRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableDomainAutoRenewRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of DisableDomainAutoRenewRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType)
+                                             -> DisableDomainAutoRenewRequest {
+        DisableDomainAutoRenewRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DisableDomainAutoRenewResponse;
 
@@ -165,7 +332,23 @@ pub struct DisableDomainTransferLockRequest {
     #[serde(rename="DomainName")]
     pub domain_name: String,
 }
-
+impl DisableDomainTransferLockRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableDomainTransferLockRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of DisableDomainTransferLockRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType)
+                                             -> DisableDomainTransferLockRequest {
+        DisableDomainTransferLockRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The DisableDomainTransferLock response includes the following element.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DisableDomainTransferLockResponse {
@@ -173,7 +356,6 @@ pub struct DisableDomainTransferLockResponse {
     #[serde(rename="OperationId")]
     pub operation_id: String,
 }
-
 #[doc="<p>Information about one suggested domain name.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DomainSuggestion {
@@ -186,7 +368,6 @@ pub struct DomainSuggestion {
     #[serde(skip_serializing_if="Option::is_none")]
     pub domain_name: Option<String>,
 }
-
 #[doc="<p>Summary information about one domain.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DomainSummary {
@@ -206,14 +387,29 @@ pub struct DomainSummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub transfer_lock: Option<bool>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct EnableDomainAutoRenewRequest {
     #[doc="<p>The name of the domain that you want to enable automatic renewal for.</p>"]
     #[serde(rename="DomainName")]
     pub domain_name: String,
 }
-
+impl EnableDomainAutoRenewRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableDomainAutoRenewRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of EnableDomainAutoRenewRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType)
+                                             -> EnableDomainAutoRenewRequest {
+        EnableDomainAutoRenewRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EnableDomainAutoRenewResponse;
 
@@ -224,7 +420,23 @@ pub struct EnableDomainTransferLockRequest {
     #[serde(rename="DomainName")]
     pub domain_name: String,
 }
-
+impl EnableDomainTransferLockRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableDomainTransferLockRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of EnableDomainTransferLockRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType)
+                                             -> EnableDomainTransferLockRequest {
+        EnableDomainTransferLockRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The EnableDomainTransferLock response includes the following elements.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EnableDomainTransferLockResponse {
@@ -232,7 +444,6 @@ pub struct EnableDomainTransferLockResponse {
     #[serde(rename="OperationId")]
     pub operation_id: String,
 }
-
 #[doc="<p>ExtraParam includes the following elements.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ExtraParam {
@@ -243,7 +454,32 @@ pub struct ExtraParam {
     #[serde(rename="Value")]
     pub value: String,
 }
-
+impl ExtraParam {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtraParam.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExtraParam.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of ExtraParam with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, ValueType: Into<String>>(name: NameType,
+                                                                value: ValueType)
+                                                                -> ExtraParam {
+        ExtraParam {
+            name: name.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetContactReachabilityStatusRequest {
     #[doc="<p>The name of the domain for which you want to know whether the registrant contact has confirmed that the email address is valid.</p>"]
@@ -251,7 +487,19 @@ pub struct GetContactReachabilityStatusRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub domain_name: Option<String>,
 }
-
+impl GetContactReachabilityStatusRequest {
+    /// Sets `domain_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetContactReachabilityStatusRequest.domain_name = Some(value.into());`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetContactReachabilityStatusRequest with optional fields set to `None`.
+    pub fn new() -> GetContactReachabilityStatusRequest {
+        GetContactReachabilityStatusRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetContactReachabilityStatusResponse {
     #[doc="<p>The domain name for which you requested the reachability status.</p>"]
@@ -263,7 +511,6 @@ pub struct GetContactReachabilityStatusResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[doc="<p>The GetDomainDetail request includes the following element.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDomainDetailRequest {
@@ -271,7 +518,23 @@ pub struct GetDomainDetailRequest {
     #[serde(rename="DomainName")]
     pub domain_name: String,
 }
-
+impl GetDomainDetailRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDomainDetailRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetDomainDetailRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType)
+                                             -> GetDomainDetailRequest {
+        GetDomainDetailRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The GetDomainDetail response includes the following elements.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetDomainDetailResponse {
@@ -355,7 +618,6 @@ pub struct GetDomainDetailResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub who_is_server: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDomainSuggestionsRequest {
     #[doc="<p>A domain name that you want to use as the basis for a list of possible domain names. The domain name must contain a top-level domain (TLD), such as .com, that Amazon Route 53 supports. For a list of TLDs, see <a href=\"http://docs.aws.amazon.com/Route53/latest/DeveloperGuide/registrar-tld-list.html\">Domains that You Can Register with Amazon Route 53</a> in the <i>Amazon Route 53 Developer Guide</i>.</p>"]
@@ -368,7 +630,44 @@ pub struct GetDomainSuggestionsRequest {
     #[serde(rename="SuggestionCount")]
     pub suggestion_count: i64,
 }
-
+impl GetDomainSuggestionsRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDomainSuggestionsRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `only_available`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDomainSuggestionsRequest.only_available = value.into();`.
+    pub fn only_available<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.only_available = value.into();
+        self
+    }
+    /// Sets `suggestion_count`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDomainSuggestionsRequest.suggestion_count = value.into();`.
+    pub fn suggestion_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.suggestion_count = value.into();
+        self
+    }
+    /// Returns a new instance of GetDomainSuggestionsRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>,
+               OnlyAvailableType: Into<bool>,
+               SuggestionCountType: Into<i64>>
+        (domain_name: DomainNameType,
+         only_available: OnlyAvailableType,
+         suggestion_count: SuggestionCountType)
+         -> GetDomainSuggestionsRequest {
+        GetDomainSuggestionsRequest {
+            domain_name: domain_name.into(),
+            only_available: only_available.into(),
+            suggestion_count: suggestion_count.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetDomainSuggestionsResponse {
     #[doc="<p>A list of possible domain names. If you specified <code>true</code> for <code>OnlyAvailable</code> in the request, the list contains only domains that are available for registration.</p>"]
@@ -376,7 +675,6 @@ pub struct GetDomainSuggestionsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub suggestions_list: Option<Vec<DomainSuggestion>>,
 }
-
 #[doc="<p>The <a>GetOperationDetail</a> request includes the following element.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetOperationDetailRequest {
@@ -384,7 +682,23 @@ pub struct GetOperationDetailRequest {
     #[serde(rename="OperationId")]
     pub operation_id: String,
 }
-
+impl GetOperationDetailRequest {
+    /// Sets `operation_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetOperationDetailRequest.operation_id = value.into();`.
+    pub fn operation_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.operation_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetOperationDetailRequest with optional fields set to `None`.
+    pub fn new<OperationIdType: Into<String>>(operation_id: OperationIdType)
+                                              -> GetOperationDetailRequest {
+        GetOperationDetailRequest {
+            operation_id: operation_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The GetOperationDetail response includes the following elements.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetOperationDetailResponse {
@@ -413,7 +727,6 @@ pub struct GetOperationDetailResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>The ListDomains request includes the following elements.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListDomainsRequest {
@@ -426,7 +739,26 @@ pub struct ListDomainsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub max_items: Option<i64>,
 }
-
+impl ListDomainsRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDomainsRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDomainsRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListDomainsRequest with optional fields set to `None`.
+    pub fn new() -> ListDomainsRequest {
+        ListDomainsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The ListDomains response includes the following elements.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListDomainsResponse {
@@ -438,7 +770,6 @@ pub struct ListDomainsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_page_marker: Option<String>,
 }
-
 #[doc="<p>The ListOperations request includes the following elements.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListOperationsRequest {
@@ -451,7 +782,26 @@ pub struct ListOperationsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub max_items: Option<i64>,
 }
-
+impl ListOperationsRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListOperationsRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListOperationsRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListOperationsRequest with optional fields set to `None`.
+    pub fn new() -> ListOperationsRequest {
+        ListOperationsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The ListOperations response includes the following elements.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListOperationsResponse {
@@ -463,7 +813,6 @@ pub struct ListOperationsResponse {
     #[serde(rename="Operations")]
     pub operations: Vec<OperationSummary>,
 }
-
 #[doc="<p>The ListTagsForDomainRequest includes the following elements.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTagsForDomainRequest {
@@ -471,7 +820,23 @@ pub struct ListTagsForDomainRequest {
     #[serde(rename="DomainName")]
     pub domain_name: String,
 }
-
+impl ListTagsForDomainRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForDomainRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListTagsForDomainRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType)
+                                             -> ListTagsForDomainRequest {
+        ListTagsForDomainRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The ListTagsForDomain response includes the following elements.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTagsForDomainResponse {
@@ -479,7 +844,6 @@ pub struct ListTagsForDomainResponse {
     #[serde(rename="TagList")]
     pub tag_list: Vec<Tag>,
 }
-
 #[doc="<p>Nameserver includes the following elements.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Nameserver {
@@ -491,7 +855,29 @@ pub struct Nameserver {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl Nameserver {
+    /// Sets `glue_ips`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Nameserver.glue_ips = Some(value.into());`.
+    pub fn glue_ips<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.glue_ips = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Nameserver.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of Nameserver with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> Nameserver {
+        Nameserver {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>OperationSummary includes the following elements.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct OperationSummary {
@@ -508,7 +894,6 @@ pub struct OperationSummary {
     #[serde(rename="Type")]
     pub type_: String,
 }
-
 #[doc="<p>The RegisterDomain request includes the following elements.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RegisterDomainRequest {
@@ -548,7 +933,103 @@ pub struct RegisterDomainRequest {
     #[serde(rename="TechContact")]
     pub tech_contact: ContactDetail,
 }
-
+impl RegisterDomainRequest {
+    /// Sets `admin_contact`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterDomainRequest.admin_contact = value.into();`.
+    pub fn admin_contact<ValueType: Into<ContactDetail>>(mut self, value: ValueType) -> Self {
+        self.admin_contact = value.into();
+        self
+    }
+    /// Sets `auto_renew`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterDomainRequest.auto_renew = Some(value.into());`.
+    pub fn auto_renew<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.auto_renew = Some(value.into());
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterDomainRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `duration_in_years`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterDomainRequest.duration_in_years = value.into();`.
+    pub fn duration_in_years<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.duration_in_years = value.into();
+        self
+    }
+    /// Sets `idn_lang_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterDomainRequest.idn_lang_code = Some(value.into());`.
+    pub fn idn_lang_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.idn_lang_code = Some(value.into());
+        self
+    }
+    /// Sets `privacy_protect_admin_contact`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterDomainRequest.privacy_protect_admin_contact = Some(value.into());`.
+    pub fn privacy_protect_admin_contact<ValueType: Into<bool>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.privacy_protect_admin_contact = Some(value.into());
+        self
+    }
+    /// Sets `privacy_protect_registrant_contact`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterDomainRequest.privacy_protect_registrant_contact = Some(value.into());`.
+    pub fn privacy_protect_registrant_contact<ValueType: Into<bool>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.privacy_protect_registrant_contact = Some(value.into());
+        self
+    }
+    /// Sets `privacy_protect_tech_contact`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterDomainRequest.privacy_protect_tech_contact = Some(value.into());`.
+    pub fn privacy_protect_tech_contact<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.privacy_protect_tech_contact = Some(value.into());
+        self
+    }
+    /// Sets `registrant_contact`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterDomainRequest.registrant_contact = value.into();`.
+    pub fn registrant_contact<ValueType: Into<ContactDetail>>(mut self, value: ValueType) -> Self {
+        self.registrant_contact = value.into();
+        self
+    }
+    /// Sets `tech_contact`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterDomainRequest.tech_contact = value.into();`.
+    pub fn tech_contact<ValueType: Into<ContactDetail>>(mut self, value: ValueType) -> Self {
+        self.tech_contact = value.into();
+        self
+    }
+    /// Returns a new instance of RegisterDomainRequest with optional fields set to `None`.
+    pub fn new<AdminContactType: Into<ContactDetail>,
+               DomainNameType: Into<String>,
+               DurationInYearsType: Into<i64>,
+               RegistrantContactType: Into<ContactDetail>,
+               TechContactType: Into<ContactDetail>>
+        (admin_contact: AdminContactType,
+         domain_name: DomainNameType,
+         duration_in_years: DurationInYearsType,
+         registrant_contact: RegistrantContactType,
+         tech_contact: TechContactType)
+         -> RegisterDomainRequest {
+        RegisterDomainRequest {
+            admin_contact: admin_contact.into(),
+            domain_name: domain_name.into(),
+            duration_in_years: duration_in_years.into(),
+            registrant_contact: registrant_contact.into(),
+            tech_contact: tech_contact.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The RegisterDomain response includes the following element.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RegisterDomainResponse {
@@ -556,7 +1037,6 @@ pub struct RegisterDomainResponse {
     #[serde(rename="OperationId")]
     pub operation_id: String,
 }
-
 #[doc="<p>A <code>RenewDomain</code> request includes the number of years that you want to renew for and the current expiration year.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RenewDomainRequest {
@@ -571,14 +1051,46 @@ pub struct RenewDomainRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub duration_in_years: Option<i64>,
 }
-
+impl RenewDomainRequest {
+    /// Sets `current_expiry_year`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RenewDomainRequest.current_expiry_year = value.into();`.
+    pub fn current_expiry_year<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.current_expiry_year = value.into();
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RenewDomainRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `duration_in_years`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RenewDomainRequest.duration_in_years = Some(value.into());`.
+    pub fn duration_in_years<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.duration_in_years = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RenewDomainRequest with optional fields set to `None`.
+    pub fn new<CurrentExpiryYearType: Into<i64>, DomainNameType: Into<String>>
+        (current_expiry_year: CurrentExpiryYearType,
+         domain_name: DomainNameType)
+         -> RenewDomainRequest {
+        RenewDomainRequest {
+            current_expiry_year: current_expiry_year.into(),
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RenewDomainResponse {
     #[doc="<p>The identifier for tracking the progress of the request. To use this ID to query the operation status, use <a>GetOperationDetail</a>.</p>"]
     #[serde(rename="OperationId")]
     pub operation_id: String,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ResendContactReachabilityEmailRequest {
     #[doc="<p>The name of the domain for which you want Amazon Route 53 to resend a confirmation email to the registrant contact.</p>"]
@@ -586,7 +1098,19 @@ pub struct ResendContactReachabilityEmailRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub domain_name: Option<String>,
 }
-
+impl ResendContactReachabilityEmailRequest {
+    /// Sets `domain_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResendContactReachabilityEmailRequest.domain_name = Some(value.into());`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ResendContactReachabilityEmailRequest with optional fields set to `None`.
+    pub fn new() -> ResendContactReachabilityEmailRequest {
+        ResendContactReachabilityEmailRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ResendContactReachabilityEmailResponse {
     #[doc="<p>The domain name for which you requested a confirmation email.</p>"]
@@ -602,7 +1126,6 @@ pub struct ResendContactReachabilityEmailResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub is_already_verified: Option<bool>,
 }
-
 #[doc="<p>A request for the authorization code for the specified domain. To transfer a domain to another registrar, you provide this value to the new registrar.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RetrieveDomainAuthCodeRequest {
@@ -610,7 +1133,23 @@ pub struct RetrieveDomainAuthCodeRequest {
     #[serde(rename="DomainName")]
     pub domain_name: String,
 }
-
+impl RetrieveDomainAuthCodeRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RetrieveDomainAuthCodeRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of RetrieveDomainAuthCodeRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType)
+                                             -> RetrieveDomainAuthCodeRequest {
+        RetrieveDomainAuthCodeRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The RetrieveDomainAuthCode response includes the following element.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RetrieveDomainAuthCodeResponse {
@@ -618,7 +1157,6 @@ pub struct RetrieveDomainAuthCodeResponse {
     #[serde(rename="AuthCode")]
     pub auth_code: String,
 }
-
 #[doc="<p>Each tag includes the following elements.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Tag {
@@ -631,7 +1169,26 @@ pub struct Tag {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl Tag {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new() -> Tag {
+        Tag { ..Default::default() }
+    }
+}
 #[doc="<p>The TransferDomain request includes the following elements.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TransferDomainRequest {
@@ -679,7 +1236,117 @@ pub struct TransferDomainRequest {
     #[serde(rename="TechContact")]
     pub tech_contact: ContactDetail,
 }
-
+impl TransferDomainRequest {
+    /// Sets `admin_contact`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TransferDomainRequest.admin_contact = value.into();`.
+    pub fn admin_contact<ValueType: Into<ContactDetail>>(mut self, value: ValueType) -> Self {
+        self.admin_contact = value.into();
+        self
+    }
+    /// Sets `auth_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TransferDomainRequest.auth_code = Some(value.into());`.
+    pub fn auth_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auth_code = Some(value.into());
+        self
+    }
+    /// Sets `auto_renew`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TransferDomainRequest.auto_renew = Some(value.into());`.
+    pub fn auto_renew<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.auto_renew = Some(value.into());
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TransferDomainRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `duration_in_years`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TransferDomainRequest.duration_in_years = value.into();`.
+    pub fn duration_in_years<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.duration_in_years = value.into();
+        self
+    }
+    /// Sets `idn_lang_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TransferDomainRequest.idn_lang_code = Some(value.into());`.
+    pub fn idn_lang_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.idn_lang_code = Some(value.into());
+        self
+    }
+    /// Sets `nameservers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TransferDomainRequest.nameservers = Some(value.into());`.
+    pub fn nameservers<ValueType: Into<Vec<Nameserver>>>(mut self, value: ValueType) -> Self {
+        self.nameservers = Some(value.into());
+        self
+    }
+    /// Sets `privacy_protect_admin_contact`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TransferDomainRequest.privacy_protect_admin_contact = Some(value.into());`.
+    pub fn privacy_protect_admin_contact<ValueType: Into<bool>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.privacy_protect_admin_contact = Some(value.into());
+        self
+    }
+    /// Sets `privacy_protect_registrant_contact`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TransferDomainRequest.privacy_protect_registrant_contact = Some(value.into());`.
+    pub fn privacy_protect_registrant_contact<ValueType: Into<bool>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.privacy_protect_registrant_contact = Some(value.into());
+        self
+    }
+    /// Sets `privacy_protect_tech_contact`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TransferDomainRequest.privacy_protect_tech_contact = Some(value.into());`.
+    pub fn privacy_protect_tech_contact<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.privacy_protect_tech_contact = Some(value.into());
+        self
+    }
+    /// Sets `registrant_contact`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TransferDomainRequest.registrant_contact = value.into();`.
+    pub fn registrant_contact<ValueType: Into<ContactDetail>>(mut self, value: ValueType) -> Self {
+        self.registrant_contact = value.into();
+        self
+    }
+    /// Sets `tech_contact`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TransferDomainRequest.tech_contact = value.into();`.
+    pub fn tech_contact<ValueType: Into<ContactDetail>>(mut self, value: ValueType) -> Self {
+        self.tech_contact = value.into();
+        self
+    }
+    /// Returns a new instance of TransferDomainRequest with optional fields set to `None`.
+    pub fn new<AdminContactType: Into<ContactDetail>,
+               DomainNameType: Into<String>,
+               DurationInYearsType: Into<i64>,
+               RegistrantContactType: Into<ContactDetail>,
+               TechContactType: Into<ContactDetail>>
+        (admin_contact: AdminContactType,
+         domain_name: DomainNameType,
+         duration_in_years: DurationInYearsType,
+         registrant_contact: RegistrantContactType,
+         tech_contact: TechContactType)
+         -> TransferDomainRequest {
+        TransferDomainRequest {
+            admin_contact: admin_contact.into(),
+            domain_name: domain_name.into(),
+            duration_in_years: duration_in_years.into(),
+            registrant_contact: registrant_contact.into(),
+            tech_contact: tech_contact.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The TranserDomain response includes the following element.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TransferDomainResponse {
@@ -687,7 +1354,6 @@ pub struct TransferDomainResponse {
     #[serde(rename="OperationId")]
     pub operation_id: String,
 }
-
 #[doc="<p>The UpdateDomainContactPrivacy request includes the following elements.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateDomainContactPrivacyRequest {
@@ -707,7 +1373,44 @@ pub struct UpdateDomainContactPrivacyRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tech_privacy: Option<bool>,
 }
-
+impl UpdateDomainContactPrivacyRequest {
+    /// Sets `admin_privacy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDomainContactPrivacyRequest.admin_privacy = Some(value.into());`.
+    pub fn admin_privacy<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.admin_privacy = Some(value.into());
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDomainContactPrivacyRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `registrant_privacy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDomainContactPrivacyRequest.registrant_privacy = Some(value.into());`.
+    pub fn registrant_privacy<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.registrant_privacy = Some(value.into());
+        self
+    }
+    /// Sets `tech_privacy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDomainContactPrivacyRequest.tech_privacy = Some(value.into());`.
+    pub fn tech_privacy<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.tech_privacy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateDomainContactPrivacyRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType)
+                                             -> UpdateDomainContactPrivacyRequest {
+        UpdateDomainContactPrivacyRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The UpdateDomainContactPrivacy response includes the following element.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateDomainContactPrivacyResponse {
@@ -715,7 +1418,6 @@ pub struct UpdateDomainContactPrivacyResponse {
     #[serde(rename="OperationId")]
     pub operation_id: String,
 }
-
 #[doc="<p>The UpdateDomainContact request includes the following elements.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateDomainContactRequest {
@@ -735,7 +1437,44 @@ pub struct UpdateDomainContactRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tech_contact: Option<ContactDetail>,
 }
-
+impl UpdateDomainContactRequest {
+    /// Sets `admin_contact`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDomainContactRequest.admin_contact = Some(value.into());`.
+    pub fn admin_contact<ValueType: Into<ContactDetail>>(mut self, value: ValueType) -> Self {
+        self.admin_contact = Some(value.into());
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDomainContactRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `registrant_contact`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDomainContactRequest.registrant_contact = Some(value.into());`.
+    pub fn registrant_contact<ValueType: Into<ContactDetail>>(mut self, value: ValueType) -> Self {
+        self.registrant_contact = Some(value.into());
+        self
+    }
+    /// Sets `tech_contact`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDomainContactRequest.tech_contact = Some(value.into());`.
+    pub fn tech_contact<ValueType: Into<ContactDetail>>(mut self, value: ValueType) -> Self {
+        self.tech_contact = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateDomainContactRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType)
+                                             -> UpdateDomainContactRequest {
+        UpdateDomainContactRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The UpdateDomainContact response includes the following element.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateDomainContactResponse {
@@ -743,7 +1482,6 @@ pub struct UpdateDomainContactResponse {
     #[serde(rename="OperationId")]
     pub operation_id: String,
 }
-
 #[doc="<p>Replaces the current set of name servers for the domain with the specified set of name servers. If you use Amazon Route 53 as your DNS service, specify the four name servers in the delegation set for the hosted zone for the domain.</p> <p>If successful, this operation returns an operation ID that you can use to track the progress and completion of the action. If the request is not completed successfully, the domain registrant will be notified by email. </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateDomainNameserversRequest {
@@ -758,7 +1496,40 @@ pub struct UpdateDomainNameserversRequest {
     #[serde(rename="Nameservers")]
     pub nameservers: Vec<Nameserver>,
 }
-
+impl UpdateDomainNameserversRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDomainNameserversRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `fi_auth_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDomainNameserversRequest.fi_auth_key = Some(value.into());`.
+    pub fn fi_auth_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fi_auth_key = Some(value.into());
+        self
+    }
+    /// Sets `nameservers`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDomainNameserversRequest.nameservers = value.into();`.
+    pub fn nameservers<ValueType: Into<Vec<Nameserver>>>(mut self, value: ValueType) -> Self {
+        self.nameservers = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateDomainNameserversRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>, NameserversType: Into<Vec<Nameserver>>>
+        (domain_name: DomainNameType,
+         nameservers: NameserversType)
+         -> UpdateDomainNameserversRequest {
+        UpdateDomainNameserversRequest {
+            domain_name: domain_name.into(),
+            nameservers: nameservers.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The UpdateDomainNameservers response includes the following element.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateDomainNameserversResponse {
@@ -766,7 +1537,6 @@ pub struct UpdateDomainNameserversResponse {
     #[serde(rename="OperationId")]
     pub operation_id: String,
 }
-
 #[doc="<p>The UpdateTagsForDomainRequest includes the following elements.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateTagsForDomainRequest {
@@ -778,7 +1548,30 @@ pub struct UpdateTagsForDomainRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags_to_update: Option<Vec<Tag>>,
 }
-
+impl UpdateTagsForDomainRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTagsForDomainRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `tags_to_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTagsForDomainRequest.tags_to_update = Some(value.into());`.
+    pub fn tags_to_update<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags_to_update = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateTagsForDomainRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType)
+                                             -> UpdateTagsForDomainRequest {
+        UpdateTagsForDomainRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateTagsForDomainResponse;
 
@@ -802,7 +1595,40 @@ pub struct ViewBillingRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub start: Option<f64>,
 }
-
+impl ViewBillingRequest {
+    /// Sets `end`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ViewBillingRequest.end = Some(value.into());`.
+    pub fn end<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.end = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ViewBillingRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ViewBillingRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `start`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ViewBillingRequest.start = Some(value.into());`.
+    pub fn start<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.start = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ViewBillingRequest with optional fields set to `None`.
+    pub fn new() -> ViewBillingRequest {
+        ViewBillingRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The ViewBilling response includes the following elements.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ViewBillingResponse {
@@ -815,7 +1641,6 @@ pub struct ViewBillingResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_page_marker: Option<String>,
 }
-
 /// Errors returned by CheckDomainAvailability
 #[derive(Debug, PartialEq)]
 pub enum CheckDomainAvailabilityError {

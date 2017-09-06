@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -88,7 +89,6 @@ pub struct ActivitiesType {
     #[doc="<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>"]
     pub next_token: Option<String>,
 }
-
 struct ActivitiesTypeDeserializer;
 impl ActivitiesTypeDeserializer {
     #[allow(unused_variables)]
@@ -159,7 +159,6 @@ pub struct Activity {
     #[doc="<p>A friendly, more verbose description of the activity status.</p>"]
     pub status_message: Option<String>,
 }
-
 struct ActivityDeserializer;
 impl ActivityDeserializer {
     #[allow(unused_variables)]
@@ -260,7 +259,6 @@ pub struct ActivityType {
     #[doc="<p>A scaling activity.</p>"]
     pub activity: Option<Activity>,
 }
-
 struct ActivityTypeDeserializer;
 impl ActivityTypeDeserializer {
     #[allow(unused_variables)]
@@ -309,7 +307,6 @@ pub struct AdjustmentType {
     #[doc="<p>The policy adjustment type. The valid values are <code>ChangeInCapacity</code>, <code>ExactCapacity</code>, and <code>PercentChangeInCapacity</code>.</p>"]
     pub adjustment_type: Option<String>,
 }
-
 struct AdjustmentTypeDeserializer;
 impl AdjustmentTypeDeserializer {
     #[allow(unused_variables)]
@@ -402,7 +399,6 @@ pub struct Alarm {
     #[doc="<p>The name of the alarm.</p>"]
     pub alarm_name: Option<String>,
 }
-
 struct AlarmDeserializer;
 impl AlarmDeserializer {
     #[allow(unused_variables)]
@@ -528,7 +524,29 @@ pub struct AttachInstancesQuery {
     #[doc="<p>One or more instance IDs.</p>"]
     pub instance_ids: Option<Vec<String>>,
 }
-
+impl AttachInstancesQuery {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachInstancesQuery.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `instance_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachInstancesQuery.instance_ids = Some(value.into());`.
+    pub fn instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AttachInstancesQuery with optional fields set to `None`.
+pub fn new<AutoScalingGroupNameType: Into<String>>(auto_scaling_group_name: AutoScalingGroupNameType) -> AttachInstancesQuery{
+        AttachInstancesQuery {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AttachInstancesQuery` contents to a `SignedRequest`.
 struct AttachInstancesQuerySerializer;
@@ -578,7 +596,33 @@ pub struct AttachLoadBalancerTargetGroupsType {
     #[doc="<p>The Amazon Resource Names (ARN) of the target groups.</p>"]
     pub target_group_ar_ns: Vec<String>,
 }
-
+impl AttachLoadBalancerTargetGroupsType {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachLoadBalancerTargetGroupsType.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `target_group_ar_ns`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachLoadBalancerTargetGroupsType.target_group_ar_ns = value.into();`.
+    pub fn target_group_ar_ns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.target_group_ar_ns = value.into();
+        self
+    }
+    /// Returns a new instance of AttachLoadBalancerTargetGroupsType with optional fields set to `None`.
+    pub fn new<AutoScalingGroupNameType: Into<String>, TargetGroupARNsType: Into<Vec<String>>>
+        (auto_scaling_group_name: AutoScalingGroupNameType,
+         target_group_ar_ns: TargetGroupARNsType)
+         -> AttachLoadBalancerTargetGroupsType {
+        AttachLoadBalancerTargetGroupsType {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            target_group_ar_ns: target_group_ar_ns.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AttachLoadBalancerTargetGroupsType` contents to a `SignedRequest`.
 struct AttachLoadBalancerTargetGroupsTypeSerializer;
@@ -626,7 +670,33 @@ pub struct AttachLoadBalancersType {
     #[doc="<p>One or more load balancer names.</p>"]
     pub load_balancer_names: Vec<String>,
 }
-
+impl AttachLoadBalancersType {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachLoadBalancersType.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `load_balancer_names`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachLoadBalancersType.load_balancer_names = value.into();`.
+    pub fn load_balancer_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.load_balancer_names = value.into();
+        self
+    }
+    /// Returns a new instance of AttachLoadBalancersType with optional fields set to `None`.
+    pub fn new<AutoScalingGroupNameType: Into<String>, LoadBalancerNamesType: Into<Vec<String>>>
+        (auto_scaling_group_name: AutoScalingGroupNameType,
+         load_balancer_names: LoadBalancerNamesType)
+         -> AttachLoadBalancersType {
+        AttachLoadBalancersType {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            load_balancer_names: load_balancer_names.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AttachLoadBalancersType` contents to a `SignedRequest`.
 struct AttachLoadBalancersTypeSerializer;
@@ -694,7 +764,6 @@ pub struct AutoScalingGroup {
     #[doc="<p>One or more subnet IDs, if applicable, separated by commas.</p> <p>If you specify <code>VPCZoneIdentifier</code> and <code>AvailabilityZones</code>, ensure that the Availability Zones of the subnets match the values for <code>AvailabilityZones</code>.</p>"]
     pub vpc_zone_identifier: Option<String>,
 }
-
 struct AutoScalingGroupDeserializer;
 impl AutoScalingGroupDeserializer {
     #[allow(unused_variables)]
@@ -902,7 +971,35 @@ pub struct AutoScalingGroupNamesType {
     #[doc="<p>The token for the next set of items to return. (You received this token from a previous call.)</p>"]
     pub next_token: Option<String>,
 }
-
+impl AutoScalingGroupNamesType {
+    /// Sets `auto_scaling_group_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AutoScalingGroupNamesType.auto_scaling_group_names = Some(value.into());`.
+    pub fn auto_scaling_group_names<ValueType: Into<Vec<String>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.auto_scaling_group_names = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AutoScalingGroupNamesType.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AutoScalingGroupNamesType.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AutoScalingGroupNamesType with optional fields set to `None`.
+    pub fn new() -> AutoScalingGroupNamesType {
+        AutoScalingGroupNamesType { ..Default::default() }
+    }
+}
 
 /// Serialize `AutoScalingGroupNamesType` contents to a `SignedRequest`.
 struct AutoScalingGroupNamesTypeSerializer;
@@ -980,7 +1077,6 @@ pub struct AutoScalingGroupsType {
     #[doc="<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>"]
     pub next_token: Option<String>,
 }
-
 struct AutoScalingGroupsTypeDeserializer;
 impl AutoScalingGroupsTypeDeserializer {
     #[allow(unused_variables)]
@@ -1046,7 +1142,6 @@ pub struct AutoScalingInstanceDetails {
     #[doc="<p>Indicates whether the instance is protected from termination by Auto Scaling when scaling in.</p>"]
     pub protected_from_scale_in: bool,
 }
-
 struct AutoScalingInstanceDetailsDeserializer;
 impl AutoScalingInstanceDetailsDeserializer {
     #[allow(unused_variables)]
@@ -1171,7 +1266,6 @@ pub struct AutoScalingInstancesType {
     #[doc="<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>"]
     pub next_token: Option<String>,
 }
-
 struct AutoScalingInstancesTypeDeserializer;
 impl AutoScalingInstancesTypeDeserializer {
     #[allow(unused_variables)]
@@ -1409,7 +1503,43 @@ pub struct BlockDeviceMapping {
     #[doc="<p>The name of the virtual device (for example, <code>ephemeral0</code>).</p>"]
     pub virtual_name: Option<String>,
 }
-
+impl BlockDeviceMapping {
+    /// Sets `device_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BlockDeviceMapping.device_name = value.into();`.
+    pub fn device_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.device_name = value.into();
+        self
+    }
+    /// Sets `ebs`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BlockDeviceMapping.ebs = Some(value.into());`.
+    pub fn ebs<ValueType: Into<Ebs>>(mut self, value: ValueType) -> Self {
+        self.ebs = Some(value.into());
+        self
+    }
+    /// Sets `no_device`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BlockDeviceMapping.no_device = Some(value.into());`.
+    pub fn no_device<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.no_device = Some(value.into());
+        self
+    }
+    /// Sets `virtual_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BlockDeviceMapping.virtual_name = Some(value.into());`.
+    pub fn virtual_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.virtual_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of BlockDeviceMapping with optional fields set to `None`.
+    pub fn new<DeviceNameType: Into<String>>(device_name: DeviceNameType) -> BlockDeviceMapping {
+        BlockDeviceMapping {
+            device_name: device_name.into(),
+            ..Default::default()
+        }
+    }
+}
 struct BlockDeviceMappingDeserializer;
 impl BlockDeviceMappingDeserializer {
     #[allow(unused_variables)]
@@ -1632,7 +1762,58 @@ pub struct CompleteLifecycleActionType {
     #[doc="<p>The name of the lifecycle hook.</p>"]
     pub lifecycle_hook_name: String,
 }
-
+impl CompleteLifecycleActionType {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteLifecycleActionType.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteLifecycleActionType.instance_id = Some(value.into());`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = Some(value.into());
+        self
+    }
+    /// Sets `lifecycle_action_result`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteLifecycleActionType.lifecycle_action_result = value.into();`.
+    pub fn lifecycle_action_result<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lifecycle_action_result = value.into();
+        self
+    }
+    /// Sets `lifecycle_action_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteLifecycleActionType.lifecycle_action_token = Some(value.into());`.
+    pub fn lifecycle_action_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lifecycle_action_token = Some(value.into());
+        self
+    }
+    /// Sets `lifecycle_hook_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteLifecycleActionType.lifecycle_hook_name = value.into();`.
+    pub fn lifecycle_hook_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lifecycle_hook_name = value.into();
+        self
+    }
+    /// Returns a new instance of CompleteLifecycleActionType with optional fields set to `None`.
+    pub fn new<AutoScalingGroupNameType: Into<String>,
+               LifecycleActionResultType: Into<String>,
+               LifecycleHookNameType: Into<String>>
+        (auto_scaling_group_name: AutoScalingGroupNameType,
+         lifecycle_action_result: LifecycleActionResultType,
+         lifecycle_hook_name: LifecycleHookNameType)
+         -> CompleteLifecycleActionType {
+        CompleteLifecycleActionType {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            lifecycle_action_result: lifecycle_action_result.into(),
+            lifecycle_hook_name: lifecycle_hook_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CompleteLifecycleActionType` contents to a `SignedRequest`.
 struct CompleteLifecycleActionTypeSerializer;
@@ -1712,7 +1893,144 @@ pub struct CreateAutoScalingGroupType {
     #[doc="<p>A comma-separated list of subnet identifiers for your virtual private cloud (VPC).</p> <p>If you specify subnets and Availability Zones with this call, ensure that the subnets' Availability Zones match the Availability Zones specified.</p> <p>For more information, see <a href=\"http://docs.aws.amazon.com/autoscaling/latest/userguide/asg-in-vpc.html\">Launching Auto Scaling Instances in a VPC</a> in the <i>Auto Scaling User Guide</i>.</p>"]
     pub vpc_zone_identifier: Option<String>,
 }
-
+impl CreateAutoScalingGroupType {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAutoScalingGroupType.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `availability_zones`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAutoScalingGroupType.availability_zones = Some(value.into());`.
+    pub fn availability_zones<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.availability_zones = Some(value.into());
+        self
+    }
+    /// Sets `default_cooldown`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAutoScalingGroupType.default_cooldown = Some(value.into());`.
+    pub fn default_cooldown<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.default_cooldown = Some(value.into());
+        self
+    }
+    /// Sets `desired_capacity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAutoScalingGroupType.desired_capacity = Some(value.into());`.
+    pub fn desired_capacity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.desired_capacity = Some(value.into());
+        self
+    }
+    /// Sets `health_check_grace_period`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAutoScalingGroupType.health_check_grace_period = Some(value.into());`.
+    pub fn health_check_grace_period<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.health_check_grace_period = Some(value.into());
+        self
+    }
+    /// Sets `health_check_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAutoScalingGroupType.health_check_type = Some(value.into());`.
+    pub fn health_check_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.health_check_type = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAutoScalingGroupType.instance_id = Some(value.into());`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = Some(value.into());
+        self
+    }
+    /// Sets `launch_configuration_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAutoScalingGroupType.launch_configuration_name = Some(value.into());`.
+    pub fn launch_configuration_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.launch_configuration_name = Some(value.into());
+        self
+    }
+    /// Sets `load_balancer_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAutoScalingGroupType.load_balancer_names = Some(value.into());`.
+    pub fn load_balancer_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.load_balancer_names = Some(value.into());
+        self
+    }
+    /// Sets `max_size`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAutoScalingGroupType.max_size = value.into();`.
+    pub fn max_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_size = value.into();
+        self
+    }
+    /// Sets `min_size`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAutoScalingGroupType.min_size = value.into();`.
+    pub fn min_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.min_size = value.into();
+        self
+    }
+    /// Sets `new_instances_protected_from_scale_in`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAutoScalingGroupType.new_instances_protected_from_scale_in = Some(value.into());`.
+    pub fn new_instances_protected_from_scale_in<ValueType: Into<bool>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.new_instances_protected_from_scale_in = Some(value.into());
+        self
+    }
+    /// Sets `placement_group`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAutoScalingGroupType.placement_group = Some(value.into());`.
+    pub fn placement_group<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.placement_group = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAutoScalingGroupType.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `target_group_ar_ns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAutoScalingGroupType.target_group_ar_ns = Some(value.into());`.
+    pub fn target_group_ar_ns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.target_group_ar_ns = Some(value.into());
+        self
+    }
+    /// Sets `termination_policies`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAutoScalingGroupType.termination_policies = Some(value.into());`.
+    pub fn termination_policies<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.termination_policies = Some(value.into());
+        self
+    }
+    /// Sets `vpc_zone_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAutoScalingGroupType.vpc_zone_identifier = Some(value.into());`.
+    pub fn vpc_zone_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_zone_identifier = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateAutoScalingGroupType with optional fields set to `None`.
+    pub fn new<AutoScalingGroupNameType: Into<String>,
+               MaxSizeType: Into<i64>,
+               MinSizeType: Into<i64>>
+        (auto_scaling_group_name: AutoScalingGroupNameType,
+         max_size: MaxSizeType,
+         min_size: MinSizeType)
+         -> CreateAutoScalingGroupType {
+        CreateAutoScalingGroupType {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            max_size: max_size.into(),
+            min_size: min_size.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateAutoScalingGroupType` contents to a `SignedRequest`.
 struct CreateAutoScalingGroupTypeSerializer;
@@ -1830,7 +2148,147 @@ pub struct CreateLaunchConfigurationType {
     #[doc="<p>The user data to make available to the launched EC2 instances. For more information, see <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html\">Instance Metadata and User Data</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>"]
     pub user_data: Option<String>,
 }
-
+impl CreateLaunchConfigurationType {
+    /// Sets `associate_public_ip_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLaunchConfigurationType.associate_public_ip_address = Some(value.into());`.
+    pub fn associate_public_ip_address<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.associate_public_ip_address = Some(value.into());
+        self
+    }
+    /// Sets `block_device_mappings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLaunchConfigurationType.block_device_mappings = Some(value.into());`.
+    pub fn block_device_mappings<ValueType: Into<Vec<BlockDeviceMapping>>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.block_device_mappings = Some(value.into());
+        self
+    }
+    /// Sets `classic_link_vpc_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLaunchConfigurationType.classic_link_vpc_id = Some(value.into());`.
+    pub fn classic_link_vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.classic_link_vpc_id = Some(value.into());
+        self
+    }
+    /// Sets `classic_link_vpc_security_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLaunchConfigurationType.classic_link_vpc_security_groups = Some(value.into());`.
+    pub fn classic_link_vpc_security_groups<ValueType: Into<Vec<String>>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.classic_link_vpc_security_groups = Some(value.into());
+        self
+    }
+    /// Sets `ebs_optimized`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLaunchConfigurationType.ebs_optimized = Some(value.into());`.
+    pub fn ebs_optimized<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.ebs_optimized = Some(value.into());
+        self
+    }
+    /// Sets `iam_instance_profile`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLaunchConfigurationType.iam_instance_profile = Some(value.into());`.
+    pub fn iam_instance_profile<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.iam_instance_profile = Some(value.into());
+        self
+    }
+    /// Sets `image_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLaunchConfigurationType.image_id = Some(value.into());`.
+    pub fn image_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.image_id = Some(value.into());
+        self
+    }
+    /// Sets `instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLaunchConfigurationType.instance_id = Some(value.into());`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = Some(value.into());
+        self
+    }
+    /// Sets `instance_monitoring`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLaunchConfigurationType.instance_monitoring = Some(value.into());`.
+    pub fn instance_monitoring<ValueType: Into<InstanceMonitoring>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.instance_monitoring = Some(value.into());
+        self
+    }
+    /// Sets `instance_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLaunchConfigurationType.instance_type = Some(value.into());`.
+    pub fn instance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_type = Some(value.into());
+        self
+    }
+    /// Sets `kernel_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLaunchConfigurationType.kernel_id = Some(value.into());`.
+    pub fn kernel_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kernel_id = Some(value.into());
+        self
+    }
+    /// Sets `key_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLaunchConfigurationType.key_name = Some(value.into());`.
+    pub fn key_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_name = Some(value.into());
+        self
+    }
+    /// Sets `launch_configuration_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLaunchConfigurationType.launch_configuration_name = value.into();`.
+    pub fn launch_configuration_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.launch_configuration_name = value.into();
+        self
+    }
+    /// Sets `placement_tenancy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLaunchConfigurationType.placement_tenancy = Some(value.into());`.
+    pub fn placement_tenancy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.placement_tenancy = Some(value.into());
+        self
+    }
+    /// Sets `ramdisk_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLaunchConfigurationType.ramdisk_id = Some(value.into());`.
+    pub fn ramdisk_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ramdisk_id = Some(value.into());
+        self
+    }
+    /// Sets `security_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLaunchConfigurationType.security_groups = Some(value.into());`.
+    pub fn security_groups<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.security_groups = Some(value.into());
+        self
+    }
+    /// Sets `spot_price`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLaunchConfigurationType.spot_price = Some(value.into());`.
+    pub fn spot_price<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.spot_price = Some(value.into());
+        self
+    }
+    /// Sets `user_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLaunchConfigurationType.user_data = Some(value.into());`.
+    pub fn user_data<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_data = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateLaunchConfigurationType with optional fields set to `None`.
+pub fn new<LaunchConfigurationNameType: Into<String>>(launch_configuration_name: LaunchConfigurationNameType) -> CreateLaunchConfigurationType{
+        CreateLaunchConfigurationType {
+            launch_configuration_name: launch_configuration_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateLaunchConfigurationType` contents to a `SignedRequest`.
 struct CreateLaunchConfigurationTypeSerializer;
@@ -1918,7 +2376,22 @@ pub struct CreateOrUpdateTagsType {
     #[doc="<p>One or more tags.</p>"]
     pub tags: Vec<Tag>,
 }
-
+impl CreateOrUpdateTagsType {
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateOrUpdateTagsType.tags = value.into();`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of CreateOrUpdateTagsType with optional fields set to `None`.
+    pub fn new<TagsType: Into<Vec<Tag>>>(tags: TagsType) -> CreateOrUpdateTagsType {
+        CreateOrUpdateTagsType {
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateOrUpdateTagsType` contents to a `SignedRequest`.
 struct CreateOrUpdateTagsTypeSerializer;
@@ -1948,7 +2421,58 @@ pub struct CustomizedMetricSpecification {
     #[doc="<p>The unit of the metric.</p>"]
     pub unit: Option<String>,
 }
-
+impl CustomizedMetricSpecification {
+    /// Sets `dimensions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CustomizedMetricSpecification.dimensions = Some(value.into());`.
+    pub fn dimensions<ValueType: Into<Vec<MetricDimension>>>(mut self, value: ValueType) -> Self {
+        self.dimensions = Some(value.into());
+        self
+    }
+    /// Sets `metric_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CustomizedMetricSpecification.metric_name = value.into();`.
+    pub fn metric_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_name = value.into();
+        self
+    }
+    /// Sets `namespace`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CustomizedMetricSpecification.namespace = value.into();`.
+    pub fn namespace<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.namespace = value.into();
+        self
+    }
+    /// Sets `statistic`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CustomizedMetricSpecification.statistic = value.into();`.
+    pub fn statistic<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.statistic = value.into();
+        self
+    }
+    /// Sets `unit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CustomizedMetricSpecification.unit = Some(value.into());`.
+    pub fn unit<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.unit = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CustomizedMetricSpecification with optional fields set to `None`.
+    pub fn new<MetricNameType: Into<String>,
+               NamespaceType: Into<String>,
+               StatisticType: Into<String>>
+        (metric_name: MetricNameType,
+         namespace: NamespaceType,
+         statistic: StatisticType)
+         -> CustomizedMetricSpecification {
+        CustomizedMetricSpecification {
+            metric_name: metric_name.into(),
+            namespace: namespace.into(),
+            statistic: statistic.into(),
+            ..Default::default()
+        }
+    }
+}
 struct CustomizedMetricSpecificationDeserializer;
 impl CustomizedMetricSpecificationDeserializer {
     #[allow(unused_variables)]
@@ -2041,7 +2565,29 @@ pub struct DeleteAutoScalingGroupType {
     #[doc="<p>Specifies that the group will be deleted along with all instances associated with the group, without waiting for all instances to be terminated. This parameter also deletes any lifecycle actions associated with the group.</p>"]
     pub force_delete: Option<bool>,
 }
-
+impl DeleteAutoScalingGroupType {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAutoScalingGroupType.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `force_delete`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAutoScalingGroupType.force_delete = Some(value.into());`.
+    pub fn force_delete<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.force_delete = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteAutoScalingGroupType with optional fields set to `None`.
+pub fn new<AutoScalingGroupNameType: Into<String>>(auto_scaling_group_name: AutoScalingGroupNameType) -> DeleteAutoScalingGroupType{
+        DeleteAutoScalingGroupType {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteAutoScalingGroupType` contents to a `SignedRequest`.
 struct DeleteAutoScalingGroupTypeSerializer;
@@ -2090,7 +2636,33 @@ pub struct DeleteLifecycleHookType {
     #[doc="<p>The name of the lifecycle hook.</p>"]
     pub lifecycle_hook_name: String,
 }
-
+impl DeleteLifecycleHookType {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteLifecycleHookType.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `lifecycle_hook_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteLifecycleHookType.lifecycle_hook_name = value.into();`.
+    pub fn lifecycle_hook_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lifecycle_hook_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteLifecycleHookType with optional fields set to `None`.
+    pub fn new<AutoScalingGroupNameType: Into<String>, LifecycleHookNameType: Into<String>>
+        (auto_scaling_group_name: AutoScalingGroupNameType,
+         lifecycle_hook_name: LifecycleHookNameType)
+         -> DeleteLifecycleHookType {
+        DeleteLifecycleHookType {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            lifecycle_hook_name: lifecycle_hook_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteLifecycleHookType` contents to a `SignedRequest`.
 struct DeleteLifecycleHookTypeSerializer;
@@ -2117,7 +2689,33 @@ pub struct DeleteNotificationConfigurationType {
     #[doc="<p>The Amazon Resource Name (ARN) of the Amazon Simple Notification Service (SNS) topic.</p>"]
     pub topic_arn: String,
 }
-
+impl DeleteNotificationConfigurationType {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteNotificationConfigurationType.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `topic_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteNotificationConfigurationType.topic_arn = value.into();`.
+    pub fn topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteNotificationConfigurationType with optional fields set to `None`.
+    pub fn new<AutoScalingGroupNameType: Into<String>, TopicARNType: Into<String>>
+        (auto_scaling_group_name: AutoScalingGroupNameType,
+         topic_arn: TopicARNType)
+         -> DeleteNotificationConfigurationType {
+        DeleteNotificationConfigurationType {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            topic_arn: topic_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteNotificationConfigurationType` contents to a `SignedRequest`.
 struct DeleteNotificationConfigurationTypeSerializer;
@@ -2143,7 +2741,29 @@ pub struct DeletePolicyType {
     #[doc="<p>The name or Amazon Resource Name (ARN) of the policy.</p>"]
     pub policy_name: String,
 }
-
+impl DeletePolicyType {
+    /// Sets `auto_scaling_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePolicyType.auto_scaling_group_name = Some(value.into());`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = Some(value.into());
+        self
+    }
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePolicyType.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeletePolicyType with optional fields set to `None`.
+    pub fn new<PolicyNameType: Into<String>>(policy_name: PolicyNameType) -> DeletePolicyType {
+        DeletePolicyType {
+            policy_name: policy_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeletePolicyType` contents to a `SignedRequest`.
 struct DeletePolicyTypeSerializer;
@@ -2171,7 +2791,33 @@ pub struct DeleteScheduledActionType {
     #[doc="<p>The name of the action to delete.</p>"]
     pub scheduled_action_name: String,
 }
-
+impl DeleteScheduledActionType {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteScheduledActionType.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `scheduled_action_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteScheduledActionType.scheduled_action_name = value.into();`.
+    pub fn scheduled_action_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.scheduled_action_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteScheduledActionType with optional fields set to `None`.
+    pub fn new<AutoScalingGroupNameType: Into<String>, ScheduledActionNameType: Into<String>>
+        (auto_scaling_group_name: AutoScalingGroupNameType,
+         scheduled_action_name: ScheduledActionNameType)
+         -> DeleteScheduledActionType {
+        DeleteScheduledActionType {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            scheduled_action_name: scheduled_action_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteScheduledActionType` contents to a `SignedRequest`.
 struct DeleteScheduledActionTypeSerializer;
@@ -2196,7 +2842,22 @@ pub struct DeleteTagsType {
     #[doc="<p>One or more tags.</p>"]
     pub tags: Vec<Tag>,
 }
-
+impl DeleteTagsType {
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTagsType.tags = value.into();`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteTagsType with optional fields set to `None`.
+    pub fn new<TagsType: Into<Vec<Tag>>>(tags: TagsType) -> DeleteTagsType {
+        DeleteTagsType {
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteTagsType` contents to a `SignedRequest`.
 struct DeleteTagsTypeSerializer;
@@ -2224,7 +2885,6 @@ pub struct DescribeAccountLimitsAnswer {
     #[doc="<p>The current number of launch configurations for your AWS account.</p>"]
     pub number_of_launch_configurations: Option<i64>,
 }
-
 struct DescribeAccountLimitsAnswerDeserializer;
 impl DescribeAccountLimitsAnswerDeserializer {
     #[allow(unused_variables)]
@@ -2281,7 +2941,6 @@ pub struct DescribeAdjustmentTypesAnswer {
     #[doc="<p>The policy adjustment types.</p>"]
     pub adjustment_types: Option<Vec<AdjustmentType>>,
 }
-
 struct DescribeAdjustmentTypesAnswerDeserializer;
 impl DescribeAdjustmentTypesAnswerDeserializer {
     #[allow(unused_variables)]
@@ -2335,7 +2994,33 @@ pub struct DescribeAutoScalingInstancesType {
     #[doc="<p>The token for the next set of items to return. (You received this token from a previous call.)</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeAutoScalingInstancesType {
+    /// Sets `instance_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAutoScalingInstancesType.instance_ids = Some(value.into());`.
+    pub fn instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_ids = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAutoScalingInstancesType.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAutoScalingInstancesType.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeAutoScalingInstancesType with optional fields set to `None`.
+    pub fn new() -> DescribeAutoScalingInstancesType {
+        DescribeAutoScalingInstancesType { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeAutoScalingInstancesType` contents to a `SignedRequest`.
 struct DescribeAutoScalingInstancesTypeSerializer;
@@ -2368,7 +3053,6 @@ pub struct DescribeAutoScalingNotificationTypesAnswer {
     #[doc="<p>The notification types.</p>"]
     pub auto_scaling_notification_types: Option<Vec<String>>,
 }
-
 struct DescribeAutoScalingNotificationTypesAnswerDeserializer;
 impl DescribeAutoScalingNotificationTypesAnswerDeserializer {
     #[allow(unused_variables)]
@@ -2417,7 +3101,6 @@ pub struct DescribeLifecycleHookTypesAnswer {
     #[doc="<p>The lifecycle hook types.</p>"]
     pub lifecycle_hook_types: Option<Vec<String>>,
 }
-
 struct DescribeLifecycleHookTypesAnswerDeserializer;
 impl DescribeLifecycleHookTypesAnswerDeserializer {
     #[allow(unused_variables)]
@@ -2466,7 +3149,6 @@ pub struct DescribeLifecycleHooksAnswer {
     #[doc="<p>The lifecycle hooks for the specified group.</p>"]
     pub lifecycle_hooks: Option<Vec<LifecycleHook>>,
 }
-
 struct DescribeLifecycleHooksAnswerDeserializer;
 impl DescribeLifecycleHooksAnswerDeserializer {
     #[allow(unused_variables)]
@@ -2518,7 +3200,29 @@ pub struct DescribeLifecycleHooksType {
     #[doc="<p>The names of one or more lifecycle hooks. If you omit this parameter, all lifecycle hooks are described.</p>"]
     pub lifecycle_hook_names: Option<Vec<String>>,
 }
-
+impl DescribeLifecycleHooksType {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLifecycleHooksType.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `lifecycle_hook_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLifecycleHooksType.lifecycle_hook_names = Some(value.into());`.
+    pub fn lifecycle_hook_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.lifecycle_hook_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeLifecycleHooksType with optional fields set to `None`.
+pub fn new<AutoScalingGroupNameType: Into<String>>(auto_scaling_group_name: AutoScalingGroupNameType) -> DescribeLifecycleHooksType{
+        DescribeLifecycleHooksType {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeLifecycleHooksType` contents to a `SignedRequest`.
 struct DescribeLifecycleHooksTypeSerializer;
@@ -2550,7 +3254,38 @@ pub struct DescribeLoadBalancerTargetGroupsRequest {
     #[doc="<p>The token for the next set of items to return. (You received this token from a previous call.)</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeLoadBalancerTargetGroupsRequest {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLoadBalancerTargetGroupsRequest.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLoadBalancerTargetGroupsRequest.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLoadBalancerTargetGroupsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeLoadBalancerTargetGroupsRequest with optional fields set to `None`.
+    pub fn new<AutoScalingGroupNameType: Into<String>>
+        (auto_scaling_group_name: AutoScalingGroupNameType)
+         -> DescribeLoadBalancerTargetGroupsRequest {
+        DescribeLoadBalancerTargetGroupsRequest {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeLoadBalancerTargetGroupsRequest` contents to a `SignedRequest`.
 struct DescribeLoadBalancerTargetGroupsRequestSerializer;
@@ -2582,7 +3317,6 @@ pub struct DescribeLoadBalancerTargetGroupsResponse {
     #[doc="<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>"]
     pub next_token: Option<String>,
 }
-
 struct DescribeLoadBalancerTargetGroupsResponseDeserializer;
 impl DescribeLoadBalancerTargetGroupsResponseDeserializer {
     #[allow(unused_variables)]
@@ -2639,7 +3373,36 @@ pub struct DescribeLoadBalancersRequest {
     #[doc="<p>The token for the next set of items to return. (You received this token from a previous call.)</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeLoadBalancersRequest {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLoadBalancersRequest.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLoadBalancersRequest.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLoadBalancersRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeLoadBalancersRequest with optional fields set to `None`.
+pub fn new<AutoScalingGroupNameType: Into<String>>(auto_scaling_group_name: AutoScalingGroupNameType) -> DescribeLoadBalancersRequest{
+        DescribeLoadBalancersRequest {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeLoadBalancersRequest` contents to a `SignedRequest`.
 struct DescribeLoadBalancersRequestSerializer;
@@ -2671,7 +3434,6 @@ pub struct DescribeLoadBalancersResponse {
     #[doc="<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>"]
     pub next_token: Option<String>,
 }
-
 struct DescribeLoadBalancersResponseDeserializer;
 impl DescribeLoadBalancersResponseDeserializer {
     #[allow(unused_variables)]
@@ -2727,7 +3489,6 @@ pub struct DescribeMetricCollectionTypesAnswer {
     #[doc="<p>One or more metrics.</p>"]
     pub metrics: Option<Vec<MetricCollectionType>>,
 }
-
 struct DescribeMetricCollectionTypesAnswerDeserializer;
 impl DescribeMetricCollectionTypesAnswerDeserializer {
     #[allow(unused_variables)]
@@ -2785,7 +3546,6 @@ pub struct DescribeNotificationConfigurationsAnswer {
     #[doc="<p>The notification configurations.</p>"]
     pub notification_configurations: Vec<NotificationConfiguration>,
 }
-
 struct DescribeNotificationConfigurationsAnswerDeserializer;
 impl DescribeNotificationConfigurationsAnswerDeserializer {
     #[allow(unused_variables)]
@@ -2844,7 +3604,35 @@ pub struct DescribeNotificationConfigurationsType {
     #[doc="<p>The token for the next set of items to return. (You received this token from a previous call.)</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeNotificationConfigurationsType {
+    /// Sets `auto_scaling_group_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNotificationConfigurationsType.auto_scaling_group_names = Some(value.into());`.
+    pub fn auto_scaling_group_names<ValueType: Into<Vec<String>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.auto_scaling_group_names = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNotificationConfigurationsType.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNotificationConfigurationsType.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeNotificationConfigurationsType with optional fields set to `None`.
+    pub fn new() -> DescribeNotificationConfigurationsType {
+        DescribeNotificationConfigurationsType { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeNotificationConfigurationsType` contents to a `SignedRequest`.
 struct DescribeNotificationConfigurationsTypeSerializer;
@@ -2887,7 +3675,47 @@ pub struct DescribePoliciesType {
     #[doc="<p>One or more policy types. Valid values are <code>SimpleScaling</code> and <code>StepScaling</code>.</p>"]
     pub policy_types: Option<Vec<String>>,
 }
-
+impl DescribePoliciesType {
+    /// Sets `auto_scaling_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePoliciesType.auto_scaling_group_name = Some(value.into());`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePoliciesType.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePoliciesType.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `policy_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePoliciesType.policy_names = Some(value.into());`.
+    pub fn policy_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.policy_names = Some(value.into());
+        self
+    }
+    /// Sets `policy_types`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePoliciesType.policy_types = Some(value.into());`.
+    pub fn policy_types<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.policy_types = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribePoliciesType with optional fields set to `None`.
+    pub fn new() -> DescribePoliciesType {
+        DescribePoliciesType { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribePoliciesType` contents to a `SignedRequest`.
 struct DescribePoliciesTypeSerializer;
@@ -2935,7 +3763,40 @@ pub struct DescribeScalingActivitiesType {
     #[doc="<p>The token for the next set of items to return. (You received this token from a previous call.)</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeScalingActivitiesType {
+    /// Sets `activity_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScalingActivitiesType.activity_ids = Some(value.into());`.
+    pub fn activity_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.activity_ids = Some(value.into());
+        self
+    }
+    /// Sets `auto_scaling_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScalingActivitiesType.auto_scaling_group_name = Some(value.into());`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScalingActivitiesType.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScalingActivitiesType.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeScalingActivitiesType with optional fields set to `None`.
+    pub fn new() -> DescribeScalingActivitiesType {
+        DescribeScalingActivitiesType { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeScalingActivitiesType` contents to a `SignedRequest`.
 struct DescribeScalingActivitiesTypeSerializer;
@@ -2982,7 +3843,56 @@ pub struct DescribeScheduledActionsType {
     #[doc="<p>The earliest scheduled start time to return. If scheduled action names are provided, this parameter is ignored.</p>"]
     pub start_time: Option<String>,
 }
-
+impl DescribeScheduledActionsType {
+    /// Sets `auto_scaling_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScheduledActionsType.auto_scaling_group_name = Some(value.into());`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = Some(value.into());
+        self
+    }
+    /// Sets `end_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScheduledActionsType.end_time = Some(value.into());`.
+    pub fn end_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.end_time = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScheduledActionsType.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScheduledActionsType.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `scheduled_action_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScheduledActionsType.scheduled_action_names = Some(value.into());`.
+    pub fn scheduled_action_names<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.scheduled_action_names = Some(value.into());
+        self
+    }
+    /// Sets `start_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScheduledActionsType.start_time = Some(value.into());`.
+    pub fn start_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_time = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeScheduledActionsType with optional fields set to `None`.
+    pub fn new() -> DescribeScheduledActionsType {
+        DescribeScheduledActionsType { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeScheduledActionsType` contents to a `SignedRequest`.
 struct DescribeScheduledActionsTypeSerializer;
@@ -3031,7 +3941,33 @@ pub struct DescribeTagsType {
     #[doc="<p>The token for the next set of items to return. (You received this token from a previous call.)</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeTagsType {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTagsType.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTagsType.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTagsType.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeTagsType with optional fields set to `None`.
+    pub fn new() -> DescribeTagsType {
+        DescribeTagsType { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeTagsType` contents to a `SignedRequest`.
 struct DescribeTagsTypeSerializer;
@@ -3062,7 +3998,6 @@ pub struct DescribeTerminationPolicyTypesAnswer {
     #[doc="<p>The termination policies supported by Auto Scaling (<code>OldestInstance</code>, <code>OldestLaunchConfiguration</code>, <code>NewestInstance</code>, <code>ClosestToNextInstanceHour</code>, and <code>Default</code>).</p>"]
     pub termination_policy_types: Option<Vec<String>>,
 }
-
 struct DescribeTerminationPolicyTypesAnswerDeserializer;
 impl DescribeTerminationPolicyTypesAnswerDeserializer {
     #[allow(unused_variables)]
@@ -3113,7 +4048,6 @@ pub struct DetachInstancesAnswer {
     #[doc="<p>The activities related to detaching the instances from the Auto Scaling group.</p>"]
     pub activities: Option<Vec<Activity>>,
 }
-
 struct DetachInstancesAnswerDeserializer;
 impl DetachInstancesAnswerDeserializer {
     #[allow(unused_variables)]
@@ -3166,7 +4100,43 @@ pub struct DetachInstancesQuery {
     #[doc="<p>If <code>True</code>, the Auto Scaling group decrements the desired capacity value by the number of instances detached.</p>"]
     pub should_decrement_desired_capacity: bool,
 }
-
+impl DetachInstancesQuery {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachInstancesQuery.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `instance_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachInstancesQuery.instance_ids = Some(value.into());`.
+    pub fn instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_ids = Some(value.into());
+        self
+    }
+    /// Sets `should_decrement_desired_capacity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachInstancesQuery.should_decrement_desired_capacity = value.into();`.
+    pub fn should_decrement_desired_capacity<ValueType: Into<bool>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.should_decrement_desired_capacity = value.into();
+        self
+    }
+    /// Returns a new instance of DetachInstancesQuery with optional fields set to `None`.
+    pub fn new<AutoScalingGroupNameType: Into<String>,
+               ShouldDecrementDesiredCapacityType: Into<bool>>
+        (auto_scaling_group_name: AutoScalingGroupNameType,
+         should_decrement_desired_capacity: ShouldDecrementDesiredCapacityType)
+         -> DetachInstancesQuery {
+        DetachInstancesQuery {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            should_decrement_desired_capacity: should_decrement_desired_capacity.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DetachInstancesQuery` contents to a `SignedRequest`.
 struct DetachInstancesQuerySerializer;
@@ -3217,7 +4187,33 @@ pub struct DetachLoadBalancerTargetGroupsType {
     #[doc="<p>The Amazon Resource Names (ARN) of the target groups.</p>"]
     pub target_group_ar_ns: Vec<String>,
 }
-
+impl DetachLoadBalancerTargetGroupsType {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachLoadBalancerTargetGroupsType.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `target_group_ar_ns`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachLoadBalancerTargetGroupsType.target_group_ar_ns = value.into();`.
+    pub fn target_group_ar_ns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.target_group_ar_ns = value.into();
+        self
+    }
+    /// Returns a new instance of DetachLoadBalancerTargetGroupsType with optional fields set to `None`.
+    pub fn new<AutoScalingGroupNameType: Into<String>, TargetGroupARNsType: Into<Vec<String>>>
+        (auto_scaling_group_name: AutoScalingGroupNameType,
+         target_group_ar_ns: TargetGroupARNsType)
+         -> DetachLoadBalancerTargetGroupsType {
+        DetachLoadBalancerTargetGroupsType {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            target_group_ar_ns: target_group_ar_ns.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DetachLoadBalancerTargetGroupsType` contents to a `SignedRequest`.
 struct DetachLoadBalancerTargetGroupsTypeSerializer;
@@ -3265,7 +4261,33 @@ pub struct DetachLoadBalancersType {
     #[doc="<p>One or more load balancer names.</p>"]
     pub load_balancer_names: Vec<String>,
 }
-
+impl DetachLoadBalancersType {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachLoadBalancersType.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `load_balancer_names`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachLoadBalancersType.load_balancer_names = value.into();`.
+    pub fn load_balancer_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.load_balancer_names = value.into();
+        self
+    }
+    /// Returns a new instance of DetachLoadBalancersType with optional fields set to `None`.
+    pub fn new<AutoScalingGroupNameType: Into<String>, LoadBalancerNamesType: Into<Vec<String>>>
+        (auto_scaling_group_name: AutoScalingGroupNameType,
+         load_balancer_names: LoadBalancerNamesType)
+         -> DetachLoadBalancersType {
+        DetachLoadBalancersType {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            load_balancer_names: load_balancer_names.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DetachLoadBalancersType` contents to a `SignedRequest`.
 struct DetachLoadBalancersTypeSerializer;
@@ -3293,7 +4315,29 @@ pub struct DisableMetricsCollectionQuery {
     #[doc="<p>One or more of the following metrics. If you omit this parameter, all metrics are disabled.</p> <ul> <li> <p> <code>GroupMinSize</code> </p> </li> <li> <p> <code>GroupMaxSize</code> </p> </li> <li> <p> <code>GroupDesiredCapacity</code> </p> </li> <li> <p> <code>GroupInServiceInstances</code> </p> </li> <li> <p> <code>GroupPendingInstances</code> </p> </li> <li> <p> <code>GroupStandbyInstances</code> </p> </li> <li> <p> <code>GroupTerminatingInstances</code> </p> </li> <li> <p> <code>GroupTotalInstances</code> </p> </li> </ul>"]
     pub metrics: Option<Vec<String>>,
 }
-
+impl DisableMetricsCollectionQuery {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableMetricsCollectionQuery.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `metrics`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableMetricsCollectionQuery.metrics = Some(value.into());`.
+    pub fn metrics<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.metrics = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DisableMetricsCollectionQuery with optional fields set to `None`.
+pub fn new<AutoScalingGroupNameType: Into<String>>(auto_scaling_group_name: AutoScalingGroupNameType) -> DisableMetricsCollectionQuery{
+        DisableMetricsCollectionQuery {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DisableMetricsCollectionQuery` contents to a `SignedRequest`.
 struct DisableMetricsCollectionQuerySerializer;
@@ -3343,7 +4387,54 @@ pub struct Ebs {
     #[doc="<p>The volume type. For more information, see <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html\">Amazon EBS Volume Types</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>Valid values: <code>standard</code> | <code>io1</code> | <code>gp2</code> </p> <p>Default: <code>standard</code> </p>"]
     pub volume_type: Option<String>,
 }
-
+impl Ebs {
+    /// Sets `delete_on_termination`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Ebs.delete_on_termination = Some(value.into());`.
+    pub fn delete_on_termination<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.delete_on_termination = Some(value.into());
+        self
+    }
+    /// Sets `encrypted`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Ebs.encrypted = Some(value.into());`.
+    pub fn encrypted<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.encrypted = Some(value.into());
+        self
+    }
+    /// Sets `iops`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Ebs.iops = Some(value.into());`.
+    pub fn iops<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.iops = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Ebs.snapshot_id = Some(value.into());`.
+    pub fn snapshot_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_id = Some(value.into());
+        self
+    }
+    /// Sets `volume_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Ebs.volume_size = Some(value.into());`.
+    pub fn volume_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.volume_size = Some(value.into());
+        self
+    }
+    /// Sets `volume_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Ebs.volume_type = Some(value.into());`.
+    pub fn volume_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Ebs with optional fields set to `None`.
+    pub fn new() -> Ebs {
+        Ebs { ..Default::default() }
+    }
+}
 struct EbsDeserializer;
 impl EbsDeserializer {
     #[allow(unused_variables)]
@@ -3465,7 +4556,40 @@ pub struct EnableMetricsCollectionQuery {
     #[doc="<p>One or more of the following metrics. If you omit this parameter, all metrics are enabled.</p> <ul> <li> <p> <code>GroupMinSize</code> </p> </li> <li> <p> <code>GroupMaxSize</code> </p> </li> <li> <p> <code>GroupDesiredCapacity</code> </p> </li> <li> <p> <code>GroupInServiceInstances</code> </p> </li> <li> <p> <code>GroupPendingInstances</code> </p> </li> <li> <p> <code>GroupStandbyInstances</code> </p> </li> <li> <p> <code>GroupTerminatingInstances</code> </p> </li> <li> <p> <code>GroupTotalInstances</code> </p> </li> </ul>"]
     pub metrics: Option<Vec<String>>,
 }
-
+impl EnableMetricsCollectionQuery {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableMetricsCollectionQuery.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `granularity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableMetricsCollectionQuery.granularity = value.into();`.
+    pub fn granularity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.granularity = value.into();
+        self
+    }
+    /// Sets `metrics`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableMetricsCollectionQuery.metrics = Some(value.into());`.
+    pub fn metrics<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.metrics = Some(value.into());
+        self
+    }
+    /// Returns a new instance of EnableMetricsCollectionQuery with optional fields set to `None`.
+    pub fn new<AutoScalingGroupNameType: Into<String>, GranularityType: Into<String>>
+        (auto_scaling_group_name: AutoScalingGroupNameType,
+         granularity: GranularityType)
+         -> EnableMetricsCollectionQuery {
+        EnableMetricsCollectionQuery {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            granularity: granularity.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `EnableMetricsCollectionQuery` contents to a `SignedRequest`.
 struct EnableMetricsCollectionQuerySerializer;
@@ -3494,7 +4618,6 @@ pub struct EnabledMetric {
     #[doc="<p>One of the following metrics:</p> <ul> <li> <p> <code>GroupMinSize</code> </p> </li> <li> <p> <code>GroupMaxSize</code> </p> </li> <li> <p> <code>GroupDesiredCapacity</code> </p> </li> <li> <p> <code>GroupInServiceInstances</code> </p> </li> <li> <p> <code>GroupPendingInstances</code> </p> </li> <li> <p> <code>GroupStandbyInstances</code> </p> </li> <li> <p> <code>GroupTerminatingInstances</code> </p> </li> <li> <p> <code>GroupTotalInstances</code> </p> </li> </ul>"]
     pub metric: Option<String>,
 }
-
 struct EnabledMetricDeserializer;
 impl EnabledMetricDeserializer {
     #[allow(unused_variables)]
@@ -3590,7 +4713,6 @@ pub struct EnterStandbyAnswer {
     #[doc="<p>The activities related to moving instances into <code>Standby</code> mode.</p>"]
     pub activities: Option<Vec<Activity>>,
 }
-
 struct EnterStandbyAnswerDeserializer;
 impl EnterStandbyAnswerDeserializer {
     #[allow(unused_variables)]
@@ -3643,7 +4765,43 @@ pub struct EnterStandbyQuery {
     #[doc="<p>Specifies whether the instances moved to <code>Standby</code> mode count as part of the Auto Scaling group's desired capacity. If set, the desired capacity for the Auto Scaling group decrements by the number of instances moved to <code>Standby</code> mode.</p>"]
     pub should_decrement_desired_capacity: bool,
 }
-
+impl EnterStandbyQuery {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnterStandbyQuery.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `instance_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnterStandbyQuery.instance_ids = Some(value.into());`.
+    pub fn instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_ids = Some(value.into());
+        self
+    }
+    /// Sets `should_decrement_desired_capacity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnterStandbyQuery.should_decrement_desired_capacity = value.into();`.
+    pub fn should_decrement_desired_capacity<ValueType: Into<bool>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.should_decrement_desired_capacity = value.into();
+        self
+    }
+    /// Returns a new instance of EnterStandbyQuery with optional fields set to `None`.
+    pub fn new<AutoScalingGroupNameType: Into<String>,
+               ShouldDecrementDesiredCapacityType: Into<bool>>
+        (auto_scaling_group_name: AutoScalingGroupNameType,
+         should_decrement_desired_capacity: ShouldDecrementDesiredCapacityType)
+         -> EnterStandbyQuery {
+        EnterStandbyQuery {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            should_decrement_desired_capacity: should_decrement_desired_capacity.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `EnterStandbyQuery` contents to a `SignedRequest`.
 struct EnterStandbyQuerySerializer;
@@ -3695,7 +4853,50 @@ pub struct ExecutePolicyType {
     #[doc="<p>The name or ARN of the policy.</p>"]
     pub policy_name: String,
 }
-
+impl ExecutePolicyType {
+    /// Sets `auto_scaling_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExecutePolicyType.auto_scaling_group_name = Some(value.into());`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = Some(value.into());
+        self
+    }
+    /// Sets `breach_threshold`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExecutePolicyType.breach_threshold = Some(value.into());`.
+    pub fn breach_threshold<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.breach_threshold = Some(value.into());
+        self
+    }
+    /// Sets `honor_cooldown`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExecutePolicyType.honor_cooldown = Some(value.into());`.
+    pub fn honor_cooldown<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.honor_cooldown = Some(value.into());
+        self
+    }
+    /// Sets `metric_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExecutePolicyType.metric_value = Some(value.into());`.
+    pub fn metric_value<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.metric_value = Some(value.into());
+        self
+    }
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExecutePolicyType.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Returns a new instance of ExecutePolicyType with optional fields set to `None`.
+    pub fn new<PolicyNameType: Into<String>>(policy_name: PolicyNameType) -> ExecutePolicyType {
+        ExecutePolicyType {
+            policy_name: policy_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ExecutePolicyType` contents to a `SignedRequest`.
 struct ExecutePolicyTypeSerializer;
@@ -3733,7 +4934,6 @@ pub struct ExitStandbyAnswer {
     #[doc="<p>The activities related to moving instances out of <code>Standby</code> mode.</p>"]
     pub activities: Option<Vec<Activity>>,
 }
-
 struct ExitStandbyAnswerDeserializer;
 impl ExitStandbyAnswerDeserializer {
     #[allow(unused_variables)]
@@ -3784,7 +4984,29 @@ pub struct ExitStandbyQuery {
     #[doc="<p>One or more instance IDs. You must specify at least one instance ID.</p>"]
     pub instance_ids: Option<Vec<String>>,
 }
-
+impl ExitStandbyQuery {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExitStandbyQuery.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `instance_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExitStandbyQuery.instance_ids = Some(value.into());`.
+    pub fn instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ExitStandbyQuery with optional fields set to `None`.
+pub fn new<AutoScalingGroupNameType: Into<String>>(auto_scaling_group_name: AutoScalingGroupNameType) -> ExitStandbyQuery{
+        ExitStandbyQuery {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ExitStandbyQuery` contents to a `SignedRequest`.
 struct ExitStandbyQuerySerializer;
@@ -3814,7 +5036,26 @@ pub struct Filter {
     #[doc="<p>The value of the filter.</p>"]
     pub values: Option<Vec<String>>,
 }
-
+impl Filter {
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Filter.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Filter.values = Some(value.into());`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Filter with optional fields set to `None`.
+    pub fn new() -> Filter {
+        Filter { ..Default::default() }
+    }
+}
 
 /// Serialize `Filter` contents to a `SignedRequest`.
 struct FilterSerializer;
@@ -3905,7 +5146,6 @@ pub struct Instance {
     #[doc="<p>Indicates whether the instance is protected from termination by Auto Scaling when scaling in.</p>"]
     pub protected_from_scale_in: bool,
 }
-
 struct InstanceDeserializer;
 impl InstanceDeserializer {
     #[allow(unused_variables)]
@@ -3992,7 +5232,19 @@ pub struct InstanceMonitoring {
     #[doc="<p>If <code>True</code>, instance monitoring is enabled.</p>"]
     pub enabled: Option<bool>,
 }
-
+impl InstanceMonitoring {
+    /// Sets `enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceMonitoring.enabled = Some(value.into());`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InstanceMonitoring with optional fields set to `None`.
+    pub fn new() -> InstanceMonitoring {
+        InstanceMonitoring { ..Default::default() }
+    }
+}
 struct InstanceMonitoringDeserializer;
 impl InstanceMonitoringDeserializer {
     #[allow(unused_variables)]
@@ -4151,7 +5403,6 @@ pub struct LaunchConfiguration {
     #[doc="<p>The user data available to the instances.</p>"]
     pub user_data: Option<String>,
 }
-
 struct LaunchConfigurationDeserializer;
 impl LaunchConfigurationDeserializer {
     #[allow(unused_variables)]
@@ -4284,7 +5535,22 @@ pub struct LaunchConfigurationNameType {
     #[doc="<p>The name of the launch configuration.</p>"]
     pub launch_configuration_name: String,
 }
-
+impl LaunchConfigurationNameType {
+    /// Sets `launch_configuration_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LaunchConfigurationNameType.launch_configuration_name = value.into();`.
+    pub fn launch_configuration_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.launch_configuration_name = value.into();
+        self
+    }
+    /// Returns a new instance of LaunchConfigurationNameType with optional fields set to `None`.
+pub fn new<LaunchConfigurationNameType: Into<String>>(launch_configuration_name: LaunchConfigurationNameType) -> LaunchConfigurationNameType{
+        LaunchConfigurationNameType {
+            launch_configuration_name: launch_configuration_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `LaunchConfigurationNameType` contents to a `SignedRequest`.
 struct LaunchConfigurationNameTypeSerializer;
@@ -4323,7 +5589,35 @@ pub struct LaunchConfigurationNamesType {
     #[doc="<p>The token for the next set of items to return. (You received this token from a previous call.)</p>"]
     pub next_token: Option<String>,
 }
-
+impl LaunchConfigurationNamesType {
+    /// Sets `launch_configuration_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LaunchConfigurationNamesType.launch_configuration_names = Some(value.into());`.
+    pub fn launch_configuration_names<ValueType: Into<Vec<String>>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.launch_configuration_names = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LaunchConfigurationNamesType.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LaunchConfigurationNamesType.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of LaunchConfigurationNamesType with optional fields set to `None`.
+    pub fn new() -> LaunchConfigurationNamesType {
+        LaunchConfigurationNamesType { ..Default::default() }
+    }
+}
 
 /// Serialize `LaunchConfigurationNamesType` contents to a `SignedRequest`.
 struct LaunchConfigurationNamesTypeSerializer;
@@ -4402,7 +5696,6 @@ pub struct LaunchConfigurationsType {
     #[doc="<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>"]
     pub next_token: Option<String>,
 }
-
 struct LaunchConfigurationsTypeDeserializer;
 impl LaunchConfigurationsTypeDeserializer {
     #[allow(unused_variables)]
@@ -4486,7 +5779,6 @@ pub struct LifecycleHook {
     #[doc="<p>The ARN of the IAM role that allows the Auto Scaling group to publish to the specified notification target.</p>"]
     pub role_arn: Option<String>,
 }
-
 struct LifecycleHookDeserializer;
 impl LifecycleHookDeserializer {
     #[allow(unused_variables)]
@@ -4712,7 +6004,6 @@ pub struct LoadBalancerState {
     #[doc="<p>One of the following load balancer states:</p> <ul> <li> <p> <code>Adding</code> - The instances in the group are being registered with the load balancer.</p> </li> <li> <p> <code>Added</code> - All instances in the group are registered with the load balancer.</p> </li> <li> <p> <code>InService</code> - At least one instance in the group passed an ELB health check.</p> </li> <li> <p> <code>Removing</code> - The instances in the group are being deregistered from the load balancer. If connection draining is enabled, Elastic Load Balancing waits for in-flight requests to complete before deregistering the instances.</p> </li> <li> <p> <code>Removed</code> - All instances in the group are deregistered from the load balancer.</p> </li> </ul>"]
     pub state: Option<String>,
 }
-
 struct LoadBalancerStateDeserializer;
 impl LoadBalancerStateDeserializer {
     #[allow(unused_variables)]
@@ -4810,7 +6101,6 @@ pub struct LoadBalancerTargetGroupState {
     #[doc="<p>The state of the target group.</p> <ul> <li> <p> <code>Adding</code> - The Auto Scaling instances are being registered with the target group.</p> </li> <li> <p> <code>Added</code> - All Auto Scaling instances are registered with the target group.</p> </li> <li> <p> <code>InService</code> - At least one Auto Scaling instance passed an ELB health check.</p> </li> <li> <p> <code>Removing</code> - The Auto Scaling instances are being deregistered from the target group. If connection draining is enabled, Elastic Load Balancing waits for in-flight requests to complete before deregistering the instances.</p> </li> <li> <p> <code>Removed</code> - All Auto Scaling instances are deregistered from the target group.</p> </li> </ul>"]
     pub state: Option<String>,
 }
-
 struct LoadBalancerTargetGroupStateDeserializer;
 impl LoadBalancerTargetGroupStateDeserializer {
     #[allow(unused_variables)]
@@ -4935,7 +6225,6 @@ pub struct MetricCollectionType {
     #[doc="<p>One of the following metrics:</p> <ul> <li> <p> <code>GroupMinSize</code> </p> </li> <li> <p> <code>GroupMaxSize</code> </p> </li> <li> <p> <code>GroupDesiredCapacity</code> </p> </li> <li> <p> <code>GroupInServiceInstances</code> </p> </li> <li> <p> <code>GroupPendingInstances</code> </p> </li> <li> <p> <code>GroupStandbyInstances</code> </p> </li> <li> <p> <code>GroupTerminatingInstances</code> </p> </li> <li> <p> <code>GroupTotalInstances</code> </p> </li> </ul>"]
     pub metric: Option<String>,
 }
-
 struct MetricCollectionTypeDeserializer;
 impl MetricCollectionTypeDeserializer {
     #[allow(unused_variables)]
@@ -5029,7 +6318,32 @@ pub struct MetricDimension {
     #[doc="<p>The value of the dimension.</p>"]
     pub value: String,
 }
-
+impl MetricDimension {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MetricDimension.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MetricDimension.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of MetricDimension with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, ValueType: Into<String>>(name: NameType,
+                                                                value: ValueType)
+                                                                -> MetricDimension {
+        MetricDimension {
+            name: name.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 struct MetricDimensionDeserializer;
 impl MetricDimensionDeserializer {
     #[allow(unused_variables)]
@@ -5179,7 +6493,6 @@ pub struct MetricGranularityType {
     #[doc="<p>The granularity. The only valid value is <code>1Minute</code>.</p>"]
     pub granularity: Option<String>,
 }
-
 struct MetricGranularityTypeDeserializer;
 impl MetricGranularityTypeDeserializer {
     #[allow(unused_variables)]
@@ -5427,7 +6740,6 @@ pub struct NotificationConfiguration {
     #[doc="<p>The Amazon Resource Name (ARN) of the Amazon Simple Notification Service (SNS) topic.</p>"]
     pub topic_arn: Option<String>,
 }
-
 struct NotificationConfigurationDeserializer;
 impl NotificationConfigurationDeserializer {
     #[allow(unused_variables)]
@@ -5559,7 +6871,6 @@ pub struct PoliciesType {
     #[doc="<p>The scaling policies.</p>"]
     pub scaling_policies: Option<Vec<ScalingPolicy>>,
 }
-
 struct PoliciesTypeDeserializer;
 impl PoliciesTypeDeserializer {
     #[allow(unused_variables)]
@@ -5615,7 +6926,6 @@ pub struct PolicyARNType {
     #[doc="<p>The Amazon Resource Name (ARN) of the policy.</p>"]
     pub policy_arn: Option<String>,
 }
-
 struct PolicyARNTypeDeserializer;
 impl PolicyARNTypeDeserializer {
     #[allow(unused_variables)]
@@ -5709,7 +7019,29 @@ pub struct PredefinedMetricSpecification {
     #[doc="<p>Identifies the resource associated with the metric type. For predefined metric types <code>ASGAverageCPUUtilization</code>, <code>ASGAverageNetworkIn</code> and <code>ASGAverageNetworkOut</code>, the parameter must not be specified as the resource associated with the metric type is the Auto Scaling group. For predefined metric type <code>ALBRequestCountPerTarget</code>, the parameter must be specified in the format <code>app/<i>load-balancer-name</i>/<i>load-balancer-id</i>/targetgroup/<i>target-group-name</i>/<i>target-group-id</i> </code>, where <code>app/<i>load-balancer-name</i>/<i>load-balancer-id</i> </code> is the final portion of the load balancer ARN, and <code>targetgroup/<i>target-group-name</i>/<i>target-group-id</i> </code> is the final portion of the target group ARN. The target group must be attached to the Auto Scaling group.</p>"]
     pub resource_label: Option<String>,
 }
-
+impl PredefinedMetricSpecification {
+    /// Sets `predefined_metric_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PredefinedMetricSpecification.predefined_metric_type = value.into();`.
+    pub fn predefined_metric_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.predefined_metric_type = value.into();
+        self
+    }
+    /// Sets `resource_label`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PredefinedMetricSpecification.resource_label = Some(value.into());`.
+    pub fn resource_label<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_label = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PredefinedMetricSpecification with optional fields set to `None`.
+pub fn new<PredefinedMetricTypeType: Into<String>>(predefined_metric_type: PredefinedMetricTypeType) -> PredefinedMetricSpecification{
+        PredefinedMetricSpecification {
+            predefined_metric_type: predefined_metric_type.into(),
+            ..Default::default()
+        }
+    }
+}
 struct PredefinedMetricSpecificationDeserializer;
 impl PredefinedMetricSpecificationDeserializer {
     #[allow(unused_variables)]
@@ -5795,7 +7127,6 @@ pub struct ProcessType {
     #[doc="<p>One of the following processes:</p> <ul> <li> <p> <code>Launch</code> </p> </li> <li> <p> <code>Terminate</code> </p> </li> <li> <p> <code>AddToLoadBalancer</code> </p> </li> <li> <p> <code>AlarmNotification</code> </p> </li> <li> <p> <code>AZRebalance</code> </p> </li> <li> <p> <code>HealthCheck</code> </p> </li> <li> <p> <code>ReplaceUnhealthy</code> </p> </li> <li> <p> <code>ScheduledActions</code> </p> </li> </ul>"]
     pub process_name: String,
 }
-
 struct ProcessTypeDeserializer;
 impl ProcessTypeDeserializer {
     #[allow(unused_variables)]
@@ -5886,7 +7217,6 @@ pub struct ProcessesType {
     #[doc="<p>The names of the process types.</p>"]
     pub processes: Option<Vec<ProcessType>>,
 }
-
 struct ProcessesTypeDeserializer;
 impl ProcessesTypeDeserializer {
     #[allow(unused_variables)]
@@ -5997,7 +7327,75 @@ pub struct PutLifecycleHookType {
     #[doc="<p>The ARN of the IAM role that allows the Auto Scaling group to publish to the specified notification target.</p> <p>This parameter is required for new lifecycle hooks, but optional when updating existing hooks.</p>"]
     pub role_arn: Option<String>,
 }
-
+impl PutLifecycleHookType {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutLifecycleHookType.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `default_result`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutLifecycleHookType.default_result = Some(value.into());`.
+    pub fn default_result<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_result = Some(value.into());
+        self
+    }
+    /// Sets `heartbeat_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutLifecycleHookType.heartbeat_timeout = Some(value.into());`.
+    pub fn heartbeat_timeout<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.heartbeat_timeout = Some(value.into());
+        self
+    }
+    /// Sets `lifecycle_hook_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutLifecycleHookType.lifecycle_hook_name = value.into();`.
+    pub fn lifecycle_hook_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lifecycle_hook_name = value.into();
+        self
+    }
+    /// Sets `lifecycle_transition`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutLifecycleHookType.lifecycle_transition = Some(value.into());`.
+    pub fn lifecycle_transition<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lifecycle_transition = Some(value.into());
+        self
+    }
+    /// Sets `notification_metadata`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutLifecycleHookType.notification_metadata = Some(value.into());`.
+    pub fn notification_metadata<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.notification_metadata = Some(value.into());
+        self
+    }
+    /// Sets `notification_target_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutLifecycleHookType.notification_target_arn = Some(value.into());`.
+    pub fn notification_target_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.notification_target_arn = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutLifecycleHookType.role_arn = Some(value.into());`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PutLifecycleHookType with optional fields set to `None`.
+    pub fn new<AutoScalingGroupNameType: Into<String>, LifecycleHookNameType: Into<String>>
+        (auto_scaling_group_name: AutoScalingGroupNameType,
+         lifecycle_hook_name: LifecycleHookNameType)
+         -> PutLifecycleHookType {
+        PutLifecycleHookType {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            lifecycle_hook_name: lifecycle_hook_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `PutLifecycleHookType` contents to a `SignedRequest`.
 struct PutLifecycleHookTypeSerializer;
@@ -6048,7 +7446,44 @@ pub struct PutNotificationConfigurationType {
     #[doc="<p>The Amazon Resource Name (ARN) of the Amazon Simple Notification Service (SNS) topic.</p>"]
     pub topic_arn: String,
 }
-
+impl PutNotificationConfigurationType {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutNotificationConfigurationType.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `notification_types`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutNotificationConfigurationType.notification_types = value.into();`.
+    pub fn notification_types<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.notification_types = value.into();
+        self
+    }
+    /// Sets `topic_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutNotificationConfigurationType.topic_arn = value.into();`.
+    pub fn topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_arn = value.into();
+        self
+    }
+    /// Returns a new instance of PutNotificationConfigurationType with optional fields set to `None`.
+    pub fn new<AutoScalingGroupNameType: Into<String>,
+               NotificationTypesType: Into<Vec<String>>,
+               TopicARNType: Into<String>>
+        (auto_scaling_group_name: AutoScalingGroupNameType,
+         notification_types: NotificationTypesType,
+         topic_arn: TopicARNType)
+         -> PutNotificationConfigurationType {
+        PutNotificationConfigurationType {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            notification_types: notification_types.into(),
+            topic_arn: topic_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `PutNotificationConfigurationType` contents to a `SignedRequest`.
 struct PutNotificationConfigurationTypeSerializer;
@@ -6099,7 +7534,105 @@ pub struct PutScalingPolicyType {
     #[doc="<p>The configuration of a target tracking policy.</p> <p>This parameter is required if the policy type is <code>TargetTrackingScaling</code> and not supported otherwise.</p>"]
     pub target_tracking_configuration: Option<TargetTrackingConfiguration>,
 }
-
+impl PutScalingPolicyType {
+    /// Sets `adjustment_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScalingPolicyType.adjustment_type = Some(value.into());`.
+    pub fn adjustment_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.adjustment_type = Some(value.into());
+        self
+    }
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScalingPolicyType.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `cooldown`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScalingPolicyType.cooldown = Some(value.into());`.
+    pub fn cooldown<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.cooldown = Some(value.into());
+        self
+    }
+    /// Sets `estimated_instance_warmup`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScalingPolicyType.estimated_instance_warmup = Some(value.into());`.
+    pub fn estimated_instance_warmup<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.estimated_instance_warmup = Some(value.into());
+        self
+    }
+    /// Sets `metric_aggregation_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScalingPolicyType.metric_aggregation_type = Some(value.into());`.
+    pub fn metric_aggregation_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_aggregation_type = Some(value.into());
+        self
+    }
+    /// Sets `min_adjustment_magnitude`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScalingPolicyType.min_adjustment_magnitude = Some(value.into());`.
+    pub fn min_adjustment_magnitude<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.min_adjustment_magnitude = Some(value.into());
+        self
+    }
+    /// Sets `min_adjustment_step`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScalingPolicyType.min_adjustment_step = Some(value.into());`.
+    pub fn min_adjustment_step<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.min_adjustment_step = Some(value.into());
+        self
+    }
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScalingPolicyType.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Sets `policy_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScalingPolicyType.policy_type = Some(value.into());`.
+    pub fn policy_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_type = Some(value.into());
+        self
+    }
+    /// Sets `scaling_adjustment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScalingPolicyType.scaling_adjustment = Some(value.into());`.
+    pub fn scaling_adjustment<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.scaling_adjustment = Some(value.into());
+        self
+    }
+    /// Sets `step_adjustments`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScalingPolicyType.step_adjustments = Some(value.into());`.
+    pub fn step_adjustments<ValueType: Into<Vec<StepAdjustment>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.step_adjustments = Some(value.into());
+        self
+    }
+    /// Sets `target_tracking_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScalingPolicyType.target_tracking_configuration = Some(value.into());`.
+pub fn target_tracking_configuration<ValueType: Into<TargetTrackingConfiguration>>(mut self, value: ValueType) -> Self{
+        self.target_tracking_configuration = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PutScalingPolicyType with optional fields set to `None`.
+    pub fn new<AutoScalingGroupNameType: Into<String>, PolicyNameType: Into<String>>
+        (auto_scaling_group_name: AutoScalingGroupNameType,
+         policy_name: PolicyNameType)
+         -> PutScalingPolicyType {
+        PutScalingPolicyType {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            policy_name: policy_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `PutScalingPolicyType` contents to a `SignedRequest`.
 struct PutScalingPolicyTypeSerializer;
@@ -6181,7 +7714,82 @@ pub struct PutScheduledUpdateGroupActionType {
     #[doc="<p>This parameter is deprecated.</p>"]
     pub time: Option<String>,
 }
-
+impl PutScheduledUpdateGroupActionType {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScheduledUpdateGroupActionType.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `desired_capacity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScheduledUpdateGroupActionType.desired_capacity = Some(value.into());`.
+    pub fn desired_capacity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.desired_capacity = Some(value.into());
+        self
+    }
+    /// Sets `end_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScheduledUpdateGroupActionType.end_time = Some(value.into());`.
+    pub fn end_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.end_time = Some(value.into());
+        self
+    }
+    /// Sets `max_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScheduledUpdateGroupActionType.max_size = Some(value.into());`.
+    pub fn max_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_size = Some(value.into());
+        self
+    }
+    /// Sets `min_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScheduledUpdateGroupActionType.min_size = Some(value.into());`.
+    pub fn min_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.min_size = Some(value.into());
+        self
+    }
+    /// Sets `recurrence`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScheduledUpdateGroupActionType.recurrence = Some(value.into());`.
+    pub fn recurrence<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.recurrence = Some(value.into());
+        self
+    }
+    /// Sets `scheduled_action_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScheduledUpdateGroupActionType.scheduled_action_name = value.into();`.
+    pub fn scheduled_action_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.scheduled_action_name = value.into();
+        self
+    }
+    /// Sets `start_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScheduledUpdateGroupActionType.start_time = Some(value.into());`.
+    pub fn start_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_time = Some(value.into());
+        self
+    }
+    /// Sets `time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScheduledUpdateGroupActionType.time = Some(value.into());`.
+    pub fn time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.time = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PutScheduledUpdateGroupActionType with optional fields set to `None`.
+    pub fn new<AutoScalingGroupNameType: Into<String>, ScheduledActionNameType: Into<String>>
+        (auto_scaling_group_name: AutoScalingGroupNameType,
+         scheduled_action_name: ScheduledActionNameType)
+         -> PutScheduledUpdateGroupActionType {
+        PutScheduledUpdateGroupActionType {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            scheduled_action_name: scheduled_action_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `PutScheduledUpdateGroupActionType` contents to a `SignedRequest`.
 struct PutScheduledUpdateGroupActionTypeSerializer;
@@ -6257,7 +7865,47 @@ pub struct RecordLifecycleActionHeartbeatType {
     #[doc="<p>The name of the lifecycle hook.</p>"]
     pub lifecycle_hook_name: String,
 }
-
+impl RecordLifecycleActionHeartbeatType {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecordLifecycleActionHeartbeatType.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecordLifecycleActionHeartbeatType.instance_id = Some(value.into());`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = Some(value.into());
+        self
+    }
+    /// Sets `lifecycle_action_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecordLifecycleActionHeartbeatType.lifecycle_action_token = Some(value.into());`.
+    pub fn lifecycle_action_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lifecycle_action_token = Some(value.into());
+        self
+    }
+    /// Sets `lifecycle_hook_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecordLifecycleActionHeartbeatType.lifecycle_hook_name = value.into();`.
+    pub fn lifecycle_hook_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lifecycle_hook_name = value.into();
+        self
+    }
+    /// Returns a new instance of RecordLifecycleActionHeartbeatType with optional fields set to `None`.
+    pub fn new<AutoScalingGroupNameType: Into<String>, LifecycleHookNameType: Into<String>>
+        (auto_scaling_group_name: AutoScalingGroupNameType,
+         lifecycle_hook_name: LifecycleHookNameType)
+         -> RecordLifecycleActionHeartbeatType {
+        RecordLifecycleActionHeartbeatType {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            lifecycle_hook_name: lifecycle_hook_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RecordLifecycleActionHeartbeatType` contents to a `SignedRequest`.
 struct RecordLifecycleActionHeartbeatTypeSerializer;
@@ -6384,7 +8032,6 @@ pub struct ScalingPolicy {
     #[doc="<p>A target tracking policy.</p>"]
     pub target_tracking_configuration: Option<TargetTrackingConfiguration>,
 }
-
 struct ScalingPolicyDeserializer;
 impl ScalingPolicyDeserializer {
     #[allow(unused_variables)]
@@ -6497,7 +8144,29 @@ pub struct ScalingProcessQuery {
     #[doc="<p>One or more of the following processes. If you omit this parameter, all processes are specified.</p> <ul> <li> <p> <code>Launch</code> </p> </li> <li> <p> <code>Terminate</code> </p> </li> <li> <p> <code>HealthCheck</code> </p> </li> <li> <p> <code>ReplaceUnhealthy</code> </p> </li> <li> <p> <code>AZRebalance</code> </p> </li> <li> <p> <code>AlarmNotification</code> </p> </li> <li> <p> <code>ScheduledActions</code> </p> </li> <li> <p> <code>AddToLoadBalancer</code> </p> </li> </ul>"]
     pub scaling_processes: Option<Vec<String>>,
 }
-
+impl ScalingProcessQuery {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScalingProcessQuery.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `scaling_processes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScalingProcessQuery.scaling_processes = Some(value.into());`.
+    pub fn scaling_processes<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.scaling_processes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ScalingProcessQuery with optional fields set to `None`.
+pub fn new<AutoScalingGroupNameType: Into<String>>(auto_scaling_group_name: AutoScalingGroupNameType) -> ScalingProcessQuery{
+        ScalingProcessQuery {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ScalingProcessQuery` contents to a `SignedRequest`.
 struct ScalingProcessQuerySerializer;
@@ -6539,7 +8208,6 @@ pub struct ScheduledActionsType {
     #[doc="<p>The scheduled actions.</p>"]
     pub scheduled_update_group_actions: Option<Vec<ScheduledUpdateGroupAction>>,
 }
-
 struct ScheduledActionsTypeDeserializer;
 impl ScheduledActionsTypeDeserializer {
     #[allow(unused_variables)]
@@ -6609,7 +8277,6 @@ pub struct ScheduledUpdateGroupAction {
     #[doc="<p>This parameter is deprecated.</p>"]
     pub time: Option<String>,
 }
-
 struct ScheduledUpdateGroupActionDeserializer;
 impl ScheduledUpdateGroupActionDeserializer {
     #[allow(unused_variables)]
@@ -6801,7 +8468,40 @@ pub struct SetDesiredCapacityType {
     #[doc="<p>By default, <code>SetDesiredCapacity</code> overrides any cooldown period associated with the Auto Scaling group. Specify <code>True</code> to make Auto Scaling to wait for the cool-down period associated with the Auto Scaling group to complete before initiating a scaling activity to set your Auto Scaling group to its new capacity.</p>"]
     pub honor_cooldown: Option<bool>,
 }
-
+impl SetDesiredCapacityType {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetDesiredCapacityType.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `desired_capacity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetDesiredCapacityType.desired_capacity = value.into();`.
+    pub fn desired_capacity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.desired_capacity = value.into();
+        self
+    }
+    /// Sets `honor_cooldown`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetDesiredCapacityType.honor_cooldown = Some(value.into());`.
+    pub fn honor_cooldown<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.honor_cooldown = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SetDesiredCapacityType with optional fields set to `None`.
+    pub fn new<AutoScalingGroupNameType: Into<String>, DesiredCapacityType: Into<i64>>
+        (auto_scaling_group_name: AutoScalingGroupNameType,
+         desired_capacity: DesiredCapacityType)
+         -> SetDesiredCapacityType {
+        SetDesiredCapacityType {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            desired_capacity: desired_capacity.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SetDesiredCapacityType` contents to a `SignedRequest`.
 struct SetDesiredCapacityTypeSerializer;
@@ -6834,7 +8534,40 @@ pub struct SetInstanceHealthQuery {
     #[doc="<p>If the Auto Scaling group of the specified instance has a <code>HealthCheckGracePeriod</code> specified for the group, by default, this call will respect the grace period. Set this to <code>False</code>, if you do not want the call to respect the grace period associated with the group.</p> <p>For more information, see the description of the health check grace period for <a>CreateAutoScalingGroup</a>.</p>"]
     pub should_respect_grace_period: Option<bool>,
 }
-
+impl SetInstanceHealthQuery {
+    /// Sets `health_status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetInstanceHealthQuery.health_status = value.into();`.
+    pub fn health_status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.health_status = value.into();
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetInstanceHealthQuery.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `should_respect_grace_period`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetInstanceHealthQuery.should_respect_grace_period = Some(value.into());`.
+    pub fn should_respect_grace_period<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.should_respect_grace_period = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SetInstanceHealthQuery with optional fields set to `None`.
+    pub fn new<HealthStatusType: Into<String>, InstanceIdType: Into<String>>
+        (health_status: HealthStatusType,
+         instance_id: InstanceIdType)
+         -> SetInstanceHealthQuery {
+        SetInstanceHealthQuery {
+            health_status: health_status.into(),
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SetInstanceHealthQuery` contents to a `SignedRequest`.
 struct SetInstanceHealthQuerySerializer;
@@ -6885,7 +8618,44 @@ pub struct SetInstanceProtectionQuery {
     #[doc="<p>Indicates whether the instance is protected from termination by Auto Scaling when scaling in.</p>"]
     pub protected_from_scale_in: bool,
 }
-
+impl SetInstanceProtectionQuery {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetInstanceProtectionQuery.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `instance_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetInstanceProtectionQuery.instance_ids = value.into();`.
+    pub fn instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_ids = value.into();
+        self
+    }
+    /// Sets `protected_from_scale_in`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetInstanceProtectionQuery.protected_from_scale_in = value.into();`.
+    pub fn protected_from_scale_in<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.protected_from_scale_in = value.into();
+        self
+    }
+    /// Returns a new instance of SetInstanceProtectionQuery with optional fields set to `None`.
+    pub fn new<AutoScalingGroupNameType: Into<String>,
+               InstanceIdsType: Into<Vec<String>>,
+               ProtectedFromScaleInType: Into<bool>>
+        (auto_scaling_group_name: AutoScalingGroupNameType,
+         instance_ids: InstanceIdsType,
+         protected_from_scale_in: ProtectedFromScaleInType)
+         -> SetInstanceProtectionQuery {
+        SetInstanceProtectionQuery {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            instance_ids: instance_ids.into(),
+            protected_from_scale_in: protected_from_scale_in.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SetInstanceProtectionQuery` contents to a `SignedRequest`.
 struct SetInstanceProtectionQuerySerializer;
@@ -6931,7 +8701,37 @@ pub struct StepAdjustment {
     #[doc="<p>The amount by which to scale, based on the specified adjustment type. A positive value adds to the current capacity while a negative number removes from the current capacity.</p>"]
     pub scaling_adjustment: i64,
 }
-
+impl StepAdjustment {
+    /// Sets `metric_interval_lower_bound`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StepAdjustment.metric_interval_lower_bound = Some(value.into());`.
+    pub fn metric_interval_lower_bound<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.metric_interval_lower_bound = Some(value.into());
+        self
+    }
+    /// Sets `metric_interval_upper_bound`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StepAdjustment.metric_interval_upper_bound = Some(value.into());`.
+    pub fn metric_interval_upper_bound<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.metric_interval_upper_bound = Some(value.into());
+        self
+    }
+    /// Sets `scaling_adjustment`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StepAdjustment.scaling_adjustment = value.into();`.
+    pub fn scaling_adjustment<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.scaling_adjustment = value.into();
+        self
+    }
+    /// Returns a new instance of StepAdjustment with optional fields set to `None`.
+    pub fn new<ScalingAdjustmentType: Into<i64>>(scaling_adjustment: ScalingAdjustmentType)
+                                                 -> StepAdjustment {
+        StepAdjustment {
+            scaling_adjustment: scaling_adjustment.into(),
+            ..Default::default()
+        }
+    }
+}
 struct StepAdjustmentDeserializer;
 impl StepAdjustmentDeserializer {
     #[allow(unused_variables)]
@@ -7070,7 +8870,6 @@ pub struct SuspendedProcess {
     #[doc="<p>The reason that the process was suspended.</p>"]
     pub suspension_reason: Option<String>,
 }
-
 struct SuspendedProcessDeserializer;
 impl SuspendedProcessDeserializer {
     #[allow(unused_variables)]
@@ -7174,7 +8973,50 @@ pub struct Tag {
     #[doc="<p>The tag value.</p>"]
     pub value: Option<String>,
 }
-
+impl Tag {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `propagate_at_launch`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.propagate_at_launch = Some(value.into());`.
+    pub fn propagate_at_launch<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.propagate_at_launch = Some(value.into());
+        self
+    }
+    /// Sets `resource_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.resource_id = Some(value.into());`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = Some(value.into());
+        self
+    }
+    /// Sets `resource_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.resource_type = Some(value.into());`.
+    pub fn resource_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_type = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>>(key: KeyType) -> Tag {
+        Tag {
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `Tag` contents to a `SignedRequest`.
 struct TagSerializer;
@@ -7217,7 +9059,6 @@ pub struct TagDescription {
     #[doc="<p>The tag value.</p>"]
     pub value: Option<String>,
 }
-
 struct TagDescriptionDeserializer;
 impl TagDescriptionDeserializer {
     #[allow(unused_variables)]
@@ -7366,7 +9207,6 @@ pub struct TagsType {
     #[doc="<p>One or more tags.</p>"]
     pub tags: Option<Vec<TagDescription>>,
 }
-
 struct TagsTypeDeserializer;
 impl TagsTypeDeserializer {
     #[allow(unused_variables)]
@@ -7480,7 +9320,50 @@ pub struct TargetTrackingConfiguration {
     #[doc="<p>The target value for the metric.</p>"]
     pub target_value: f64,
 }
-
+impl TargetTrackingConfiguration {
+    /// Sets `customized_metric_specification`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TargetTrackingConfiguration.customized_metric_specification = Some(value.into());`.
+    pub fn customized_metric_specification<ValueType: Into<CustomizedMetricSpecification>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.customized_metric_specification = Some(value.into());
+        self
+    }
+    /// Sets `disable_scale_in`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TargetTrackingConfiguration.disable_scale_in = Some(value.into());`.
+    pub fn disable_scale_in<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.disable_scale_in = Some(value.into());
+        self
+    }
+    /// Sets `predefined_metric_specification`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TargetTrackingConfiguration.predefined_metric_specification = Some(value.into());`.
+    pub fn predefined_metric_specification<ValueType: Into<PredefinedMetricSpecification>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.predefined_metric_specification = Some(value.into());
+        self
+    }
+    /// Sets `target_value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TargetTrackingConfiguration.target_value = value.into();`.
+    pub fn target_value<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.target_value = value.into();
+        self
+    }
+    /// Returns a new instance of TargetTrackingConfiguration with optional fields set to `None`.
+    pub fn new<TargetValueType: Into<f64>>(target_value: TargetValueType)
+                                           -> TargetTrackingConfiguration {
+        TargetTrackingConfiguration {
+            target_value: target_value.into(),
+            ..Default::default()
+        }
+    }
+}
 struct TargetTrackingConfigurationDeserializer;
 impl TargetTrackingConfigurationDeserializer {
     #[allow(unused_variables)]
@@ -7576,7 +9459,35 @@ pub struct TerminateInstanceInAutoScalingGroupType {
     #[doc="<p>If <code>true</code>, terminating the instance also decrements the size of the Auto Scaling group.</p>"]
     pub should_decrement_desired_capacity: bool,
 }
-
+impl TerminateInstanceInAutoScalingGroupType {
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateInstanceInAutoScalingGroupType.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Sets `should_decrement_desired_capacity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateInstanceInAutoScalingGroupType.should_decrement_desired_capacity = value.into();`.
+    pub fn should_decrement_desired_capacity<ValueType: Into<bool>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.should_decrement_desired_capacity = value.into();
+        self
+    }
+    /// Returns a new instance of TerminateInstanceInAutoScalingGroupType with optional fields set to `None`.
+    pub fn new<InstanceIdType: Into<String>, ShouldDecrementDesiredCapacityType: Into<bool>>
+        (instance_id: InstanceIdType,
+         should_decrement_desired_capacity: ShouldDecrementDesiredCapacityType)
+         -> TerminateInstanceInAutoScalingGroupType {
+        TerminateInstanceInAutoScalingGroupType {
+            instance_id: instance_id.into(),
+            should_decrement_desired_capacity: should_decrement_desired_capacity.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `TerminateInstanceInAutoScalingGroupType` contents to a `SignedRequest`.
 struct TerminateInstanceInAutoScalingGroupTypeSerializer;
@@ -7692,7 +9603,108 @@ pub struct UpdateAutoScalingGroupType {
     #[doc="<p>The ID of the subnet, if you are launching into a VPC. You can specify several subnets in a comma-separated list.</p> <p>When you specify <code>VPCZoneIdentifier</code> with <code>AvailabilityZones</code>, ensure that the subnets' Availability Zones match the values you specify for <code>AvailabilityZones</code>.</p> <p>For more information, see <a href=\"http://docs.aws.amazon.com/autoscaling/latest/userguide/asg-in-vpc.html\">Launching Auto Scaling Instances in a VPC</a> in the <i>Auto Scaling User Guide</i>.</p>"]
     pub vpc_zone_identifier: Option<String>,
 }
-
+impl UpdateAutoScalingGroupType {
+    /// Sets `auto_scaling_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAutoScalingGroupType.auto_scaling_group_name = value.into();`.
+    pub fn auto_scaling_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_group_name = value.into();
+        self
+    }
+    /// Sets `availability_zones`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAutoScalingGroupType.availability_zones = Some(value.into());`.
+    pub fn availability_zones<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.availability_zones = Some(value.into());
+        self
+    }
+    /// Sets `default_cooldown`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAutoScalingGroupType.default_cooldown = Some(value.into());`.
+    pub fn default_cooldown<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.default_cooldown = Some(value.into());
+        self
+    }
+    /// Sets `desired_capacity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAutoScalingGroupType.desired_capacity = Some(value.into());`.
+    pub fn desired_capacity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.desired_capacity = Some(value.into());
+        self
+    }
+    /// Sets `health_check_grace_period`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAutoScalingGroupType.health_check_grace_period = Some(value.into());`.
+    pub fn health_check_grace_period<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.health_check_grace_period = Some(value.into());
+        self
+    }
+    /// Sets `health_check_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAutoScalingGroupType.health_check_type = Some(value.into());`.
+    pub fn health_check_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.health_check_type = Some(value.into());
+        self
+    }
+    /// Sets `launch_configuration_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAutoScalingGroupType.launch_configuration_name = Some(value.into());`.
+    pub fn launch_configuration_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.launch_configuration_name = Some(value.into());
+        self
+    }
+    /// Sets `max_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAutoScalingGroupType.max_size = Some(value.into());`.
+    pub fn max_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_size = Some(value.into());
+        self
+    }
+    /// Sets `min_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAutoScalingGroupType.min_size = Some(value.into());`.
+    pub fn min_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.min_size = Some(value.into());
+        self
+    }
+    /// Sets `new_instances_protected_from_scale_in`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAutoScalingGroupType.new_instances_protected_from_scale_in = Some(value.into());`.
+    pub fn new_instances_protected_from_scale_in<ValueType: Into<bool>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.new_instances_protected_from_scale_in = Some(value.into());
+        self
+    }
+    /// Sets `placement_group`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAutoScalingGroupType.placement_group = Some(value.into());`.
+    pub fn placement_group<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.placement_group = Some(value.into());
+        self
+    }
+    /// Sets `termination_policies`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAutoScalingGroupType.termination_policies = Some(value.into());`.
+    pub fn termination_policies<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.termination_policies = Some(value.into());
+        self
+    }
+    /// Sets `vpc_zone_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAutoScalingGroupType.vpc_zone_identifier = Some(value.into());`.
+    pub fn vpc_zone_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_zone_identifier = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateAutoScalingGroupType with optional fields set to `None`.
+pub fn new<AutoScalingGroupNameType: Into<String>>(auto_scaling_group_name: AutoScalingGroupNameType) -> UpdateAutoScalingGroupType{
+        UpdateAutoScalingGroupType {
+            auto_scaling_group_name: auto_scaling_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateAutoScalingGroupType` contents to a `SignedRequest`.
 struct UpdateAutoScalingGroupTypeSerializer;

@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -45,7 +46,49 @@ pub struct ActivatedRule {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
+impl ActivatedRule {
+    /// Sets `action`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActivatedRule.action = value.into();`.
+    pub fn action<ValueType: Into<WafAction>>(mut self, value: ValueType) -> Self {
+        self.action = value.into();
+        self
+    }
+    /// Sets `priority`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActivatedRule.priority = value.into();`.
+    pub fn priority<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.priority = value.into();
+        self
+    }
+    /// Sets `rule_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActivatedRule.rule_id = value.into();`.
+    pub fn rule_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_id = value.into();
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActivatedRule.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ActivatedRule with optional fields set to `None`.
+    pub fn new<ActionType: Into<WafAction>, PriorityType: Into<i64>, RuleIdType: Into<String>>
+        (action: ActionType,
+         priority: PriorityType,
+         rule_id: RuleIdType)
+         -> ActivatedRule {
+        ActivatedRule {
+            action: action.into(),
+            priority: priority.into(),
+            rule_id: rule_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AssociateWebACLRequest {
     #[doc="<p>The ARN (Amazon Resource Name) of the resource to be protected.</p>"]
@@ -55,7 +98,33 @@ pub struct AssociateWebACLRequest {
     #[serde(rename="WebACLId")]
     pub web_acl_id: String,
 }
-
+impl AssociateWebACLRequest {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateWebACLRequest.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Sets `web_acl_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateWebACLRequest.web_acl_id = value.into();`.
+    pub fn web_acl_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.web_acl_id = value.into();
+        self
+    }
+    /// Returns a new instance of AssociateWebACLRequest with optional fields set to `None`.
+    pub fn new<ResourceArnType: Into<String>, WebACLIdType: Into<String>>
+        (resource_arn: ResourceArnType,
+         web_acl_id: WebACLIdType)
+         -> AssociateWebACLRequest {
+        AssociateWebACLRequest {
+            resource_arn: resource_arn.into(),
+            web_acl_id: web_acl_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AssociateWebACLResponse;
 
@@ -73,7 +142,6 @@ pub struct ByteMatchSet {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p>Returned by <a>ListByteMatchSets</a>. Each <code>ByteMatchSetSummary</code> object includes the <code>Name</code> and <code>ByteMatchSetId</code> for one <a>ByteMatchSet</a>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ByteMatchSetSummary {
@@ -84,7 +152,6 @@ pub struct ByteMatchSetSummary {
     #[serde(rename="Name")]
     pub name: String,
 }
-
 #[doc="<p>In an <a>UpdateByteMatchSet</a> request, <code>ByteMatchSetUpdate</code> specifies whether to insert or delete a <a>ByteMatchTuple</a> and includes the settings for the <code>ByteMatchTuple</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ByteMatchSetUpdate {
@@ -95,7 +162,33 @@ pub struct ByteMatchSetUpdate {
     #[serde(rename="ByteMatchTuple")]
     pub byte_match_tuple: ByteMatchTuple,
 }
-
+impl ByteMatchSetUpdate {
+    /// Sets `action`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ByteMatchSetUpdate.action = value.into();`.
+    pub fn action<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.action = value.into();
+        self
+    }
+    /// Sets `byte_match_tuple`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ByteMatchSetUpdate.byte_match_tuple = value.into();`.
+    pub fn byte_match_tuple<ValueType: Into<ByteMatchTuple>>(mut self, value: ValueType) -> Self {
+        self.byte_match_tuple = value.into();
+        self
+    }
+    /// Returns a new instance of ByteMatchSetUpdate with optional fields set to `None`.
+    pub fn new<ActionType: Into<String>, ByteMatchTupleType: Into<ByteMatchTuple>>
+        (action: ActionType,
+         byte_match_tuple: ByteMatchTupleType)
+         -> ByteMatchSetUpdate {
+        ByteMatchSetUpdate {
+            action: action.into(),
+            byte_match_tuple: byte_match_tuple.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The bytes (typically a string that corresponds with ASCII characters) that you want AWS WAF to search for in web requests, the location in requests that you want AWS WAF to search, and other settings.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ByteMatchTuple {
@@ -117,7 +210,54 @@ pub struct ByteMatchTuple {
     #[serde(rename="TextTransformation")]
     pub text_transformation: String,
 }
-
+impl ByteMatchTuple {
+    /// Sets `field_to_match`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ByteMatchTuple.field_to_match = value.into();`.
+    pub fn field_to_match<ValueType: Into<FieldToMatch>>(mut self, value: ValueType) -> Self {
+        self.field_to_match = value.into();
+        self
+    }
+    /// Sets `positional_constraint`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ByteMatchTuple.positional_constraint = value.into();`.
+    pub fn positional_constraint<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.positional_constraint = value.into();
+        self
+    }
+    /// Sets `target_string`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ByteMatchTuple.target_string = value.into();`.
+    pub fn target_string<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.target_string = value.into();
+        self
+    }
+    /// Sets `text_transformation`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ByteMatchTuple.text_transformation = value.into();`.
+    pub fn text_transformation<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.text_transformation = value.into();
+        self
+    }
+    /// Returns a new instance of ByteMatchTuple with optional fields set to `None`.
+    pub fn new<FieldToMatchType: Into<FieldToMatch>,
+               PositionalConstraintType: Into<String>,
+               TargetStringType: Into<Vec<u8>>,
+               TextTransformationType: Into<String>>
+        (field_to_match: FieldToMatchType,
+         positional_constraint: PositionalConstraintType,
+         target_string: TargetStringType,
+         text_transformation: TextTransformationType)
+         -> ByteMatchTuple {
+        ByteMatchTuple {
+            field_to_match: field_to_match.into(),
+            positional_constraint: positional_constraint.into(),
+            target_string: target_string.into(),
+            text_transformation: text_transformation.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateByteMatchSetRequest {
     #[doc="<p>The value returned by the most recent call to <a>GetChangeToken</a>.</p>"]
@@ -127,7 +267,33 @@ pub struct CreateByteMatchSetRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl CreateByteMatchSetRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateByteMatchSetRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateByteMatchSetRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateByteMatchSetRequest with optional fields set to `None`.
+    pub fn new<ChangeTokenType: Into<String>, NameType: Into<String>>
+        (change_token: ChangeTokenType,
+         name: NameType)
+         -> CreateByteMatchSetRequest {
+        CreateByteMatchSetRequest {
+            change_token: change_token.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateByteMatchSetResponse {
     #[doc="<p>A <a>ByteMatchSet</a> that contains no <code>ByteMatchTuple</code> objects.</p>"]
@@ -139,7 +305,6 @@ pub struct CreateByteMatchSetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub change_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateIPSetRequest {
     #[doc="<p>The value returned by the most recent call to <a>GetChangeToken</a>.</p>"]
@@ -149,7 +314,30 @@ pub struct CreateIPSetRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl CreateIPSetRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateIPSetRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateIPSetRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateIPSetRequest with optional fields set to `None`.
+pub fn new<ChangeTokenType: Into<String>, NameType: Into<String>>(change_token: ChangeTokenType, name: NameType) -> CreateIPSetRequest{
+        CreateIPSetRequest {
+            change_token: change_token.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateIPSetResponse {
     #[doc="<p>The <code>ChangeToken</code> that you used to submit the <code>CreateIPSet</code> request. You can also use this value to query the status of the request. For more information, see <a>GetChangeTokenStatus</a>.</p>"]
@@ -161,7 +349,6 @@ pub struct CreateIPSetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ip_set: Option<IPSet>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateRateBasedRuleRequest {
     #[doc="<p>The <code>ChangeToken</code> that you used to submit the <code>CreateRateBasedRule</code> request. You can also use this value to query the status of the request. For more information, see <a>GetChangeTokenStatus</a>.</p>"]
@@ -180,7 +367,64 @@ pub struct CreateRateBasedRuleRequest {
     #[serde(rename="RateLimit")]
     pub rate_limit: i64,
 }
-
+impl CreateRateBasedRuleRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRateBasedRuleRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `metric_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRateBasedRuleRequest.metric_name = value.into();`.
+    pub fn metric_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_name = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRateBasedRuleRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `rate_key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRateBasedRuleRequest.rate_key = value.into();`.
+    pub fn rate_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rate_key = value.into();
+        self
+    }
+    /// Sets `rate_limit`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRateBasedRuleRequest.rate_limit = value.into();`.
+    pub fn rate_limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.rate_limit = value.into();
+        self
+    }
+    /// Returns a new instance of CreateRateBasedRuleRequest with optional fields set to `None`.
+    pub fn new<ChangeTokenType: Into<String>,
+               MetricNameType: Into<String>,
+               NameType: Into<String>,
+               RateKeyType: Into<String>,
+               RateLimitType: Into<i64>>
+        (change_token: ChangeTokenType,
+         metric_name: MetricNameType,
+         name: NameType,
+         rate_key: RateKeyType,
+         rate_limit: RateLimitType)
+         -> CreateRateBasedRuleRequest {
+        CreateRateBasedRuleRequest {
+            change_token: change_token.into(),
+            metric_name: metric_name.into(),
+            name: name.into(),
+            rate_key: rate_key.into(),
+            rate_limit: rate_limit.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateRateBasedRuleResponse {
     #[doc="<p>The <code>ChangeToken</code> that you used to submit the <code>CreateRateBasedRule</code> request. You can also use this value to query the status of the request. For more information, see <a>GetChangeTokenStatus</a>.</p>"]
@@ -192,7 +436,6 @@ pub struct CreateRateBasedRuleResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rule: Option<RateBasedRule>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateRuleRequest {
     #[doc="<p>The value returned by the most recent call to <a>GetChangeToken</a>.</p>"]
@@ -205,7 +448,42 @@ pub struct CreateRuleRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl CreateRuleRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRuleRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `metric_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRuleRequest.metric_name = value.into();`.
+    pub fn metric_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_name = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRuleRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateRuleRequest with optional fields set to `None`.
+    pub fn new<ChangeTokenType: Into<String>, MetricNameType: Into<String>, NameType: Into<String>>
+        (change_token: ChangeTokenType,
+         metric_name: MetricNameType,
+         name: NameType)
+         -> CreateRuleRequest {
+        CreateRuleRequest {
+            change_token: change_token.into(),
+            metric_name: metric_name.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateRuleResponse {
     #[doc="<p>The <code>ChangeToken</code> that you used to submit the <code>CreateRule</code> request. You can also use this value to query the status of the request. For more information, see <a>GetChangeTokenStatus</a>.</p>"]
@@ -217,7 +495,6 @@ pub struct CreateRuleResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rule: Option<Rule>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateSizeConstraintSetRequest {
     #[doc="<p>The value returned by the most recent call to <a>GetChangeToken</a>.</p>"]
@@ -227,7 +504,33 @@ pub struct CreateSizeConstraintSetRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl CreateSizeConstraintSetRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSizeConstraintSetRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSizeConstraintSetRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateSizeConstraintSetRequest with optional fields set to `None`.
+    pub fn new<ChangeTokenType: Into<String>, NameType: Into<String>>
+        (change_token: ChangeTokenType,
+         name: NameType)
+         -> CreateSizeConstraintSetRequest {
+        CreateSizeConstraintSetRequest {
+            change_token: change_token.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateSizeConstraintSetResponse {
     #[doc="<p>The <code>ChangeToken</code> that you used to submit the <code>CreateSizeConstraintSet</code> request. You can also use this value to query the status of the request. For more information, see <a>GetChangeTokenStatus</a>.</p>"]
@@ -239,7 +542,6 @@ pub struct CreateSizeConstraintSetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub size_constraint_set: Option<SizeConstraintSet>,
 }
-
 #[doc="<p>A request to create a <a>SqlInjectionMatchSet</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateSqlInjectionMatchSetRequest {
@@ -250,7 +552,33 @@ pub struct CreateSqlInjectionMatchSetRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl CreateSqlInjectionMatchSetRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSqlInjectionMatchSetRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSqlInjectionMatchSetRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateSqlInjectionMatchSetRequest with optional fields set to `None`.
+    pub fn new<ChangeTokenType: Into<String>, NameType: Into<String>>
+        (change_token: ChangeTokenType,
+         name: NameType)
+         -> CreateSqlInjectionMatchSetRequest {
+        CreateSqlInjectionMatchSetRequest {
+            change_token: change_token.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response to a <code>CreateSqlInjectionMatchSet</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateSqlInjectionMatchSetResponse {
@@ -263,7 +591,6 @@ pub struct CreateSqlInjectionMatchSetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sql_injection_match_set: Option<SqlInjectionMatchSet>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateWebACLRequest {
     #[doc="<p>The value returned by the most recent call to <a>GetChangeToken</a>.</p>"]
@@ -279,7 +606,54 @@ pub struct CreateWebACLRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl CreateWebACLRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateWebACLRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `default_action`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateWebACLRequest.default_action = value.into();`.
+    pub fn default_action<ValueType: Into<WafAction>>(mut self, value: ValueType) -> Self {
+        self.default_action = value.into();
+        self
+    }
+    /// Sets `metric_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateWebACLRequest.metric_name = value.into();`.
+    pub fn metric_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_name = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateWebACLRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateWebACLRequest with optional fields set to `None`.
+    pub fn new<ChangeTokenType: Into<String>,
+               DefaultActionType: Into<WafAction>,
+               MetricNameType: Into<String>,
+               NameType: Into<String>>
+        (change_token: ChangeTokenType,
+         default_action: DefaultActionType,
+         metric_name: MetricNameType,
+         name: NameType)
+         -> CreateWebACLRequest {
+        CreateWebACLRequest {
+            change_token: change_token.into(),
+            default_action: default_action.into(),
+            metric_name: metric_name.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateWebACLResponse {
     #[doc="<p>The <code>ChangeToken</code> that you used to submit the <code>CreateWebACL</code> request. You can also use this value to query the status of the request. For more information, see <a>GetChangeTokenStatus</a>.</p>"]
@@ -291,7 +665,6 @@ pub struct CreateWebACLResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub web_acl: Option<WebACL>,
 }
-
 #[doc="<p>A request to create an <a>XssMatchSet</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateXssMatchSetRequest {
@@ -302,7 +675,33 @@ pub struct CreateXssMatchSetRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl CreateXssMatchSetRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateXssMatchSetRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateXssMatchSetRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateXssMatchSetRequest with optional fields set to `None`.
+    pub fn new<ChangeTokenType: Into<String>, NameType: Into<String>>
+        (change_token: ChangeTokenType,
+         name: NameType)
+         -> CreateXssMatchSetRequest {
+        CreateXssMatchSetRequest {
+            change_token: change_token.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response to a <code>CreateXssMatchSet</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateXssMatchSetResponse {
@@ -315,7 +714,6 @@ pub struct CreateXssMatchSetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub xss_match_set: Option<XssMatchSet>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteByteMatchSetRequest {
     #[doc="<p>The <code>ByteMatchSetId</code> of the <a>ByteMatchSet</a> that you want to delete. <code>ByteMatchSetId</code> is returned by <a>CreateByteMatchSet</a> and by <a>ListByteMatchSets</a>.</p>"]
@@ -325,7 +723,33 @@ pub struct DeleteByteMatchSetRequest {
     #[serde(rename="ChangeToken")]
     pub change_token: String,
 }
-
+impl DeleteByteMatchSetRequest {
+    /// Sets `byte_match_set_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteByteMatchSetRequest.byte_match_set_id = value.into();`.
+    pub fn byte_match_set_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.byte_match_set_id = value.into();
+        self
+    }
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteByteMatchSetRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteByteMatchSetRequest with optional fields set to `None`.
+    pub fn new<ByteMatchSetIdType: Into<String>, ChangeTokenType: Into<String>>
+        (byte_match_set_id: ByteMatchSetIdType,
+         change_token: ChangeTokenType)
+         -> DeleteByteMatchSetRequest {
+        DeleteByteMatchSetRequest {
+            byte_match_set_id: byte_match_set_id.into(),
+            change_token: change_token.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteByteMatchSetResponse {
     #[doc="<p>The <code>ChangeToken</code> that you used to submit the <code>DeleteByteMatchSet</code> request. You can also use this value to query the status of the request. For more information, see <a>GetChangeTokenStatus</a>.</p>"]
@@ -333,7 +757,6 @@ pub struct DeleteByteMatchSetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub change_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteIPSetRequest {
     #[doc="<p>The value returned by the most recent call to <a>GetChangeToken</a>.</p>"]
@@ -343,7 +766,30 @@ pub struct DeleteIPSetRequest {
     #[serde(rename="IPSetId")]
     pub ip_set_id: String,
 }
-
+impl DeleteIPSetRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteIPSetRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `ip_set_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteIPSetRequest.ip_set_id = value.into();`.
+    pub fn ip_set_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ip_set_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteIPSetRequest with optional fields set to `None`.
+pub fn new<ChangeTokenType: Into<String>, IPSetIdType: Into<String>>(change_token: ChangeTokenType, ip_set_id: IPSetIdType) -> DeleteIPSetRequest{
+        DeleteIPSetRequest {
+            change_token: change_token.into(),
+            ip_set_id: ip_set_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteIPSetResponse {
     #[doc="<p>The <code>ChangeToken</code> that you used to submit the <code>DeleteIPSet</code> request. You can also use this value to query the status of the request. For more information, see <a>GetChangeTokenStatus</a>.</p>"]
@@ -351,7 +797,6 @@ pub struct DeleteIPSetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub change_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteRateBasedRuleRequest {
     #[doc="<p>The value returned by the most recent call to <a>GetChangeToken</a>.</p>"]
@@ -361,7 +806,33 @@ pub struct DeleteRateBasedRuleRequest {
     #[serde(rename="RuleId")]
     pub rule_id: String,
 }
-
+impl DeleteRateBasedRuleRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRateBasedRuleRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `rule_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRateBasedRuleRequest.rule_id = value.into();`.
+    pub fn rule_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteRateBasedRuleRequest with optional fields set to `None`.
+    pub fn new<ChangeTokenType: Into<String>, RuleIdType: Into<String>>
+        (change_token: ChangeTokenType,
+         rule_id: RuleIdType)
+         -> DeleteRateBasedRuleRequest {
+        DeleteRateBasedRuleRequest {
+            change_token: change_token.into(),
+            rule_id: rule_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteRateBasedRuleResponse {
     #[doc="<p>The <code>ChangeToken</code> that you used to submit the <code>DeleteRateBasedRule</code> request. You can also use this value to query the status of the request. For more information, see <a>GetChangeTokenStatus</a>.</p>"]
@@ -369,7 +840,6 @@ pub struct DeleteRateBasedRuleResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub change_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteRuleRequest {
     #[doc="<p>The value returned by the most recent call to <a>GetChangeToken</a>.</p>"]
@@ -379,7 +849,30 @@ pub struct DeleteRuleRequest {
     #[serde(rename="RuleId")]
     pub rule_id: String,
 }
-
+impl DeleteRuleRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRuleRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `rule_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRuleRequest.rule_id = value.into();`.
+    pub fn rule_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteRuleRequest with optional fields set to `None`.
+pub fn new<ChangeTokenType: Into<String>, RuleIdType: Into<String>>(change_token: ChangeTokenType, rule_id: RuleIdType) -> DeleteRuleRequest{
+        DeleteRuleRequest {
+            change_token: change_token.into(),
+            rule_id: rule_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteRuleResponse {
     #[doc="<p>The <code>ChangeToken</code> that you used to submit the <code>DeleteRule</code> request. You can also use this value to query the status of the request. For more information, see <a>GetChangeTokenStatus</a>.</p>"]
@@ -387,7 +880,6 @@ pub struct DeleteRuleResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub change_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteSizeConstraintSetRequest {
     #[doc="<p>The value returned by the most recent call to <a>GetChangeToken</a>.</p>"]
@@ -397,7 +889,33 @@ pub struct DeleteSizeConstraintSetRequest {
     #[serde(rename="SizeConstraintSetId")]
     pub size_constraint_set_id: String,
 }
-
+impl DeleteSizeConstraintSetRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSizeConstraintSetRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `size_constraint_set_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSizeConstraintSetRequest.size_constraint_set_id = value.into();`.
+    pub fn size_constraint_set_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.size_constraint_set_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteSizeConstraintSetRequest with optional fields set to `None`.
+    pub fn new<ChangeTokenType: Into<String>, SizeConstraintSetIdType: Into<String>>
+        (change_token: ChangeTokenType,
+         size_constraint_set_id: SizeConstraintSetIdType)
+         -> DeleteSizeConstraintSetRequest {
+        DeleteSizeConstraintSetRequest {
+            change_token: change_token.into(),
+            size_constraint_set_id: size_constraint_set_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteSizeConstraintSetResponse {
     #[doc="<p>The <code>ChangeToken</code> that you used to submit the <code>DeleteSizeConstraintSet</code> request. You can also use this value to query the status of the request. For more information, see <a>GetChangeTokenStatus</a>.</p>"]
@@ -405,7 +923,6 @@ pub struct DeleteSizeConstraintSetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub change_token: Option<String>,
 }
-
 #[doc="<p>A request to delete a <a>SqlInjectionMatchSet</a> from AWS WAF.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteSqlInjectionMatchSetRequest {
@@ -416,7 +933,33 @@ pub struct DeleteSqlInjectionMatchSetRequest {
     #[serde(rename="SqlInjectionMatchSetId")]
     pub sql_injection_match_set_id: String,
 }
-
+impl DeleteSqlInjectionMatchSetRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSqlInjectionMatchSetRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `sql_injection_match_set_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSqlInjectionMatchSetRequest.sql_injection_match_set_id = value.into();`.
+    pub fn sql_injection_match_set_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sql_injection_match_set_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteSqlInjectionMatchSetRequest with optional fields set to `None`.
+    pub fn new<ChangeTokenType: Into<String>, SqlInjectionMatchSetIdType: Into<String>>
+        (change_token: ChangeTokenType,
+         sql_injection_match_set_id: SqlInjectionMatchSetIdType)
+         -> DeleteSqlInjectionMatchSetRequest {
+        DeleteSqlInjectionMatchSetRequest {
+            change_token: change_token.into(),
+            sql_injection_match_set_id: sql_injection_match_set_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response to a request to delete a <a>SqlInjectionMatchSet</a> from AWS WAF.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteSqlInjectionMatchSetResponse {
@@ -425,7 +968,6 @@ pub struct DeleteSqlInjectionMatchSetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub change_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteWebACLRequest {
     #[doc="<p>The value returned by the most recent call to <a>GetChangeToken</a>.</p>"]
@@ -435,7 +977,33 @@ pub struct DeleteWebACLRequest {
     #[serde(rename="WebACLId")]
     pub web_acl_id: String,
 }
-
+impl DeleteWebACLRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteWebACLRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `web_acl_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteWebACLRequest.web_acl_id = value.into();`.
+    pub fn web_acl_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.web_acl_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteWebACLRequest with optional fields set to `None`.
+    pub fn new<ChangeTokenType: Into<String>, WebACLIdType: Into<String>>
+        (change_token: ChangeTokenType,
+         web_acl_id: WebACLIdType)
+         -> DeleteWebACLRequest {
+        DeleteWebACLRequest {
+            change_token: change_token.into(),
+            web_acl_id: web_acl_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteWebACLResponse {
     #[doc="<p>The <code>ChangeToken</code> that you used to submit the <code>DeleteWebACL</code> request. You can also use this value to query the status of the request. For more information, see <a>GetChangeTokenStatus</a>.</p>"]
@@ -443,7 +1011,6 @@ pub struct DeleteWebACLResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub change_token: Option<String>,
 }
-
 #[doc="<p>A request to delete an <a>XssMatchSet</a> from AWS WAF.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteXssMatchSetRequest {
@@ -454,7 +1021,33 @@ pub struct DeleteXssMatchSetRequest {
     #[serde(rename="XssMatchSetId")]
     pub xss_match_set_id: String,
 }
-
+impl DeleteXssMatchSetRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteXssMatchSetRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `xss_match_set_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteXssMatchSetRequest.xss_match_set_id = value.into();`.
+    pub fn xss_match_set_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.xss_match_set_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteXssMatchSetRequest with optional fields set to `None`.
+    pub fn new<ChangeTokenType: Into<String>, XssMatchSetIdType: Into<String>>
+        (change_token: ChangeTokenType,
+         xss_match_set_id: XssMatchSetIdType)
+         -> DeleteXssMatchSetRequest {
+        DeleteXssMatchSetRequest {
+            change_token: change_token.into(),
+            xss_match_set_id: xss_match_set_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response to a request to delete an <a>XssMatchSet</a> from AWS WAF.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteXssMatchSetResponse {
@@ -463,14 +1056,29 @@ pub struct DeleteXssMatchSetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub change_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DisassociateWebACLRequest {
     #[doc="<p>The ARN (Amazon Resource Name) of the resource from which the web ACL is being removed.</p>"]
     #[serde(rename="ResourceArn")]
     pub resource_arn: String,
 }
-
+impl DisassociateWebACLRequest {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateWebACLRequest.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DisassociateWebACLRequest with optional fields set to `None`.
+    pub fn new<ResourceArnType: Into<String>>(resource_arn: ResourceArnType)
+                                              -> DisassociateWebACLRequest {
+        DisassociateWebACLRequest {
+            resource_arn: resource_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DisassociateWebACLResponse;
 
@@ -485,14 +1093,52 @@ pub struct FieldToMatch {
     #[serde(rename="Type")]
     pub type_: String,
 }
-
+impl FieldToMatch {
+    /// Sets `data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FieldToMatch.data = Some(value.into());`.
+    pub fn data<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data = Some(value.into());
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FieldToMatch.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of FieldToMatch with optional fields set to `None`.
+    pub fn new<TypeType: Into<String>>(type_: TypeType) -> FieldToMatch {
+        FieldToMatch {
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetByteMatchSetRequest {
     #[doc="<p>The <code>ByteMatchSetId</code> of the <a>ByteMatchSet</a> that you want to get. <code>ByteMatchSetId</code> is returned by <a>CreateByteMatchSet</a> and by <a>ListByteMatchSets</a>.</p>"]
     #[serde(rename="ByteMatchSetId")]
     pub byte_match_set_id: String,
 }
-
+impl GetByteMatchSetRequest {
+    /// Sets `byte_match_set_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetByteMatchSetRequest.byte_match_set_id = value.into();`.
+    pub fn byte_match_set_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.byte_match_set_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetByteMatchSetRequest with optional fields set to `None`.
+    pub fn new<ByteMatchSetIdType: Into<String>>(byte_match_set_id: ByteMatchSetIdType)
+                                                 -> GetByteMatchSetRequest {
+        GetByteMatchSetRequest {
+            byte_match_set_id: byte_match_set_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetByteMatchSetResponse {
     #[doc="<p>Information about the <a>ByteMatchSet</a> that you specified in the <code>GetByteMatchSet</code> request. For more information, see the following topics:</p> <ul> <li> <p> <a>ByteMatchSet</a>: Contains <code>ByteMatchSetId</code>, <code>ByteMatchTuples</code>, and <code>Name</code> </p> </li> <li> <p> <code>ByteMatchTuples</code>: Contains an array of <a>ByteMatchTuple</a> objects. Each <code>ByteMatchTuple</code> object contains <a>FieldToMatch</a>, <code>PositionalConstraint</code>, <code>TargetString</code>, and <code>TextTransformation</code> </p> </li> <li> <p> <a>FieldToMatch</a>: Contains <code>Data</code> and <code>Type</code> </p> </li> </ul>"]
@@ -500,7 +1146,6 @@ pub struct GetByteMatchSetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub byte_match_set: Option<ByteMatchSet>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetChangeTokenRequest;
 
@@ -511,14 +1156,29 @@ pub struct GetChangeTokenResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub change_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetChangeTokenStatusRequest {
     #[doc="<p>The change token for which you want to get the status. This change token was previously returned in the <code>GetChangeToken</code> response.</p>"]
     #[serde(rename="ChangeToken")]
     pub change_token: String,
 }
-
+impl GetChangeTokenStatusRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetChangeTokenStatusRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Returns a new instance of GetChangeTokenStatusRequest with optional fields set to `None`.
+    pub fn new<ChangeTokenType: Into<String>>(change_token: ChangeTokenType)
+                                              -> GetChangeTokenStatusRequest {
+        GetChangeTokenStatusRequest {
+            change_token: change_token.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetChangeTokenStatusResponse {
     #[doc="<p>The status of the change token.</p>"]
@@ -526,14 +1186,28 @@ pub struct GetChangeTokenStatusResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub change_token_status: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetIPSetRequest {
     #[doc="<p>The <code>IPSetId</code> of the <a>IPSet</a> that you want to get. <code>IPSetId</code> is returned by <a>CreateIPSet</a> and by <a>ListIPSets</a>.</p>"]
     #[serde(rename="IPSetId")]
     pub ip_set_id: String,
 }
-
+impl GetIPSetRequest {
+    /// Sets `ip_set_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetIPSetRequest.ip_set_id = value.into();`.
+    pub fn ip_set_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ip_set_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetIPSetRequest with optional fields set to `None`.
+    pub fn new<IPSetIdType: Into<String>>(ip_set_id: IPSetIdType) -> GetIPSetRequest {
+        GetIPSetRequest {
+            ip_set_id: ip_set_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetIPSetResponse {
     #[doc="<p>Information about the <a>IPSet</a> that you specified in the <code>GetIPSet</code> request. For more information, see the following topics:</p> <ul> <li> <p> <a>IPSet</a>: Contains <code>IPSetDescriptors</code>, <code>IPSetId</code>, and <code>Name</code> </p> </li> <li> <p> <code>IPSetDescriptors</code>: Contains an array of <a>IPSetDescriptor</a> objects. Each <code>IPSetDescriptor</code> object contains <code>Type</code> and <code>Value</code> </p> </li> </ul>"]
@@ -541,7 +1215,6 @@ pub struct GetIPSetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ip_set: Option<IPSet>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetRateBasedRuleManagedKeysRequest {
     #[doc="<p>A null value and not currently used. Do not include this in your request.</p>"]
@@ -552,7 +1225,30 @@ pub struct GetRateBasedRuleManagedKeysRequest {
     #[serde(rename="RuleId")]
     pub rule_id: String,
 }
-
+impl GetRateBasedRuleManagedKeysRequest {
+    /// Sets `next_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRateBasedRuleManagedKeysRequest.next_marker = Some(value.into());`.
+    pub fn next_marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_marker = Some(value.into());
+        self
+    }
+    /// Sets `rule_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRateBasedRuleManagedKeysRequest.rule_id = value.into();`.
+    pub fn rule_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetRateBasedRuleManagedKeysRequest with optional fields set to `None`.
+    pub fn new<RuleIdType: Into<String>>(rule_id: RuleIdType)
+                                         -> GetRateBasedRuleManagedKeysRequest {
+        GetRateBasedRuleManagedKeysRequest {
+            rule_id: rule_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetRateBasedRuleManagedKeysResponse {
     #[doc="<p>An array of IP addresses that currently are blocked by the specified <a>RateBasedRule</a>. </p>"]
@@ -564,14 +1260,28 @@ pub struct GetRateBasedRuleManagedKeysResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_marker: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetRateBasedRuleRequest {
     #[doc="<p>The <code>RuleId</code> of the <a>RateBasedRule</a> that you want to get. <code>RuleId</code> is returned by <a>CreateRateBasedRule</a> and by <a>ListRateBasedRules</a>.</p>"]
     #[serde(rename="RuleId")]
     pub rule_id: String,
 }
-
+impl GetRateBasedRuleRequest {
+    /// Sets `rule_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRateBasedRuleRequest.rule_id = value.into();`.
+    pub fn rule_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetRateBasedRuleRequest with optional fields set to `None`.
+    pub fn new<RuleIdType: Into<String>>(rule_id: RuleIdType) -> GetRateBasedRuleRequest {
+        GetRateBasedRuleRequest {
+            rule_id: rule_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetRateBasedRuleResponse {
     #[doc="<p>Information about the <a>RateBasedRule</a> that you specified in the <code>GetRateBasedRule</code> request.</p>"]
@@ -579,14 +1289,28 @@ pub struct GetRateBasedRuleResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rule: Option<RateBasedRule>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetRuleRequest {
     #[doc="<p>The <code>RuleId</code> of the <a>Rule</a> that you want to get. <code>RuleId</code> is returned by <a>CreateRule</a> and by <a>ListRules</a>.</p>"]
     #[serde(rename="RuleId")]
     pub rule_id: String,
 }
-
+impl GetRuleRequest {
+    /// Sets `rule_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRuleRequest.rule_id = value.into();`.
+    pub fn rule_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetRuleRequest with optional fields set to `None`.
+    pub fn new<RuleIdType: Into<String>>(rule_id: RuleIdType) -> GetRuleRequest {
+        GetRuleRequest {
+            rule_id: rule_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetRuleResponse {
     #[doc="<p>Information about the <a>Rule</a> that you specified in the <code>GetRule</code> request. For more information, see the following topics:</p> <ul> <li> <p> <a>Rule</a>: Contains <code>MetricName</code>, <code>Name</code>, an array of <code>Predicate</code> objects, and <code>RuleId</code> </p> </li> <li> <p> <a>Predicate</a>: Each <code>Predicate</code> object contains <code>DataId</code>, <code>Negated</code>, and <code>Type</code> </p> </li> </ul>"]
@@ -594,7 +1318,6 @@ pub struct GetRuleResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rule: Option<Rule>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetSampledRequestsRequest {
     #[doc="<p>The number of requests that you want AWS WAF to return from among the first 5,000 requests that your AWS resource received during the time range. If your resource received fewer requests than the value of <code>MaxItems</code>, <code>GetSampledRequests</code> returns information about all of them. </p>"]
@@ -610,7 +1333,54 @@ pub struct GetSampledRequestsRequest {
     #[serde(rename="WebAclId")]
     pub web_acl_id: String,
 }
-
+impl GetSampledRequestsRequest {
+    /// Sets `max_items`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSampledRequestsRequest.max_items = value.into();`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = value.into();
+        self
+    }
+    /// Sets `rule_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSampledRequestsRequest.rule_id = value.into();`.
+    pub fn rule_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_id = value.into();
+        self
+    }
+    /// Sets `time_window`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSampledRequestsRequest.time_window = value.into();`.
+    pub fn time_window<ValueType: Into<TimeWindow>>(mut self, value: ValueType) -> Self {
+        self.time_window = value.into();
+        self
+    }
+    /// Sets `web_acl_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSampledRequestsRequest.web_acl_id = value.into();`.
+    pub fn web_acl_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.web_acl_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetSampledRequestsRequest with optional fields set to `None`.
+    pub fn new<MaxItemsType: Into<i64>,
+               RuleIdType: Into<String>,
+               TimeWindowType: Into<TimeWindow>,
+               WebAclIdType: Into<String>>
+        (max_items: MaxItemsType,
+         rule_id: RuleIdType,
+         time_window: TimeWindowType,
+         web_acl_id: WebAclIdType)
+         -> GetSampledRequestsRequest {
+        GetSampledRequestsRequest {
+            max_items: max_items.into(),
+            rule_id: rule_id.into(),
+            time_window: time_window.into(),
+            web_acl_id: web_acl_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetSampledRequestsResponse {
     #[doc="<p>The total number of requests from which <code>GetSampledRequests</code> got a sample of <code>MaxItems</code> requests. If <code>PopulationSize</code> is less than <code>MaxItems</code>, the sample includes every request that your AWS resource received during the specified time range.</p>"]
@@ -626,14 +1396,28 @@ pub struct GetSampledRequestsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub time_window: Option<TimeWindow>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetSizeConstraintSetRequest {
     #[doc="<p>The <code>SizeConstraintSetId</code> of the <a>SizeConstraintSet</a> that you want to get. <code>SizeConstraintSetId</code> is returned by <a>CreateSizeConstraintSet</a> and by <a>ListSizeConstraintSets</a>.</p>"]
     #[serde(rename="SizeConstraintSetId")]
     pub size_constraint_set_id: String,
 }
-
+impl GetSizeConstraintSetRequest {
+    /// Sets `size_constraint_set_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSizeConstraintSetRequest.size_constraint_set_id = value.into();`.
+    pub fn size_constraint_set_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.size_constraint_set_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetSizeConstraintSetRequest with optional fields set to `None`.
+pub fn new<SizeConstraintSetIdType: Into<String>>(size_constraint_set_id: SizeConstraintSetIdType) -> GetSizeConstraintSetRequest{
+        GetSizeConstraintSetRequest {
+            size_constraint_set_id: size_constraint_set_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetSizeConstraintSetResponse {
     #[doc="<p>Information about the <a>SizeConstraintSet</a> that you specified in the <code>GetSizeConstraintSet</code> request. For more information, see the following topics:</p> <ul> <li> <p> <a>SizeConstraintSet</a>: Contains <code>SizeConstraintSetId</code>, <code>SizeConstraints</code>, and <code>Name</code> </p> </li> <li> <p> <code>SizeConstraints</code>: Contains an array of <a>SizeConstraint</a> objects. Each <code>SizeConstraint</code> object contains <a>FieldToMatch</a>, <code>TextTransformation</code>, <code>ComparisonOperator</code>, and <code>Size</code> </p> </li> <li> <p> <a>FieldToMatch</a>: Contains <code>Data</code> and <code>Type</code> </p> </li> </ul>"]
@@ -641,7 +1425,6 @@ pub struct GetSizeConstraintSetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub size_constraint_set: Option<SizeConstraintSet>,
 }
-
 #[doc="<p>A request to get a <a>SqlInjectionMatchSet</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetSqlInjectionMatchSetRequest {
@@ -649,7 +1432,22 @@ pub struct GetSqlInjectionMatchSetRequest {
     #[serde(rename="SqlInjectionMatchSetId")]
     pub sql_injection_match_set_id: String,
 }
-
+impl GetSqlInjectionMatchSetRequest {
+    /// Sets `sql_injection_match_set_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSqlInjectionMatchSetRequest.sql_injection_match_set_id = value.into();`.
+    pub fn sql_injection_match_set_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sql_injection_match_set_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetSqlInjectionMatchSetRequest with optional fields set to `None`.
+pub fn new<SqlInjectionMatchSetIdType: Into<String>>(sql_injection_match_set_id: SqlInjectionMatchSetIdType) -> GetSqlInjectionMatchSetRequest{
+        GetSqlInjectionMatchSetRequest {
+            sql_injection_match_set_id: sql_injection_match_set_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response to a <a>GetSqlInjectionMatchSet</a> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetSqlInjectionMatchSetResponse {
@@ -658,14 +1456,29 @@ pub struct GetSqlInjectionMatchSetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sql_injection_match_set: Option<SqlInjectionMatchSet>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetWebACLForResourceRequest {
     #[doc="<p>The ARN (Amazon Resource Name) of the resource for which to get the web ACL.</p>"]
     #[serde(rename="ResourceArn")]
     pub resource_arn: String,
 }
-
+impl GetWebACLForResourceRequest {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetWebACLForResourceRequest.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetWebACLForResourceRequest with optional fields set to `None`.
+    pub fn new<ResourceArnType: Into<String>>(resource_arn: ResourceArnType)
+                                              -> GetWebACLForResourceRequest {
+        GetWebACLForResourceRequest {
+            resource_arn: resource_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetWebACLForResourceResponse {
     #[doc="<p>Information about the web ACL that you specified in the <code>GetWebACLForResource</code> request. If there is no associated resource, a null WebACLSummary is returned.</p>"]
@@ -673,14 +1486,28 @@ pub struct GetWebACLForResourceResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub web_acl_summary: Option<WebACLSummary>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetWebACLRequest {
     #[doc="<p>The <code>WebACLId</code> of the <a>WebACL</a> that you want to get. <code>WebACLId</code> is returned by <a>CreateWebACL</a> and by <a>ListWebACLs</a>.</p>"]
     #[serde(rename="WebACLId")]
     pub web_acl_id: String,
 }
-
+impl GetWebACLRequest {
+    /// Sets `web_acl_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetWebACLRequest.web_acl_id = value.into();`.
+    pub fn web_acl_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.web_acl_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetWebACLRequest with optional fields set to `None`.
+    pub fn new<WebACLIdType: Into<String>>(web_acl_id: WebACLIdType) -> GetWebACLRequest {
+        GetWebACLRequest {
+            web_acl_id: web_acl_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetWebACLResponse {
     #[doc="<p>Information about the <a>WebACL</a> that you specified in the <code>GetWebACL</code> request. For more information, see the following topics:</p> <ul> <li> <p> <a>WebACL</a>: Contains <code>DefaultAction</code>, <code>MetricName</code>, <code>Name</code>, an array of <code>Rule</code> objects, and <code>WebACLId</code> </p> </li> <li> <p> <code>DefaultAction</code> (Data type is <a>WafAction</a>): Contains <code>Type</code> </p> </li> <li> <p> <code>Rules</code>: Contains an array of <code>ActivatedRule</code> objects, which contain <code>Action</code>, <code>Priority</code>, and <code>RuleId</code> </p> </li> <li> <p> <code>Action</code>: Contains <code>Type</code> </p> </li> </ul>"]
@@ -688,7 +1515,6 @@ pub struct GetWebACLResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub web_acl: Option<WebACL>,
 }
-
 #[doc="<p>A request to get an <a>XssMatchSet</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetXssMatchSetRequest {
@@ -696,7 +1522,23 @@ pub struct GetXssMatchSetRequest {
     #[serde(rename="XssMatchSetId")]
     pub xss_match_set_id: String,
 }
-
+impl GetXssMatchSetRequest {
+    /// Sets `xss_match_set_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetXssMatchSetRequest.xss_match_set_id = value.into();`.
+    pub fn xss_match_set_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.xss_match_set_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetXssMatchSetRequest with optional fields set to `None`.
+    pub fn new<XssMatchSetIdType: Into<String>>(xss_match_set_id: XssMatchSetIdType)
+                                                -> GetXssMatchSetRequest {
+        GetXssMatchSetRequest {
+            xss_match_set_id: xss_match_set_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response to a <a>GetXssMatchSet</a> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetXssMatchSetResponse {
@@ -705,7 +1547,6 @@ pub struct GetXssMatchSetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub xss_match_set: Option<XssMatchSet>,
 }
-
 #[doc="<p>The response from a <a>GetSampledRequests</a> request includes an <code>HTTPHeader</code> complex type that appears as <code>Headers</code> in the response syntax. <code>HTTPHeader</code> contains the names and values of all of the headers that appear in one of the web requests that were returned by <code>GetSampledRequests</code>. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct HTTPHeader {
@@ -718,7 +1559,6 @@ pub struct HTTPHeader {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
 #[doc="<p>The response from a <a>GetSampledRequests</a> request includes an <code>HTTPRequest</code> complex type that appears as <code>Request</code> in the response syntax. <code>HTTPRequest</code> contains information about one of the web requests that were returned by <code>GetSampledRequests</code>. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct HTTPRequest {
@@ -747,7 +1587,6 @@ pub struct HTTPRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub uri: Option<String>,
 }
-
 #[doc="<p>Contains one or more IP addresses or blocks of IP addresses specified in Classless Inter-Domain Routing (CIDR) notation. AWS WAF supports /8, /16, /24, and /32 IP address ranges for IPv4, and /24, /32, /48, /56, /64 and /128 for IPv6.</p> <p>To specify an individual IP address, you specify the four-part IP address followed by a <code>/32</code>, for example, 192.0.2.0/31. To block a range of IP addresses, you can specify a <code>/128</code>, <code>/64</code>, <code>/56</code>, <code>/48</code>, <code>/32</code>, <code>/24</code>, <code>/16</code>, or <code>/8</code> CIDR. For more information about CIDR notation, see the Wikipedia entry <a href=\"https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing\">Classless Inter-Domain Routing</a>. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct IPSet {
@@ -762,7 +1601,6 @@ pub struct IPSet {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p>Specifies the IP address type (<code>IPV4</code> or <code>IPV6</code>) and the IP address range (in CIDR format) that web requests originate from.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct IPSetDescriptor {
@@ -773,7 +1611,32 @@ pub struct IPSetDescriptor {
     #[serde(rename="Value")]
     pub value: String,
 }
-
+impl IPSetDescriptor {
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IPSetDescriptor.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IPSetDescriptor.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of IPSetDescriptor with optional fields set to `None`.
+    pub fn new<TypeType: Into<String>, ValueType: Into<String>>(type_: TypeType,
+                                                                value: ValueType)
+                                                                -> IPSetDescriptor {
+        IPSetDescriptor {
+            type_: type_.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the identifier and the name of the <code>IPSet</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct IPSetSummary {
@@ -784,7 +1647,6 @@ pub struct IPSetSummary {
     #[serde(rename="Name")]
     pub name: String,
 }
-
 #[doc="<p>Specifies the type of update to perform to an <a>IPSet</a> with <a>UpdateIPSet</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct IPSetUpdate {
@@ -795,7 +1657,33 @@ pub struct IPSetUpdate {
     #[serde(rename="IPSetDescriptor")]
     pub ip_set_descriptor: IPSetDescriptor,
 }
-
+impl IPSetUpdate {
+    /// Sets `action`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IPSetUpdate.action = value.into();`.
+    pub fn action<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.action = value.into();
+        self
+    }
+    /// Sets `ip_set_descriptor`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IPSetUpdate.ip_set_descriptor = value.into();`.
+    pub fn ip_set_descriptor<ValueType: Into<IPSetDescriptor>>(mut self, value: ValueType) -> Self {
+        self.ip_set_descriptor = value.into();
+        self
+    }
+    /// Returns a new instance of IPSetUpdate with optional fields set to `None`.
+    pub fn new<ActionType: Into<String>, IPSetDescriptorType: Into<IPSetDescriptor>>
+        (action: ActionType,
+         ip_set_descriptor: IPSetDescriptorType)
+         -> IPSetUpdate {
+        IPSetUpdate {
+            action: action.into(),
+            ip_set_descriptor: ip_set_descriptor.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListByteMatchSetsRequest {
     #[doc="<p>Specifies the number of <code>ByteMatchSet</code> objects that you want AWS WAF to return for this request. If you have more <code>ByteMatchSets</code> objects than the number you specify for <code>Limit</code>, the response includes a <code>NextMarker</code> value that you can use to get another batch of <code>ByteMatchSet</code> objects.</p>"]
@@ -807,7 +1695,26 @@ pub struct ListByteMatchSetsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_marker: Option<String>,
 }
-
+impl ListByteMatchSetsRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListByteMatchSetsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListByteMatchSetsRequest.next_marker = Some(value.into());`.
+    pub fn next_marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListByteMatchSetsRequest with optional fields set to `None`.
+    pub fn new() -> ListByteMatchSetsRequest {
+        ListByteMatchSetsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListByteMatchSetsResponse {
     #[doc="<p>An array of <a>ByteMatchSetSummary</a> objects.</p>"]
@@ -819,7 +1726,6 @@ pub struct ListByteMatchSetsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_marker: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListIPSetsRequest {
     #[doc="<p>Specifies the number of <code>IPSet</code> objects that you want AWS WAF to return for this request. If you have more <code>IPSet</code> objects than the number you specify for <code>Limit</code>, the response includes a <code>NextMarker</code> value that you can use to get another batch of <code>IPSet</code> objects.</p>"]
@@ -831,7 +1737,26 @@ pub struct ListIPSetsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_marker: Option<String>,
 }
-
+impl ListIPSetsRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListIPSetsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListIPSetsRequest.next_marker = Some(value.into());`.
+    pub fn next_marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListIPSetsRequest with optional fields set to `None`.
+    pub fn new() -> ListIPSetsRequest {
+        ListIPSetsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListIPSetsResponse {
     #[doc="<p>An array of <a>IPSetSummary</a> objects.</p>"]
@@ -843,7 +1768,6 @@ pub struct ListIPSetsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_marker: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListRateBasedRulesRequest {
     #[doc="<p>Specifies the number of <code>Rules</code> that you want AWS WAF to return for this request. If you have more <code>Rules</code> than the number that you specify for <code>Limit</code>, the response includes a <code>NextMarker</code> value that you can use to get another batch of <code>Rules</code>.</p>"]
@@ -855,7 +1779,26 @@ pub struct ListRateBasedRulesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_marker: Option<String>,
 }
-
+impl ListRateBasedRulesRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRateBasedRulesRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRateBasedRulesRequest.next_marker = Some(value.into());`.
+    pub fn next_marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListRateBasedRulesRequest with optional fields set to `None`.
+    pub fn new() -> ListRateBasedRulesRequest {
+        ListRateBasedRulesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListRateBasedRulesResponse {
     #[doc="<p>If you have more <code>Rules</code> than the number that you specified for <code>Limit</code> in the request, the response includes a <code>NextMarker</code> value. To list more <code>Rules</code>, submit another <code>ListRateBasedRules</code> request, and specify the <code>NextMarker</code> value from the response in the <code>NextMarker</code> value in the next request.</p>"]
@@ -867,14 +1810,29 @@ pub struct ListRateBasedRulesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rules: Option<Vec<RuleSummary>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListResourcesForWebACLRequest {
     #[doc="<p>The unique identifier (ID) of the web ACL for which to list the associated resources.</p>"]
     #[serde(rename="WebACLId")]
     pub web_acl_id: String,
 }
-
+impl ListResourcesForWebACLRequest {
+    /// Sets `web_acl_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListResourcesForWebACLRequest.web_acl_id = value.into();`.
+    pub fn web_acl_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.web_acl_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListResourcesForWebACLRequest with optional fields set to `None`.
+    pub fn new<WebACLIdType: Into<String>>(web_acl_id: WebACLIdType)
+                                           -> ListResourcesForWebACLRequest {
+        ListResourcesForWebACLRequest {
+            web_acl_id: web_acl_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListResourcesForWebACLResponse {
     #[doc="<p>An array of ARNs (Amazon Resource Names) of the resources associated with the specified web ACL. An array with zero elements is returned if there are no resources associated with the web ACL.</p>"]
@@ -882,7 +1840,6 @@ pub struct ListResourcesForWebACLResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_arns: Option<Vec<String>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListRulesRequest {
     #[doc="<p>Specifies the number of <code>Rules</code> that you want AWS WAF to return for this request. If you have more <code>Rules</code> than the number that you specify for <code>Limit</code>, the response includes a <code>NextMarker</code> value that you can use to get another batch of <code>Rules</code>.</p>"]
@@ -894,7 +1851,26 @@ pub struct ListRulesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_marker: Option<String>,
 }
-
+impl ListRulesRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRulesRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRulesRequest.next_marker = Some(value.into());`.
+    pub fn next_marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListRulesRequest with optional fields set to `None`.
+    pub fn new() -> ListRulesRequest {
+        ListRulesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListRulesResponse {
     #[doc="<p>If you have more <code>Rules</code> than the number that you specified for <code>Limit</code> in the request, the response includes a <code>NextMarker</code> value. To list more <code>Rules</code>, submit another <code>ListRules</code> request, and specify the <code>NextMarker</code> value from the response in the <code>NextMarker</code> value in the next request.</p>"]
@@ -906,7 +1882,6 @@ pub struct ListRulesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rules: Option<Vec<RuleSummary>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListSizeConstraintSetsRequest {
     #[doc="<p>Specifies the number of <code>SizeConstraintSet</code> objects that you want AWS WAF to return for this request. If you have more <code>SizeConstraintSets</code> objects than the number you specify for <code>Limit</code>, the response includes a <code>NextMarker</code> value that you can use to get another batch of <code>SizeConstraintSet</code> objects.</p>"]
@@ -918,7 +1893,26 @@ pub struct ListSizeConstraintSetsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_marker: Option<String>,
 }
-
+impl ListSizeConstraintSetsRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListSizeConstraintSetsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListSizeConstraintSetsRequest.next_marker = Some(value.into());`.
+    pub fn next_marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListSizeConstraintSetsRequest with optional fields set to `None`.
+    pub fn new() -> ListSizeConstraintSetsRequest {
+        ListSizeConstraintSetsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListSizeConstraintSetsResponse {
     #[doc="<p>If you have more <code>SizeConstraintSet</code> objects than the number that you specified for <code>Limit</code> in the request, the response includes a <code>NextMarker</code> value. To list more <code>SizeConstraintSet</code> objects, submit another <code>ListSizeConstraintSets</code> request, and specify the <code>NextMarker</code> value from the response in the <code>NextMarker</code> value in the next request.</p>"]
@@ -930,7 +1924,6 @@ pub struct ListSizeConstraintSetsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub size_constraint_sets: Option<Vec<SizeConstraintSetSummary>>,
 }
-
 #[doc="<p>A request to list the <a>SqlInjectionMatchSet</a> objects created by the current AWS account.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListSqlInjectionMatchSetsRequest {
@@ -943,7 +1936,26 @@ pub struct ListSqlInjectionMatchSetsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_marker: Option<String>,
 }
-
+impl ListSqlInjectionMatchSetsRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListSqlInjectionMatchSetsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListSqlInjectionMatchSetsRequest.next_marker = Some(value.into());`.
+    pub fn next_marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListSqlInjectionMatchSetsRequest with optional fields set to `None`.
+    pub fn new() -> ListSqlInjectionMatchSetsRequest {
+        ListSqlInjectionMatchSetsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The response to a <a>ListSqlInjectionMatchSets</a> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListSqlInjectionMatchSetsResponse {
@@ -956,7 +1968,6 @@ pub struct ListSqlInjectionMatchSetsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sql_injection_match_sets: Option<Vec<SqlInjectionMatchSetSummary>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListWebACLsRequest {
     #[doc="<p>Specifies the number of <code>WebACL</code> objects that you want AWS WAF to return for this request. If you have more <code>WebACL</code> objects than the number that you specify for <code>Limit</code>, the response includes a <code>NextMarker</code> value that you can use to get another batch of <code>WebACL</code> objects.</p>"]
@@ -968,7 +1979,26 @@ pub struct ListWebACLsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_marker: Option<String>,
 }
-
+impl ListWebACLsRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListWebACLsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListWebACLsRequest.next_marker = Some(value.into());`.
+    pub fn next_marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListWebACLsRequest with optional fields set to `None`.
+    pub fn new() -> ListWebACLsRequest {
+        ListWebACLsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListWebACLsResponse {
     #[doc="<p>If you have more <code>WebACL</code> objects than the number that you specified for <code>Limit</code> in the request, the response includes a <code>NextMarker</code> value. To list more <code>WebACL</code> objects, submit another <code>ListWebACLs</code> request, and specify the <code>NextMarker</code> value from the response in the <code>NextMarker</code> value in the next request.</p>"]
@@ -980,7 +2010,6 @@ pub struct ListWebACLsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub web_ac_ls: Option<Vec<WebACLSummary>>,
 }
-
 #[doc="<p>A request to list the <a>XssMatchSet</a> objects created by the current AWS account.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListXssMatchSetsRequest {
@@ -993,7 +2022,26 @@ pub struct ListXssMatchSetsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_marker: Option<String>,
 }
-
+impl ListXssMatchSetsRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListXssMatchSetsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListXssMatchSetsRequest.next_marker = Some(value.into());`.
+    pub fn next_marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListXssMatchSetsRequest with optional fields set to `None`.
+    pub fn new() -> ListXssMatchSetsRequest {
+        ListXssMatchSetsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The response to a <a>ListXssMatchSets</a> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListXssMatchSetsResponse {
@@ -1006,7 +2054,6 @@ pub struct ListXssMatchSetsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub xss_match_sets: Option<Vec<XssMatchSetSummary>>,
 }
-
 #[doc="<p>Specifies the <a>ByteMatchSet</a>, <a>IPSet</a>, <a>SqlInjectionMatchSet</a>, <a>XssMatchSet</a>, and <a>SizeConstraintSet</a> objects that you want to add to a <code>Rule</code> and, for each object, indicates whether you want to negate the settings, for example, requests that do NOT originate from the IP address 192.0.2.44. </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Predicate {
@@ -1020,7 +2067,42 @@ pub struct Predicate {
     #[serde(rename="Type")]
     pub type_: String,
 }
-
+impl Predicate {
+    /// Sets `data_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Predicate.data_id = value.into();`.
+    pub fn data_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_id = value.into();
+        self
+    }
+    /// Sets `negated`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Predicate.negated = value.into();`.
+    pub fn negated<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.negated = value.into();
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Predicate.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of Predicate with optional fields set to `None`.
+    pub fn new<DataIdType: Into<String>, NegatedType: Into<bool>, TypeType: Into<String>>
+        (data_id: DataIdType,
+         negated: NegatedType,
+         type_: TypeType)
+         -> Predicate {
+        Predicate {
+            data_id: data_id.into(),
+            negated: negated.into(),
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A <code>RateBasedRule</code> is identical to a regular <a>Rule</a>, with one addition: a <code>RateBasedRule</code> counts the number of requests that arrive from a specified IP address every five minutes. For example, based on recent requests that you've seen from an attacker, you might create a <code>RateBasedRule</code> that includes the following conditions: </p> <ul> <li> <p>The requests come from 192.0.2.44.</p> </li> <li> <p>They contain the value <code>BadBot</code> in the <code>User-Agent</code> header.</p> </li> </ul> <p>In the rule, you also define the rate limit as 15,000.</p> <p>Requests that meet both of these conditions and exceed 15,000 requests every five minutes trigger the rule's action (block or count), which is defined in the web ACL.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RateBasedRule {
@@ -1045,7 +2127,6 @@ pub struct RateBasedRule {
     #[serde(rename="RuleId")]
     pub rule_id: String,
 }
-
 #[doc="<p>A combination of <a>ByteMatchSet</a>, <a>IPSet</a>, and/or <a>SqlInjectionMatchSet</a> objects that identify the web requests that you want to allow, block, or count. For example, you might create a <code>Rule</code> that includes the following predicates:</p> <ul> <li> <p>An <code>IPSet</code> that causes AWS WAF to search for web requests that originate from the IP address <code>192.0.2.44</code> </p> </li> <li> <p>A <code>ByteMatchSet</code> that causes AWS WAF to search for web requests for which the value of the <code>User-Agent</code> header is <code>BadBot</code>.</p> </li> </ul> <p>To match the settings in this <code>Rule</code>, a request must originate from <code>192.0.2.44</code> AND include a <code>User-Agent</code> header for which the value is <code>BadBot</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Rule {
@@ -1064,7 +2145,6 @@ pub struct Rule {
     #[serde(rename="RuleId")]
     pub rule_id: String,
 }
-
 #[doc="<p>Contains the identifier and the friendly name or description of the <code>Rule</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RuleSummary {
@@ -1075,7 +2155,6 @@ pub struct RuleSummary {
     #[serde(rename="RuleId")]
     pub rule_id: String,
 }
-
 #[doc="<p>Specifies a <code>Predicate</code> (such as an <code>IPSet</code>) and indicates whether you want to add it to a <code>Rule</code> or delete it from a <code>Rule</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RuleUpdate {
@@ -1086,7 +2165,32 @@ pub struct RuleUpdate {
     #[serde(rename="Predicate")]
     pub predicate: Predicate,
 }
-
+impl RuleUpdate {
+    /// Sets `action`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RuleUpdate.action = value.into();`.
+    pub fn action<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.action = value.into();
+        self
+    }
+    /// Sets `predicate`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RuleUpdate.predicate = value.into();`.
+    pub fn predicate<ValueType: Into<Predicate>>(mut self, value: ValueType) -> Self {
+        self.predicate = value.into();
+        self
+    }
+    /// Returns a new instance of RuleUpdate with optional fields set to `None`.
+    pub fn new<ActionType: Into<String>, PredicateType: Into<Predicate>>(action: ActionType,
+                                                                         predicate: PredicateType)
+                                                                         -> RuleUpdate {
+        RuleUpdate {
+            action: action.into(),
+            predicate: predicate.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response from a <a>GetSampledRequests</a> request includes a <code>SampledHTTPRequests</code> complex type that appears as <code>SampledRequests</code> in the response syntax. <code>SampledHTTPRequests</code> contains one <code>SampledHTTPRequest</code> object for each web request that is returned by <code>GetSampledRequests</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SampledHTTPRequest {
@@ -1105,7 +2209,6 @@ pub struct SampledHTTPRequest {
     #[serde(rename="Weight")]
     pub weight: i64,
 }
-
 #[doc="<p>Specifies a constraint on the size of a part of the web request. AWS WAF uses the <code>Size</code>, <code>ComparisonOperator</code>, and <code>FieldToMatch</code> to build an expression in the form of \"<code>Size</code> <code>ComparisonOperator</code> size in bytes of <code>FieldToMatch</code>\". If that expression is true, the <code>SizeConstraint</code> is considered to match.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct SizeConstraint {
@@ -1122,7 +2225,54 @@ pub struct SizeConstraint {
     #[serde(rename="TextTransformation")]
     pub text_transformation: String,
 }
-
+impl SizeConstraint {
+    /// Sets `comparison_operator`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SizeConstraint.comparison_operator = value.into();`.
+    pub fn comparison_operator<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.comparison_operator = value.into();
+        self
+    }
+    /// Sets `field_to_match`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SizeConstraint.field_to_match = value.into();`.
+    pub fn field_to_match<ValueType: Into<FieldToMatch>>(mut self, value: ValueType) -> Self {
+        self.field_to_match = value.into();
+        self
+    }
+    /// Sets `size`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SizeConstraint.size = value.into();`.
+    pub fn size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.size = value.into();
+        self
+    }
+    /// Sets `text_transformation`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SizeConstraint.text_transformation = value.into();`.
+    pub fn text_transformation<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.text_transformation = value.into();
+        self
+    }
+    /// Returns a new instance of SizeConstraint with optional fields set to `None`.
+    pub fn new<ComparisonOperatorType: Into<String>,
+               FieldToMatchType: Into<FieldToMatch>,
+               SizeType: Into<i64>,
+               TextTransformationType: Into<String>>
+        (comparison_operator: ComparisonOperatorType,
+         field_to_match: FieldToMatchType,
+         size: SizeType,
+         text_transformation: TextTransformationType)
+         -> SizeConstraint {
+        SizeConstraint {
+            comparison_operator: comparison_operator.into(),
+            field_to_match: field_to_match.into(),
+            size: size.into(),
+            text_transformation: text_transformation.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains <code>SizeConstraint</code> objects, which specify the parts of web requests that you want AWS WAF to inspect the size of. If a <code>SizeConstraintSet</code> contains more than one <code>SizeConstraint</code> object, a request only needs to match one constraint to be considered a match.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SizeConstraintSet {
@@ -1137,7 +2287,6 @@ pub struct SizeConstraintSet {
     #[serde(rename="SizeConstraints")]
     pub size_constraints: Vec<SizeConstraint>,
 }
-
 #[doc="<p>The <code>Id</code> and <code>Name</code> of a <code>SizeConstraintSet</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SizeConstraintSetSummary {
@@ -1148,7 +2297,6 @@ pub struct SizeConstraintSetSummary {
     #[serde(rename="SizeConstraintSetId")]
     pub size_constraint_set_id: String,
 }
-
 #[doc="<p>Specifies the part of a web request that you want to inspect the size of and indicates whether you want to add the specification to a <a>SizeConstraintSet</a> or delete it from a <code>SizeConstraintSet</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SizeConstraintSetUpdate {
@@ -1159,7 +2307,33 @@ pub struct SizeConstraintSetUpdate {
     #[serde(rename="SizeConstraint")]
     pub size_constraint: SizeConstraint,
 }
-
+impl SizeConstraintSetUpdate {
+    /// Sets `action`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SizeConstraintSetUpdate.action = value.into();`.
+    pub fn action<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.action = value.into();
+        self
+    }
+    /// Sets `size_constraint`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SizeConstraintSetUpdate.size_constraint = value.into();`.
+    pub fn size_constraint<ValueType: Into<SizeConstraint>>(mut self, value: ValueType) -> Self {
+        self.size_constraint = value.into();
+        self
+    }
+    /// Returns a new instance of SizeConstraintSetUpdate with optional fields set to `None`.
+    pub fn new<ActionType: Into<String>, SizeConstraintType: Into<SizeConstraint>>
+        (action: ActionType,
+         size_constraint: SizeConstraintType)
+         -> SizeConstraintSetUpdate {
+        SizeConstraintSetUpdate {
+            action: action.into(),
+            size_constraint: size_constraint.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains <code>SqlInjectionMatchTuple</code> objects, which specify the parts of web requests that you want AWS WAF to inspect for snippets of malicious SQL code and, if you want AWS WAF to inspect a header, the name of the header. If a <code>SqlInjectionMatchSet</code> contains more than one <code>SqlInjectionMatchTuple</code> object, a request needs to include snippets of SQL code in only one of the specified parts of the request to be considered a match.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SqlInjectionMatchSet {
@@ -1174,7 +2348,6 @@ pub struct SqlInjectionMatchSet {
     #[serde(rename="SqlInjectionMatchTuples")]
     pub sql_injection_match_tuples: Vec<SqlInjectionMatchTuple>,
 }
-
 #[doc="<p>The <code>Id</code> and <code>Name</code> of a <code>SqlInjectionMatchSet</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SqlInjectionMatchSetSummary {
@@ -1185,7 +2358,6 @@ pub struct SqlInjectionMatchSetSummary {
     #[serde(rename="SqlInjectionMatchSetId")]
     pub sql_injection_match_set_id: String,
 }
-
 #[doc="<p>Specifies the part of a web request that you want to inspect for snippets of malicious SQL code and indicates whether you want to add the specification to a <a>SqlInjectionMatchSet</a> or delete it from a <code>SqlInjectionMatchSet</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SqlInjectionMatchSetUpdate {
@@ -1196,7 +2368,35 @@ pub struct SqlInjectionMatchSetUpdate {
     #[serde(rename="SqlInjectionMatchTuple")]
     pub sql_injection_match_tuple: SqlInjectionMatchTuple,
 }
-
+impl SqlInjectionMatchSetUpdate {
+    /// Sets `action`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SqlInjectionMatchSetUpdate.action = value.into();`.
+    pub fn action<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.action = value.into();
+        self
+    }
+    /// Sets `sql_injection_match_tuple`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SqlInjectionMatchSetUpdate.sql_injection_match_tuple = value.into();`.
+    pub fn sql_injection_match_tuple<ValueType: Into<SqlInjectionMatchTuple>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.sql_injection_match_tuple = value.into();
+        self
+    }
+    /// Returns a new instance of SqlInjectionMatchSetUpdate with optional fields set to `None`.
+    pub fn new<ActionType: Into<String>, SqlInjectionMatchTupleType: Into<SqlInjectionMatchTuple>>
+        (action: ActionType,
+         sql_injection_match_tuple: SqlInjectionMatchTupleType)
+         -> SqlInjectionMatchSetUpdate {
+        SqlInjectionMatchSetUpdate {
+            action: action.into(),
+            sql_injection_match_tuple: sql_injection_match_tuple.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Specifies the part of a web request that you want AWS WAF to inspect for snippets of malicious SQL code and, if you want AWS WAF to inspect a header, the name of the header.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct SqlInjectionMatchTuple {
@@ -1207,7 +2407,33 @@ pub struct SqlInjectionMatchTuple {
     #[serde(rename="TextTransformation")]
     pub text_transformation: String,
 }
-
+impl SqlInjectionMatchTuple {
+    /// Sets `field_to_match`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SqlInjectionMatchTuple.field_to_match = value.into();`.
+    pub fn field_to_match<ValueType: Into<FieldToMatch>>(mut self, value: ValueType) -> Self {
+        self.field_to_match = value.into();
+        self
+    }
+    /// Sets `text_transformation`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SqlInjectionMatchTuple.text_transformation = value.into();`.
+    pub fn text_transformation<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.text_transformation = value.into();
+        self
+    }
+    /// Returns a new instance of SqlInjectionMatchTuple with optional fields set to `None`.
+    pub fn new<FieldToMatchType: Into<FieldToMatch>, TextTransformationType: Into<String>>
+        (field_to_match: FieldToMatchType,
+         text_transformation: TextTransformationType)
+         -> SqlInjectionMatchTuple {
+        SqlInjectionMatchTuple {
+            field_to_match: field_to_match.into(),
+            text_transformation: text_transformation.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>In a <a>GetSampledRequests</a> request, the <code>StartTime</code> and <code>EndTime</code> objects specify the time range for which you want AWS WAF to return a sample of web requests.</p> <p>In a <a>GetSampledRequests</a> response, the <code>StartTime</code> and <code>EndTime</code> objects specify the time range for which AWS WAF actually returned a sample of web requests. AWS WAF gets the specified number of requests from among the first 5,000 requests that your AWS resource receives during the specified time period. If your resource receives more than 5,000 requests during that period, AWS WAF stops sampling after the 5,000th request. In that case, <code>EndTime</code> is the time that AWS WAF received the 5,000th request. </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct TimeWindow {
@@ -1218,7 +2444,32 @@ pub struct TimeWindow {
     #[serde(rename="StartTime")]
     pub start_time: f64,
 }
-
+impl TimeWindow {
+    /// Sets `end_time`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TimeWindow.end_time = value.into();`.
+    pub fn end_time<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.end_time = value.into();
+        self
+    }
+    /// Sets `start_time`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TimeWindow.start_time = value.into();`.
+    pub fn start_time<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.start_time = value.into();
+        self
+    }
+    /// Returns a new instance of TimeWindow with optional fields set to `None`.
+    pub fn new<EndTimeType: Into<f64>, StartTimeType: Into<f64>>(end_time: EndTimeType,
+                                                                 start_time: StartTimeType)
+                                                                 -> TimeWindow {
+        TimeWindow {
+            end_time: end_time.into(),
+            start_time: start_time.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateByteMatchSetRequest {
     #[doc="<p>The <code>ByteMatchSetId</code> of the <a>ByteMatchSet</a> that you want to update. <code>ByteMatchSetId</code> is returned by <a>CreateByteMatchSet</a> and by <a>ListByteMatchSets</a>.</p>"]
@@ -1231,7 +2482,44 @@ pub struct UpdateByteMatchSetRequest {
     #[serde(rename="Updates")]
     pub updates: Vec<ByteMatchSetUpdate>,
 }
-
+impl UpdateByteMatchSetRequest {
+    /// Sets `byte_match_set_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateByteMatchSetRequest.byte_match_set_id = value.into();`.
+    pub fn byte_match_set_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.byte_match_set_id = value.into();
+        self
+    }
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateByteMatchSetRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `updates`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateByteMatchSetRequest.updates = value.into();`.
+    pub fn updates<ValueType: Into<Vec<ByteMatchSetUpdate>>>(mut self, value: ValueType) -> Self {
+        self.updates = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateByteMatchSetRequest with optional fields set to `None`.
+    pub fn new<ByteMatchSetIdType: Into<String>,
+               ChangeTokenType: Into<String>,
+               UpdatesType: Into<Vec<ByteMatchSetUpdate>>>
+        (byte_match_set_id: ByteMatchSetIdType,
+         change_token: ChangeTokenType,
+         updates: UpdatesType)
+         -> UpdateByteMatchSetRequest {
+        UpdateByteMatchSetRequest {
+            byte_match_set_id: byte_match_set_id.into(),
+            change_token: change_token.into(),
+            updates: updates.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateByteMatchSetResponse {
     #[doc="<p>The <code>ChangeToken</code> that you used to submit the <code>UpdateByteMatchSet</code> request. You can also use this value to query the status of the request. For more information, see <a>GetChangeTokenStatus</a>.</p>"]
@@ -1239,7 +2527,6 @@ pub struct UpdateByteMatchSetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub change_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateIPSetRequest {
     #[doc="<p>The value returned by the most recent call to <a>GetChangeToken</a>.</p>"]
@@ -1252,7 +2539,44 @@ pub struct UpdateIPSetRequest {
     #[serde(rename="Updates")]
     pub updates: Vec<IPSetUpdate>,
 }
-
+impl UpdateIPSetRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateIPSetRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `ip_set_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateIPSetRequest.ip_set_id = value.into();`.
+    pub fn ip_set_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ip_set_id = value.into();
+        self
+    }
+    /// Sets `updates`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateIPSetRequest.updates = value.into();`.
+    pub fn updates<ValueType: Into<Vec<IPSetUpdate>>>(mut self, value: ValueType) -> Self {
+        self.updates = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateIPSetRequest with optional fields set to `None`.
+    pub fn new<ChangeTokenType: Into<String>,
+               IPSetIdType: Into<String>,
+               UpdatesType: Into<Vec<IPSetUpdate>>>
+        (change_token: ChangeTokenType,
+         ip_set_id: IPSetIdType,
+         updates: UpdatesType)
+         -> UpdateIPSetRequest {
+        UpdateIPSetRequest {
+            change_token: change_token.into(),
+            ip_set_id: ip_set_id.into(),
+            updates: updates.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateIPSetResponse {
     #[doc="<p>The <code>ChangeToken</code> that you used to submit the <code>UpdateIPSet</code> request. You can also use this value to query the status of the request. For more information, see <a>GetChangeTokenStatus</a>.</p>"]
@@ -1260,7 +2584,6 @@ pub struct UpdateIPSetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub change_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateRateBasedRuleRequest {
     #[doc="<p>The value returned by the most recent call to <a>GetChangeToken</a>.</p>"]
@@ -1276,7 +2599,54 @@ pub struct UpdateRateBasedRuleRequest {
     #[serde(rename="Updates")]
     pub updates: Vec<RuleUpdate>,
 }
-
+impl UpdateRateBasedRuleRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRateBasedRuleRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `rate_limit`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRateBasedRuleRequest.rate_limit = value.into();`.
+    pub fn rate_limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.rate_limit = value.into();
+        self
+    }
+    /// Sets `rule_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRateBasedRuleRequest.rule_id = value.into();`.
+    pub fn rule_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_id = value.into();
+        self
+    }
+    /// Sets `updates`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRateBasedRuleRequest.updates = value.into();`.
+    pub fn updates<ValueType: Into<Vec<RuleUpdate>>>(mut self, value: ValueType) -> Self {
+        self.updates = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateRateBasedRuleRequest with optional fields set to `None`.
+    pub fn new<ChangeTokenType: Into<String>,
+               RateLimitType: Into<i64>,
+               RuleIdType: Into<String>,
+               UpdatesType: Into<Vec<RuleUpdate>>>
+        (change_token: ChangeTokenType,
+         rate_limit: RateLimitType,
+         rule_id: RuleIdType,
+         updates: UpdatesType)
+         -> UpdateRateBasedRuleRequest {
+        UpdateRateBasedRuleRequest {
+            change_token: change_token.into(),
+            rate_limit: rate_limit.into(),
+            rule_id: rule_id.into(),
+            updates: updates.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateRateBasedRuleResponse {
     #[doc="<p>The <code>ChangeToken</code> that you used to submit the <code>UpdateRateBasedRule</code> request. You can also use this value to query the status of the request. For more information, see <a>GetChangeTokenStatus</a>.</p>"]
@@ -1284,7 +2654,6 @@ pub struct UpdateRateBasedRuleResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub change_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateRuleRequest {
     #[doc="<p>The value returned by the most recent call to <a>GetChangeToken</a>.</p>"]
@@ -1297,7 +2666,44 @@ pub struct UpdateRuleRequest {
     #[serde(rename="Updates")]
     pub updates: Vec<RuleUpdate>,
 }
-
+impl UpdateRuleRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRuleRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `rule_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRuleRequest.rule_id = value.into();`.
+    pub fn rule_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_id = value.into();
+        self
+    }
+    /// Sets `updates`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRuleRequest.updates = value.into();`.
+    pub fn updates<ValueType: Into<Vec<RuleUpdate>>>(mut self, value: ValueType) -> Self {
+        self.updates = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateRuleRequest with optional fields set to `None`.
+    pub fn new<ChangeTokenType: Into<String>,
+               RuleIdType: Into<String>,
+               UpdatesType: Into<Vec<RuleUpdate>>>
+        (change_token: ChangeTokenType,
+         rule_id: RuleIdType,
+         updates: UpdatesType)
+         -> UpdateRuleRequest {
+        UpdateRuleRequest {
+            change_token: change_token.into(),
+            rule_id: rule_id.into(),
+            updates: updates.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateRuleResponse {
     #[doc="<p>The <code>ChangeToken</code> that you used to submit the <code>UpdateRule</code> request. You can also use this value to query the status of the request. For more information, see <a>GetChangeTokenStatus</a>.</p>"]
@@ -1305,7 +2711,6 @@ pub struct UpdateRuleResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub change_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateSizeConstraintSetRequest {
     #[doc="<p>The value returned by the most recent call to <a>GetChangeToken</a>.</p>"]
@@ -1318,7 +2723,46 @@ pub struct UpdateSizeConstraintSetRequest {
     #[serde(rename="Updates")]
     pub updates: Vec<SizeConstraintSetUpdate>,
 }
-
+impl UpdateSizeConstraintSetRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateSizeConstraintSetRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `size_constraint_set_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateSizeConstraintSetRequest.size_constraint_set_id = value.into();`.
+    pub fn size_constraint_set_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.size_constraint_set_id = value.into();
+        self
+    }
+    /// Sets `updates`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateSizeConstraintSetRequest.updates = value.into();`.
+    pub fn updates<ValueType: Into<Vec<SizeConstraintSetUpdate>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.updates = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateSizeConstraintSetRequest with optional fields set to `None`.
+    pub fn new<ChangeTokenType: Into<String>,
+               SizeConstraintSetIdType: Into<String>,
+               UpdatesType: Into<Vec<SizeConstraintSetUpdate>>>
+        (change_token: ChangeTokenType,
+         size_constraint_set_id: SizeConstraintSetIdType,
+         updates: UpdatesType)
+         -> UpdateSizeConstraintSetRequest {
+        UpdateSizeConstraintSetRequest {
+            change_token: change_token.into(),
+            size_constraint_set_id: size_constraint_set_id.into(),
+            updates: updates.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateSizeConstraintSetResponse {
     #[doc="<p>The <code>ChangeToken</code> that you used to submit the <code>UpdateSizeConstraintSet</code> request. You can also use this value to query the status of the request. For more information, see <a>GetChangeTokenStatus</a>.</p>"]
@@ -1326,7 +2770,6 @@ pub struct UpdateSizeConstraintSetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub change_token: Option<String>,
 }
-
 #[doc="<p>A request to update a <a>SqlInjectionMatchSet</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateSqlInjectionMatchSetRequest {
@@ -1340,7 +2783,46 @@ pub struct UpdateSqlInjectionMatchSetRequest {
     #[serde(rename="Updates")]
     pub updates: Vec<SqlInjectionMatchSetUpdate>,
 }
-
+impl UpdateSqlInjectionMatchSetRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateSqlInjectionMatchSetRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `sql_injection_match_set_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateSqlInjectionMatchSetRequest.sql_injection_match_set_id = value.into();`.
+    pub fn sql_injection_match_set_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sql_injection_match_set_id = value.into();
+        self
+    }
+    /// Sets `updates`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateSqlInjectionMatchSetRequest.updates = value.into();`.
+    pub fn updates<ValueType: Into<Vec<SqlInjectionMatchSetUpdate>>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.updates = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateSqlInjectionMatchSetRequest with optional fields set to `None`.
+    pub fn new<ChangeTokenType: Into<String>,
+               SqlInjectionMatchSetIdType: Into<String>,
+               UpdatesType: Into<Vec<SqlInjectionMatchSetUpdate>>>
+        (change_token: ChangeTokenType,
+         sql_injection_match_set_id: SqlInjectionMatchSetIdType,
+         updates: UpdatesType)
+         -> UpdateSqlInjectionMatchSetRequest {
+        UpdateSqlInjectionMatchSetRequest {
+            change_token: change_token.into(),
+            sql_injection_match_set_id: sql_injection_match_set_id.into(),
+            updates: updates.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response to an <a>UpdateSqlInjectionMatchSets</a> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateSqlInjectionMatchSetResponse {
@@ -1349,7 +2831,6 @@ pub struct UpdateSqlInjectionMatchSetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub change_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateWebACLRequest {
     #[doc="<p>The value returned by the most recent call to <a>GetChangeToken</a>.</p>"]
@@ -1367,7 +2848,47 @@ pub struct UpdateWebACLRequest {
     #[serde(rename="WebACLId")]
     pub web_acl_id: String,
 }
-
+impl UpdateWebACLRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateWebACLRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `default_action`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateWebACLRequest.default_action = Some(value.into());`.
+    pub fn default_action<ValueType: Into<WafAction>>(mut self, value: ValueType) -> Self {
+        self.default_action = Some(value.into());
+        self
+    }
+    /// Sets `updates`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateWebACLRequest.updates = Some(value.into());`.
+    pub fn updates<ValueType: Into<Vec<WebACLUpdate>>>(mut self, value: ValueType) -> Self {
+        self.updates = Some(value.into());
+        self
+    }
+    /// Sets `web_acl_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateWebACLRequest.web_acl_id = value.into();`.
+    pub fn web_acl_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.web_acl_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateWebACLRequest with optional fields set to `None`.
+    pub fn new<ChangeTokenType: Into<String>, WebACLIdType: Into<String>>
+        (change_token: ChangeTokenType,
+         web_acl_id: WebACLIdType)
+         -> UpdateWebACLRequest {
+        UpdateWebACLRequest {
+            change_token: change_token.into(),
+            web_acl_id: web_acl_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateWebACLResponse {
     #[doc="<p>The <code>ChangeToken</code> that you used to submit the <code>UpdateWebACL</code> request. You can also use this value to query the status of the request. For more information, see <a>GetChangeTokenStatus</a>.</p>"]
@@ -1375,7 +2896,6 @@ pub struct UpdateWebACLResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub change_token: Option<String>,
 }
-
 #[doc="<p>A request to update an <a>XssMatchSet</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateXssMatchSetRequest {
@@ -1389,7 +2909,44 @@ pub struct UpdateXssMatchSetRequest {
     #[serde(rename="XssMatchSetId")]
     pub xss_match_set_id: String,
 }
-
+impl UpdateXssMatchSetRequest {
+    /// Sets `change_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateXssMatchSetRequest.change_token = value.into();`.
+    pub fn change_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.change_token = value.into();
+        self
+    }
+    /// Sets `updates`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateXssMatchSetRequest.updates = value.into();`.
+    pub fn updates<ValueType: Into<Vec<XssMatchSetUpdate>>>(mut self, value: ValueType) -> Self {
+        self.updates = value.into();
+        self
+    }
+    /// Sets `xss_match_set_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateXssMatchSetRequest.xss_match_set_id = value.into();`.
+    pub fn xss_match_set_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.xss_match_set_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateXssMatchSetRequest with optional fields set to `None`.
+    pub fn new<ChangeTokenType: Into<String>,
+               UpdatesType: Into<Vec<XssMatchSetUpdate>>,
+               XssMatchSetIdType: Into<String>>
+        (change_token: ChangeTokenType,
+         updates: UpdatesType,
+         xss_match_set_id: XssMatchSetIdType)
+         -> UpdateXssMatchSetRequest {
+        UpdateXssMatchSetRequest {
+            change_token: change_token.into(),
+            updates: updates.into(),
+            xss_match_set_id: xss_match_set_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response to an <a>UpdateXssMatchSets</a> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateXssMatchSetResponse {
@@ -1398,7 +2955,6 @@ pub struct UpdateXssMatchSetResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub change_token: Option<String>,
 }
-
 #[doc="<p>For the action that is associated with a rule in a <code>WebACL</code>, specifies the action that you want AWS WAF to perform when a web request matches all of the conditions in a rule. For the default action in a <code>WebACL</code>, specifies the action that you want AWS WAF to take when a web request doesn't match all of the conditions in any of the rules in a <code>WebACL</code>. </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct WafAction {
@@ -1406,7 +2962,22 @@ pub struct WafAction {
     #[serde(rename="Type")]
     pub type_: String,
 }
-
+impl WafAction {
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WafAction.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of WafAction with optional fields set to `None`.
+    pub fn new<TypeType: Into<String>>(type_: TypeType) -> WafAction {
+        WafAction {
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the <code>Rules</code> that identify the requests that you want to allow, block, or count. In a <code>WebACL</code>, you also specify a default action (<code>ALLOW</code> or <code>BLOCK</code>), and the action for each <code>Rule</code> that you add to a <code>WebACL</code>, for example, block requests from specified IP addresses or block requests from specified referrers. You also associate the <code>WebACL</code> with a CloudFront distribution to identify the requests that you want AWS WAF to filter. If you add more than one <code>Rule</code> to a <code>WebACL</code>, a request needs to match only one of the specifications to be allowed, blocked, or counted. For more information, see <a>UpdateWebACL</a>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WebACL {
@@ -1428,7 +2999,6 @@ pub struct WebACL {
     #[serde(rename="WebACLId")]
     pub web_acl_id: String,
 }
-
 #[doc="<p>Contains the identifier and the name or description of the <a>WebACL</a>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WebACLSummary {
@@ -1439,7 +3009,6 @@ pub struct WebACLSummary {
     #[serde(rename="WebACLId")]
     pub web_acl_id: String,
 }
-
 #[doc="<p>Specifies whether to insert a <code>Rule</code> into or delete a <code>Rule</code> from a <code>WebACL</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct WebACLUpdate {
@@ -1450,7 +3019,33 @@ pub struct WebACLUpdate {
     #[serde(rename="ActivatedRule")]
     pub activated_rule: ActivatedRule,
 }
-
+impl WebACLUpdate {
+    /// Sets `action`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WebACLUpdate.action = value.into();`.
+    pub fn action<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.action = value.into();
+        self
+    }
+    /// Sets `activated_rule`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WebACLUpdate.activated_rule = value.into();`.
+    pub fn activated_rule<ValueType: Into<ActivatedRule>>(mut self, value: ValueType) -> Self {
+        self.activated_rule = value.into();
+        self
+    }
+    /// Returns a new instance of WebACLUpdate with optional fields set to `None`.
+    pub fn new<ActionType: Into<String>, ActivatedRuleType: Into<ActivatedRule>>
+        (action: ActionType,
+         activated_rule: ActivatedRuleType)
+         -> WebACLUpdate {
+        WebACLUpdate {
+            action: action.into(),
+            activated_rule: activated_rule.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains <code>XssMatchTuple</code> objects, which specify the parts of web requests that you want AWS WAF to inspect for cross-site scripting attacks and, if you want AWS WAF to inspect a header, the name of the header. If a <code>XssMatchSet</code> contains more than one <code>XssMatchTuple</code> object, a request needs to include cross-site scripting attacks in only one of the specified parts of the request to be considered a match.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct XssMatchSet {
@@ -1465,7 +3060,6 @@ pub struct XssMatchSet {
     #[serde(rename="XssMatchTuples")]
     pub xss_match_tuples: Vec<XssMatchTuple>,
 }
-
 #[doc="<p>The <code>Id</code> and <code>Name</code> of an <code>XssMatchSet</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct XssMatchSetSummary {
@@ -1476,7 +3070,6 @@ pub struct XssMatchSetSummary {
     #[serde(rename="XssMatchSetId")]
     pub xss_match_set_id: String,
 }
-
 #[doc="<p>Specifies the part of a web request that you want to inspect for cross-site scripting attacks and indicates whether you want to add the specification to an <a>XssMatchSet</a> or delete it from an <code>XssMatchSet</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct XssMatchSetUpdate {
@@ -1487,7 +3080,33 @@ pub struct XssMatchSetUpdate {
     #[serde(rename="XssMatchTuple")]
     pub xss_match_tuple: XssMatchTuple,
 }
-
+impl XssMatchSetUpdate {
+    /// Sets `action`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `XssMatchSetUpdate.action = value.into();`.
+    pub fn action<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.action = value.into();
+        self
+    }
+    /// Sets `xss_match_tuple`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `XssMatchSetUpdate.xss_match_tuple = value.into();`.
+    pub fn xss_match_tuple<ValueType: Into<XssMatchTuple>>(mut self, value: ValueType) -> Self {
+        self.xss_match_tuple = value.into();
+        self
+    }
+    /// Returns a new instance of XssMatchSetUpdate with optional fields set to `None`.
+    pub fn new<ActionType: Into<String>, XssMatchTupleType: Into<XssMatchTuple>>
+        (action: ActionType,
+         xss_match_tuple: XssMatchTupleType)
+         -> XssMatchSetUpdate {
+        XssMatchSetUpdate {
+            action: action.into(),
+            xss_match_tuple: xss_match_tuple.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Specifies the part of a web request that you want AWS WAF to inspect for cross-site scripting attacks and, if you want AWS WAF to inspect a header, the name of the header.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct XssMatchTuple {
@@ -1498,7 +3117,33 @@ pub struct XssMatchTuple {
     #[serde(rename="TextTransformation")]
     pub text_transformation: String,
 }
-
+impl XssMatchTuple {
+    /// Sets `field_to_match`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `XssMatchTuple.field_to_match = value.into();`.
+    pub fn field_to_match<ValueType: Into<FieldToMatch>>(mut self, value: ValueType) -> Self {
+        self.field_to_match = value.into();
+        self
+    }
+    /// Sets `text_transformation`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `XssMatchTuple.text_transformation = value.into();`.
+    pub fn text_transformation<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.text_transformation = value.into();
+        self
+    }
+    /// Returns a new instance of XssMatchTuple with optional fields set to `None`.
+    pub fn new<FieldToMatchType: Into<FieldToMatch>, TextTransformationType: Into<String>>
+        (field_to_match: FieldToMatchType,
+         text_transformation: TextTransformationType)
+         -> XssMatchTuple {
+        XssMatchTuple {
+            field_to_match: field_to_match.into(),
+            text_transformation: text_transformation.into(),
+            ..Default::default()
+        }
+    }
+}
 /// Errors returned by AssociateWebACL
 #[derive(Debug, PartialEq)]
 pub enum AssociateWebACLError {

@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -44,7 +45,6 @@ pub struct AuthorizationData {
     #[serde(skip_serializing_if="Option::is_none")]
     pub proxy_endpoint: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct BatchCheckLayerAvailabilityRequest {
     #[doc="<p>The digests of the image layers to check.</p>"]
@@ -58,7 +58,40 @@ pub struct BatchCheckLayerAvailabilityRequest {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl BatchCheckLayerAvailabilityRequest {
+    /// Sets `layer_digests`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchCheckLayerAvailabilityRequest.layer_digests = value.into();`.
+    pub fn layer_digests<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.layer_digests = value.into();
+        self
+    }
+    /// Sets `registry_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchCheckLayerAvailabilityRequest.registry_id = Some(value.into());`.
+    pub fn registry_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.registry_id = Some(value.into());
+        self
+    }
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchCheckLayerAvailabilityRequest.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of BatchCheckLayerAvailabilityRequest with optional fields set to `None`.
+    pub fn new<layerDigestsType: Into<Vec<String>>, repositoryNameType: Into<String>>
+        (layer_digests: layerDigestsType,
+         repository_name: repositoryNameType)
+         -> BatchCheckLayerAvailabilityRequest {
+        BatchCheckLayerAvailabilityRequest {
+            layer_digests: layer_digests.into(),
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BatchCheckLayerAvailabilityResponse {
     #[doc="<p>Any failures associated with the call.</p>"]
@@ -70,7 +103,6 @@ pub struct BatchCheckLayerAvailabilityResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub layers: Option<Vec<Layer>>,
 }
-
 #[doc="<p>Deletes specified images within a specified repository. Images are specified with either the <code>imageTag</code> or <code>imageDigest</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct BatchDeleteImageRequest {
@@ -85,7 +117,40 @@ pub struct BatchDeleteImageRequest {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl BatchDeleteImageRequest {
+    /// Sets `image_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchDeleteImageRequest.image_ids = value.into();`.
+    pub fn image_ids<ValueType: Into<Vec<ImageIdentifier>>>(mut self, value: ValueType) -> Self {
+        self.image_ids = value.into();
+        self
+    }
+    /// Sets `registry_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchDeleteImageRequest.registry_id = Some(value.into());`.
+    pub fn registry_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.registry_id = Some(value.into());
+        self
+    }
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchDeleteImageRequest.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of BatchDeleteImageRequest with optional fields set to `None`.
+    pub fn new<imageIdsType: Into<Vec<ImageIdentifier>>, repositoryNameType: Into<String>>
+        (image_ids: imageIdsType,
+         repository_name: repositoryNameType)
+         -> BatchDeleteImageRequest {
+        BatchDeleteImageRequest {
+            image_ids: image_ids.into(),
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BatchDeleteImageResponse {
     #[doc="<p>Any failures associated with the call.</p>"]
@@ -97,7 +162,6 @@ pub struct BatchDeleteImageResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub image_ids: Option<Vec<ImageIdentifier>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct BatchGetImageRequest {
     #[doc="<p>The accepted media types for the request.</p> <p>Valid values: <code>application/vnd.docker.distribution.manifest.v1+json</code> | <code>application/vnd.docker.distribution.manifest.v2+json</code> | <code>application/vnd.oci.image.manifest.v1+json</code> </p>"]
@@ -115,7 +179,47 @@ pub struct BatchGetImageRequest {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl BatchGetImageRequest {
+    /// Sets `accepted_media_types`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchGetImageRequest.accepted_media_types = Some(value.into());`.
+    pub fn accepted_media_types<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.accepted_media_types = Some(value.into());
+        self
+    }
+    /// Sets `image_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchGetImageRequest.image_ids = value.into();`.
+    pub fn image_ids<ValueType: Into<Vec<ImageIdentifier>>>(mut self, value: ValueType) -> Self {
+        self.image_ids = value.into();
+        self
+    }
+    /// Sets `registry_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchGetImageRequest.registry_id = Some(value.into());`.
+    pub fn registry_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.registry_id = Some(value.into());
+        self
+    }
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchGetImageRequest.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of BatchGetImageRequest with optional fields set to `None`.
+    pub fn new<imageIdsType: Into<Vec<ImageIdentifier>>, repositoryNameType: Into<String>>
+        (image_ids: imageIdsType,
+         repository_name: repositoryNameType)
+         -> BatchGetImageRequest {
+        BatchGetImageRequest {
+            image_ids: image_ids.into(),
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BatchGetImageResponse {
     #[doc="<p>Any failures associated with the call.</p>"]
@@ -127,7 +231,6 @@ pub struct BatchGetImageResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub images: Option<Vec<Image>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CompleteLayerUploadRequest {
     #[doc="<p>The <code>sha256</code> digest of the image layer.</p>"]
@@ -144,7 +247,51 @@ pub struct CompleteLayerUploadRequest {
     #[serde(rename="uploadId")]
     pub upload_id: String,
 }
-
+impl CompleteLayerUploadRequest {
+    /// Sets `layer_digests`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteLayerUploadRequest.layer_digests = value.into();`.
+    pub fn layer_digests<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.layer_digests = value.into();
+        self
+    }
+    /// Sets `registry_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteLayerUploadRequest.registry_id = Some(value.into());`.
+    pub fn registry_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.registry_id = Some(value.into());
+        self
+    }
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteLayerUploadRequest.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Sets `upload_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteLayerUploadRequest.upload_id = value.into();`.
+    pub fn upload_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.upload_id = value.into();
+        self
+    }
+    /// Returns a new instance of CompleteLayerUploadRequest with optional fields set to `None`.
+    pub fn new<layerDigestsType: Into<Vec<String>>,
+               repositoryNameType: Into<String>,
+               uploadIdType: Into<String>>
+        (layer_digests: layerDigestsType,
+         repository_name: repositoryNameType,
+         upload_id: uploadIdType)
+         -> CompleteLayerUploadRequest {
+        CompleteLayerUploadRequest {
+            layer_digests: layer_digests.into(),
+            repository_name: repository_name.into(),
+            upload_id: upload_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CompleteLayerUploadResponse {
     #[doc="<p>The <code>sha256</code> digest of the image layer.</p>"]
@@ -164,14 +311,29 @@ pub struct CompleteLayerUploadResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub upload_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateRepositoryRequest {
     #[doc="<p>The name to use for the repository. The repository name may be specified on its own (such as <code>nginx-web-app</code>) or it can be prepended with a namespace to group the repository into a category (such as <code>project-a/nginx-web-app</code>).</p>"]
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl CreateRepositoryRequest {
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRepositoryRequest.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateRepositoryRequest with optional fields set to `None`.
+    pub fn new<repositoryNameType: Into<String>>(repository_name: repositoryNameType)
+                                                 -> CreateRepositoryRequest {
+        CreateRepositoryRequest {
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateRepositoryResponse {
     #[doc="<p>The repository that was created.</p>"]
@@ -179,7 +341,6 @@ pub struct CreateRepositoryResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub repository: Option<Repository>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteRepositoryPolicyRequest {
     #[doc="<p>The AWS account ID associated with the registry that contains the repository policy to delete. If you do not specify a registry, the default registry is assumed.</p>"]
@@ -190,7 +351,30 @@ pub struct DeleteRepositoryPolicyRequest {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl DeleteRepositoryPolicyRequest {
+    /// Sets `registry_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRepositoryPolicyRequest.registry_id = Some(value.into());`.
+    pub fn registry_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.registry_id = Some(value.into());
+        self
+    }
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRepositoryPolicyRequest.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteRepositoryPolicyRequest with optional fields set to `None`.
+    pub fn new<repositoryNameType: Into<String>>(repository_name: repositoryNameType)
+                                                 -> DeleteRepositoryPolicyRequest {
+        DeleteRepositoryPolicyRequest {
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteRepositoryPolicyResponse {
     #[doc="<p>The JSON repository policy that was deleted from the repository.</p>"]
@@ -206,7 +390,6 @@ pub struct DeleteRepositoryPolicyResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub repository_name: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteRepositoryRequest {
     #[doc="<p>Force the deletion of the repository if it contains images.</p>"]
@@ -221,7 +404,37 @@ pub struct DeleteRepositoryRequest {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl DeleteRepositoryRequest {
+    /// Sets `force`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRepositoryRequest.force = Some(value.into());`.
+    pub fn force<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.force = Some(value.into());
+        self
+    }
+    /// Sets `registry_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRepositoryRequest.registry_id = Some(value.into());`.
+    pub fn registry_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.registry_id = Some(value.into());
+        self
+    }
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRepositoryRequest.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteRepositoryRequest with optional fields set to `None`.
+    pub fn new<repositoryNameType: Into<String>>(repository_name: repositoryNameType)
+                                                 -> DeleteRepositoryRequest {
+        DeleteRepositoryRequest {
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteRepositoryResponse {
     #[doc="<p>The repository that was deleted.</p>"]
@@ -229,7 +442,6 @@ pub struct DeleteRepositoryResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub repository: Option<Repository>,
 }
-
 #[doc="<p>An object representing a filter on a <a>DescribeImages</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeImagesFilter {
@@ -238,7 +450,19 @@ pub struct DescribeImagesFilter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tag_status: Option<String>,
 }
-
+impl DescribeImagesFilter {
+    /// Sets `tag_status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImagesFilter.tag_status = Some(value.into());`.
+    pub fn tag_status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tag_status = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeImagesFilter with optional fields set to `None`.
+    pub fn new() -> DescribeImagesFilter {
+        DescribeImagesFilter { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeImagesRequest {
     #[doc="<p>The filter key and value with which to filter your <code>DescribeImages</code> results.</p>"]
@@ -265,7 +489,58 @@ pub struct DescribeImagesRequest {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl DescribeImagesRequest {
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImagesRequest.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<DescribeImagesFilter>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `image_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImagesRequest.image_ids = Some(value.into());`.
+    pub fn image_ids<ValueType: Into<Vec<ImageIdentifier>>>(mut self, value: ValueType) -> Self {
+        self.image_ids = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImagesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImagesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `registry_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImagesRequest.registry_id = Some(value.into());`.
+    pub fn registry_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.registry_id = Some(value.into());
+        self
+    }
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeImagesRequest.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeImagesRequest with optional fields set to `None`.
+    pub fn new<repositoryNameType: Into<String>>(repository_name: repositoryNameType)
+                                                 -> DescribeImagesRequest {
+        DescribeImagesRequest {
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeImagesResponse {
     #[doc="<p>A list of <a>ImageDetail</a> objects that contain data about the image.</p>"]
@@ -277,7 +552,6 @@ pub struct DescribeImagesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeRepositoriesRequest {
     #[doc="<p>The maximum number of repository results returned by <code>DescribeRepositories</code> in paginated output. When this parameter is used, <code>DescribeRepositories</code> only returns <code>maxResults</code> results in a single page along with a <code>nextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>DescribeRepositories</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 100. If this parameter is not used, then <code>DescribeRepositories</code> returns up to 100 results and a <code>nextToken</code> value, if applicable.</p>"]
@@ -297,7 +571,40 @@ pub struct DescribeRepositoriesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub repository_names: Option<Vec<String>>,
 }
-
+impl DescribeRepositoriesRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRepositoriesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRepositoriesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `registry_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRepositoriesRequest.registry_id = Some(value.into());`.
+    pub fn registry_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.registry_id = Some(value.into());
+        self
+    }
+    /// Sets `repository_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRepositoriesRequest.repository_names = Some(value.into());`.
+    pub fn repository_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.repository_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeRepositoriesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeRepositoriesRequest {
+        DescribeRepositoriesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeRepositoriesResponse {
     #[doc="<p>The <code>nextToken</code> value to include in a future <code>DescribeRepositories</code> request. When the results of a <code>DescribeRepositories</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"]
@@ -309,7 +616,6 @@ pub struct DescribeRepositoriesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub repositories: Option<Vec<Repository>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetAuthorizationTokenRequest {
     #[doc="<p>A list of AWS account IDs that are associated with the registries for which to get authorization tokens. If you do not specify a registry, the default registry is assumed.</p>"]
@@ -317,7 +623,19 @@ pub struct GetAuthorizationTokenRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub registry_ids: Option<Vec<String>>,
 }
-
+impl GetAuthorizationTokenRequest {
+    /// Sets `registry_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetAuthorizationTokenRequest.registry_ids = Some(value.into());`.
+    pub fn registry_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.registry_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetAuthorizationTokenRequest with optional fields set to `None`.
+    pub fn new() -> GetAuthorizationTokenRequest {
+        GetAuthorizationTokenRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetAuthorizationTokenResponse {
     #[doc="<p>A list of authorization token data objects that correspond to the <code>registryIds</code> values in the request.</p>"]
@@ -325,7 +643,6 @@ pub struct GetAuthorizationTokenResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub authorization_data: Option<Vec<AuthorizationData>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDownloadUrlForLayerRequest {
     #[doc="<p>The digest of the image layer to download.</p>"]
@@ -339,7 +656,40 @@ pub struct GetDownloadUrlForLayerRequest {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl GetDownloadUrlForLayerRequest {
+    /// Sets `layer_digest`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDownloadUrlForLayerRequest.layer_digest = value.into();`.
+    pub fn layer_digest<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.layer_digest = value.into();
+        self
+    }
+    /// Sets `registry_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDownloadUrlForLayerRequest.registry_id = Some(value.into());`.
+    pub fn registry_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.registry_id = Some(value.into());
+        self
+    }
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDownloadUrlForLayerRequest.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetDownloadUrlForLayerRequest with optional fields set to `None`.
+    pub fn new<layerDigestType: Into<String>, repositoryNameType: Into<String>>
+        (layer_digest: layerDigestType,
+         repository_name: repositoryNameType)
+         -> GetDownloadUrlForLayerRequest {
+        GetDownloadUrlForLayerRequest {
+            layer_digest: layer_digest.into(),
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetDownloadUrlForLayerResponse {
     #[doc="<p>The pre-signed Amazon S3 download URL for the requested layer.</p>"]
@@ -351,7 +701,6 @@ pub struct GetDownloadUrlForLayerResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub layer_digest: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetRepositoryPolicyRequest {
     #[doc="<p>The AWS account ID associated with the registry that contains the repository. If you do not specify a registry, the default registry is assumed.</p>"]
@@ -362,7 +711,30 @@ pub struct GetRepositoryPolicyRequest {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl GetRepositoryPolicyRequest {
+    /// Sets `registry_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRepositoryPolicyRequest.registry_id = Some(value.into());`.
+    pub fn registry_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.registry_id = Some(value.into());
+        self
+    }
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRepositoryPolicyRequest.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetRepositoryPolicyRequest with optional fields set to `None`.
+    pub fn new<repositoryNameType: Into<String>>(repository_name: repositoryNameType)
+                                                 -> GetRepositoryPolicyRequest {
+        GetRepositoryPolicyRequest {
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetRepositoryPolicyResponse {
     #[doc="<p>The JSON repository policy text associated with the repository.</p>"]
@@ -378,7 +750,6 @@ pub struct GetRepositoryPolicyResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub repository_name: Option<String>,
 }
-
 #[doc="<p>An object representing an Amazon ECR image.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Image {
@@ -399,7 +770,6 @@ pub struct Image {
     #[serde(skip_serializing_if="Option::is_none")]
     pub repository_name: Option<String>,
 }
-
 #[doc="<p>An object that describes an image returned by a <a>DescribeImages</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ImageDetail {
@@ -428,7 +798,6 @@ pub struct ImageDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub repository_name: Option<String>,
 }
-
 #[doc="<p>An object representing an Amazon ECR image failure.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ImageFailure {
@@ -445,7 +814,6 @@ pub struct ImageFailure {
     #[serde(skip_serializing_if="Option::is_none")]
     pub image_id: Option<ImageIdentifier>,
 }
-
 #[doc="<p>An object with identifying information for an Amazon ECR image.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ImageIdentifier {
@@ -458,7 +826,26 @@ pub struct ImageIdentifier {
     #[serde(skip_serializing_if="Option::is_none")]
     pub image_tag: Option<String>,
 }
-
+impl ImageIdentifier {
+    /// Sets `image_digest`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImageIdentifier.image_digest = Some(value.into());`.
+    pub fn image_digest<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.image_digest = Some(value.into());
+        self
+    }
+    /// Sets `image_tag`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImageIdentifier.image_tag = Some(value.into());`.
+    pub fn image_tag<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.image_tag = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ImageIdentifier with optional fields set to `None`.
+    pub fn new() -> ImageIdentifier {
+        ImageIdentifier { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InitiateLayerUploadRequest {
     #[doc="<p>The AWS account ID associated with the registry that you intend to upload layers to. If you do not specify a registry, the default registry is assumed.</p>"]
@@ -469,7 +856,30 @@ pub struct InitiateLayerUploadRequest {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl InitiateLayerUploadRequest {
+    /// Sets `registry_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InitiateLayerUploadRequest.registry_id = Some(value.into());`.
+    pub fn registry_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.registry_id = Some(value.into());
+        self
+    }
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InitiateLayerUploadRequest.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of InitiateLayerUploadRequest with optional fields set to `None`.
+    pub fn new<repositoryNameType: Into<String>>(repository_name: repositoryNameType)
+                                                 -> InitiateLayerUploadRequest {
+        InitiateLayerUploadRequest {
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InitiateLayerUploadResponse {
     #[doc="<p>The size, in bytes, that Amazon ECR expects future layer part uploads to be.</p>"]
@@ -481,7 +891,6 @@ pub struct InitiateLayerUploadResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub upload_id: Option<String>,
 }
-
 #[doc="<p>An object representing an Amazon ECR image layer.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Layer {
@@ -502,7 +911,6 @@ pub struct Layer {
     #[serde(skip_serializing_if="Option::is_none")]
     pub media_type: Option<String>,
 }
-
 #[doc="<p>An object representing an Amazon ECR image layer failure.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LayerFailure {
@@ -519,7 +927,6 @@ pub struct LayerFailure {
     #[serde(skip_serializing_if="Option::is_none")]
     pub layer_digest: Option<String>,
 }
-
 #[doc="<p>An object representing a filter on a <a>ListImages</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListImagesFilter {
@@ -528,7 +935,19 @@ pub struct ListImagesFilter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tag_status: Option<String>,
 }
-
+impl ListImagesFilter {
+    /// Sets `tag_status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListImagesFilter.tag_status = Some(value.into());`.
+    pub fn tag_status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tag_status = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListImagesFilter with optional fields set to `None`.
+    pub fn new() -> ListImagesFilter {
+        ListImagesFilter { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListImagesRequest {
     #[doc="<p>The filter key and value with which to filter your <code>ListImages</code> results.</p>"]
@@ -551,7 +970,51 @@ pub struct ListImagesRequest {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl ListImagesRequest {
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListImagesRequest.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<ListImagesFilter>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListImagesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListImagesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `registry_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListImagesRequest.registry_id = Some(value.into());`.
+    pub fn registry_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.registry_id = Some(value.into());
+        self
+    }
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListImagesRequest.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListImagesRequest with optional fields set to `None`.
+    pub fn new<repositoryNameType: Into<String>>(repository_name: repositoryNameType)
+                                                 -> ListImagesRequest {
+        ListImagesRequest {
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListImagesResponse {
     #[doc="<p>The list of image IDs for the requested repository.</p>"]
@@ -563,7 +1026,6 @@ pub struct ListImagesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutImageRequest {
     #[doc="<p>The image manifest corresponding to the image to be uploaded.</p>"]
@@ -581,7 +1043,47 @@ pub struct PutImageRequest {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl PutImageRequest {
+    /// Sets `image_manifest`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutImageRequest.image_manifest = value.into();`.
+    pub fn image_manifest<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.image_manifest = value.into();
+        self
+    }
+    /// Sets `image_tag`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutImageRequest.image_tag = Some(value.into());`.
+    pub fn image_tag<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.image_tag = Some(value.into());
+        self
+    }
+    /// Sets `registry_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutImageRequest.registry_id = Some(value.into());`.
+    pub fn registry_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.registry_id = Some(value.into());
+        self
+    }
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutImageRequest.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of PutImageRequest with optional fields set to `None`.
+    pub fn new<imageManifestType: Into<String>, repositoryNameType: Into<String>>
+        (image_manifest: imageManifestType,
+         repository_name: repositoryNameType)
+         -> PutImageRequest {
+        PutImageRequest {
+            image_manifest: image_manifest.into(),
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutImageResponse {
     #[doc="<p>Details of the image uploaded.</p>"]
@@ -589,7 +1091,6 @@ pub struct PutImageResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub image: Option<Image>,
 }
-
 #[doc="<p>An object representing a repository.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Repository {
@@ -614,7 +1115,6 @@ pub struct Repository {
     #[serde(skip_serializing_if="Option::is_none")]
     pub repository_uri: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SetRepositoryPolicyRequest {
     #[doc="<p>If the policy you are attempting to set on a repository policy would prevent you from setting another policy in the future, you must force the <a>SetRepositoryPolicy</a> operation. This is intended to prevent accidental repository lock outs.</p>"]
@@ -632,7 +1132,47 @@ pub struct SetRepositoryPolicyRequest {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl SetRepositoryPolicyRequest {
+    /// Sets `force`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetRepositoryPolicyRequest.force = Some(value.into());`.
+    pub fn force<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.force = Some(value.into());
+        self
+    }
+    /// Sets `policy_text`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetRepositoryPolicyRequest.policy_text = value.into();`.
+    pub fn policy_text<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_text = value.into();
+        self
+    }
+    /// Sets `registry_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetRepositoryPolicyRequest.registry_id = Some(value.into());`.
+    pub fn registry_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.registry_id = Some(value.into());
+        self
+    }
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetRepositoryPolicyRequest.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of SetRepositoryPolicyRequest with optional fields set to `None`.
+    pub fn new<policyTextType: Into<String>, repositoryNameType: Into<String>>
+        (policy_text: policyTextType,
+         repository_name: repositoryNameType)
+         -> SetRepositoryPolicyRequest {
+        SetRepositoryPolicyRequest {
+            policy_text: policy_text.into(),
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SetRepositoryPolicyResponse {
     #[doc="<p>The JSON repository policy text applied to the repository.</p>"]
@@ -648,7 +1188,6 @@ pub struct SetRepositoryPolicyResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub repository_name: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UploadLayerPartRequest {
     #[doc="<p>The base64-encoded layer part payload.</p>"]
@@ -676,7 +1215,71 @@ pub struct UploadLayerPartRequest {
     #[serde(rename="uploadId")]
     pub upload_id: String,
 }
-
+impl UploadLayerPartRequest {
+    /// Sets `layer_part_blob`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadLayerPartRequest.layer_part_blob = value.into();`.
+    pub fn layer_part_blob<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.layer_part_blob = value.into();
+        self
+    }
+    /// Sets `part_first_byte`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadLayerPartRequest.part_first_byte = value.into();`.
+    pub fn part_first_byte<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.part_first_byte = value.into();
+        self
+    }
+    /// Sets `part_last_byte`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadLayerPartRequest.part_last_byte = value.into();`.
+    pub fn part_last_byte<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.part_last_byte = value.into();
+        self
+    }
+    /// Sets `registry_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadLayerPartRequest.registry_id = Some(value.into());`.
+    pub fn registry_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.registry_id = Some(value.into());
+        self
+    }
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadLayerPartRequest.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Sets `upload_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UploadLayerPartRequest.upload_id = value.into();`.
+    pub fn upload_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.upload_id = value.into();
+        self
+    }
+    /// Returns a new instance of UploadLayerPartRequest with optional fields set to `None`.
+    pub fn new<layerPartBlobType: Into<Vec<u8>>,
+               partFirstByteType: Into<i64>,
+               partLastByteType: Into<i64>,
+               repositoryNameType: Into<String>,
+               uploadIdType: Into<String>>
+        (layer_part_blob: layerPartBlobType,
+         part_first_byte: partFirstByteType,
+         part_last_byte: partLastByteType,
+         repository_name: repositoryNameType,
+         upload_id: uploadIdType)
+         -> UploadLayerPartRequest {
+        UploadLayerPartRequest {
+            layer_part_blob: layer_part_blob.into(),
+            part_first_byte: part_first_byte.into(),
+            part_last_byte: part_last_byte.into(),
+            repository_name: repository_name.into(),
+            upload_id: upload_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UploadLayerPartResponse {
     #[doc="<p>The integer value of the last byte received in the request.</p>"]
@@ -696,7 +1299,6 @@ pub struct UploadLayerPartResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub upload_id: Option<String>,
 }
-
 /// Errors returned by BatchCheckLayerAvailability
 #[derive(Debug, PartialEq)]
 pub enum BatchCheckLayerAvailabilityError {

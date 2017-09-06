@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -51,7 +52,6 @@ pub struct ActivityTask {
     #[serde(rename="workflowExecution")]
     pub workflow_execution: WorkflowExecution,
 }
-
 #[doc="<p>Provides the details of the <code>ActivityTaskCancelRequested</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActivityTaskCancelRequestedEventAttributes {
@@ -62,7 +62,6 @@ pub struct ActivityTaskCancelRequestedEventAttributes {
     #[serde(rename="decisionTaskCompletedEventId")]
     pub decision_task_completed_event_id: i64,
 }
-
 #[doc="<p>Provides the details of the <code>ActivityTaskCanceled</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActivityTaskCanceledEventAttributes {
@@ -81,7 +80,6 @@ pub struct ActivityTaskCanceledEventAttributes {
     #[serde(rename="startedEventId")]
     pub started_event_id: i64,
 }
-
 #[doc="<p>Provides the details of the <code>ActivityTaskCompleted</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActivityTaskCompletedEventAttributes {
@@ -96,7 +94,6 @@ pub struct ActivityTaskCompletedEventAttributes {
     #[serde(rename="startedEventId")]
     pub started_event_id: i64,
 }
-
 #[doc="<p>Provides the details of the <code>ActivityTaskFailed</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActivityTaskFailedEventAttributes {
@@ -115,7 +112,6 @@ pub struct ActivityTaskFailedEventAttributes {
     #[serde(rename="startedEventId")]
     pub started_event_id: i64,
 }
-
 #[doc="<p>Provides the details of the <code>ActivityTaskScheduled</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActivityTaskScheduledEventAttributes {
@@ -160,7 +156,6 @@ pub struct ActivityTaskScheduledEventAttributes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub task_priority: Option<String>,
 }
-
 #[doc="<p>Provides the details of the <code>ActivityTaskStarted</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActivityTaskStartedEventAttributes {
@@ -172,7 +167,6 @@ pub struct ActivityTaskStartedEventAttributes {
     #[serde(rename="scheduledEventId")]
     pub scheduled_event_id: i64,
 }
-
 #[doc="<p>Status information about an activity task.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActivityTaskStatus {
@@ -180,7 +174,6 @@ pub struct ActivityTaskStatus {
     #[serde(rename="cancelRequested")]
     pub cancel_requested: bool,
 }
-
 #[doc="<p>Provides the details of the <code>ActivityTaskTimedOut</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActivityTaskTimedOutEventAttributes {
@@ -198,7 +191,6 @@ pub struct ActivityTaskTimedOutEventAttributes {
     #[serde(rename="timeoutType")]
     pub timeout_type: String,
 }
-
 #[doc="<p>Represents an activity type.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ActivityType {
@@ -209,7 +201,32 @@ pub struct ActivityType {
     #[serde(rename="version")]
     pub version: String,
 }
-
+impl ActivityType {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActivityType.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActivityType.version = value.into();`.
+    pub fn version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version = value.into();
+        self
+    }
+    /// Returns a new instance of ActivityType with optional fields set to `None`.
+    pub fn new<nameType: Into<String>, versionType: Into<String>>(name: nameType,
+                                                                  version: versionType)
+                                                                  -> ActivityType {
+        ActivityType {
+            name: name.into(),
+            version: version.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Configuration settings registered with the activity type.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActivityTypeConfiguration {
@@ -238,7 +255,6 @@ pub struct ActivityTypeConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub default_task_start_to_close_timeout: Option<String>,
 }
-
 #[doc="<p>Detailed information about an activity type.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActivityTypeDetail {
@@ -249,7 +265,6 @@ pub struct ActivityTypeDetail {
     #[serde(rename="typeInfo")]
     pub type_info: ActivityTypeInfo,
 }
-
 #[doc="<p>Detailed information about an activity type.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActivityTypeInfo {
@@ -271,7 +286,6 @@ pub struct ActivityTypeInfo {
     #[serde(rename="status")]
     pub status: String,
 }
-
 #[doc="<p>Contains a paginated list of activity type information structures.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActivityTypeInfos {
@@ -283,7 +297,6 @@ pub struct ActivityTypeInfos {
     #[serde(rename="typeInfos")]
     pub type_infos: Vec<ActivityTypeInfo>,
 }
-
 #[doc="<p>Provides the details of the <code>CancelTimer</code> decision.</p> <p> <b>Access Control</b> </p> <p>You can use IAM policies to control this decision's access to Amazon SWF resources as follows:</p> <ul> <li> <p>Use a <code>Resource</code> element with the domain name to limit the action to only specified domains.</p> </li> <li> <p>Use an <code>Action</code> element to allow or deny permission to call this action.</p> </li> <li> <p>You cannot use an IAM policy to constrain this action's parameters.</p> </li> </ul> <p>If the caller doesn't have sufficient permissions to invoke the action, or the parameter values fall outside the specified constraints, the action fails. The associated event attribute's <code>cause</code> parameter is set to <code>OPERATION_NOT_PERMITTED</code>. For details and example IAM policies, see <a href=\"http://docs.aws.amazon.com/amazonswf/latest/developerguide/swf-dev-iam.html\">Using IAM to Manage Access to Amazon SWF Workflows</a> in the <i>Amazon SWF Developer Guide</i>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CancelTimerDecisionAttributes {
@@ -291,7 +304,22 @@ pub struct CancelTimerDecisionAttributes {
     #[serde(rename="timerId")]
     pub timer_id: String,
 }
-
+impl CancelTimerDecisionAttributes {
+    /// Sets `timer_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelTimerDecisionAttributes.timer_id = value.into();`.
+    pub fn timer_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.timer_id = value.into();
+        self
+    }
+    /// Returns a new instance of CancelTimerDecisionAttributes with optional fields set to `None`.
+    pub fn new<timerIdType: Into<String>>(timer_id: timerIdType) -> CancelTimerDecisionAttributes {
+        CancelTimerDecisionAttributes {
+            timer_id: timer_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides the details of the <code>CancelTimerFailed</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CancelTimerFailedEventAttributes {
@@ -305,7 +333,6 @@ pub struct CancelTimerFailedEventAttributes {
     #[serde(rename="timerId")]
     pub timer_id: String,
 }
-
 #[doc="<p>Provides the details of the <code>CancelWorkflowExecution</code> decision.</p> <p> <b>Access Control</b> </p> <p>You can use IAM policies to control this decision's access to Amazon SWF resources as follows:</p> <ul> <li> <p>Use a <code>Resource</code> element with the domain name to limit the action to only specified domains.</p> </li> <li> <p>Use an <code>Action</code> element to allow or deny permission to call this action.</p> </li> <li> <p>You cannot use an IAM policy to constrain this action's parameters.</p> </li> </ul> <p>If the caller doesn't have sufficient permissions to invoke the action, or the parameter values fall outside the specified constraints, the action fails. The associated event attribute's <code>cause</code> parameter is set to <code>OPERATION_NOT_PERMITTED</code>. For details and example IAM policies, see <a href=\"http://docs.aws.amazon.com/amazonswf/latest/developerguide/swf-dev-iam.html\">Using IAM to Manage Access to Amazon SWF Workflows</a> in the <i>Amazon SWF Developer Guide</i>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CancelWorkflowExecutionDecisionAttributes {
@@ -314,7 +341,19 @@ pub struct CancelWorkflowExecutionDecisionAttributes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub details: Option<String>,
 }
-
+impl CancelWorkflowExecutionDecisionAttributes {
+    /// Sets `details`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelWorkflowExecutionDecisionAttributes.details = Some(value.into());`.
+    pub fn details<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.details = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CancelWorkflowExecutionDecisionAttributes with optional fields set to `None`.
+    pub fn new() -> CancelWorkflowExecutionDecisionAttributes {
+        CancelWorkflowExecutionDecisionAttributes { ..Default::default() }
+    }
+}
 #[doc="<p>Provides the details of the <code>CancelWorkflowExecutionFailed</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CancelWorkflowExecutionFailedEventAttributes {
@@ -325,7 +364,6 @@ pub struct CancelWorkflowExecutionFailedEventAttributes {
     #[serde(rename="decisionTaskCompletedEventId")]
     pub decision_task_completed_event_id: i64,
 }
-
 #[doc="<p>Provide details of the <code>ChildWorkflowExecutionCanceled</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ChildWorkflowExecutionCanceledEventAttributes {
@@ -346,7 +384,6 @@ pub struct ChildWorkflowExecutionCanceledEventAttributes {
     #[serde(rename="workflowType")]
     pub workflow_type: WorkflowType,
 }
-
 #[doc="<p>Provides the details of the <code>ChildWorkflowExecutionCompleted</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ChildWorkflowExecutionCompletedEventAttributes {
@@ -367,7 +404,6 @@ pub struct ChildWorkflowExecutionCompletedEventAttributes {
     #[serde(rename="workflowType")]
     pub workflow_type: WorkflowType,
 }
-
 #[doc="<p>Provides the details of the <code>ChildWorkflowExecutionFailed</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ChildWorkflowExecutionFailedEventAttributes {
@@ -392,7 +428,6 @@ pub struct ChildWorkflowExecutionFailedEventAttributes {
     #[serde(rename="workflowType")]
     pub workflow_type: WorkflowType,
 }
-
 #[doc="<p>Provides the details of the <code>ChildWorkflowExecutionStarted</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ChildWorkflowExecutionStartedEventAttributes {
@@ -406,7 +441,6 @@ pub struct ChildWorkflowExecutionStartedEventAttributes {
     #[serde(rename="workflowType")]
     pub workflow_type: WorkflowType,
 }
-
 #[doc="<p>Provides the details of the <code>ChildWorkflowExecutionTerminated</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ChildWorkflowExecutionTerminatedEventAttributes {
@@ -423,7 +457,6 @@ pub struct ChildWorkflowExecutionTerminatedEventAttributes {
     #[serde(rename="workflowType")]
     pub workflow_type: WorkflowType,
 }
-
 #[doc="<p>Provides the details of the <code>ChildWorkflowExecutionTimedOut</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ChildWorkflowExecutionTimedOutEventAttributes {
@@ -443,7 +476,6 @@ pub struct ChildWorkflowExecutionTimedOutEventAttributes {
     #[serde(rename="workflowType")]
     pub workflow_type: WorkflowType,
 }
-
 #[doc="<p>Used to filter the closed workflow executions in visibility APIs by their close status.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CloseStatusFilter {
@@ -451,7 +483,22 @@ pub struct CloseStatusFilter {
     #[serde(rename="status")]
     pub status: String,
 }
-
+impl CloseStatusFilter {
+    /// Sets `status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloseStatusFilter.status = value.into();`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = value.into();
+        self
+    }
+    /// Returns a new instance of CloseStatusFilter with optional fields set to `None`.
+    pub fn new<statusType: Into<String>>(status: statusType) -> CloseStatusFilter {
+        CloseStatusFilter {
+            status: status.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides the details of the <code>CompleteWorkflowExecution</code> decision.</p> <p> <b>Access Control</b> </p> <p>You can use IAM policies to control this decision's access to Amazon SWF resources as follows:</p> <ul> <li> <p>Use a <code>Resource</code> element with the domain name to limit the action to only specified domains.</p> </li> <li> <p>Use an <code>Action</code> element to allow or deny permission to call this action.</p> </li> <li> <p>You cannot use an IAM policy to constrain this action's parameters.</p> </li> </ul> <p>If the caller doesn't have sufficient permissions to invoke the action, or the parameter values fall outside the specified constraints, the action fails. The associated event attribute's <code>cause</code> parameter is set to <code>OPERATION_NOT_PERMITTED</code>. For details and example IAM policies, see <a href=\"http://docs.aws.amazon.com/amazonswf/latest/developerguide/swf-dev-iam.html\">Using IAM to Manage Access to Amazon SWF Workflows</a> in the <i>Amazon SWF Developer Guide</i>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CompleteWorkflowExecutionDecisionAttributes {
@@ -460,7 +507,19 @@ pub struct CompleteWorkflowExecutionDecisionAttributes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub result: Option<String>,
 }
-
+impl CompleteWorkflowExecutionDecisionAttributes {
+    /// Sets `result`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CompleteWorkflowExecutionDecisionAttributes.result = Some(value.into());`.
+    pub fn result<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.result = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CompleteWorkflowExecutionDecisionAttributes with optional fields set to `None`.
+    pub fn new() -> CompleteWorkflowExecutionDecisionAttributes {
+        CompleteWorkflowExecutionDecisionAttributes { ..Default::default() }
+    }
+}
 #[doc="<p>Provides the details of the <code>CompleteWorkflowExecutionFailed</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CompleteWorkflowExecutionFailedEventAttributes {
@@ -471,7 +530,6 @@ pub struct CompleteWorkflowExecutionFailedEventAttributes {
     #[serde(rename="decisionTaskCompletedEventId")]
     pub decision_task_completed_event_id: i64,
 }
-
 #[doc="<p>Provides the details of the <code>ContinueAsNewWorkflowExecution</code> decision.</p> <p> <b>Access Control</b> </p> <p>You can use IAM policies to control this decision's access to Amazon SWF resources as follows:</p> <ul> <li> <p>Use a <code>Resource</code> element with the domain name to limit the action to only specified domains.</p> </li> <li> <p>Use an <code>Action</code> element to allow or deny permission to call this action.</p> </li> <li> <p>Constrain the following parameters by using a <code>Condition</code> element with the appropriate keys.</p> <ul> <li> <p> <code>tag</code> – A tag used to identify the workflow execution</p> </li> <li> <p> <code>taskList</code> – String constraint. The key is <code>swf:taskList.name</code>.</p> </li> <li> <p> <code>workflowType.version</code> – String constraint. The key is <code>swf:workflowType.version</code>.</p> </li> </ul> </li> </ul> <p>If the caller doesn't have sufficient permissions to invoke the action, or the parameter values fall outside the specified constraints, the action fails. The associated event attribute's <code>cause</code> parameter is set to <code>OPERATION_NOT_PERMITTED</code>. For details and example IAM policies, see <a href=\"http://docs.aws.amazon.com/amazonswf/latest/developerguide/swf-dev-iam.html\">Using IAM to Manage Access to Amazon SWF Workflows</a> in the <i>Amazon SWF Developer Guide</i>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ContinueAsNewWorkflowExecutionDecisionAttributes {
@@ -512,7 +570,79 @@ pub struct ContinueAsNewWorkflowExecutionDecisionAttributes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub workflow_type_version: Option<String>,
 }
-
+impl ContinueAsNewWorkflowExecutionDecisionAttributes {
+    /// Sets `child_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContinueAsNewWorkflowExecutionDecisionAttributes.child_policy = Some(value.into());`.
+    pub fn child_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.child_policy = Some(value.into());
+        self
+    }
+    /// Sets `execution_start_to_close_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContinueAsNewWorkflowExecutionDecisionAttributes.execution_start_to_close_timeout = Some(value.into());`.
+    pub fn execution_start_to_close_timeout<ValueType: Into<String>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.execution_start_to_close_timeout = Some(value.into());
+        self
+    }
+    /// Sets `input`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContinueAsNewWorkflowExecutionDecisionAttributes.input = Some(value.into());`.
+    pub fn input<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.input = Some(value.into());
+        self
+    }
+    /// Sets `lambda_role`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContinueAsNewWorkflowExecutionDecisionAttributes.lambda_role = Some(value.into());`.
+    pub fn lambda_role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lambda_role = Some(value.into());
+        self
+    }
+    /// Sets `tag_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContinueAsNewWorkflowExecutionDecisionAttributes.tag_list = Some(value.into());`.
+    pub fn tag_list<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tag_list = Some(value.into());
+        self
+    }
+    /// Sets `task_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContinueAsNewWorkflowExecutionDecisionAttributes.task_list = Some(value.into());`.
+    pub fn task_list<ValueType: Into<TaskList>>(mut self, value: ValueType) -> Self {
+        self.task_list = Some(value.into());
+        self
+    }
+    /// Sets `task_priority`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContinueAsNewWorkflowExecutionDecisionAttributes.task_priority = Some(value.into());`.
+    pub fn task_priority<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_priority = Some(value.into());
+        self
+    }
+    /// Sets `task_start_to_close_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContinueAsNewWorkflowExecutionDecisionAttributes.task_start_to_close_timeout = Some(value.into());`.
+    pub fn task_start_to_close_timeout<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.task_start_to_close_timeout = Some(value.into());
+        self
+    }
+    /// Sets `workflow_type_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContinueAsNewWorkflowExecutionDecisionAttributes.workflow_type_version = Some(value.into());`.
+    pub fn workflow_type_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.workflow_type_version = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ContinueAsNewWorkflowExecutionDecisionAttributes with optional fields set to `None`.
+    pub fn new() -> ContinueAsNewWorkflowExecutionDecisionAttributes {
+        ContinueAsNewWorkflowExecutionDecisionAttributes { ..Default::default() }
+    }
+}
 #[doc="<p>Provides the details of the <code>ContinueAsNewWorkflowExecutionFailed</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ContinueAsNewWorkflowExecutionFailedEventAttributes {
@@ -523,7 +653,6 @@ pub struct ContinueAsNewWorkflowExecutionFailedEventAttributes {
     #[serde(rename="decisionTaskCompletedEventId")]
     pub decision_task_completed_event_id: i64,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CountClosedWorkflowExecutionsInput {
     #[doc="<p>If specified, only workflow executions that match this close status are counted. This filter has an affect only if <code>executionStatus</code> is specified as <code>CLOSED</code>.</p> <note> <p> <code>closeStatusFilter</code>, <code>executionFilter</code>, <code>typeFilter</code> and <code>tagFilter</code> are mutually exclusive. You can specify at most one of these in a request.</p> </note>"]
@@ -554,7 +683,72 @@ pub struct CountClosedWorkflowExecutionsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_filter: Option<WorkflowTypeFilter>,
 }
-
+impl CountClosedWorkflowExecutionsInput {
+    /// Sets `close_status_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CountClosedWorkflowExecutionsInput.close_status_filter = Some(value.into());`.
+    pub fn close_status_filter<ValueType: Into<CloseStatusFilter>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.close_status_filter = Some(value.into());
+        self
+    }
+    /// Sets `close_time_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CountClosedWorkflowExecutionsInput.close_time_filter = Some(value.into());`.
+    pub fn close_time_filter<ValueType: Into<ExecutionTimeFilter>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.close_time_filter = Some(value.into());
+        self
+    }
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CountClosedWorkflowExecutionsInput.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `execution_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CountClosedWorkflowExecutionsInput.execution_filter = Some(value.into());`.
+    pub fn execution_filter<ValueType: Into<WorkflowExecutionFilter>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.execution_filter = Some(value.into());
+        self
+    }
+    /// Sets `start_time_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CountClosedWorkflowExecutionsInput.start_time_filter = Some(value.into());`.
+    pub fn start_time_filter<ValueType: Into<ExecutionTimeFilter>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.start_time_filter = Some(value.into());
+        self
+    }
+    /// Sets `tag_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CountClosedWorkflowExecutionsInput.tag_filter = Some(value.into());`.
+    pub fn tag_filter<ValueType: Into<TagFilter>>(mut self, value: ValueType) -> Self {
+        self.tag_filter = Some(value.into());
+        self
+    }
+    /// Sets `type_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CountClosedWorkflowExecutionsInput.type_filter = Some(value.into());`.
+    pub fn type_filter<ValueType: Into<WorkflowTypeFilter>>(mut self, value: ValueType) -> Self {
+        self.type_filter = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CountClosedWorkflowExecutionsInput with optional fields set to `None`.
+    pub fn new<domainType: Into<String>>(domain: domainType) -> CountClosedWorkflowExecutionsInput {
+        CountClosedWorkflowExecutionsInput {
+            domain: domain.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CountOpenWorkflowExecutionsInput {
     #[doc="<p>The name of the domain containing the workflow executions to count.</p>"]
@@ -576,7 +770,58 @@ pub struct CountOpenWorkflowExecutionsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_filter: Option<WorkflowTypeFilter>,
 }
-
+impl CountOpenWorkflowExecutionsInput {
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CountOpenWorkflowExecutionsInput.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `execution_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CountOpenWorkflowExecutionsInput.execution_filter = Some(value.into());`.
+    pub fn execution_filter<ValueType: Into<WorkflowExecutionFilter>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.execution_filter = Some(value.into());
+        self
+    }
+    /// Sets `start_time_filter`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CountOpenWorkflowExecutionsInput.start_time_filter = value.into();`.
+    pub fn start_time_filter<ValueType: Into<ExecutionTimeFilter>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.start_time_filter = value.into();
+        self
+    }
+    /// Sets `tag_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CountOpenWorkflowExecutionsInput.tag_filter = Some(value.into());`.
+    pub fn tag_filter<ValueType: Into<TagFilter>>(mut self, value: ValueType) -> Self {
+        self.tag_filter = Some(value.into());
+        self
+    }
+    /// Sets `type_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CountOpenWorkflowExecutionsInput.type_filter = Some(value.into());`.
+    pub fn type_filter<ValueType: Into<WorkflowTypeFilter>>(mut self, value: ValueType) -> Self {
+        self.type_filter = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CountOpenWorkflowExecutionsInput with optional fields set to `None`.
+    pub fn new<domainType: Into<String>, startTimeFilterType: Into<ExecutionTimeFilter>>
+        (domain: domainType,
+         start_time_filter: startTimeFilterType)
+         -> CountOpenWorkflowExecutionsInput {
+        CountOpenWorkflowExecutionsInput {
+            domain: domain.into(),
+            start_time_filter: start_time_filter.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CountPendingActivityTasksInput {
     #[doc="<p>The name of the domain that contains the task list.</p>"]
@@ -586,7 +831,33 @@ pub struct CountPendingActivityTasksInput {
     #[serde(rename="taskList")]
     pub task_list: TaskList,
 }
-
+impl CountPendingActivityTasksInput {
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CountPendingActivityTasksInput.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `task_list`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CountPendingActivityTasksInput.task_list = value.into();`.
+    pub fn task_list<ValueType: Into<TaskList>>(mut self, value: ValueType) -> Self {
+        self.task_list = value.into();
+        self
+    }
+    /// Returns a new instance of CountPendingActivityTasksInput with optional fields set to `None`.
+    pub fn new<domainType: Into<String>, taskListType: Into<TaskList>>
+        (domain: domainType,
+         task_list: taskListType)
+         -> CountPendingActivityTasksInput {
+        CountPendingActivityTasksInput {
+            domain: domain.into(),
+            task_list: task_list.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CountPendingDecisionTasksInput {
     #[doc="<p>The name of the domain that contains the task list.</p>"]
@@ -596,7 +867,33 @@ pub struct CountPendingDecisionTasksInput {
     #[serde(rename="taskList")]
     pub task_list: TaskList,
 }
-
+impl CountPendingDecisionTasksInput {
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CountPendingDecisionTasksInput.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `task_list`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CountPendingDecisionTasksInput.task_list = value.into();`.
+    pub fn task_list<ValueType: Into<TaskList>>(mut self, value: ValueType) -> Self {
+        self.task_list = value.into();
+        self
+    }
+    /// Returns a new instance of CountPendingDecisionTasksInput with optional fields set to `None`.
+    pub fn new<domainType: Into<String>, taskListType: Into<TaskList>>
+        (domain: domainType,
+         task_list: taskListType)
+         -> CountPendingDecisionTasksInput {
+        CountPendingDecisionTasksInput {
+            domain: domain.into(),
+            task_list: task_list.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Specifies a decision made by the decider. A decision can be one of these types:</p> <ul> <li> <p> <code>CancelTimer</code> – Cancels a previously started timer and records a <code>TimerCanceled</code> event in the history.</p> </li> <li> <p> <code>CancelWorkflowExecution</code> – Closes the workflow execution and records a <code>WorkflowExecutionCanceled</code> event in the history.</p> </li> <li> <p> <code>CompleteWorkflowExecution</code> – Closes the workflow execution and records a <code>WorkflowExecutionCompleted</code> event in the history .</p> </li> <li> <p> <code>ContinueAsNewWorkflowExecution</code> – Closes the workflow execution and starts a new workflow execution of the same type using the same workflow ID and a unique run Id. A <code>WorkflowExecutionContinuedAsNew</code> event is recorded in the history.</p> </li> <li> <p> <code>FailWorkflowExecution</code> – Closes the workflow execution and records a <code>WorkflowExecutionFailed</code> event in the history.</p> </li> <li> <p> <code>RecordMarker</code> – Records a <code>MarkerRecorded</code> event in the history. Markers can be used for adding custom information in the history for instance to let deciders know that they don't need to look at the history beyond the marker event.</p> </li> <li> <p> <code>RequestCancelActivityTask</code> – Attempts to cancel a previously scheduled activity task. If the activity task was scheduled but has not been assigned to a worker, then it is canceled. If the activity task was already assigned to a worker, then the worker is informed that cancellation has been requested in the response to <a>RecordActivityTaskHeartbeat</a>.</p> </li> <li> <p> <code>RequestCancelExternalWorkflowExecution</code> – Requests that a request be made to cancel the specified external workflow execution and records a <code>RequestCancelExternalWorkflowExecutionInitiated</code> event in the history.</p> </li> <li> <p> <code>ScheduleActivityTask</code> – Schedules an activity task.</p> </li> <li> <p> <code>SignalExternalWorkflowExecution</code> – Requests a signal to be delivered to the specified external workflow execution and records a <code>SignalExternalWorkflowExecutionInitiated</code> event in the history.</p> </li> <li> <p> <code>StartChildWorkflowExecution</code> – Requests that a child workflow execution be started and records a <code>StartChildWorkflowExecutionInitiated</code> event in the history. The child workflow execution is a separate workflow execution with its own history.</p> </li> <li> <p> <code>StartTimer</code> – Starts a timer for this workflow execution and records a <code>TimerStarted</code> event in the history. This timer fires after the specified delay and record a <code>TimerFired</code> event.</p> </li> </ul> <p> <b>Access Control</b> </p> <p>If you grant permission to use <code>RespondDecisionTaskCompleted</code>, you can use IAM policies to express permissions for the list of decisions returned by this action as if they were members of the API. Treating decisions as a pseudo API maintains a uniform conceptual model and helps keep policies readable. For details and example IAM policies, see <a href=\"http://docs.aws.amazon.com/amazonswf/latest/developerguide/swf-dev-iam.html\">Using IAM to Manage Access to Amazon SWF Workflows</a> in the <i>Amazon SWF Developer Guide</i>.</p> <p> <b>Decision Failure</b> </p> <p>Decisions can fail for several reasons</p> <ul> <li> <p>The ordering of decisions should follow a logical flow. Some decisions might not make sense in the current context of the workflow execution and therefore fails.</p> </li> <li> <p>A limit on your account was reached.</p> </li> <li> <p>The decision lacks sufficient permissions.</p> </li> </ul> <p>One of the following events might be added to the history to indicate an error. The event attribute's <code>cause</code> parameter indicates the cause. If <code>cause</code> is set to <code>OPERATION_NOT_PERMITTED</code>, the decision failed because it lacked sufficient permissions. For details and example IAM policies, see <a href=\"http://docs.aws.amazon.com/amazonswf/latest/developerguide/swf-dev-iam.html\">Using IAM to Manage Access to Amazon SWF Workflows</a> in the <i>Amazon SWF Developer Guide</i>.</p> <ul> <li> <p> <code>ScheduleActivityTaskFailed</code> – A <code>ScheduleActivityTask</code> decision failed. This could happen if the activity type specified in the decision isn't registered, is in a deprecated state, or the decision isn't properly configured.</p> </li> <li> <p> <code>RequestCancelActivityTaskFailed</code> – A <code>RequestCancelActivityTask</code> decision failed. This could happen if there is no open activity task with the specified activityId.</p> </li> <li> <p> <code>StartTimerFailed</code> – A <code>StartTimer</code> decision failed. This could happen if there is another open timer with the same timerId.</p> </li> <li> <p> <code>CancelTimerFailed</code> – A <code>CancelTimer</code> decision failed. This could happen if there is no open timer with the specified timerId.</p> </li> <li> <p> <code>StartChildWorkflowExecutionFailed</code> – A <code>StartChildWorkflowExecution</code> decision failed. This could happen if the workflow type specified isn't registered, is deprecated, or the decision isn't properly configured.</p> </li> <li> <p> <code>SignalExternalWorkflowExecutionFailed</code> – A <code>SignalExternalWorkflowExecution</code> decision failed. This could happen if the <code>workflowID</code> specified in the decision was incorrect.</p> </li> <li> <p> <code>RequestCancelExternalWorkflowExecutionFailed</code> – A <code>RequestCancelExternalWorkflowExecution</code> decision failed. This could happen if the <code>workflowID</code> specified in the decision was incorrect.</p> </li> <li> <p> <code>CancelWorkflowExecutionFailed</code> – A <code>CancelWorkflowExecution</code> decision failed. This could happen if there is an unhandled decision task pending in the workflow execution.</p> </li> <li> <p> <code>CompleteWorkflowExecutionFailed</code> – A <code>CompleteWorkflowExecution</code> decision failed. This could happen if there is an unhandled decision task pending in the workflow execution.</p> </li> <li> <p> <code>ContinueAsNewWorkflowExecutionFailed</code> – A <code>ContinueAsNewWorkflowExecution</code> decision failed. This could happen if there is an unhandled decision task pending in the workflow execution or the ContinueAsNewWorkflowExecution decision was not configured correctly.</p> </li> <li> <p> <code>FailWorkflowExecutionFailed</code> – A <code>FailWorkflowExecution</code> decision failed. This could happen if there is an unhandled decision task pending in the workflow execution.</p> </li> </ul> <p>The preceding error events might occur due to an error in the decider logic, which might put the workflow execution in an unstable state The cause field in the event structure for the error event indicates the cause of the error.</p> <note> <p>A workflow execution may be closed by the decider by returning one of the following decisions when completing a decision task: <code>CompleteWorkflowExecution</code>, <code>FailWorkflowExecution</code>, <code>CancelWorkflowExecution</code> and <code>ContinueAsNewWorkflowExecution</code>. An <code>UnhandledDecision</code> fault is returned if a workflow closing decision is specified and a signal or activity event had been added to the history while the decision task was being performed by the decider. Unlike the above situations which are logic issues, this fault is always possible because of race conditions in a distributed system. The right action here is to call <a>RespondDecisionTaskCompleted</a> without any decisions. This would result in another decision task with these new events included in the history. The decider should handle the new events and may decide to close the workflow execution.</p> </note> <p> <b>How to Code a Decision</b> </p> <p>You code a decision by first setting the decision type field to one of the above decision values, and then set the corresponding attributes field shown below:</p> <ul> <li> <p> <code> <a>ScheduleActivityTaskDecisionAttributes</a> </code> </p> </li> <li> <p> <code> <a>RequestCancelActivityTaskDecisionAttributes</a> </code> </p> </li> <li> <p> <code> <a>CompleteWorkflowExecutionDecisionAttributes</a> </code> </p> </li> <li> <p> <code> <a>FailWorkflowExecutionDecisionAttributes</a> </code> </p> </li> <li> <p> <code> <a>CancelWorkflowExecutionDecisionAttributes</a> </code> </p> </li> <li> <p> <code> <a>ContinueAsNewWorkflowExecutionDecisionAttributes</a> </code> </p> </li> <li> <p> <code> <a>RecordMarkerDecisionAttributes</a> </code> </p> </li> <li> <p> <code> <a>StartTimerDecisionAttributes</a> </code> </p> </li> <li> <p> <code> <a>CancelTimerDecisionAttributes</a> </code> </p> </li> <li> <p> <code> <a>SignalExternalWorkflowExecutionDecisionAttributes</a> </code> </p> </li> <li> <p> <code> <a>RequestCancelExternalWorkflowExecutionDecisionAttributes</a> </code> </p> </li> <li> <p> <code> <a>StartChildWorkflowExecutionDecisionAttributes</a> </code> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct Decision {
@@ -666,7 +963,122 @@ pub struct Decision {
     #[serde(skip_serializing_if="Option::is_none")]
     pub start_timer_decision_attributes: Option<StartTimerDecisionAttributes>,
 }
-
+impl Decision {
+    /// Sets `cancel_timer_decision_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Decision.cancel_timer_decision_attributes = Some(value.into());`.
+    pub fn cancel_timer_decision_attributes<ValueType: Into<CancelTimerDecisionAttributes>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.cancel_timer_decision_attributes = Some(value.into());
+        self
+    }
+    /// Sets `cancel_workflow_execution_decision_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Decision.cancel_workflow_execution_decision_attributes = Some(value.into());`.
+pub fn cancel_workflow_execution_decision_attributes<ValueType: Into<CancelWorkflowExecutionDecisionAttributes>>(mut self, value: ValueType) -> Self{
+        self.cancel_workflow_execution_decision_attributes = Some(value.into());
+        self
+    }
+    /// Sets `complete_workflow_execution_decision_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Decision.complete_workflow_execution_decision_attributes = Some(value.into());`.
+pub fn complete_workflow_execution_decision_attributes<ValueType: Into<CompleteWorkflowExecutionDecisionAttributes>>(mut self, value: ValueType) -> Self{
+        self.complete_workflow_execution_decision_attributes = Some(value.into());
+        self
+    }
+    /// Sets `continue_as_new_workflow_execution_decision_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Decision.continue_as_new_workflow_execution_decision_attributes = Some(value.into());`.
+pub fn continue_as_new_workflow_execution_decision_attributes<ValueType: Into<ContinueAsNewWorkflowExecutionDecisionAttributes>>(mut self, value: ValueType) -> Self{
+        self.continue_as_new_workflow_execution_decision_attributes = Some(value.into());
+        self
+    }
+    /// Sets `decision_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Decision.decision_type = value.into();`.
+    pub fn decision_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.decision_type = value.into();
+        self
+    }
+    /// Sets `fail_workflow_execution_decision_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Decision.fail_workflow_execution_decision_attributes = Some(value.into());`.
+pub fn fail_workflow_execution_decision_attributes<ValueType: Into<FailWorkflowExecutionDecisionAttributes>>(mut self, value: ValueType) -> Self{
+        self.fail_workflow_execution_decision_attributes = Some(value.into());
+        self
+    }
+    /// Sets `record_marker_decision_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Decision.record_marker_decision_attributes = Some(value.into());`.
+    pub fn record_marker_decision_attributes<ValueType: Into<RecordMarkerDecisionAttributes>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.record_marker_decision_attributes = Some(value.into());
+        self
+    }
+    /// Sets `request_cancel_activity_task_decision_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Decision.request_cancel_activity_task_decision_attributes = Some(value.into());`.
+pub fn request_cancel_activity_task_decision_attributes<ValueType: Into<RequestCancelActivityTaskDecisionAttributes>>(mut self, value: ValueType) -> Self{
+        self.request_cancel_activity_task_decision_attributes = Some(value.into());
+        self
+    }
+    /// Sets `request_cancel_external_workflow_execution_decision_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Decision.request_cancel_external_workflow_execution_decision_attributes = Some(value.into());`.
+pub fn request_cancel_external_workflow_execution_decision_attributes<ValueType: Into<RequestCancelExternalWorkflowExecutionDecisionAttributes>>(mut self, value: ValueType) -> Self{
+        self.request_cancel_external_workflow_execution_decision_attributes = Some(value.into());
+        self
+    }
+    /// Sets `schedule_activity_task_decision_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Decision.schedule_activity_task_decision_attributes = Some(value.into());`.
+pub fn schedule_activity_task_decision_attributes<ValueType: Into<ScheduleActivityTaskDecisionAttributes>>(mut self, value: ValueType) -> Self{
+        self.schedule_activity_task_decision_attributes = Some(value.into());
+        self
+    }
+    /// Sets `schedule_lambda_function_decision_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Decision.schedule_lambda_function_decision_attributes = Some(value.into());`.
+pub fn schedule_lambda_function_decision_attributes<ValueType: Into<ScheduleLambdaFunctionDecisionAttributes>>(mut self, value: ValueType) -> Self{
+        self.schedule_lambda_function_decision_attributes = Some(value.into());
+        self
+    }
+    /// Sets `signal_external_workflow_execution_decision_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Decision.signal_external_workflow_execution_decision_attributes = Some(value.into());`.
+pub fn signal_external_workflow_execution_decision_attributes<ValueType: Into<SignalExternalWorkflowExecutionDecisionAttributes>>(mut self, value: ValueType) -> Self{
+        self.signal_external_workflow_execution_decision_attributes = Some(value.into());
+        self
+    }
+    /// Sets `start_child_workflow_execution_decision_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Decision.start_child_workflow_execution_decision_attributes = Some(value.into());`.
+pub fn start_child_workflow_execution_decision_attributes<ValueType: Into<StartChildWorkflowExecutionDecisionAttributes>>(mut self, value: ValueType) -> Self{
+        self.start_child_workflow_execution_decision_attributes = Some(value.into());
+        self
+    }
+    /// Sets `start_timer_decision_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Decision.start_timer_decision_attributes = Some(value.into());`.
+    pub fn start_timer_decision_attributes<ValueType: Into<StartTimerDecisionAttributes>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.start_timer_decision_attributes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Decision with optional fields set to `None`.
+    pub fn new<decisionTypeType: Into<String>>(decision_type: decisionTypeType) -> Decision {
+        Decision {
+            decision_type: decision_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A structure that represents a decision task. Decision tasks are sent to deciders in order for them to make decisions.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DecisionTask {
@@ -694,7 +1106,6 @@ pub struct DecisionTask {
     #[serde(rename="workflowType")]
     pub workflow_type: WorkflowType,
 }
-
 #[doc="<p>Provides the details of the <code>DecisionTaskCompleted</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DecisionTaskCompletedEventAttributes {
@@ -709,7 +1120,6 @@ pub struct DecisionTaskCompletedEventAttributes {
     #[serde(rename="startedEventId")]
     pub started_event_id: i64,
 }
-
 #[doc="<p>Provides details about the <code>DecisionTaskScheduled</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DecisionTaskScheduledEventAttributes {
@@ -725,7 +1135,6 @@ pub struct DecisionTaskScheduledEventAttributes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub task_priority: Option<String>,
 }
-
 #[doc="<p>Provides the details of the <code>DecisionTaskStarted</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DecisionTaskStartedEventAttributes {
@@ -737,7 +1146,6 @@ pub struct DecisionTaskStartedEventAttributes {
     #[serde(rename="scheduledEventId")]
     pub scheduled_event_id: i64,
 }
-
 #[doc="<p>Provides the details of the <code>DecisionTaskTimedOut</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DecisionTaskTimedOutEventAttributes {
@@ -751,7 +1159,6 @@ pub struct DecisionTaskTimedOutEventAttributes {
     #[serde(rename="timeoutType")]
     pub timeout_type: String,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeprecateActivityTypeInput {
     #[doc="<p>The activity type to deprecate.</p>"]
@@ -761,14 +1168,55 @@ pub struct DeprecateActivityTypeInput {
     #[serde(rename="domain")]
     pub domain: String,
 }
-
+impl DeprecateActivityTypeInput {
+    /// Sets `activity_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeprecateActivityTypeInput.activity_type = value.into();`.
+    pub fn activity_type<ValueType: Into<ActivityType>>(mut self, value: ValueType) -> Self {
+        self.activity_type = value.into();
+        self
+    }
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeprecateActivityTypeInput.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Returns a new instance of DeprecateActivityTypeInput with optional fields set to `None`.
+    pub fn new<activityTypeType: Into<ActivityType>, domainType: Into<String>>
+        (activity_type: activityTypeType,
+         domain: domainType)
+         -> DeprecateActivityTypeInput {
+        DeprecateActivityTypeInput {
+            activity_type: activity_type.into(),
+            domain: domain.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeprecateDomainInput {
     #[doc="<p>The name of the domain to deprecate.</p>"]
     #[serde(rename="name")]
     pub name: String,
 }
-
+impl DeprecateDomainInput {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeprecateDomainInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of DeprecateDomainInput with optional fields set to `None`.
+    pub fn new<nameType: Into<String>>(name: nameType) -> DeprecateDomainInput {
+        DeprecateDomainInput {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeprecateWorkflowTypeInput {
     #[doc="<p>The name of the domain in which the workflow type is registered.</p>"]
@@ -778,7 +1226,33 @@ pub struct DeprecateWorkflowTypeInput {
     #[serde(rename="workflowType")]
     pub workflow_type: WorkflowType,
 }
-
+impl DeprecateWorkflowTypeInput {
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeprecateWorkflowTypeInput.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `workflow_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeprecateWorkflowTypeInput.workflow_type = value.into();`.
+    pub fn workflow_type<ValueType: Into<WorkflowType>>(mut self, value: ValueType) -> Self {
+        self.workflow_type = value.into();
+        self
+    }
+    /// Returns a new instance of DeprecateWorkflowTypeInput with optional fields set to `None`.
+    pub fn new<domainType: Into<String>, workflowTypeType: Into<WorkflowType>>
+        (domain: domainType,
+         workflow_type: workflowTypeType)
+         -> DeprecateWorkflowTypeInput {
+        DeprecateWorkflowTypeInput {
+            domain: domain.into(),
+            workflow_type: workflow_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeActivityTypeInput {
     #[doc="<p>The activity type to get information about. Activity types are identified by the <code>name</code> and <code>version</code> that were supplied when the activity was registered.</p>"]
@@ -788,14 +1262,55 @@ pub struct DescribeActivityTypeInput {
     #[serde(rename="domain")]
     pub domain: String,
 }
-
+impl DescribeActivityTypeInput {
+    /// Sets `activity_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeActivityTypeInput.activity_type = value.into();`.
+    pub fn activity_type<ValueType: Into<ActivityType>>(mut self, value: ValueType) -> Self {
+        self.activity_type = value.into();
+        self
+    }
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeActivityTypeInput.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeActivityTypeInput with optional fields set to `None`.
+    pub fn new<activityTypeType: Into<ActivityType>, domainType: Into<String>>
+        (activity_type: activityTypeType,
+         domain: domainType)
+         -> DescribeActivityTypeInput {
+        DescribeActivityTypeInput {
+            activity_type: activity_type.into(),
+            domain: domain.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeDomainInput {
     #[doc="<p>The name of the domain to describe.</p>"]
     #[serde(rename="name")]
     pub name: String,
 }
-
+impl DescribeDomainInput {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDomainInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeDomainInput with optional fields set to `None`.
+    pub fn new<nameType: Into<String>>(name: nameType) -> DescribeDomainInput {
+        DescribeDomainInput {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeWorkflowExecutionInput {
     #[doc="<p>The name of the domain containing the workflow execution.</p>"]
@@ -805,7 +1320,33 @@ pub struct DescribeWorkflowExecutionInput {
     #[serde(rename="execution")]
     pub execution: WorkflowExecution,
 }
-
+impl DescribeWorkflowExecutionInput {
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeWorkflowExecutionInput.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `execution`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeWorkflowExecutionInput.execution = value.into();`.
+    pub fn execution<ValueType: Into<WorkflowExecution>>(mut self, value: ValueType) -> Self {
+        self.execution = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeWorkflowExecutionInput with optional fields set to `None`.
+    pub fn new<domainType: Into<String>, executionType: Into<WorkflowExecution>>
+        (domain: domainType,
+         execution: executionType)
+         -> DescribeWorkflowExecutionInput {
+        DescribeWorkflowExecutionInput {
+            domain: domain.into(),
+            execution: execution.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeWorkflowTypeInput {
     #[doc="<p>The name of the domain in which this workflow type is registered.</p>"]
@@ -815,7 +1356,33 @@ pub struct DescribeWorkflowTypeInput {
     #[serde(rename="workflowType")]
     pub workflow_type: WorkflowType,
 }
-
+impl DescribeWorkflowTypeInput {
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeWorkflowTypeInput.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `workflow_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeWorkflowTypeInput.workflow_type = value.into();`.
+    pub fn workflow_type<ValueType: Into<WorkflowType>>(mut self, value: ValueType) -> Self {
+        self.workflow_type = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeWorkflowTypeInput with optional fields set to `None`.
+    pub fn new<domainType: Into<String>, workflowTypeType: Into<WorkflowType>>
+        (domain: domainType,
+         workflow_type: workflowTypeType)
+         -> DescribeWorkflowTypeInput {
+        DescribeWorkflowTypeInput {
+            domain: domain.into(),
+            workflow_type: workflow_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the configuration settings of a domain.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DomainConfiguration {
@@ -823,7 +1390,6 @@ pub struct DomainConfiguration {
     #[serde(rename="workflowExecutionRetentionPeriodInDays")]
     pub workflow_execution_retention_period_in_days: String,
 }
-
 #[doc="<p>Contains details of a domain.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DomainDetail {
@@ -834,7 +1400,6 @@ pub struct DomainDetail {
     #[serde(rename="domainInfo")]
     pub domain_info: DomainInfo,
 }
-
 #[doc="<p>Contains general information about a domain.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DomainInfo {
@@ -849,7 +1414,6 @@ pub struct DomainInfo {
     #[serde(rename="status")]
     pub status: String,
 }
-
 #[doc="<p>Contains a paginated collection of DomainInfo structures.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DomainInfos {
@@ -861,7 +1425,6 @@ pub struct DomainInfos {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_page_token: Option<String>,
 }
-
 #[doc="<p>Used to filter the workflow executions in visibility APIs by various time-based rules. Each parameter, if specified, defines a rule that must be satisfied by each returned query result. The parameter values are in the <a href=\"https://en.wikipedia.org/wiki/Unix_time\">Unix Time format</a>. For example: <code>\"oldestDate\": 1325376070.</code> </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ExecutionTimeFilter {
@@ -873,7 +1436,29 @@ pub struct ExecutionTimeFilter {
     #[serde(rename="oldestDate")]
     pub oldest_date: f64,
 }
-
+impl ExecutionTimeFilter {
+    /// Sets `latest_date`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExecutionTimeFilter.latest_date = Some(value.into());`.
+    pub fn latest_date<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.latest_date = Some(value.into());
+        self
+    }
+    /// Sets `oldest_date`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExecutionTimeFilter.oldest_date = value.into();`.
+    pub fn oldest_date<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.oldest_date = value.into();
+        self
+    }
+    /// Returns a new instance of ExecutionTimeFilter with optional fields set to `None`.
+    pub fn new<oldestDateType: Into<f64>>(oldest_date: oldestDateType) -> ExecutionTimeFilter {
+        ExecutionTimeFilter {
+            oldest_date: oldest_date.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides the details of the <code>ExternalWorkflowExecutionCancelRequested</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ExternalWorkflowExecutionCancelRequestedEventAttributes {
@@ -884,7 +1469,6 @@ pub struct ExternalWorkflowExecutionCancelRequestedEventAttributes {
     #[serde(rename="workflowExecution")]
     pub workflow_execution: WorkflowExecution,
 }
-
 #[doc="<p>Provides the details of the <code>ExternalWorkflowExecutionSignaled</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ExternalWorkflowExecutionSignaledEventAttributes {
@@ -895,7 +1479,6 @@ pub struct ExternalWorkflowExecutionSignaledEventAttributes {
     #[serde(rename="workflowExecution")]
     pub workflow_execution: WorkflowExecution,
 }
-
 #[doc="<p>Provides the details of the <code>FailWorkflowExecution</code> decision.</p> <p> <b>Access Control</b> </p> <p>You can use IAM policies to control this decision's access to Amazon SWF resources as follows:</p> <ul> <li> <p>Use a <code>Resource</code> element with the domain name to limit the action to only specified domains.</p> </li> <li> <p>Use an <code>Action</code> element to allow or deny permission to call this action.</p> </li> <li> <p>You cannot use an IAM policy to constrain this action's parameters.</p> </li> </ul> <p>If the caller doesn't have sufficient permissions to invoke the action, or the parameter values fall outside the specified constraints, the action fails. The associated event attribute's <code>cause</code> parameter is set to <code>OPERATION_NOT_PERMITTED</code>. For details and example IAM policies, see <a href=\"http://docs.aws.amazon.com/amazonswf/latest/developerguide/swf-dev-iam.html\">Using IAM to Manage Access to Amazon SWF Workflows</a> in the <i>Amazon SWF Developer Guide</i>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct FailWorkflowExecutionDecisionAttributes {
@@ -908,7 +1491,26 @@ pub struct FailWorkflowExecutionDecisionAttributes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub reason: Option<String>,
 }
-
+impl FailWorkflowExecutionDecisionAttributes {
+    /// Sets `details`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FailWorkflowExecutionDecisionAttributes.details = Some(value.into());`.
+    pub fn details<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.details = Some(value.into());
+        self
+    }
+    /// Sets `reason`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FailWorkflowExecutionDecisionAttributes.reason = Some(value.into());`.
+    pub fn reason<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reason = Some(value.into());
+        self
+    }
+    /// Returns a new instance of FailWorkflowExecutionDecisionAttributes with optional fields set to `None`.
+    pub fn new() -> FailWorkflowExecutionDecisionAttributes {
+        FailWorkflowExecutionDecisionAttributes { ..Default::default() }
+    }
+}
 #[doc="<p>Provides the details of the <code>FailWorkflowExecutionFailed</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct FailWorkflowExecutionFailedEventAttributes {
@@ -919,7 +1521,6 @@ pub struct FailWorkflowExecutionFailedEventAttributes {
     #[serde(rename="decisionTaskCompletedEventId")]
     pub decision_task_completed_event_id: i64,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetWorkflowExecutionHistoryInput {
     #[doc="<p>The name of the domain containing the workflow execution.</p>"]
@@ -941,7 +1542,54 @@ pub struct GetWorkflowExecutionHistoryInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub reverse_order: Option<bool>,
 }
-
+impl GetWorkflowExecutionHistoryInput {
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetWorkflowExecutionHistoryInput.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `execution`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetWorkflowExecutionHistoryInput.execution = value.into();`.
+    pub fn execution<ValueType: Into<WorkflowExecution>>(mut self, value: ValueType) -> Self {
+        self.execution = value.into();
+        self
+    }
+    /// Sets `maximum_page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetWorkflowExecutionHistoryInput.maximum_page_size = Some(value.into());`.
+    pub fn maximum_page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.maximum_page_size = Some(value.into());
+        self
+    }
+    /// Sets `next_page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetWorkflowExecutionHistoryInput.next_page_token = Some(value.into());`.
+    pub fn next_page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_page_token = Some(value.into());
+        self
+    }
+    /// Sets `reverse_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetWorkflowExecutionHistoryInput.reverse_order = Some(value.into());`.
+    pub fn reverse_order<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.reverse_order = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetWorkflowExecutionHistoryInput with optional fields set to `None`.
+    pub fn new<domainType: Into<String>, executionType: Into<WorkflowExecution>>
+        (domain: domainType,
+         execution: executionType)
+         -> GetWorkflowExecutionHistoryInput {
+        GetWorkflowExecutionHistoryInput {
+            domain: domain.into(),
+            execution: execution.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Paginated representation of a workflow history for a workflow execution. This is the up to date, complete and authoritative record of the events related to all tasks and events in the life of the workflow execution.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct History {
@@ -953,7 +1601,6 @@ pub struct History {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_page_token: Option<String>,
 }
-
 #[doc="<p>Event within a workflow execution. A history event can be one of these types:</p> <ul> <li> <p> <code>ActivityTaskCancelRequested</code> – A <code>RequestCancelActivityTask</code> decision was received by the system.</p> </li> <li> <p> <code>ActivityTaskCanceled</code> – The activity task was successfully canceled.</p> </li> <li> <p> <code>ActivityTaskCompleted</code> – An activity worker successfully completed an activity task by calling <a>RespondActivityTaskCompleted</a>.</p> </li> <li> <p> <code>ActivityTaskFailed</code> – An activity worker failed an activity task by calling <a>RespondActivityTaskFailed</a>.</p> </li> <li> <p> <code>ActivityTaskScheduled</code> – An activity task was scheduled for execution.</p> </li> <li> <p> <code>ActivityTaskStarted</code> – The scheduled activity task was dispatched to a worker.</p> </li> <li> <p> <code>ActivityTaskTimedOut</code> – The activity task timed out.</p> </li> <li> <p> <code>CancelTimerFailed</code> – Failed to process CancelTimer decision. This happens when the decision isn't configured properly, for example no timer exists with the specified timer Id.</p> </li> <li> <p> <code>CancelWorkflowExecutionFailed</code> – A request to cancel a workflow execution failed.</p> </li> <li> <p> <code>ChildWorkflowExecutionCanceled</code> – A child workflow execution, started by this workflow execution, was canceled and closed.</p> </li> <li> <p> <code>ChildWorkflowExecutionCompleted</code> – A child workflow execution, started by this workflow execution, completed successfully and was closed.</p> </li> <li> <p> <code>ChildWorkflowExecutionFailed</code> – A child workflow execution, started by this workflow execution, failed to complete successfully and was closed.</p> </li> <li> <p> <code>ChildWorkflowExecutionStarted</code> – A child workflow execution was successfully started.</p> </li> <li> <p> <code>ChildWorkflowExecutionTerminated</code> – A child workflow execution, started by this workflow execution, was terminated.</p> </li> <li> <p> <code>ChildWorkflowExecutionTimedOut</code> – A child workflow execution, started by this workflow execution, timed out and was closed.</p> </li> <li> <p> <code>CompleteWorkflowExecutionFailed</code> – The workflow execution failed to complete.</p> </li> <li> <p> <code>ContinueAsNewWorkflowExecutionFailed</code> – The workflow execution failed to complete after being continued as a new workflow execution.</p> </li> <li> <p> <code>DecisionTaskCompleted</code> – The decider successfully completed a decision task by calling <a>RespondDecisionTaskCompleted</a>.</p> </li> <li> <p> <code>DecisionTaskScheduled</code> – A decision task was scheduled for the workflow execution.</p> </li> <li> <p> <code>DecisionTaskStarted</code> – The decision task was dispatched to a decider.</p> </li> <li> <p> <code>DecisionTaskTimedOut</code> – The decision task timed out.</p> </li> <li> <p> <code>ExternalWorkflowExecutionCancelRequested</code> – Request to cancel an external workflow execution was successfully delivered to the target execution.</p> </li> <li> <p> <code>ExternalWorkflowExecutionSignaled</code> – A signal, requested by this workflow execution, was successfully delivered to the target external workflow execution.</p> </li> <li> <p> <code>FailWorkflowExecutionFailed</code> – A request to mark a workflow execution as failed, itself failed.</p> </li> <li> <p> <code>MarkerRecorded</code> – A marker was recorded in the workflow history as the result of a <code>RecordMarker</code> decision.</p> </li> <li> <p> <code>RecordMarkerFailed</code> – A <code>RecordMarker</code> decision was returned as failed.</p> </li> <li> <p> <code>RequestCancelActivityTaskFailed</code> – Failed to process RequestCancelActivityTask decision. This happens when the decision isn't configured properly.</p> </li> <li> <p> <code>RequestCancelExternalWorkflowExecutionFailed</code> – Request to cancel an external workflow execution failed.</p> </li> <li> <p> <code>RequestCancelExternalWorkflowExecutionInitiated</code> – A request was made to request the cancellation of an external workflow execution.</p> </li> <li> <p> <code>ScheduleActivityTaskFailed</code> – Failed to process ScheduleActivityTask decision. This happens when the decision isn't configured properly, for example the activity type specified isn't registered.</p> </li> <li> <p> <code>SignalExternalWorkflowExecutionFailed</code> – The request to signal an external workflow execution failed.</p> </li> <li> <p> <code>SignalExternalWorkflowExecutionInitiated</code> – A request to signal an external workflow was made.</p> </li> <li> <p> <code>StartActivityTaskFailed</code> – A scheduled activity task failed to start.</p> </li> <li> <p> <code>StartChildWorkflowExecutionFailed</code> – Failed to process StartChildWorkflowExecution decision. This happens when the decision isn't configured properly, for example the workflow type specified isn't registered.</p> </li> <li> <p> <code>StartChildWorkflowExecutionInitiated</code> – A request was made to start a child workflow execution.</p> </li> <li> <p> <code>StartTimerFailed</code> – Failed to process StartTimer decision. This happens when the decision isn't configured properly, for example a timer already exists with the specified timer Id.</p> </li> <li> <p> <code>TimerCanceled</code> – A timer, previously started for this workflow execution, was successfully canceled.</p> </li> <li> <p> <code>TimerFired</code> – A timer, previously started for this workflow execution, fired.</p> </li> <li> <p> <code>TimerStarted</code> – A timer was started for the workflow execution due to a <code>StartTimer</code> decision.</p> </li> <li> <p> <code>WorkflowExecutionCancelRequested</code> – A request to cancel this workflow execution was made.</p> </li> <li> <p> <code>WorkflowExecutionCanceled</code> – The workflow execution was successfully canceled and closed.</p> </li> <li> <p> <code>WorkflowExecutionCompleted</code> – The workflow execution was closed due to successful completion.</p> </li> <li> <p> <code>WorkflowExecutionContinuedAsNew</code> – The workflow execution was closed and a new execution of the same type was created with the same workflowId.</p> </li> <li> <p> <code>WorkflowExecutionFailed</code> – The workflow execution closed due to a failure.</p> </li> <li> <p> <code>WorkflowExecutionSignaled</code> – An external signal was received for the workflow execution.</p> </li> <li> <p> <code>WorkflowExecutionStarted</code> – The workflow execution was started.</p> </li> <li> <p> <code>WorkflowExecutionTerminated</code> – The workflow execution was terminated.</p> </li> <li> <p> <code>WorkflowExecutionTimedOut</code> – The workflow execution was closed because a time out was exceeded.</p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct HistoryEvent {
@@ -1218,7 +1865,6 @@ pub struct HistoryEvent {
     pub workflow_execution_timed_out_event_attributes:
         Option<WorkflowExecutionTimedOutEventAttributes>,
 }
-
 #[doc="<p>Provides the details of the <code>LambdaFunctionCompleted</code> event. It isn't set for other event types.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LambdaFunctionCompletedEventAttributes {
@@ -1233,7 +1879,6 @@ pub struct LambdaFunctionCompletedEventAttributes {
     #[serde(rename="startedEventId")]
     pub started_event_id: i64,
 }
-
 #[doc="<p>Provides the details of the <code>LambdaFunctionFailed</code> event. It isn't set for other event types.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LambdaFunctionFailedEventAttributes {
@@ -1252,7 +1897,6 @@ pub struct LambdaFunctionFailedEventAttributes {
     #[serde(rename="startedEventId")]
     pub started_event_id: i64,
 }
-
 #[doc="<p>Provides the details of the <code>LambdaFunctionScheduled</code> event. It isn't set for other event types.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LambdaFunctionScheduledEventAttributes {
@@ -1278,7 +1922,6 @@ pub struct LambdaFunctionScheduledEventAttributes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub start_to_close_timeout: Option<String>,
 }
-
 #[doc="<p>Provides the details of the <code>LambdaFunctionStarted</code> event. It isn't set for other event types.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LambdaFunctionStartedEventAttributes {
@@ -1286,7 +1929,6 @@ pub struct LambdaFunctionStartedEventAttributes {
     #[serde(rename="scheduledEventId")]
     pub scheduled_event_id: i64,
 }
-
 #[doc="<p>Provides details of the <code>LambdaFunctionTimedOut</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LambdaFunctionTimedOutEventAttributes {
@@ -1301,7 +1943,6 @@ pub struct LambdaFunctionTimedOutEventAttributes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub timeout_type: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListActivityTypesInput {
     #[doc="<p>The name of the domain in which the activity types have been registered.</p>"]
@@ -1327,7 +1968,61 @@ pub struct ListActivityTypesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub reverse_order: Option<bool>,
 }
-
+impl ListActivityTypesInput {
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListActivityTypesInput.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `maximum_page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListActivityTypesInput.maximum_page_size = Some(value.into());`.
+    pub fn maximum_page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.maximum_page_size = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListActivityTypesInput.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `next_page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListActivityTypesInput.next_page_token = Some(value.into());`.
+    pub fn next_page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_page_token = Some(value.into());
+        self
+    }
+    /// Sets `registration_status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListActivityTypesInput.registration_status = value.into();`.
+    pub fn registration_status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.registration_status = value.into();
+        self
+    }
+    /// Sets `reverse_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListActivityTypesInput.reverse_order = Some(value.into());`.
+    pub fn reverse_order<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.reverse_order = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListActivityTypesInput with optional fields set to `None`.
+    pub fn new<domainType: Into<String>, registrationStatusType: Into<String>>
+        (domain: domainType,
+         registration_status: registrationStatusType)
+         -> ListActivityTypesInput {
+        ListActivityTypesInput {
+            domain: domain.into(),
+            registration_status: registration_status.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListClosedWorkflowExecutionsInput {
     #[doc="<p>If specified, only workflow executions that match this <i>close status</i> are listed. For example, if TERMINATED is specified, then only TERMINATED workflow executions are listed.</p> <note> <p> <code>closeStatusFilter</code>, <code>executionFilter</code>, <code>typeFilter</code> and <code>tagFilter</code> are mutually exclusive. You can specify at most one of these in a request.</p> </note>"]
@@ -1370,7 +2065,93 @@ pub struct ListClosedWorkflowExecutionsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_filter: Option<WorkflowTypeFilter>,
 }
-
+impl ListClosedWorkflowExecutionsInput {
+    /// Sets `close_status_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListClosedWorkflowExecutionsInput.close_status_filter = Some(value.into());`.
+    pub fn close_status_filter<ValueType: Into<CloseStatusFilter>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.close_status_filter = Some(value.into());
+        self
+    }
+    /// Sets `close_time_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListClosedWorkflowExecutionsInput.close_time_filter = Some(value.into());`.
+    pub fn close_time_filter<ValueType: Into<ExecutionTimeFilter>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.close_time_filter = Some(value.into());
+        self
+    }
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListClosedWorkflowExecutionsInput.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `execution_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListClosedWorkflowExecutionsInput.execution_filter = Some(value.into());`.
+    pub fn execution_filter<ValueType: Into<WorkflowExecutionFilter>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.execution_filter = Some(value.into());
+        self
+    }
+    /// Sets `maximum_page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListClosedWorkflowExecutionsInput.maximum_page_size = Some(value.into());`.
+    pub fn maximum_page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.maximum_page_size = Some(value.into());
+        self
+    }
+    /// Sets `next_page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListClosedWorkflowExecutionsInput.next_page_token = Some(value.into());`.
+    pub fn next_page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_page_token = Some(value.into());
+        self
+    }
+    /// Sets `reverse_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListClosedWorkflowExecutionsInput.reverse_order = Some(value.into());`.
+    pub fn reverse_order<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.reverse_order = Some(value.into());
+        self
+    }
+    /// Sets `start_time_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListClosedWorkflowExecutionsInput.start_time_filter = Some(value.into());`.
+    pub fn start_time_filter<ValueType: Into<ExecutionTimeFilter>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.start_time_filter = Some(value.into());
+        self
+    }
+    /// Sets `tag_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListClosedWorkflowExecutionsInput.tag_filter = Some(value.into());`.
+    pub fn tag_filter<ValueType: Into<TagFilter>>(mut self, value: ValueType) -> Self {
+        self.tag_filter = Some(value.into());
+        self
+    }
+    /// Sets `type_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListClosedWorkflowExecutionsInput.type_filter = Some(value.into());`.
+    pub fn type_filter<ValueType: Into<WorkflowTypeFilter>>(mut self, value: ValueType) -> Self {
+        self.type_filter = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListClosedWorkflowExecutionsInput with optional fields set to `None`.
+    pub fn new<domainType: Into<String>>(domain: domainType) -> ListClosedWorkflowExecutionsInput {
+        ListClosedWorkflowExecutionsInput {
+            domain: domain.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListDomainsInput {
     #[doc="<p>The maximum number of results that are returned per call. <code>nextPageToken</code> can be used to obtain futher pages of results. The default is 1000, which is the maximum allowed page size. You can, however, specify a page size <i>smaller</i> than the maximum.</p> <p>This is an upper limit only; the actual number of results returned per call may be fewer than the specified maximum.</p>"]
@@ -1389,7 +2170,44 @@ pub struct ListDomainsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub reverse_order: Option<bool>,
 }
-
+impl ListDomainsInput {
+    /// Sets `maximum_page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDomainsInput.maximum_page_size = Some(value.into());`.
+    pub fn maximum_page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.maximum_page_size = Some(value.into());
+        self
+    }
+    /// Sets `next_page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDomainsInput.next_page_token = Some(value.into());`.
+    pub fn next_page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_page_token = Some(value.into());
+        self
+    }
+    /// Sets `registration_status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDomainsInput.registration_status = value.into();`.
+    pub fn registration_status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.registration_status = value.into();
+        self
+    }
+    /// Sets `reverse_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDomainsInput.reverse_order = Some(value.into());`.
+    pub fn reverse_order<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.reverse_order = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListDomainsInput with optional fields set to `None`.
+    pub fn new<registrationStatusType: Into<String>>(registration_status: registrationStatusType)
+                                                     -> ListDomainsInput {
+        ListDomainsInput {
+            registration_status: registration_status.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListOpenWorkflowExecutionsInput {
     #[doc="<p>The name of the domain that contains the workflow executions to list.</p>"]
@@ -1423,7 +2241,79 @@ pub struct ListOpenWorkflowExecutionsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_filter: Option<WorkflowTypeFilter>,
 }
-
+impl ListOpenWorkflowExecutionsInput {
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListOpenWorkflowExecutionsInput.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `execution_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListOpenWorkflowExecutionsInput.execution_filter = Some(value.into());`.
+    pub fn execution_filter<ValueType: Into<WorkflowExecutionFilter>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.execution_filter = Some(value.into());
+        self
+    }
+    /// Sets `maximum_page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListOpenWorkflowExecutionsInput.maximum_page_size = Some(value.into());`.
+    pub fn maximum_page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.maximum_page_size = Some(value.into());
+        self
+    }
+    /// Sets `next_page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListOpenWorkflowExecutionsInput.next_page_token = Some(value.into());`.
+    pub fn next_page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_page_token = Some(value.into());
+        self
+    }
+    /// Sets `reverse_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListOpenWorkflowExecutionsInput.reverse_order = Some(value.into());`.
+    pub fn reverse_order<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.reverse_order = Some(value.into());
+        self
+    }
+    /// Sets `start_time_filter`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListOpenWorkflowExecutionsInput.start_time_filter = value.into();`.
+    pub fn start_time_filter<ValueType: Into<ExecutionTimeFilter>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.start_time_filter = value.into();
+        self
+    }
+    /// Sets `tag_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListOpenWorkflowExecutionsInput.tag_filter = Some(value.into());`.
+    pub fn tag_filter<ValueType: Into<TagFilter>>(mut self, value: ValueType) -> Self {
+        self.tag_filter = Some(value.into());
+        self
+    }
+    /// Sets `type_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListOpenWorkflowExecutionsInput.type_filter = Some(value.into());`.
+    pub fn type_filter<ValueType: Into<WorkflowTypeFilter>>(mut self, value: ValueType) -> Self {
+        self.type_filter = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListOpenWorkflowExecutionsInput with optional fields set to `None`.
+    pub fn new<domainType: Into<String>, startTimeFilterType: Into<ExecutionTimeFilter>>
+        (domain: domainType,
+         start_time_filter: startTimeFilterType)
+         -> ListOpenWorkflowExecutionsInput {
+        ListOpenWorkflowExecutionsInput {
+            domain: domain.into(),
+            start_time_filter: start_time_filter.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListWorkflowTypesInput {
     #[doc="<p>The name of the domain in which the workflow types have been registered.</p>"]
@@ -1449,7 +2339,61 @@ pub struct ListWorkflowTypesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub reverse_order: Option<bool>,
 }
-
+impl ListWorkflowTypesInput {
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListWorkflowTypesInput.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `maximum_page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListWorkflowTypesInput.maximum_page_size = Some(value.into());`.
+    pub fn maximum_page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.maximum_page_size = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListWorkflowTypesInput.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `next_page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListWorkflowTypesInput.next_page_token = Some(value.into());`.
+    pub fn next_page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_page_token = Some(value.into());
+        self
+    }
+    /// Sets `registration_status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListWorkflowTypesInput.registration_status = value.into();`.
+    pub fn registration_status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.registration_status = value.into();
+        self
+    }
+    /// Sets `reverse_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListWorkflowTypesInput.reverse_order = Some(value.into());`.
+    pub fn reverse_order<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.reverse_order = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListWorkflowTypesInput with optional fields set to `None`.
+    pub fn new<domainType: Into<String>, registrationStatusType: Into<String>>
+        (domain: domainType,
+         registration_status: registrationStatusType)
+         -> ListWorkflowTypesInput {
+        ListWorkflowTypesInput {
+            domain: domain.into(),
+            registration_status: registration_status.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides the details of the <code>MarkerRecorded</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MarkerRecordedEventAttributes {
@@ -1464,7 +2408,6 @@ pub struct MarkerRecordedEventAttributes {
     #[serde(rename="markerName")]
     pub marker_name: String,
 }
-
 #[doc="<p>Contains the count of tasks in a task list.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PendingTaskCount {
@@ -1476,7 +2419,6 @@ pub struct PendingTaskCount {
     #[serde(skip_serializing_if="Option::is_none")]
     pub truncated: Option<bool>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PollForActivityTaskInput {
     #[doc="<p>The name of the domain that contains the task lists being polled.</p>"]
@@ -1490,7 +2432,40 @@ pub struct PollForActivityTaskInput {
     #[serde(rename="taskList")]
     pub task_list: TaskList,
 }
-
+impl PollForActivityTaskInput {
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PollForActivityTaskInput.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `identity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PollForActivityTaskInput.identity = Some(value.into());`.
+    pub fn identity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity = Some(value.into());
+        self
+    }
+    /// Sets `task_list`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PollForActivityTaskInput.task_list = value.into();`.
+    pub fn task_list<ValueType: Into<TaskList>>(mut self, value: ValueType) -> Self {
+        self.task_list = value.into();
+        self
+    }
+    /// Returns a new instance of PollForActivityTaskInput with optional fields set to `None`.
+    pub fn new<domainType: Into<String>, taskListType: Into<TaskList>>
+        (domain: domainType,
+         task_list: taskListType)
+         -> PollForActivityTaskInput {
+        PollForActivityTaskInput {
+            domain: domain.into(),
+            task_list: task_list.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PollForDecisionTaskInput {
     #[doc="<p>The name of the domain containing the task lists to poll.</p>"]
@@ -1516,7 +2491,61 @@ pub struct PollForDecisionTaskInput {
     #[serde(rename="taskList")]
     pub task_list: TaskList,
 }
-
+impl PollForDecisionTaskInput {
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PollForDecisionTaskInput.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `identity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PollForDecisionTaskInput.identity = Some(value.into());`.
+    pub fn identity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity = Some(value.into());
+        self
+    }
+    /// Sets `maximum_page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PollForDecisionTaskInput.maximum_page_size = Some(value.into());`.
+    pub fn maximum_page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.maximum_page_size = Some(value.into());
+        self
+    }
+    /// Sets `next_page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PollForDecisionTaskInput.next_page_token = Some(value.into());`.
+    pub fn next_page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_page_token = Some(value.into());
+        self
+    }
+    /// Sets `reverse_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PollForDecisionTaskInput.reverse_order = Some(value.into());`.
+    pub fn reverse_order<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.reverse_order = Some(value.into());
+        self
+    }
+    /// Sets `task_list`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PollForDecisionTaskInput.task_list = value.into();`.
+    pub fn task_list<ValueType: Into<TaskList>>(mut self, value: ValueType) -> Self {
+        self.task_list = value.into();
+        self
+    }
+    /// Returns a new instance of PollForDecisionTaskInput with optional fields set to `None`.
+    pub fn new<domainType: Into<String>, taskListType: Into<TaskList>>
+        (domain: domainType,
+         task_list: taskListType)
+         -> PollForDecisionTaskInput {
+        PollForDecisionTaskInput {
+            domain: domain.into(),
+            task_list: task_list.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RecordActivityTaskHeartbeatInput {
     #[doc="<p>If specified, contains details about the progress of the task.</p>"]
@@ -1527,7 +2556,30 @@ pub struct RecordActivityTaskHeartbeatInput {
     #[serde(rename="taskToken")]
     pub task_token: String,
 }
-
+impl RecordActivityTaskHeartbeatInput {
+    /// Sets `details`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecordActivityTaskHeartbeatInput.details = Some(value.into());`.
+    pub fn details<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.details = Some(value.into());
+        self
+    }
+    /// Sets `task_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecordActivityTaskHeartbeatInput.task_token = value.into();`.
+    pub fn task_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_token = value.into();
+        self
+    }
+    /// Returns a new instance of RecordActivityTaskHeartbeatInput with optional fields set to `None`.
+    pub fn new<taskTokenType: Into<String>>(task_token: taskTokenType)
+                                            -> RecordActivityTaskHeartbeatInput {
+        RecordActivityTaskHeartbeatInput {
+            task_token: task_token.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides the details of the <code>RecordMarker</code> decision.</p> <p> <b>Access Control</b> </p> <p>You can use IAM policies to control this decision's access to Amazon SWF resources as follows:</p> <ul> <li> <p>Use a <code>Resource</code> element with the domain name to limit the action to only specified domains.</p> </li> <li> <p>Use an <code>Action</code> element to allow or deny permission to call this action.</p> </li> <li> <p>You cannot use an IAM policy to constrain this action's parameters.</p> </li> </ul> <p>If the caller doesn't have sufficient permissions to invoke the action, or the parameter values fall outside the specified constraints, the action fails. The associated event attribute's <code>cause</code> parameter is set to <code>OPERATION_NOT_PERMITTED</code>. For details and example IAM policies, see <a href=\"http://docs.aws.amazon.com/amazonswf/latest/developerguide/swf-dev-iam.html\">Using IAM to Manage Access to Amazon SWF Workflows</a> in the <i>Amazon SWF Developer Guide</i>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RecordMarkerDecisionAttributes {
@@ -1539,7 +2591,30 @@ pub struct RecordMarkerDecisionAttributes {
     #[serde(rename="markerName")]
     pub marker_name: String,
 }
-
+impl RecordMarkerDecisionAttributes {
+    /// Sets `details`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecordMarkerDecisionAttributes.details = Some(value.into());`.
+    pub fn details<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.details = Some(value.into());
+        self
+    }
+    /// Sets `marker_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecordMarkerDecisionAttributes.marker_name = value.into();`.
+    pub fn marker_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker_name = value.into();
+        self
+    }
+    /// Returns a new instance of RecordMarkerDecisionAttributes with optional fields set to `None`.
+    pub fn new<markerNameType: Into<String>>(marker_name: markerNameType)
+                                             -> RecordMarkerDecisionAttributes {
+        RecordMarkerDecisionAttributes {
+            marker_name: marker_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides the details of the <code>RecordMarkerFailed</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RecordMarkerFailedEventAttributes {
@@ -1553,7 +2628,6 @@ pub struct RecordMarkerFailedEventAttributes {
     #[serde(rename="markerName")]
     pub marker_name: String,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RegisterActivityTypeInput {
     #[doc="<p>If set, specifies the default maximum time before which a worker processing a task of this type must report progress by calling <a>RecordActivityTaskHeartbeat</a>. If the timeout is exceeded, the activity task is automatically timed out. This default can be overridden when scheduling an activity task using the <code>ScheduleActivityTask</code> <a>Decision</a>. If the activity worker subsequently attempts to record a heartbeat or returns a result, the activity worker receives an <code>UnknownResource</code> fault. In this case, Amazon SWF no longer considers the activity task to be valid; the activity worker should clean up the activity task.</p> <p>The duration is specified in seconds, an integer greater than or equal to <code>0</code>. You can use <code>NONE</code> to specify unlimited duration.</p>"]
@@ -1594,7 +2668,99 @@ pub struct RegisterActivityTypeInput {
     #[serde(rename="version")]
     pub version: String,
 }
-
+impl RegisterActivityTypeInput {
+    /// Sets `default_task_heartbeat_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterActivityTypeInput.default_task_heartbeat_timeout = Some(value.into());`.
+    pub fn default_task_heartbeat_timeout<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.default_task_heartbeat_timeout = Some(value.into());
+        self
+    }
+    /// Sets `default_task_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterActivityTypeInput.default_task_list = Some(value.into());`.
+    pub fn default_task_list<ValueType: Into<TaskList>>(mut self, value: ValueType) -> Self {
+        self.default_task_list = Some(value.into());
+        self
+    }
+    /// Sets `default_task_priority`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterActivityTypeInput.default_task_priority = Some(value.into());`.
+    pub fn default_task_priority<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_task_priority = Some(value.into());
+        self
+    }
+    /// Sets `default_task_schedule_to_close_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterActivityTypeInput.default_task_schedule_to_close_timeout = Some(value.into());`.
+    pub fn default_task_schedule_to_close_timeout<ValueType: Into<String>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.default_task_schedule_to_close_timeout = Some(value.into());
+        self
+    }
+    /// Sets `default_task_schedule_to_start_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterActivityTypeInput.default_task_schedule_to_start_timeout = Some(value.into());`.
+    pub fn default_task_schedule_to_start_timeout<ValueType: Into<String>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.default_task_schedule_to_start_timeout = Some(value.into());
+        self
+    }
+    /// Sets `default_task_start_to_close_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterActivityTypeInput.default_task_start_to_close_timeout = Some(value.into());`.
+    pub fn default_task_start_to_close_timeout<ValueType: Into<String>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.default_task_start_to_close_timeout = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterActivityTypeInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterActivityTypeInput.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterActivityTypeInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterActivityTypeInput.version = value.into();`.
+    pub fn version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version = value.into();
+        self
+    }
+    /// Returns a new instance of RegisterActivityTypeInput with optional fields set to `None`.
+    pub fn new<domainType: Into<String>, nameType: Into<String>, versionType: Into<String>>
+        (domain: domainType,
+         name: nameType,
+         version: versionType)
+         -> RegisterActivityTypeInput {
+        RegisterActivityTypeInput {
+            domain: domain.into(),
+            name: name.into(),
+            version: version.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RegisterDomainInput {
     #[doc="<p>A text description of the domain.</p>"]
@@ -1608,7 +2774,43 @@ pub struct RegisterDomainInput {
     #[serde(rename="workflowExecutionRetentionPeriodInDays")]
     pub workflow_execution_retention_period_in_days: String,
 }
-
+impl RegisterDomainInput {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterDomainInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterDomainInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `workflow_execution_retention_period_in_days`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterDomainInput.workflow_execution_retention_period_in_days = value.into();`.
+    pub fn workflow_execution_retention_period_in_days<ValueType: Into<String>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.workflow_execution_retention_period_in_days = value.into();
+        self
+    }
+    /// Returns a new instance of RegisterDomainInput with optional fields set to `None`.
+    pub fn new<nameType: Into<String>, workflowExecutionRetentionPeriodInDaysType: Into<String>>
+        (name: nameType,
+         workflow_execution_retention_period_in_days: workflowExecutionRetentionPeriodInDaysType)
+         -> RegisterDomainInput {
+        RegisterDomainInput {
+            name: name.into(),
+            workflow_execution_retention_period_in_days:
+                workflow_execution_retention_period_in_days.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RegisterWorkflowTypeInput {
     #[doc="<p>If set, specifies the default policy to use for the child workflow executions when a workflow execution of this type is terminated, by calling the <a>TerminateWorkflowExecution</a> action explicitly or due to an expired timeout. This default can be overridden when starting a workflow execution using the <a>StartWorkflowExecution</a> action or the <code>StartChildWorkflowExecution</code> <a>Decision</a>.</p> <p>The supported child policies are:</p> <ul> <li> <p> <code>TERMINATE</code> – The child executions are terminated.</p> </li> <li> <p> <code>REQUEST_CANCEL</code> – A request to cancel is attempted for each child execution by recording a <code>WorkflowExecutionCancelRequested</code> event in its history. It is up to the decider to take appropriate actions when it receives an execution history with this event.</p> </li> <li> <p> <code>ABANDON</code> – No action is taken. The child executions continue to run.</p> </li> </ul>"]
@@ -1649,7 +2851,95 @@ pub struct RegisterWorkflowTypeInput {
     #[serde(rename="version")]
     pub version: String,
 }
-
+impl RegisterWorkflowTypeInput {
+    /// Sets `default_child_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterWorkflowTypeInput.default_child_policy = Some(value.into());`.
+    pub fn default_child_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_child_policy = Some(value.into());
+        self
+    }
+    /// Sets `default_execution_start_to_close_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterWorkflowTypeInput.default_execution_start_to_close_timeout = Some(value.into());`.
+    pub fn default_execution_start_to_close_timeout<ValueType: Into<String>>(mut self,
+                                                                             value: ValueType)
+                                                                             -> Self {
+        self.default_execution_start_to_close_timeout = Some(value.into());
+        self
+    }
+    /// Sets `default_lambda_role`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterWorkflowTypeInput.default_lambda_role = Some(value.into());`.
+    pub fn default_lambda_role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_lambda_role = Some(value.into());
+        self
+    }
+    /// Sets `default_task_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterWorkflowTypeInput.default_task_list = Some(value.into());`.
+    pub fn default_task_list<ValueType: Into<TaskList>>(mut self, value: ValueType) -> Self {
+        self.default_task_list = Some(value.into());
+        self
+    }
+    /// Sets `default_task_priority`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterWorkflowTypeInput.default_task_priority = Some(value.into());`.
+    pub fn default_task_priority<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_task_priority = Some(value.into());
+        self
+    }
+    /// Sets `default_task_start_to_close_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterWorkflowTypeInput.default_task_start_to_close_timeout = Some(value.into());`.
+    pub fn default_task_start_to_close_timeout<ValueType: Into<String>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.default_task_start_to_close_timeout = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterWorkflowTypeInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterWorkflowTypeInput.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterWorkflowTypeInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterWorkflowTypeInput.version = value.into();`.
+    pub fn version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version = value.into();
+        self
+    }
+    /// Returns a new instance of RegisterWorkflowTypeInput with optional fields set to `None`.
+    pub fn new<domainType: Into<String>, nameType: Into<String>, versionType: Into<String>>
+        (domain: domainType,
+         name: nameType,
+         version: versionType)
+         -> RegisterWorkflowTypeInput {
+        RegisterWorkflowTypeInput {
+            domain: domain.into(),
+            name: name.into(),
+            version: version.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides the details of the <code>RequestCancelActivityTask</code> decision.</p> <p> <b>Access Control</b> </p> <p>You can use IAM policies to control this decision's access to Amazon SWF resources as follows:</p> <ul> <li> <p>Use a <code>Resource</code> element with the domain name to limit the action to only specified domains.</p> </li> <li> <p>Use an <code>Action</code> element to allow or deny permission to call this action.</p> </li> <li> <p>You cannot use an IAM policy to constrain this action's parameters.</p> </li> </ul> <p>If the caller doesn't have sufficient permissions to invoke the action, or the parameter values fall outside the specified constraints, the action fails. The associated event attribute's <code>cause</code> parameter is set to <code>OPERATION_NOT_PERMITTED</code>. For details and example IAM policies, see <a href=\"http://docs.aws.amazon.com/amazonswf/latest/developerguide/swf-dev-iam.html\">Using IAM to Manage Access to Amazon SWF Workflows</a> in the <i>Amazon SWF Developer Guide</i>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RequestCancelActivityTaskDecisionAttributes {
@@ -1657,7 +2947,23 @@ pub struct RequestCancelActivityTaskDecisionAttributes {
     #[serde(rename="activityId")]
     pub activity_id: String,
 }
-
+impl RequestCancelActivityTaskDecisionAttributes {
+    /// Sets `activity_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestCancelActivityTaskDecisionAttributes.activity_id = value.into();`.
+    pub fn activity_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.activity_id = value.into();
+        self
+    }
+    /// Returns a new instance of RequestCancelActivityTaskDecisionAttributes with optional fields set to `None`.
+    pub fn new<activityIdType: Into<String>>(activity_id: activityIdType)
+                                             -> RequestCancelActivityTaskDecisionAttributes {
+        RequestCancelActivityTaskDecisionAttributes {
+            activity_id: activity_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides the details of the <code>RequestCancelActivityTaskFailed</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RequestCancelActivityTaskFailedEventAttributes {
@@ -1671,7 +2977,6 @@ pub struct RequestCancelActivityTaskFailedEventAttributes {
     #[serde(rename="decisionTaskCompletedEventId")]
     pub decision_task_completed_event_id: i64,
 }
-
 #[doc="<p>Provides the details of the <code>RequestCancelExternalWorkflowExecution</code> decision.</p> <p> <b>Access Control</b> </p> <p>You can use IAM policies to control this decision's access to Amazon SWF resources as follows:</p> <ul> <li> <p>Use a <code>Resource</code> element with the domain name to limit the action to only specified domains.</p> </li> <li> <p>Use an <code>Action</code> element to allow or deny permission to call this action.</p> </li> <li> <p>You cannot use an IAM policy to constrain this action's parameters.</p> </li> </ul> <p>If the caller doesn't have sufficient permissions to invoke the action, or the parameter values fall outside the specified constraints, the action fails. The associated event attribute's <code>cause</code> parameter is set to <code>OPERATION_NOT_PERMITTED</code>. For details and example IAM policies, see <a href=\"http://docs.aws.amazon.com/amazonswf/latest/developerguide/swf-dev-iam.html\">Using IAM to Manage Access to Amazon SWF Workflows</a> in the <i>Amazon SWF Developer Guide</i>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RequestCancelExternalWorkflowExecutionDecisionAttributes {
@@ -1687,7 +2992,38 @@ pub struct RequestCancelExternalWorkflowExecutionDecisionAttributes {
     #[serde(rename="workflowId")]
     pub workflow_id: String,
 }
-
+impl RequestCancelExternalWorkflowExecutionDecisionAttributes {
+    /// Sets `control`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestCancelExternalWorkflowExecutionDecisionAttributes.control = Some(value.into());`.
+    pub fn control<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.control = Some(value.into());
+        self
+    }
+    /// Sets `run_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestCancelExternalWorkflowExecutionDecisionAttributes.run_id = Some(value.into());`.
+    pub fn run_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.run_id = Some(value.into());
+        self
+    }
+    /// Sets `workflow_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestCancelExternalWorkflowExecutionDecisionAttributes.workflow_id = value.into();`.
+    pub fn workflow_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.workflow_id = value.into();
+        self
+    }
+    /// Returns a new instance of RequestCancelExternalWorkflowExecutionDecisionAttributes with optional fields set to `None`.
+    pub fn new<workflowIdType: Into<String>>
+        (workflow_id: workflowIdType)
+         -> RequestCancelExternalWorkflowExecutionDecisionAttributes {
+        RequestCancelExternalWorkflowExecutionDecisionAttributes {
+            workflow_id: workflow_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides the details of the <code>RequestCancelExternalWorkflowExecutionFailed</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RequestCancelExternalWorkflowExecutionFailedEventAttributes {
@@ -1712,7 +3048,6 @@ pub struct RequestCancelExternalWorkflowExecutionFailedEventAttributes {
     #[serde(rename="workflowId")]
     pub workflow_id: String,
 }
-
 #[doc="<p>Provides the details of the <code>RequestCancelExternalWorkflowExecutionInitiated</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RequestCancelExternalWorkflowExecutionInitiatedEventAttributes {
@@ -1731,7 +3066,6 @@ pub struct RequestCancelExternalWorkflowExecutionInitiatedEventAttributes {
     #[serde(rename="workflowId")]
     pub workflow_id: String,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RequestCancelWorkflowExecutionInput {
     #[doc="<p>The name of the domain containing the workflow execution to cancel.</p>"]
@@ -1745,7 +3079,40 @@ pub struct RequestCancelWorkflowExecutionInput {
     #[serde(rename="workflowId")]
     pub workflow_id: String,
 }
-
+impl RequestCancelWorkflowExecutionInput {
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestCancelWorkflowExecutionInput.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `run_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestCancelWorkflowExecutionInput.run_id = Some(value.into());`.
+    pub fn run_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.run_id = Some(value.into());
+        self
+    }
+    /// Sets `workflow_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestCancelWorkflowExecutionInput.workflow_id = value.into();`.
+    pub fn workflow_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.workflow_id = value.into();
+        self
+    }
+    /// Returns a new instance of RequestCancelWorkflowExecutionInput with optional fields set to `None`.
+    pub fn new<domainType: Into<String>, workflowIdType: Into<String>>
+        (domain: domainType,
+         workflow_id: workflowIdType)
+         -> RequestCancelWorkflowExecutionInput {
+        RequestCancelWorkflowExecutionInput {
+            domain: domain.into(),
+            workflow_id: workflow_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RespondActivityTaskCanceledInput {
     #[doc="<p> Information about the cancellation.</p>"]
@@ -1756,7 +3123,30 @@ pub struct RespondActivityTaskCanceledInput {
     #[serde(rename="taskToken")]
     pub task_token: String,
 }
-
+impl RespondActivityTaskCanceledInput {
+    /// Sets `details`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RespondActivityTaskCanceledInput.details = Some(value.into());`.
+    pub fn details<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.details = Some(value.into());
+        self
+    }
+    /// Sets `task_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RespondActivityTaskCanceledInput.task_token = value.into();`.
+    pub fn task_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_token = value.into();
+        self
+    }
+    /// Returns a new instance of RespondActivityTaskCanceledInput with optional fields set to `None`.
+    pub fn new<taskTokenType: Into<String>>(task_token: taskTokenType)
+                                            -> RespondActivityTaskCanceledInput {
+        RespondActivityTaskCanceledInput {
+            task_token: task_token.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RespondActivityTaskCompletedInput {
     #[doc="<p>The result of the activity task. It is a free form string that is implementation specific.</p>"]
@@ -1767,7 +3157,30 @@ pub struct RespondActivityTaskCompletedInput {
     #[serde(rename="taskToken")]
     pub task_token: String,
 }
-
+impl RespondActivityTaskCompletedInput {
+    /// Sets `result`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RespondActivityTaskCompletedInput.result = Some(value.into());`.
+    pub fn result<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.result = Some(value.into());
+        self
+    }
+    /// Sets `task_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RespondActivityTaskCompletedInput.task_token = value.into();`.
+    pub fn task_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_token = value.into();
+        self
+    }
+    /// Returns a new instance of RespondActivityTaskCompletedInput with optional fields set to `None`.
+    pub fn new<taskTokenType: Into<String>>(task_token: taskTokenType)
+                                            -> RespondActivityTaskCompletedInput {
+        RespondActivityTaskCompletedInput {
+            task_token: task_token.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RespondActivityTaskFailedInput {
     #[doc="<p> Detailed information about the failure.</p>"]
@@ -1782,7 +3195,37 @@ pub struct RespondActivityTaskFailedInput {
     #[serde(rename="taskToken")]
     pub task_token: String,
 }
-
+impl RespondActivityTaskFailedInput {
+    /// Sets `details`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RespondActivityTaskFailedInput.details = Some(value.into());`.
+    pub fn details<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.details = Some(value.into());
+        self
+    }
+    /// Sets `reason`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RespondActivityTaskFailedInput.reason = Some(value.into());`.
+    pub fn reason<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reason = Some(value.into());
+        self
+    }
+    /// Sets `task_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RespondActivityTaskFailedInput.task_token = value.into();`.
+    pub fn task_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_token = value.into();
+        self
+    }
+    /// Returns a new instance of RespondActivityTaskFailedInput with optional fields set to `None`.
+    pub fn new<taskTokenType: Into<String>>(task_token: taskTokenType)
+                                            -> RespondActivityTaskFailedInput {
+        RespondActivityTaskFailedInput {
+            task_token: task_token.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Input data for a TaskCompleted response to a decision task.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RespondDecisionTaskCompletedInput {
@@ -1798,7 +3241,37 @@ pub struct RespondDecisionTaskCompletedInput {
     #[serde(rename="taskToken")]
     pub task_token: String,
 }
-
+impl RespondDecisionTaskCompletedInput {
+    /// Sets `decisions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RespondDecisionTaskCompletedInput.decisions = Some(value.into());`.
+    pub fn decisions<ValueType: Into<Vec<Decision>>>(mut self, value: ValueType) -> Self {
+        self.decisions = Some(value.into());
+        self
+    }
+    /// Sets `execution_context`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RespondDecisionTaskCompletedInput.execution_context = Some(value.into());`.
+    pub fn execution_context<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.execution_context = Some(value.into());
+        self
+    }
+    /// Sets `task_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RespondDecisionTaskCompletedInput.task_token = value.into();`.
+    pub fn task_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_token = value.into();
+        self
+    }
+    /// Returns a new instance of RespondDecisionTaskCompletedInput with optional fields set to `None`.
+    pub fn new<taskTokenType: Into<String>>(task_token: taskTokenType)
+                                            -> RespondDecisionTaskCompletedInput {
+        RespondDecisionTaskCompletedInput {
+            task_token: task_token.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Specifies the <code>runId</code> of a workflow execution.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Run {
@@ -1807,7 +3280,6 @@ pub struct Run {
     #[serde(skip_serializing_if="Option::is_none")]
     pub run_id: Option<String>,
 }
-
 #[doc="<p>Provides the details of the <code>ScheduleActivityTask</code> decision.</p> <p> <b>Access Control</b> </p> <p>You can use IAM policies to control this decision's access to Amazon SWF resources as follows:</p> <ul> <li> <p>Use a <code>Resource</code> element with the domain name to limit the action to only specified domains.</p> </li> <li> <p>Use an <code>Action</code> element to allow or deny permission to call this action.</p> </li> <li> <p>Constrain the following parameters by using a <code>Condition</code> element with the appropriate keys.</p> <ul> <li> <p> <code>activityType.name</code> – String constraint. The key is <code>swf:activityType.name</code>.</p> </li> <li> <p> <code>activityType.version</code> – String constraint. The key is <code>swf:activityType.version</code>.</p> </li> <li> <p> <code>taskList</code> – String constraint. The key is <code>swf:taskList.name</code>.</p> </li> </ul> </li> </ul> <p>If the caller doesn't have sufficient permissions to invoke the action, or the parameter values fall outside the specified constraints, the action fails. The associated event attribute's <code>cause</code> parameter is set to <code>OPERATION_NOT_PERMITTED</code>. For details and example IAM policies, see <a href=\"http://docs.aws.amazon.com/amazonswf/latest/developerguide/swf-dev-iam.html\">Using IAM to Manage Access to Amazon SWF Workflows</a> in the <i>Amazon SWF Developer Guide</i>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ScheduleActivityTaskDecisionAttributes {
@@ -1850,7 +3322,89 @@ pub struct ScheduleActivityTaskDecisionAttributes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub task_priority: Option<String>,
 }
-
+impl ScheduleActivityTaskDecisionAttributes {
+    /// Sets `activity_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleActivityTaskDecisionAttributes.activity_id = value.into();`.
+    pub fn activity_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.activity_id = value.into();
+        self
+    }
+    /// Sets `activity_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleActivityTaskDecisionAttributes.activity_type = value.into();`.
+    pub fn activity_type<ValueType: Into<ActivityType>>(mut self, value: ValueType) -> Self {
+        self.activity_type = value.into();
+        self
+    }
+    /// Sets `control`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleActivityTaskDecisionAttributes.control = Some(value.into());`.
+    pub fn control<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.control = Some(value.into());
+        self
+    }
+    /// Sets `heartbeat_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleActivityTaskDecisionAttributes.heartbeat_timeout = Some(value.into());`.
+    pub fn heartbeat_timeout<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.heartbeat_timeout = Some(value.into());
+        self
+    }
+    /// Sets `input`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleActivityTaskDecisionAttributes.input = Some(value.into());`.
+    pub fn input<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.input = Some(value.into());
+        self
+    }
+    /// Sets `schedule_to_close_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleActivityTaskDecisionAttributes.schedule_to_close_timeout = Some(value.into());`.
+    pub fn schedule_to_close_timeout<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.schedule_to_close_timeout = Some(value.into());
+        self
+    }
+    /// Sets `schedule_to_start_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleActivityTaskDecisionAttributes.schedule_to_start_timeout = Some(value.into());`.
+    pub fn schedule_to_start_timeout<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.schedule_to_start_timeout = Some(value.into());
+        self
+    }
+    /// Sets `start_to_close_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleActivityTaskDecisionAttributes.start_to_close_timeout = Some(value.into());`.
+    pub fn start_to_close_timeout<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_to_close_timeout = Some(value.into());
+        self
+    }
+    /// Sets `task_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleActivityTaskDecisionAttributes.task_list = Some(value.into());`.
+    pub fn task_list<ValueType: Into<TaskList>>(mut self, value: ValueType) -> Self {
+        self.task_list = Some(value.into());
+        self
+    }
+    /// Sets `task_priority`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleActivityTaskDecisionAttributes.task_priority = Some(value.into());`.
+    pub fn task_priority<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_priority = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ScheduleActivityTaskDecisionAttributes with optional fields set to `None`.
+    pub fn new<activityIdType: Into<String>, activityTypeType: Into<ActivityType>>
+        (activity_id: activityIdType,
+         activity_type: activityTypeType)
+         -> ScheduleActivityTaskDecisionAttributes {
+        ScheduleActivityTaskDecisionAttributes {
+            activity_id: activity_id.into(),
+            activity_type: activity_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides the details of the <code>ScheduleActivityTaskFailed</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ScheduleActivityTaskFailedEventAttributes {
@@ -1867,7 +3421,6 @@ pub struct ScheduleActivityTaskFailedEventAttributes {
     #[serde(rename="decisionTaskCompletedEventId")]
     pub decision_task_completed_event_id: i64,
 }
-
 #[doc="<p>Decision attributes specified in <code>scheduleLambdaFunctionDecisionAttributes</code> within the list of decisions <code>decisions</code> passed to <a>RespondDecisionTaskCompleted</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ScheduleLambdaFunctionDecisionAttributes {
@@ -1890,7 +3443,54 @@ pub struct ScheduleLambdaFunctionDecisionAttributes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub start_to_close_timeout: Option<String>,
 }
-
+impl ScheduleLambdaFunctionDecisionAttributes {
+    /// Sets `control`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleLambdaFunctionDecisionAttributes.control = Some(value.into());`.
+    pub fn control<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.control = Some(value.into());
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleLambdaFunctionDecisionAttributes.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `input`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleLambdaFunctionDecisionAttributes.input = Some(value.into());`.
+    pub fn input<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.input = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleLambdaFunctionDecisionAttributes.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `start_to_close_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleLambdaFunctionDecisionAttributes.start_to_close_timeout = Some(value.into());`.
+    pub fn start_to_close_timeout<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_to_close_timeout = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ScheduleLambdaFunctionDecisionAttributes with optional fields set to `None`.
+    pub fn new<idType: Into<String>, nameType: Into<String>>
+        (id: idType,
+         name: nameType)
+         -> ScheduleLambdaFunctionDecisionAttributes {
+        ScheduleLambdaFunctionDecisionAttributes {
+            id: id.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides the details of the <code>ScheduleLambdaFunctionFailed</code> event. It isn't set for other event types.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ScheduleLambdaFunctionFailedEventAttributes {
@@ -1907,7 +3507,6 @@ pub struct ScheduleLambdaFunctionFailedEventAttributes {
     #[serde(rename="name")]
     pub name: String,
 }
-
 #[doc="<p>Provides the details of the <code>SignalExternalWorkflowExecution</code> decision.</p> <p> <b>Access Control</b> </p> <p>You can use IAM policies to control this decision's access to Amazon SWF resources as follows:</p> <ul> <li> <p>Use a <code>Resource</code> element with the domain name to limit the action to only specified domains.</p> </li> <li> <p>Use an <code>Action</code> element to allow or deny permission to call this action.</p> </li> <li> <p>You cannot use an IAM policy to constrain this action's parameters.</p> </li> </ul> <p>If the caller doesn't have sufficient permissions to invoke the action, or the parameter values fall outside the specified constraints, the action fails. The associated event attribute's <code>cause</code> parameter is set to <code>OPERATION_NOT_PERMITTED</code>. For details and example IAM policies, see <a href=\"http://docs.aws.amazon.com/amazonswf/latest/developerguide/swf-dev-iam.html\">Using IAM to Manage Access to Amazon SWF Workflows</a> in the <i>Amazon SWF Developer Guide</i>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SignalExternalWorkflowExecutionDecisionAttributes {
@@ -1930,7 +3529,54 @@ pub struct SignalExternalWorkflowExecutionDecisionAttributes {
     #[serde(rename="workflowId")]
     pub workflow_id: String,
 }
-
+impl SignalExternalWorkflowExecutionDecisionAttributes {
+    /// Sets `control`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SignalExternalWorkflowExecutionDecisionAttributes.control = Some(value.into());`.
+    pub fn control<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.control = Some(value.into());
+        self
+    }
+    /// Sets `input`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SignalExternalWorkflowExecutionDecisionAttributes.input = Some(value.into());`.
+    pub fn input<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.input = Some(value.into());
+        self
+    }
+    /// Sets `run_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SignalExternalWorkflowExecutionDecisionAttributes.run_id = Some(value.into());`.
+    pub fn run_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.run_id = Some(value.into());
+        self
+    }
+    /// Sets `signal_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SignalExternalWorkflowExecutionDecisionAttributes.signal_name = value.into();`.
+    pub fn signal_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.signal_name = value.into();
+        self
+    }
+    /// Sets `workflow_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SignalExternalWorkflowExecutionDecisionAttributes.workflow_id = value.into();`.
+    pub fn workflow_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.workflow_id = value.into();
+        self
+    }
+    /// Returns a new instance of SignalExternalWorkflowExecutionDecisionAttributes with optional fields set to `None`.
+    pub fn new<signalNameType: Into<String>, workflowIdType: Into<String>>
+        (signal_name: signalNameType,
+         workflow_id: workflowIdType)
+         -> SignalExternalWorkflowExecutionDecisionAttributes {
+        SignalExternalWorkflowExecutionDecisionAttributes {
+            signal_name: signal_name.into(),
+            workflow_id: workflow_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides the details of the <code>SignalExternalWorkflowExecutionFailed</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SignalExternalWorkflowExecutionFailedEventAttributes {
@@ -1955,7 +3601,6 @@ pub struct SignalExternalWorkflowExecutionFailedEventAttributes {
     #[serde(rename="workflowId")]
     pub workflow_id: String,
 }
-
 #[doc="<p>Provides the details of the <code>SignalExternalWorkflowExecutionInitiated</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SignalExternalWorkflowExecutionInitiatedEventAttributes {
@@ -1981,7 +3626,6 @@ pub struct SignalExternalWorkflowExecutionInitiatedEventAttributes {
     #[serde(rename="workflowId")]
     pub workflow_id: String,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SignalWorkflowExecutionInput {
     #[doc="<p>The name of the domain containing the workflow execution to signal.</p>"]
@@ -2002,7 +3646,56 @@ pub struct SignalWorkflowExecutionInput {
     #[serde(rename="workflowId")]
     pub workflow_id: String,
 }
-
+impl SignalWorkflowExecutionInput {
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SignalWorkflowExecutionInput.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `input`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SignalWorkflowExecutionInput.input = Some(value.into());`.
+    pub fn input<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.input = Some(value.into());
+        self
+    }
+    /// Sets `run_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SignalWorkflowExecutionInput.run_id = Some(value.into());`.
+    pub fn run_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.run_id = Some(value.into());
+        self
+    }
+    /// Sets `signal_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SignalWorkflowExecutionInput.signal_name = value.into();`.
+    pub fn signal_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.signal_name = value.into();
+        self
+    }
+    /// Sets `workflow_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SignalWorkflowExecutionInput.workflow_id = value.into();`.
+    pub fn workflow_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.workflow_id = value.into();
+        self
+    }
+    /// Returns a new instance of SignalWorkflowExecutionInput with optional fields set to `None`.
+    pub fn new<domainType: Into<String>, signalNameType: Into<String>, workflowIdType: Into<String>>
+        (domain: domainType,
+         signal_name: signalNameType,
+         workflow_id: workflowIdType)
+         -> SignalWorkflowExecutionInput {
+        SignalWorkflowExecutionInput {
+            domain: domain.into(),
+            signal_name: signal_name.into(),
+            workflow_id: workflow_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides the details of the <code>StartChildWorkflowExecution</code> decision.</p> <p> <b>Access Control</b> </p> <p>You can use IAM policies to control this decision's access to Amazon SWF resources as follows:</p> <ul> <li> <p>Use a <code>Resource</code> element with the domain name to limit the action to only specified domains.</p> </li> <li> <p>Use an <code>Action</code> element to allow or deny permission to call this action.</p> </li> <li> <p>Constrain the following parameters by using a <code>Condition</code> element with the appropriate keys.</p> <ul> <li> <p> <code>tagList.member.N</code> – The key is \"swf:tagList.N\" where N is the tag number from 0 to 4, inclusive.</p> </li> <li> <p> <code>taskList</code> – String constraint. The key is <code>swf:taskList.name</code>.</p> </li> <li> <p> <code>workflowType.name</code> – String constraint. The key is <code>swf:workflowType.name</code>.</p> </li> <li> <p> <code>workflowType.version</code> – String constraint. The key is <code>swf:workflowType.version</code>.</p> </li> </ul> </li> </ul> <p>If the caller doesn't have sufficient permissions to invoke the action, or the parameter values fall outside the specified constraints, the action fails. The associated event attribute's <code>cause</code> parameter is set to <code>OPERATION_NOT_PERMITTED</code>. For details and example IAM policies, see <a href=\"http://docs.aws.amazon.com/amazonswf/latest/developerguide/swf-dev-iam.html\">Using IAM to Manage Access to Amazon SWF Workflows</a> in the <i>Amazon SWF Developer Guide</i>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartChildWorkflowExecutionDecisionAttributes {
@@ -2049,7 +3742,100 @@ pub struct StartChildWorkflowExecutionDecisionAttributes {
     #[serde(rename="workflowType")]
     pub workflow_type: WorkflowType,
 }
-
+impl StartChildWorkflowExecutionDecisionAttributes {
+    /// Sets `child_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartChildWorkflowExecutionDecisionAttributes.child_policy = Some(value.into());`.
+    pub fn child_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.child_policy = Some(value.into());
+        self
+    }
+    /// Sets `control`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartChildWorkflowExecutionDecisionAttributes.control = Some(value.into());`.
+    pub fn control<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.control = Some(value.into());
+        self
+    }
+    /// Sets `execution_start_to_close_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartChildWorkflowExecutionDecisionAttributes.execution_start_to_close_timeout = Some(value.into());`.
+    pub fn execution_start_to_close_timeout<ValueType: Into<String>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.execution_start_to_close_timeout = Some(value.into());
+        self
+    }
+    /// Sets `input`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartChildWorkflowExecutionDecisionAttributes.input = Some(value.into());`.
+    pub fn input<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.input = Some(value.into());
+        self
+    }
+    /// Sets `lambda_role`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartChildWorkflowExecutionDecisionAttributes.lambda_role = Some(value.into());`.
+    pub fn lambda_role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lambda_role = Some(value.into());
+        self
+    }
+    /// Sets `tag_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartChildWorkflowExecutionDecisionAttributes.tag_list = Some(value.into());`.
+    pub fn tag_list<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tag_list = Some(value.into());
+        self
+    }
+    /// Sets `task_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartChildWorkflowExecutionDecisionAttributes.task_list = Some(value.into());`.
+    pub fn task_list<ValueType: Into<TaskList>>(mut self, value: ValueType) -> Self {
+        self.task_list = Some(value.into());
+        self
+    }
+    /// Sets `task_priority`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartChildWorkflowExecutionDecisionAttributes.task_priority = Some(value.into());`.
+    pub fn task_priority<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_priority = Some(value.into());
+        self
+    }
+    /// Sets `task_start_to_close_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartChildWorkflowExecutionDecisionAttributes.task_start_to_close_timeout = Some(value.into());`.
+    pub fn task_start_to_close_timeout<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.task_start_to_close_timeout = Some(value.into());
+        self
+    }
+    /// Sets `workflow_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartChildWorkflowExecutionDecisionAttributes.workflow_id = value.into();`.
+    pub fn workflow_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.workflow_id = value.into();
+        self
+    }
+    /// Sets `workflow_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartChildWorkflowExecutionDecisionAttributes.workflow_type = value.into();`.
+    pub fn workflow_type<ValueType: Into<WorkflowType>>(mut self, value: ValueType) -> Self {
+        self.workflow_type = value.into();
+        self
+    }
+    /// Returns a new instance of StartChildWorkflowExecutionDecisionAttributes with optional fields set to `None`.
+    pub fn new<workflowIdType: Into<String>, workflowTypeType: Into<WorkflowType>>
+        (workflow_id: workflowIdType,
+         workflow_type: workflowTypeType)
+         -> StartChildWorkflowExecutionDecisionAttributes {
+        StartChildWorkflowExecutionDecisionAttributes {
+            workflow_id: workflow_id.into(),
+            workflow_type: workflow_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides the details of the <code>StartChildWorkflowExecutionFailed</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartChildWorkflowExecutionFailedEventAttributes {
@@ -2073,7 +3859,6 @@ pub struct StartChildWorkflowExecutionFailedEventAttributes {
     #[serde(rename="workflowType")]
     pub workflow_type: WorkflowType,
 }
-
 #[doc="<p>Provides the details of the <code>StartChildWorkflowExecutionInitiated</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartChildWorkflowExecutionInitiatedEventAttributes {
@@ -2121,7 +3906,6 @@ pub struct StartChildWorkflowExecutionInitiatedEventAttributes {
     #[serde(rename="workflowType")]
     pub workflow_type: WorkflowType,
 }
-
 #[doc="<p>Provides the details of the <code>StartLambdaFunctionFailed</code> event. It isn't set for other event types.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartLambdaFunctionFailedEventAttributes {
@@ -2138,7 +3922,6 @@ pub struct StartLambdaFunctionFailedEventAttributes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub scheduled_event_id: Option<i64>,
 }
-
 #[doc="<p>Provides the details of the <code>StartTimer</code> decision.</p> <p> <b>Access Control</b> </p> <p>You can use IAM policies to control this decision's access to Amazon SWF resources as follows:</p> <ul> <li> <p>Use a <code>Resource</code> element with the domain name to limit the action to only specified domains.</p> </li> <li> <p>Use an <code>Action</code> element to allow or deny permission to call this action.</p> </li> <li> <p>You cannot use an IAM policy to constrain this action's parameters.</p> </li> </ul> <p>If the caller doesn't have sufficient permissions to invoke the action, or the parameter values fall outside the specified constraints, the action fails. The associated event attribute's <code>cause</code> parameter is set to <code>OPERATION_NOT_PERMITTED</code>. For details and example IAM policies, see <a href=\"http://docs.aws.amazon.com/amazonswf/latest/developerguide/swf-dev-iam.html\">Using IAM to Manage Access to Amazon SWF Workflows</a> in the <i>Amazon SWF Developer Guide</i>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartTimerDecisionAttributes {
@@ -2153,7 +3936,40 @@ pub struct StartTimerDecisionAttributes {
     #[serde(rename="timerId")]
     pub timer_id: String,
 }
-
+impl StartTimerDecisionAttributes {
+    /// Sets `control`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartTimerDecisionAttributes.control = Some(value.into());`.
+    pub fn control<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.control = Some(value.into());
+        self
+    }
+    /// Sets `start_to_fire_timeout`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartTimerDecisionAttributes.start_to_fire_timeout = value.into();`.
+    pub fn start_to_fire_timeout<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_to_fire_timeout = value.into();
+        self
+    }
+    /// Sets `timer_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartTimerDecisionAttributes.timer_id = value.into();`.
+    pub fn timer_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.timer_id = value.into();
+        self
+    }
+    /// Returns a new instance of StartTimerDecisionAttributes with optional fields set to `None`.
+    pub fn new<startToFireTimeoutType: Into<String>, timerIdType: Into<String>>
+        (start_to_fire_timeout: startToFireTimeoutType,
+         timer_id: timerIdType)
+         -> StartTimerDecisionAttributes {
+        StartTimerDecisionAttributes {
+            start_to_fire_timeout: start_to_fire_timeout.into(),
+            timer_id: timer_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides the details of the <code>StartTimerFailed</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartTimerFailedEventAttributes {
@@ -2167,7 +3983,6 @@ pub struct StartTimerFailedEventAttributes {
     #[serde(rename="timerId")]
     pub timer_id: String,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartWorkflowExecutionInput {
     #[doc="<p>If set, specifies the policy to use for the child workflow executions of this workflow execution if it is terminated, by calling the <a>TerminateWorkflowExecution</a> action explicitly or due to an expired timeout. This policy overrides the default child policy specified when registering the workflow type using <a>RegisterWorkflowType</a>.</p> <p>The supported child policies are:</p> <ul> <li> <p> <code>TERMINATE</code> – The child executions are terminated.</p> </li> <li> <p> <code>REQUEST_CANCEL</code> – A request to cancel is attempted for each child execution by recording a <code>WorkflowExecutionCancelRequested</code> event in its history. It is up to the decider to take appropriate actions when it receives an execution history with this event.</p> </li> <li> <p> <code>ABANDON</code> – No action is taken. The child executions continue to run.</p> </li> </ul> <note> <p>A child policy for this workflow execution must be specified either as a default for the workflow type or through this parameter. If neither this parameter is set nor a default child policy was specified at registration time then a fault is returned.</p> </note>"]
@@ -2212,7 +4027,104 @@ pub struct StartWorkflowExecutionInput {
     #[serde(rename="workflowType")]
     pub workflow_type: WorkflowType,
 }
-
+impl StartWorkflowExecutionInput {
+    /// Sets `child_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartWorkflowExecutionInput.child_policy = Some(value.into());`.
+    pub fn child_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.child_policy = Some(value.into());
+        self
+    }
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartWorkflowExecutionInput.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `execution_start_to_close_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartWorkflowExecutionInput.execution_start_to_close_timeout = Some(value.into());`.
+    pub fn execution_start_to_close_timeout<ValueType: Into<String>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.execution_start_to_close_timeout = Some(value.into());
+        self
+    }
+    /// Sets `input`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartWorkflowExecutionInput.input = Some(value.into());`.
+    pub fn input<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.input = Some(value.into());
+        self
+    }
+    /// Sets `lambda_role`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartWorkflowExecutionInput.lambda_role = Some(value.into());`.
+    pub fn lambda_role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lambda_role = Some(value.into());
+        self
+    }
+    /// Sets `tag_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartWorkflowExecutionInput.tag_list = Some(value.into());`.
+    pub fn tag_list<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tag_list = Some(value.into());
+        self
+    }
+    /// Sets `task_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartWorkflowExecutionInput.task_list = Some(value.into());`.
+    pub fn task_list<ValueType: Into<TaskList>>(mut self, value: ValueType) -> Self {
+        self.task_list = Some(value.into());
+        self
+    }
+    /// Sets `task_priority`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartWorkflowExecutionInput.task_priority = Some(value.into());`.
+    pub fn task_priority<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_priority = Some(value.into());
+        self
+    }
+    /// Sets `task_start_to_close_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartWorkflowExecutionInput.task_start_to_close_timeout = Some(value.into());`.
+    pub fn task_start_to_close_timeout<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.task_start_to_close_timeout = Some(value.into());
+        self
+    }
+    /// Sets `workflow_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartWorkflowExecutionInput.workflow_id = value.into();`.
+    pub fn workflow_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.workflow_id = value.into();
+        self
+    }
+    /// Sets `workflow_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartWorkflowExecutionInput.workflow_type = value.into();`.
+    pub fn workflow_type<ValueType: Into<WorkflowType>>(mut self, value: ValueType) -> Self {
+        self.workflow_type = value.into();
+        self
+    }
+    /// Returns a new instance of StartWorkflowExecutionInput with optional fields set to `None`.
+    pub fn new<domainType: Into<String>,
+               workflowIdType: Into<String>,
+               workflowTypeType: Into<WorkflowType>>
+        (domain: domainType,
+         workflow_id: workflowIdType,
+         workflow_type: workflowTypeType)
+         -> StartWorkflowExecutionInput {
+        StartWorkflowExecutionInput {
+            domain: domain.into(),
+            workflow_id: workflow_id.into(),
+            workflow_type: workflow_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Used to filter the workflow executions in visibility APIs based on a tag.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TagFilter {
@@ -2220,7 +4132,22 @@ pub struct TagFilter {
     #[serde(rename="tag")]
     pub tag: String,
 }
-
+impl TagFilter {
+    /// Sets `tag`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TagFilter.tag = value.into();`.
+    pub fn tag<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tag = value.into();
+        self
+    }
+    /// Returns a new instance of TagFilter with optional fields set to `None`.
+    pub fn new<tagType: Into<String>>(tag: tagType) -> TagFilter {
+        TagFilter {
+            tag: tag.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents a task list.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct TaskList {
@@ -2228,7 +4155,22 @@ pub struct TaskList {
     #[serde(rename="name")]
     pub name: String,
 }
-
+impl TaskList {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TaskList.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of TaskList with optional fields set to `None`.
+    pub fn new<nameType: Into<String>>(name: nameType) -> TaskList {
+        TaskList {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TerminateWorkflowExecutionInput {
     #[doc="<p>If set, specifies the policy to use for the child workflow executions of the workflow execution being terminated. This policy overrides the child policy specified for the workflow execution at registration time or when starting the execution.</p> <p>The supported child policies are:</p> <ul> <li> <p> <code>TERMINATE</code> – The child executions are terminated.</p> </li> <li> <p> <code>REQUEST_CANCEL</code> – A request to cancel is attempted for each child execution by recording a <code>WorkflowExecutionCancelRequested</code> event in its history. It is up to the decider to take appropriate actions when it receives an execution history with this event.</p> </li> <li> <p> <code>ABANDON</code> – No action is taken. The child executions continue to run.</p> </li> </ul> <note> <p>A child policy for this workflow execution must be specified either as a default for the workflow type or through this parameter. If neither this parameter is set nor a default child policy was specified at registration time then a fault is returned.</p> </note>"]
@@ -2254,7 +4196,61 @@ pub struct TerminateWorkflowExecutionInput {
     #[serde(rename="workflowId")]
     pub workflow_id: String,
 }
-
+impl TerminateWorkflowExecutionInput {
+    /// Sets `child_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateWorkflowExecutionInput.child_policy = Some(value.into());`.
+    pub fn child_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.child_policy = Some(value.into());
+        self
+    }
+    /// Sets `details`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateWorkflowExecutionInput.details = Some(value.into());`.
+    pub fn details<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.details = Some(value.into());
+        self
+    }
+    /// Sets `domain`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateWorkflowExecutionInput.domain = value.into();`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = value.into();
+        self
+    }
+    /// Sets `reason`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateWorkflowExecutionInput.reason = Some(value.into());`.
+    pub fn reason<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reason = Some(value.into());
+        self
+    }
+    /// Sets `run_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateWorkflowExecutionInput.run_id = Some(value.into());`.
+    pub fn run_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.run_id = Some(value.into());
+        self
+    }
+    /// Sets `workflow_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateWorkflowExecutionInput.workflow_id = value.into();`.
+    pub fn workflow_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.workflow_id = value.into();
+        self
+    }
+    /// Returns a new instance of TerminateWorkflowExecutionInput with optional fields set to `None`.
+    pub fn new<domainType: Into<String>, workflowIdType: Into<String>>
+        (domain: domainType,
+         workflow_id: workflowIdType)
+         -> TerminateWorkflowExecutionInput {
+        TerminateWorkflowExecutionInput {
+            domain: domain.into(),
+            workflow_id: workflow_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> Provides the details of the <code>TimerCanceled</code> event. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TimerCanceledEventAttributes {
@@ -2268,7 +4264,6 @@ pub struct TimerCanceledEventAttributes {
     #[serde(rename="timerId")]
     pub timer_id: String,
 }
-
 #[doc="<p>Provides the details of the <code>TimerFired</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TimerFiredEventAttributes {
@@ -2279,7 +4274,6 @@ pub struct TimerFiredEventAttributes {
     #[serde(rename="timerId")]
     pub timer_id: String,
 }
-
 #[doc="<p>Provides the details of the <code>TimerStarted</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TimerStartedEventAttributes {
@@ -2297,7 +4291,6 @@ pub struct TimerStartedEventAttributes {
     #[serde(rename="timerId")]
     pub timer_id: String,
 }
-
 #[doc="<p>Represents a workflow execution.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct WorkflowExecution {
@@ -2308,7 +4301,32 @@ pub struct WorkflowExecution {
     #[serde(rename="workflowId")]
     pub workflow_id: String,
 }
-
+impl WorkflowExecution {
+    /// Sets `run_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WorkflowExecution.run_id = value.into();`.
+    pub fn run_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.run_id = value.into();
+        self
+    }
+    /// Sets `workflow_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WorkflowExecution.workflow_id = value.into();`.
+    pub fn workflow_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.workflow_id = value.into();
+        self
+    }
+    /// Returns a new instance of WorkflowExecution with optional fields set to `None`.
+    pub fn new<runIdType: Into<String>, workflowIdType: Into<String>>(run_id: runIdType,
+                                                                      workflow_id: workflowIdType)
+                                                                      -> WorkflowExecution {
+        WorkflowExecution {
+            run_id: run_id.into(),
+            workflow_id: workflow_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides the details of the <code>WorkflowExecutionCancelRequested</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkflowExecutionCancelRequestedEventAttributes {
@@ -2325,7 +4343,6 @@ pub struct WorkflowExecutionCancelRequestedEventAttributes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub external_workflow_execution: Option<WorkflowExecution>,
 }
-
 #[doc="<p>Provides the details of the <code>WorkflowExecutionCanceled</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkflowExecutionCanceledEventAttributes {
@@ -2337,7 +4354,6 @@ pub struct WorkflowExecutionCanceledEventAttributes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub details: Option<String>,
 }
-
 #[doc="<p>Provides the details of the <code>WorkflowExecutionCompleted</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkflowExecutionCompletedEventAttributes {
@@ -2349,7 +4365,6 @@ pub struct WorkflowExecutionCompletedEventAttributes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub result: Option<String>,
 }
-
 #[doc="<p>The configuration settings for a workflow execution including timeout values, tasklist etc. These configuration settings are determined from the defaults specified when registering the workflow type and those specified when starting the workflow execution.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkflowExecutionConfiguration {
@@ -2374,7 +4389,6 @@ pub struct WorkflowExecutionConfiguration {
     #[serde(rename="taskStartToCloseTimeout")]
     pub task_start_to_close_timeout: String,
 }
-
 #[doc="<p>Provides the details of the <code>WorkflowExecutionContinuedAsNew</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkflowExecutionContinuedAsNewEventAttributes {
@@ -2418,7 +4432,6 @@ pub struct WorkflowExecutionContinuedAsNewEventAttributes {
     #[serde(rename="workflowType")]
     pub workflow_type: WorkflowType,
 }
-
 #[doc="<p>Contains the count of workflow executions returned from <a>CountOpenWorkflowExecutions</a> or <a>CountClosedWorkflowExecutions</a> </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkflowExecutionCount {
@@ -2430,7 +4443,6 @@ pub struct WorkflowExecutionCount {
     #[serde(skip_serializing_if="Option::is_none")]
     pub truncated: Option<bool>,
 }
-
 #[doc="<p>Contains details about a workflow execution.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkflowExecutionDetail {
@@ -2452,7 +4464,6 @@ pub struct WorkflowExecutionDetail {
     #[serde(rename="openCounts")]
     pub open_counts: WorkflowExecutionOpenCounts,
 }
-
 #[doc="<p>Provides the details of the <code>WorkflowExecutionFailed</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkflowExecutionFailedEventAttributes {
@@ -2468,7 +4479,6 @@ pub struct WorkflowExecutionFailedEventAttributes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub reason: Option<String>,
 }
-
 #[doc="<p>Used to filter the workflow executions in visibility APIs by their <code>workflowId</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct WorkflowExecutionFilter {
@@ -2476,7 +4486,23 @@ pub struct WorkflowExecutionFilter {
     #[serde(rename="workflowId")]
     pub workflow_id: String,
 }
-
+impl WorkflowExecutionFilter {
+    /// Sets `workflow_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WorkflowExecutionFilter.workflow_id = value.into();`.
+    pub fn workflow_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.workflow_id = value.into();
+        self
+    }
+    /// Returns a new instance of WorkflowExecutionFilter with optional fields set to `None`.
+    pub fn new<workflowIdType: Into<String>>(workflow_id: workflowIdType)
+                                             -> WorkflowExecutionFilter {
+        WorkflowExecutionFilter {
+            workflow_id: workflow_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains information about a workflow execution.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkflowExecutionInfo {
@@ -2513,7 +4539,6 @@ pub struct WorkflowExecutionInfo {
     #[serde(rename="workflowType")]
     pub workflow_type: WorkflowType,
 }
-
 #[doc="<p>Contains a paginated list of information about workflow executions.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkflowExecutionInfos {
@@ -2525,7 +4550,6 @@ pub struct WorkflowExecutionInfos {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_page_token: Option<String>,
 }
-
 #[doc="<p>Contains the counts of open tasks, child workflow executions and timers for a workflow execution.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkflowExecutionOpenCounts {
@@ -2546,7 +4570,6 @@ pub struct WorkflowExecutionOpenCounts {
     #[serde(rename="openTimers")]
     pub open_timers: i64,
 }
-
 #[doc="<p>Provides the details of the <code>WorkflowExecutionSignaled</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkflowExecutionSignaledEventAttributes {
@@ -2566,7 +4589,6 @@ pub struct WorkflowExecutionSignaledEventAttributes {
     #[serde(rename="signalName")]
     pub signal_name: String,
 }
-
 #[doc="<p>Provides details of <code>WorkflowExecutionStarted</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkflowExecutionStartedEventAttributes {
@@ -2616,7 +4638,6 @@ pub struct WorkflowExecutionStartedEventAttributes {
     #[serde(rename="workflowType")]
     pub workflow_type: WorkflowType,
 }
-
 #[doc="<p>Provides the details of the <code>WorkflowExecutionTerminated</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkflowExecutionTerminatedEventAttributes {
@@ -2636,7 +4657,6 @@ pub struct WorkflowExecutionTerminatedEventAttributes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub reason: Option<String>,
 }
-
 #[doc="<p>Provides the details of the <code>WorkflowExecutionTimedOut</code> event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkflowExecutionTimedOutEventAttributes {
@@ -2647,7 +4667,6 @@ pub struct WorkflowExecutionTimedOutEventAttributes {
     #[serde(rename="timeoutType")]
     pub timeout_type: String,
 }
-
 #[doc="<p>Represents a workflow type.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct WorkflowType {
@@ -2658,7 +4677,32 @@ pub struct WorkflowType {
     #[serde(rename="version")]
     pub version: String,
 }
-
+impl WorkflowType {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WorkflowType.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WorkflowType.version = value.into();`.
+    pub fn version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version = value.into();
+        self
+    }
+    /// Returns a new instance of WorkflowType with optional fields set to `None`.
+    pub fn new<nameType: Into<String>, versionType: Into<String>>(name: nameType,
+                                                                  version: versionType)
+                                                                  -> WorkflowType {
+        WorkflowType {
+            name: name.into(),
+            version: version.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The configuration settings of a workflow type.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkflowTypeConfiguration {
@@ -2687,7 +4731,6 @@ pub struct WorkflowTypeConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub default_task_start_to_close_timeout: Option<String>,
 }
-
 #[doc="<p>Contains details about a workflow type.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkflowTypeDetail {
@@ -2698,7 +4741,6 @@ pub struct WorkflowTypeDetail {
     #[serde(rename="typeInfo")]
     pub type_info: WorkflowTypeInfo,
 }
-
 #[doc="<p>Used to filter workflow execution query results by type. Each parameter, if specified, defines a rule that must be satisfied by each returned result.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct WorkflowTypeFilter {
@@ -2710,7 +4752,29 @@ pub struct WorkflowTypeFilter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<String>,
 }
-
+impl WorkflowTypeFilter {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WorkflowTypeFilter.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `WorkflowTypeFilter.version = Some(value.into());`.
+    pub fn version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version = Some(value.into());
+        self
+    }
+    /// Returns a new instance of WorkflowTypeFilter with optional fields set to `None`.
+    pub fn new<nameType: Into<String>>(name: nameType) -> WorkflowTypeFilter {
+        WorkflowTypeFilter {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains information about a workflow type.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkflowTypeInfo {
@@ -2732,7 +4796,6 @@ pub struct WorkflowTypeInfo {
     #[serde(rename="workflowType")]
     pub workflow_type: WorkflowType,
 }
-
 #[doc="<p>Contains a paginated list of information structures about workflow types.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkflowTypeInfos {
@@ -2744,7 +4807,6 @@ pub struct WorkflowTypeInfos {
     #[serde(rename="typeInfos")]
     pub type_infos: Vec<WorkflowTypeInfo>,
 }
-
 /// Errors returned by CountClosedWorkflowExecutions
 #[derive(Debug, PartialEq)]
 pub enum CountClosedWorkflowExecutionsError {

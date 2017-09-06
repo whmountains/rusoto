@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -47,7 +48,32 @@ pub struct AlarmIdentifier {
     #[doc="<p>A complex type that identifies the CloudWatch alarm that you want Amazon Route 53 health checkers to use to determine whether this health check is healthy.</p> <p>For the current list of CloudWatch regions, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/rande.html#cw_region\">Amazon CloudWatch</a> in the <i>AWS Regions and Endpoints</i> chapter of the <i>Amazon Web Services General Reference</i>.</p>"]
     pub region: String,
 }
-
+impl AlarmIdentifier {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AlarmIdentifier.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `region`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AlarmIdentifier.region = value.into();`.
+    pub fn region<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.region = value.into();
+        self
+    }
+    /// Returns a new instance of AlarmIdentifier with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, RegionType: Into<String>>(name: NameType,
+                                                                 region: RegionType)
+                                                                 -> AlarmIdentifier {
+        AlarmIdentifier {
+            name: name.into(),
+            region: region.into(),
+            ..Default::default()
+        }
+    }
+}
 struct AlarmIdentifierDeserializer;
 impl AlarmIdentifierDeserializer {
     #[allow(unused_variables)]
@@ -166,7 +192,44 @@ pub struct AliasTarget {
     #[doc="<p> <i>Alias resource records sets only</i>: The value used depends on where you want to route traffic:</p> <dl> <dt>CloudFront distribution</dt> <dd> <p>Specify <code>Z2FDTNDATAQYW2</code>.</p> <note> <p>Alias resource record sets for CloudFront can't be created in a private zone.</p> </note> </dd> <dt>Elastic Beanstalk environment</dt> <dd> <p>Specify the hosted zone ID for the region in which you created the environment. The environment must have a regionalized subdomain. For a list of regions and the corresponding hosted zone IDs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/rande.html#elasticbeanstalk_region\">AWS Elastic Beanstalk</a> in the \"AWS Regions and Endpoints\" chapter of the <i>Amazon Web Services General Reference</i>.</p> </dd> <dt>ELB load balancer</dt> <dd> <p>Specify the value of the hosted zone ID for the load balancer. Use the following methods to get the hosted zone ID:</p> <ul> <li> <p> <a href=\"http://docs.aws.amazon.com/general/latest/gr/rande.html#elb_region\">Elastic Load Balancing</a> table in the \"AWS Regions and Endpoints\" chapter of the <i>Amazon Web Services General Reference</i>: Use the value in the \"Amazon Route 53 Hosted Zone ID\" column that corresponds with the region that you created your load balancer in.</p> </li> <li> <p> <b>AWS Management Console</b>: Go to the Amazon EC2 page, click <b>Load Balancers</b> in the navigation pane, select the load balancer, and get the value of the <b>Hosted zone</b> field on the <b>Description</b> tab.</p> </li> <li> <p> <b>Elastic Load Balancing API</b>: Use <code>DescribeLoadBalancers</code> to get the value of <code>CanonicalHostedZoneNameId</code>. For more information, see the applicable guide:</p> <ul> <li> <p>Classic Load Balancer: <a href=\"http://docs.aws.amazon.com/elasticloadbalancing/2012-06-01/APIReference/API_DescribeLoadBalancers.html\">DescribeLoadBalancers</a> </p> </li> <li> <p>Application Load Balancer: <a href=\"http://docs.aws.amazon.com/elasticloadbalancing/latest/APIReference/API_DescribeLoadBalancers.html\">DescribeLoadBalancers</a> </p> </li> </ul> </li> <li> <p> <b>AWS CLI</b>: Use <code> <a href=\"http://docs.aws.amazon.com/cli/latest/reference/elb/describe-load-balancers.html\">describe-load-balancers</a> </code> to get the value of <code>CanonicalHostedZoneNameID</code>.</p> </li> </ul> </dd> <dt>An Amazon S3 bucket configured as a static website</dt> <dd> <p>Specify the hosted zone ID for the region that you created the bucket in. For more information about valid values, see the <a href=\"http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region\">Amazon Simple Storage Service Website Endpoints</a> table in the \"AWS Regions and Endpoints\" chapter of the <i>Amazon Web Services General Reference</i>.</p> </dd> <dt>Another Amazon Route 53 resource record set in your hosted zone</dt> <dd> <p>Specify the hosted zone ID of your hosted zone. (An alias resource record set can't reference a resource record set in a different hosted zone.)</p> </dd> </dl>"]
     pub hosted_zone_id: String,
 }
-
+impl AliasTarget {
+    /// Sets `dns_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AliasTarget.dns_name = value.into();`.
+    pub fn dns_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.dns_name = value.into();
+        self
+    }
+    /// Sets `evaluate_target_health`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AliasTarget.evaluate_target_health = value.into();`.
+    pub fn evaluate_target_health<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.evaluate_target_health = value.into();
+        self
+    }
+    /// Sets `hosted_zone_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AliasTarget.hosted_zone_id = value.into();`.
+    pub fn hosted_zone_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hosted_zone_id = value.into();
+        self
+    }
+    /// Returns a new instance of AliasTarget with optional fields set to `None`.
+    pub fn new<DNSNameType: Into<String>,
+               EvaluateTargetHealthType: Into<bool>,
+               HostedZoneIdType: Into<String>>
+        (dns_name: DNSNameType,
+         evaluate_target_health: EvaluateTargetHealthType,
+         hosted_zone_id: HostedZoneIdType)
+         -> AliasTarget {
+        AliasTarget {
+            dns_name: dns_name.into(),
+            evaluate_target_health: evaluate_target_health.into(),
+            hosted_zone_id: hosted_zone_id.into(),
+            ..Default::default()
+        }
+    }
+}
 struct AliasTargetDeserializer;
 impl AliasTargetDeserializer {
     #[allow(unused_variables)]
@@ -254,14 +317,46 @@ pub struct AssociateVPCWithHostedZoneRequest {
     #[doc="<p>A complex type that contains information about the VPC that you want to associate with a private hosted zone.</p>"]
     pub vpc: VPC,
 }
-
+impl AssociateVPCWithHostedZoneRequest {
+    /// Sets `comment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateVPCWithHostedZoneRequest.comment = Some(value.into());`.
+    pub fn comment<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.comment = Some(value.into());
+        self
+    }
+    /// Sets `hosted_zone_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateVPCWithHostedZoneRequest.hosted_zone_id = value.into();`.
+    pub fn hosted_zone_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hosted_zone_id = value.into();
+        self
+    }
+    /// Sets `vpc`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateVPCWithHostedZoneRequest.vpc = value.into();`.
+    pub fn vpc<ValueType: Into<VPC>>(mut self, value: ValueType) -> Self {
+        self.vpc = value.into();
+        self
+    }
+    /// Returns a new instance of AssociateVPCWithHostedZoneRequest with optional fields set to `None`.
+    pub fn new<HostedZoneIdType: Into<String>, VPCType: Into<VPC>>
+        (hosted_zone_id: HostedZoneIdType,
+         vpc: VPCType)
+         -> AssociateVPCWithHostedZoneRequest {
+        AssociateVPCWithHostedZoneRequest {
+            hosted_zone_id: hosted_zone_id.into(),
+            vpc: vpc.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains the response information for the <code>AssociateVPCWithHostedZone</code> request.</p>"]
 #[derive(Default,Debug)]
 pub struct AssociateVPCWithHostedZoneResponse {
     #[doc="<p>A complex type that describes the changes made to your hosted zone.</p>"]
     pub change_info: ChangeInfo,
 }
-
 struct AssociateVPCWithHostedZoneResponseDeserializer;
 impl AssociateVPCWithHostedZoneResponseDeserializer {
     #[allow(unused_variables)]
@@ -313,7 +408,35 @@ pub struct Change {
     #[doc="<p>Information about the resource record set to create, delete, or update.</p>"]
     pub resource_record_set: ResourceRecordSet,
 }
-
+impl Change {
+    /// Sets `action`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Change.action = value.into();`.
+    pub fn action<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.action = value.into();
+        self
+    }
+    /// Sets `resource_record_set`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Change.resource_record_set = value.into();`.
+    pub fn resource_record_set<ValueType: Into<ResourceRecordSet>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.resource_record_set = value.into();
+        self
+    }
+    /// Returns a new instance of Change with optional fields set to `None`.
+    pub fn new<ActionType: Into<String>, ResourceRecordSetType: Into<ResourceRecordSet>>
+        (action: ActionType,
+         resource_record_set: ResourceRecordSetType)
+         -> Change {
+        Change {
+            action: action.into(),
+            resource_record_set: resource_record_set.into(),
+            ..Default::default()
+        }
+    }
+}
 
 pub struct ChangeSerializer;
 impl ChangeSerializer {
@@ -347,7 +470,29 @@ pub struct ChangeBatch {
     #[doc="<p> <i>Optional:</i> Any comments you want to include about a change batch request.</p>"]
     pub comment: Option<String>,
 }
-
+impl ChangeBatch {
+    /// Sets `changes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChangeBatch.changes = value.into();`.
+    pub fn changes<ValueType: Into<Vec<Change>>>(mut self, value: ValueType) -> Self {
+        self.changes = value.into();
+        self
+    }
+    /// Sets `comment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChangeBatch.comment = Some(value.into());`.
+    pub fn comment<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.comment = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ChangeBatch with optional fields set to `None`.
+    pub fn new<ChangesType: Into<Vec<Change>>>(changes: ChangesType) -> ChangeBatch {
+        ChangeBatch {
+            changes: changes.into(),
+            ..Default::default()
+        }
+    }
+}
 
 pub struct ChangeBatchSerializer;
 impl ChangeBatchSerializer {
@@ -375,7 +520,6 @@ pub struct ChangeInfo {
     #[doc="<p>The date and time that the change request was submitted in <a href=\"https://en.wikipedia.org/wiki/ISO_8601\">ISO 8601 format</a> and Coordinated Universal Time (UTC). For example, the value <code>2017-03-27T17:48:16.751Z</code> represents March 27, 2017 at 17:48:16.751 UTC.</p>"]
     pub submitted_at: String,
 }
-
 struct ChangeInfoDeserializer;
 impl ChangeInfoDeserializer {
     #[allow(unused_variables)]
@@ -438,14 +582,39 @@ pub struct ChangeResourceRecordSetsRequest {
     #[doc="<p>The ID of the hosted zone that contains the resource record sets that you want to change.</p>"]
     pub hosted_zone_id: String,
 }
-
+impl ChangeResourceRecordSetsRequest {
+    /// Sets `change_batch`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChangeResourceRecordSetsRequest.change_batch = value.into();`.
+    pub fn change_batch<ValueType: Into<ChangeBatch>>(mut self, value: ValueType) -> Self {
+        self.change_batch = value.into();
+        self
+    }
+    /// Sets `hosted_zone_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChangeResourceRecordSetsRequest.hosted_zone_id = value.into();`.
+    pub fn hosted_zone_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hosted_zone_id = value.into();
+        self
+    }
+    /// Returns a new instance of ChangeResourceRecordSetsRequest with optional fields set to `None`.
+    pub fn new<ChangeBatchType: Into<ChangeBatch>, HostedZoneIdType: Into<String>>
+        (change_batch: ChangeBatchType,
+         hosted_zone_id: HostedZoneIdType)
+         -> ChangeResourceRecordSetsRequest {
+        ChangeResourceRecordSetsRequest {
+            change_batch: change_batch.into(),
+            hosted_zone_id: hosted_zone_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type containing the response for the request.</p>"]
 #[derive(Default,Debug)]
 pub struct ChangeResourceRecordSetsResponse {
     #[doc="<p>A complex type that contains information about changes made to your hosted zone.</p> <p>This element contains an ID that you use when performing a <a>GetChange</a> action to get detailed information about the change.</p>"]
     pub change_info: ChangeInfo,
 }
-
 struct ChangeResourceRecordSetsResponseDeserializer;
 impl ChangeResourceRecordSetsResponseDeserializer {
     #[allow(unused_variables)]
@@ -515,7 +684,47 @@ pub struct ChangeTagsForResourceRequest {
     #[doc="<p>The type of the resource.</p> <ul> <li> <p>The resource type for health checks is <code>healthcheck</code>.</p> </li> <li> <p>The resource type for hosted zones is <code>hostedzone</code>.</p> </li> </ul>"]
     pub resource_type: String,
 }
-
+impl ChangeTagsForResourceRequest {
+    /// Sets `add_tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChangeTagsForResourceRequest.add_tags = Some(value.into());`.
+    pub fn add_tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.add_tags = Some(value.into());
+        self
+    }
+    /// Sets `remove_tag_keys`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChangeTagsForResourceRequest.remove_tag_keys = Some(value.into());`.
+    pub fn remove_tag_keys<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.remove_tag_keys = Some(value.into());
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChangeTagsForResourceRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `resource_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChangeTagsForResourceRequest.resource_type = value.into();`.
+    pub fn resource_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_type = value.into();
+        self
+    }
+    /// Returns a new instance of ChangeTagsForResourceRequest with optional fields set to `None`.
+    pub fn new<ResourceIdType: Into<String>, ResourceTypeType: Into<String>>
+        (resource_id: ResourceIdType,
+         resource_type: ResourceTypeType)
+         -> ChangeTagsForResourceRequest {
+        ChangeTagsForResourceRequest {
+            resource_id: resource_id.into(),
+            resource_type: resource_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Empty response for the request.</p>"]
 #[derive(Default,Debug)]
 pub struct ChangeTagsForResourceResponse;
@@ -669,7 +878,6 @@ pub struct CloudWatchAlarmConfiguration {
     #[doc="<p>For the metric that the CloudWatch alarm is associated with, the value the metric is compared with.</p>"]
     pub threshold: f64,
 }
-
 struct CloudWatchAlarmConfigurationDeserializer;
 impl CloudWatchAlarmConfigurationDeserializer {
     #[allow(unused_variables)]
@@ -789,7 +997,35 @@ pub struct CreateHealthCheckRequest {
     #[doc="<p>A complex type that contains the response to a <code>CreateHealthCheck</code> request. </p>"]
     pub health_check_config: HealthCheckConfig,
 }
-
+impl CreateHealthCheckRequest {
+    /// Sets `caller_reference`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHealthCheckRequest.caller_reference = value.into();`.
+    pub fn caller_reference<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.caller_reference = value.into();
+        self
+    }
+    /// Sets `health_check_config`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHealthCheckRequest.health_check_config = value.into();`.
+    pub fn health_check_config<ValueType: Into<HealthCheckConfig>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.health_check_config = value.into();
+        self
+    }
+    /// Returns a new instance of CreateHealthCheckRequest with optional fields set to `None`.
+    pub fn new<CallerReferenceType: Into<String>, HealthCheckConfigType: Into<HealthCheckConfig>>
+        (caller_reference: CallerReferenceType,
+         health_check_config: HealthCheckConfigType)
+         -> CreateHealthCheckRequest {
+        CreateHealthCheckRequest {
+            caller_reference: caller_reference.into(),
+            health_check_config: health_check_config.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type containing the response information for the new health check.</p>"]
 #[derive(Default,Debug)]
 pub struct CreateHealthCheckResponse {
@@ -798,7 +1034,6 @@ pub struct CreateHealthCheckResponse {
     #[doc="<p>The unique URL representing the new health check.</p>"]
     pub location: String,
 }
-
 struct CreateHealthCheckResponseDeserializer;
 impl CreateHealthCheckResponseDeserializer {
     #[allow(unused_variables)]
@@ -855,7 +1090,56 @@ pub struct CreateHostedZoneRequest {
     #[doc="<p>(Private hosted zones only) A complex type that contains information about the Amazon VPC that you're associating with this hosted zone.</p> <p>You can specify only one Amazon VPC when you create a private hosted zone. To associate additional Amazon VPCs with the hosted zone, use <a>AssociateVPCWithHostedZone</a> after you create a hosted zone.</p>"]
     pub vpc: Option<VPC>,
 }
-
+impl CreateHostedZoneRequest {
+    /// Sets `caller_reference`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHostedZoneRequest.caller_reference = value.into();`.
+    pub fn caller_reference<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.caller_reference = value.into();
+        self
+    }
+    /// Sets `delegation_set_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHostedZoneRequest.delegation_set_id = Some(value.into());`.
+    pub fn delegation_set_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.delegation_set_id = Some(value.into());
+        self
+    }
+    /// Sets `hosted_zone_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHostedZoneRequest.hosted_zone_config = Some(value.into());`.
+    pub fn hosted_zone_config<ValueType: Into<HostedZoneConfig>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.hosted_zone_config = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHostedZoneRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `vpc`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHostedZoneRequest.vpc = Some(value.into());`.
+    pub fn vpc<ValueType: Into<VPC>>(mut self, value: ValueType) -> Self {
+        self.vpc = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateHostedZoneRequest with optional fields set to `None`.
+    pub fn new<CallerReferenceType: Into<String>, NameType: Into<String>>
+        (caller_reference: CallerReferenceType,
+         name: NameType)
+         -> CreateHostedZoneRequest {
+        CreateHostedZoneRequest {
+            caller_reference: caller_reference.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type containing the response information for the hosted zone.</p>"]
 #[derive(Default,Debug)]
 pub struct CreateHostedZoneResponse {
@@ -870,7 +1154,6 @@ pub struct CreateHostedZoneResponse {
     #[doc="<p>A complex type that contains information about an Amazon VPC that you associated with this hosted zone.</p>"]
     pub vpc: Option<VPC>,
 }
-
 struct CreateHostedZoneResponseDeserializer;
 impl CreateHostedZoneResponseDeserializer {
     #[allow(unused_variables)]
@@ -932,7 +1215,30 @@ pub struct CreateReusableDelegationSetRequest {
     #[doc="<p>If you want to mark the delegation set for an existing hosted zone as reusable, the ID for that hosted zone.</p>"]
     pub hosted_zone_id: Option<String>,
 }
-
+impl CreateReusableDelegationSetRequest {
+    /// Sets `caller_reference`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReusableDelegationSetRequest.caller_reference = value.into();`.
+    pub fn caller_reference<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.caller_reference = value.into();
+        self
+    }
+    /// Sets `hosted_zone_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReusableDelegationSetRequest.hosted_zone_id = Some(value.into());`.
+    pub fn hosted_zone_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hosted_zone_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateReusableDelegationSetRequest with optional fields set to `None`.
+    pub fn new<CallerReferenceType: Into<String>>(caller_reference: CallerReferenceType)
+                                                  -> CreateReusableDelegationSetRequest {
+        CreateReusableDelegationSetRequest {
+            caller_reference: caller_reference.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct CreateReusableDelegationSetResponse {
     #[doc="<p>A complex type that contains name server information.</p>"]
@@ -940,7 +1246,6 @@ pub struct CreateReusableDelegationSetResponse {
     #[doc="<p>The unique URL representing the new reusable delegation set.</p>"]
     pub location: String,
 }
-
 struct CreateReusableDelegationSetResponseDeserializer;
 impl CreateReusableDelegationSetResponseDeserializer {
     #[allow(unused_variables)]
@@ -999,7 +1304,64 @@ pub struct CreateTrafficPolicyInstanceRequest {
     #[doc="<p>The version of the traffic policy that you want to use to create resource record sets in the specified hosted zone.</p>"]
     pub traffic_policy_version: i64,
 }
-
+impl CreateTrafficPolicyInstanceRequest {
+    /// Sets `hosted_zone_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrafficPolicyInstanceRequest.hosted_zone_id = value.into();`.
+    pub fn hosted_zone_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hosted_zone_id = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrafficPolicyInstanceRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `ttl`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrafficPolicyInstanceRequest.ttl = value.into();`.
+    pub fn ttl<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.ttl = value.into();
+        self
+    }
+    /// Sets `traffic_policy_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrafficPolicyInstanceRequest.traffic_policy_id = value.into();`.
+    pub fn traffic_policy_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.traffic_policy_id = value.into();
+        self
+    }
+    /// Sets `traffic_policy_version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrafficPolicyInstanceRequest.traffic_policy_version = value.into();`.
+    pub fn traffic_policy_version<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.traffic_policy_version = value.into();
+        self
+    }
+    /// Returns a new instance of CreateTrafficPolicyInstanceRequest with optional fields set to `None`.
+    pub fn new<HostedZoneIdType: Into<String>,
+               NameType: Into<String>,
+               TTLType: Into<i64>,
+               TrafficPolicyIdType: Into<String>,
+               TrafficPolicyVersionType: Into<i64>>
+        (hosted_zone_id: HostedZoneIdType,
+         name: NameType,
+         ttl: TTLType,
+         traffic_policy_id: TrafficPolicyIdType,
+         traffic_policy_version: TrafficPolicyVersionType)
+         -> CreateTrafficPolicyInstanceRequest {
+        CreateTrafficPolicyInstanceRequest {
+            hosted_zone_id: hosted_zone_id.into(),
+            name: name.into(),
+            ttl: ttl.into(),
+            traffic_policy_id: traffic_policy_id.into(),
+            traffic_policy_version: traffic_policy_version.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains the response information for the <code>CreateTrafficPolicyInstance</code> request.</p>"]
 #[derive(Default,Debug)]
 pub struct CreateTrafficPolicyInstanceResponse {
@@ -1008,7 +1370,6 @@ pub struct CreateTrafficPolicyInstanceResponse {
     #[doc="<p>A complex type that contains settings for the new traffic policy instance.</p>"]
     pub traffic_policy_instance: TrafficPolicyInstance,
 }
-
 struct CreateTrafficPolicyInstanceResponseDeserializer;
 impl CreateTrafficPolicyInstanceResponseDeserializer {
     #[allow(unused_variables)]
@@ -1063,7 +1424,40 @@ pub struct CreateTrafficPolicyRequest {
     #[doc="<p>The name of the traffic policy.</p>"]
     pub name: String,
 }
-
+impl CreateTrafficPolicyRequest {
+    /// Sets `comment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrafficPolicyRequest.comment = Some(value.into());`.
+    pub fn comment<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.comment = Some(value.into());
+        self
+    }
+    /// Sets `document`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrafficPolicyRequest.document = value.into();`.
+    pub fn document<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.document = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrafficPolicyRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateTrafficPolicyRequest with optional fields set to `None`.
+    pub fn new<DocumentType: Into<String>, NameType: Into<String>>
+        (document: DocumentType,
+         name: NameType)
+         -> CreateTrafficPolicyRequest {
+        CreateTrafficPolicyRequest {
+            document: document.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains the response information for the <code>CreateTrafficPolicy</code> request.</p>"]
 #[derive(Default,Debug)]
 pub struct CreateTrafficPolicyResponse {
@@ -1072,7 +1466,6 @@ pub struct CreateTrafficPolicyResponse {
     #[doc="<p>A complex type that contains settings for the new traffic policy.</p>"]
     pub traffic_policy: TrafficPolicy,
 }
-
 struct CreateTrafficPolicyResponseDeserializer;
 impl CreateTrafficPolicyResponseDeserializer {
     #[allow(unused_variables)]
@@ -1126,7 +1519,40 @@ pub struct CreateTrafficPolicyVersionRequest {
     #[doc="<p>The ID of the traffic policy for which you want to create a new version.</p>"]
     pub id: String,
 }
-
+impl CreateTrafficPolicyVersionRequest {
+    /// Sets `comment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrafficPolicyVersionRequest.comment = Some(value.into());`.
+    pub fn comment<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.comment = Some(value.into());
+        self
+    }
+    /// Sets `document`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrafficPolicyVersionRequest.document = value.into();`.
+    pub fn document<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.document = value.into();
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrafficPolicyVersionRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateTrafficPolicyVersionRequest with optional fields set to `None`.
+    pub fn new<DocumentType: Into<String>, IdType: Into<String>>
+        (document: DocumentType,
+         id: IdType)
+         -> CreateTrafficPolicyVersionRequest {
+        CreateTrafficPolicyVersionRequest {
+            document: document.into(),
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains the response information for the <code>CreateTrafficPolicyVersion</code> request.</p>"]
 #[derive(Default,Debug)]
 pub struct CreateTrafficPolicyVersionResponse {
@@ -1135,7 +1561,6 @@ pub struct CreateTrafficPolicyVersionResponse {
     #[doc="<p>A complex type that contains settings for the new version of the traffic policy.</p>"]
     pub traffic_policy: TrafficPolicy,
 }
-
 struct CreateTrafficPolicyVersionResponseDeserializer;
 impl CreateTrafficPolicyVersionResponseDeserializer {
     #[allow(unused_variables)]
@@ -1188,7 +1613,33 @@ pub struct CreateVPCAssociationAuthorizationRequest {
     #[doc="<p>A complex type that contains the VPC ID and region for the VPC that you want to authorize associating with your hosted zone.</p>"]
     pub vpc: VPC,
 }
-
+impl CreateVPCAssociationAuthorizationRequest {
+    /// Sets `hosted_zone_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVPCAssociationAuthorizationRequest.hosted_zone_id = value.into();`.
+    pub fn hosted_zone_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hosted_zone_id = value.into();
+        self
+    }
+    /// Sets `vpc`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateVPCAssociationAuthorizationRequest.vpc = value.into();`.
+    pub fn vpc<ValueType: Into<VPC>>(mut self, value: ValueType) -> Self {
+        self.vpc = value.into();
+        self
+    }
+    /// Returns a new instance of CreateVPCAssociationAuthorizationRequest with optional fields set to `None`.
+    pub fn new<HostedZoneIdType: Into<String>, VPCType: Into<VPC>>
+        (hosted_zone_id: HostedZoneIdType,
+         vpc: VPCType)
+         -> CreateVPCAssociationAuthorizationRequest {
+        CreateVPCAssociationAuthorizationRequest {
+            hosted_zone_id: hosted_zone_id.into(),
+            vpc: vpc.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains the response information from a <code>CreateVPCAssociationAuthorization</code> request.</p>"]
 #[derive(Default,Debug)]
 pub struct CreateVPCAssociationAuthorizationResponse {
@@ -1197,7 +1648,6 @@ pub struct CreateVPCAssociationAuthorizationResponse {
     #[doc="<p>The VPC that you authorized associating with a hosted zone.</p>"]
     pub vpc: VPC,
 }
-
 struct CreateVPCAssociationAuthorizationResponseDeserializer;
 impl CreateVPCAssociationAuthorizationResponseDeserializer {
     #[allow(unused_variables)]
@@ -1293,7 +1743,6 @@ pub struct DelegationSet {
     #[doc="<p>A complex type that contains a list of the authoritative name servers for a hosted zone or for a reusable delegation set.</p>"]
     pub name_servers: Vec<String>,
 }
-
 struct DelegationSetDeserializer;
 impl DelegationSetDeserializer {
     #[allow(unused_variables)]
@@ -1434,7 +1883,23 @@ pub struct DeleteHealthCheckRequest {
     #[doc="<p>The ID of the health check that you want to delete.</p>"]
     pub health_check_id: String,
 }
-
+impl DeleteHealthCheckRequest {
+    /// Sets `health_check_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteHealthCheckRequest.health_check_id = value.into();`.
+    pub fn health_check_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.health_check_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteHealthCheckRequest with optional fields set to `None`.
+    pub fn new<HealthCheckIdType: Into<String>>(health_check_id: HealthCheckIdType)
+                                                -> DeleteHealthCheckRequest {
+        DeleteHealthCheckRequest {
+            health_check_id: health_check_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>An empty element.</p>"]
 #[derive(Default,Debug)]
 pub struct DeleteHealthCheckResponse;
@@ -1461,14 +1926,28 @@ pub struct DeleteHostedZoneRequest {
     #[doc="<p>The ID of the hosted zone you want to delete.</p>"]
     pub id: String,
 }
-
+impl DeleteHostedZoneRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteHostedZoneRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteHostedZoneRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> DeleteHostedZoneRequest {
+        DeleteHostedZoneRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains the response to a <code>DeleteHostedZone</code> request.</p>"]
 #[derive(Default,Debug)]
 pub struct DeleteHostedZoneResponse {
     #[doc="<p>A complex type that contains the ID, the status, and the date and time of a request to delete a hosted zone.</p>"]
     pub change_info: ChangeInfo,
 }
-
 struct DeleteHostedZoneResponseDeserializer;
 impl DeleteHostedZoneResponseDeserializer {
     #[allow(unused_variables)]
@@ -1517,7 +1996,22 @@ pub struct DeleteReusableDelegationSetRequest {
     #[doc="<p>The ID of the reusable delegation set that you want to delete.</p>"]
     pub id: String,
 }
-
+impl DeleteReusableDelegationSetRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteReusableDelegationSetRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteReusableDelegationSetRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> DeleteReusableDelegationSetRequest {
+        DeleteReusableDelegationSetRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>An empty element.</p>"]
 #[derive(Default,Debug)]
 pub struct DeleteReusableDelegationSetResponse;
@@ -1545,7 +2039,22 @@ pub struct DeleteTrafficPolicyInstanceRequest {
     #[doc="<p>The ID of the traffic policy instance that you want to delete. </p> <important> <p>When you delete a traffic policy instance, Amazon Route 53 also deletes all of the resource record sets that were created when you created the traffic policy instance.</p> </important>"]
     pub id: String,
 }
-
+impl DeleteTrafficPolicyInstanceRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTrafficPolicyInstanceRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteTrafficPolicyInstanceRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> DeleteTrafficPolicyInstanceRequest {
+        DeleteTrafficPolicyInstanceRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>An empty element.</p>"]
 #[derive(Default,Debug)]
 pub struct DeleteTrafficPolicyInstanceResponse;
@@ -1575,7 +2084,32 @@ pub struct DeleteTrafficPolicyRequest {
     #[doc="<p>The version number of the traffic policy that you want to delete.</p>"]
     pub version: i64,
 }
-
+impl DeleteTrafficPolicyRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTrafficPolicyRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTrafficPolicyRequest.version = value.into();`.
+    pub fn version<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.version = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteTrafficPolicyRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>, VersionType: Into<i64>>(id: IdType,
+                                                             version: VersionType)
+                                                             -> DeleteTrafficPolicyRequest {
+        DeleteTrafficPolicyRequest {
+            id: id.into(),
+            version: version.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>An empty element.</p>"]
 #[derive(Default,Debug)]
 pub struct DeleteTrafficPolicyResponse;
@@ -1604,7 +2138,33 @@ pub struct DeleteVPCAssociationAuthorizationRequest {
     #[doc="<p>When removing authorization to associate a VPC that was created by one AWS account with a hosted zone that was created with a different AWS account, a complex type that includes the ID and region of the VPC.</p>"]
     pub vpc: VPC,
 }
-
+impl DeleteVPCAssociationAuthorizationRequest {
+    /// Sets `hosted_zone_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVPCAssociationAuthorizationRequest.hosted_zone_id = value.into();`.
+    pub fn hosted_zone_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hosted_zone_id = value.into();
+        self
+    }
+    /// Sets `vpc`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVPCAssociationAuthorizationRequest.vpc = value.into();`.
+    pub fn vpc<ValueType: Into<VPC>>(mut self, value: ValueType) -> Self {
+        self.vpc = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteVPCAssociationAuthorizationRequest with optional fields set to `None`.
+    pub fn new<HostedZoneIdType: Into<String>, VPCType: Into<VPC>>
+        (hosted_zone_id: HostedZoneIdType,
+         vpc: VPCType)
+         -> DeleteVPCAssociationAuthorizationRequest {
+        DeleteVPCAssociationAuthorizationRequest {
+            hosted_zone_id: hosted_zone_id.into(),
+            vpc: vpc.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Empty response for the request.</p>"]
 #[derive(Default,Debug)]
 pub struct DeleteVPCAssociationAuthorizationResponse;
@@ -1634,7 +2194,6 @@ pub struct Dimension {
     #[doc="<p>For the metric that the CloudWatch alarm is associated with, the value of one dimension.</p>"]
     pub value: String,
 }
-
 struct DimensionDeserializer;
 impl DimensionDeserializer {
     #[allow(unused_variables)]
@@ -1756,14 +2315,46 @@ pub struct DisassociateVPCFromHostedZoneRequest {
     #[doc="<p>A complex type that contains information about the VPC that you're disassociating from the specified hosted zone.</p>"]
     pub vpc: VPC,
 }
-
+impl DisassociateVPCFromHostedZoneRequest {
+    /// Sets `comment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateVPCFromHostedZoneRequest.comment = Some(value.into());`.
+    pub fn comment<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.comment = Some(value.into());
+        self
+    }
+    /// Sets `hosted_zone_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateVPCFromHostedZoneRequest.hosted_zone_id = value.into();`.
+    pub fn hosted_zone_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hosted_zone_id = value.into();
+        self
+    }
+    /// Sets `vpc`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateVPCFromHostedZoneRequest.vpc = value.into();`.
+    pub fn vpc<ValueType: Into<VPC>>(mut self, value: ValueType) -> Self {
+        self.vpc = value.into();
+        self
+    }
+    /// Returns a new instance of DisassociateVPCFromHostedZoneRequest with optional fields set to `None`.
+    pub fn new<HostedZoneIdType: Into<String>, VPCType: Into<VPC>>
+        (hosted_zone_id: HostedZoneIdType,
+         vpc: VPCType)
+         -> DisassociateVPCFromHostedZoneRequest {
+        DisassociateVPCFromHostedZoneRequest {
+            hosted_zone_id: hosted_zone_id.into(),
+            vpc: vpc.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains the response information for the disassociate request.</p>"]
 #[derive(Default,Debug)]
 pub struct DisassociateVPCFromHostedZoneResponse {
     #[doc="<p>A complex type that describes the changes made to the specified private hosted zone.</p>"]
     pub change_info: ChangeInfo,
 }
-
 struct DisassociateVPCFromHostedZoneResponseDeserializer;
 impl DisassociateVPCFromHostedZoneResponseDeserializer {
     #[allow(unused_variables)]
@@ -1906,7 +2497,33 @@ pub struct GeoLocation {
     #[doc="<p>The code for the subdivision, for example, a state in the United States or a province in Canada.</p>"]
     pub subdivision_code: Option<String>,
 }
-
+impl GeoLocation {
+    /// Sets `continent_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GeoLocation.continent_code = Some(value.into());`.
+    pub fn continent_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.continent_code = Some(value.into());
+        self
+    }
+    /// Sets `country_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GeoLocation.country_code = Some(value.into());`.
+    pub fn country_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.country_code = Some(value.into());
+        self
+    }
+    /// Sets `subdivision_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GeoLocation.subdivision_code = Some(value.into());`.
+    pub fn subdivision_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subdivision_code = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GeoLocation with optional fields set to `None`.
+    pub fn new() -> GeoLocation {
+        GeoLocation { ..Default::default() }
+    }
+}
 struct GeoLocationDeserializer;
 impl GeoLocationDeserializer {
     #[allow(unused_variables)]
@@ -2070,7 +2687,6 @@ pub struct GeoLocationDetails {
     #[doc="<p>The full name of the subdivision, for example, a state in the United States or a province in Canada.</p>"]
     pub subdivision_name: Option<String>,
 }
-
 struct GeoLocationDetailsDeserializer;
 impl GeoLocationDetailsDeserializer {
     #[allow(unused_variables)]
@@ -2217,14 +2833,28 @@ pub struct GetChangeRequest {
     #[doc="<p>The ID of the change batch request. The value that you specify here is the value that <code>ChangeResourceRecordSets</code> returned in the <code>Id</code> element when you submitted the request.</p>"]
     pub id: String,
 }
-
+impl GetChangeRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetChangeRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of GetChangeRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> GetChangeRequest {
+        GetChangeRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains the <code>ChangeInfo</code> element.</p>"]
 #[derive(Default,Debug)]
 pub struct GetChangeResponse {
     #[doc="<p>A complex type that contains information about the specified change batch.</p>"]
     pub change_info: ChangeInfo,
 }
-
 struct GetChangeResponseDeserializer;
 impl GetChangeResponseDeserializer {
     #[allow(unused_variables)]
@@ -2274,7 +2904,6 @@ pub struct GetCheckerIpRangesRequest;
 pub struct GetCheckerIpRangesResponse {
     pub checker_ip_ranges: Vec<String>,
 }
-
 struct GetCheckerIpRangesResponseDeserializer;
 impl GetCheckerIpRangesResponseDeserializer {
     #[allow(unused_variables)]
@@ -2328,14 +2957,39 @@ pub struct GetGeoLocationRequest {
     #[doc="<p>Amazon Route 53 uses the one- to three-letter subdivision codes that are specified in <a href=\"https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2\">ISO standard 3166-1 alpha-2</a>. Amazon Route 53 doesn't support subdivision codes for all countries. If you specify <code>SubdivisionCode</code>, you must also specify <code>CountryCode</code>. </p>"]
     pub subdivision_code: Option<String>,
 }
-
+impl GetGeoLocationRequest {
+    /// Sets `continent_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetGeoLocationRequest.continent_code = Some(value.into());`.
+    pub fn continent_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.continent_code = Some(value.into());
+        self
+    }
+    /// Sets `country_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetGeoLocationRequest.country_code = Some(value.into());`.
+    pub fn country_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.country_code = Some(value.into());
+        self
+    }
+    /// Sets `subdivision_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetGeoLocationRequest.subdivision_code = Some(value.into());`.
+    pub fn subdivision_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subdivision_code = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetGeoLocationRequest with optional fields set to `None`.
+    pub fn new() -> GetGeoLocationRequest {
+        GetGeoLocationRequest { ..Default::default() }
+    }
+}
 #[doc="<p>A complex type that contains the response information for the specified geolocation code.</p>"]
 #[derive(Default,Debug)]
 pub struct GetGeoLocationResponse {
     #[doc="<p>A complex type that contains the codes and full continent, country, and subdivision names for the specified geolocation code.</p>"]
     pub geo_location_details: GeoLocationDetails,
 }
-
 struct GetGeoLocationResponseDeserializer;
 impl GetGeoLocationResponseDeserializer {
     #[allow(unused_variables)]
@@ -2389,7 +3043,6 @@ pub struct GetHealthCheckCountResponse {
     #[doc="<p>The number of health checks associated with the current AWS account.</p>"]
     pub health_check_count: i64,
 }
-
 struct GetHealthCheckCountResponseDeserializer;
 impl GetHealthCheckCountResponseDeserializer {
     #[allow(unused_variables)]
@@ -2439,14 +3092,29 @@ pub struct GetHealthCheckLastFailureReasonRequest {
     #[doc="<p>The ID for the health check for which you want the last failure reason. When you created the health check, <code>CreateHealthCheck</code> returned the ID in the response, in the <code>HealthCheckId</code> element.</p>"]
     pub health_check_id: String,
 }
-
+impl GetHealthCheckLastFailureReasonRequest {
+    /// Sets `health_check_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetHealthCheckLastFailureReasonRequest.health_check_id = value.into();`.
+    pub fn health_check_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.health_check_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetHealthCheckLastFailureReasonRequest with optional fields set to `None`.
+    pub fn new<HealthCheckIdType: Into<String>>(health_check_id: HealthCheckIdType)
+                                                -> GetHealthCheckLastFailureReasonRequest {
+        GetHealthCheckLastFailureReasonRequest {
+            health_check_id: health_check_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains the response to a <code>GetHealthCheckLastFailureReason</code> request.</p>"]
 #[derive(Default,Debug)]
 pub struct GetHealthCheckLastFailureReasonResponse {
     #[doc="<p>A list that contains one <code>Observation</code> element for each Amazon Route 53 health checker that is reporting a last failure reason. </p>"]
     pub health_check_observations: Vec<HealthCheckObservation>,
 }
-
 struct GetHealthCheckLastFailureReasonResponseDeserializer;
 impl GetHealthCheckLastFailureReasonResponseDeserializer {
     #[allow(unused_variables)]
@@ -2497,14 +3165,29 @@ pub struct GetHealthCheckRequest {
     #[doc="<p>The identifier that Amazon Route 53 assigned to the health check when you created it. When you add or update a resource record set, you use this value to specify which health check to use. The value can be up to 64 characters long.</p>"]
     pub health_check_id: String,
 }
-
+impl GetHealthCheckRequest {
+    /// Sets `health_check_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetHealthCheckRequest.health_check_id = value.into();`.
+    pub fn health_check_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.health_check_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetHealthCheckRequest with optional fields set to `None`.
+    pub fn new<HealthCheckIdType: Into<String>>(health_check_id: HealthCheckIdType)
+                                                -> GetHealthCheckRequest {
+        GetHealthCheckRequest {
+            health_check_id: health_check_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains the response to a <code>GetHealthCheck</code> request.</p>"]
 #[derive(Default,Debug)]
 pub struct GetHealthCheckResponse {
     #[doc="<p>A complex type that contains information about one health check that is associated with the current AWS account.</p>"]
     pub health_check: HealthCheck,
 }
-
 struct GetHealthCheckResponseDeserializer;
 impl GetHealthCheckResponseDeserializer {
     #[allow(unused_variables)]
@@ -2553,14 +3236,29 @@ pub struct GetHealthCheckStatusRequest {
     #[doc="<p>The ID for the health check that you want the current status for. When you created the health check, <code>CreateHealthCheck</code> returned the ID in the response, in the <code>HealthCheckId</code> element.</p> <note> <p>If you want to check the status of a calculated health check, you must use the Amazon Route 53 console or the CloudWatch console. You can't use <code>GetHealthCheckStatus</code> to get the status of a calculated health check.</p> </note>"]
     pub health_check_id: String,
 }
-
+impl GetHealthCheckStatusRequest {
+    /// Sets `health_check_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetHealthCheckStatusRequest.health_check_id = value.into();`.
+    pub fn health_check_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.health_check_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetHealthCheckStatusRequest with optional fields set to `None`.
+    pub fn new<HealthCheckIdType: Into<String>>(health_check_id: HealthCheckIdType)
+                                                -> GetHealthCheckStatusRequest {
+        GetHealthCheckStatusRequest {
+            health_check_id: health_check_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains the response to a <code>GetHealthCheck</code> request.</p>"]
 #[derive(Default,Debug)]
 pub struct GetHealthCheckStatusResponse {
     #[doc="<p>A list that contains one <code>HealthCheckObservation</code> element for each Amazon Route 53 health checker that is reporting a status about the health check endpoint.</p>"]
     pub health_check_observations: Vec<HealthCheckObservation>,
 }
-
 struct GetHealthCheckStatusResponseDeserializer;
 impl GetHealthCheckStatusResponseDeserializer {
     #[allow(unused_variables)]
@@ -2614,7 +3312,6 @@ pub struct GetHostedZoneCountResponse {
     #[doc="<p>The total number of public and private hosted zones that are associated with the current AWS account.</p>"]
     pub hosted_zone_count: i64,
 }
-
 struct GetHostedZoneCountResponseDeserializer;
 impl GetHostedZoneCountResponseDeserializer {
     #[allow(unused_variables)]
@@ -2664,7 +3361,22 @@ pub struct GetHostedZoneRequest {
     #[doc="<p>The ID of the hosted zone that you want to get information about.</p>"]
     pub id: String,
 }
-
+impl GetHostedZoneRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetHostedZoneRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of GetHostedZoneRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> GetHostedZoneRequest {
+        GetHostedZoneRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contain the response to a <code>GetHostedZone</code> request.</p>"]
 #[derive(Default,Debug)]
 pub struct GetHostedZoneResponse {
@@ -2675,7 +3387,6 @@ pub struct GetHostedZoneResponse {
     #[doc="<p>A complex type that contains information about the VPCs that are associated with the specified hosted zone.</p>"]
     pub vp_cs: Option<Vec<VPC>>,
 }
-
 struct GetHostedZoneResponseDeserializer;
 impl GetHostedZoneResponseDeserializer {
     #[allow(unused_variables)]
@@ -2732,14 +3443,28 @@ pub struct GetReusableDelegationSetRequest {
     #[doc="<p>The ID of the reusable delegation set that you want to get a list of name servers for.</p>"]
     pub id: String,
 }
-
+impl GetReusableDelegationSetRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetReusableDelegationSetRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of GetReusableDelegationSetRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> GetReusableDelegationSetRequest {
+        GetReusableDelegationSetRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains the response to the <code>GetReusableDelegationSet</code> request.</p>"]
 #[derive(Default,Debug)]
 pub struct GetReusableDelegationSetResponse {
     #[doc="<p>A complex type that contains information about the reusable delegation set.</p>"]
     pub delegation_set: DelegationSet,
 }
-
 struct GetReusableDelegationSetResponseDeserializer;
 impl GetReusableDelegationSetResponseDeserializer {
     #[allow(unused_variables)]
@@ -2794,7 +3519,6 @@ pub struct GetTrafficPolicyInstanceCountResponse {
     #[doc="<p>The number of traffic policy instances that are associated with the current AWS account.</p>"]
     pub traffic_policy_instance_count: i64,
 }
-
 struct GetTrafficPolicyInstanceCountResponseDeserializer;
 impl GetTrafficPolicyInstanceCountResponseDeserializer {
     #[allow(unused_variables)]
@@ -2845,14 +3569,28 @@ pub struct GetTrafficPolicyInstanceRequest {
     #[doc="<p>The ID of the traffic policy instance that you want to get information about.</p>"]
     pub id: String,
 }
-
+impl GetTrafficPolicyInstanceRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetTrafficPolicyInstanceRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of GetTrafficPolicyInstanceRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> GetTrafficPolicyInstanceRequest {
+        GetTrafficPolicyInstanceRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains information about the resource record sets that Amazon Route 53 created based on a specified traffic policy.</p>"]
 #[derive(Default,Debug)]
 pub struct GetTrafficPolicyInstanceResponse {
     #[doc="<p>A complex type that contains settings for the traffic policy instance.</p>"]
     pub traffic_policy_instance: TrafficPolicyInstance,
 }
-
 struct GetTrafficPolicyInstanceResponseDeserializer;
 impl GetTrafficPolicyInstanceResponseDeserializer {
     #[allow(unused_variables)]
@@ -2905,14 +3643,38 @@ pub struct GetTrafficPolicyRequest {
     #[doc="<p>The version number of the traffic policy that you want to get information about.</p>"]
     pub version: i64,
 }
-
+impl GetTrafficPolicyRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetTrafficPolicyRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetTrafficPolicyRequest.version = value.into();`.
+    pub fn version<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.version = value.into();
+        self
+    }
+    /// Returns a new instance of GetTrafficPolicyRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>, VersionType: Into<i64>>(id: IdType,
+                                                             version: VersionType)
+                                                             -> GetTrafficPolicyRequest {
+        GetTrafficPolicyRequest {
+            id: id.into(),
+            version: version.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains the response information for the request.</p>"]
 #[derive(Default,Debug)]
 pub struct GetTrafficPolicyResponse {
     #[doc="<p>A complex type that contains settings for the specified traffic policy.</p>"]
     pub traffic_policy: TrafficPolicy,
 }
-
 struct GetTrafficPolicyResponseDeserializer;
 impl GetTrafficPolicyResponseDeserializer {
     #[allow(unused_variables)]
@@ -2970,7 +3732,6 @@ pub struct HealthCheck {
     #[doc="<p>The identifier that Amazon Route 53assigned to the health check when you created it. When you add or update a resource record set, you use this value to specify which health check to use. The value can be up to 64 characters long. </p>"]
     pub id: String,
 }
-
 struct HealthCheckDeserializer;
 impl HealthCheckDeserializer {
     #[allow(unused_variables)]
@@ -3066,7 +3827,131 @@ pub struct HealthCheckConfig {
     #[doc="<p>The type of health check that you want to create, which indicates how Amazon Route 53 determines whether an endpoint is healthy.</p> <important> <p>You can't change the value of <code>Type</code> after you create a health check.</p> </important> <p>You can create the following types of health checks:</p> <ul> <li> <p> <b>HTTP</b>: Amazon Route 53 tries to establish a TCP connection. If successful, Amazon Route 53 submits an HTTP request and waits for an HTTP status code of 200 or greater and less than 400.</p> </li> <li> <p> <b>HTTPS</b>: Amazon Route 53 tries to establish a TCP connection. If successful, Amazon Route 53 submits an HTTPS request and waits for an HTTP status code of 200 or greater and less than 400.</p> <important> <p>If you specify <code>HTTPS</code> for the value of <code>Type</code>, the endpoint must support TLS v1.0 or later.</p> </important> </li> <li> <p> <b>HTTP_STR_MATCH</b>: Amazon Route 53 tries to establish a TCP connection. If successful, Amazon Route 53 submits an HTTP request and searches the first 5,120 bytes of the response body for the string that you specify in <code>SearchString</code>.</p> </li> <li> <p> <b>HTTPS_STR_MATCH</b>: Amazon Route 53 tries to establish a TCP connection. If successful, Amazon Route 53 submits an <code>HTTPS</code> request and searches the first 5,120 bytes of the response body for the string that you specify in <code>SearchString</code>.</p> </li> <li> <p> <b>TCP</b>: Amazon Route 53 tries to establish a TCP connection.</p> </li> <li> <p> <b>CLOUDWATCH_METRIC</b>: The health check is associated with a CloudWatch alarm. If the state of the alarm is <code>OK</code>, the health check is considered healthy. If the state is <code>ALARM</code>, the health check is considered unhealthy. If CloudWatch doesn't have sufficient data to determine whether the state is <code>OK</code> or <code>ALARM</code>, the health check status depends on the setting for <code>InsufficientDataHealthStatus</code>: <code>Healthy</code>, <code>Unhealthy</code>, or <code>LastKnownStatus</code>. </p> </li> <li> <p> <b>CALCULATED</b>: For health checks that monitor the status of other health checks, Amazon Route 53 adds up the number of health checks that Amazon Route 53 health checkers consider to be healthy and compares that number with the value of <code>HealthThreshold</code>. </p> </li> </ul> <p>For more information, see <a href=\"http://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover-determining-health-of-endpoints.html\">How Amazon Route 53 Determines Whether an Endpoint Is Healthy</a> in the <i>Amazon Route 53 Developer Guide</i>.</p>"]
     pub type_: String,
 }
-
+impl HealthCheckConfig {
+    /// Sets `alarm_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HealthCheckConfig.alarm_identifier = Some(value.into());`.
+    pub fn alarm_identifier<ValueType: Into<AlarmIdentifier>>(mut self, value: ValueType) -> Self {
+        self.alarm_identifier = Some(value.into());
+        self
+    }
+    /// Sets `child_health_checks`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HealthCheckConfig.child_health_checks = Some(value.into());`.
+    pub fn child_health_checks<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.child_health_checks = Some(value.into());
+        self
+    }
+    /// Sets `enable_sni`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HealthCheckConfig.enable_sni = Some(value.into());`.
+    pub fn enable_sni<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enable_sni = Some(value.into());
+        self
+    }
+    /// Sets `failure_threshold`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HealthCheckConfig.failure_threshold = Some(value.into());`.
+    pub fn failure_threshold<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.failure_threshold = Some(value.into());
+        self
+    }
+    /// Sets `fully_qualified_domain_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HealthCheckConfig.fully_qualified_domain_name = Some(value.into());`.
+    pub fn fully_qualified_domain_name<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.fully_qualified_domain_name = Some(value.into());
+        self
+    }
+    /// Sets `health_threshold`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HealthCheckConfig.health_threshold = Some(value.into());`.
+    pub fn health_threshold<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.health_threshold = Some(value.into());
+        self
+    }
+    /// Sets `ip_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HealthCheckConfig.ip_address = Some(value.into());`.
+    pub fn ip_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ip_address = Some(value.into());
+        self
+    }
+    /// Sets `insufficient_data_health_status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HealthCheckConfig.insufficient_data_health_status = Some(value.into());`.
+    pub fn insufficient_data_health_status<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.insufficient_data_health_status = Some(value.into());
+        self
+    }
+    /// Sets `inverted`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HealthCheckConfig.inverted = Some(value.into());`.
+    pub fn inverted<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.inverted = Some(value.into());
+        self
+    }
+    /// Sets `measure_latency`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HealthCheckConfig.measure_latency = Some(value.into());`.
+    pub fn measure_latency<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.measure_latency = Some(value.into());
+        self
+    }
+    /// Sets `port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HealthCheckConfig.port = Some(value.into());`.
+    pub fn port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.port = Some(value.into());
+        self
+    }
+    /// Sets `regions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HealthCheckConfig.regions = Some(value.into());`.
+    pub fn regions<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.regions = Some(value.into());
+        self
+    }
+    /// Sets `request_interval`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HealthCheckConfig.request_interval = Some(value.into());`.
+    pub fn request_interval<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.request_interval = Some(value.into());
+        self
+    }
+    /// Sets `resource_path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HealthCheckConfig.resource_path = Some(value.into());`.
+    pub fn resource_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_path = Some(value.into());
+        self
+    }
+    /// Sets `search_string`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HealthCheckConfig.search_string = Some(value.into());`.
+    pub fn search_string<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.search_string = Some(value.into());
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HealthCheckConfig.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of HealthCheckConfig with optional fields set to `None`.
+    pub fn new<TypeType: Into<String>>(type_: TypeType) -> HealthCheckConfig {
+        HealthCheckConfig {
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 struct HealthCheckConfigDeserializer;
 impl HealthCheckConfigDeserializer {
     #[allow(unused_variables)]
@@ -3309,7 +4194,6 @@ pub struct HealthCheckObservation {
     #[doc="<p>A complex type that contains the last failure reason as reported by one Amazon Route 53 health checker and the time of the failed health check.</p>"]
     pub status_report: Option<StatusReport>,
 }
-
 struct HealthCheckObservationDeserializer;
 impl HealthCheckObservationDeserializer {
     #[allow(unused_variables)]
@@ -3614,7 +4498,6 @@ pub struct HostedZone {
     #[doc="<p>The number of resource record sets in the hosted zone.</p>"]
     pub resource_record_set_count: Option<i64>,
 }
-
 struct HostedZoneDeserializer;
 impl HostedZoneDeserializer {
     #[allow(unused_variables)]
@@ -3681,7 +4564,26 @@ pub struct HostedZoneConfig {
     #[doc="<p>A value that indicates whether this is a private hosted zone.</p>"]
     pub private_zone: Option<bool>,
 }
-
+impl HostedZoneConfig {
+    /// Sets `comment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HostedZoneConfig.comment = Some(value.into());`.
+    pub fn comment<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.comment = Some(value.into());
+        self
+    }
+    /// Sets `private_zone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HostedZoneConfig.private_zone = Some(value.into());`.
+    pub fn private_zone<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.private_zone = Some(value.into());
+        self
+    }
+    /// Returns a new instance of HostedZoneConfig with optional fields set to `None`.
+    pub fn new() -> HostedZoneConfig {
+        HostedZoneConfig { ..Default::default() }
+    }
+}
 struct HostedZoneConfigDeserializer;
 impl HostedZoneConfigDeserializer {
     #[allow(unused_variables)]
@@ -3942,7 +4844,40 @@ pub struct ListGeoLocationsRequest {
     #[doc="<p>The code for the subdivision (for example, state or province) with which you want to start listing locations that Amazon Route 53 supports for geolocation. If Amazon Route 53 has already returned a page or more of results, if <code>IsTruncated</code> is <code>true</code>, and if <code>NextSubdivisionCode</code> from the previous response has a value, enter that value in <code>StartSubdivisionCode</code> to return the next page of results.</p> <p>To list subdivisions of a country, you must include both <code>StartCountryCode</code> and <code>StartSubdivisionCode</code>.</p>"]
     pub start_subdivision_code: Option<String>,
 }
-
+impl ListGeoLocationsRequest {
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListGeoLocationsRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `start_continent_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListGeoLocationsRequest.start_continent_code = Some(value.into());`.
+    pub fn start_continent_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_continent_code = Some(value.into());
+        self
+    }
+    /// Sets `start_country_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListGeoLocationsRequest.start_country_code = Some(value.into());`.
+    pub fn start_country_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_country_code = Some(value.into());
+        self
+    }
+    /// Sets `start_subdivision_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListGeoLocationsRequest.start_subdivision_code = Some(value.into());`.
+    pub fn start_subdivision_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_subdivision_code = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListGeoLocationsRequest with optional fields set to `None`.
+    pub fn new() -> ListGeoLocationsRequest {
+        ListGeoLocationsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>A complex type containing the response information for the request.</p>"]
 #[derive(Default,Debug)]
 pub struct ListGeoLocationsResponse {
@@ -3959,7 +4894,6 @@ pub struct ListGeoLocationsResponse {
     #[doc="<p>If <code>IsTruncated</code> is <code>true</code>, you can make a follow-up request to display more locations. Enter the value of <code>NextSubdivisionCode</code> in the <code>StartSubdivisionCode</code> parameter in another <code>ListGeoLocations</code> request.</p>"]
     pub next_subdivision_code: Option<String>,
 }
-
 struct ListGeoLocationsResponseDeserializer;
 impl ListGeoLocationsResponseDeserializer {
     #[allow(unused_variables)]
@@ -4030,7 +4964,26 @@ pub struct ListHealthChecksRequest {
     #[doc="<p>The maximum number of health checks that you want <code>ListHealthChecks</code> to return in response to the current request. Amazon Route 53 returns a maximum of 100 items. If you set <code>MaxItems</code> to a value greater than 100, Amazon Route 53 returns only the first 100 health checks. </p>"]
     pub max_items: Option<String>,
 }
-
+impl ListHealthChecksRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListHealthChecksRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListHealthChecksRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListHealthChecksRequest with optional fields set to `None`.
+    pub fn new() -> ListHealthChecksRequest {
+        ListHealthChecksRequest { ..Default::default() }
+    }
+}
 #[doc="<p>A complex type that contains the response to a <code>ListHealthChecks</code> request.</p>"]
 #[derive(Default,Debug)]
 pub struct ListHealthChecksResponse {
@@ -4045,7 +4998,6 @@ pub struct ListHealthChecksResponse {
     #[doc="<p>If <code>IsTruncated</code> is <code>true</code>, the value of <code>NextMarker</code> identifies the first health check that Amazon Route 53 returns if you submit another <code>ListHealthChecks</code> request and specify the value of <code>NextMarker</code> in the <code>marker</code> parameter.</p>"]
     pub next_marker: Option<String>,
 }
-
 struct ListHealthChecksResponseDeserializer;
 impl ListHealthChecksResponseDeserializer {
     #[allow(unused_variables)]
@@ -4114,7 +5066,33 @@ pub struct ListHostedZonesByNameRequest {
     #[doc="<p>The maximum number of hosted zones to be included in the response body for this request. If you have more than <code>maxitems</code> hosted zones, then the value of the <code>IsTruncated</code> element in the response is true, and the values of <code>NextDNSName</code> and <code>NextHostedZoneId</code> specify the first hosted zone in the next group of <code>maxitems</code> hosted zones. </p>"]
     pub max_items: Option<String>,
 }
-
+impl ListHostedZonesByNameRequest {
+    /// Sets `dns_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListHostedZonesByNameRequest.dns_name = Some(value.into());`.
+    pub fn dns_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.dns_name = Some(value.into());
+        self
+    }
+    /// Sets `hosted_zone_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListHostedZonesByNameRequest.hosted_zone_id = Some(value.into());`.
+    pub fn hosted_zone_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hosted_zone_id = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListHostedZonesByNameRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListHostedZonesByNameRequest with optional fields set to `None`.
+    pub fn new() -> ListHostedZonesByNameRequest {
+        ListHostedZonesByNameRequest { ..Default::default() }
+    }
+}
 #[doc="<p>A complex type that contains the response information for the request.</p>"]
 #[derive(Default,Debug)]
 pub struct ListHostedZonesByNameResponse {
@@ -4133,7 +5111,6 @@ pub struct ListHostedZonesByNameResponse {
     #[doc="<p>If <code>IsTruncated</code> is <code>true</code>, the value of <code>NextHostedZoneId</code> identifies the first hosted zone in the next group of <code>maxitems</code> hosted zones. Call <code>ListHostedZonesByName</code> again and specify the value of <code>NextDNSName</code> and <code>NextHostedZoneId</code> in the <code>dnsname</code> and <code>hostedzoneid</code> parameters, respectively.</p> <p>This element is present only if <code>IsTruncated</code> is <code>true</code>.</p>"]
     pub next_hosted_zone_id: Option<String>,
 }
-
 struct ListHostedZonesByNameResponseDeserializer;
 impl ListHostedZonesByNameResponseDeserializer {
     #[allow(unused_variables)]
@@ -4212,7 +5189,33 @@ pub struct ListHostedZonesRequest {
     #[doc="<p>(Optional) The maximum number of hosted zones that you want Amazon Route 53 to return. If you have more than <code>maxitems</code> hosted zones, the value of <code>IsTruncated</code> in the response is <code>true</code>, and the value of <code>NextMarker</code> is the hosted zone ID of the first hosted zone that Amazon Route 53 will return if you submit another request.</p>"]
     pub max_items: Option<String>,
 }
-
+impl ListHostedZonesRequest {
+    /// Sets `delegation_set_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListHostedZonesRequest.delegation_set_id = Some(value.into());`.
+    pub fn delegation_set_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.delegation_set_id = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListHostedZonesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListHostedZonesRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListHostedZonesRequest with optional fields set to `None`.
+    pub fn new() -> ListHostedZonesRequest {
+        ListHostedZonesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug)]
 pub struct ListHostedZonesResponse {
     #[doc="<p>A complex type that contains general information about the hosted zone.</p>"]
@@ -4226,7 +5229,6 @@ pub struct ListHostedZonesResponse {
     #[doc="<p>If <code>IsTruncated</code> is <code>true</code>, the value of <code>NextMarker</code> identifies the first hosted zone in the next group of hosted zones. Submit another <code>ListHostedZones</code> request, and specify the value of <code>NextMarker</code> from the response in the <code>marker</code> parameter.</p> <p>This element is present only if <code>IsTruncated</code> is <code>true</code>.</p>"]
     pub next_marker: Option<String>,
 }
-
 struct ListHostedZonesResponseDeserializer;
 impl ListHostedZonesResponseDeserializer {
     #[allow(unused_variables)]
@@ -4299,7 +5301,51 @@ pub struct ListResourceRecordSetsRequest {
     #[doc="<p>The type of resource record set to begin the record listing from.</p> <p>Valid values for basic resource record sets: <code>A</code> | <code>AAAA</code> | <code>CAA</code> | <code>CNAME</code> | <code>MX</code> | <code>NAPTR</code> | <code>NS</code> | <code>PTR</code> | <code>SOA</code> | <code>SPF</code> | <code>SRV</code> | <code>TXT</code> </p> <p>Values for weighted, latency, geo, and failover resource record sets: <code>A</code> | <code>AAAA</code> | <code>CAA</code> | <code>CNAME</code> | <code>MX</code> | <code>NAPTR</code> | <code>PTR</code> | <code>SPF</code> | <code>SRV</code> | <code>TXT</code> </p> <p>Values for alias resource record sets: </p> <ul> <li> <p> <b>CloudFront distribution</b>: A or AAAA</p> </li> <li> <p> <b>Elastic Beanstalk environment that has a regionalized subdomain</b>: A</p> </li> <li> <p> <b>ELB load balancer</b>: A | AAAA</p> </li> <li> <p> <b>Amazon S3 bucket</b>: A</p> </li> <li> <p> <b>Another resource record set in this hosted zone:</b> The type of the resource record set that the alias references.</p> </li> </ul> <p>Constraint: Specifying <code>type</code> without specifying <code>name</code> returns an <code>InvalidInput</code> error.</p>"]
     pub start_record_type: Option<String>,
 }
-
+impl ListResourceRecordSetsRequest {
+    /// Sets `hosted_zone_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListResourceRecordSetsRequest.hosted_zone_id = value.into();`.
+    pub fn hosted_zone_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hosted_zone_id = value.into();
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListResourceRecordSetsRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `start_record_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListResourceRecordSetsRequest.start_record_identifier = Some(value.into());`.
+    pub fn start_record_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_record_identifier = Some(value.into());
+        self
+    }
+    /// Sets `start_record_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListResourceRecordSetsRequest.start_record_name = Some(value.into());`.
+    pub fn start_record_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_record_name = Some(value.into());
+        self
+    }
+    /// Sets `start_record_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListResourceRecordSetsRequest.start_record_type = Some(value.into());`.
+    pub fn start_record_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_record_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListResourceRecordSetsRequest with optional fields set to `None`.
+    pub fn new<HostedZoneIdType: Into<String>>(hosted_zone_id: HostedZoneIdType)
+                                               -> ListResourceRecordSetsRequest {
+        ListResourceRecordSetsRequest {
+            hosted_zone_id: hosted_zone_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains list information for the resource record set.</p>"]
 #[derive(Default,Debug)]
 pub struct ListResourceRecordSetsResponse {
@@ -4316,7 +5362,6 @@ pub struct ListResourceRecordSetsResponse {
     #[doc="<p>Information about multiple resource record sets.</p>"]
     pub resource_record_sets: Vec<ResourceRecordSet>,
 }
-
 struct ListResourceRecordSetsResponseDeserializer;
 impl ListResourceRecordSetsResponseDeserializer {
     #[allow(unused_variables)]
@@ -4389,7 +5434,26 @@ pub struct ListReusableDelegationSetsRequest {
     #[doc="<p>The number of reusable delegation sets that you want Amazon Route 53 to return in the response to this request. If you specify a value greater than 100, Amazon Route 53 returns only the first 100 reusable delegation sets.</p>"]
     pub max_items: Option<String>,
 }
-
+impl ListReusableDelegationSetsRequest {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListReusableDelegationSetsRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListReusableDelegationSetsRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListReusableDelegationSetsRequest with optional fields set to `None`.
+    pub fn new() -> ListReusableDelegationSetsRequest {
+        ListReusableDelegationSetsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>A complex type that contains information about the reusable delegation sets that are associated with the current AWS account.</p>"]
 #[derive(Default,Debug)]
 pub struct ListReusableDelegationSetsResponse {
@@ -4404,7 +5468,6 @@ pub struct ListReusableDelegationSetsResponse {
     #[doc="<p>If <code>IsTruncated</code> is <code>true</code>, the value of <code>NextMarker</code> identifies the next reusable delegation set that Amazon Route 53 will return if you submit another <code>ListReusableDelegationSets</code> request and specify the value of <code>NextMarker</code> in the <code>marker</code> parameter.</p>"]
     pub next_marker: Option<String>,
 }
-
 struct ListReusableDelegationSetsResponseDeserializer;
 impl ListReusableDelegationSetsResponseDeserializer {
     #[allow(unused_variables)]
@@ -4473,14 +5536,39 @@ pub struct ListTagsForResourceRequest {
     #[doc="<p>The type of the resource.</p> <ul> <li> <p>The resource type for health checks is <code>healthcheck</code>.</p> </li> <li> <p>The resource type for hosted zones is <code>hostedzone</code>.</p> </li> </ul>"]
     pub resource_type: String,
 }
-
+impl ListTagsForResourceRequest {
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForResourceRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `resource_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForResourceRequest.resource_type = value.into();`.
+    pub fn resource_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_type = value.into();
+        self
+    }
+    /// Returns a new instance of ListTagsForResourceRequest with optional fields set to `None`.
+    pub fn new<ResourceIdType: Into<String>, ResourceTypeType: Into<String>>
+        (resource_id: ResourceIdType,
+         resource_type: ResourceTypeType)
+         -> ListTagsForResourceRequest {
+        ListTagsForResourceRequest {
+            resource_id: resource_id.into(),
+            resource_type: resource_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains information about the health checks or hosted zones for which you want to list tags.</p>"]
 #[derive(Default,Debug)]
 pub struct ListTagsForResourceResponse {
     #[doc="<p>A <code>ResourceTagSet</code> containing tags associated with the specified resource.</p>"]
     pub resource_tag_set: ResourceTagSet,
 }
-
 struct ListTagsForResourceResponseDeserializer;
 impl ListTagsForResourceResponseDeserializer {
     #[allow(unused_variables)]
@@ -4532,14 +5620,39 @@ pub struct ListTagsForResourcesRequest {
     #[doc="<p>The type of the resources.</p> <ul> <li> <p>The resource type for health checks is <code>healthcheck</code>.</p> </li> <li> <p>The resource type for hosted zones is <code>hostedzone</code>.</p> </li> </ul>"]
     pub resource_type: String,
 }
-
+impl ListTagsForResourcesRequest {
+    /// Sets `resource_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForResourcesRequest.resource_ids = value.into();`.
+    pub fn resource_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resource_ids = value.into();
+        self
+    }
+    /// Sets `resource_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForResourcesRequest.resource_type = value.into();`.
+    pub fn resource_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_type = value.into();
+        self
+    }
+    /// Returns a new instance of ListTagsForResourcesRequest with optional fields set to `None`.
+    pub fn new<ResourceIdsType: Into<Vec<String>>, ResourceTypeType: Into<String>>
+        (resource_ids: ResourceIdsType,
+         resource_type: ResourceTypeType)
+         -> ListTagsForResourcesRequest {
+        ListTagsForResourcesRequest {
+            resource_ids: resource_ids.into(),
+            resource_type: resource_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type containing tags for the specified resources.</p>"]
 #[derive(Default,Debug)]
 pub struct ListTagsForResourcesResponse {
     #[doc="<p>A list of <code>ResourceTagSet</code>s containing tags associated with the specified resources.</p>"]
     pub resource_tag_sets: Vec<ResourceTagSet>,
 }
-
 struct ListTagsForResourcesResponseDeserializer;
 impl ListTagsForResourcesResponseDeserializer {
     #[allow(unused_variables)]
@@ -4591,7 +5704,26 @@ pub struct ListTrafficPoliciesRequest {
     #[doc="<p>(Conditional) For your first request to <code>ListTrafficPolicies</code>, don't include the <code>TrafficPolicyIdMarker</code> parameter.</p> <p>If you have more traffic policies than the value of <code>MaxItems</code>, <code>ListTrafficPolicies</code> returns only the first <code>MaxItems</code> traffic policies. To get the next group of policies, submit another request to <code>ListTrafficPolicies</code>. For the value of <code>TrafficPolicyIdMarker</code>, specify the value of <code>TrafficPolicyIdMarker</code> that was returned in the previous response.</p>"]
     pub traffic_policy_id_marker: Option<String>,
 }
-
+impl ListTrafficPoliciesRequest {
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTrafficPoliciesRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `traffic_policy_id_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTrafficPoliciesRequest.traffic_policy_id_marker = Some(value.into());`.
+    pub fn traffic_policy_id_marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.traffic_policy_id_marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListTrafficPoliciesRequest with optional fields set to `None`.
+    pub fn new() -> ListTrafficPoliciesRequest {
+        ListTrafficPoliciesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>A complex type that contains the response information for the request.</p>"]
 #[derive(Default,Debug)]
 pub struct ListTrafficPoliciesResponse {
@@ -4604,7 +5736,6 @@ pub struct ListTrafficPoliciesResponse {
     #[doc="<p>A list that contains one <code>TrafficPolicySummary</code> element for each traffic policy that was created by the current AWS account.</p>"]
     pub traffic_policy_summaries: Vec<TrafficPolicySummary>,
 }
-
 struct ListTrafficPoliciesResponseDeserializer;
 impl ListTrafficPoliciesResponseDeserializer {
     #[allow(unused_variables)]
@@ -4673,7 +5804,48 @@ pub struct ListTrafficPolicyInstancesByHostedZoneRequest {
     #[doc="<p>If the value of <code>IsTruncated</code> in the previous response is true, you have more traffic policy instances. To get more traffic policy instances, submit another <code>ListTrafficPolicyInstances</code> request. For the value of <code>trafficpolicyinstancetype</code>, specify the value of <code>TrafficPolicyInstanceTypeMarker</code> from the previous response, which is the type of the first traffic policy instance in the next group of traffic policy instances.</p> <p>If the value of <code>IsTruncated</code> in the previous response was <code>false</code>, there are no more traffic policy instances to get.</p>"]
     pub traffic_policy_instance_type_marker: Option<String>,
 }
-
+impl ListTrafficPolicyInstancesByHostedZoneRequest {
+    /// Sets `hosted_zone_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTrafficPolicyInstancesByHostedZoneRequest.hosted_zone_id = value.into();`.
+    pub fn hosted_zone_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hosted_zone_id = value.into();
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTrafficPolicyInstancesByHostedZoneRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `traffic_policy_instance_name_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTrafficPolicyInstancesByHostedZoneRequest.traffic_policy_instance_name_marker = Some(value.into());`.
+    pub fn traffic_policy_instance_name_marker<ValueType: Into<String>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.traffic_policy_instance_name_marker = Some(value.into());
+        self
+    }
+    /// Sets `traffic_policy_instance_type_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTrafficPolicyInstancesByHostedZoneRequest.traffic_policy_instance_type_marker = Some(value.into());`.
+    pub fn traffic_policy_instance_type_marker<ValueType: Into<String>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.traffic_policy_instance_type_marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListTrafficPolicyInstancesByHostedZoneRequest with optional fields set to `None`.
+    pub fn new<HostedZoneIdType: Into<String>>(hosted_zone_id: HostedZoneIdType)
+                                               -> ListTrafficPolicyInstancesByHostedZoneRequest {
+        ListTrafficPolicyInstancesByHostedZoneRequest {
+            hosted_zone_id: hosted_zone_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains the response information for the request.</p>"]
 #[derive(Default,Debug)]
 pub struct ListTrafficPolicyInstancesByHostedZoneResponse {
@@ -4688,7 +5860,6 @@ pub struct ListTrafficPolicyInstancesByHostedZoneResponse {
     #[doc="<p>A list that contains one <code>TrafficPolicyInstance</code> element for each traffic policy instance that matches the elements in the request. </p>"]
     pub traffic_policy_instances: Vec<TrafficPolicyInstance>,
 }
-
 struct ListTrafficPolicyInstancesByHostedZoneResponseDeserializer;
 impl ListTrafficPolicyInstancesByHostedZoneResponseDeserializer {
     #[allow(unused_variables)]
@@ -4767,7 +5938,65 @@ pub struct ListTrafficPolicyInstancesByPolicyRequest {
     #[doc="<p>The version of the traffic policy for which you want to list traffic policy instances. The version must be associated with the traffic policy that is specified by <code>TrafficPolicyId</code>.</p>"]
     pub traffic_policy_version: i64,
 }
-
+impl ListTrafficPolicyInstancesByPolicyRequest {
+    /// Sets `hosted_zone_id_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTrafficPolicyInstancesByPolicyRequest.hosted_zone_id_marker = Some(value.into());`.
+    pub fn hosted_zone_id_marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hosted_zone_id_marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTrafficPolicyInstancesByPolicyRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `traffic_policy_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTrafficPolicyInstancesByPolicyRequest.traffic_policy_id = value.into();`.
+    pub fn traffic_policy_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.traffic_policy_id = value.into();
+        self
+    }
+    /// Sets `traffic_policy_instance_name_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTrafficPolicyInstancesByPolicyRequest.traffic_policy_instance_name_marker = Some(value.into());`.
+    pub fn traffic_policy_instance_name_marker<ValueType: Into<String>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.traffic_policy_instance_name_marker = Some(value.into());
+        self
+    }
+    /// Sets `traffic_policy_instance_type_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTrafficPolicyInstancesByPolicyRequest.traffic_policy_instance_type_marker = Some(value.into());`.
+    pub fn traffic_policy_instance_type_marker<ValueType: Into<String>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.traffic_policy_instance_type_marker = Some(value.into());
+        self
+    }
+    /// Sets `traffic_policy_version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTrafficPolicyInstancesByPolicyRequest.traffic_policy_version = value.into();`.
+    pub fn traffic_policy_version<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.traffic_policy_version = value.into();
+        self
+    }
+    /// Returns a new instance of ListTrafficPolicyInstancesByPolicyRequest with optional fields set to `None`.
+    pub fn new<TrafficPolicyIdType: Into<String>, TrafficPolicyVersionType: Into<i64>>
+        (traffic_policy_id: TrafficPolicyIdType,
+         traffic_policy_version: TrafficPolicyVersionType)
+         -> ListTrafficPolicyInstancesByPolicyRequest {
+        ListTrafficPolicyInstancesByPolicyRequest {
+            traffic_policy_id: traffic_policy_id.into(),
+            traffic_policy_version: traffic_policy_version.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains the response information for the request.</p>"]
 #[derive(Default,Debug)]
 pub struct ListTrafficPolicyInstancesByPolicyResponse {
@@ -4784,7 +6013,6 @@ pub struct ListTrafficPolicyInstancesByPolicyResponse {
     #[doc="<p>A list that contains one <code>TrafficPolicyInstance</code> element for each traffic policy instance that matches the elements in the request.</p>"]
     pub traffic_policy_instances: Vec<TrafficPolicyInstance>,
 }
-
 struct ListTrafficPolicyInstancesByPolicyResponseDeserializer;
 impl ListTrafficPolicyInstancesByPolicyResponseDeserializer {
     #[allow(unused_variables)]
@@ -4864,7 +6092,44 @@ pub struct ListTrafficPolicyInstancesRequest {
     #[doc="<p>If the value of <code>IsTruncated</code> in the previous response was <code>true</code>, you have more traffic policy instances. To get more traffic policy instances, submit another <code>ListTrafficPolicyInstances</code> request. For the value of <code>trafficpolicyinstancetype</code>, specify the value of <code>TrafficPolicyInstanceTypeMarker</code> from the previous response, which is the type of the first traffic policy instance in the next group of traffic policy instances.</p> <p>If the value of <code>IsTruncated</code> in the previous response was <code>false</code>, there are no more traffic policy instances to get.</p>"]
     pub traffic_policy_instance_type_marker: Option<String>,
 }
-
+impl ListTrafficPolicyInstancesRequest {
+    /// Sets `hosted_zone_id_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTrafficPolicyInstancesRequest.hosted_zone_id_marker = Some(value.into());`.
+    pub fn hosted_zone_id_marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hosted_zone_id_marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTrafficPolicyInstancesRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `traffic_policy_instance_name_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTrafficPolicyInstancesRequest.traffic_policy_instance_name_marker = Some(value.into());`.
+    pub fn traffic_policy_instance_name_marker<ValueType: Into<String>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.traffic_policy_instance_name_marker = Some(value.into());
+        self
+    }
+    /// Sets `traffic_policy_instance_type_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTrafficPolicyInstancesRequest.traffic_policy_instance_type_marker = Some(value.into());`.
+    pub fn traffic_policy_instance_type_marker<ValueType: Into<String>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.traffic_policy_instance_type_marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListTrafficPolicyInstancesRequest with optional fields set to `None`.
+    pub fn new() -> ListTrafficPolicyInstancesRequest {
+        ListTrafficPolicyInstancesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>A complex type that contains the response information for the request.</p>"]
 #[derive(Default,Debug)]
 pub struct ListTrafficPolicyInstancesResponse {
@@ -4881,7 +6146,6 @@ pub struct ListTrafficPolicyInstancesResponse {
     #[doc="<p>A list that contains one <code>TrafficPolicyInstance</code> element for each traffic policy instance that matches the elements in the request.</p>"]
     pub traffic_policy_instances: Vec<TrafficPolicyInstance>,
 }
-
 struct ListTrafficPolicyInstancesResponseDeserializer;
 impl ListTrafficPolicyInstancesResponseDeserializer {
     #[allow(unused_variables)]
@@ -4959,7 +6223,38 @@ pub struct ListTrafficPolicyVersionsRequest {
     #[doc="<p>For your first request to <code>ListTrafficPolicyVersions</code>, don't include the <code>TrafficPolicyVersionMarker</code> parameter.</p> <p>If you have more traffic policy versions than the value of <code>MaxItems</code>, <code>ListTrafficPolicyVersions</code> returns only the first group of <code>MaxItems</code> versions. To get more traffic policy versions, submit another <code>ListTrafficPolicyVersions</code> request. For the value of <code>TrafficPolicyVersionMarker</code>, specify the value of <code>TrafficPolicyVersionMarker</code> in the previous response.</p>"]
     pub traffic_policy_version_marker: Option<String>,
 }
-
+impl ListTrafficPolicyVersionsRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTrafficPolicyVersionsRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTrafficPolicyVersionsRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `traffic_policy_version_marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTrafficPolicyVersionsRequest.traffic_policy_version_marker = Some(value.into());`.
+    pub fn traffic_policy_version_marker<ValueType: Into<String>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.traffic_policy_version_marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListTrafficPolicyVersionsRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> ListTrafficPolicyVersionsRequest {
+        ListTrafficPolicyVersionsRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains the response information for the request.</p>"]
 #[derive(Default,Debug)]
 pub struct ListTrafficPolicyVersionsResponse {
@@ -4972,7 +6267,6 @@ pub struct ListTrafficPolicyVersionsResponse {
     #[doc="<p>If <code>IsTruncated</code> is <code>true</code>, the value of <code>TrafficPolicyVersionMarker</code> identifies the first traffic policy that Amazon Route 53 will return if you submit another request. Call <code>ListTrafficPolicyVersions</code> again and specify the value of <code>TrafficPolicyVersionMarker</code> in the <code>TrafficPolicyVersionMarker</code> request parameter.</p> <p>This element is present only if <code>IsTruncated</code> is <code>true</code>.</p>"]
     pub traffic_policy_version_marker: String,
 }
-
 struct ListTrafficPolicyVersionsResponseDeserializer;
 impl ListTrafficPolicyVersionsResponseDeserializer {
     #[allow(unused_variables)]
@@ -5040,7 +6334,37 @@ pub struct ListVPCAssociationAuthorizationsRequest {
     #[doc="<p> <i>Optional</i>: If a response includes a <code>NextToken</code> element, there are more VPCs that can be associated with the specified hosted zone. To get the next page of results, submit another request, and include the value of <code>NextToken</code> from the response in the <code>nexttoken</code> parameter in another <code>ListVPCAssociationAuthorizations</code> request.</p>"]
     pub next_token: Option<String>,
 }
-
+impl ListVPCAssociationAuthorizationsRequest {
+    /// Sets `hosted_zone_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListVPCAssociationAuthorizationsRequest.hosted_zone_id = value.into();`.
+    pub fn hosted_zone_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hosted_zone_id = value.into();
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListVPCAssociationAuthorizationsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListVPCAssociationAuthorizationsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListVPCAssociationAuthorizationsRequest with optional fields set to `None`.
+    pub fn new<HostedZoneIdType: Into<String>>(hosted_zone_id: HostedZoneIdType)
+                                               -> ListVPCAssociationAuthorizationsRequest {
+        ListVPCAssociationAuthorizationsRequest {
+            hosted_zone_id: hosted_zone_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains the response information for the request.</p>"]
 #[derive(Default,Debug)]
 pub struct ListVPCAssociationAuthorizationsResponse {
@@ -5051,7 +6375,6 @@ pub struct ListVPCAssociationAuthorizationsResponse {
     #[doc="<p>The list of VPCs that are authorized to be associated with the specified hosted zone.</p>"]
     pub vp_cs: Vec<VPC>,
 }
-
 struct ListVPCAssociationAuthorizationsResponseDeserializer;
 impl ListVPCAssociationAuthorizationsResponseDeserializer {
     #[allow(unused_variables)]
@@ -5560,7 +6883,22 @@ pub struct ResourceRecord {
     #[doc="<p>The current or new DNS record value, not to exceed 4,000 characters. In the case of a <code>DELETE</code> action, if the current value does not match the actual value, an error is returned. For descriptions about how to format <code>Value</code> for different record types, see <a href=\"http://docs.aws.amazon.com/Route53/latest/DeveloperGuide/ResourceRecordTypes.html\">Supported DNS Resource Record Types</a> in the <i>Amazon Route 53 Developer Guide</i>.</p> <p>You can specify more than one value for all record types except <code>CNAME</code> and <code>SOA</code>. </p> <note> <p>If you're creating an alias resource record set, omit <code>Value</code>.</p> </note>"]
     pub value: String,
 }
-
+impl ResourceRecord {
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceRecord.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of ResourceRecord with optional fields set to `None`.
+    pub fn new<ValueType: Into<String>>(value: ValueType) -> ResourceRecord {
+        ResourceRecord {
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 struct ResourceRecordDeserializer;
 impl ResourceRecordDeserializer {
     #[allow(unused_variables)]
@@ -5644,7 +6982,111 @@ pub struct ResourceRecordSet {
     #[doc="<p> <i>Weighted resource record sets only:</i> Among resource record sets that have the same combination of DNS name and type, a value that determines the proportion of DNS queries that Amazon Route 53 responds to using the current resource record set. Amazon Route 53 calculates the sum of the weights for the resource record sets that have the same combination of DNS name and type. Amazon Route 53 then responds to queries based on the ratio of a resource's weight to the total. Note the following:</p> <ul> <li> <p>You must specify a value for the <code>Weight</code> element for every weighted resource record set.</p> </li> <li> <p>You can only specify one <code>ResourceRecord</code> per weighted resource record set.</p> </li> <li> <p>You can't create latency, failover, or geolocation resource record sets that have the same values for the <code>Name</code> and <code>Type</code> elements as weighted resource record sets.</p> </li> <li> <p>You can create a maximum of 100 weighted resource record sets that have the same values for the <code>Name</code> and <code>Type</code> elements.</p> </li> <li> <p>For weighted (but not weighted alias) resource record sets, if you set <code>Weight</code> to <code>0</code> for a resource record set, Amazon Route 53 never responds to queries with the applicable value for that resource record set. However, if you set <code>Weight</code> to <code>0</code> for all resource record sets that have the same combination of DNS name and type, traffic is routed to all resources with equal probability.</p> <p>The effect of setting <code>Weight</code> to <code>0</code> is different when you associate health checks with weighted resource record sets. For more information, see <a href=\"http://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover-configuring-options.html\">Options for Configuring Amazon Route 53 Active-Active and Active-Passive Failover</a> in the <i>Amazon Route 53 Developer Guide</i>.</p> </li> </ul>"]
     pub weight: Option<i64>,
 }
-
+impl ResourceRecordSet {
+    /// Sets `alias_target`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceRecordSet.alias_target = Some(value.into());`.
+    pub fn alias_target<ValueType: Into<AliasTarget>>(mut self, value: ValueType) -> Self {
+        self.alias_target = Some(value.into());
+        self
+    }
+    /// Sets `failover`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceRecordSet.failover = Some(value.into());`.
+    pub fn failover<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.failover = Some(value.into());
+        self
+    }
+    /// Sets `geo_location`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceRecordSet.geo_location = Some(value.into());`.
+    pub fn geo_location<ValueType: Into<GeoLocation>>(mut self, value: ValueType) -> Self {
+        self.geo_location = Some(value.into());
+        self
+    }
+    /// Sets `health_check_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceRecordSet.health_check_id = Some(value.into());`.
+    pub fn health_check_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.health_check_id = Some(value.into());
+        self
+    }
+    /// Sets `multi_value_answer`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceRecordSet.multi_value_answer = Some(value.into());`.
+    pub fn multi_value_answer<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.multi_value_answer = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceRecordSet.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `region`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceRecordSet.region = Some(value.into());`.
+    pub fn region<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.region = Some(value.into());
+        self
+    }
+    /// Sets `resource_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceRecordSet.resource_records = Some(value.into());`.
+    pub fn resource_records<ValueType: Into<Vec<ResourceRecord>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.resource_records = Some(value.into());
+        self
+    }
+    /// Sets `set_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceRecordSet.set_identifier = Some(value.into());`.
+    pub fn set_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.set_identifier = Some(value.into());
+        self
+    }
+    /// Sets `ttl`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceRecordSet.ttl = Some(value.into());`.
+    pub fn ttl<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.ttl = Some(value.into());
+        self
+    }
+    /// Sets `traffic_policy_instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceRecordSet.traffic_policy_instance_id = Some(value.into());`.
+    pub fn traffic_policy_instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.traffic_policy_instance_id = Some(value.into());
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceRecordSet.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Sets `weight`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceRecordSet.weight = Some(value.into());`.
+    pub fn weight<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.weight = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ResourceRecordSet with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, TypeType: Into<String>>(name: NameType,
+                                                               type_: TypeType)
+                                                               -> ResourceRecordSet {
+        ResourceRecordSet {
+            name: name.into(),
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 struct ResourceRecordSetDeserializer;
 impl ResourceRecordSetDeserializer {
     #[allow(unused_variables)]
@@ -6017,7 +7459,6 @@ pub struct ResourceTagSet {
     #[doc="<p>The tags associated with the specified resource.</p>"]
     pub tags: Option<Vec<Tag>>,
 }
-
 struct ResourceTagSetDeserializer;
 impl ResourceTagSetDeserializer {
     #[allow(unused_variables)]
@@ -6172,7 +7613,6 @@ pub struct StatusReport {
     #[doc="<p>A description of the status of the health check endpoint as reported by one of the Amazon Route 53 health checkers.</p>"]
     pub status: Option<String>,
 }
-
 struct StatusReportDeserializer;
 impl StatusReportDeserializer {
     #[allow(unused_variables)]
@@ -6264,7 +7704,26 @@ pub struct Tag {
     #[doc="<p>The value of <code>Value</code> depends on the operation that you want to perform:</p> <ul> <li> <p> <b>Add a tag to a health check or hosted zone</b>: <code>Value</code> is the value that you want to give the new tag.</p> </li> <li> <p> <b>Edit a tag</b>: <code>Value</code> is the new value that you want to assign the tag.</p> </li> </ul>"]
     pub value: Option<String>,
 }
-
+impl Tag {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new() -> Tag {
+        Tag { ..Default::default() }
+    }
+}
 struct TagDeserializer;
 impl TagDeserializer {
     #[allow(unused_variables)]
@@ -6529,7 +7988,65 @@ pub struct TestDNSAnswerRequest {
     #[doc="<p>If you want to simulate a request from a specific DNS resolver, specify the IP address for that resolver. If you omit this value, <code>TestDnsAnswer</code> uses the IP address of a DNS resolver in the AWS US East (N. Virginia) Region (<code>us-east-1</code>).</p>"]
     pub resolver_ip: Option<String>,
 }
-
+impl TestDNSAnswerRequest {
+    /// Sets `edns0_client_subnet_ip`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestDNSAnswerRequest.edns0_client_subnet_ip = Some(value.into());`.
+    pub fn edns0_client_subnet_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.edns0_client_subnet_ip = Some(value.into());
+        self
+    }
+    /// Sets `edns0_client_subnet_mask`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestDNSAnswerRequest.edns0_client_subnet_mask = Some(value.into());`.
+    pub fn edns0_client_subnet_mask<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.edns0_client_subnet_mask = Some(value.into());
+        self
+    }
+    /// Sets `hosted_zone_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestDNSAnswerRequest.hosted_zone_id = value.into();`.
+    pub fn hosted_zone_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hosted_zone_id = value.into();
+        self
+    }
+    /// Sets `record_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestDNSAnswerRequest.record_name = value.into();`.
+    pub fn record_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.record_name = value.into();
+        self
+    }
+    /// Sets `record_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestDNSAnswerRequest.record_type = value.into();`.
+    pub fn record_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.record_type = value.into();
+        self
+    }
+    /// Sets `resolver_ip`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestDNSAnswerRequest.resolver_ip = Some(value.into());`.
+    pub fn resolver_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resolver_ip = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TestDNSAnswerRequest with optional fields set to `None`.
+    pub fn new<HostedZoneIdType: Into<String>,
+               RecordNameType: Into<String>,
+               RecordTypeType: Into<String>>
+        (hosted_zone_id: HostedZoneIdType,
+         record_name: RecordNameType,
+         record_type: RecordTypeType)
+         -> TestDNSAnswerRequest {
+        TestDNSAnswerRequest {
+            hosted_zone_id: hosted_zone_id.into(),
+            record_name: record_name.into(),
+            record_type: record_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains the response to a <code>TestDNSAnswer</code> request. </p>"]
 #[derive(Default,Debug)]
 pub struct TestDNSAnswerResponse {
@@ -6546,7 +8063,6 @@ pub struct TestDNSAnswerResponse {
     #[doc="<p>A code that indicates whether the request is valid or not. The most common response code is <code>NOERROR</code>, meaning that the request is valid. If the response is not valid, Amazon Route 53 returns a response code that describes the error. For a list of possible response codes, see <a href=\"http://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-6\">DNS RCODES</a> on the IANA website. </p>"]
     pub response_code: String,
 }
-
 struct TestDNSAnswerResponseDeserializer;
 impl TestDNSAnswerResponseDeserializer {
     #[allow(unused_variables)]
@@ -6695,7 +8211,6 @@ pub struct TrafficPolicy {
     #[doc="<p>The version number that Amazon Route 53 assigns to a traffic policy. For a new traffic policy, the value of <code>Version</code> is always 1.</p>"]
     pub version: i64,
 }
-
 struct TrafficPolicyDeserializer;
 impl TrafficPolicyDeserializer {
     #[allow(unused_variables)]
@@ -6856,7 +8371,6 @@ pub struct TrafficPolicyInstance {
     #[doc="<p>The version of the traffic policy that Amazon Route 53 used to create resource record sets in the specified hosted zone.</p>"]
     pub traffic_policy_version: i64,
 }
-
 struct TrafficPolicyInstanceDeserializer;
 impl TrafficPolicyInstanceDeserializer {
     #[allow(unused_variables)]
@@ -7105,7 +8619,6 @@ pub struct TrafficPolicySummary {
     #[doc="<p>The DNS type of the resource record sets that Amazon Route 53 creates when you use a traffic policy to create a traffic policy instance.</p>"]
     pub type_: String,
 }
-
 struct TrafficPolicySummaryDeserializer;
 impl TrafficPolicySummaryDeserializer {
     #[allow(unused_variables)]
@@ -7261,12 +8774,129 @@ pub struct UpdateHealthCheckRequest {
     #[doc="<p>If the value of <code>Type</code> is <code>HTTP_STR_MATCH</code> or <code>HTTP_STR_MATCH</code>, the string that you want Amazon Route 53 to search for in the response body from the specified resource. If the string appears in the response body, Amazon Route 53 considers the resource healthy. (You can't change the value of <code>Type</code> when you update a health check.)</p>"]
     pub search_string: Option<String>,
 }
-
+impl UpdateHealthCheckRequest {
+    /// Sets `alarm_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateHealthCheckRequest.alarm_identifier = Some(value.into());`.
+    pub fn alarm_identifier<ValueType: Into<AlarmIdentifier>>(mut self, value: ValueType) -> Self {
+        self.alarm_identifier = Some(value.into());
+        self
+    }
+    /// Sets `child_health_checks`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateHealthCheckRequest.child_health_checks = Some(value.into());`.
+    pub fn child_health_checks<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.child_health_checks = Some(value.into());
+        self
+    }
+    /// Sets `enable_sni`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateHealthCheckRequest.enable_sni = Some(value.into());`.
+    pub fn enable_sni<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enable_sni = Some(value.into());
+        self
+    }
+    /// Sets `failure_threshold`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateHealthCheckRequest.failure_threshold = Some(value.into());`.
+    pub fn failure_threshold<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.failure_threshold = Some(value.into());
+        self
+    }
+    /// Sets `fully_qualified_domain_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateHealthCheckRequest.fully_qualified_domain_name = Some(value.into());`.
+    pub fn fully_qualified_domain_name<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.fully_qualified_domain_name = Some(value.into());
+        self
+    }
+    /// Sets `health_check_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateHealthCheckRequest.health_check_id = value.into();`.
+    pub fn health_check_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.health_check_id = value.into();
+        self
+    }
+    /// Sets `health_check_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateHealthCheckRequest.health_check_version = Some(value.into());`.
+    pub fn health_check_version<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.health_check_version = Some(value.into());
+        self
+    }
+    /// Sets `health_threshold`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateHealthCheckRequest.health_threshold = Some(value.into());`.
+    pub fn health_threshold<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.health_threshold = Some(value.into());
+        self
+    }
+    /// Sets `ip_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateHealthCheckRequest.ip_address = Some(value.into());`.
+    pub fn ip_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ip_address = Some(value.into());
+        self
+    }
+    /// Sets `insufficient_data_health_status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateHealthCheckRequest.insufficient_data_health_status = Some(value.into());`.
+    pub fn insufficient_data_health_status<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.insufficient_data_health_status = Some(value.into());
+        self
+    }
+    /// Sets `inverted`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateHealthCheckRequest.inverted = Some(value.into());`.
+    pub fn inverted<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.inverted = Some(value.into());
+        self
+    }
+    /// Sets `port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateHealthCheckRequest.port = Some(value.into());`.
+    pub fn port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.port = Some(value.into());
+        self
+    }
+    /// Sets `regions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateHealthCheckRequest.regions = Some(value.into());`.
+    pub fn regions<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.regions = Some(value.into());
+        self
+    }
+    /// Sets `resource_path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateHealthCheckRequest.resource_path = Some(value.into());`.
+    pub fn resource_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_path = Some(value.into());
+        self
+    }
+    /// Sets `search_string`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateHealthCheckRequest.search_string = Some(value.into());`.
+    pub fn search_string<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.search_string = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateHealthCheckRequest with optional fields set to `None`.
+    pub fn new<HealthCheckIdType: Into<String>>(health_check_id: HealthCheckIdType)
+                                                -> UpdateHealthCheckRequest {
+        UpdateHealthCheckRequest {
+            health_check_id: health_check_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug)]
 pub struct UpdateHealthCheckResponse {
     pub health_check: HealthCheck,
 }
-
 struct UpdateHealthCheckResponseDeserializer;
 impl UpdateHealthCheckResponseDeserializer {
     #[allow(unused_variables)]
@@ -7317,13 +8947,34 @@ pub struct UpdateHostedZoneCommentRequest {
     #[doc="<p>The ID for the hosted zone that you want to update the comment for.</p>"]
     pub id: String,
 }
-
+impl UpdateHostedZoneCommentRequest {
+    /// Sets `comment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateHostedZoneCommentRequest.comment = Some(value.into());`.
+    pub fn comment<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.comment = Some(value.into());
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateHostedZoneCommentRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateHostedZoneCommentRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> UpdateHostedZoneCommentRequest {
+        UpdateHostedZoneCommentRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains the response to the <code>UpdateHostedZoneComment</code> request.</p>"]
 #[derive(Default,Debug)]
 pub struct UpdateHostedZoneCommentResponse {
     pub hosted_zone: HostedZone,
 }
-
 struct UpdateHostedZoneCommentResponseDeserializer;
 impl UpdateHostedZoneCommentResponseDeserializer {
     #[allow(unused_variables)]
@@ -7377,14 +9028,48 @@ pub struct UpdateTrafficPolicyCommentRequest {
     #[doc="<p>The value of <code>Version</code> for the traffic policy that you want to update the comment for.</p>"]
     pub version: i64,
 }
-
+impl UpdateTrafficPolicyCommentRequest {
+    /// Sets `comment`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTrafficPolicyCommentRequest.comment = value.into();`.
+    pub fn comment<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.comment = value.into();
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTrafficPolicyCommentRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTrafficPolicyCommentRequest.version = value.into();`.
+    pub fn version<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.version = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateTrafficPolicyCommentRequest with optional fields set to `None`.
+    pub fn new<CommentType: Into<String>, IdType: Into<String>, VersionType: Into<i64>>
+        (comment: CommentType,
+         id: IdType,
+         version: VersionType)
+         -> UpdateTrafficPolicyCommentRequest {
+        UpdateTrafficPolicyCommentRequest {
+            comment: comment.into(),
+            id: id.into(),
+            version: version.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains the response information for the traffic policy.</p>"]
 #[derive(Default,Debug)]
 pub struct UpdateTrafficPolicyCommentResponse {
     #[doc="<p>A complex type that contains settings for the specified traffic policy.</p>"]
     pub traffic_policy: TrafficPolicy,
 }
-
 struct UpdateTrafficPolicyCommentResponseDeserializer;
 impl UpdateTrafficPolicyCommentResponseDeserializer {
     #[allow(unused_variables)]
@@ -7441,14 +9126,60 @@ pub struct UpdateTrafficPolicyInstanceRequest {
     #[doc="<p>The version of the traffic policy that you want Amazon Route 53 to use to update resource record sets for the specified traffic policy instance.</p>"]
     pub traffic_policy_version: i64,
 }
-
+impl UpdateTrafficPolicyInstanceRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTrafficPolicyInstanceRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `ttl`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTrafficPolicyInstanceRequest.ttl = value.into();`.
+    pub fn ttl<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.ttl = value.into();
+        self
+    }
+    /// Sets `traffic_policy_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTrafficPolicyInstanceRequest.traffic_policy_id = value.into();`.
+    pub fn traffic_policy_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.traffic_policy_id = value.into();
+        self
+    }
+    /// Sets `traffic_policy_version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTrafficPolicyInstanceRequest.traffic_policy_version = value.into();`.
+    pub fn traffic_policy_version<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.traffic_policy_version = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateTrafficPolicyInstanceRequest with optional fields set to `None`.
+    pub fn new<IdType: Into<String>,
+               TTLType: Into<i64>,
+               TrafficPolicyIdType: Into<String>,
+               TrafficPolicyVersionType: Into<i64>>
+        (id: IdType,
+         ttl: TTLType,
+         traffic_policy_id: TrafficPolicyIdType,
+         traffic_policy_version: TrafficPolicyVersionType)
+         -> UpdateTrafficPolicyInstanceRequest {
+        UpdateTrafficPolicyInstanceRequest {
+            id: id.into(),
+            ttl: ttl.into(),
+            traffic_policy_id: traffic_policy_id.into(),
+            traffic_policy_version: traffic_policy_version.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A complex type that contains information about the resource record sets that Amazon Route 53 created based on a specified traffic policy.</p>"]
 #[derive(Default,Debug)]
 pub struct UpdateTrafficPolicyInstanceResponse {
     #[doc="<p>A complex type that contains settings for the updated traffic policy instance.</p>"]
     pub traffic_policy_instance: TrafficPolicyInstance,
 }
-
 struct UpdateTrafficPolicyInstanceResponseDeserializer;
 impl UpdateTrafficPolicyInstanceResponseDeserializer {
     #[allow(unused_variables)]
@@ -7500,7 +9231,26 @@ pub struct VPC {
     #[doc="<p>(Private hosted zones only) The region in which you created an Amazon VPC.</p>"]
     pub vpc_region: Option<String>,
 }
-
+impl VPC {
+    /// Sets `vpc_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VPC.vpc_id = Some(value.into());`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = Some(value.into());
+        self
+    }
+    /// Sets `vpc_region`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VPC.vpc_region = Some(value.into());`.
+    pub fn vpc_region<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_region = Some(value.into());
+        self
+    }
+    /// Returns a new instance of VPC with optional fields set to `None`.
+    pub fn new() -> VPC {
+        VPC { ..Default::default() }
+    }
+}
 struct VPCDeserializer;
 impl VPCDeserializer {
     #[allow(unused_variables)]

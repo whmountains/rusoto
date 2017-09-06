@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -62,7 +63,6 @@ pub struct Connector {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vm_manager_type: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateReplicationJobRequest {
     #[serde(rename="description")]
@@ -81,20 +81,93 @@ pub struct CreateReplicationJobRequest {
     #[serde(rename="serverId")]
     pub server_id: String,
 }
-
+impl CreateReplicationJobRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationJobRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `frequency`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationJobRequest.frequency = value.into();`.
+    pub fn frequency<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.frequency = value.into();
+        self
+    }
+    /// Sets `license_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationJobRequest.license_type = Some(value.into());`.
+    pub fn license_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.license_type = Some(value.into());
+        self
+    }
+    /// Sets `role_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationJobRequest.role_name = Some(value.into());`.
+    pub fn role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_name = Some(value.into());
+        self
+    }
+    /// Sets `seed_replication_time`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationJobRequest.seed_replication_time = value.into();`.
+    pub fn seed_replication_time<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.seed_replication_time = value.into();
+        self
+    }
+    /// Sets `server_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateReplicationJobRequest.server_id = value.into();`.
+    pub fn server_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateReplicationJobRequest with optional fields set to `None`.
+    pub fn new<frequencyType: Into<i64>,
+               seedReplicationTimeType: Into<f64>,
+               serverIdType: Into<String>>
+        (frequency: frequencyType,
+         seed_replication_time: seedReplicationTimeType,
+         server_id: serverIdType)
+         -> CreateReplicationJobRequest {
+        CreateReplicationJobRequest {
+            frequency: frequency.into(),
+            seed_replication_time: seed_replication_time.into(),
+            server_id: server_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateReplicationJobResponse {
     #[serde(rename="replicationJobId")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub replication_job_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteReplicationJobRequest {
     #[serde(rename="replicationJobId")]
     pub replication_job_id: String,
 }
-
+impl DeleteReplicationJobRequest {
+    /// Sets `replication_job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteReplicationJobRequest.replication_job_id = value.into();`.
+    pub fn replication_job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_job_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteReplicationJobRequest with optional fields set to `None`.
+    pub fn new<replicationJobIdType: Into<String>>(replication_job_id: replicationJobIdType)
+                                                   -> DeleteReplicationJobRequest {
+        DeleteReplicationJobRequest {
+            replication_job_id: replication_job_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteReplicationJobResponse;
 
@@ -109,7 +182,23 @@ pub struct DisassociateConnectorRequest {
     #[serde(rename="connectorId")]
     pub connector_id: String,
 }
-
+impl DisassociateConnectorRequest {
+    /// Sets `connector_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateConnectorRequest.connector_id = value.into();`.
+    pub fn connector_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connector_id = value.into();
+        self
+    }
+    /// Returns a new instance of DisassociateConnectorRequest with optional fields set to `None`.
+    pub fn new<connectorIdType: Into<String>>(connector_id: connectorIdType)
+                                              -> DisassociateConnectorRequest {
+        DisassociateConnectorRequest {
+            connector_id: connector_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DisassociateConnectorResponse;
 
@@ -122,7 +211,26 @@ pub struct GetConnectorsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl GetConnectorsRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetConnectorsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetConnectorsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetConnectorsRequest with optional fields set to `None`.
+    pub fn new() -> GetConnectorsRequest {
+        GetConnectorsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetConnectorsResponse {
     #[serde(rename="connectorList")]
@@ -132,7 +240,6 @@ pub struct GetConnectorsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetReplicationJobsRequest {
     #[serde(rename="maxResults")]
@@ -145,7 +252,33 @@ pub struct GetReplicationJobsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub replication_job_id: Option<String>,
 }
-
+impl GetReplicationJobsRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetReplicationJobsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetReplicationJobsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `replication_job_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetReplicationJobsRequest.replication_job_id = Some(value.into());`.
+    pub fn replication_job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_job_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetReplicationJobsRequest with optional fields set to `None`.
+    pub fn new() -> GetReplicationJobsRequest {
+        GetReplicationJobsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetReplicationJobsResponse {
     #[serde(rename="nextToken")]
@@ -155,7 +288,6 @@ pub struct GetReplicationJobsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub replication_job_list: Option<Vec<ReplicationJob>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetReplicationRunsRequest {
     #[serde(rename="maxResults")]
@@ -167,7 +299,37 @@ pub struct GetReplicationRunsRequest {
     #[serde(rename="replicationJobId")]
     pub replication_job_id: String,
 }
-
+impl GetReplicationRunsRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetReplicationRunsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetReplicationRunsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `replication_job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetReplicationRunsRequest.replication_job_id = value.into();`.
+    pub fn replication_job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_job_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetReplicationRunsRequest with optional fields set to `None`.
+    pub fn new<replicationJobIdType: Into<String>>(replication_job_id: replicationJobIdType)
+                                                   -> GetReplicationRunsRequest {
+        GetReplicationRunsRequest {
+            replication_job_id: replication_job_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetReplicationRunsResponse {
     #[serde(rename="nextToken")]
@@ -180,7 +342,6 @@ pub struct GetReplicationRunsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub replication_run_list: Option<Vec<ReplicationRun>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetServersRequest {
     #[serde(rename="maxResults")]
@@ -190,7 +351,26 @@ pub struct GetServersRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl GetServersRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetServersRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetServersRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetServersRequest with optional fields set to `None`.
+    pub fn new() -> GetServersRequest {
+        GetServersRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetServersResponse {
     #[serde(rename="lastModifiedOn")]
@@ -206,7 +386,6 @@ pub struct GetServersResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub server_list: Option<Vec<Server>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ImportServerCatalogRequest;
 
@@ -259,7 +438,6 @@ pub struct ReplicationJob {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vm_server: Option<VmServer>,
 }
-
 #[doc="Object representing a Replication Run"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ReplicationRun {
@@ -288,7 +466,6 @@ pub struct ReplicationRun {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="Object representing a server"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Server {
@@ -308,7 +485,6 @@ pub struct Server {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vm_server: Option<VmServer>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartOnDemandReplicationRunRequest {
     #[serde(rename="description")]
@@ -317,14 +493,36 @@ pub struct StartOnDemandReplicationRunRequest {
     #[serde(rename="replicationJobId")]
     pub replication_job_id: String,
 }
-
+impl StartOnDemandReplicationRunRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartOnDemandReplicationRunRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `replication_job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartOnDemandReplicationRunRequest.replication_job_id = value.into();`.
+    pub fn replication_job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_job_id = value.into();
+        self
+    }
+    /// Returns a new instance of StartOnDemandReplicationRunRequest with optional fields set to `None`.
+    pub fn new<replicationJobIdType: Into<String>>(replication_job_id: replicationJobIdType)
+                                                   -> StartOnDemandReplicationRunRequest {
+        StartOnDemandReplicationRunRequest {
+            replication_job_id: replication_job_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartOnDemandReplicationRunResponse {
     #[serde(rename="replicationRunId")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub replication_run_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateReplicationJobRequest {
     #[serde(rename="description")]
@@ -345,7 +543,60 @@ pub struct UpdateReplicationJobRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub role_name: Option<String>,
 }
-
+impl UpdateReplicationJobRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateReplicationJobRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `frequency`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateReplicationJobRequest.frequency = Some(value.into());`.
+    pub fn frequency<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.frequency = Some(value.into());
+        self
+    }
+    /// Sets `license_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateReplicationJobRequest.license_type = Some(value.into());`.
+    pub fn license_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.license_type = Some(value.into());
+        self
+    }
+    /// Sets `next_replication_run_start_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateReplicationJobRequest.next_replication_run_start_time = Some(value.into());`.
+    pub fn next_replication_run_start_time<ValueType: Into<f64>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.next_replication_run_start_time = Some(value.into());
+        self
+    }
+    /// Sets `replication_job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateReplicationJobRequest.replication_job_id = value.into();`.
+    pub fn replication_job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.replication_job_id = value.into();
+        self
+    }
+    /// Sets `role_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateReplicationJobRequest.role_name = Some(value.into());`.
+    pub fn role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateReplicationJobRequest with optional fields set to `None`.
+    pub fn new<replicationJobIdType: Into<String>>(replication_job_id: replicationJobIdType)
+                                                   -> UpdateReplicationJobRequest {
+        UpdateReplicationJobRequest {
+            replication_job_id: replication_job_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateReplicationJobResponse;
 
@@ -368,7 +619,6 @@ pub struct VmServer {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vm_server_address: Option<VmServerAddress>,
 }
-
 #[doc="Object representing a server's location"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct VmServerAddress {
@@ -379,7 +629,6 @@ pub struct VmServerAddress {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vm_manager_id: Option<String>,
 }
-
 /// Errors returned by CreateReplicationJob
 #[derive(Debug, PartialEq)]
 pub enum CreateReplicationJobError {

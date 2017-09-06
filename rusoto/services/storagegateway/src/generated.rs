@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -56,7 +57,75 @@ pub struct ActivateGatewayInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tape_drive_type: Option<String>,
 }
-
+impl ActivateGatewayInput {
+    /// Sets `activation_key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActivateGatewayInput.activation_key = value.into();`.
+    pub fn activation_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.activation_key = value.into();
+        self
+    }
+    /// Sets `gateway_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActivateGatewayInput.gateway_name = value.into();`.
+    pub fn gateway_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_name = value.into();
+        self
+    }
+    /// Sets `gateway_region`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActivateGatewayInput.gateway_region = value.into();`.
+    pub fn gateway_region<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_region = value.into();
+        self
+    }
+    /// Sets `gateway_timezone`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActivateGatewayInput.gateway_timezone = value.into();`.
+    pub fn gateway_timezone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_timezone = value.into();
+        self
+    }
+    /// Sets `gateway_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActivateGatewayInput.gateway_type = Some(value.into());`.
+    pub fn gateway_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_type = Some(value.into());
+        self
+    }
+    /// Sets `medium_changer_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActivateGatewayInput.medium_changer_type = Some(value.into());`.
+    pub fn medium_changer_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.medium_changer_type = Some(value.into());
+        self
+    }
+    /// Sets `tape_drive_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ActivateGatewayInput.tape_drive_type = Some(value.into());`.
+    pub fn tape_drive_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tape_drive_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ActivateGatewayInput with optional fields set to `None`.
+    pub fn new<ActivationKeyType: Into<String>,
+               GatewayNameType: Into<String>,
+               GatewayRegionType: Into<String>,
+               GatewayTimezoneType: Into<String>>
+        (activation_key: ActivationKeyType,
+         gateway_name: GatewayNameType,
+         gateway_region: GatewayRegionType,
+         gateway_timezone: GatewayTimezoneType)
+         -> ActivateGatewayInput {
+        ActivateGatewayInput {
+            activation_key: activation_key.into(),
+            gateway_name: gateway_name.into(),
+            gateway_region: gateway_region.into(),
+            gateway_timezone: gateway_timezone.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>AWS Storage Gateway returns the Amazon Resource Name (ARN) of the activated gateway. It is a string made of information such as your account, gateway name, and region. This ARN is used to reference the gateway in other API operations as well as resource-based authorization.</p> <note> <p>For gateways activated prior to September 02, 2015 the gateway ARN contains the gateway name rather than the gateway id. Changing the name of the gateway has no effect on the gateway ARN.</p> </note>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ActivateGatewayOutput {
@@ -64,7 +133,6 @@ pub struct ActivateGatewayOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub gateway_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AddCacheInput {
     #[serde(rename="DiskIds")]
@@ -72,14 +140,36 @@ pub struct AddCacheInput {
     #[serde(rename="GatewayARN")]
     pub gateway_arn: String,
 }
-
+impl AddCacheInput {
+    /// Sets `disk_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddCacheInput.disk_ids = value.into();`.
+    pub fn disk_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.disk_ids = value.into();
+        self
+    }
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddCacheInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Returns a new instance of AddCacheInput with optional fields set to `None`.
+pub fn new<DiskIdsType: Into<Vec<String>>, GatewayARNType: Into<String>>(disk_ids: DiskIdsType, gateway_arn: GatewayARNType) -> AddCacheInput{
+        AddCacheInput {
+            disk_ids: disk_ids.into(),
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddCacheOutput {
     #[serde(rename="GatewayARN")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub gateway_arn: Option<String>,
 }
-
 #[doc="<p>AddTagsToResourceInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AddTagsToResourceInput {
@@ -90,7 +180,33 @@ pub struct AddTagsToResourceInput {
     #[serde(rename="Tags")]
     pub tags: Vec<Tag>,
 }
-
+impl AddTagsToResourceInput {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToResourceInput.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToResourceInput.tags = value.into();`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of AddTagsToResourceInput with optional fields set to `None`.
+    pub fn new<ResourceARNType: Into<String>, TagsType: Into<Vec<Tag>>>
+        (resource_arn: ResourceARNType,
+         tags: TagsType)
+         -> AddTagsToResourceInput {
+        AddTagsToResourceInput {
+            resource_arn: resource_arn.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>AddTagsToResourceOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddTagsToResourceOutput {
@@ -99,7 +215,6 @@ pub struct AddTagsToResourceOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AddUploadBufferInput {
     #[serde(rename="DiskIds")]
@@ -107,14 +222,39 @@ pub struct AddUploadBufferInput {
     #[serde(rename="GatewayARN")]
     pub gateway_arn: String,
 }
-
+impl AddUploadBufferInput {
+    /// Sets `disk_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddUploadBufferInput.disk_ids = value.into();`.
+    pub fn disk_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.disk_ids = value.into();
+        self
+    }
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddUploadBufferInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Returns a new instance of AddUploadBufferInput with optional fields set to `None`.
+    pub fn new<DiskIdsType: Into<Vec<String>>, GatewayARNType: Into<String>>
+        (disk_ids: DiskIdsType,
+         gateway_arn: GatewayARNType)
+         -> AddUploadBufferInput {
+        AddUploadBufferInput {
+            disk_ids: disk_ids.into(),
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddUploadBufferOutput {
     #[serde(rename="GatewayARN")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub gateway_arn: Option<String>,
 }
-
 #[doc="<p>A JSON object containing one or more of the following fields:</p> <ul> <li> <p> <a>AddWorkingStorageInput$DiskIds</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AddWorkingStorageInput {
@@ -124,7 +264,33 @@ pub struct AddWorkingStorageInput {
     #[serde(rename="GatewayARN")]
     pub gateway_arn: String,
 }
-
+impl AddWorkingStorageInput {
+    /// Sets `disk_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddWorkingStorageInput.disk_ids = value.into();`.
+    pub fn disk_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.disk_ids = value.into();
+        self
+    }
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddWorkingStorageInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Returns a new instance of AddWorkingStorageInput with optional fields set to `None`.
+    pub fn new<DiskIdsType: Into<Vec<String>>, GatewayARNType: Into<String>>
+        (disk_ids: DiskIdsType,
+         gateway_arn: GatewayARNType)
+         -> AddWorkingStorageInput {
+        AddWorkingStorageInput {
+            disk_ids: disk_ids.into(),
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A JSON object containing the of the gateway for which working storage was configured.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddWorkingStorageOutput {
@@ -132,7 +298,6 @@ pub struct AddWorkingStorageOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub gateway_arn: Option<String>,
 }
-
 #[doc="<p>Describes an iSCSI cached volume.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CachediSCSIVolume {
@@ -173,7 +338,6 @@ pub struct CachediSCSIVolume {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volumei_scsi_attributes: Option<VolumeiSCSIAttributes>,
 }
-
 #[doc="<p>CancelArchivalInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CancelArchivalInput {
@@ -183,7 +347,30 @@ pub struct CancelArchivalInput {
     #[serde(rename="TapeARN")]
     pub tape_arn: String,
 }
-
+impl CancelArchivalInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelArchivalInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Sets `tape_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelArchivalInput.tape_arn = value.into();`.
+    pub fn tape_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tape_arn = value.into();
+        self
+    }
+    /// Returns a new instance of CancelArchivalInput with optional fields set to `None`.
+pub fn new<GatewayARNType: Into<String>, TapeARNType: Into<String>>(gateway_arn: GatewayARNType, tape_arn: TapeARNType) -> CancelArchivalInput{
+        CancelArchivalInput {
+            gateway_arn: gateway_arn.into(),
+            tape_arn: tape_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>CancelArchivalOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CancelArchivalOutput {
@@ -192,7 +379,6 @@ pub struct CancelArchivalOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tape_arn: Option<String>,
 }
-
 #[doc="<p>CancelRetrievalInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CancelRetrievalInput {
@@ -202,7 +388,30 @@ pub struct CancelRetrievalInput {
     #[serde(rename="TapeARN")]
     pub tape_arn: String,
 }
-
+impl CancelRetrievalInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelRetrievalInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Sets `tape_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelRetrievalInput.tape_arn = value.into();`.
+    pub fn tape_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tape_arn = value.into();
+        self
+    }
+    /// Returns a new instance of CancelRetrievalInput with optional fields set to `None`.
+pub fn new<GatewayARNType: Into<String>, TapeARNType: Into<String>>(gateway_arn: GatewayARNType, tape_arn: TapeARNType) -> CancelRetrievalInput{
+        CancelRetrievalInput {
+            gateway_arn: gateway_arn.into(),
+            tape_arn: tape_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>CancelRetrievalOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CancelRetrievalOutput {
@@ -211,7 +420,6 @@ pub struct CancelRetrievalOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tape_arn: Option<String>,
 }
-
 #[doc="<p>Describes Challenge-Handshake Authentication Protocol (CHAP) information that supports authentication between your gateway and iSCSI initiators.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ChapInfo {
@@ -232,7 +440,6 @@ pub struct ChapInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub target_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateCachediSCSIVolumeInput {
     #[serde(rename="ClientToken")]
@@ -253,7 +460,78 @@ pub struct CreateCachediSCSIVolumeInput {
     #[serde(rename="VolumeSizeInBytes")]
     pub volume_size_in_bytes: i64,
 }
-
+impl CreateCachediSCSIVolumeInput {
+    /// Sets `client_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCachediSCSIVolumeInput.client_token = value.into();`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = value.into();
+        self
+    }
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCachediSCSIVolumeInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Sets `network_interface_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCachediSCSIVolumeInput.network_interface_id = value.into();`.
+    pub fn network_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_interface_id = value.into();
+        self
+    }
+    /// Sets `snapshot_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCachediSCSIVolumeInput.snapshot_id = Some(value.into());`.
+    pub fn snapshot_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_id = Some(value.into());
+        self
+    }
+    /// Sets `source_volume_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCachediSCSIVolumeInput.source_volume_arn = Some(value.into());`.
+    pub fn source_volume_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_volume_arn = Some(value.into());
+        self
+    }
+    /// Sets `target_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCachediSCSIVolumeInput.target_name = value.into();`.
+    pub fn target_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_name = value.into();
+        self
+    }
+    /// Sets `volume_size_in_bytes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCachediSCSIVolumeInput.volume_size_in_bytes = value.into();`.
+    pub fn volume_size_in_bytes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.volume_size_in_bytes = value.into();
+        self
+    }
+    /// Returns a new instance of CreateCachediSCSIVolumeInput with optional fields set to `None`.
+    pub fn new<ClientTokenType: Into<String>,
+               GatewayARNType: Into<String>,
+               NetworkInterfaceIdType: Into<String>,
+               TargetNameType: Into<String>,
+               VolumeSizeInBytesType: Into<i64>>
+        (client_token: ClientTokenType,
+         gateway_arn: GatewayARNType,
+         network_interface_id: NetworkInterfaceIdType,
+         target_name: TargetNameType,
+         volume_size_in_bytes: VolumeSizeInBytesType)
+         -> CreateCachediSCSIVolumeInput {
+        CreateCachediSCSIVolumeInput {
+            client_token: client_token.into(),
+            gateway_arn: gateway_arn.into(),
+            network_interface_id: network_interface_id.into(),
+            target_name: target_name.into(),
+            volume_size_in_bytes: volume_size_in_bytes.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateCachediSCSIVolumeOutput {
     #[serde(rename="TargetARN")]
@@ -263,7 +541,6 @@ pub struct CreateCachediSCSIVolumeOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_arn: Option<String>,
 }
-
 #[doc="<p>CreateNFSFileShareInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateNFSFileShareInput {
@@ -308,7 +585,105 @@ pub struct CreateNFSFileShareInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub squash: Option<String>,
 }
-
+impl CreateNFSFileShareInput {
+    /// Sets `client_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNFSFileShareInput.client_list = Some(value.into());`.
+    pub fn client_list<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.client_list = Some(value.into());
+        self
+    }
+    /// Sets `client_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNFSFileShareInput.client_token = value.into();`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = value.into();
+        self
+    }
+    /// Sets `default_storage_class`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNFSFileShareInput.default_storage_class = Some(value.into());`.
+    pub fn default_storage_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_storage_class = Some(value.into());
+        self
+    }
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNFSFileShareInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Sets `kms_encrypted`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNFSFileShareInput.kms_encrypted = Some(value.into());`.
+    pub fn kms_encrypted<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.kms_encrypted = Some(value.into());
+        self
+    }
+    /// Sets `kms_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNFSFileShareInput.kms_key = Some(value.into());`.
+    pub fn kms_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kms_key = Some(value.into());
+        self
+    }
+    /// Sets `location_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNFSFileShareInput.location_arn = value.into();`.
+    pub fn location_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.location_arn = value.into();
+        self
+    }
+    /// Sets `nfs_file_share_defaults`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNFSFileShareInput.nfs_file_share_defaults = Some(value.into());`.
+    pub fn nfs_file_share_defaults<ValueType: Into<NFSFileShareDefaults>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.nfs_file_share_defaults = Some(value.into());
+        self
+    }
+    /// Sets `read_only`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNFSFileShareInput.read_only = Some(value.into());`.
+    pub fn read_only<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.read_only = Some(value.into());
+        self
+    }
+    /// Sets `role`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNFSFileShareInput.role = value.into();`.
+    pub fn role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role = value.into();
+        self
+    }
+    /// Sets `squash`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNFSFileShareInput.squash = Some(value.into());`.
+    pub fn squash<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.squash = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateNFSFileShareInput with optional fields set to `None`.
+    pub fn new<ClientTokenType: Into<String>,
+               GatewayARNType: Into<String>,
+               LocationARNType: Into<String>,
+               RoleType: Into<String>>
+        (client_token: ClientTokenType,
+         gateway_arn: GatewayARNType,
+         location_arn: LocationARNType,
+         role: RoleType)
+         -> CreateNFSFileShareInput {
+        CreateNFSFileShareInput {
+            client_token: client_token.into(),
+            gateway_arn: gateway_arn.into(),
+            location_arn: location_arn.into(),
+            role: role.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>CreateNFSFileShareOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateNFSFileShareOutput {
@@ -317,7 +692,6 @@ pub struct CreateNFSFileShareOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub file_share_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateSnapshotFromVolumeRecoveryPointInput {
     #[serde(rename="SnapshotDescription")]
@@ -325,7 +699,33 @@ pub struct CreateSnapshotFromVolumeRecoveryPointInput {
     #[serde(rename="VolumeARN")]
     pub volume_arn: String,
 }
-
+impl CreateSnapshotFromVolumeRecoveryPointInput {
+    /// Sets `snapshot_description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSnapshotFromVolumeRecoveryPointInput.snapshot_description = value.into();`.
+    pub fn snapshot_description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_description = value.into();
+        self
+    }
+    /// Sets `volume_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSnapshotFromVolumeRecoveryPointInput.volume_arn = value.into();`.
+    pub fn volume_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_arn = value.into();
+        self
+    }
+    /// Returns a new instance of CreateSnapshotFromVolumeRecoveryPointInput with optional fields set to `None`.
+    pub fn new<SnapshotDescriptionType: Into<String>, VolumeARNType: Into<String>>
+        (snapshot_description: SnapshotDescriptionType,
+         volume_arn: VolumeARNType)
+         -> CreateSnapshotFromVolumeRecoveryPointInput {
+        CreateSnapshotFromVolumeRecoveryPointInput {
+            snapshot_description: snapshot_description.into(),
+            volume_arn: volume_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateSnapshotFromVolumeRecoveryPointOutput {
     #[serde(rename="SnapshotId")]
@@ -338,7 +738,6 @@ pub struct CreateSnapshotFromVolumeRecoveryPointOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_recovery_point_time: Option<String>,
 }
-
 #[doc="<p>A JSON object containing one or more of the following fields:</p> <ul> <li> <p> <a>CreateSnapshotInput$SnapshotDescription</a> </p> </li> <li> <p> <a>CreateSnapshotInput$VolumeARN</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateSnapshotInput {
@@ -349,7 +748,33 @@ pub struct CreateSnapshotInput {
     #[serde(rename="VolumeARN")]
     pub volume_arn: String,
 }
-
+impl CreateSnapshotInput {
+    /// Sets `snapshot_description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSnapshotInput.snapshot_description = value.into();`.
+    pub fn snapshot_description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_description = value.into();
+        self
+    }
+    /// Sets `volume_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSnapshotInput.volume_arn = value.into();`.
+    pub fn volume_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_arn = value.into();
+        self
+    }
+    /// Returns a new instance of CreateSnapshotInput with optional fields set to `None`.
+    pub fn new<SnapshotDescriptionType: Into<String>, VolumeARNType: Into<String>>
+        (snapshot_description: SnapshotDescriptionType,
+         volume_arn: VolumeARNType)
+         -> CreateSnapshotInput {
+        CreateSnapshotInput {
+            snapshot_description: snapshot_description.into(),
+            volume_arn: volume_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A JSON object containing the following fields:</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateSnapshotOutput {
@@ -362,7 +787,6 @@ pub struct CreateSnapshotOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_arn: Option<String>,
 }
-
 #[doc="<p>A JSON object containing one or more of the following fields:</p> <ul> <li> <p> <a>CreateStorediSCSIVolumeInput$DiskId</a> </p> </li> <li> <p> <a>CreateStorediSCSIVolumeInput$NetworkInterfaceId</a> </p> </li> <li> <p> <a>CreateStorediSCSIVolumeInput$PreserveExistingData</a> </p> </li> <li> <p> <a>CreateStorediSCSIVolumeInput$SnapshotId</a> </p> </li> <li> <p> <a>CreateStorediSCSIVolumeInput$TargetName</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateStorediSCSIVolumeInput {
@@ -385,7 +809,71 @@ pub struct CreateStorediSCSIVolumeInput {
     #[serde(rename="TargetName")]
     pub target_name: String,
 }
-
+impl CreateStorediSCSIVolumeInput {
+    /// Sets `disk_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStorediSCSIVolumeInput.disk_id = value.into();`.
+    pub fn disk_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.disk_id = value.into();
+        self
+    }
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStorediSCSIVolumeInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Sets `network_interface_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStorediSCSIVolumeInput.network_interface_id = value.into();`.
+    pub fn network_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_interface_id = value.into();
+        self
+    }
+    /// Sets `preserve_existing_data`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStorediSCSIVolumeInput.preserve_existing_data = value.into();`.
+    pub fn preserve_existing_data<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.preserve_existing_data = value.into();
+        self
+    }
+    /// Sets `snapshot_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStorediSCSIVolumeInput.snapshot_id = Some(value.into());`.
+    pub fn snapshot_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_id = Some(value.into());
+        self
+    }
+    /// Sets `target_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStorediSCSIVolumeInput.target_name = value.into();`.
+    pub fn target_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateStorediSCSIVolumeInput with optional fields set to `None`.
+    pub fn new<DiskIdType: Into<String>,
+               GatewayARNType: Into<String>,
+               NetworkInterfaceIdType: Into<String>,
+               PreserveExistingDataType: Into<bool>,
+               TargetNameType: Into<String>>
+        (disk_id: DiskIdType,
+         gateway_arn: GatewayARNType,
+         network_interface_id: NetworkInterfaceIdType,
+         preserve_existing_data: PreserveExistingDataType,
+         target_name: TargetNameType)
+         -> CreateStorediSCSIVolumeInput {
+        CreateStorediSCSIVolumeInput {
+            disk_id: disk_id.into(),
+            gateway_arn: gateway_arn.into(),
+            network_interface_id: network_interface_id.into(),
+            preserve_existing_data: preserve_existing_data.into(),
+            target_name: target_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A JSON object containing the following fields:</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateStorediSCSIVolumeOutput {
@@ -402,7 +890,6 @@ pub struct CreateStorediSCSIVolumeOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_size_in_bytes: Option<i64>,
 }
-
 #[doc="<p>CreateTapeWithBarcodeInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateTapeWithBarcodeInput {
@@ -416,7 +903,44 @@ pub struct CreateTapeWithBarcodeInput {
     #[serde(rename="TapeSizeInBytes")]
     pub tape_size_in_bytes: i64,
 }
-
+impl CreateTapeWithBarcodeInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTapeWithBarcodeInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Sets `tape_barcode`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTapeWithBarcodeInput.tape_barcode = value.into();`.
+    pub fn tape_barcode<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tape_barcode = value.into();
+        self
+    }
+    /// Sets `tape_size_in_bytes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTapeWithBarcodeInput.tape_size_in_bytes = value.into();`.
+    pub fn tape_size_in_bytes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.tape_size_in_bytes = value.into();
+        self
+    }
+    /// Returns a new instance of CreateTapeWithBarcodeInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>,
+               TapeBarcodeType: Into<String>,
+               TapeSizeInBytesType: Into<i64>>
+        (gateway_arn: GatewayARNType,
+         tape_barcode: TapeBarcodeType,
+         tape_size_in_bytes: TapeSizeInBytesType)
+         -> CreateTapeWithBarcodeInput {
+        CreateTapeWithBarcodeInput {
+            gateway_arn: gateway_arn.into(),
+            tape_barcode: tape_barcode.into(),
+            tape_size_in_bytes: tape_size_in_bytes.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>CreateTapeOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateTapeWithBarcodeOutput {
@@ -425,7 +949,6 @@ pub struct CreateTapeWithBarcodeOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tape_arn: Option<String>,
 }
-
 #[doc="<p>CreateTapesInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateTapesInput {
@@ -445,7 +968,64 @@ pub struct CreateTapesInput {
     #[serde(rename="TapeSizeInBytes")]
     pub tape_size_in_bytes: i64,
 }
-
+impl CreateTapesInput {
+    /// Sets `client_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTapesInput.client_token = value.into();`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = value.into();
+        self
+    }
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTapesInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Sets `num_tapes_to_create`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTapesInput.num_tapes_to_create = value.into();`.
+    pub fn num_tapes_to_create<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.num_tapes_to_create = value.into();
+        self
+    }
+    /// Sets `tape_barcode_prefix`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTapesInput.tape_barcode_prefix = value.into();`.
+    pub fn tape_barcode_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tape_barcode_prefix = value.into();
+        self
+    }
+    /// Sets `tape_size_in_bytes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTapesInput.tape_size_in_bytes = value.into();`.
+    pub fn tape_size_in_bytes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.tape_size_in_bytes = value.into();
+        self
+    }
+    /// Returns a new instance of CreateTapesInput with optional fields set to `None`.
+    pub fn new<ClientTokenType: Into<String>,
+               GatewayARNType: Into<String>,
+               NumTapesToCreateType: Into<i64>,
+               TapeBarcodePrefixType: Into<String>,
+               TapeSizeInBytesType: Into<i64>>
+        (client_token: ClientTokenType,
+         gateway_arn: GatewayARNType,
+         num_tapes_to_create: NumTapesToCreateType,
+         tape_barcode_prefix: TapeBarcodePrefixType,
+         tape_size_in_bytes: TapeSizeInBytesType)
+         -> CreateTapesInput {
+        CreateTapesInput {
+            client_token: client_token.into(),
+            gateway_arn: gateway_arn.into(),
+            num_tapes_to_create: num_tapes_to_create.into(),
+            tape_barcode_prefix: tape_barcode_prefix.into(),
+            tape_size_in_bytes: tape_size_in_bytes.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>CreateTapeOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateTapesOutput {
@@ -454,7 +1034,6 @@ pub struct CreateTapesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tape_ar_ns: Option<Vec<String>>,
 }
-
 #[doc="<p>A JSON object containing the following fields:</p> <ul> <li> <p> <a>DeleteBandwidthRateLimitInput$BandwidthType</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteBandwidthRateLimitInput {
@@ -464,7 +1043,33 @@ pub struct DeleteBandwidthRateLimitInput {
     #[serde(rename="GatewayARN")]
     pub gateway_arn: String,
 }
-
+impl DeleteBandwidthRateLimitInput {
+    /// Sets `bandwidth_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBandwidthRateLimitInput.bandwidth_type = value.into();`.
+    pub fn bandwidth_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bandwidth_type = value.into();
+        self
+    }
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBandwidthRateLimitInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteBandwidthRateLimitInput with optional fields set to `None`.
+    pub fn new<BandwidthTypeType: Into<String>, GatewayARNType: Into<String>>
+        (bandwidth_type: BandwidthTypeType,
+         gateway_arn: GatewayARNType)
+         -> DeleteBandwidthRateLimitInput {
+        DeleteBandwidthRateLimitInput {
+            bandwidth_type: bandwidth_type.into(),
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A JSON object containing the of the gateway whose bandwidth rate information was deleted.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteBandwidthRateLimitOutput {
@@ -472,7 +1077,6 @@ pub struct DeleteBandwidthRateLimitOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub gateway_arn: Option<String>,
 }
-
 #[doc="<p>A JSON object containing one or more of the following fields:</p> <ul> <li> <p> <a>DeleteChapCredentialsInput$InitiatorName</a> </p> </li> <li> <p> <a>DeleteChapCredentialsInput$TargetARN</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteChapCredentialsInput {
@@ -483,7 +1087,33 @@ pub struct DeleteChapCredentialsInput {
     #[serde(rename="TargetARN")]
     pub target_arn: String,
 }
-
+impl DeleteChapCredentialsInput {
+    /// Sets `initiator_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteChapCredentialsInput.initiator_name = value.into();`.
+    pub fn initiator_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.initiator_name = value.into();
+        self
+    }
+    /// Sets `target_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteChapCredentialsInput.target_arn = value.into();`.
+    pub fn target_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteChapCredentialsInput with optional fields set to `None`.
+    pub fn new<InitiatorNameType: Into<String>, TargetARNType: Into<String>>
+        (initiator_name: InitiatorNameType,
+         target_arn: TargetARNType)
+         -> DeleteChapCredentialsInput {
+        DeleteChapCredentialsInput {
+            initiator_name: initiator_name.into(),
+            target_arn: target_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A JSON object containing the following fields:</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteChapCredentialsOutput {
@@ -496,7 +1126,6 @@ pub struct DeleteChapCredentialsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub target_arn: Option<String>,
 }
-
 #[doc="<p>DeleteFileShareInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteFileShareInput {
@@ -508,7 +1137,30 @@ pub struct DeleteFileShareInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub force_delete: Option<bool>,
 }
-
+impl DeleteFileShareInput {
+    /// Sets `file_share_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteFileShareInput.file_share_arn = value.into();`.
+    pub fn file_share_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.file_share_arn = value.into();
+        self
+    }
+    /// Sets `force_delete`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteFileShareInput.force_delete = Some(value.into());`.
+    pub fn force_delete<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.force_delete = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteFileShareInput with optional fields set to `None`.
+    pub fn new<FileShareARNType: Into<String>>(file_share_arn: FileShareARNType)
+                                               -> DeleteFileShareInput {
+        DeleteFileShareInput {
+            file_share_arn: file_share_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>DeleteFileShareOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteFileShareOutput {
@@ -517,14 +1169,28 @@ pub struct DeleteFileShareOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub file_share_arn: Option<String>,
 }
-
 #[doc="<p>A JSON object containing the id of the gateway to delete.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteGatewayInput {
     #[serde(rename="GatewayARN")]
     pub gateway_arn: String,
 }
-
+impl DeleteGatewayInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteGatewayInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteGatewayInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>>(gateway_arn: GatewayARNType) -> DeleteGatewayInput {
+        DeleteGatewayInput {
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A JSON object containing the id of the deleted gateway.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteGatewayOutput {
@@ -532,20 +1198,34 @@ pub struct DeleteGatewayOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub gateway_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteSnapshotScheduleInput {
     #[serde(rename="VolumeARN")]
     pub volume_arn: String,
 }
-
+impl DeleteSnapshotScheduleInput {
+    /// Sets `volume_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSnapshotScheduleInput.volume_arn = value.into();`.
+    pub fn volume_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteSnapshotScheduleInput with optional fields set to `None`.
+    pub fn new<VolumeARNType: Into<String>>(volume_arn: VolumeARNType)
+                                            -> DeleteSnapshotScheduleInput {
+        DeleteSnapshotScheduleInput {
+            volume_arn: volume_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteSnapshotScheduleOutput {
     #[serde(rename="VolumeARN")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_arn: Option<String>,
 }
-
 #[doc="<p>DeleteTapeArchiveInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteTapeArchiveInput {
@@ -553,7 +1233,22 @@ pub struct DeleteTapeArchiveInput {
     #[serde(rename="TapeARN")]
     pub tape_arn: String,
 }
-
+impl DeleteTapeArchiveInput {
+    /// Sets `tape_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTapeArchiveInput.tape_arn = value.into();`.
+    pub fn tape_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tape_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteTapeArchiveInput with optional fields set to `None`.
+    pub fn new<TapeARNType: Into<String>>(tape_arn: TapeARNType) -> DeleteTapeArchiveInput {
+        DeleteTapeArchiveInput {
+            tape_arn: tape_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>DeleteTapeArchiveOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteTapeArchiveOutput {
@@ -562,7 +1257,6 @@ pub struct DeleteTapeArchiveOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tape_arn: Option<String>,
 }
-
 #[doc="<p>DeleteTapeInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteTapeInput {
@@ -573,7 +1267,30 @@ pub struct DeleteTapeInput {
     #[serde(rename="TapeARN")]
     pub tape_arn: String,
 }
-
+impl DeleteTapeInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTapeInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Sets `tape_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTapeInput.tape_arn = value.into();`.
+    pub fn tape_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tape_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteTapeInput with optional fields set to `None`.
+pub fn new<GatewayARNType: Into<String>, TapeARNType: Into<String>>(gateway_arn: GatewayARNType, tape_arn: TapeARNType) -> DeleteTapeInput{
+        DeleteTapeInput {
+            gateway_arn: gateway_arn.into(),
+            tape_arn: tape_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>DeleteTapeOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteTapeOutput {
@@ -582,7 +1299,6 @@ pub struct DeleteTapeOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tape_arn: Option<String>,
 }
-
 #[doc="<p>A JSON object containing the <a>DeleteVolumeInput$VolumeARN</a> to delete.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteVolumeInput {
@@ -590,7 +1306,22 @@ pub struct DeleteVolumeInput {
     #[serde(rename="VolumeARN")]
     pub volume_arn: String,
 }
-
+impl DeleteVolumeInput {
+    /// Sets `volume_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVolumeInput.volume_arn = value.into();`.
+    pub fn volume_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteVolumeInput with optional fields set to `None`.
+    pub fn new<VolumeARNType: Into<String>>(volume_arn: VolumeARNType) -> DeleteVolumeInput {
+        DeleteVolumeInput {
+            volume_arn: volume_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A JSON object containing the of the storage volume that was deleted</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteVolumeOutput {
@@ -599,14 +1330,29 @@ pub struct DeleteVolumeOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_arn: Option<String>,
 }
-
 #[doc="<p>A JSON object containing the of the gateway.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeBandwidthRateLimitInput {
     #[serde(rename="GatewayARN")]
     pub gateway_arn: String,
 }
-
+impl DescribeBandwidthRateLimitInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeBandwidthRateLimitInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeBandwidthRateLimitInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>>(gateway_arn: GatewayARNType)
+                                             -> DescribeBandwidthRateLimitInput {
+        DescribeBandwidthRateLimitInput {
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A JSON object containing the following fields:</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeBandwidthRateLimitOutput {
@@ -622,13 +1368,27 @@ pub struct DescribeBandwidthRateLimitOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub gateway_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeCacheInput {
     #[serde(rename="GatewayARN")]
     pub gateway_arn: String,
 }
-
+impl DescribeCacheInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCacheInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeCacheInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>>(gateway_arn: GatewayARNType) -> DescribeCacheInput {
+        DescribeCacheInput {
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeCacheOutput {
     #[serde(rename="CacheAllocatedInBytes")]
@@ -653,13 +1413,28 @@ pub struct DescribeCacheOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub gateway_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeCachediSCSIVolumesInput {
     #[serde(rename="VolumeARNs")]
     pub volume_ar_ns: Vec<String>,
 }
-
+impl DescribeCachediSCSIVolumesInput {
+    /// Sets `volume_ar_ns`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCachediSCSIVolumesInput.volume_ar_ns = value.into();`.
+    pub fn volume_ar_ns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.volume_ar_ns = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeCachediSCSIVolumesInput with optional fields set to `None`.
+    pub fn new<VolumeARNsType: Into<Vec<String>>>(volume_ar_ns: VolumeARNsType)
+                                                  -> DescribeCachediSCSIVolumesInput {
+        DescribeCachediSCSIVolumesInput {
+            volume_ar_ns: volume_ar_ns.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A JSON object containing the following fields:</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeCachediSCSIVolumesOutput {
@@ -668,7 +1443,6 @@ pub struct DescribeCachediSCSIVolumesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub cachedi_scsi_volumes: Option<Vec<CachediSCSIVolume>>,
 }
-
 #[doc="<p>A JSON object containing the Amazon Resource Name (ARN) of the iSCSI volume target.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeChapCredentialsInput {
@@ -676,7 +1450,23 @@ pub struct DescribeChapCredentialsInput {
     #[serde(rename="TargetARN")]
     pub target_arn: String,
 }
-
+impl DescribeChapCredentialsInput {
+    /// Sets `target_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeChapCredentialsInput.target_arn = value.into();`.
+    pub fn target_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeChapCredentialsInput with optional fields set to `None`.
+    pub fn new<TargetARNType: Into<String>>(target_arn: TargetARNType)
+                                            -> DescribeChapCredentialsInput {
+        DescribeChapCredentialsInput {
+            target_arn: target_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A JSON object containing a .</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeChapCredentialsOutput {
@@ -685,14 +1475,29 @@ pub struct DescribeChapCredentialsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub chap_credentials: Option<Vec<ChapInfo>>,
 }
-
 #[doc="<p>A JSON object containing the id of the gateway.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeGatewayInformationInput {
     #[serde(rename="GatewayARN")]
     pub gateway_arn: String,
 }
-
+impl DescribeGatewayInformationInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeGatewayInformationInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeGatewayInformationInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>>(gateway_arn: GatewayARNType)
+                                             -> DescribeGatewayInformationInput {
+        DescribeGatewayInformationInput {
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A JSON object containing the following fields:</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeGatewayInformationOutput {
@@ -732,14 +1537,29 @@ pub struct DescribeGatewayInformationOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_update_availability_date: Option<String>,
 }
-
 #[doc="<p>A JSON object containing the of the gateway.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeMaintenanceStartTimeInput {
     #[serde(rename="GatewayARN")]
     pub gateway_arn: String,
 }
-
+impl DescribeMaintenanceStartTimeInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMaintenanceStartTimeInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeMaintenanceStartTimeInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>>(gateway_arn: GatewayARNType)
+                                             -> DescribeMaintenanceStartTimeInput {
+        DescribeMaintenanceStartTimeInput {
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A JSON object containing the following fields:</p> <ul> <li> <p> <a>DescribeMaintenanceStartTimeOutput$DayOfWeek</a> </p> </li> <li> <p> <a>DescribeMaintenanceStartTimeOutput$HourOfDay</a> </p> </li> <li> <p> <a>DescribeMaintenanceStartTimeOutput$MinuteOfHour</a> </p> </li> <li> <p> <a>DescribeMaintenanceStartTimeOutput$Timezone</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeMaintenanceStartTimeOutput {
@@ -762,7 +1582,6 @@ pub struct DescribeMaintenanceStartTimeOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub timezone: Option<String>,
 }
-
 #[doc="<p>DescribeNFSFileSharesInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeNFSFileSharesInput {
@@ -770,7 +1589,23 @@ pub struct DescribeNFSFileSharesInput {
     #[serde(rename="FileShareARNList")]
     pub file_share_arn_list: Vec<String>,
 }
-
+impl DescribeNFSFileSharesInput {
+    /// Sets `file_share_arn_list`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeNFSFileSharesInput.file_share_arn_list = value.into();`.
+    pub fn file_share_arn_list<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.file_share_arn_list = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeNFSFileSharesInput with optional fields set to `None`.
+    pub fn new<FileShareARNListType: Into<Vec<String>>>(file_share_arn_list: FileShareARNListType)
+                                                        -> DescribeNFSFileSharesInput {
+        DescribeNFSFileSharesInput {
+            file_share_arn_list: file_share_arn_list.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>DescribeNFSFileSharesOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeNFSFileSharesOutput {
@@ -779,7 +1614,6 @@ pub struct DescribeNFSFileSharesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub nfs_file_share_info_list: Option<Vec<NFSFileShareInfo>>,
 }
-
 #[doc="<p>A JSON object containing the <a>DescribeSnapshotScheduleInput$VolumeARN</a> of the volume.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeSnapshotScheduleInput {
@@ -787,7 +1621,23 @@ pub struct DescribeSnapshotScheduleInput {
     #[serde(rename="VolumeARN")]
     pub volume_arn: String,
 }
-
+impl DescribeSnapshotScheduleInput {
+    /// Sets `volume_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSnapshotScheduleInput.volume_arn = value.into();`.
+    pub fn volume_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeSnapshotScheduleInput with optional fields set to `None`.
+    pub fn new<VolumeARNType: Into<String>>(volume_arn: VolumeARNType)
+                                            -> DescribeSnapshotScheduleInput {
+        DescribeSnapshotScheduleInput {
+            volume_arn: volume_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeSnapshotScheduleOutput {
     #[serde(rename="Description")]
@@ -806,7 +1656,6 @@ pub struct DescribeSnapshotScheduleOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_arn: Option<String>,
 }
-
 #[doc="<p>A JSON object containing a list of <a>DescribeStorediSCSIVolumesInput$VolumeARNs</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeStorediSCSIVolumesInput {
@@ -814,14 +1663,29 @@ pub struct DescribeStorediSCSIVolumesInput {
     #[serde(rename="VolumeARNs")]
     pub volume_ar_ns: Vec<String>,
 }
-
+impl DescribeStorediSCSIVolumesInput {
+    /// Sets `volume_ar_ns`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStorediSCSIVolumesInput.volume_ar_ns = value.into();`.
+    pub fn volume_ar_ns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.volume_ar_ns = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeStorediSCSIVolumesInput with optional fields set to `None`.
+    pub fn new<VolumeARNsType: Into<Vec<String>>>(volume_ar_ns: VolumeARNsType)
+                                                  -> DescribeStorediSCSIVolumesInput {
+        DescribeStorediSCSIVolumesInput {
+            volume_ar_ns: volume_ar_ns.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeStorediSCSIVolumesOutput {
     #[serde(rename="StorediSCSIVolumes")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub storedi_scsi_volumes: Option<Vec<StorediSCSIVolume>>,
 }
-
 #[doc="<p>DescribeTapeArchivesInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeTapeArchivesInput {
@@ -838,7 +1702,33 @@ pub struct DescribeTapeArchivesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tape_ar_ns: Option<Vec<String>>,
 }
-
+impl DescribeTapeArchivesInput {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTapeArchivesInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTapeArchivesInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `tape_ar_ns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTapeArchivesInput.tape_ar_ns = Some(value.into());`.
+    pub fn tape_ar_ns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tape_ar_ns = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeTapeArchivesInput with optional fields set to `None`.
+    pub fn new() -> DescribeTapeArchivesInput {
+        DescribeTapeArchivesInput { ..Default::default() }
+    }
+}
 #[doc="<p>DescribeTapeArchivesOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeTapeArchivesOutput {
@@ -851,7 +1741,6 @@ pub struct DescribeTapeArchivesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tape_archives: Option<Vec<TapeArchive>>,
 }
-
 #[doc="<p>DescribeTapeRecoveryPointsInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeTapeRecoveryPointsInput {
@@ -866,7 +1755,37 @@ pub struct DescribeTapeRecoveryPointsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
+impl DescribeTapeRecoveryPointsInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTapeRecoveryPointsInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTapeRecoveryPointsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTapeRecoveryPointsInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeTapeRecoveryPointsInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>>(gateway_arn: GatewayARNType)
+                                             -> DescribeTapeRecoveryPointsInput {
+        DescribeTapeRecoveryPointsInput {
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>DescribeTapeRecoveryPointsOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeTapeRecoveryPointsOutput {
@@ -882,7 +1801,6 @@ pub struct DescribeTapeRecoveryPointsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tape_recovery_point_infos: Option<Vec<TapeRecoveryPointInfo>>,
 }
-
 #[doc="<p>DescribeTapesInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeTapesInput {
@@ -901,7 +1819,43 @@ pub struct DescribeTapesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tape_ar_ns: Option<Vec<String>>,
 }
-
+impl DescribeTapesInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTapesInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTapesInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTapesInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `tape_ar_ns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTapesInput.tape_ar_ns = Some(value.into());`.
+    pub fn tape_ar_ns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tape_ar_ns = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeTapesInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>>(gateway_arn: GatewayARNType) -> DescribeTapesInput {
+        DescribeTapesInput {
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>DescribeTapesOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeTapesOutput {
@@ -914,13 +1868,28 @@ pub struct DescribeTapesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tapes: Option<Vec<Tape>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeUploadBufferInput {
     #[serde(rename="GatewayARN")]
     pub gateway_arn: String,
 }
-
+impl DescribeUploadBufferInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeUploadBufferInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeUploadBufferInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>>(gateway_arn: GatewayARNType)
+                                             -> DescribeUploadBufferInput {
+        DescribeUploadBufferInput {
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeUploadBufferOutput {
     #[serde(rename="DiskIds")]
@@ -936,7 +1905,6 @@ pub struct DescribeUploadBufferOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub upload_buffer_used_in_bytes: Option<i64>,
 }
-
 #[doc="<p>DescribeVTLDevicesInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeVTLDevicesInput {
@@ -955,7 +1923,44 @@ pub struct DescribeVTLDevicesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vtl_device_ar_ns: Option<Vec<String>>,
 }
-
+impl DescribeVTLDevicesInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVTLDevicesInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVTLDevicesInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVTLDevicesInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `vtl_device_ar_ns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVTLDevicesInput.vtl_device_ar_ns = Some(value.into());`.
+    pub fn vtl_device_ar_ns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.vtl_device_ar_ns = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeVTLDevicesInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>>(gateway_arn: GatewayARNType)
+                                             -> DescribeVTLDevicesInput {
+        DescribeVTLDevicesInput {
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>DescribeVTLDevicesOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeVTLDevicesOutput {
@@ -971,14 +1976,29 @@ pub struct DescribeVTLDevicesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vtl_devices: Option<Vec<VTLDevice>>,
 }
-
 #[doc="<p>A JSON object containing the of the gateway.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeWorkingStorageInput {
     #[serde(rename="GatewayARN")]
     pub gateway_arn: String,
 }
-
+impl DescribeWorkingStorageInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeWorkingStorageInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeWorkingStorageInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>>(gateway_arn: GatewayARNType)
+                                             -> DescribeWorkingStorageInput {
+        DescribeWorkingStorageInput {
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A JSON object containing the following fields:</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeWorkingStorageOutput {
@@ -998,7 +2018,6 @@ pub struct DescribeWorkingStorageOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub working_storage_used_in_bytes: Option<i64>,
 }
-
 #[doc="<p>Lists iSCSI information about a VTL device.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeviceiSCSIAttributes {
@@ -1019,14 +2038,28 @@ pub struct DeviceiSCSIAttributes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub target_arn: Option<String>,
 }
-
 #[doc="<p>DisableGatewayInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DisableGatewayInput {
     #[serde(rename="GatewayARN")]
     pub gateway_arn: String,
 }
-
+impl DisableGatewayInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableGatewayInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DisableGatewayInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>>(gateway_arn: GatewayARNType) -> DisableGatewayInput {
+        DisableGatewayInput {
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>DisableGatewayOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DisableGatewayOutput {
@@ -1035,7 +2068,6 @@ pub struct DisableGatewayOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub gateway_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Disk {
     #[serde(rename="DiskAllocationResource")]
@@ -1060,7 +2092,6 @@ pub struct Disk {
     #[serde(skip_serializing_if="Option::is_none")]
     pub disk_status: Option<String>,
 }
-
 #[doc="<p>Describes a file share.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct FileShareInfo {
@@ -1077,7 +2108,6 @@ pub struct FileShareInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub gateway_arn: Option<String>,
 }
-
 #[doc="<p>Describes a gateway object.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GatewayInfo {
@@ -1102,7 +2132,6 @@ pub struct GatewayInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub gateway_type: Option<String>,
 }
-
 #[doc="<p>ListFileShareInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListFileSharesInput {
@@ -1119,7 +2148,33 @@ pub struct ListFileSharesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
+impl ListFileSharesInput {
+    /// Sets `gateway_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListFileSharesInput.gateway_arn = Some(value.into());`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListFileSharesInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListFileSharesInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListFileSharesInput with optional fields set to `None`.
+    pub fn new() -> ListFileSharesInput {
+        ListFileSharesInput { ..Default::default() }
+    }
+}
 #[doc="<p>ListFileShareOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListFileSharesOutput {
@@ -1136,7 +2191,6 @@ pub struct ListFileSharesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_marker: Option<String>,
 }
-
 #[doc="<p>A JSON object containing zero or more of the following fields:</p> <ul> <li> <p> <a>ListGatewaysInput$Limit</a> </p> </li> <li> <p> <a>ListGatewaysInput$Marker</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListGatewaysInput {
@@ -1149,7 +2203,26 @@ pub struct ListGatewaysInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
+impl ListGatewaysInput {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListGatewaysInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListGatewaysInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListGatewaysInput with optional fields set to `None`.
+    pub fn new() -> ListGatewaysInput {
+        ListGatewaysInput { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListGatewaysOutput {
     #[serde(rename="Gateways")]
@@ -1159,14 +2232,28 @@ pub struct ListGatewaysOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
 #[doc="<p>A JSON object containing the of the gateway.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListLocalDisksInput {
     #[serde(rename="GatewayARN")]
     pub gateway_arn: String,
 }
-
+impl ListLocalDisksInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListLocalDisksInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Returns a new instance of ListLocalDisksInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>>(gateway_arn: GatewayARNType) -> ListLocalDisksInput {
+        ListLocalDisksInput {
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListLocalDisksOutput {
     #[serde(rename="Disks")]
@@ -1176,7 +2263,6 @@ pub struct ListLocalDisksOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub gateway_arn: Option<String>,
 }
-
 #[doc="<p>ListTagsForResourceInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTagsForResourceInput {
@@ -1192,7 +2278,37 @@ pub struct ListTagsForResourceInput {
     #[serde(rename="ResourceARN")]
     pub resource_arn: String,
 }
-
+impl ListTagsForResourceInput {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForResourceInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForResourceInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForResourceInput.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Returns a new instance of ListTagsForResourceInput with optional fields set to `None`.
+    pub fn new<ResourceARNType: Into<String>>(resource_arn: ResourceARNType)
+                                              -> ListTagsForResourceInput {
+        ListTagsForResourceInput {
+            resource_arn: resource_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>ListTagsForResourceOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTagsForResourceOutput {
@@ -1209,7 +2325,6 @@ pub struct ListTagsForResourceOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
 #[doc="<p>A JSON object that contains one or more of the following fields:</p> <ul> <li> <p> <a>ListTapesInput$Limit</a> </p> </li> <li> <p> <a>ListTapesInput$Marker</a> </p> </li> <li> <p> <a>ListTapesInput$TapeARNs</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTapesInput {
@@ -1225,7 +2340,33 @@ pub struct ListTapesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tape_ar_ns: Option<Vec<String>>,
 }
-
+impl ListTapesInput {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTapesInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTapesInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `tape_ar_ns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTapesInput.tape_ar_ns = Some(value.into());`.
+    pub fn tape_ar_ns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tape_ar_ns = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListTapesInput with optional fields set to `None`.
+    pub fn new() -> ListTapesInput {
+        ListTapesInput { ..Default::default() }
+    }
+}
 #[doc="<p>A JSON object containing the following fields:</p> <ul> <li> <p> <a>ListTapesOutput$Marker</a> </p> </li> <li> <p> <a>ListTapesOutput$VolumeInfos</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTapesOutput {
@@ -1237,7 +2378,6 @@ pub struct ListTapesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tape_infos: Option<Vec<TapeInfo>>,
 }
-
 #[doc="<p>ListVolumeInitiatorsInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListVolumeInitiatorsInput {
@@ -1245,7 +2385,23 @@ pub struct ListVolumeInitiatorsInput {
     #[serde(rename="VolumeARN")]
     pub volume_arn: String,
 }
-
+impl ListVolumeInitiatorsInput {
+    /// Sets `volume_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListVolumeInitiatorsInput.volume_arn = value.into();`.
+    pub fn volume_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_arn = value.into();
+        self
+    }
+    /// Returns a new instance of ListVolumeInitiatorsInput with optional fields set to `None`.
+    pub fn new<VolumeARNType: Into<String>>(volume_arn: VolumeARNType)
+                                            -> ListVolumeInitiatorsInput {
+        ListVolumeInitiatorsInput {
+            volume_arn: volume_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>ListVolumeInitiatorsOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListVolumeInitiatorsOutput {
@@ -1254,13 +2410,28 @@ pub struct ListVolumeInitiatorsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub initiators: Option<Vec<String>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListVolumeRecoveryPointsInput {
     #[serde(rename="GatewayARN")]
     pub gateway_arn: String,
 }
-
+impl ListVolumeRecoveryPointsInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListVolumeRecoveryPointsInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Returns a new instance of ListVolumeRecoveryPointsInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>>(gateway_arn: GatewayARNType)
+                                             -> ListVolumeRecoveryPointsInput {
+        ListVolumeRecoveryPointsInput {
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListVolumeRecoveryPointsOutput {
     #[serde(rename="GatewayARN")]
@@ -1270,7 +2441,6 @@ pub struct ListVolumeRecoveryPointsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_recovery_point_infos: Option<Vec<VolumeRecoveryPointInfo>>,
 }
-
 #[doc="<p>A JSON object that contains one or more of the following fields:</p> <ul> <li> <p> <a>ListVolumesInput$Limit</a> </p> </li> <li> <p> <a>ListVolumesInput$Marker</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListVolumesInput {
@@ -1286,7 +2456,33 @@ pub struct ListVolumesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
+impl ListVolumesInput {
+    /// Sets `gateway_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListVolumesInput.gateway_arn = Some(value.into());`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListVolumesInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListVolumesInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListVolumesInput with optional fields set to `None`.
+    pub fn new() -> ListVolumesInput {
+        ListVolumesInput { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListVolumesOutput {
     #[serde(rename="GatewayARN")]
@@ -1299,7 +2495,6 @@ pub struct ListVolumesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_infos: Option<Vec<VolumeInfo>>,
 }
-
 #[doc="<p>Describes file share default values. Files and folders stored as Amazon S3 objects in S3 buckets don't, by default, have Unix file permissions assigned to them. Upon discovery in an S3 bucket by Storage Gateway, the S3 objects that represent files and folders are assigned these default Unix permissions. This operation is only supported in the file gateway architecture.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct NFSFileShareDefaults {
@@ -1320,7 +2515,40 @@ pub struct NFSFileShareDefaults {
     #[serde(skip_serializing_if="Option::is_none")]
     pub owner_id: Option<i64>,
 }
-
+impl NFSFileShareDefaults {
+    /// Sets `directory_mode`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NFSFileShareDefaults.directory_mode = Some(value.into());`.
+    pub fn directory_mode<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_mode = Some(value.into());
+        self
+    }
+    /// Sets `file_mode`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NFSFileShareDefaults.file_mode = Some(value.into());`.
+    pub fn file_mode<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.file_mode = Some(value.into());
+        self
+    }
+    /// Sets `group_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NFSFileShareDefaults.group_id = Some(value.into());`.
+    pub fn group_id<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.group_id = Some(value.into());
+        self
+    }
+    /// Sets `owner_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NFSFileShareDefaults.owner_id = Some(value.into());`.
+    pub fn owner_id<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.owner_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of NFSFileShareDefaults with optional fields set to `None`.
+    pub fn new() -> NFSFileShareDefaults {
+        NFSFileShareDefaults { ..Default::default() }
+    }
+}
 #[doc="<p>The Unix file permissions and ownership information assigned, by default, to native S3 objects when file gateway discovers them in S3 buckets. This operation is only supported in file gateways.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct NFSFileShareInfo {
@@ -1369,7 +2597,6 @@ pub struct NFSFileShareInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub squash: Option<String>,
 }
-
 #[doc="<p>Describes a gateway's network interface.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct NetworkInterface {
@@ -1386,20 +2613,34 @@ pub struct NetworkInterface {
     #[serde(skip_serializing_if="Option::is_none")]
     pub mac_address: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RefreshCacheInput {
     #[serde(rename="FileShareARN")]
     pub file_share_arn: String,
 }
-
+impl RefreshCacheInput {
+    /// Sets `file_share_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RefreshCacheInput.file_share_arn = value.into();`.
+    pub fn file_share_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.file_share_arn = value.into();
+        self
+    }
+    /// Returns a new instance of RefreshCacheInput with optional fields set to `None`.
+    pub fn new<FileShareARNType: Into<String>>(file_share_arn: FileShareARNType)
+                                               -> RefreshCacheInput {
+        RefreshCacheInput {
+            file_share_arn: file_share_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RefreshCacheOutput {
     #[serde(rename="FileShareARN")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub file_share_arn: Option<String>,
 }
-
 #[doc="<p>RemoveTagsFromResourceInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RemoveTagsFromResourceInput {
@@ -1410,7 +2651,33 @@ pub struct RemoveTagsFromResourceInput {
     #[serde(rename="TagKeys")]
     pub tag_keys: Vec<String>,
 }
-
+impl RemoveTagsFromResourceInput {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromResourceInput.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Sets `tag_keys`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromResourceInput.tag_keys = value.into();`.
+    pub fn tag_keys<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tag_keys = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveTagsFromResourceInput with optional fields set to `None`.
+    pub fn new<ResourceARNType: Into<String>, TagKeysType: Into<Vec<String>>>
+        (resource_arn: ResourceARNType,
+         tag_keys: TagKeysType)
+         -> RemoveTagsFromResourceInput {
+        RemoveTagsFromResourceInput {
+            resource_arn: resource_arn.into(),
+            tag_keys: tag_keys.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>RemoveTagsFromResourceOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RemoveTagsFromResourceOutput {
@@ -1419,20 +2686,33 @@ pub struct RemoveTagsFromResourceOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ResetCacheInput {
     #[serde(rename="GatewayARN")]
     pub gateway_arn: String,
 }
-
+impl ResetCacheInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetCacheInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Returns a new instance of ResetCacheInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>>(gateway_arn: GatewayARNType) -> ResetCacheInput {
+        ResetCacheInput {
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ResetCacheOutput {
     #[serde(rename="GatewayARN")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub gateway_arn: Option<String>,
 }
-
 #[doc="<p>RetrieveTapeArchiveInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RetrieveTapeArchiveInput {
@@ -1443,7 +2723,33 @@ pub struct RetrieveTapeArchiveInput {
     #[serde(rename="TapeARN")]
     pub tape_arn: String,
 }
-
+impl RetrieveTapeArchiveInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RetrieveTapeArchiveInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Sets `tape_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RetrieveTapeArchiveInput.tape_arn = value.into();`.
+    pub fn tape_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tape_arn = value.into();
+        self
+    }
+    /// Returns a new instance of RetrieveTapeArchiveInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>, TapeARNType: Into<String>>
+        (gateway_arn: GatewayARNType,
+         tape_arn: TapeARNType)
+         -> RetrieveTapeArchiveInput {
+        RetrieveTapeArchiveInput {
+            gateway_arn: gateway_arn.into(),
+            tape_arn: tape_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>RetrieveTapeArchiveOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RetrieveTapeArchiveOutput {
@@ -1452,7 +2758,6 @@ pub struct RetrieveTapeArchiveOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tape_arn: Option<String>,
 }
-
 #[doc="<p>RetrieveTapeRecoveryPointInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RetrieveTapeRecoveryPointInput {
@@ -1462,7 +2767,33 @@ pub struct RetrieveTapeRecoveryPointInput {
     #[serde(rename="TapeARN")]
     pub tape_arn: String,
 }
-
+impl RetrieveTapeRecoveryPointInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RetrieveTapeRecoveryPointInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Sets `tape_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RetrieveTapeRecoveryPointInput.tape_arn = value.into();`.
+    pub fn tape_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tape_arn = value.into();
+        self
+    }
+    /// Returns a new instance of RetrieveTapeRecoveryPointInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>, TapeARNType: Into<String>>
+        (gateway_arn: GatewayARNType,
+         tape_arn: TapeARNType)
+         -> RetrieveTapeRecoveryPointInput {
+        RetrieveTapeRecoveryPointInput {
+            gateway_arn: gateway_arn.into(),
+            tape_arn: tape_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>RetrieveTapeRecoveryPointOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RetrieveTapeRecoveryPointOutput {
@@ -1471,7 +2802,6 @@ pub struct RetrieveTapeRecoveryPointOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tape_arn: Option<String>,
 }
-
 #[doc="<p>SetLocalConsolePasswordInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SetLocalConsolePasswordInput {
@@ -1481,21 +2811,61 @@ pub struct SetLocalConsolePasswordInput {
     #[serde(rename="LocalConsolePassword")]
     pub local_console_password: String,
 }
-
+impl SetLocalConsolePasswordInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetLocalConsolePasswordInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Sets `local_console_password`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetLocalConsolePasswordInput.local_console_password = value.into();`.
+    pub fn local_console_password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.local_console_password = value.into();
+        self
+    }
+    /// Returns a new instance of SetLocalConsolePasswordInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>, LocalConsolePasswordType: Into<String>>
+        (gateway_arn: GatewayARNType,
+         local_console_password: LocalConsolePasswordType)
+         -> SetLocalConsolePasswordInput {
+        SetLocalConsolePasswordInput {
+            gateway_arn: gateway_arn.into(),
+            local_console_password: local_console_password.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SetLocalConsolePasswordOutput {
     #[serde(rename="GatewayARN")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub gateway_arn: Option<String>,
 }
-
 #[doc="<p>A JSON object containing the of the gateway to shut down.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ShutdownGatewayInput {
     #[serde(rename="GatewayARN")]
     pub gateway_arn: String,
 }
-
+impl ShutdownGatewayInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ShutdownGatewayInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Returns a new instance of ShutdownGatewayInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>>(gateway_arn: GatewayARNType) -> ShutdownGatewayInput {
+        ShutdownGatewayInput {
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A JSON object containing the of the gateway that was shut down.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ShutdownGatewayOutput {
@@ -1503,14 +2873,28 @@ pub struct ShutdownGatewayOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub gateway_arn: Option<String>,
 }
-
 #[doc="<p>A JSON object containing the of the gateway to start.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartGatewayInput {
     #[serde(rename="GatewayARN")]
     pub gateway_arn: String,
 }
-
+impl StartGatewayInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartGatewayInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Returns a new instance of StartGatewayInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>>(gateway_arn: GatewayARNType) -> StartGatewayInput {
+        StartGatewayInput {
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A JSON object containing the of the gateway that was restarted.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartGatewayOutput {
@@ -1518,7 +2902,6 @@ pub struct StartGatewayOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub gateway_arn: Option<String>,
 }
-
 #[doc="<p>Provides additional information about an error that was returned by the service as an or. See the <code>errorCode</code> and <code>errorDetails</code> members for more information about the error.</p>"]
 #[derive(Default,Debug,Clone)]
 pub struct StorageGatewayError {
@@ -1527,7 +2910,6 @@ pub struct StorageGatewayError {
     #[doc="<p>Human-readable text that provides detail about the error that occurred.</p>"]
     pub error_details: Option<::std::collections::HashMap<String, String>>,
 }
-
 #[doc="<p>Describes an iSCSI stored volume.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StorediSCSIVolume {
@@ -1576,7 +2958,6 @@ pub struct StorediSCSIVolume {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volumei_scsi_attributes: Option<VolumeiSCSIAttributes>,
 }
-
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Tag {
     #[serde(rename="Key")]
@@ -1584,7 +2965,32 @@ pub struct Tag {
     #[serde(rename="Value")]
     pub value: String,
 }
-
+impl Tag {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>, ValueType: Into<String>>(key: KeyType,
+                                                               value: ValueType)
+                                                               -> Tag {
+        Tag {
+            key: key.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes a virtual tape object.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Tape {
@@ -1621,7 +3027,6 @@ pub struct Tape {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vtl_device: Option<String>,
 }
-
 #[doc="<p>Represents a virtual tape that is archived in the virtual tape shelf (VTS).</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TapeArchive {
@@ -1657,7 +3062,6 @@ pub struct TapeArchive {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tape_used_in_bytes: Option<i64>,
 }
-
 #[doc="<p>Describes a virtual tape.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TapeInfo {
@@ -1682,7 +3086,6 @@ pub struct TapeInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tape_status: Option<String>,
 }
-
 #[doc="<p>Describes a recovery point.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TapeRecoveryPointInfo {
@@ -1702,7 +3105,6 @@ pub struct TapeRecoveryPointInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tape_status: Option<String>,
 }
-
 #[doc="<p>A JSON object containing one or more of the following fields:</p> <ul> <li> <p> <a>UpdateBandwidthRateLimitInput$AverageDownloadRateLimitInBitsPerSec</a> </p> </li> <li> <p> <a>UpdateBandwidthRateLimitInput$AverageUploadRateLimitInBitsPerSec</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateBandwidthRateLimitInput {
@@ -1717,7 +3119,41 @@ pub struct UpdateBandwidthRateLimitInput {
     #[serde(rename="GatewayARN")]
     pub gateway_arn: String,
 }
-
+impl UpdateBandwidthRateLimitInput {
+    /// Sets `average_download_rate_limit_in_bits_per_sec`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateBandwidthRateLimitInput.average_download_rate_limit_in_bits_per_sec = Some(value.into());`.
+    pub fn average_download_rate_limit_in_bits_per_sec<ValueType: Into<i64>>(mut self,
+                                                                             value: ValueType)
+                                                                             -> Self {
+        self.average_download_rate_limit_in_bits_per_sec = Some(value.into());
+        self
+    }
+    /// Sets `average_upload_rate_limit_in_bits_per_sec`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateBandwidthRateLimitInput.average_upload_rate_limit_in_bits_per_sec = Some(value.into());`.
+    pub fn average_upload_rate_limit_in_bits_per_sec<ValueType: Into<i64>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.average_upload_rate_limit_in_bits_per_sec = Some(value.into());
+        self
+    }
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateBandwidthRateLimitInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateBandwidthRateLimitInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>>(gateway_arn: GatewayARNType)
+                                             -> UpdateBandwidthRateLimitInput {
+        UpdateBandwidthRateLimitInput {
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A JSON object containing the of the gateway whose throttle information was updated.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateBandwidthRateLimitOutput {
@@ -1725,7 +3161,6 @@ pub struct UpdateBandwidthRateLimitOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub gateway_arn: Option<String>,
 }
-
 #[doc="<p>A JSON object containing one or more of the following fields:</p> <ul> <li> <p> <a>UpdateChapCredentialsInput$InitiatorName</a> </p> </li> <li> <p> <a>UpdateChapCredentialsInput$SecretToAuthenticateInitiator</a> </p> </li> <li> <p> <a>UpdateChapCredentialsInput$SecretToAuthenticateTarget</a> </p> </li> <li> <p> <a>UpdateChapCredentialsInput$TargetARN</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateChapCredentialsInput {
@@ -1743,7 +3178,55 @@ pub struct UpdateChapCredentialsInput {
     #[serde(rename="TargetARN")]
     pub target_arn: String,
 }
-
+impl UpdateChapCredentialsInput {
+    /// Sets `initiator_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateChapCredentialsInput.initiator_name = value.into();`.
+    pub fn initiator_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.initiator_name = value.into();
+        self
+    }
+    /// Sets `secret_to_authenticate_initiator`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateChapCredentialsInput.secret_to_authenticate_initiator = value.into();`.
+    pub fn secret_to_authenticate_initiator<ValueType: Into<String>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.secret_to_authenticate_initiator = value.into();
+        self
+    }
+    /// Sets `secret_to_authenticate_target`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateChapCredentialsInput.secret_to_authenticate_target = Some(value.into());`.
+    pub fn secret_to_authenticate_target<ValueType: Into<String>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.secret_to_authenticate_target = Some(value.into());
+        self
+    }
+    /// Sets `target_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateChapCredentialsInput.target_arn = value.into();`.
+    pub fn target_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_arn = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateChapCredentialsInput with optional fields set to `None`.
+    pub fn new<InitiatorNameType: Into<String>,
+               SecretToAuthenticateInitiatorType: Into<String>,
+               TargetARNType: Into<String>>
+        (initiator_name: InitiatorNameType,
+         secret_to_authenticate_initiator: SecretToAuthenticateInitiatorType,
+         target_arn: TargetARNType)
+         -> UpdateChapCredentialsInput {
+        UpdateChapCredentialsInput {
+            initiator_name: initiator_name.into(),
+            secret_to_authenticate_initiator: secret_to_authenticate_initiator.into(),
+            target_arn: target_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A JSON object containing the following fields:</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateChapCredentialsOutput {
@@ -1756,7 +3239,6 @@ pub struct UpdateChapCredentialsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub target_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateGatewayInformationInput {
     #[serde(rename="GatewayARN")]
@@ -1768,7 +3250,37 @@ pub struct UpdateGatewayInformationInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub gateway_timezone: Option<String>,
 }
-
+impl UpdateGatewayInformationInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGatewayInformationInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Sets `gateway_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGatewayInformationInput.gateway_name = Some(value.into());`.
+    pub fn gateway_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_name = Some(value.into());
+        self
+    }
+    /// Sets `gateway_timezone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGatewayInformationInput.gateway_timezone = Some(value.into());`.
+    pub fn gateway_timezone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_timezone = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateGatewayInformationInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>>(gateway_arn: GatewayARNType)
+                                             -> UpdateGatewayInformationInput {
+        UpdateGatewayInformationInput {
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A JSON object containing the ARN of the gateway that was updated.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateGatewayInformationOutput {
@@ -1779,14 +3291,29 @@ pub struct UpdateGatewayInformationOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub gateway_name: Option<String>,
 }
-
 #[doc="<p>A JSON object containing the of the gateway to update.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateGatewaySoftwareNowInput {
     #[serde(rename="GatewayARN")]
     pub gateway_arn: String,
 }
-
+impl UpdateGatewaySoftwareNowInput {
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGatewaySoftwareNowInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateGatewaySoftwareNowInput with optional fields set to `None`.
+    pub fn new<GatewayARNType: Into<String>>(gateway_arn: GatewayARNType)
+                                             -> UpdateGatewaySoftwareNowInput {
+        UpdateGatewaySoftwareNowInput {
+            gateway_arn: gateway_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A JSON object containing the of the gateway that was updated.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateGatewaySoftwareNowOutput {
@@ -1794,7 +3321,6 @@ pub struct UpdateGatewaySoftwareNowOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub gateway_arn: Option<String>,
 }
-
 #[doc="<p>A JSON object containing the following fields:</p> <ul> <li> <p> <a>UpdateMaintenanceStartTimeInput$DayOfWeek</a> </p> </li> <li> <p> <a>UpdateMaintenanceStartTimeInput$HourOfDay</a> </p> </li> <li> <p> <a>UpdateMaintenanceStartTimeInput$MinuteOfHour</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateMaintenanceStartTimeInput {
@@ -1810,7 +3336,54 @@ pub struct UpdateMaintenanceStartTimeInput {
     #[serde(rename="MinuteOfHour")]
     pub minute_of_hour: i64,
 }
-
+impl UpdateMaintenanceStartTimeInput {
+    /// Sets `day_of_week`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceStartTimeInput.day_of_week = value.into();`.
+    pub fn day_of_week<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.day_of_week = value.into();
+        self
+    }
+    /// Sets `gateway_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceStartTimeInput.gateway_arn = value.into();`.
+    pub fn gateway_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gateway_arn = value.into();
+        self
+    }
+    /// Sets `hour_of_day`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceStartTimeInput.hour_of_day = value.into();`.
+    pub fn hour_of_day<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.hour_of_day = value.into();
+        self
+    }
+    /// Sets `minute_of_hour`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMaintenanceStartTimeInput.minute_of_hour = value.into();`.
+    pub fn minute_of_hour<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.minute_of_hour = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateMaintenanceStartTimeInput with optional fields set to `None`.
+    pub fn new<DayOfWeekType: Into<i64>,
+               GatewayARNType: Into<String>,
+               HourOfDayType: Into<i64>,
+               MinuteOfHourType: Into<i64>>
+        (day_of_week: DayOfWeekType,
+         gateway_arn: GatewayARNType,
+         hour_of_day: HourOfDayType,
+         minute_of_hour: MinuteOfHourType)
+         -> UpdateMaintenanceStartTimeInput {
+        UpdateMaintenanceStartTimeInput {
+            day_of_week: day_of_week.into(),
+            gateway_arn: gateway_arn.into(),
+            hour_of_day: hour_of_day.into(),
+            minute_of_hour: minute_of_hour.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A JSON object containing the of the gateway whose maintenance start time is updated.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateMaintenanceStartTimeOutput {
@@ -1818,7 +3391,6 @@ pub struct UpdateMaintenanceStartTimeOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub gateway_arn: Option<String>,
 }
-
 #[doc="<p>UpdateNFSFileShareInput</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateNFSFileShareInput {
@@ -1854,7 +3426,74 @@ pub struct UpdateNFSFileShareInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub squash: Option<String>,
 }
-
+impl UpdateNFSFileShareInput {
+    /// Sets `client_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNFSFileShareInput.client_list = Some(value.into());`.
+    pub fn client_list<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.client_list = Some(value.into());
+        self
+    }
+    /// Sets `default_storage_class`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNFSFileShareInput.default_storage_class = Some(value.into());`.
+    pub fn default_storage_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_storage_class = Some(value.into());
+        self
+    }
+    /// Sets `file_share_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNFSFileShareInput.file_share_arn = value.into();`.
+    pub fn file_share_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.file_share_arn = value.into();
+        self
+    }
+    /// Sets `kms_encrypted`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNFSFileShareInput.kms_encrypted = Some(value.into());`.
+    pub fn kms_encrypted<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.kms_encrypted = Some(value.into());
+        self
+    }
+    /// Sets `kms_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNFSFileShareInput.kms_key = Some(value.into());`.
+    pub fn kms_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kms_key = Some(value.into());
+        self
+    }
+    /// Sets `nfs_file_share_defaults`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNFSFileShareInput.nfs_file_share_defaults = Some(value.into());`.
+    pub fn nfs_file_share_defaults<ValueType: Into<NFSFileShareDefaults>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.nfs_file_share_defaults = Some(value.into());
+        self
+    }
+    /// Sets `read_only`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNFSFileShareInput.read_only = Some(value.into());`.
+    pub fn read_only<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.read_only = Some(value.into());
+        self
+    }
+    /// Sets `squash`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNFSFileShareInput.squash = Some(value.into());`.
+    pub fn squash<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.squash = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateNFSFileShareInput with optional fields set to `None`.
+    pub fn new<FileShareARNType: Into<String>>(file_share_arn: FileShareARNType)
+                                               -> UpdateNFSFileShareInput {
+        UpdateNFSFileShareInput {
+            file_share_arn: file_share_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>UpdateNFSFileShareOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateNFSFileShareOutput {
@@ -1863,7 +3502,6 @@ pub struct UpdateNFSFileShareOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub file_share_arn: Option<String>,
 }
-
 #[doc="<p>A JSON object containing one or more of the following fields:</p> <ul> <li> <p> <a>UpdateSnapshotScheduleInput$Description</a> </p> </li> <li> <p> <a>UpdateSnapshotScheduleInput$RecurrenceInHours</a> </p> </li> <li> <p> <a>UpdateSnapshotScheduleInput$StartAt</a> </p> </li> <li> <p> <a>UpdateSnapshotScheduleInput$VolumeARN</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateSnapshotScheduleInput {
@@ -1881,7 +3519,51 @@ pub struct UpdateSnapshotScheduleInput {
     #[serde(rename="VolumeARN")]
     pub volume_arn: String,
 }
-
+impl UpdateSnapshotScheduleInput {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateSnapshotScheduleInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `recurrence_in_hours`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateSnapshotScheduleInput.recurrence_in_hours = value.into();`.
+    pub fn recurrence_in_hours<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.recurrence_in_hours = value.into();
+        self
+    }
+    /// Sets `start_at`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateSnapshotScheduleInput.start_at = value.into();`.
+    pub fn start_at<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.start_at = value.into();
+        self
+    }
+    /// Sets `volume_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateSnapshotScheduleInput.volume_arn = value.into();`.
+    pub fn volume_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_arn = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateSnapshotScheduleInput with optional fields set to `None`.
+    pub fn new<RecurrenceInHoursType: Into<i64>,
+               StartAtType: Into<i64>,
+               VolumeARNType: Into<String>>
+        (recurrence_in_hours: RecurrenceInHoursType,
+         start_at: StartAtType,
+         volume_arn: VolumeARNType)
+         -> UpdateSnapshotScheduleInput {
+        UpdateSnapshotScheduleInput {
+            recurrence_in_hours: recurrence_in_hours.into(),
+            start_at: start_at.into(),
+            volume_arn: volume_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A JSON object containing the of the updated storage volume.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateSnapshotScheduleOutput {
@@ -1890,7 +3572,6 @@ pub struct UpdateSnapshotScheduleOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateVTLDeviceTypeInput {
     #[doc="<p>The type of medium changer you want to select.</p> <p> Valid Values: \"STK-L700\", \"AWS-Gateway-VTL\"</p>"]
@@ -1900,7 +3581,33 @@ pub struct UpdateVTLDeviceTypeInput {
     #[serde(rename="VTLDeviceARN")]
     pub vtl_device_arn: String,
 }
-
+impl UpdateVTLDeviceTypeInput {
+    /// Sets `device_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateVTLDeviceTypeInput.device_type = value.into();`.
+    pub fn device_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.device_type = value.into();
+        self
+    }
+    /// Sets `vtl_device_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateVTLDeviceTypeInput.vtl_device_arn = value.into();`.
+    pub fn vtl_device_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vtl_device_arn = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateVTLDeviceTypeInput with optional fields set to `None`.
+    pub fn new<DeviceTypeType: Into<String>, VTLDeviceARNType: Into<String>>
+        (device_type: DeviceTypeType,
+         vtl_device_arn: VTLDeviceARNType)
+         -> UpdateVTLDeviceTypeInput {
+        UpdateVTLDeviceTypeInput {
+            device_type: device_type.into(),
+            vtl_device_arn: vtl_device_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>UpdateVTLDeviceTypeOutput</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateVTLDeviceTypeOutput {
@@ -1909,7 +3616,6 @@ pub struct UpdateVTLDeviceTypeOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vtl_device_arn: Option<String>,
 }
-
 #[doc="<p>Represents a device object associated with a tape gateway.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct VTLDevice {
@@ -1931,7 +3637,6 @@ pub struct VTLDevice {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vtl_device_vendor: Option<String>,
 }
-
 #[doc="<p>Describes a storage volume object.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct VolumeInfo {
@@ -1958,7 +3663,6 @@ pub struct VolumeInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_type: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct VolumeRecoveryPointInfo {
     #[serde(rename="VolumeARN")]
@@ -1974,7 +3678,6 @@ pub struct VolumeRecoveryPointInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_usage_in_bytes: Option<i64>,
 }
-
 #[doc="<p>Lists iSCSI information about a volume.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct VolumeiSCSIAttributes {
@@ -1999,7 +3702,6 @@ pub struct VolumeiSCSIAttributes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub target_arn: Option<String>,
 }
-
 /// Errors returned by ActivateGateway
 #[derive(Debug, PartialEq)]
 pub enum ActivateGatewayError {

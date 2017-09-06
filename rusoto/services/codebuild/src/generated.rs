@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -34,7 +35,22 @@ pub struct BatchGetBuildsInput {
     #[serde(rename="ids")]
     pub ids: Vec<String>,
 }
-
+impl BatchGetBuildsInput {
+    /// Sets `ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchGetBuildsInput.ids = value.into();`.
+    pub fn ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.ids = value.into();
+        self
+    }
+    /// Returns a new instance of BatchGetBuildsInput with optional fields set to `None`.
+    pub fn new<idsType: Into<Vec<String>>>(ids: idsType) -> BatchGetBuildsInput {
+        BatchGetBuildsInput {
+            ids: ids.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BatchGetBuildsOutput {
     #[doc="<p>Information about the requested builds.</p>"]
@@ -46,14 +62,28 @@ pub struct BatchGetBuildsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub builds_not_found: Option<Vec<String>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct BatchGetProjectsInput {
     #[doc="<p>The names of the build projects.</p>"]
     #[serde(rename="names")]
     pub names: Vec<String>,
 }
-
+impl BatchGetProjectsInput {
+    /// Sets `names`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchGetProjectsInput.names = value.into();`.
+    pub fn names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.names = value.into();
+        self
+    }
+    /// Returns a new instance of BatchGetProjectsInput with optional fields set to `None`.
+    pub fn new<namesType: Into<Vec<String>>>(names: namesType) -> BatchGetProjectsInput {
+        BatchGetProjectsInput {
+            names: names.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BatchGetProjectsOutput {
     #[doc="<p>Information about the requested build projects.</p>"]
@@ -65,7 +95,6 @@ pub struct BatchGetProjectsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub projects_not_found: Option<Vec<String>>,
 }
-
 #[doc="<p>Information about a build.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Build {
@@ -134,7 +163,6 @@ pub struct Build {
     #[serde(skip_serializing_if="Option::is_none")]
     pub timeout_in_minutes: Option<i64>,
 }
-
 #[doc="<p>Information about build output artifacts.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BuildArtifacts {
@@ -151,7 +179,6 @@ pub struct BuildArtifacts {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sha_25_6sum: Option<String>,
 }
-
 #[doc="<p>Information about a stage for a build.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BuildPhase {
@@ -180,7 +207,6 @@ pub struct BuildPhase {
     #[serde(skip_serializing_if="Option::is_none")]
     pub start_time: Option<f64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateProjectInput {
     #[doc="<p>Information about the build output artifacts for the build project.</p>"]
@@ -216,7 +242,89 @@ pub struct CreateProjectInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub timeout_in_minutes: Option<i64>,
 }
-
+impl CreateProjectInput {
+    /// Sets `artifacts`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProjectInput.artifacts = value.into();`.
+    pub fn artifacts<ValueType: Into<ProjectArtifacts>>(mut self, value: ValueType) -> Self {
+        self.artifacts = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProjectInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `encryption_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProjectInput.encryption_key = Some(value.into());`.
+    pub fn encryption_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.encryption_key = Some(value.into());
+        self
+    }
+    /// Sets `environment`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProjectInput.environment = value.into();`.
+    pub fn environment<ValueType: Into<ProjectEnvironment>>(mut self, value: ValueType) -> Self {
+        self.environment = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProjectInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `service_role`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProjectInput.service_role = Some(value.into());`.
+    pub fn service_role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_role = Some(value.into());
+        self
+    }
+    /// Sets `source`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProjectInput.source = value.into();`.
+    pub fn source<ValueType: Into<ProjectSource>>(mut self, value: ValueType) -> Self {
+        self.source = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProjectInput.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `timeout_in_minutes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProjectInput.timeout_in_minutes = Some(value.into());`.
+    pub fn timeout_in_minutes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.timeout_in_minutes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateProjectInput with optional fields set to `None`.
+    pub fn new<artifactsType: Into<ProjectArtifacts>,
+               environmentType: Into<ProjectEnvironment>,
+               nameType: Into<String>,
+               sourceType: Into<ProjectSource>>
+        (artifacts: artifactsType,
+         environment: environmentType,
+         name: nameType,
+         source: sourceType)
+         -> CreateProjectInput {
+        CreateProjectInput {
+            artifacts: artifacts.into(),
+            environment: environment.into(),
+            name: name.into(),
+            source: source.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateProjectOutput {
     #[doc="<p>Information about the build project that was created.</p>"]
@@ -224,14 +332,28 @@ pub struct CreateProjectOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub project: Option<Project>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteProjectInput {
     #[doc="<p>The name of the build project.</p>"]
     #[serde(rename="name")]
     pub name: String,
 }
-
+impl DeleteProjectInput {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteProjectInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteProjectInput with optional fields set to `None`.
+    pub fn new<nameType: Into<String>>(name: nameType) -> DeleteProjectInput {
+        DeleteProjectInput {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteProjectOutput;
 
@@ -247,7 +369,6 @@ pub struct EnvironmentImage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p>A set of Docker images that are related by programming language and are managed by AWS CodeBuild.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EnvironmentLanguage {
@@ -260,7 +381,6 @@ pub struct EnvironmentLanguage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub language: Option<String>,
 }
-
 #[doc="<p>A set of Docker images that are related by platform and are managed by AWS CodeBuild.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EnvironmentPlatform {
@@ -273,7 +393,6 @@ pub struct EnvironmentPlatform {
     #[serde(skip_serializing_if="Option::is_none")]
     pub platform: Option<String>,
 }
-
 #[doc="<p>Information about an environment variable for a build project or a build.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct EnvironmentVariable {
@@ -284,7 +403,32 @@ pub struct EnvironmentVariable {
     #[serde(rename="value")]
     pub value: String,
 }
-
+impl EnvironmentVariable {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnvironmentVariable.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnvironmentVariable.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of EnvironmentVariable with optional fields set to `None`.
+    pub fn new<nameType: Into<String>, valueType: Into<String>>(name: nameType,
+                                                                value: valueType)
+                                                                -> EnvironmentVariable {
+        EnvironmentVariable {
+            name: name.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListBuildsForProjectInput {
     #[doc="<p>During a previous call, if there are more than 100 items in the list, only the first 100 items are returned, along with a unique string called a <i>next token</i>. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned.</p>"]
@@ -299,7 +443,37 @@ pub struct ListBuildsForProjectInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sort_order: Option<String>,
 }
-
+impl ListBuildsForProjectInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListBuildsForProjectInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `project_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListBuildsForProjectInput.project_name = value.into();`.
+    pub fn project_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.project_name = value.into();
+        self
+    }
+    /// Sets `sort_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListBuildsForProjectInput.sort_order = Some(value.into());`.
+    pub fn sort_order<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sort_order = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListBuildsForProjectInput with optional fields set to `None`.
+    pub fn new<projectNameType: Into<String>>(project_name: projectNameType)
+                                              -> ListBuildsForProjectInput {
+        ListBuildsForProjectInput {
+            project_name: project_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListBuildsForProjectOutput {
     #[doc="<p>A list of build IDs for the specified build project, with each build ID representing a single build.</p>"]
@@ -311,7 +485,6 @@ pub struct ListBuildsForProjectOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListBuildsInput {
     #[doc="<p>During a previous call, if there are more than 100 items in the list, only the first 100 items are returned, along with a unique string called a <i>next token</i>. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned.</p>"]
@@ -323,7 +496,26 @@ pub struct ListBuildsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sort_order: Option<String>,
 }
-
+impl ListBuildsInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListBuildsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `sort_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListBuildsInput.sort_order = Some(value.into());`.
+    pub fn sort_order<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sort_order = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListBuildsInput with optional fields set to `None`.
+    pub fn new() -> ListBuildsInput {
+        ListBuildsInput { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListBuildsOutput {
     #[doc="<p>A list of build IDs, with each build ID representing a single build.</p>"]
@@ -335,7 +527,6 @@ pub struct ListBuildsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListCuratedEnvironmentImagesInput;
 
@@ -346,7 +537,6 @@ pub struct ListCuratedEnvironmentImagesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub platforms: Option<Vec<EnvironmentPlatform>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListProjectsInput {
     #[doc="<p>During a previous call, if there are more than 100 items in the list, only the first 100 items are returned, along with a unique string called a <i>next token</i>. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned.</p>"]
@@ -362,7 +552,33 @@ pub struct ListProjectsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sort_order: Option<String>,
 }
-
+impl ListProjectsInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListProjectsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `sort_by`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListProjectsInput.sort_by = Some(value.into());`.
+    pub fn sort_by<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sort_by = Some(value.into());
+        self
+    }
+    /// Sets `sort_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListProjectsInput.sort_order = Some(value.into());`.
+    pub fn sort_order<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sort_order = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListProjectsInput with optional fields set to `None`.
+    pub fn new() -> ListProjectsInput {
+        ListProjectsInput { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListProjectsOutput {
     #[doc="<p>If there are more than 100 items in the list, only the first 100 items are returned, along with a unique string called a <i>next token</i>. To get the next batch of items in the list, call this operation again, adding the next token to the call.</p>"]
@@ -374,7 +590,6 @@ pub struct ListProjectsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub projects: Option<Vec<String>>,
 }
-
 #[doc="<p>Information about build logs in Amazon CloudWatch Logs.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LogsLocation {
@@ -391,7 +606,6 @@ pub struct LogsLocation {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stream_name: Option<String>,
 }
-
 #[doc="<p>Additional information about a build phase that has an error. You can use this information to help troubleshoot a failed build.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PhaseContext {
@@ -404,7 +618,6 @@ pub struct PhaseContext {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status_code: Option<String>,
 }
-
 #[doc="<p>Information about a build project.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Project {
@@ -457,7 +670,6 @@ pub struct Project {
     #[serde(skip_serializing_if="Option::is_none")]
     pub timeout_in_minutes: Option<i64>,
 }
-
 #[doc="<p>Information about the build output artifacts for the build project.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ProjectArtifacts {
@@ -485,7 +697,57 @@ pub struct ProjectArtifacts {
     #[serde(rename="type")]
     pub type_: String,
 }
-
+impl ProjectArtifacts {
+    /// Sets `location`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProjectArtifacts.location = Some(value.into());`.
+    pub fn location<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.location = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProjectArtifacts.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `namespace_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProjectArtifacts.namespace_type = Some(value.into());`.
+    pub fn namespace_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.namespace_type = Some(value.into());
+        self
+    }
+    /// Sets `packaging`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProjectArtifacts.packaging = Some(value.into());`.
+    pub fn packaging<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.packaging = Some(value.into());
+        self
+    }
+    /// Sets `path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProjectArtifacts.path = Some(value.into());`.
+    pub fn path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path = Some(value.into());
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProjectArtifacts.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of ProjectArtifacts with optional fields set to `None`.
+    pub fn new<typeType: Into<String>>(type_: typeType) -> ProjectArtifacts {
+        ProjectArtifacts {
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Information about the build environment of the build project.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ProjectEnvironment {
@@ -507,7 +769,58 @@ pub struct ProjectEnvironment {
     #[serde(rename="type")]
     pub type_: String,
 }
-
+impl ProjectEnvironment {
+    /// Sets `compute_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProjectEnvironment.compute_type = value.into();`.
+    pub fn compute_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.compute_type = value.into();
+        self
+    }
+    /// Sets `environment_variables`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProjectEnvironment.environment_variables = Some(value.into());`.
+    pub fn environment_variables<ValueType: Into<Vec<EnvironmentVariable>>>(mut self,
+                                                                            value: ValueType)
+                                                                            -> Self {
+        self.environment_variables = Some(value.into());
+        self
+    }
+    /// Sets `image`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProjectEnvironment.image = value.into();`.
+    pub fn image<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.image = value.into();
+        self
+    }
+    /// Sets `privileged_mode`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProjectEnvironment.privileged_mode = Some(value.into());`.
+    pub fn privileged_mode<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.privileged_mode = Some(value.into());
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProjectEnvironment.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of ProjectEnvironment with optional fields set to `None`.
+    pub fn new<computeTypeType: Into<String>, imageType: Into<String>, typeType: Into<String>>
+        (compute_type: computeTypeType,
+         image: imageType,
+         type_: typeType)
+         -> ProjectEnvironment {
+        ProjectEnvironment {
+            compute_type: compute_type.into(),
+            image: image.into(),
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Information about the build input source code for the build project.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ProjectSource {
@@ -527,7 +840,43 @@ pub struct ProjectSource {
     #[serde(rename="type")]
     pub type_: String,
 }
-
+impl ProjectSource {
+    /// Sets `auth`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProjectSource.auth = Some(value.into());`.
+    pub fn auth<ValueType: Into<SourceAuth>>(mut self, value: ValueType) -> Self {
+        self.auth = Some(value.into());
+        self
+    }
+    /// Sets `buildspec`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProjectSource.buildspec = Some(value.into());`.
+    pub fn buildspec<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.buildspec = Some(value.into());
+        self
+    }
+    /// Sets `location`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProjectSource.location = Some(value.into());`.
+    pub fn location<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.location = Some(value.into());
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProjectSource.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of ProjectSource with optional fields set to `None`.
+    pub fn new<typeType: Into<String>>(type_: typeType) -> ProjectSource {
+        ProjectSource {
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Information about the authorization settings for AWS CodeBuild to access the source code to be built.</p> <p>This information is for the AWS CodeBuild console's use only. Your code should not get or set this information directly (unless the build project's source <code>type</code> value is <code>GITHUB</code>).</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct SourceAuth {
@@ -539,7 +888,29 @@ pub struct SourceAuth {
     #[serde(rename="type")]
     pub type_: String,
 }
-
+impl SourceAuth {
+    /// Sets `resource`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SourceAuth.resource = Some(value.into());`.
+    pub fn resource<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource = Some(value.into());
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SourceAuth.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of SourceAuth with optional fields set to `None`.
+    pub fn new<typeType: Into<String>>(type_: typeType) -> SourceAuth {
+        SourceAuth {
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartBuildInput {
     #[doc="<p>Build output artifact settings that override, for this build only, the latest ones already defined in the build project.</p>"]
@@ -566,7 +937,59 @@ pub struct StartBuildInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub timeout_in_minutes_override: Option<i64>,
 }
-
+impl StartBuildInput {
+    /// Sets `artifacts_override`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartBuildInput.artifacts_override = Some(value.into());`.
+    pub fn artifacts_override<ValueType: Into<ProjectArtifacts>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.artifacts_override = Some(value.into());
+        self
+    }
+    /// Sets `buildspec_override`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartBuildInput.buildspec_override = Some(value.into());`.
+    pub fn buildspec_override<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.buildspec_override = Some(value.into());
+        self
+    }
+    /// Sets `environment_variables_override`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartBuildInput.environment_variables_override = Some(value.into());`.
+pub fn environment_variables_override<ValueType: Into<Vec<EnvironmentVariable>>>(mut self, value: ValueType) -> Self{
+        self.environment_variables_override = Some(value.into());
+        self
+    }
+    /// Sets `project_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartBuildInput.project_name = value.into();`.
+    pub fn project_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.project_name = value.into();
+        self
+    }
+    /// Sets `source_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartBuildInput.source_version = Some(value.into());`.
+    pub fn source_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_version = Some(value.into());
+        self
+    }
+    /// Sets `timeout_in_minutes_override`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartBuildInput.timeout_in_minutes_override = Some(value.into());`.
+    pub fn timeout_in_minutes_override<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.timeout_in_minutes_override = Some(value.into());
+        self
+    }
+    /// Returns a new instance of StartBuildInput with optional fields set to `None`.
+    pub fn new<projectNameType: Into<String>>(project_name: projectNameType) -> StartBuildInput {
+        StartBuildInput {
+            project_name: project_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartBuildOutput {
     #[doc="<p>Information about the build to be run.</p>"]
@@ -574,14 +997,28 @@ pub struct StartBuildOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub build: Option<Build>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StopBuildInput {
     #[doc="<p>The ID of the build.</p>"]
     #[serde(rename="id")]
     pub id: String,
 }
-
+impl StopBuildInput {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopBuildInput.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of StopBuildInput with optional fields set to `None`.
+    pub fn new<idType: Into<String>>(id: idType) -> StopBuildInput {
+        StopBuildInput {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StopBuildOutput {
     #[doc="<p>Information about the build.</p>"]
@@ -589,7 +1026,6 @@ pub struct StopBuildOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub build: Option<Build>,
 }
-
 #[doc="<p>A tag, consisting of a key and a value.</p> <p>This tag is available for use by AWS services that support tags in AWS CodeBuild.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Tag {
@@ -602,7 +1038,26 @@ pub struct Tag {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl Tag {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new() -> Tag {
+        Tag { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateProjectInput {
     #[doc="<p>Information to be changed about the build output artifacts for the build project.</p>"]
@@ -641,7 +1096,78 @@ pub struct UpdateProjectInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub timeout_in_minutes: Option<i64>,
 }
-
+impl UpdateProjectInput {
+    /// Sets `artifacts`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProjectInput.artifacts = Some(value.into());`.
+    pub fn artifacts<ValueType: Into<ProjectArtifacts>>(mut self, value: ValueType) -> Self {
+        self.artifacts = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProjectInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `encryption_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProjectInput.encryption_key = Some(value.into());`.
+    pub fn encryption_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.encryption_key = Some(value.into());
+        self
+    }
+    /// Sets `environment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProjectInput.environment = Some(value.into());`.
+    pub fn environment<ValueType: Into<ProjectEnvironment>>(mut self, value: ValueType) -> Self {
+        self.environment = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProjectInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `service_role`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProjectInput.service_role = Some(value.into());`.
+    pub fn service_role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_role = Some(value.into());
+        self
+    }
+    /// Sets `source`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProjectInput.source = Some(value.into());`.
+    pub fn source<ValueType: Into<ProjectSource>>(mut self, value: ValueType) -> Self {
+        self.source = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProjectInput.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `timeout_in_minutes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProjectInput.timeout_in_minutes = Some(value.into());`.
+    pub fn timeout_in_minutes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.timeout_in_minutes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateProjectInput with optional fields set to `None`.
+    pub fn new<nameType: Into<String>>(name: nameType) -> UpdateProjectInput {
+        UpdateProjectInput {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateProjectOutput {
     #[doc="<p>Information about the build project that was changed.</p>"]
@@ -649,7 +1175,6 @@ pub struct UpdateProjectOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub project: Option<Project>,
 }
-
 /// Errors returned by BatchGetBuilds
 #[derive(Debug, PartialEq)]
 pub enum BatchGetBuildsError {

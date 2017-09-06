@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -49,7 +50,6 @@ pub struct AccountLimit {
     #[serde(skip_serializing_if="Option::is_none")]
     pub total_code_size: Option<i64>,
 }
-
 #[doc="<p>Provides code size usage and function count associated with the current account and region.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AccountUsage {
@@ -62,7 +62,6 @@ pub struct AccountUsage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub total_code_size: Option<i64>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AddPermissionRequest {
@@ -95,7 +94,82 @@ pub struct AddPermissionRequest {
     #[serde(rename="StatementId")]
     pub statement_id: String,
 }
-
+impl AddPermissionRequest {
+    /// Sets `action`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddPermissionRequest.action = value.into();`.
+    pub fn action<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.action = value.into();
+        self
+    }
+    /// Sets `event_source_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddPermissionRequest.event_source_token = Some(value.into());`.
+    pub fn event_source_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.event_source_token = Some(value.into());
+        self
+    }
+    /// Sets `function_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddPermissionRequest.function_name = value.into();`.
+    pub fn function_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_name = value.into();
+        self
+    }
+    /// Sets `principal`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddPermissionRequest.principal = value.into();`.
+    pub fn principal<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.principal = value.into();
+        self
+    }
+    /// Sets `qualifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddPermissionRequest.qualifier = Some(value.into());`.
+    pub fn qualifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.qualifier = Some(value.into());
+        self
+    }
+    /// Sets `source_account`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddPermissionRequest.source_account = Some(value.into());`.
+    pub fn source_account<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_account = Some(value.into());
+        self
+    }
+    /// Sets `source_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddPermissionRequest.source_arn = Some(value.into());`.
+    pub fn source_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_arn = Some(value.into());
+        self
+    }
+    /// Sets `statement_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddPermissionRequest.statement_id = value.into();`.
+    pub fn statement_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.statement_id = value.into();
+        self
+    }
+    /// Returns a new instance of AddPermissionRequest with optional fields set to `None`.
+    pub fn new<ActionType: Into<String>,
+               FunctionNameType: Into<String>,
+               PrincipalType: Into<String>,
+               StatementIdType: Into<String>>
+        (action: ActionType,
+         function_name: FunctionNameType,
+         principal: PrincipalType,
+         statement_id: StatementIdType)
+         -> AddPermissionRequest {
+        AddPermissionRequest {
+            action: action.into(),
+            function_name: function_name.into(),
+            principal: principal.into(),
+            statement_id: statement_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddPermissionResponse {
@@ -104,7 +178,6 @@ pub struct AddPermissionResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub statement: Option<String>,
 }
-
 #[doc="<p>Provides configuration information about a Lambda function version alias.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AliasConfiguration {
@@ -125,7 +198,6 @@ pub struct AliasConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateAliasRequest {
     #[doc="<p>Description of the alias.</p>"]
@@ -142,7 +214,51 @@ pub struct CreateAliasRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl CreateAliasRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAliasRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `function_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAliasRequest.function_name = value.into();`.
+    pub fn function_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_name = value.into();
+        self
+    }
+    /// Sets `function_version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAliasRequest.function_version = value.into();`.
+    pub fn function_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_version = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAliasRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateAliasRequest with optional fields set to `None`.
+    pub fn new<FunctionNameType: Into<String>,
+               FunctionVersionType: Into<String>,
+               NameType: Into<String>>
+        (function_name: FunctionNameType,
+         function_version: FunctionVersionType,
+         name: NameType)
+         -> CreateAliasRequest {
+        CreateAliasRequest {
+            function_name: function_name.into(),
+            function_version: function_version.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateEventSourceMappingRequest {
@@ -168,7 +284,65 @@ pub struct CreateEventSourceMappingRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub starting_position_timestamp: Option<f64>,
 }
-
+impl CreateEventSourceMappingRequest {
+    /// Sets `batch_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEventSourceMappingRequest.batch_size = Some(value.into());`.
+    pub fn batch_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.batch_size = Some(value.into());
+        self
+    }
+    /// Sets `enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEventSourceMappingRequest.enabled = Some(value.into());`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = Some(value.into());
+        self
+    }
+    /// Sets `event_source_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEventSourceMappingRequest.event_source_arn = value.into();`.
+    pub fn event_source_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.event_source_arn = value.into();
+        self
+    }
+    /// Sets `function_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEventSourceMappingRequest.function_name = value.into();`.
+    pub fn function_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_name = value.into();
+        self
+    }
+    /// Sets `starting_position`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEventSourceMappingRequest.starting_position = value.into();`.
+    pub fn starting_position<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.starting_position = value.into();
+        self
+    }
+    /// Sets `starting_position_timestamp`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEventSourceMappingRequest.starting_position_timestamp = Some(value.into());`.
+    pub fn starting_position_timestamp<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.starting_position_timestamp = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateEventSourceMappingRequest with optional fields set to `None`.
+    pub fn new<EventSourceArnType: Into<String>,
+               FunctionNameType: Into<String>,
+               StartingPositionType: Into<String>>
+        (event_source_arn: EventSourceArnType,
+         function_name: FunctionNameType,
+         starting_position: StartingPositionType)
+         -> CreateEventSourceMappingRequest {
+        CreateEventSourceMappingRequest {
+            event_source_arn: event_source_arn.into(),
+            function_name: function_name.into(),
+            starting_position: starting_position.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateFunctionRequest {
@@ -227,7 +401,138 @@ pub struct CreateFunctionRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vpc_config: Option<VpcConfig>,
 }
-
+impl CreateFunctionRequest {
+    /// Sets `code`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFunctionRequest.code = value.into();`.
+    pub fn code<ValueType: Into<FunctionCode>>(mut self, value: ValueType) -> Self {
+        self.code = value.into();
+        self
+    }
+    /// Sets `dead_letter_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFunctionRequest.dead_letter_config = Some(value.into());`.
+    pub fn dead_letter_config<ValueType: Into<DeadLetterConfig>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.dead_letter_config = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFunctionRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `environment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFunctionRequest.environment = Some(value.into());`.
+    pub fn environment<ValueType: Into<Environment>>(mut self, value: ValueType) -> Self {
+        self.environment = Some(value.into());
+        self
+    }
+    /// Sets `function_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFunctionRequest.function_name = value.into();`.
+    pub fn function_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_name = value.into();
+        self
+    }
+    /// Sets `handler`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFunctionRequest.handler = value.into();`.
+    pub fn handler<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.handler = value.into();
+        self
+    }
+    /// Sets `kms_key_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFunctionRequest.kms_key_arn = Some(value.into());`.
+    pub fn kms_key_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kms_key_arn = Some(value.into());
+        self
+    }
+    /// Sets `memory_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFunctionRequest.memory_size = Some(value.into());`.
+    pub fn memory_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.memory_size = Some(value.into());
+        self
+    }
+    /// Sets `publish`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFunctionRequest.publish = Some(value.into());`.
+    pub fn publish<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.publish = Some(value.into());
+        self
+    }
+    /// Sets `role`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFunctionRequest.role = value.into();`.
+    pub fn role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role = value.into();
+        self
+    }
+    /// Sets `runtime`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFunctionRequest.runtime = value.into();`.
+    pub fn runtime<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.runtime = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFunctionRequest.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFunctionRequest.timeout = Some(value.into());`.
+    pub fn timeout<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.timeout = Some(value.into());
+        self
+    }
+    /// Sets `tracing_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFunctionRequest.tracing_config = Some(value.into());`.
+    pub fn tracing_config<ValueType: Into<TracingConfig>>(mut self, value: ValueType) -> Self {
+        self.tracing_config = Some(value.into());
+        self
+    }
+    /// Sets `vpc_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFunctionRequest.vpc_config = Some(value.into());`.
+    pub fn vpc_config<ValueType: Into<VpcConfig>>(mut self, value: ValueType) -> Self {
+        self.vpc_config = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateFunctionRequest with optional fields set to `None`.
+    pub fn new<CodeType: Into<FunctionCode>,
+               FunctionNameType: Into<String>,
+               HandlerType: Into<String>,
+               RoleType: Into<String>,
+               RuntimeType: Into<String>>
+        (code: CodeType,
+         function_name: FunctionNameType,
+         handler: HandlerType,
+         role: RoleType,
+         runtime: RuntimeType)
+         -> CreateFunctionRequest {
+        CreateFunctionRequest {
+            code: code.into(),
+            function_name: function_name.into(),
+            handler: handler.into(),
+            role: role.into(),
+            runtime: runtime.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The parent object that contains the target ARN (Amazon Resource Name) of an Amazon SQS queue or Amazon SNS topic.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct DeadLetterConfig {
@@ -236,7 +541,19 @@ pub struct DeadLetterConfig {
     #[serde(skip_serializing_if="Option::is_none")]
     pub target_arn: Option<String>,
 }
-
+impl DeadLetterConfig {
+    /// Sets `target_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeadLetterConfig.target_arn = Some(value.into());`.
+    pub fn target_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeadLetterConfig with optional fields set to `None`.
+    pub fn new() -> DeadLetterConfig {
+        DeadLetterConfig { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteAliasRequest {
     #[doc="<p>The Lambda function name for which the alias is created. Deleting an alias does not delete the function version to which it is pointing. Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length.</p>"]
@@ -246,7 +563,30 @@ pub struct DeleteAliasRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl DeleteAliasRequest {
+    /// Sets `function_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAliasRequest.function_name = value.into();`.
+    pub fn function_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_name = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAliasRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteAliasRequest with optional fields set to `None`.
+pub fn new<FunctionNameType: Into<String>, NameType: Into<String>>(function_name: FunctionNameType, name: NameType) -> DeleteAliasRequest{
+        DeleteAliasRequest {
+            function_name: function_name.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteEventSourceMappingRequest {
@@ -254,7 +594,22 @@ pub struct DeleteEventSourceMappingRequest {
     #[serde(rename="UUID")]
     pub uuid: String,
 }
-
+impl DeleteEventSourceMappingRequest {
+    /// Sets `uuid`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteEventSourceMappingRequest.uuid = value.into();`.
+    pub fn uuid<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.uuid = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteEventSourceMappingRequest with optional fields set to `None`.
+    pub fn new<UUIDType: Into<String>>(uuid: UUIDType) -> DeleteEventSourceMappingRequest {
+        DeleteEventSourceMappingRequest {
+            uuid: uuid.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteFunctionRequest {
     #[doc="<p>The Lambda function to delete.</p> <p> You can specify the function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). If you are using versioning, you can also provide a qualified function ARN (ARN that is qualified with function version or alias name as suffix). AWS Lambda also allows you to specify only the function name with the account ID qualifier (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length. </p>"]
@@ -265,7 +620,30 @@ pub struct DeleteFunctionRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub qualifier: Option<String>,
 }
-
+impl DeleteFunctionRequest {
+    /// Sets `function_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteFunctionRequest.function_name = value.into();`.
+    pub fn function_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_name = value.into();
+        self
+    }
+    /// Sets `qualifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteFunctionRequest.qualifier = Some(value.into());`.
+    pub fn qualifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.qualifier = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteFunctionRequest with optional fields set to `None`.
+    pub fn new<FunctionNameType: Into<String>>(function_name: FunctionNameType)
+                                               -> DeleteFunctionRequest {
+        DeleteFunctionRequest {
+            function_name: function_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The parent object that contains your environment's configuration settings.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct Environment {
@@ -274,7 +652,19 @@ pub struct Environment {
     #[serde(skip_serializing_if="Option::is_none")]
     pub variables: Option<::std::collections::HashMap<String, String>>,
 }
-
+impl Environment {
+    /// Sets `variables`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Environment.variables = Some(value.into());`.
+pub fn variables<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.variables = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Environment with optional fields set to `None`.
+    pub fn new() -> Environment {
+        Environment { ..Default::default() }
+    }
+}
 #[doc="<p>The parent object that contains error information associated with your configuration settings.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EnvironmentError {
@@ -287,7 +677,6 @@ pub struct EnvironmentError {
     #[serde(skip_serializing_if="Option::is_none")]
     pub message: Option<String>,
 }
-
 #[doc="<p>The parent object returned that contains your environment's configuration settings or any error information associated with your configuration settings.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EnvironmentResponse {
@@ -299,7 +688,6 @@ pub struct EnvironmentResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub variables: Option<::std::collections::HashMap<String, String>>,
 }
-
 #[doc="<p>Describes mapping between an Amazon Kinesis stream and a Lambda function.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EventSourceMappingConfiguration {
@@ -336,7 +724,6 @@ pub struct EventSourceMappingConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub uuid: Option<String>,
 }
-
 #[doc="<p>The code for the Lambda function.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct FunctionCode {
@@ -361,7 +748,40 @@ pub struct FunctionCode {
                         )]
     pub zip_file: Option<Vec<u8>>,
 }
-
+impl FunctionCode {
+    /// Sets `s3_bucket`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FunctionCode.s3_bucket = Some(value.into());`.
+    pub fn s3_bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_bucket = Some(value.into());
+        self
+    }
+    /// Sets `s3_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FunctionCode.s3_key = Some(value.into());`.
+    pub fn s3_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_key = Some(value.into());
+        self
+    }
+    /// Sets `s3_object_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FunctionCode.s3_object_version = Some(value.into());`.
+    pub fn s3_object_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_object_version = Some(value.into());
+        self
+    }
+    /// Sets `zip_file`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FunctionCode.zip_file = Some(value.into());`.
+    pub fn zip_file<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.zip_file = Some(value.into());
+        self
+    }
+    /// Returns a new instance of FunctionCode with optional fields set to `None`.
+    pub fn new() -> FunctionCode {
+        FunctionCode { ..Default::default() }
+    }
+}
 #[doc="<p>The object for the Lambda function location.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct FunctionCodeLocation {
@@ -374,7 +794,6 @@ pub struct FunctionCodeLocation {
     #[serde(skip_serializing_if="Option::is_none")]
     pub repository_type: Option<String>,
 }
-
 #[doc="<p>A complex type that describes function metadata.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct FunctionConfiguration {
@@ -451,7 +870,6 @@ pub struct FunctionConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vpc_config: Option<VpcConfigResponse>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetAccountSettingsRequest;
 
@@ -464,7 +882,6 @@ pub struct GetAccountSettingsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub account_usage: Option<AccountUsage>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetAliasRequest {
     #[doc="<p>Function name for which the alias is created. An alias is a subresource that exists only in the context of an existing Lambda function so you must specify the function name. Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length.</p>"]
@@ -474,7 +891,30 @@ pub struct GetAliasRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl GetAliasRequest {
+    /// Sets `function_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetAliasRequest.function_name = value.into();`.
+    pub fn function_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_name = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetAliasRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of GetAliasRequest with optional fields set to `None`.
+pub fn new<FunctionNameType: Into<String>, NameType: Into<String>>(function_name: FunctionNameType, name: NameType) -> GetAliasRequest{
+        GetAliasRequest {
+            function_name: function_name.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetEventSourceMappingRequest {
@@ -482,7 +922,22 @@ pub struct GetEventSourceMappingRequest {
     #[serde(rename="UUID")]
     pub uuid: String,
 }
-
+impl GetEventSourceMappingRequest {
+    /// Sets `uuid`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetEventSourceMappingRequest.uuid = value.into();`.
+    pub fn uuid<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.uuid = value.into();
+        self
+    }
+    /// Returns a new instance of GetEventSourceMappingRequest with optional fields set to `None`.
+    pub fn new<UUIDType: Into<String>>(uuid: UUIDType) -> GetEventSourceMappingRequest {
+        GetEventSourceMappingRequest {
+            uuid: uuid.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetFunctionConfigurationRequest {
@@ -494,7 +949,30 @@ pub struct GetFunctionConfigurationRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub qualifier: Option<String>,
 }
-
+impl GetFunctionConfigurationRequest {
+    /// Sets `function_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetFunctionConfigurationRequest.function_name = value.into();`.
+    pub fn function_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_name = value.into();
+        self
+    }
+    /// Sets `qualifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetFunctionConfigurationRequest.qualifier = Some(value.into());`.
+    pub fn qualifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.qualifier = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetFunctionConfigurationRequest with optional fields set to `None`.
+    pub fn new<FunctionNameType: Into<String>>(function_name: FunctionNameType)
+                                               -> GetFunctionConfigurationRequest {
+        GetFunctionConfigurationRequest {
+            function_name: function_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetFunctionRequest {
@@ -506,7 +984,30 @@ pub struct GetFunctionRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub qualifier: Option<String>,
 }
-
+impl GetFunctionRequest {
+    /// Sets `function_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetFunctionRequest.function_name = value.into();`.
+    pub fn function_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_name = value.into();
+        self
+    }
+    /// Sets `qualifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetFunctionRequest.qualifier = Some(value.into());`.
+    pub fn qualifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.qualifier = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetFunctionRequest with optional fields set to `None`.
+    pub fn new<FunctionNameType: Into<String>>(function_name: FunctionNameType)
+                                               -> GetFunctionRequest {
+        GetFunctionRequest {
+            function_name: function_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>This response contains the object for the Lambda function location (see <a>FunctionCodeLocation</a>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetFunctionResponse {
@@ -521,7 +1022,6 @@ pub struct GetFunctionResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<::std::collections::HashMap<String, String>>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetPolicyRequest {
@@ -533,7 +1033,30 @@ pub struct GetPolicyRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub qualifier: Option<String>,
 }
-
+impl GetPolicyRequest {
+    /// Sets `function_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetPolicyRequest.function_name = value.into();`.
+    pub fn function_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_name = value.into();
+        self
+    }
+    /// Sets `qualifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetPolicyRequest.qualifier = Some(value.into());`.
+    pub fn qualifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.qualifier = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetPolicyRequest with optional fields set to `None`.
+    pub fn new<FunctionNameType: Into<String>>(function_name: FunctionNameType)
+                                               -> GetPolicyRequest {
+        GetPolicyRequest {
+            function_name: function_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetPolicyResponse {
@@ -542,7 +1065,6 @@ pub struct GetPolicyResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policy: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InvocationRequest {
@@ -574,7 +1096,58 @@ pub struct InvocationRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub qualifier: Option<String>,
 }
-
+impl InvocationRequest {
+    /// Sets `client_context`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InvocationRequest.client_context = Some(value.into());`.
+    pub fn client_context<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_context = Some(value.into());
+        self
+    }
+    /// Sets `function_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InvocationRequest.function_name = value.into();`.
+    pub fn function_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_name = value.into();
+        self
+    }
+    /// Sets `invocation_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InvocationRequest.invocation_type = Some(value.into());`.
+    pub fn invocation_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.invocation_type = Some(value.into());
+        self
+    }
+    /// Sets `log_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InvocationRequest.log_type = Some(value.into());`.
+    pub fn log_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_type = Some(value.into());
+        self
+    }
+    /// Sets `payload`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InvocationRequest.payload = Some(value.into());`.
+    pub fn payload<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.payload = Some(value.into());
+        self
+    }
+    /// Sets `qualifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InvocationRequest.qualifier = Some(value.into());`.
+    pub fn qualifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.qualifier = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InvocationRequest with optional fields set to `None`.
+    pub fn new<FunctionNameType: Into<String>>(function_name: FunctionNameType)
+                                               -> InvocationRequest {
+        InvocationRequest {
+            function_name: function_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Upon success, returns an empty response. Otherwise, throws an exception.</p>"]
 #[derive(Default,Debug,Clone)]
 pub struct InvocationResponse {
@@ -587,7 +1160,6 @@ pub struct InvocationResponse {
     #[doc="<p>The HTTP status code will be in the 200 range for successful request. For the <code>RequestResponse</code> invocation type this status code will be 200. For the <code>Event</code> invocation type this status code will be 202. For the <code>DryRun</code> invocation type the status code will be 204. </p>"]
     pub status_code: Option<i64>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InvokeAsyncRequest {
@@ -603,7 +1175,33 @@ pub struct InvokeAsyncRequest {
                         )]
     pub invoke_args: Vec<u8>,
 }
-
+impl InvokeAsyncRequest {
+    /// Sets `function_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InvokeAsyncRequest.function_name = value.into();`.
+    pub fn function_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_name = value.into();
+        self
+    }
+    /// Sets `invoke_args`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InvokeAsyncRequest.invoke_args = value.into();`.
+    pub fn invoke_args<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.invoke_args = value.into();
+        self
+    }
+    /// Returns a new instance of InvokeAsyncRequest with optional fields set to `None`.
+    pub fn new<FunctionNameType: Into<String>, InvokeArgsType: Into<Vec<u8>>>
+        (function_name: FunctionNameType,
+         invoke_args: InvokeArgsType)
+         -> InvokeAsyncRequest {
+        InvokeAsyncRequest {
+            function_name: function_name.into(),
+            invoke_args: invoke_args.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Upon success, it returns empty response. Otherwise, throws an exception.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InvokeAsyncResponse {
@@ -612,7 +1210,6 @@ pub struct InvokeAsyncResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListAliasesRequest {
     #[doc="<p>Lambda function name for which the alias is created. Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length.</p>"]
@@ -631,7 +1228,44 @@ pub struct ListAliasesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub max_items: Option<i64>,
 }
-
+impl ListAliasesRequest {
+    /// Sets `function_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAliasesRequest.function_name = value.into();`.
+    pub fn function_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_name = value.into();
+        self
+    }
+    /// Sets `function_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAliasesRequest.function_version = Some(value.into());`.
+    pub fn function_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_version = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAliasesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAliasesRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListAliasesRequest with optional fields set to `None`.
+    pub fn new<FunctionNameType: Into<String>>(function_name: FunctionNameType)
+                                               -> ListAliasesRequest {
+        ListAliasesRequest {
+            function_name: function_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListAliasesResponse {
     #[doc="<p>A list of aliases.</p>"]
@@ -643,7 +1277,6 @@ pub struct ListAliasesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_marker: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListEventSourceMappingsRequest {
@@ -664,7 +1297,40 @@ pub struct ListEventSourceMappingsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub max_items: Option<i64>,
 }
-
+impl ListEventSourceMappingsRequest {
+    /// Sets `event_source_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListEventSourceMappingsRequest.event_source_arn = Some(value.into());`.
+    pub fn event_source_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.event_source_arn = Some(value.into());
+        self
+    }
+    /// Sets `function_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListEventSourceMappingsRequest.function_name = Some(value.into());`.
+    pub fn function_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_name = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListEventSourceMappingsRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListEventSourceMappingsRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListEventSourceMappingsRequest with optional fields set to `None`.
+    pub fn new() -> ListEventSourceMappingsRequest {
+        ListEventSourceMappingsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains a list of event sources (see <a>EventSourceMappingConfiguration</a>)</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListEventSourceMappingsResponse {
@@ -677,7 +1343,6 @@ pub struct ListEventSourceMappingsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_marker: Option<String>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListFunctionsRequest {
@@ -698,7 +1363,40 @@ pub struct ListFunctionsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub max_items: Option<i64>,
 }
-
+impl ListFunctionsRequest {
+    /// Sets `function_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListFunctionsRequest.function_version = Some(value.into());`.
+    pub fn function_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_version = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListFunctionsRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `master_region`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListFunctionsRequest.master_region = Some(value.into());`.
+    pub fn master_region<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.master_region = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListFunctionsRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListFunctionsRequest with optional fields set to `None`.
+    pub fn new() -> ListFunctionsRequest {
+        ListFunctionsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains a list of AWS Lambda function configurations (see <a>FunctionConfiguration</a>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListFunctionsResponse {
@@ -711,14 +1409,28 @@ pub struct ListFunctionsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_marker: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTagsRequest {
     #[doc="<p>The ARN (Amazon Resource Name) of the function.</p>"]
     #[serde(rename="Resource")]
     pub resource: String,
 }
-
+impl ListTagsRequest {
+    /// Sets `resource`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsRequest.resource = value.into();`.
+    pub fn resource<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource = value.into();
+        self
+    }
+    /// Returns a new instance of ListTagsRequest with optional fields set to `None`.
+    pub fn new<ResourceType: Into<String>>(resource: ResourceType) -> ListTagsRequest {
+        ListTagsRequest {
+            resource: resource.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTagsResponse {
     #[doc="<p>The list of tags assigned to the function.</p>"]
@@ -726,7 +1438,6 @@ pub struct ListTagsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<::std::collections::HashMap<String, String>>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListVersionsByFunctionRequest {
@@ -742,7 +1453,37 @@ pub struct ListVersionsByFunctionRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub max_items: Option<i64>,
 }
-
+impl ListVersionsByFunctionRequest {
+    /// Sets `function_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListVersionsByFunctionRequest.function_name = value.into();`.
+    pub fn function_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_name = value.into();
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListVersionsByFunctionRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListVersionsByFunctionRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListVersionsByFunctionRequest with optional fields set to `None`.
+    pub fn new<FunctionNameType: Into<String>>(function_name: FunctionNameType)
+                                               -> ListVersionsByFunctionRequest {
+        ListVersionsByFunctionRequest {
+            function_name: function_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListVersionsByFunctionResponse {
@@ -755,7 +1496,6 @@ pub struct ListVersionsByFunctionResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub versions: Option<Vec<FunctionConfiguration>>,
 }
-
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PublishVersionRequest {
@@ -771,7 +1511,37 @@ pub struct PublishVersionRequest {
     #[serde(rename="FunctionName")]
     pub function_name: String,
 }
-
+impl PublishVersionRequest {
+    /// Sets `code_sha_256`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PublishVersionRequest.code_sha_256 = Some(value.into());`.
+    pub fn code_sha_256<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.code_sha_256 = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PublishVersionRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `function_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PublishVersionRequest.function_name = value.into();`.
+    pub fn function_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_name = value.into();
+        self
+    }
+    /// Returns a new instance of PublishVersionRequest with optional fields set to `None`.
+    pub fn new<FunctionNameType: Into<String>>(function_name: FunctionNameType)
+                                               -> PublishVersionRequest {
+        PublishVersionRequest {
+            function_name: function_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RemovePermissionRequest {
@@ -786,7 +1556,40 @@ pub struct RemovePermissionRequest {
     #[serde(rename="StatementId")]
     pub statement_id: String,
 }
-
+impl RemovePermissionRequest {
+    /// Sets `function_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemovePermissionRequest.function_name = value.into();`.
+    pub fn function_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_name = value.into();
+        self
+    }
+    /// Sets `qualifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemovePermissionRequest.qualifier = Some(value.into());`.
+    pub fn qualifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.qualifier = Some(value.into());
+        self
+    }
+    /// Sets `statement_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemovePermissionRequest.statement_id = value.into();`.
+    pub fn statement_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.statement_id = value.into();
+        self
+    }
+    /// Returns a new instance of RemovePermissionRequest with optional fields set to `None`.
+    pub fn new<FunctionNameType: Into<String>, StatementIdType: Into<String>>
+        (function_name: FunctionNameType,
+         statement_id: StatementIdType)
+         -> RemovePermissionRequest {
+        RemovePermissionRequest {
+            function_name: function_name.into(),
+            statement_id: statement_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TagResourceRequest {
     #[doc="<p>The ARN (Amazon Resource Name) of the Lambda function.</p>"]
@@ -796,7 +1599,36 @@ pub struct TagResourceRequest {
     #[serde(rename="Tags")]
     pub tags: ::std::collections::HashMap<String, String>,
 }
-
+impl TagResourceRequest {
+    /// Sets `resource`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TagResourceRequest.resource = value.into();`.
+    pub fn resource<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TagResourceRequest.tags = value.into();`.
+    pub fn tags<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of TagResourceRequest with optional fields set to `None`.
+    pub fn new<ResourceType: Into<String>,
+               TagsType: Into<::std::collections::HashMap<String, String>>>
+        (resource: ResourceType,
+         tags: TagsType)
+         -> TagResourceRequest {
+        TagResourceRequest {
+            resource: resource.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The parent object that contains your function's tracing settings.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TracingConfig {
@@ -805,7 +1637,19 @@ pub struct TracingConfig {
     #[serde(skip_serializing_if="Option::is_none")]
     pub mode: Option<String>,
 }
-
+impl TracingConfig {
+    /// Sets `mode`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TracingConfig.mode = Some(value.into());`.
+    pub fn mode<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.mode = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TracingConfig with optional fields set to `None`.
+    pub fn new() -> TracingConfig {
+        TracingConfig { ..Default::default() }
+    }
+}
 #[doc="<p>Parent object of the tracing information associated with your Lambda function.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TracingConfigResponse {
@@ -814,7 +1658,6 @@ pub struct TracingConfigResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub mode: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UntagResourceRequest {
     #[doc="<p>The ARN (Amazon Resource Name) of the function.</p>"]
@@ -824,7 +1667,33 @@ pub struct UntagResourceRequest {
     #[serde(rename="TagKeys")]
     pub tag_keys: Vec<String>,
 }
-
+impl UntagResourceRequest {
+    /// Sets `resource`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UntagResourceRequest.resource = value.into();`.
+    pub fn resource<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource = value.into();
+        self
+    }
+    /// Sets `tag_keys`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UntagResourceRequest.tag_keys = value.into();`.
+    pub fn tag_keys<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tag_keys = value.into();
+        self
+    }
+    /// Returns a new instance of UntagResourceRequest with optional fields set to `None`.
+    pub fn new<ResourceType: Into<String>, TagKeysType: Into<Vec<String>>>
+        (resource: ResourceType,
+         tag_keys: TagKeysType)
+         -> UntagResourceRequest {
+        UntagResourceRequest {
+            resource: resource.into(),
+            tag_keys: tag_keys.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateAliasRequest {
     #[doc="<p>You can change the description of the alias using this parameter.</p>"]
@@ -842,7 +1711,44 @@ pub struct UpdateAliasRequest {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl UpdateAliasRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAliasRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `function_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAliasRequest.function_name = value.into();`.
+    pub fn function_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_name = value.into();
+        self
+    }
+    /// Sets `function_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAliasRequest.function_version = Some(value.into());`.
+    pub fn function_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_version = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAliasRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateAliasRequest with optional fields set to `None`.
+pub fn new<FunctionNameType: Into<String>, NameType: Into<String>>(function_name: FunctionNameType, name: NameType) -> UpdateAliasRequest{
+        UpdateAliasRequest {
+            function_name: function_name.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateEventSourceMappingRequest {
@@ -862,7 +1768,43 @@ pub struct UpdateEventSourceMappingRequest {
     #[serde(rename="UUID")]
     pub uuid: String,
 }
-
+impl UpdateEventSourceMappingRequest {
+    /// Sets `batch_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateEventSourceMappingRequest.batch_size = Some(value.into());`.
+    pub fn batch_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.batch_size = Some(value.into());
+        self
+    }
+    /// Sets `enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateEventSourceMappingRequest.enabled = Some(value.into());`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = Some(value.into());
+        self
+    }
+    /// Sets `function_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateEventSourceMappingRequest.function_name = Some(value.into());`.
+    pub fn function_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_name = Some(value.into());
+        self
+    }
+    /// Sets `uuid`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateEventSourceMappingRequest.uuid = value.into();`.
+    pub fn uuid<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.uuid = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateEventSourceMappingRequest with optional fields set to `None`.
+    pub fn new<UUIDType: Into<String>>(uuid: UUIDType) -> UpdateEventSourceMappingRequest {
+        UpdateEventSourceMappingRequest {
+            uuid: uuid.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateFunctionCodeRequest {
@@ -898,7 +1840,65 @@ pub struct UpdateFunctionCodeRequest {
                         )]
     pub zip_file: Option<Vec<u8>>,
 }
-
+impl UpdateFunctionCodeRequest {
+    /// Sets `dry_run`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFunctionCodeRequest.dry_run = Some(value.into());`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = Some(value.into());
+        self
+    }
+    /// Sets `function_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFunctionCodeRequest.function_name = value.into();`.
+    pub fn function_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_name = value.into();
+        self
+    }
+    /// Sets `publish`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFunctionCodeRequest.publish = Some(value.into());`.
+    pub fn publish<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.publish = Some(value.into());
+        self
+    }
+    /// Sets `s3_bucket`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFunctionCodeRequest.s3_bucket = Some(value.into());`.
+    pub fn s3_bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_bucket = Some(value.into());
+        self
+    }
+    /// Sets `s3_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFunctionCodeRequest.s3_key = Some(value.into());`.
+    pub fn s3_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_key = Some(value.into());
+        self
+    }
+    /// Sets `s3_object_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFunctionCodeRequest.s3_object_version = Some(value.into());`.
+    pub fn s3_object_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_object_version = Some(value.into());
+        self
+    }
+    /// Sets `zip_file`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFunctionCodeRequest.zip_file = Some(value.into());`.
+    pub fn zip_file<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.zip_file = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateFunctionCodeRequest with optional fields set to `None`.
+    pub fn new<FunctionNameType: Into<String>>(function_name: FunctionNameType)
+                                               -> UpdateFunctionCodeRequest {
+        UpdateFunctionCodeRequest {
+            function_name: function_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateFunctionConfigurationRequest {
@@ -949,7 +1949,102 @@ pub struct UpdateFunctionConfigurationRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vpc_config: Option<VpcConfig>,
 }
-
+impl UpdateFunctionConfigurationRequest {
+    /// Sets `dead_letter_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFunctionConfigurationRequest.dead_letter_config = Some(value.into());`.
+    pub fn dead_letter_config<ValueType: Into<DeadLetterConfig>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.dead_letter_config = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFunctionConfigurationRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `environment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFunctionConfigurationRequest.environment = Some(value.into());`.
+    pub fn environment<ValueType: Into<Environment>>(mut self, value: ValueType) -> Self {
+        self.environment = Some(value.into());
+        self
+    }
+    /// Sets `function_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFunctionConfigurationRequest.function_name = value.into();`.
+    pub fn function_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_name = value.into();
+        self
+    }
+    /// Sets `handler`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFunctionConfigurationRequest.handler = Some(value.into());`.
+    pub fn handler<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.handler = Some(value.into());
+        self
+    }
+    /// Sets `kms_key_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFunctionConfigurationRequest.kms_key_arn = Some(value.into());`.
+    pub fn kms_key_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kms_key_arn = Some(value.into());
+        self
+    }
+    /// Sets `memory_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFunctionConfigurationRequest.memory_size = Some(value.into());`.
+    pub fn memory_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.memory_size = Some(value.into());
+        self
+    }
+    /// Sets `role`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFunctionConfigurationRequest.role = Some(value.into());`.
+    pub fn role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role = Some(value.into());
+        self
+    }
+    /// Sets `runtime`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFunctionConfigurationRequest.runtime = Some(value.into());`.
+    pub fn runtime<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.runtime = Some(value.into());
+        self
+    }
+    /// Sets `timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFunctionConfigurationRequest.timeout = Some(value.into());`.
+    pub fn timeout<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.timeout = Some(value.into());
+        self
+    }
+    /// Sets `tracing_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFunctionConfigurationRequest.tracing_config = Some(value.into());`.
+    pub fn tracing_config<ValueType: Into<TracingConfig>>(mut self, value: ValueType) -> Self {
+        self.tracing_config = Some(value.into());
+        self
+    }
+    /// Sets `vpc_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFunctionConfigurationRequest.vpc_config = Some(value.into());`.
+    pub fn vpc_config<ValueType: Into<VpcConfig>>(mut self, value: ValueType) -> Self {
+        self.vpc_config = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateFunctionConfigurationRequest with optional fields set to `None`.
+    pub fn new<FunctionNameType: Into<String>>(function_name: FunctionNameType)
+                                               -> UpdateFunctionConfigurationRequest {
+        UpdateFunctionConfigurationRequest {
+            function_name: function_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>If your Lambda function accesses resources in a VPC, you provide this parameter identifying the list of security group IDs and subnet IDs. These must belong to the same VPC. You must provide at least one security group and one subnet ID.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct VpcConfig {
@@ -962,7 +2057,26 @@ pub struct VpcConfig {
     #[serde(skip_serializing_if="Option::is_none")]
     pub subnet_ids: Option<Vec<String>>,
 }
-
+impl VpcConfig {
+    /// Sets `security_group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VpcConfig.security_group_ids = Some(value.into());`.
+    pub fn security_group_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.security_group_ids = Some(value.into());
+        self
+    }
+    /// Sets `subnet_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VpcConfig.subnet_ids = Some(value.into());`.
+    pub fn subnet_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.subnet_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of VpcConfig with optional fields set to `None`.
+    pub fn new() -> VpcConfig {
+        VpcConfig { ..Default::default() }
+    }
+}
 #[doc="<p>VPC configuration associated with your Lambda function.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct VpcConfigResponse {
@@ -979,7 +2093,6 @@ pub struct VpcConfigResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vpc_id: Option<String>,
 }
-
 /// Errors returned by AddPermission
 #[derive(Debug, PartialEq)]
 pub enum AddPermissionError {

@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -75,7 +76,54 @@ pub struct AddPermissionRequest {
     #[doc="<p>The URL of the Amazon SQS queue to which permissions are added.</p> <p>Queue URLs are case-sensitive.</p>"]
     pub queue_url: String,
 }
-
+impl AddPermissionRequest {
+    /// Sets `aws_account_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddPermissionRequest.aws_account_ids = value.into();`.
+    pub fn aws_account_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.aws_account_ids = value.into();
+        self
+    }
+    /// Sets `actions`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddPermissionRequest.actions = value.into();`.
+    pub fn actions<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.actions = value.into();
+        self
+    }
+    /// Sets `label`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddPermissionRequest.label = value.into();`.
+    pub fn label<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.label = value.into();
+        self
+    }
+    /// Sets `queue_url`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddPermissionRequest.queue_url = value.into();`.
+    pub fn queue_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.queue_url = value.into();
+        self
+    }
+    /// Returns a new instance of AddPermissionRequest with optional fields set to `None`.
+    pub fn new<AWSAccountIdsType: Into<Vec<String>>,
+               ActionsType: Into<Vec<String>>,
+               LabelType: Into<String>,
+               QueueUrlType: Into<String>>
+        (aws_account_ids: AWSAccountIdsType,
+         actions: ActionsType,
+         label: LabelType,
+         queue_url: QueueUrlType)
+         -> AddPermissionRequest {
+        AddPermissionRequest {
+            aws_account_ids: aws_account_ids.into(),
+            actions: actions.into(),
+            label: label.into(),
+            queue_url: queue_url.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AddPermissionRequest` contents to a `SignedRequest`.
 struct AddPermissionRequestSerializer;
@@ -122,7 +170,6 @@ pub struct BatchResultErrorEntry {
     #[doc="<p>Specifies whether the error happened due to the sender's fault.</p>"]
     pub sender_fault: bool,
 }
-
 struct BatchResultErrorEntryDeserializer;
 impl BatchResultErrorEntryDeserializer {
     #[allow(unused_variables)]
@@ -292,7 +339,34 @@ pub struct ChangeMessageVisibilityBatchRequest {
     #[doc="<p>The URL of the Amazon SQS queue whose messages' visibility is changed.</p> <p>Queue URLs are case-sensitive.</p>"]
     pub queue_url: String,
 }
-
+impl ChangeMessageVisibilityBatchRequest {
+    /// Sets `entries`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChangeMessageVisibilityBatchRequest.entries = value.into();`.
+pub fn entries<ValueType: Into<Vec<ChangeMessageVisibilityBatchRequestEntry>>>(mut self, value: ValueType) -> Self{
+        self.entries = value.into();
+        self
+    }
+    /// Sets `queue_url`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChangeMessageVisibilityBatchRequest.queue_url = value.into();`.
+    pub fn queue_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.queue_url = value.into();
+        self
+    }
+    /// Returns a new instance of ChangeMessageVisibilityBatchRequest with optional fields set to `None`.
+    pub fn new<EntriesType: Into<Vec<ChangeMessageVisibilityBatchRequestEntry>>,
+               QueueUrlType: Into<String>>
+        (entries: EntriesType,
+         queue_url: QueueUrlType)
+         -> ChangeMessageVisibilityBatchRequest {
+        ChangeMessageVisibilityBatchRequest {
+            entries: entries.into(),
+            queue_url: queue_url.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ChangeMessageVisibilityBatchRequest` contents to a `SignedRequest`.
 struct ChangeMessageVisibilityBatchRequestSerializer;
@@ -323,7 +397,40 @@ pub struct ChangeMessageVisibilityBatchRequestEntry {
     #[doc="<p>The new value (in seconds) for the message's visibility timeout.</p>"]
     pub visibility_timeout: Option<i64>,
 }
-
+impl ChangeMessageVisibilityBatchRequestEntry {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChangeMessageVisibilityBatchRequestEntry.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `receipt_handle`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChangeMessageVisibilityBatchRequestEntry.receipt_handle = value.into();`.
+    pub fn receipt_handle<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.receipt_handle = value.into();
+        self
+    }
+    /// Sets `visibility_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChangeMessageVisibilityBatchRequestEntry.visibility_timeout = Some(value.into());`.
+    pub fn visibility_timeout<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.visibility_timeout = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ChangeMessageVisibilityBatchRequestEntry with optional fields set to `None`.
+    pub fn new<IdType: Into<String>, ReceiptHandleType: Into<String>>
+        (id: IdType,
+         receipt_handle: ReceiptHandleType)
+         -> ChangeMessageVisibilityBatchRequestEntry {
+        ChangeMessageVisibilityBatchRequestEntry {
+            id: id.into(),
+            receipt_handle: receipt_handle.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ChangeMessageVisibilityBatchRequestEntry` contents to a `SignedRequest`.
 struct ChangeMessageVisibilityBatchRequestEntrySerializer;
@@ -367,7 +474,6 @@ pub struct ChangeMessageVisibilityBatchResult {
     #[doc="<p>A list of <code> <a>ChangeMessageVisibilityBatchResultEntry</a> </code> items.</p>"]
     pub successful: Vec<ChangeMessageVisibilityBatchResultEntry>,
 }
-
 struct ChangeMessageVisibilityBatchResultDeserializer;
 impl ChangeMessageVisibilityBatchResultDeserializer {
     #[allow(unused_variables)]
@@ -421,7 +527,6 @@ pub struct ChangeMessageVisibilityBatchResultEntry {
     #[doc="<p>Represents a message whose visibility timeout has been changed successfully.</p>"]
     pub id: String,
 }
-
 struct ChangeMessageVisibilityBatchResultEntryDeserializer;
 impl ChangeMessageVisibilityBatchResultEntryDeserializer {
     #[allow(unused_variables)]
@@ -502,7 +607,44 @@ pub struct ChangeMessageVisibilityRequest {
     #[doc="<p>The new value for the message's visibility timeout (in seconds). Values values: <code>0</code> to <code>43200</code>. Maximum: 12 hours.</p>"]
     pub visibility_timeout: i64,
 }
-
+impl ChangeMessageVisibilityRequest {
+    /// Sets `queue_url`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChangeMessageVisibilityRequest.queue_url = value.into();`.
+    pub fn queue_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.queue_url = value.into();
+        self
+    }
+    /// Sets `receipt_handle`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChangeMessageVisibilityRequest.receipt_handle = value.into();`.
+    pub fn receipt_handle<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.receipt_handle = value.into();
+        self
+    }
+    /// Sets `visibility_timeout`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ChangeMessageVisibilityRequest.visibility_timeout = value.into();`.
+    pub fn visibility_timeout<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.visibility_timeout = value.into();
+        self
+    }
+    /// Returns a new instance of ChangeMessageVisibilityRequest with optional fields set to `None`.
+    pub fn new<QueueUrlType: Into<String>,
+               ReceiptHandleType: Into<String>,
+               VisibilityTimeoutType: Into<i64>>
+        (queue_url: QueueUrlType,
+         receipt_handle: ReceiptHandleType,
+         visibility_timeout: VisibilityTimeoutType)
+         -> ChangeMessageVisibilityRequest {
+        ChangeMessageVisibilityRequest {
+            queue_url: queue_url.into(),
+            receipt_handle: receipt_handle.into(),
+            visibility_timeout: visibility_timeout.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ChangeMessageVisibilityRequest` contents to a `SignedRequest`.
 struct ChangeMessageVisibilityRequestSerializer;
@@ -530,7 +672,29 @@ pub struct CreateQueueRequest {
     #[doc="<p>The name of the new queue. The following limits apply to this name:</p> <ul> <li> <p>A queue name can have up to 80 characters.</p> </li> <li> <p>Valid values: alphanumeric characters, hyphens (<code>-</code>), and underscores (<code>_</code>).</p> </li> <li> <p>A FIFO queue name must end with the <code>.fifo</code> suffix.</p> </li> </ul> <p>Queue names are case-sensitive.</p>"]
     pub queue_name: String,
 }
-
+impl CreateQueueRequest {
+    /// Sets `attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateQueueRequest.attributes = Some(value.into());`.
+pub fn attributes<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.attributes = Some(value.into());
+        self
+    }
+    /// Sets `queue_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateQueueRequest.queue_name = value.into();`.
+    pub fn queue_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.queue_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateQueueRequest with optional fields set to `None`.
+    pub fn new<QueueNameType: Into<String>>(queue_name: QueueNameType) -> CreateQueueRequest {
+        CreateQueueRequest {
+            queue_name: queue_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateQueueRequest` contents to a `SignedRequest`.
 struct CreateQueueRequestSerializer;
@@ -557,7 +721,6 @@ pub struct CreateQueueResult {
     #[doc="<p>The URL of the created Amazon SQS queue.</p>"]
     pub queue_url: Option<String>,
 }
-
 struct CreateQueueResultDeserializer;
 impl CreateQueueResultDeserializer {
     #[allow(unused_variables)]
@@ -608,7 +771,35 @@ pub struct DeleteMessageBatchRequest {
     #[doc="<p>The URL of the Amazon SQS queue from which messages are deleted.</p> <p>Queue URLs are case-sensitive.</p>"]
     pub queue_url: String,
 }
-
+impl DeleteMessageBatchRequest {
+    /// Sets `entries`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteMessageBatchRequest.entries = value.into();`.
+    pub fn entries<ValueType: Into<Vec<DeleteMessageBatchRequestEntry>>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.entries = value.into();
+        self
+    }
+    /// Sets `queue_url`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteMessageBatchRequest.queue_url = value.into();`.
+    pub fn queue_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.queue_url = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteMessageBatchRequest with optional fields set to `None`.
+    pub fn new<EntriesType: Into<Vec<DeleteMessageBatchRequestEntry>>, QueueUrlType: Into<String>>
+        (entries: EntriesType,
+         queue_url: QueueUrlType)
+         -> DeleteMessageBatchRequest {
+        DeleteMessageBatchRequest {
+            entries: entries.into(),
+            queue_url: queue_url.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteMessageBatchRequest` contents to a `SignedRequest`.
 struct DeleteMessageBatchRequestSerializer;
@@ -637,7 +828,33 @@ pub struct DeleteMessageBatchRequestEntry {
     #[doc="<p>A receipt handle.</p>"]
     pub receipt_handle: String,
 }
-
+impl DeleteMessageBatchRequestEntry {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteMessageBatchRequestEntry.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `receipt_handle`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteMessageBatchRequestEntry.receipt_handle = value.into();`.
+    pub fn receipt_handle<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.receipt_handle = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteMessageBatchRequestEntry with optional fields set to `None`.
+    pub fn new<IdType: Into<String>, ReceiptHandleType: Into<String>>
+        (id: IdType,
+         receipt_handle: ReceiptHandleType)
+         -> DeleteMessageBatchRequestEntry {
+        DeleteMessageBatchRequestEntry {
+            id: id.into(),
+            receipt_handle: receipt_handle.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteMessageBatchRequestEntry` contents to a `SignedRequest`.
 struct DeleteMessageBatchRequestEntrySerializer;
@@ -675,7 +892,6 @@ pub struct DeleteMessageBatchResult {
     #[doc="<p>A list of <code> <a>DeleteMessageBatchResultEntry</a> </code> items.</p>"]
     pub successful: Vec<DeleteMessageBatchResultEntry>,
 }
-
 struct DeleteMessageBatchResultDeserializer;
 impl DeleteMessageBatchResultDeserializer {
     #[allow(unused_variables)]
@@ -728,7 +944,6 @@ pub struct DeleteMessageBatchResultEntry {
     #[doc="<p>Represents a successfully deleted message.</p>"]
     pub id: String,
 }
-
 struct DeleteMessageBatchResultEntryDeserializer;
 impl DeleteMessageBatchResultEntryDeserializer {
     #[allow(unused_variables)]
@@ -808,7 +1023,33 @@ pub struct DeleteMessageRequest {
     #[doc="<p>The receipt handle associated with the message to delete.</p>"]
     pub receipt_handle: String,
 }
-
+impl DeleteMessageRequest {
+    /// Sets `queue_url`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteMessageRequest.queue_url = value.into();`.
+    pub fn queue_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.queue_url = value.into();
+        self
+    }
+    /// Sets `receipt_handle`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteMessageRequest.receipt_handle = value.into();`.
+    pub fn receipt_handle<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.receipt_handle = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteMessageRequest with optional fields set to `None`.
+    pub fn new<QueueUrlType: Into<String>, ReceiptHandleType: Into<String>>
+        (queue_url: QueueUrlType,
+         receipt_handle: ReceiptHandleType)
+         -> DeleteMessageRequest {
+        DeleteMessageRequest {
+            queue_url: queue_url.into(),
+            receipt_handle: receipt_handle.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteMessageRequest` contents to a `SignedRequest`.
 struct DeleteMessageRequestSerializer;
@@ -832,7 +1073,22 @@ pub struct DeleteQueueRequest {
     #[doc="<p>The URL of the Amazon SQS queue to delete.</p> <p>Queue URLs are case-sensitive.</p>"]
     pub queue_url: String,
 }
-
+impl DeleteQueueRequest {
+    /// Sets `queue_url`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteQueueRequest.queue_url = value.into();`.
+    pub fn queue_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.queue_url = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteQueueRequest with optional fields set to `None`.
+    pub fn new<QueueUrlType: Into<String>>(queue_url: QueueUrlType) -> DeleteQueueRequest {
+        DeleteQueueRequest {
+            queue_url: queue_url.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteQueueRequest` contents to a `SignedRequest`.
 struct DeleteQueueRequestSerializer;
@@ -856,7 +1112,29 @@ pub struct GetQueueAttributesRequest {
     #[doc="<p>The URL of the Amazon SQS queue whose attribute information is retrieved.</p> <p>Queue URLs are case-sensitive.</p>"]
     pub queue_url: String,
 }
-
+impl GetQueueAttributesRequest {
+    /// Sets `attribute_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetQueueAttributesRequest.attribute_names = Some(value.into());`.
+    pub fn attribute_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.attribute_names = Some(value.into());
+        self
+    }
+    /// Sets `queue_url`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetQueueAttributesRequest.queue_url = value.into();`.
+    pub fn queue_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.queue_url = value.into();
+        self
+    }
+    /// Returns a new instance of GetQueueAttributesRequest with optional fields set to `None`.
+    pub fn new<QueueUrlType: Into<String>>(queue_url: QueueUrlType) -> GetQueueAttributesRequest {
+        GetQueueAttributesRequest {
+            queue_url: queue_url.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetQueueAttributesRequest` contents to a `SignedRequest`.
 struct GetQueueAttributesRequestSerializer;
@@ -883,7 +1161,6 @@ pub struct GetQueueAttributesResult {
     #[doc="<p>A map of attributes to their respective values.</p>"]
     pub attributes: Option<::std::collections::HashMap<String, String>>,
 }
-
 struct GetQueueAttributesResultDeserializer;
 impl GetQueueAttributesResultDeserializer {
     #[allow(unused_variables)]
@@ -935,7 +1212,29 @@ pub struct GetQueueUrlRequest {
     #[doc="<p>The AWS account ID of the account that created the queue.</p>"]
     pub queue_owner_aws_account_id: Option<String>,
 }
-
+impl GetQueueUrlRequest {
+    /// Sets `queue_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetQueueUrlRequest.queue_name = value.into();`.
+    pub fn queue_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.queue_name = value.into();
+        self
+    }
+    /// Sets `queue_owner_aws_account_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetQueueUrlRequest.queue_owner_aws_account_id = Some(value.into());`.
+    pub fn queue_owner_aws_account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.queue_owner_aws_account_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetQueueUrlRequest with optional fields set to `None`.
+    pub fn new<QueueNameType: Into<String>>(queue_name: QueueNameType) -> GetQueueUrlRequest {
+        GetQueueUrlRequest {
+            queue_name: queue_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetQueueUrlRequest` contents to a `SignedRequest`.
 struct GetQueueUrlRequestSerializer;
@@ -961,7 +1260,6 @@ pub struct GetQueueUrlResult {
     #[doc="<p>The URL of the queue.</p>"]
     pub queue_url: Option<String>,
 }
-
 struct GetQueueUrlResultDeserializer;
 impl GetQueueUrlResultDeserializer {
     #[allow(unused_variables)]
@@ -1010,7 +1308,23 @@ pub struct ListDeadLetterSourceQueuesRequest {
     #[doc="<p>The URL of a dead letter queue.</p> <p>Queue URLs are case-sensitive.</p>"]
     pub queue_url: String,
 }
-
+impl ListDeadLetterSourceQueuesRequest {
+    /// Sets `queue_url`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDeadLetterSourceQueuesRequest.queue_url = value.into();`.
+    pub fn queue_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.queue_url = value.into();
+        self
+    }
+    /// Returns a new instance of ListDeadLetterSourceQueuesRequest with optional fields set to `None`.
+    pub fn new<QueueUrlType: Into<String>>(queue_url: QueueUrlType)
+                                           -> ListDeadLetterSourceQueuesRequest {
+        ListDeadLetterSourceQueuesRequest {
+            queue_url: queue_url.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ListDeadLetterSourceQueuesRequest` contents to a `SignedRequest`.
 struct ListDeadLetterSourceQueuesRequestSerializer;
@@ -1032,7 +1346,6 @@ pub struct ListDeadLetterSourceQueuesResult {
     #[doc="<p>A list of source queue URLs that have the <code>RedrivePolicy</code> queue attribute configured with a dead letter queue.</p>"]
     pub queue_urls: Vec<String>,
 }
-
 struct ListDeadLetterSourceQueuesResultDeserializer;
 impl ListDeadLetterSourceQueuesResultDeserializer {
     #[allow(unused_variables)]
@@ -1082,7 +1395,19 @@ pub struct ListQueuesRequest {
     #[doc="<p>A string to use for filtering the list results. Only those queues whose name begins with the specified string are returned.</p> <p>Queue names are case-sensitive.</p>"]
     pub queue_name_prefix: Option<String>,
 }
-
+impl ListQueuesRequest {
+    /// Sets `queue_name_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListQueuesRequest.queue_name_prefix = Some(value.into());`.
+    pub fn queue_name_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.queue_name_prefix = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListQueuesRequest with optional fields set to `None`.
+    pub fn new() -> ListQueuesRequest {
+        ListQueuesRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ListQueuesRequest` contents to a `SignedRequest`.
 struct ListQueuesRequestSerializer;
@@ -1106,7 +1431,6 @@ pub struct ListQueuesResult {
     #[doc="<p>A list of queue URLs, up to 1,000 entries.</p>"]
     pub queue_urls: Option<Vec<String>>,
 }
-
 struct ListQueuesResultDeserializer;
 impl ListQueuesResultDeserializer {
     #[allow(unused_variables)]
@@ -1168,7 +1492,6 @@ pub struct Message {
     #[doc="<p>An identifier associated with the act of receiving the message. A new receipt handle is returned every time you receive a message. When deleting a message, you provide the last received receipt handle to delete the message.</p>"]
     pub receipt_handle: Option<String>,
 }
-
 struct MessageDeserializer;
 impl MessageDeserializer {
     #[allow(unused_variables)]
@@ -1261,7 +1584,50 @@ pub struct MessageAttributeValue {
     #[doc="<p>Strings are Unicode with UTF-8 binary encoding. For a list of code values, see <a href=\"http://en.wikipedia.org/wiki/ASCII#ASCII_printable_characters\">ASCII Printable Characters</a>.</p>"]
     pub string_value: Option<String>,
 }
-
+impl MessageAttributeValue {
+    /// Sets `binary_list_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MessageAttributeValue.binary_list_values = Some(value.into());`.
+    pub fn binary_list_values<ValueType: Into<Vec<Vec<u8>>>>(mut self, value: ValueType) -> Self {
+        self.binary_list_values = Some(value.into());
+        self
+    }
+    /// Sets `binary_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MessageAttributeValue.binary_value = Some(value.into());`.
+    pub fn binary_value<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.binary_value = Some(value.into());
+        self
+    }
+    /// Sets `data_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MessageAttributeValue.data_type = value.into();`.
+    pub fn data_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_type = value.into();
+        self
+    }
+    /// Sets `string_list_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MessageAttributeValue.string_list_values = Some(value.into());`.
+    pub fn string_list_values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.string_list_values = Some(value.into());
+        self
+    }
+    /// Sets `string_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MessageAttributeValue.string_value = Some(value.into());`.
+    pub fn string_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.string_value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of MessageAttributeValue with optional fields set to `None`.
+    pub fn new<DataTypeType: Into<String>>(data_type: DataTypeType) -> MessageAttributeValue {
+        MessageAttributeValue {
+            data_type: data_type.into(),
+            ..Default::default()
+        }
+    }
+}
 struct MessageAttributeValueDeserializer;
 impl MessageAttributeValueDeserializer {
     #[allow(unused_variables)]
@@ -1461,7 +1827,22 @@ pub struct PurgeQueueRequest {
     #[doc="<p>The URL of the queue from which the <code>PurgeQueue</code> action deletes messages.</p> <p>Queue URLs are case-sensitive.</p>"]
     pub queue_url: String,
 }
-
+impl PurgeQueueRequest {
+    /// Sets `queue_url`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurgeQueueRequest.queue_url = value.into();`.
+    pub fn queue_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.queue_url = value.into();
+        self
+    }
+    /// Returns a new instance of PurgeQueueRequest with optional fields set to `None`.
+    pub fn new<QueueUrlType: Into<String>>(queue_url: QueueUrlType) -> PurgeQueueRequest {
+        PurgeQueueRequest {
+            queue_url: queue_url.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `PurgeQueueRequest` contents to a `SignedRequest`.
 struct PurgeQueueRequestSerializer;
@@ -1573,7 +1954,66 @@ pub struct ReceiveMessageRequest {
     #[doc="<p>The duration (in seconds) for which the call waits for a message to arrive in the queue before returning. If a message is available, the call returns sooner than <code>WaitTimeSeconds</code>.</p>"]
     pub wait_time_seconds: Option<i64>,
 }
-
+impl ReceiveMessageRequest {
+    /// Sets `attribute_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiveMessageRequest.attribute_names = Some(value.into());`.
+    pub fn attribute_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.attribute_names = Some(value.into());
+        self
+    }
+    /// Sets `max_number_of_messages`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiveMessageRequest.max_number_of_messages = Some(value.into());`.
+    pub fn max_number_of_messages<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_number_of_messages = Some(value.into());
+        self
+    }
+    /// Sets `message_attribute_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiveMessageRequest.message_attribute_names = Some(value.into());`.
+    pub fn message_attribute_names<ValueType: Into<Vec<String>>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.message_attribute_names = Some(value.into());
+        self
+    }
+    /// Sets `queue_url`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiveMessageRequest.queue_url = value.into();`.
+    pub fn queue_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.queue_url = value.into();
+        self
+    }
+    /// Sets `receive_request_attempt_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiveMessageRequest.receive_request_attempt_id = Some(value.into());`.
+    pub fn receive_request_attempt_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.receive_request_attempt_id = Some(value.into());
+        self
+    }
+    /// Sets `visibility_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiveMessageRequest.visibility_timeout = Some(value.into());`.
+    pub fn visibility_timeout<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.visibility_timeout = Some(value.into());
+        self
+    }
+    /// Sets `wait_time_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReceiveMessageRequest.wait_time_seconds = Some(value.into());`.
+    pub fn wait_time_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.wait_time_seconds = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ReceiveMessageRequest with optional fields set to `None`.
+    pub fn new<QueueUrlType: Into<String>>(queue_url: QueueUrlType) -> ReceiveMessageRequest {
+        ReceiveMessageRequest {
+            queue_url: queue_url.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ReceiveMessageRequest` contents to a `SignedRequest`.
 struct ReceiveMessageRequestSerializer;
@@ -1623,7 +2063,6 @@ pub struct ReceiveMessageResult {
     #[doc="<p>A list of messages.</p>"]
     pub messages: Option<Vec<Message>>,
 }
-
 struct ReceiveMessageResultDeserializer;
 impl ReceiveMessageResultDeserializer {
     #[allow(unused_variables)]
@@ -1674,7 +2113,32 @@ pub struct RemovePermissionRequest {
     #[doc="<p>The URL of the Amazon SQS queue from which permissions are removed.</p> <p>Queue URLs are case-sensitive.</p>"]
     pub queue_url: String,
 }
-
+impl RemovePermissionRequest {
+    /// Sets `label`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemovePermissionRequest.label = value.into();`.
+    pub fn label<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.label = value.into();
+        self
+    }
+    /// Sets `queue_url`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemovePermissionRequest.queue_url = value.into();`.
+    pub fn queue_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.queue_url = value.into();
+        self
+    }
+    /// Returns a new instance of RemovePermissionRequest with optional fields set to `None`.
+    pub fn new<LabelType: Into<String>, QueueUrlType: Into<String>>(label: LabelType,
+                                                                    queue_url: QueueUrlType)
+                                                                    -> RemovePermissionRequest {
+        RemovePermissionRequest {
+            label: label.into(),
+            queue_url: queue_url.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RemovePermissionRequest` contents to a `SignedRequest`.
 struct RemovePermissionRequestSerializer;
@@ -1699,7 +2163,35 @@ pub struct SendMessageBatchRequest {
     #[doc="<p>The URL of the Amazon SQS queue to which batched messages are sent.</p> <p>Queue URLs are case-sensitive.</p>"]
     pub queue_url: String,
 }
-
+impl SendMessageBatchRequest {
+    /// Sets `entries`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendMessageBatchRequest.entries = value.into();`.
+    pub fn entries<ValueType: Into<Vec<SendMessageBatchRequestEntry>>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.entries = value.into();
+        self
+    }
+    /// Sets `queue_url`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendMessageBatchRequest.queue_url = value.into();`.
+    pub fn queue_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.queue_url = value.into();
+        self
+    }
+    /// Returns a new instance of SendMessageBatchRequest with optional fields set to `None`.
+    pub fn new<EntriesType: Into<Vec<SendMessageBatchRequestEntry>>, QueueUrlType: Into<String>>
+        (entries: EntriesType,
+         queue_url: QueueUrlType)
+         -> SendMessageBatchRequest {
+        SendMessageBatchRequest {
+            entries: entries.into(),
+            queue_url: queue_url.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SendMessageBatchRequest` contents to a `SignedRequest`.
 struct SendMessageBatchRequestSerializer;
@@ -1734,7 +2226,61 @@ pub struct SendMessageBatchRequestEntry {
     #[doc="<p>This parameter applies only to FIFO (first-in-first-out) queues.</p> <p>The tag that specifies that a message belongs to a specific message group. Messages that belong to the same message group are processed in a FIFO manner (however, messages in different message groups might be processed out of order). To interleave multiple ordered streams within a single queue, use <code>MessageGroupId</code> values (for example, session data for multiple users). In this scenario, multiple readers can process the queue, but the session data of each user is processed in a FIFO fashion.</p> <ul> <li> <p>You must associate a non-empty <code>MessageGroupId</code> with a message. If you don't provide a <code>MessageGroupId</code>, the action fails.</p> </li> <li> <p> <code>ReceiveMessage</code> might return messages with multiple <code>MessageGroupId</code> values. For each <code>MessageGroupId</code>, the messages are sorted by time sent. The caller can't specify a <code>MessageGroupId</code>.</p> </li> </ul> <p>The length of <code>MessageGroupId</code> is 128 characters. Valid values are alphanumeric characters and punctuation <code>(!\"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\\]^_`{|}~)</code>.</p> <p>For best practices of using <code>MessageGroupId</code>, see <a href=\"http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queue-recommendations.html#using-messagegroupid-property\">Using the MessageGroupId Property</a> in the <i>Amazon Simple Queue Service Developer Guide</i>.</p> <important> <p> <code>MessageGroupId</code> is required for FIFO queues. You can't use it for Standard queues.</p> </important>"]
     pub message_group_id: Option<String>,
 }
-
+impl SendMessageBatchRequestEntry {
+    /// Sets `delay_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendMessageBatchRequestEntry.delay_seconds = Some(value.into());`.
+    pub fn delay_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.delay_seconds = Some(value.into());
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendMessageBatchRequestEntry.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `message_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendMessageBatchRequestEntry.message_attributes = Some(value.into());`.
+pub fn message_attributes<ValueType: Into<::std::collections::HashMap<String, MessageAttributeValue>>>(mut self, value: ValueType) -> Self{
+        self.message_attributes = Some(value.into());
+        self
+    }
+    /// Sets `message_body`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendMessageBatchRequestEntry.message_body = value.into();`.
+    pub fn message_body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.message_body = value.into();
+        self
+    }
+    /// Sets `message_deduplication_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendMessageBatchRequestEntry.message_deduplication_id = Some(value.into());`.
+    pub fn message_deduplication_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.message_deduplication_id = Some(value.into());
+        self
+    }
+    /// Sets `message_group_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendMessageBatchRequestEntry.message_group_id = Some(value.into());`.
+    pub fn message_group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.message_group_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SendMessageBatchRequestEntry with optional fields set to `None`.
+    pub fn new<IdType: Into<String>, MessageBodyType: Into<String>>
+        (id: IdType,
+         message_body: MessageBodyType)
+         -> SendMessageBatchRequestEntry {
+        SendMessageBatchRequestEntry {
+            id: id.into(),
+            message_body: message_body.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SendMessageBatchRequestEntry` contents to a `SignedRequest`.
 struct SendMessageBatchRequestEntrySerializer;
@@ -1789,7 +2335,6 @@ pub struct SendMessageBatchResult {
     #[doc="<p>A list of <code> <a>SendMessageBatchResultEntry</a> </code> items.</p>"]
     pub successful: Vec<SendMessageBatchResultEntry>,
 }
-
 struct SendMessageBatchResultDeserializer;
 impl SendMessageBatchResultDeserializer {
     #[allow(unused_variables)]
@@ -1850,7 +2395,6 @@ pub struct SendMessageBatchResultEntry {
     #[doc="<p>This parameter applies only to FIFO (first-in-first-out) queues.</p> <p>The large, non-consecutive number that Amazon SQS assigns to each message.</p> <p>The length of <code>SequenceNumber</code> is 128 bits. As <code>SequenceNumber</code> continues to increase for a particular <code>MessageGroupId</code>.</p>"]
     pub sequence_number: Option<String>,
 }
-
 struct SendMessageBatchResultEntryDeserializer;
 impl SendMessageBatchResultEntryDeserializer {
     #[allow(unused_variables)]
@@ -1956,7 +2500,58 @@ pub struct SendMessageRequest {
     #[doc="<p>The URL of the Amazon SQS queue to which a message is sent.</p> <p>Queue URLs are case-sensitive.</p>"]
     pub queue_url: String,
 }
-
+impl SendMessageRequest {
+    /// Sets `delay_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendMessageRequest.delay_seconds = Some(value.into());`.
+    pub fn delay_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.delay_seconds = Some(value.into());
+        self
+    }
+    /// Sets `message_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendMessageRequest.message_attributes = Some(value.into());`.
+pub fn message_attributes<ValueType: Into<::std::collections::HashMap<String, MessageAttributeValue>>>(mut self, value: ValueType) -> Self{
+        self.message_attributes = Some(value.into());
+        self
+    }
+    /// Sets `message_body`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendMessageRequest.message_body = value.into();`.
+    pub fn message_body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.message_body = value.into();
+        self
+    }
+    /// Sets `message_deduplication_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendMessageRequest.message_deduplication_id = Some(value.into());`.
+    pub fn message_deduplication_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.message_deduplication_id = Some(value.into());
+        self
+    }
+    /// Sets `message_group_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendMessageRequest.message_group_id = Some(value.into());`.
+    pub fn message_group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.message_group_id = Some(value.into());
+        self
+    }
+    /// Sets `queue_url`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendMessageRequest.queue_url = value.into();`.
+    pub fn queue_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.queue_url = value.into();
+        self
+    }
+    /// Returns a new instance of SendMessageRequest with optional fields set to `None`.
+pub fn new<MessageBodyType: Into<String>, QueueUrlType: Into<String>>(message_body: MessageBodyType, queue_url: QueueUrlType) -> SendMessageRequest{
+        SendMessageRequest {
+            message_body: message_body.into(),
+            queue_url: queue_url.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SendMessageRequest` contents to a `SignedRequest`.
 struct SendMessageRequestSerializer;
@@ -2003,7 +2598,6 @@ pub struct SendMessageResult {
     #[doc="<p>This parameter applies only to FIFO (first-in-first-out) queues.</p> <p>The large, non-consecutive number that Amazon SQS assigns to each message.</p> <p>The length of <code>SequenceNumber</code> is 128 bits. <code>SequenceNumber</code> continues to increase for a particular <code>MessageGroupId</code>.</p>"]
     pub sequence_number: Option<String>,
 }
-
 struct SendMessageResultDeserializer;
 impl SendMessageResultDeserializer {
     #[allow(unused_variables)]
@@ -2069,7 +2663,34 @@ pub struct SetQueueAttributesRequest {
     #[doc="<p>The URL of the Amazon SQS queue whose attributes are set.</p> <p>Queue URLs are case-sensitive.</p>"]
     pub queue_url: String,
 }
-
+impl SetQueueAttributesRequest {
+    /// Sets `attributes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetQueueAttributesRequest.attributes = value.into();`.
+pub fn attributes<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.attributes = value.into();
+        self
+    }
+    /// Sets `queue_url`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetQueueAttributesRequest.queue_url = value.into();`.
+    pub fn queue_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.queue_url = value.into();
+        self
+    }
+    /// Returns a new instance of SetQueueAttributesRequest with optional fields set to `None`.
+    pub fn new<AttributesType: Into<::std::collections::HashMap<String, String>>,
+               QueueUrlType: Into<String>>
+        (attributes: AttributesType,
+         queue_url: QueueUrlType)
+         -> SetQueueAttributesRequest {
+        SetQueueAttributesRequest {
+            attributes: attributes.into(),
+            queue_url: queue_url.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SetQueueAttributesRequest` contents to a `SignedRequest`.
 struct SetQueueAttributesRequestSerializer;

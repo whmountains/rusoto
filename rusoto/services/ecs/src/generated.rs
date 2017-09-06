@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -47,7 +48,43 @@ pub struct Attribute {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl Attribute {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Attribute.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `target_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Attribute.target_id = Some(value.into());`.
+    pub fn target_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_id = Some(value.into());
+        self
+    }
+    /// Sets `target_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Attribute.target_type = Some(value.into());`.
+    pub fn target_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_type = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Attribute.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Attribute with optional fields set to `None`.
+    pub fn new<nameType: Into<String>>(name: nameType) -> Attribute {
+        Attribute {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A regional grouping of one or more container instances on which you can run task requests. Each account receives a default cluster the first time you use the Amazon ECS service, but you may also create other clusters. Clusters may contain more than one instance type simultaneously.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Cluster {
@@ -80,7 +117,6 @@ pub struct Cluster {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[doc="<p>A Docker container that is part of a task.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Container {
@@ -113,7 +149,6 @@ pub struct Container {
     #[serde(skip_serializing_if="Option::is_none")]
     pub task_arn: Option<String>,
 }
-
 #[doc="<p>Container definitions are used in task definitions to describe the different containers that are launched as part of a task.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ContainerDefinition {
@@ -222,7 +257,198 @@ pub struct ContainerDefinition {
     #[serde(skip_serializing_if="Option::is_none")]
     pub working_directory: Option<String>,
 }
-
+impl ContainerDefinition {
+    /// Sets `command`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.command = Some(value.into());`.
+    pub fn command<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.command = Some(value.into());
+        self
+    }
+    /// Sets `cpu`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.cpu = Some(value.into());`.
+    pub fn cpu<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.cpu = Some(value.into());
+        self
+    }
+    /// Sets `disable_networking`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.disable_networking = Some(value.into());`.
+    pub fn disable_networking<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.disable_networking = Some(value.into());
+        self
+    }
+    /// Sets `dns_search_domains`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.dns_search_domains = Some(value.into());`.
+    pub fn dns_search_domains<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.dns_search_domains = Some(value.into());
+        self
+    }
+    /// Sets `dns_servers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.dns_servers = Some(value.into());`.
+    pub fn dns_servers<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.dns_servers = Some(value.into());
+        self
+    }
+    /// Sets `docker_labels`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.docker_labels = Some(value.into());`.
+pub fn docker_labels<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.docker_labels = Some(value.into());
+        self
+    }
+    /// Sets `docker_security_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.docker_security_options = Some(value.into());`.
+    pub fn docker_security_options<ValueType: Into<Vec<String>>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.docker_security_options = Some(value.into());
+        self
+    }
+    /// Sets `entry_point`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.entry_point = Some(value.into());`.
+    pub fn entry_point<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.entry_point = Some(value.into());
+        self
+    }
+    /// Sets `environment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.environment = Some(value.into());`.
+    pub fn environment<ValueType: Into<Vec<KeyValuePair>>>(mut self, value: ValueType) -> Self {
+        self.environment = Some(value.into());
+        self
+    }
+    /// Sets `essential`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.essential = Some(value.into());`.
+    pub fn essential<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.essential = Some(value.into());
+        self
+    }
+    /// Sets `extra_hosts`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.extra_hosts = Some(value.into());`.
+    pub fn extra_hosts<ValueType: Into<Vec<HostEntry>>>(mut self, value: ValueType) -> Self {
+        self.extra_hosts = Some(value.into());
+        self
+    }
+    /// Sets `hostname`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.hostname = Some(value.into());`.
+    pub fn hostname<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hostname = Some(value.into());
+        self
+    }
+    /// Sets `image`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.image = Some(value.into());`.
+    pub fn image<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.image = Some(value.into());
+        self
+    }
+    /// Sets `links`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.links = Some(value.into());`.
+    pub fn links<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.links = Some(value.into());
+        self
+    }
+    /// Sets `log_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.log_configuration = Some(value.into());`.
+    pub fn log_configuration<ValueType: Into<LogConfiguration>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.log_configuration = Some(value.into());
+        self
+    }
+    /// Sets `memory`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.memory = Some(value.into());`.
+    pub fn memory<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.memory = Some(value.into());
+        self
+    }
+    /// Sets `memory_reservation`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.memory_reservation = Some(value.into());`.
+    pub fn memory_reservation<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.memory_reservation = Some(value.into());
+        self
+    }
+    /// Sets `mount_points`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.mount_points = Some(value.into());`.
+    pub fn mount_points<ValueType: Into<Vec<MountPoint>>>(mut self, value: ValueType) -> Self {
+        self.mount_points = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `port_mappings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.port_mappings = Some(value.into());`.
+    pub fn port_mappings<ValueType: Into<Vec<PortMapping>>>(mut self, value: ValueType) -> Self {
+        self.port_mappings = Some(value.into());
+        self
+    }
+    /// Sets `privileged`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.privileged = Some(value.into());`.
+    pub fn privileged<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.privileged = Some(value.into());
+        self
+    }
+    /// Sets `readonly_root_filesystem`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.readonly_root_filesystem = Some(value.into());`.
+    pub fn readonly_root_filesystem<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.readonly_root_filesystem = Some(value.into());
+        self
+    }
+    /// Sets `ulimits`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.ulimits = Some(value.into());`.
+    pub fn ulimits<ValueType: Into<Vec<Ulimit>>>(mut self, value: ValueType) -> Self {
+        self.ulimits = Some(value.into());
+        self
+    }
+    /// Sets `user`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.user = Some(value.into());`.
+    pub fn user<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user = Some(value.into());
+        self
+    }
+    /// Sets `volumes_from`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.volumes_from = Some(value.into());`.
+    pub fn volumes_from<ValueType: Into<Vec<VolumeFrom>>>(mut self, value: ValueType) -> Self {
+        self.volumes_from = Some(value.into());
+        self
+    }
+    /// Sets `working_directory`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerDefinition.working_directory = Some(value.into());`.
+    pub fn working_directory<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.working_directory = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ContainerDefinition with optional fields set to `None`.
+    pub fn new() -> ContainerDefinition {
+        ContainerDefinition { ..Default::default() }
+    }
+}
 #[doc="<p>An EC2 instance that is running the Amazon ECS agent and has been registered with a cluster.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ContainerInstance {
@@ -279,7 +505,6 @@ pub struct ContainerInstance {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version_info: Option<VersionInfo>,
 }
-
 #[doc="<p>The overrides that should be sent to a container.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ContainerOverride {
@@ -308,7 +533,54 @@ pub struct ContainerOverride {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
+impl ContainerOverride {
+    /// Sets `command`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerOverride.command = Some(value.into());`.
+    pub fn command<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.command = Some(value.into());
+        self
+    }
+    /// Sets `cpu`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerOverride.cpu = Some(value.into());`.
+    pub fn cpu<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.cpu = Some(value.into());
+        self
+    }
+    /// Sets `environment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerOverride.environment = Some(value.into());`.
+    pub fn environment<ValueType: Into<Vec<KeyValuePair>>>(mut self, value: ValueType) -> Self {
+        self.environment = Some(value.into());
+        self
+    }
+    /// Sets `memory`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerOverride.memory = Some(value.into());`.
+    pub fn memory<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.memory = Some(value.into());
+        self
+    }
+    /// Sets `memory_reservation`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerOverride.memory_reservation = Some(value.into());`.
+    pub fn memory_reservation<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.memory_reservation = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerOverride.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ContainerOverride with optional fields set to `None`.
+    pub fn new() -> ContainerOverride {
+        ContainerOverride { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateClusterRequest {
     #[doc="<p>The name of your cluster. If you do not specify a name for your cluster, you create a cluster named <code>default</code>. Up to 255 letters (uppercase and lowercase), numbers, hyphens, and underscores are allowed.</p>"]
@@ -316,7 +588,19 @@ pub struct CreateClusterRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub cluster_name: Option<String>,
 }
-
+impl CreateClusterRequest {
+    /// Sets `cluster_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateClusterRequest.cluster_name = Some(value.into());`.
+    pub fn cluster_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateClusterRequest with optional fields set to `None`.
+    pub fn new() -> CreateClusterRequest {
+        CreateClusterRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateClusterResponse {
     #[doc="<p>The full description of your new cluster.</p>"]
@@ -324,7 +608,6 @@ pub struct CreateClusterResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub cluster: Option<Cluster>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateServiceRequest {
     #[doc="<p>Unique, case-sensitive identifier you provide to ensure the idempotency of the request. Up to 32 ASCII characters are allowed.</p>"]
@@ -365,7 +648,99 @@ pub struct CreateServiceRequest {
     #[serde(rename="taskDefinition")]
     pub task_definition: String,
 }
-
+impl CreateServiceRequest {
+    /// Sets `client_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServiceRequest.client_token = Some(value.into());`.
+    pub fn client_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_token = Some(value.into());
+        self
+    }
+    /// Sets `cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServiceRequest.cluster = Some(value.into());`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = Some(value.into());
+        self
+    }
+    /// Sets `deployment_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServiceRequest.deployment_configuration = Some(value.into());`.
+    pub fn deployment_configuration<ValueType: Into<DeploymentConfiguration>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.deployment_configuration = Some(value.into());
+        self
+    }
+    /// Sets `desired_count`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServiceRequest.desired_count = value.into();`.
+    pub fn desired_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.desired_count = value.into();
+        self
+    }
+    /// Sets `load_balancers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServiceRequest.load_balancers = Some(value.into());`.
+    pub fn load_balancers<ValueType: Into<Vec<LoadBalancer>>>(mut self, value: ValueType) -> Self {
+        self.load_balancers = Some(value.into());
+        self
+    }
+    /// Sets `placement_constraints`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServiceRequest.placement_constraints = Some(value.into());`.
+    pub fn placement_constraints<ValueType: Into<Vec<PlacementConstraint>>>(mut self,
+                                                                            value: ValueType)
+                                                                            -> Self {
+        self.placement_constraints = Some(value.into());
+        self
+    }
+    /// Sets `placement_strategy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServiceRequest.placement_strategy = Some(value.into());`.
+    pub fn placement_strategy<ValueType: Into<Vec<PlacementStrategy>>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.placement_strategy = Some(value.into());
+        self
+    }
+    /// Sets `role`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServiceRequest.role = Some(value.into());`.
+    pub fn role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role = Some(value.into());
+        self
+    }
+    /// Sets `service_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServiceRequest.service_name = value.into();`.
+    pub fn service_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_name = value.into();
+        self
+    }
+    /// Sets `task_definition`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateServiceRequest.task_definition = value.into();`.
+    pub fn task_definition<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_definition = value.into();
+        self
+    }
+    /// Returns a new instance of CreateServiceRequest with optional fields set to `None`.
+    pub fn new<desiredCountType: Into<i64>,
+               serviceNameType: Into<String>,
+               taskDefinitionType: Into<String>>
+        (desired_count: desiredCountType,
+         service_name: serviceNameType,
+         task_definition: taskDefinitionType)
+         -> CreateServiceRequest {
+        CreateServiceRequest {
+            desired_count: desired_count.into(),
+            service_name: service_name.into(),
+            task_definition: task_definition.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateServiceResponse {
     #[doc="<p>The full description of your service following the create call.</p>"]
@@ -373,7 +748,6 @@ pub struct CreateServiceResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub service: Option<Service>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteAttributesRequest {
     #[doc="<p>The attributes to delete from your resource. You can specify up to 10 attributes per request. For custom attributes, specify the attribute name and target ID, but do not specify the value. If you specify the target ID using the short form, you must also specify the target type.</p>"]
@@ -384,7 +758,30 @@ pub struct DeleteAttributesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub cluster: Option<String>,
 }
-
+impl DeleteAttributesRequest {
+    /// Sets `attributes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAttributesRequest.attributes = value.into();`.
+    pub fn attributes<ValueType: Into<Vec<Attribute>>>(mut self, value: ValueType) -> Self {
+        self.attributes = value.into();
+        self
+    }
+    /// Sets `cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAttributesRequest.cluster = Some(value.into());`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteAttributesRequest with optional fields set to `None`.
+    pub fn new<attributesType: Into<Vec<Attribute>>>(attributes: attributesType)
+                                                     -> DeleteAttributesRequest {
+        DeleteAttributesRequest {
+            attributes: attributes.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteAttributesResponse {
     #[doc="<p>A list of attribute objects that were successfully deleted from your resource.</p>"]
@@ -392,14 +789,28 @@ pub struct DeleteAttributesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub attributes: Option<Vec<Attribute>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteClusterRequest {
     #[doc="<p>The short name or full Amazon Resource Name (ARN) of the cluster to delete.</p>"]
     #[serde(rename="cluster")]
     pub cluster: String,
 }
-
+impl DeleteClusterRequest {
+    /// Sets `cluster`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteClusterRequest.cluster = value.into();`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteClusterRequest with optional fields set to `None`.
+    pub fn new<clusterType: Into<String>>(cluster: clusterType) -> DeleteClusterRequest {
+        DeleteClusterRequest {
+            cluster: cluster.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteClusterResponse {
     #[doc="<p>The full description of the deleted cluster.</p>"]
@@ -407,7 +818,6 @@ pub struct DeleteClusterResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub cluster: Option<Cluster>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteServiceRequest {
     #[doc="<p>The short name or full Amazon Resource Name (ARN) of the cluster that hosts the service to delete. If you do not specify a cluster, the default cluster is assumed.</p>"]
@@ -418,7 +828,29 @@ pub struct DeleteServiceRequest {
     #[serde(rename="service")]
     pub service: String,
 }
-
+impl DeleteServiceRequest {
+    /// Sets `cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteServiceRequest.cluster = Some(value.into());`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = Some(value.into());
+        self
+    }
+    /// Sets `service`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteServiceRequest.service = value.into();`.
+    pub fn service<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteServiceRequest with optional fields set to `None`.
+    pub fn new<serviceType: Into<String>>(service: serviceType) -> DeleteServiceRequest {
+        DeleteServiceRequest {
+            service: service.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteServiceResponse {
     #[doc="<p>The full description of the deleted service.</p>"]
@@ -426,7 +858,6 @@ pub struct DeleteServiceResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub service: Option<Service>,
 }
-
 #[doc="<p>The details of an Amazon ECS service deployment.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Deployment {
@@ -463,7 +894,6 @@ pub struct Deployment {
     #[serde(skip_serializing_if="Option::is_none")]
     pub updated_at: Option<f64>,
 }
-
 #[doc="<p>Optional deployment parameters that control how many tasks run during the deployment and the ordering of stopping and starting tasks.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct DeploymentConfiguration {
@@ -476,7 +906,26 @@ pub struct DeploymentConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub minimum_healthy_percent: Option<i64>,
 }
-
+impl DeploymentConfiguration {
+    /// Sets `maximum_percent`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeploymentConfiguration.maximum_percent = Some(value.into());`.
+    pub fn maximum_percent<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.maximum_percent = Some(value.into());
+        self
+    }
+    /// Sets `minimum_healthy_percent`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeploymentConfiguration.minimum_healthy_percent = Some(value.into());`.
+    pub fn minimum_healthy_percent<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.minimum_healthy_percent = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeploymentConfiguration with optional fields set to `None`.
+    pub fn new() -> DeploymentConfiguration {
+        DeploymentConfiguration { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeregisterContainerInstanceRequest {
     #[doc="<p>The short name or full Amazon Resource Name (ARN) of the cluster that hosts the container instance to deregister. If you do not specify a cluster, the default cluster is assumed.</p>"]
@@ -491,7 +940,37 @@ pub struct DeregisterContainerInstanceRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub force: Option<bool>,
 }
-
+impl DeregisterContainerInstanceRequest {
+    /// Sets `cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterContainerInstanceRequest.cluster = Some(value.into());`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = Some(value.into());
+        self
+    }
+    /// Sets `container_instance`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterContainerInstanceRequest.container_instance = value.into();`.
+    pub fn container_instance<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.container_instance = value.into();
+        self
+    }
+    /// Sets `force`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterContainerInstanceRequest.force = Some(value.into());`.
+    pub fn force<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.force = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeregisterContainerInstanceRequest with optional fields set to `None`.
+    pub fn new<containerInstanceType: Into<String>>(container_instance: containerInstanceType)
+                                                    -> DeregisterContainerInstanceRequest {
+        DeregisterContainerInstanceRequest {
+            container_instance: container_instance.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeregisterContainerInstanceResponse {
     #[doc="<p>The container instance that was deregistered.</p>"]
@@ -499,14 +978,29 @@ pub struct DeregisterContainerInstanceResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub container_instance: Option<ContainerInstance>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeregisterTaskDefinitionRequest {
     #[doc="<p>The <code>family</code> and <code>revision</code> (<code>family:revision</code>) or full Amazon Resource Name (ARN) of the task definition to deregister. You must specify a <code>revision</code>.</p>"]
     #[serde(rename="taskDefinition")]
     pub task_definition: String,
 }
-
+impl DeregisterTaskDefinitionRequest {
+    /// Sets `task_definition`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterTaskDefinitionRequest.task_definition = value.into();`.
+    pub fn task_definition<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_definition = value.into();
+        self
+    }
+    /// Returns a new instance of DeregisterTaskDefinitionRequest with optional fields set to `None`.
+    pub fn new<taskDefinitionType: Into<String>>(task_definition: taskDefinitionType)
+                                                 -> DeregisterTaskDefinitionRequest {
+        DeregisterTaskDefinitionRequest {
+            task_definition: task_definition.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeregisterTaskDefinitionResponse {
     #[doc="<p>The full description of the deregistered task.</p>"]
@@ -514,7 +1008,6 @@ pub struct DeregisterTaskDefinitionResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub task_definition: Option<TaskDefinition>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeClustersRequest {
     #[doc="<p>A list of up to 100 cluster names or full cluster Amazon Resource Name (ARN) entries. If you do not specify a cluster, the default cluster is assumed.</p>"]
@@ -522,7 +1015,19 @@ pub struct DescribeClustersRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub clusters: Option<Vec<String>>,
 }
-
+impl DescribeClustersRequest {
+    /// Sets `clusters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeClustersRequest.clusters = Some(value.into());`.
+    pub fn clusters<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.clusters = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeClustersRequest with optional fields set to `None`.
+    pub fn new() -> DescribeClustersRequest {
+        DescribeClustersRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeClustersResponse {
     #[doc="<p>The list of clusters.</p>"]
@@ -534,7 +1039,6 @@ pub struct DescribeClustersResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub failures: Option<Vec<Failure>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeContainerInstancesRequest {
     #[doc="<p>The short name or full Amazon Resource Name (ARN) of the cluster that hosts the container instances to describe. If you do not specify a cluster, the default cluster is assumed.</p>"]
@@ -545,7 +1049,29 @@ pub struct DescribeContainerInstancesRequest {
     #[serde(rename="containerInstances")]
     pub container_instances: Vec<String>,
 }
-
+impl DescribeContainerInstancesRequest {
+    /// Sets `cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeContainerInstancesRequest.cluster = Some(value.into());`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = Some(value.into());
+        self
+    }
+    /// Sets `container_instances`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeContainerInstancesRequest.container_instances = value.into();`.
+    pub fn container_instances<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.container_instances = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeContainerInstancesRequest with optional fields set to `None`.
+pub fn new<containerInstancesType: Into<Vec<String>>>(container_instances: containerInstancesType) -> DescribeContainerInstancesRequest{
+        DescribeContainerInstancesRequest {
+            container_instances: container_instances.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeContainerInstancesResponse {
     #[doc="<p>The list of container instances.</p>"]
@@ -557,7 +1083,6 @@ pub struct DescribeContainerInstancesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub failures: Option<Vec<Failure>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeServicesRequest {
     #[doc="<p>The short name or full Amazon Resource Name (ARN)the cluster that hosts the service to describe. If you do not specify a cluster, the default cluster is assumed.</p>"]
@@ -568,7 +1093,29 @@ pub struct DescribeServicesRequest {
     #[serde(rename="services")]
     pub services: Vec<String>,
 }
-
+impl DescribeServicesRequest {
+    /// Sets `cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeServicesRequest.cluster = Some(value.into());`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = Some(value.into());
+        self
+    }
+    /// Sets `services`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeServicesRequest.services = value.into();`.
+    pub fn services<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.services = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeServicesRequest with optional fields set to `None`.
+    pub fn new<servicesType: Into<Vec<String>>>(services: servicesType) -> DescribeServicesRequest {
+        DescribeServicesRequest {
+            services: services.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeServicesResponse {
     #[doc="<p>Any failures associated with the call.</p>"]
@@ -580,14 +1127,29 @@ pub struct DescribeServicesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub services: Option<Vec<Service>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeTaskDefinitionRequest {
     #[doc="<p>The <code>family</code> for the latest <code>ACTIVE</code> revision, <code>family</code> and <code>revision</code> (<code>family:revision</code>) for a specific revision in the family, or full Amazon Resource Name (ARN) of the task definition to describe.</p>"]
     #[serde(rename="taskDefinition")]
     pub task_definition: String,
 }
-
+impl DescribeTaskDefinitionRequest {
+    /// Sets `task_definition`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTaskDefinitionRequest.task_definition = value.into();`.
+    pub fn task_definition<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_definition = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeTaskDefinitionRequest with optional fields set to `None`.
+    pub fn new<taskDefinitionType: Into<String>>(task_definition: taskDefinitionType)
+                                                 -> DescribeTaskDefinitionRequest {
+        DescribeTaskDefinitionRequest {
+            task_definition: task_definition.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeTaskDefinitionResponse {
     #[doc="<p>The full task definition description.</p>"]
@@ -595,7 +1157,6 @@ pub struct DescribeTaskDefinitionResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub task_definition: Option<TaskDefinition>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeTasksRequest {
     #[doc="<p>The short name or full Amazon Resource Name (ARN) of the cluster that hosts the task to describe. If you do not specify a cluster, the default cluster is assumed.</p>"]
@@ -606,7 +1167,29 @@ pub struct DescribeTasksRequest {
     #[serde(rename="tasks")]
     pub tasks: Vec<String>,
 }
-
+impl DescribeTasksRequest {
+    /// Sets `cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTasksRequest.cluster = Some(value.into());`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = Some(value.into());
+        self
+    }
+    /// Sets `tasks`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTasksRequest.tasks = value.into();`.
+    pub fn tasks<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tasks = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeTasksRequest with optional fields set to `None`.
+    pub fn new<tasksType: Into<Vec<String>>>(tasks: tasksType) -> DescribeTasksRequest {
+        DescribeTasksRequest {
+            tasks: tasks.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeTasksResponse {
     #[doc="<p>Any failures associated with the call.</p>"]
@@ -618,7 +1201,6 @@ pub struct DescribeTasksResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tasks: Option<Vec<Task>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DiscoverPollEndpointRequest {
     #[doc="<p>The short name or full Amazon Resource Name (ARN) of the cluster that the container instance belongs to.</p>"]
@@ -630,7 +1212,26 @@ pub struct DiscoverPollEndpointRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub container_instance: Option<String>,
 }
-
+impl DiscoverPollEndpointRequest {
+    /// Sets `cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DiscoverPollEndpointRequest.cluster = Some(value.into());`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = Some(value.into());
+        self
+    }
+    /// Sets `container_instance`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DiscoverPollEndpointRequest.container_instance = Some(value.into());`.
+    pub fn container_instance<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.container_instance = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DiscoverPollEndpointRequest with optional fields set to `None`.
+    pub fn new() -> DiscoverPollEndpointRequest {
+        DiscoverPollEndpointRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DiscoverPollEndpointResponse {
     #[doc="<p>The endpoint for the Amazon ECS agent to poll.</p>"]
@@ -642,7 +1243,6 @@ pub struct DiscoverPollEndpointResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub telemetry_endpoint: Option<String>,
 }
-
 #[doc="<p>A failed resource.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Failure {
@@ -655,7 +1255,6 @@ pub struct Failure {
     #[serde(skip_serializing_if="Option::is_none")]
     pub reason: Option<String>,
 }
-
 #[doc="<p>Hostnames and IP address entries that are added to the <code>/etc/hosts</code> file of a container via the <code>extraHosts</code> parameter of its <a>ContainerDefinition</a>. </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct HostEntry {
@@ -666,7 +1265,32 @@ pub struct HostEntry {
     #[serde(rename="ipAddress")]
     pub ip_address: String,
 }
-
+impl HostEntry {
+    /// Sets `hostname`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HostEntry.hostname = value.into();`.
+    pub fn hostname<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hostname = value.into();
+        self
+    }
+    /// Sets `ip_address`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HostEntry.ip_address = value.into();`.
+    pub fn ip_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ip_address = value.into();
+        self
+    }
+    /// Returns a new instance of HostEntry with optional fields set to `None`.
+    pub fn new<hostnameType: Into<String>, ipAddressType: Into<String>>(hostname: hostnameType,
+                                                                        ip_address: ipAddressType)
+                                                                        -> HostEntry {
+        HostEntry {
+            hostname: hostname.into(),
+            ip_address: ip_address.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Details on a container instance host volume.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct HostVolumeProperties {
@@ -675,7 +1299,19 @@ pub struct HostVolumeProperties {
     #[serde(skip_serializing_if="Option::is_none")]
     pub source_path: Option<String>,
 }
-
+impl HostVolumeProperties {
+    /// Sets `source_path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HostVolumeProperties.source_path = Some(value.into());`.
+    pub fn source_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_path = Some(value.into());
+        self
+    }
+    /// Returns a new instance of HostVolumeProperties with optional fields set to `None`.
+    pub fn new() -> HostVolumeProperties {
+        HostVolumeProperties { ..Default::default() }
+    }
+}
 #[doc="<p>A key and value pair object.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct KeyValuePair {
@@ -688,7 +1324,26 @@ pub struct KeyValuePair {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl KeyValuePair {
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KeyValuePair.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KeyValuePair.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of KeyValuePair with optional fields set to `None`.
+    pub fn new() -> KeyValuePair {
+        KeyValuePair { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListAttributesRequest {
     #[doc="<p>The name of the attribute with which to filter the results. </p>"]
@@ -715,7 +1370,57 @@ pub struct ListAttributesRequest {
     #[serde(rename="targetType")]
     pub target_type: String,
 }
-
+impl ListAttributesRequest {
+    /// Sets `attribute_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAttributesRequest.attribute_name = Some(value.into());`.
+    pub fn attribute_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute_name = Some(value.into());
+        self
+    }
+    /// Sets `attribute_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAttributesRequest.attribute_value = Some(value.into());`.
+    pub fn attribute_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute_value = Some(value.into());
+        self
+    }
+    /// Sets `cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAttributesRequest.cluster = Some(value.into());`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAttributesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAttributesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `target_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAttributesRequest.target_type = value.into();`.
+    pub fn target_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_type = value.into();
+        self
+    }
+    /// Returns a new instance of ListAttributesRequest with optional fields set to `None`.
+    pub fn new<targetTypeType: Into<String>>(target_type: targetTypeType) -> ListAttributesRequest {
+        ListAttributesRequest {
+            target_type: target_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListAttributesResponse {
     #[doc="<p>A list of attribute objects that meet the criteria of the request.</p>"]
@@ -727,7 +1432,6 @@ pub struct ListAttributesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListClustersRequest {
     #[doc="<p>The maximum number of cluster results returned by <code>ListClusters</code> in paginated output. When this parameter is used, <code>ListClusters</code> only returns <code>maxResults</code> results in a single page along with a <code>nextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>ListClusters</code> request with the returned <code>nextToken</code> value. This value can be between 1 and 100. If this parameter is not used, then <code>ListClusters</code> returns up to 100 results and a <code>nextToken</code> value if applicable.</p>"]
@@ -739,7 +1443,26 @@ pub struct ListClustersRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListClustersRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListClustersRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListClustersRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListClustersRequest with optional fields set to `None`.
+    pub fn new() -> ListClustersRequest {
+        ListClustersRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListClustersResponse {
     #[doc="<p>The list of full Amazon Resource Name (ARN) entries for each cluster associated with your account.</p>"]
@@ -751,7 +1474,6 @@ pub struct ListClustersResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListContainerInstancesRequest {
     #[doc="<p>The short name or full Amazon Resource Name (ARN) of the cluster that hosts the container instances to list. If you do not specify a cluster, the default cluster is assumed.</p>"]
@@ -775,7 +1497,47 @@ pub struct ListContainerInstancesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
+impl ListContainerInstancesRequest {
+    /// Sets `cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListContainerInstancesRequest.cluster = Some(value.into());`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = Some(value.into());
+        self
+    }
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListContainerInstancesRequest.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListContainerInstancesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListContainerInstancesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListContainerInstancesRequest.status = Some(value.into());`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListContainerInstancesRequest with optional fields set to `None`.
+    pub fn new() -> ListContainerInstancesRequest {
+        ListContainerInstancesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListContainerInstancesResponse {
     #[doc="<p>The list of container instances with full Amazon Resource Name (ARN) entries for each container instance associated with the specified cluster.</p>"]
@@ -787,7 +1549,6 @@ pub struct ListContainerInstancesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListServicesRequest {
     #[doc="<p>The short name or full Amazon Resource Name (ARN) of the cluster that hosts the services to list. If you do not specify a cluster, the default cluster is assumed.</p>"]
@@ -803,7 +1564,33 @@ pub struct ListServicesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListServicesRequest {
+    /// Sets `cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListServicesRequest.cluster = Some(value.into());`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListServicesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListServicesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListServicesRequest with optional fields set to `None`.
+    pub fn new() -> ListServicesRequest {
+        ListServicesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListServicesResponse {
     #[doc="<p>The <code>nextToken</code> value to include in a future <code>ListServices</code> request. When the results of a <code>ListServices</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"]
@@ -815,7 +1602,6 @@ pub struct ListServicesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub service_arns: Option<Vec<String>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTaskDefinitionFamiliesRequest {
     #[doc="<p>The <code>familyPrefix</code> is a string that is used to filter the results of <code>ListTaskDefinitionFamilies</code>. If you specify a <code>familyPrefix</code>, only task definition family names that begin with the <code>familyPrefix</code> string are returned.</p>"]
@@ -835,7 +1621,40 @@ pub struct ListTaskDefinitionFamiliesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
+impl ListTaskDefinitionFamiliesRequest {
+    /// Sets `family_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTaskDefinitionFamiliesRequest.family_prefix = Some(value.into());`.
+    pub fn family_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.family_prefix = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTaskDefinitionFamiliesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTaskDefinitionFamiliesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTaskDefinitionFamiliesRequest.status = Some(value.into());`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListTaskDefinitionFamiliesRequest with optional fields set to `None`.
+    pub fn new() -> ListTaskDefinitionFamiliesRequest {
+        ListTaskDefinitionFamiliesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTaskDefinitionFamiliesResponse {
     #[doc="<p>The list of task definition family names that match the <code>ListTaskDefinitionFamilies</code> request.</p>"]
@@ -847,7 +1666,6 @@ pub struct ListTaskDefinitionFamiliesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTaskDefinitionsRequest {
     #[doc="<p>The full family name with which to filter the <code>ListTaskDefinitions</code> results. Specifying a <code>familyPrefix</code> limits the listed task definitions to task definition revisions that belong to that family.</p>"]
@@ -871,7 +1689,47 @@ pub struct ListTaskDefinitionsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
+impl ListTaskDefinitionsRequest {
+    /// Sets `family_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTaskDefinitionsRequest.family_prefix = Some(value.into());`.
+    pub fn family_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.family_prefix = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTaskDefinitionsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTaskDefinitionsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `sort`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTaskDefinitionsRequest.sort = Some(value.into());`.
+    pub fn sort<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sort = Some(value.into());
+        self
+    }
+    /// Sets `status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTaskDefinitionsRequest.status = Some(value.into());`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListTaskDefinitionsRequest with optional fields set to `None`.
+    pub fn new() -> ListTaskDefinitionsRequest {
+        ListTaskDefinitionsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTaskDefinitionsResponse {
     #[doc="<p>The <code>nextToken</code> value to include in a future <code>ListTaskDefinitions</code> request. When the results of a <code>ListTaskDefinitions</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"]
@@ -883,7 +1741,6 @@ pub struct ListTaskDefinitionsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub task_definition_arns: Option<Vec<String>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTasksRequest {
     #[doc="<p>The short name or full Amazon Resource Name (ARN) of the cluster that hosts the tasks to list. If you do not specify a cluster, the default cluster is assumed.</p>"]
@@ -919,7 +1776,68 @@ pub struct ListTasksRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub started_by: Option<String>,
 }
-
+impl ListTasksRequest {
+    /// Sets `cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTasksRequest.cluster = Some(value.into());`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = Some(value.into());
+        self
+    }
+    /// Sets `container_instance`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTasksRequest.container_instance = Some(value.into());`.
+    pub fn container_instance<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.container_instance = Some(value.into());
+        self
+    }
+    /// Sets `desired_status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTasksRequest.desired_status = Some(value.into());`.
+    pub fn desired_status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.desired_status = Some(value.into());
+        self
+    }
+    /// Sets `family`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTasksRequest.family = Some(value.into());`.
+    pub fn family<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.family = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTasksRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTasksRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `service_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTasksRequest.service_name = Some(value.into());`.
+    pub fn service_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_name = Some(value.into());
+        self
+    }
+    /// Sets `started_by`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTasksRequest.started_by = Some(value.into());`.
+    pub fn started_by<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.started_by = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListTasksRequest with optional fields set to `None`.
+    pub fn new() -> ListTasksRequest {
+        ListTasksRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTasksResponse {
     #[doc="<p>The <code>nextToken</code> value to include in a future <code>ListTasks</code> request. When the results of a <code>ListTasks</code> request exceed <code>maxResults</code>, this value can be used to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"]
@@ -931,7 +1849,6 @@ pub struct ListTasksResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub task_arns: Option<Vec<String>>,
 }
-
 #[doc="<p>Details on a load balancer that is used with a service.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct LoadBalancer {
@@ -952,7 +1869,40 @@ pub struct LoadBalancer {
     #[serde(skip_serializing_if="Option::is_none")]
     pub target_group_arn: Option<String>,
 }
-
+impl LoadBalancer {
+    /// Sets `container_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LoadBalancer.container_name = Some(value.into());`.
+    pub fn container_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.container_name = Some(value.into());
+        self
+    }
+    /// Sets `container_port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LoadBalancer.container_port = Some(value.into());`.
+    pub fn container_port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.container_port = Some(value.into());
+        self
+    }
+    /// Sets `load_balancer_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LoadBalancer.load_balancer_name = Some(value.into());`.
+    pub fn load_balancer_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.load_balancer_name = Some(value.into());
+        self
+    }
+    /// Sets `target_group_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LoadBalancer.target_group_arn = Some(value.into());`.
+    pub fn target_group_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_group_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of LoadBalancer with optional fields set to `None`.
+    pub fn new() -> LoadBalancer {
+        LoadBalancer { ..Default::default() }
+    }
+}
 #[doc="<p>Log configuration options to send to a custom log driver for the container.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct LogConfiguration {
@@ -964,7 +1914,31 @@ pub struct LogConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub options: Option<::std::collections::HashMap<String, String>>,
 }
-
+impl LogConfiguration {
+    /// Sets `log_driver`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LogConfiguration.log_driver = value.into();`.
+    pub fn log_driver<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_driver = value.into();
+        self
+    }
+    /// Sets `options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LogConfiguration.options = Some(value.into());`.
+    pub fn options<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                                 value: ValueType)
+                                                                                 -> Self {
+        self.options = Some(value.into());
+        self
+    }
+    /// Returns a new instance of LogConfiguration with optional fields set to `None`.
+    pub fn new<logDriverType: Into<String>>(log_driver: logDriverType) -> LogConfiguration {
+        LogConfiguration {
+            log_driver: log_driver.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Details on a volume mount point that is used in a container definition.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct MountPoint {
@@ -981,7 +1955,33 @@ pub struct MountPoint {
     #[serde(skip_serializing_if="Option::is_none")]
     pub source_volume: Option<String>,
 }
-
+impl MountPoint {
+    /// Sets `container_path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MountPoint.container_path = Some(value.into());`.
+    pub fn container_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.container_path = Some(value.into());
+        self
+    }
+    /// Sets `read_only`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MountPoint.read_only = Some(value.into());`.
+    pub fn read_only<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.read_only = Some(value.into());
+        self
+    }
+    /// Sets `source_volume`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MountPoint.source_volume = Some(value.into());`.
+    pub fn source_volume<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_volume = Some(value.into());
+        self
+    }
+    /// Returns a new instance of MountPoint with optional fields set to `None`.
+    pub fn new() -> MountPoint {
+        MountPoint { ..Default::default() }
+    }
+}
 #[doc="<p>Details on the network bindings between a container and its host container instance. After a task reaches the <code>RUNNING</code> status, manual and automatic host and container port assignments are visible in the <code>networkBindings</code> section of <a>DescribeTasks</a> API responses.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct NetworkBinding {
@@ -1002,7 +2002,40 @@ pub struct NetworkBinding {
     #[serde(skip_serializing_if="Option::is_none")]
     pub protocol: Option<String>,
 }
-
+impl NetworkBinding {
+    /// Sets `bind_ip`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NetworkBinding.bind_ip = Some(value.into());`.
+    pub fn bind_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bind_ip = Some(value.into());
+        self
+    }
+    /// Sets `container_port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NetworkBinding.container_port = Some(value.into());`.
+    pub fn container_port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.container_port = Some(value.into());
+        self
+    }
+    /// Sets `host_port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NetworkBinding.host_port = Some(value.into());`.
+    pub fn host_port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.host_port = Some(value.into());
+        self
+    }
+    /// Sets `protocol`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NetworkBinding.protocol = Some(value.into());`.
+    pub fn protocol<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.protocol = Some(value.into());
+        self
+    }
+    /// Returns a new instance of NetworkBinding with optional fields set to `None`.
+    pub fn new() -> NetworkBinding {
+        NetworkBinding { ..Default::default() }
+    }
+}
 #[doc="<p>An object representing a constraint on task placement. For more information, see <a href=\"http://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-placement-constraints.html\">Task Placement Constraints</a> in the <i>Amazon EC2 Container Service Developer Guide</i>.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct PlacementConstraint {
@@ -1015,7 +2048,26 @@ pub struct PlacementConstraint {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
+impl PlacementConstraint {
+    /// Sets `expression`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PlacementConstraint.expression = Some(value.into());`.
+    pub fn expression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.expression = Some(value.into());
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PlacementConstraint.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PlacementConstraint with optional fields set to `None`.
+    pub fn new() -> PlacementConstraint {
+        PlacementConstraint { ..Default::default() }
+    }
+}
 #[doc="<p>The task placement strategy for a task or service. For more information, see <a href=\"http://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-placement-strategies.html\">Task Placement Strategies</a> in the <i>Amazon EC2 Container Service Developer Guide</i>.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct PlacementStrategy {
@@ -1028,7 +2080,26 @@ pub struct PlacementStrategy {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
+impl PlacementStrategy {
+    /// Sets `field`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PlacementStrategy.field = Some(value.into());`.
+    pub fn field<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.field = Some(value.into());
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PlacementStrategy.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PlacementStrategy with optional fields set to `None`.
+    pub fn new() -> PlacementStrategy {
+        PlacementStrategy { ..Default::default() }
+    }
+}
 #[doc="<p>Port mappings allow containers to access ports on the host container instance to send or receive traffic. Port mappings are specified as part of the container definition. After a task reaches the <code>RUNNING</code> status, manual and automatic host and container port assignments are visible in the <code>networkBindings</code> section of <a>DescribeTasks</a> API responses.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct PortMapping {
@@ -1045,7 +2116,33 @@ pub struct PortMapping {
     #[serde(skip_serializing_if="Option::is_none")]
     pub protocol: Option<String>,
 }
-
+impl PortMapping {
+    /// Sets `container_port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PortMapping.container_port = Some(value.into());`.
+    pub fn container_port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.container_port = Some(value.into());
+        self
+    }
+    /// Sets `host_port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PortMapping.host_port = Some(value.into());`.
+    pub fn host_port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.host_port = Some(value.into());
+        self
+    }
+    /// Sets `protocol`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PortMapping.protocol = Some(value.into());`.
+    pub fn protocol<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.protocol = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PortMapping with optional fields set to `None`.
+    pub fn new() -> PortMapping {
+        PortMapping { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutAttributesRequest {
     #[doc="<p>The attributes to apply to your resource. You can specify up to 10 custom attributes per resource. You can specify up to 10 attributes in a single call.</p>"]
@@ -1056,7 +2153,30 @@ pub struct PutAttributesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub cluster: Option<String>,
 }
-
+impl PutAttributesRequest {
+    /// Sets `attributes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutAttributesRequest.attributes = value.into();`.
+    pub fn attributes<ValueType: Into<Vec<Attribute>>>(mut self, value: ValueType) -> Self {
+        self.attributes = value.into();
+        self
+    }
+    /// Sets `cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutAttributesRequest.cluster = Some(value.into());`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PutAttributesRequest with optional fields set to `None`.
+    pub fn new<attributesType: Into<Vec<Attribute>>>(attributes: attributesType)
+                                                     -> PutAttributesRequest {
+        PutAttributesRequest {
+            attributes: attributes.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutAttributesResponse {
     #[doc="<p>The attributes applied to your resource.</p>"]
@@ -1064,7 +2184,6 @@ pub struct PutAttributesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub attributes: Option<Vec<Attribute>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RegisterContainerInstanceRequest {
     #[doc="<p>The container instance attributes that this container instance supports.</p>"]
@@ -1096,7 +2215,63 @@ pub struct RegisterContainerInstanceRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version_info: Option<VersionInfo>,
 }
-
+impl RegisterContainerInstanceRequest {
+    /// Sets `attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterContainerInstanceRequest.attributes = Some(value.into());`.
+    pub fn attributes<ValueType: Into<Vec<Attribute>>>(mut self, value: ValueType) -> Self {
+        self.attributes = Some(value.into());
+        self
+    }
+    /// Sets `cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterContainerInstanceRequest.cluster = Some(value.into());`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = Some(value.into());
+        self
+    }
+    /// Sets `container_instance_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterContainerInstanceRequest.container_instance_arn = Some(value.into());`.
+    pub fn container_instance_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.container_instance_arn = Some(value.into());
+        self
+    }
+    /// Sets `instance_identity_document`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterContainerInstanceRequest.instance_identity_document = Some(value.into());`.
+    pub fn instance_identity_document<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_identity_document = Some(value.into());
+        self
+    }
+    /// Sets `instance_identity_document_signature`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterContainerInstanceRequest.instance_identity_document_signature = Some(value.into());`.
+    pub fn instance_identity_document_signature<ValueType: Into<String>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.instance_identity_document_signature = Some(value.into());
+        self
+    }
+    /// Sets `total_resources`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterContainerInstanceRequest.total_resources = Some(value.into());`.
+    pub fn total_resources<ValueType: Into<Vec<Resource>>>(mut self, value: ValueType) -> Self {
+        self.total_resources = Some(value.into());
+        self
+    }
+    /// Sets `version_info`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterContainerInstanceRequest.version_info = Some(value.into());`.
+    pub fn version_info<ValueType: Into<VersionInfo>>(mut self, value: ValueType) -> Self {
+        self.version_info = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RegisterContainerInstanceRequest with optional fields set to `None`.
+    pub fn new() -> RegisterContainerInstanceRequest {
+        RegisterContainerInstanceRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RegisterContainerInstanceResponse {
     #[doc="<p>The container instance that was registered.</p>"]
@@ -1104,7 +2279,6 @@ pub struct RegisterContainerInstanceResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub container_instance: Option<ContainerInstance>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RegisterTaskDefinitionRequest {
     #[doc="<p>A list of container definitions in JSON format that describe the different containers that make up your task.</p>"]
@@ -1130,7 +2304,66 @@ pub struct RegisterTaskDefinitionRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volumes: Option<Vec<Volume>>,
 }
-
+impl RegisterTaskDefinitionRequest {
+    /// Sets `container_definitions`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTaskDefinitionRequest.container_definitions = value.into();`.
+    pub fn container_definitions<ValueType: Into<Vec<ContainerDefinition>>>(mut self,
+                                                                            value: ValueType)
+                                                                            -> Self {
+        self.container_definitions = value.into();
+        self
+    }
+    /// Sets `family`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTaskDefinitionRequest.family = value.into();`.
+    pub fn family<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.family = value.into();
+        self
+    }
+    /// Sets `network_mode`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTaskDefinitionRequest.network_mode = Some(value.into());`.
+    pub fn network_mode<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_mode = Some(value.into());
+        self
+    }
+    /// Sets `placement_constraints`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTaskDefinitionRequest.placement_constraints = Some(value.into());`.
+    pub fn placement_constraints<ValueType: Into<Vec<TaskDefinitionPlacementConstraint>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.placement_constraints = Some(value.into());
+        self
+    }
+    /// Sets `task_role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTaskDefinitionRequest.task_role_arn = Some(value.into());`.
+    pub fn task_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_role_arn = Some(value.into());
+        self
+    }
+    /// Sets `volumes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTaskDefinitionRequest.volumes = Some(value.into());`.
+    pub fn volumes<ValueType: Into<Vec<Volume>>>(mut self, value: ValueType) -> Self {
+        self.volumes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RegisterTaskDefinitionRequest with optional fields set to `None`.
+    pub fn new<containerDefinitionsType: Into<Vec<ContainerDefinition>>, familyType: Into<String>>
+        (container_definitions: containerDefinitionsType,
+         family: familyType)
+         -> RegisterTaskDefinitionRequest {
+        RegisterTaskDefinitionRequest {
+            container_definitions: container_definitions.into(),
+            family: family.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RegisterTaskDefinitionResponse {
     #[doc="<p>The full description of the registered task definition.</p>"]
@@ -1138,7 +2371,6 @@ pub struct RegisterTaskDefinitionResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub task_definition: Option<TaskDefinition>,
 }
-
 #[doc="<p>Describes the resources available for a container instance.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Resource {
@@ -1167,7 +2399,54 @@ pub struct Resource {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
+impl Resource {
+    /// Sets `double_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Resource.double_value = Some(value.into());`.
+    pub fn double_value<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.double_value = Some(value.into());
+        self
+    }
+    /// Sets `integer_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Resource.integer_value = Some(value.into());`.
+    pub fn integer_value<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.integer_value = Some(value.into());
+        self
+    }
+    /// Sets `long_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Resource.long_value = Some(value.into());`.
+    pub fn long_value<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.long_value = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Resource.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `string_set_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Resource.string_set_value = Some(value.into());`.
+    pub fn string_set_value<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.string_set_value = Some(value.into());
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Resource.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Resource with optional fields set to `None`.
+    pub fn new() -> Resource {
+        Resource { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RunTaskRequest {
     #[doc="<p>The short name or full Amazon Resource Name (ARN) of the cluster on which to run your task. If you do not specify a cluster, the default cluster is assumed.</p>"]
@@ -1202,7 +2481,76 @@ pub struct RunTaskRequest {
     #[serde(rename="taskDefinition")]
     pub task_definition: String,
 }
-
+impl RunTaskRequest {
+    /// Sets `cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunTaskRequest.cluster = Some(value.into());`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = Some(value.into());
+        self
+    }
+    /// Sets `count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunTaskRequest.count = Some(value.into());`.
+    pub fn count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.count = Some(value.into());
+        self
+    }
+    /// Sets `group`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunTaskRequest.group = Some(value.into());`.
+    pub fn group<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group = Some(value.into());
+        self
+    }
+    /// Sets `overrides`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunTaskRequest.overrides = Some(value.into());`.
+    pub fn overrides<ValueType: Into<TaskOverride>>(mut self, value: ValueType) -> Self {
+        self.overrides = Some(value.into());
+        self
+    }
+    /// Sets `placement_constraints`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunTaskRequest.placement_constraints = Some(value.into());`.
+    pub fn placement_constraints<ValueType: Into<Vec<PlacementConstraint>>>(mut self,
+                                                                            value: ValueType)
+                                                                            -> Self {
+        self.placement_constraints = Some(value.into());
+        self
+    }
+    /// Sets `placement_strategy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunTaskRequest.placement_strategy = Some(value.into());`.
+    pub fn placement_strategy<ValueType: Into<Vec<PlacementStrategy>>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.placement_strategy = Some(value.into());
+        self
+    }
+    /// Sets `started_by`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunTaskRequest.started_by = Some(value.into());`.
+    pub fn started_by<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.started_by = Some(value.into());
+        self
+    }
+    /// Sets `task_definition`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunTaskRequest.task_definition = value.into();`.
+    pub fn task_definition<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_definition = value.into();
+        self
+    }
+    /// Returns a new instance of RunTaskRequest with optional fields set to `None`.
+    pub fn new<taskDefinitionType: Into<String>>(task_definition: taskDefinitionType)
+                                                 -> RunTaskRequest {
+        RunTaskRequest {
+            task_definition: task_definition.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RunTaskResponse {
     #[doc="<p>Any failures associated with the call.</p>"]
@@ -1214,7 +2562,6 @@ pub struct RunTaskResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tasks: Option<Vec<Task>>,
 }
-
 #[doc="<p>Details on a service within a cluster</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Service {
@@ -1283,7 +2630,6 @@ pub struct Service {
     #[serde(skip_serializing_if="Option::is_none")]
     pub task_definition: Option<String>,
 }
-
 #[doc="<p>Details on an event associated with a service.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ServiceEvent {
@@ -1300,7 +2646,6 @@ pub struct ServiceEvent {
     #[serde(skip_serializing_if="Option::is_none")]
     pub message: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartTaskRequest {
     #[doc="<p>The short name or full Amazon Resource Name (ARN) of the cluster on which to start your task. If you do not specify a cluster, the default cluster is assumed.</p>"]
@@ -1326,7 +2671,61 @@ pub struct StartTaskRequest {
     #[serde(rename="taskDefinition")]
     pub task_definition: String,
 }
-
+impl StartTaskRequest {
+    /// Sets `cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartTaskRequest.cluster = Some(value.into());`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = Some(value.into());
+        self
+    }
+    /// Sets `container_instances`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartTaskRequest.container_instances = value.into();`.
+    pub fn container_instances<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.container_instances = value.into();
+        self
+    }
+    /// Sets `group`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartTaskRequest.group = Some(value.into());`.
+    pub fn group<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group = Some(value.into());
+        self
+    }
+    /// Sets `overrides`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartTaskRequest.overrides = Some(value.into());`.
+    pub fn overrides<ValueType: Into<TaskOverride>>(mut self, value: ValueType) -> Self {
+        self.overrides = Some(value.into());
+        self
+    }
+    /// Sets `started_by`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartTaskRequest.started_by = Some(value.into());`.
+    pub fn started_by<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.started_by = Some(value.into());
+        self
+    }
+    /// Sets `task_definition`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartTaskRequest.task_definition = value.into();`.
+    pub fn task_definition<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_definition = value.into();
+        self
+    }
+    /// Returns a new instance of StartTaskRequest with optional fields set to `None`.
+    pub fn new<containerInstancesType: Into<Vec<String>>, taskDefinitionType: Into<String>>
+        (container_instances: containerInstancesType,
+         task_definition: taskDefinitionType)
+         -> StartTaskRequest {
+        StartTaskRequest {
+            container_instances: container_instances.into(),
+            task_definition: task_definition.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartTaskResponse {
     #[doc="<p>Any failures associated with the call.</p>"]
@@ -1338,7 +2737,6 @@ pub struct StartTaskResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tasks: Option<Vec<Task>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StopTaskRequest {
     #[doc="<p>The short name or full Amazon Resource Name (ARN) of the cluster that hosts the task to stop. If you do not specify a cluster, the default cluster is assumed.</p>"]
@@ -1353,7 +2751,36 @@ pub struct StopTaskRequest {
     #[serde(rename="task")]
     pub task: String,
 }
-
+impl StopTaskRequest {
+    /// Sets `cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopTaskRequest.cluster = Some(value.into());`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = Some(value.into());
+        self
+    }
+    /// Sets `reason`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopTaskRequest.reason = Some(value.into());`.
+    pub fn reason<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reason = Some(value.into());
+        self
+    }
+    /// Sets `task`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopTaskRequest.task = value.into();`.
+    pub fn task<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task = value.into();
+        self
+    }
+    /// Returns a new instance of StopTaskRequest with optional fields set to `None`.
+    pub fn new<taskType: Into<String>>(task: taskType) -> StopTaskRequest {
+        StopTaskRequest {
+            task: task.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StopTaskResponse {
     #[doc="<p>The task that was stopped.</p>"]
@@ -1361,7 +2788,6 @@ pub struct StopTaskResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub task: Option<Task>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SubmitContainerStateChangeRequest {
     #[doc="<p>The short name or full Amazon Resource Name (ARN) of the cluster that hosts the container.</p>"]
@@ -1393,7 +2819,63 @@ pub struct SubmitContainerStateChangeRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub task: Option<String>,
 }
-
+impl SubmitContainerStateChangeRequest {
+    /// Sets `cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubmitContainerStateChangeRequest.cluster = Some(value.into());`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = Some(value.into());
+        self
+    }
+    /// Sets `container_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubmitContainerStateChangeRequest.container_name = Some(value.into());`.
+    pub fn container_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.container_name = Some(value.into());
+        self
+    }
+    /// Sets `exit_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubmitContainerStateChangeRequest.exit_code = Some(value.into());`.
+    pub fn exit_code<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.exit_code = Some(value.into());
+        self
+    }
+    /// Sets `network_bindings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubmitContainerStateChangeRequest.network_bindings = Some(value.into());`.
+    pub fn network_bindings<ValueType: Into<Vec<NetworkBinding>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.network_bindings = Some(value.into());
+        self
+    }
+    /// Sets `reason`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubmitContainerStateChangeRequest.reason = Some(value.into());`.
+    pub fn reason<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reason = Some(value.into());
+        self
+    }
+    /// Sets `status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubmitContainerStateChangeRequest.status = Some(value.into());`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = Some(value.into());
+        self
+    }
+    /// Sets `task`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubmitContainerStateChangeRequest.task = Some(value.into());`.
+    pub fn task<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SubmitContainerStateChangeRequest with optional fields set to `None`.
+    pub fn new() -> SubmitContainerStateChangeRequest {
+        SubmitContainerStateChangeRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SubmitContainerStateChangeResponse {
     #[doc="<p>Acknowledgement of the state change.</p>"]
@@ -1401,7 +2883,6 @@ pub struct SubmitContainerStateChangeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub acknowledgment: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SubmitTaskStateChangeRequest {
     #[doc="<p>The short name or full Amazon Resource Name (ARN) of the cluster that hosts the task.</p>"]
@@ -1421,7 +2902,40 @@ pub struct SubmitTaskStateChangeRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub task: Option<String>,
 }
-
+impl SubmitTaskStateChangeRequest {
+    /// Sets `cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubmitTaskStateChangeRequest.cluster = Some(value.into());`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = Some(value.into());
+        self
+    }
+    /// Sets `reason`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubmitTaskStateChangeRequest.reason = Some(value.into());`.
+    pub fn reason<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reason = Some(value.into());
+        self
+    }
+    /// Sets `status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubmitTaskStateChangeRequest.status = Some(value.into());`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = Some(value.into());
+        self
+    }
+    /// Sets `task`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubmitTaskStateChangeRequest.task = Some(value.into());`.
+    pub fn task<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SubmitTaskStateChangeRequest with optional fields set to `None`.
+    pub fn new() -> SubmitTaskStateChangeRequest {
+        SubmitTaskStateChangeRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SubmitTaskStateChangeResponse {
     #[doc="<p>Acknowledgement of the state change.</p>"]
@@ -1429,7 +2943,6 @@ pub struct SubmitTaskStateChangeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub acknowledgment: Option<String>,
 }
-
 #[doc="<p>Details on a task in a cluster.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Task {
@@ -1494,7 +3007,6 @@ pub struct Task {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<i64>,
 }
-
 #[doc="<p>Details of a task definition.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TaskDefinition {
@@ -1539,7 +3051,6 @@ pub struct TaskDefinition {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volumes: Option<Vec<Volume>>,
 }
-
 #[doc="<p>An object representing a constraint on task placement in the task definition. For more information, see <a href=\"http://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-placement-constraints.html\">Task Placement Constraints</a> in the <i>Amazon EC2 Container Service Developer Guide</i>.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct TaskDefinitionPlacementConstraint {
@@ -1552,7 +3063,26 @@ pub struct TaskDefinitionPlacementConstraint {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
+impl TaskDefinitionPlacementConstraint {
+    /// Sets `expression`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TaskDefinitionPlacementConstraint.expression = Some(value.into());`.
+    pub fn expression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.expression = Some(value.into());
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TaskDefinitionPlacementConstraint.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TaskDefinitionPlacementConstraint with optional fields set to `None`.
+    pub fn new() -> TaskDefinitionPlacementConstraint {
+        TaskDefinitionPlacementConstraint { ..Default::default() }
+    }
+}
 #[doc="<p>The overrides associated with a task.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct TaskOverride {
@@ -1565,7 +3095,28 @@ pub struct TaskOverride {
     #[serde(skip_serializing_if="Option::is_none")]
     pub task_role_arn: Option<String>,
 }
-
+impl TaskOverride {
+    /// Sets `container_overrides`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TaskOverride.container_overrides = Some(value.into());`.
+    pub fn container_overrides<ValueType: Into<Vec<ContainerOverride>>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.container_overrides = Some(value.into());
+        self
+    }
+    /// Sets `task_role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TaskOverride.task_role_arn = Some(value.into());`.
+    pub fn task_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_role_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TaskOverride with optional fields set to `None`.
+    pub fn new() -> TaskOverride {
+        TaskOverride { ..Default::default() }
+    }
+}
 #[doc="<p>The <code>ulimit</code> settings to pass to the container.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Ulimit {
@@ -1579,7 +3130,42 @@ pub struct Ulimit {
     #[serde(rename="softLimit")]
     pub soft_limit: i64,
 }
-
+impl Ulimit {
+    /// Sets `hard_limit`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Ulimit.hard_limit = value.into();`.
+    pub fn hard_limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.hard_limit = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Ulimit.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `soft_limit`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Ulimit.soft_limit = value.into();`.
+    pub fn soft_limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.soft_limit = value.into();
+        self
+    }
+    /// Returns a new instance of Ulimit with optional fields set to `None`.
+    pub fn new<hardLimitType: Into<i64>, nameType: Into<String>, softLimitType: Into<i64>>
+        (hard_limit: hardLimitType,
+         name: nameType,
+         soft_limit: softLimitType)
+         -> Ulimit {
+        Ulimit {
+            hard_limit: hard_limit.into(),
+            name: name.into(),
+            soft_limit: soft_limit.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateContainerAgentRequest {
     #[doc="<p>The short name or full Amazon Resource Name (ARN) of the cluster that your container instance is running on. If you do not specify a cluster, the default cluster is assumed.</p>"]
@@ -1590,7 +3176,30 @@ pub struct UpdateContainerAgentRequest {
     #[serde(rename="containerInstance")]
     pub container_instance: String,
 }
-
+impl UpdateContainerAgentRequest {
+    /// Sets `cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateContainerAgentRequest.cluster = Some(value.into());`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = Some(value.into());
+        self
+    }
+    /// Sets `container_instance`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateContainerAgentRequest.container_instance = value.into();`.
+    pub fn container_instance<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.container_instance = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateContainerAgentRequest with optional fields set to `None`.
+    pub fn new<containerInstanceType: Into<String>>(container_instance: containerInstanceType)
+                                                    -> UpdateContainerAgentRequest {
+        UpdateContainerAgentRequest {
+            container_instance: container_instance.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateContainerAgentResponse {
     #[doc="<p>The container instance for which the container agent was updated.</p>"]
@@ -1598,7 +3207,6 @@ pub struct UpdateContainerAgentResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub container_instance: Option<ContainerInstance>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateContainerInstancesStateRequest {
     #[doc="<p>The short name or full Amazon Resource Name (ARN) of the cluster that hosts the container instance to update. If you do not specify a cluster, the default cluster is assumed.</p>"]
@@ -1612,7 +3220,40 @@ pub struct UpdateContainerInstancesStateRequest {
     #[serde(rename="status")]
     pub status: String,
 }
-
+impl UpdateContainerInstancesStateRequest {
+    /// Sets `cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateContainerInstancesStateRequest.cluster = Some(value.into());`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = Some(value.into());
+        self
+    }
+    /// Sets `container_instances`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateContainerInstancesStateRequest.container_instances = value.into();`.
+    pub fn container_instances<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.container_instances = value.into();
+        self
+    }
+    /// Sets `status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateContainerInstancesStateRequest.status = value.into();`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateContainerInstancesStateRequest with optional fields set to `None`.
+    pub fn new<containerInstancesType: Into<Vec<String>>, statusType: Into<String>>
+        (container_instances: containerInstancesType,
+         status: statusType)
+         -> UpdateContainerInstancesStateRequest {
+        UpdateContainerInstancesStateRequest {
+            container_instances: container_instances.into(),
+            status: status.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateContainerInstancesStateResponse {
     #[doc="<p>The list of container instances.</p>"]
@@ -1624,7 +3265,6 @@ pub struct UpdateContainerInstancesStateResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub failures: Option<Vec<Failure>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateServiceRequest {
     #[doc="<p>The short name or full Amazon Resource Name (ARN) of the cluster that your service is running on. If you do not specify a cluster, the default cluster is assumed.</p>"]
@@ -1647,7 +3287,52 @@ pub struct UpdateServiceRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub task_definition: Option<String>,
 }
-
+impl UpdateServiceRequest {
+    /// Sets `cluster`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateServiceRequest.cluster = Some(value.into());`.
+    pub fn cluster<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster = Some(value.into());
+        self
+    }
+    /// Sets `deployment_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateServiceRequest.deployment_configuration = Some(value.into());`.
+    pub fn deployment_configuration<ValueType: Into<DeploymentConfiguration>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.deployment_configuration = Some(value.into());
+        self
+    }
+    /// Sets `desired_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateServiceRequest.desired_count = Some(value.into());`.
+    pub fn desired_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.desired_count = Some(value.into());
+        self
+    }
+    /// Sets `service`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateServiceRequest.service = value.into();`.
+    pub fn service<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service = value.into();
+        self
+    }
+    /// Sets `task_definition`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateServiceRequest.task_definition = Some(value.into());`.
+    pub fn task_definition<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_definition = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateServiceRequest with optional fields set to `None`.
+    pub fn new<serviceType: Into<String>>(service: serviceType) -> UpdateServiceRequest {
+        UpdateServiceRequest {
+            service: service.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateServiceResponse {
     #[doc="<p>The full description of your service following the update call.</p>"]
@@ -1655,7 +3340,6 @@ pub struct UpdateServiceResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub service: Option<Service>,
 }
-
 #[doc="<p>The Docker and Amazon ECS container agent version information about a container instance.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct VersionInfo {
@@ -1672,7 +3356,33 @@ pub struct VersionInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub docker_version: Option<String>,
 }
-
+impl VersionInfo {
+    /// Sets `agent_hash`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VersionInfo.agent_hash = Some(value.into());`.
+    pub fn agent_hash<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.agent_hash = Some(value.into());
+        self
+    }
+    /// Sets `agent_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VersionInfo.agent_version = Some(value.into());`.
+    pub fn agent_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.agent_version = Some(value.into());
+        self
+    }
+    /// Sets `docker_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VersionInfo.docker_version = Some(value.into());`.
+    pub fn docker_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.docker_version = Some(value.into());
+        self
+    }
+    /// Returns a new instance of VersionInfo with optional fields set to `None`.
+    pub fn new() -> VersionInfo {
+        VersionInfo { ..Default::default() }
+    }
+}
 #[doc="<p>A data volume used in a task definition.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Volume {
@@ -1685,7 +3395,26 @@ pub struct Volume {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
+impl Volume {
+    /// Sets `host`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Volume.host = Some(value.into());`.
+    pub fn host<ValueType: Into<HostVolumeProperties>>(mut self, value: ValueType) -> Self {
+        self.host = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Volume.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Volume with optional fields set to `None`.
+    pub fn new() -> Volume {
+        Volume { ..Default::default() }
+    }
+}
 #[doc="<p>Details on a data volume from another container in the same task definition.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct VolumeFrom {
@@ -1698,7 +3427,26 @@ pub struct VolumeFrom {
     #[serde(skip_serializing_if="Option::is_none")]
     pub source_container: Option<String>,
 }
-
+impl VolumeFrom {
+    /// Sets `read_only`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VolumeFrom.read_only = Some(value.into());`.
+    pub fn read_only<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.read_only = Some(value.into());
+        self
+    }
+    /// Sets `source_container`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VolumeFrom.source_container = Some(value.into());`.
+    pub fn source_container<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_container = Some(value.into());
+        self
+    }
+    /// Returns a new instance of VolumeFrom with optional fields set to `None`.
+    pub fn new() -> VolumeFrom {
+        VolumeFrom { ..Default::default() }
+    }
+}
 /// Errors returned by CreateCluster
 #[derive(Debug, PartialEq)]
 pub enum CreateClusterError {

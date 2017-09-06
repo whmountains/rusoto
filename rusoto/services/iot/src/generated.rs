@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -40,7 +41,30 @@ pub struct AcceptCertificateTransferRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub set_as_active: Option<bool>,
 }
-
+impl AcceptCertificateTransferRequest {
+    /// Sets `certificate_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AcceptCertificateTransferRequest.certificate_id = value.into();`.
+    pub fn certificate_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_id = value.into();
+        self
+    }
+    /// Sets `set_as_active`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AcceptCertificateTransferRequest.set_as_active = Some(value.into());`.
+    pub fn set_as_active<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.set_as_active = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AcceptCertificateTransferRequest with optional fields set to `None`.
+    pub fn new<certificateIdType: Into<String>>(certificate_id: certificateIdType)
+                                                -> AcceptCertificateTransferRequest {
+        AcceptCertificateTransferRequest {
+            certificate_id: certificate_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes the actions associated with a rule.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Action {
@@ -97,7 +121,107 @@ pub struct Action {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sqs: Option<SqsAction>,
 }
-
+impl Action {
+    /// Sets `cloudwatch_alarm`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Action.cloudwatch_alarm = Some(value.into());`.
+    pub fn cloudwatch_alarm<ValueType: Into<CloudwatchAlarmAction>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.cloudwatch_alarm = Some(value.into());
+        self
+    }
+    /// Sets `cloudwatch_metric`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Action.cloudwatch_metric = Some(value.into());`.
+    pub fn cloudwatch_metric<ValueType: Into<CloudwatchMetricAction>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.cloudwatch_metric = Some(value.into());
+        self
+    }
+    /// Sets `dynamo_db`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Action.dynamo_db = Some(value.into());`.
+    pub fn dynamo_db<ValueType: Into<DynamoDBAction>>(mut self, value: ValueType) -> Self {
+        self.dynamo_db = Some(value.into());
+        self
+    }
+    /// Sets `dynamo_d_bv_2`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Action.dynamo_d_bv_2 = Some(value.into());`.
+    pub fn dynamo_d_bv_2<ValueType: Into<DynamoDBv2Action>>(mut self, value: ValueType) -> Self {
+        self.dynamo_d_bv_2 = Some(value.into());
+        self
+    }
+    /// Sets `elasticsearch`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Action.elasticsearch = Some(value.into());`.
+    pub fn elasticsearch<ValueType: Into<ElasticsearchAction>>(mut self, value: ValueType) -> Self {
+        self.elasticsearch = Some(value.into());
+        self
+    }
+    /// Sets `firehose`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Action.firehose = Some(value.into());`.
+    pub fn firehose<ValueType: Into<FirehoseAction>>(mut self, value: ValueType) -> Self {
+        self.firehose = Some(value.into());
+        self
+    }
+    /// Sets `kinesis`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Action.kinesis = Some(value.into());`.
+    pub fn kinesis<ValueType: Into<KinesisAction>>(mut self, value: ValueType) -> Self {
+        self.kinesis = Some(value.into());
+        self
+    }
+    /// Sets `lambda`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Action.lambda = Some(value.into());`.
+    pub fn lambda<ValueType: Into<LambdaAction>>(mut self, value: ValueType) -> Self {
+        self.lambda = Some(value.into());
+        self
+    }
+    /// Sets `republish`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Action.republish = Some(value.into());`.
+    pub fn republish<ValueType: Into<RepublishAction>>(mut self, value: ValueType) -> Self {
+        self.republish = Some(value.into());
+        self
+    }
+    /// Sets `s_3`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Action.s_3 = Some(value.into());`.
+    pub fn s_3<ValueType: Into<S3Action>>(mut self, value: ValueType) -> Self {
+        self.s_3 = Some(value.into());
+        self
+    }
+    /// Sets `salesforce`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Action.salesforce = Some(value.into());`.
+    pub fn salesforce<ValueType: Into<SalesforceAction>>(mut self, value: ValueType) -> Self {
+        self.salesforce = Some(value.into());
+        self
+    }
+    /// Sets `sns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Action.sns = Some(value.into());`.
+    pub fn sns<ValueType: Into<SnsAction>>(mut self, value: ValueType) -> Self {
+        self.sns = Some(value.into());
+        self
+    }
+    /// Sets `sqs`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Action.sqs = Some(value.into());`.
+    pub fn sqs<ValueType: Into<SqsAction>>(mut self, value: ValueType) -> Self {
+        self.sqs = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Action with optional fields set to `None`.
+    pub fn new() -> Action {
+        Action { ..Default::default() }
+    }
+}
 #[doc="<p>The input for the AttachPrincipalPolicy operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AttachPrincipalPolicyRequest {
@@ -108,7 +232,33 @@ pub struct AttachPrincipalPolicyRequest {
     #[serde(rename="principal")]
     pub principal: String,
 }
-
+impl AttachPrincipalPolicyRequest {
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachPrincipalPolicyRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Sets `principal`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachPrincipalPolicyRequest.principal = value.into();`.
+    pub fn principal<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.principal = value.into();
+        self
+    }
+    /// Returns a new instance of AttachPrincipalPolicyRequest with optional fields set to `None`.
+    pub fn new<policyNameType: Into<String>, principalType: Into<String>>
+        (policy_name: policyNameType,
+         principal: principalType)
+         -> AttachPrincipalPolicyRequest {
+        AttachPrincipalPolicyRequest {
+            policy_name: policy_name.into(),
+            principal: principal.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input for the AttachThingPrincipal operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AttachThingPrincipalRequest {
@@ -119,7 +269,33 @@ pub struct AttachThingPrincipalRequest {
     #[serde(rename="thingName")]
     pub thing_name: String,
 }
-
+impl AttachThingPrincipalRequest {
+    /// Sets `principal`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachThingPrincipalRequest.principal = value.into();`.
+    pub fn principal<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.principal = value.into();
+        self
+    }
+    /// Sets `thing_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttachThingPrincipalRequest.thing_name = value.into();`.
+    pub fn thing_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.thing_name = value.into();
+        self
+    }
+    /// Returns a new instance of AttachThingPrincipalRequest with optional fields set to `None`.
+    pub fn new<principalType: Into<String>, thingNameType: Into<String>>
+        (principal: principalType,
+         thing_name: thingNameType)
+         -> AttachThingPrincipalRequest {
+        AttachThingPrincipalRequest {
+            principal: principal.into(),
+            thing_name: thing_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output from the AttachThingPrincipal operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AttachThingPrincipalResponse;
@@ -136,7 +312,26 @@ pub struct AttributePayload {
     #[serde(skip_serializing_if="Option::is_none")]
     pub merge: Option<bool>,
 }
-
+impl AttributePayload {
+    /// Sets `attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributePayload.attributes = Some(value.into());`.
+pub fn attributes<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.attributes = Some(value.into());
+        self
+    }
+    /// Sets `merge`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributePayload.merge = Some(value.into());`.
+    pub fn merge<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.merge = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AttributePayload with optional fields set to `None`.
+    pub fn new() -> AttributePayload {
+        AttributePayload { ..Default::default() }
+    }
+}
 #[doc="<p>A CA certificate.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CACertificate {
@@ -157,7 +352,6 @@ pub struct CACertificate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[doc="<p>Describes a CA certificate.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CACertificateDescription {
@@ -190,7 +384,6 @@ pub struct CACertificateDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[doc="<p>The input for the CancelCertificateTransfer operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CancelCertificateTransferRequest {
@@ -198,7 +391,23 @@ pub struct CancelCertificateTransferRequest {
     #[serde(rename="certificateId")]
     pub certificate_id: String,
 }
-
+impl CancelCertificateTransferRequest {
+    /// Sets `certificate_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelCertificateTransferRequest.certificate_id = value.into();`.
+    pub fn certificate_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_id = value.into();
+        self
+    }
+    /// Returns a new instance of CancelCertificateTransferRequest with optional fields set to `None`.
+    pub fn new<certificateIdType: Into<String>>(certificate_id: certificateIdType)
+                                                -> CancelCertificateTransferRequest {
+        CancelCertificateTransferRequest {
+            certificate_id: certificate_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Information about a certificate.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Certificate {
@@ -219,7 +428,6 @@ pub struct Certificate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[doc="<p>Describes a certificate.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CertificateDescription {
@@ -264,7 +472,6 @@ pub struct CertificateDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub transfer_data: Option<TransferData>,
 }
-
 #[doc="<p>Describes an action that updates a CloudWatch alarm.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct CloudwatchAlarmAction {
@@ -281,7 +488,54 @@ pub struct CloudwatchAlarmAction {
     #[serde(rename="stateValue")]
     pub state_value: String,
 }
-
+impl CloudwatchAlarmAction {
+    /// Sets `alarm_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudwatchAlarmAction.alarm_name = value.into();`.
+    pub fn alarm_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.alarm_name = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudwatchAlarmAction.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Sets `state_reason`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudwatchAlarmAction.state_reason = value.into();`.
+    pub fn state_reason<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.state_reason = value.into();
+        self
+    }
+    /// Sets `state_value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudwatchAlarmAction.state_value = value.into();`.
+    pub fn state_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.state_value = value.into();
+        self
+    }
+    /// Returns a new instance of CloudwatchAlarmAction with optional fields set to `None`.
+    pub fn new<alarmNameType: Into<String>,
+               roleArnType: Into<String>,
+               stateReasonType: Into<String>,
+               stateValueType: Into<String>>
+        (alarm_name: alarmNameType,
+         role_arn: roleArnType,
+         state_reason: stateReasonType,
+         state_value: stateValueType)
+         -> CloudwatchAlarmAction {
+        CloudwatchAlarmAction {
+            alarm_name: alarm_name.into(),
+            role_arn: role_arn.into(),
+            state_reason: state_reason.into(),
+            state_value: state_value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes an action that captures a CloudWatch metric.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct CloudwatchMetricAction {
@@ -305,7 +559,71 @@ pub struct CloudwatchMetricAction {
     #[serde(rename="roleArn")]
     pub role_arn: String,
 }
-
+impl CloudwatchMetricAction {
+    /// Sets `metric_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudwatchMetricAction.metric_name = value.into();`.
+    pub fn metric_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_name = value.into();
+        self
+    }
+    /// Sets `metric_namespace`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudwatchMetricAction.metric_namespace = value.into();`.
+    pub fn metric_namespace<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_namespace = value.into();
+        self
+    }
+    /// Sets `metric_timestamp`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudwatchMetricAction.metric_timestamp = Some(value.into());`.
+    pub fn metric_timestamp<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_timestamp = Some(value.into());
+        self
+    }
+    /// Sets `metric_unit`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudwatchMetricAction.metric_unit = value.into();`.
+    pub fn metric_unit<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_unit = value.into();
+        self
+    }
+    /// Sets `metric_value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudwatchMetricAction.metric_value = value.into();`.
+    pub fn metric_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_value = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudwatchMetricAction.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Returns a new instance of CloudwatchMetricAction with optional fields set to `None`.
+    pub fn new<metricNameType: Into<String>,
+               metricNamespaceType: Into<String>,
+               metricUnitType: Into<String>,
+               metricValueType: Into<String>,
+               roleArnType: Into<String>>
+        (metric_name: metricNameType,
+         metric_namespace: metricNamespaceType,
+         metric_unit: metricUnitType,
+         metric_value: metricValueType,
+         role_arn: roleArnType)
+         -> CloudwatchMetricAction {
+        CloudwatchMetricAction {
+            metric_name: metric_name.into(),
+            metric_namespace: metric_namespace.into(),
+            metric_unit: metric_unit.into(),
+            metric_value: metric_value.into(),
+            role_arn: role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input for the CreateCertificateFromCsr operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateCertificateFromCsrRequest {
@@ -317,7 +635,31 @@ pub struct CreateCertificateFromCsrRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub set_as_active: Option<bool>,
 }
-
+impl CreateCertificateFromCsrRequest {
+    /// Sets `certificate_signing_request`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCertificateFromCsrRequest.certificate_signing_request = value.into();`.
+    pub fn certificate_signing_request<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.certificate_signing_request = value.into();
+        self
+    }
+    /// Sets `set_as_active`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateCertificateFromCsrRequest.set_as_active = Some(value.into());`.
+    pub fn set_as_active<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.set_as_active = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateCertificateFromCsrRequest with optional fields set to `None`.
+pub fn new<certificateSigningRequestType: Into<String>>(certificate_signing_request: certificateSigningRequestType) -> CreateCertificateFromCsrRequest{
+        CreateCertificateFromCsrRequest {
+            certificate_signing_request: certificate_signing_request.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output from the CreateCertificateFromCsr operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateCertificateFromCsrResponse {
@@ -334,7 +676,6 @@ pub struct CreateCertificateFromCsrResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub certificate_pem: Option<String>,
 }
-
 #[doc="<p>The input for the CreateKeysAndCertificate operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateKeysAndCertificateRequest {
@@ -343,7 +684,19 @@ pub struct CreateKeysAndCertificateRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub set_as_active: Option<bool>,
 }
-
+impl CreateKeysAndCertificateRequest {
+    /// Sets `set_as_active`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateKeysAndCertificateRequest.set_as_active = Some(value.into());`.
+    pub fn set_as_active<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.set_as_active = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateKeysAndCertificateRequest with optional fields set to `None`.
+    pub fn new() -> CreateKeysAndCertificateRequest {
+        CreateKeysAndCertificateRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The output of the CreateKeysAndCertificate operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateKeysAndCertificateResponse {
@@ -364,7 +717,6 @@ pub struct CreateKeysAndCertificateResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub key_pair: Option<KeyPair>,
 }
-
 #[doc="<p>The input for the CreatePolicy operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreatePolicyRequest {
@@ -375,7 +727,33 @@ pub struct CreatePolicyRequest {
     #[serde(rename="policyName")]
     pub policy_name: String,
 }
-
+impl CreatePolicyRequest {
+    /// Sets `policy_document`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePolicyRequest.policy_document = value.into();`.
+    pub fn policy_document<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_document = value.into();
+        self
+    }
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePolicyRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreatePolicyRequest with optional fields set to `None`.
+    pub fn new<policyDocumentType: Into<String>, policyNameType: Into<String>>
+        (policy_document: policyDocumentType,
+         policy_name: policyNameType)
+         -> CreatePolicyRequest {
+        CreatePolicyRequest {
+            policy_document: policy_document.into(),
+            policy_name: policy_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output from the CreatePolicy operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreatePolicyResponse {
@@ -396,7 +774,6 @@ pub struct CreatePolicyResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policy_version_id: Option<String>,
 }
-
 #[doc="<p>The input for the CreatePolicyVersion operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreatePolicyVersionRequest {
@@ -411,7 +788,40 @@ pub struct CreatePolicyVersionRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub set_as_default: Option<bool>,
 }
-
+impl CreatePolicyVersionRequest {
+    /// Sets `policy_document`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePolicyVersionRequest.policy_document = value.into();`.
+    pub fn policy_document<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_document = value.into();
+        self
+    }
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePolicyVersionRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Sets `set_as_default`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePolicyVersionRequest.set_as_default = Some(value.into());`.
+    pub fn set_as_default<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.set_as_default = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreatePolicyVersionRequest with optional fields set to `None`.
+    pub fn new<policyDocumentType: Into<String>, policyNameType: Into<String>>
+        (policy_document: policyDocumentType,
+         policy_name: policyNameType)
+         -> CreatePolicyVersionRequest {
+        CreatePolicyVersionRequest {
+            policy_document: policy_document.into(),
+            policy_name: policy_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output of the CreatePolicyVersion operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreatePolicyVersionResponse {
@@ -432,7 +842,6 @@ pub struct CreatePolicyVersionResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policy_version_id: Option<String>,
 }
-
 #[doc="<p>The input for the CreateThing operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateThingRequest {
@@ -448,7 +857,38 @@ pub struct CreateThingRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub thing_type_name: Option<String>,
 }
-
+impl CreateThingRequest {
+    /// Sets `attribute_payload`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateThingRequest.attribute_payload = Some(value.into());`.
+    pub fn attribute_payload<ValueType: Into<AttributePayload>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.attribute_payload = Some(value.into());
+        self
+    }
+    /// Sets `thing_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateThingRequest.thing_name = value.into();`.
+    pub fn thing_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.thing_name = value.into();
+        self
+    }
+    /// Sets `thing_type_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateThingRequest.thing_type_name = Some(value.into());`.
+    pub fn thing_type_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.thing_type_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateThingRequest with optional fields set to `None`.
+    pub fn new<thingNameType: Into<String>>(thing_name: thingNameType) -> CreateThingRequest {
+        CreateThingRequest {
+            thing_name: thing_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output of the CreateThing operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateThingResponse {
@@ -461,7 +901,6 @@ pub struct CreateThingResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub thing_name: Option<String>,
 }
-
 #[doc="<p>The input for the CreateThingType operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateThingTypeRequest {
@@ -473,7 +912,32 @@ pub struct CreateThingTypeRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub thing_type_properties: Option<ThingTypeProperties>,
 }
-
+impl CreateThingTypeRequest {
+    /// Sets `thing_type_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateThingTypeRequest.thing_type_name = value.into();`.
+    pub fn thing_type_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.thing_type_name = value.into();
+        self
+    }
+    /// Sets `thing_type_properties`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateThingTypeRequest.thing_type_properties = Some(value.into());`.
+    pub fn thing_type_properties<ValueType: Into<ThingTypeProperties>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.thing_type_properties = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateThingTypeRequest with optional fields set to `None`.
+    pub fn new<thingTypeNameType: Into<String>>(thing_type_name: thingTypeNameType)
+                                                -> CreateThingTypeRequest {
+        CreateThingTypeRequest {
+            thing_type_name: thing_type_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output of the CreateThingType operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateThingTypeResponse {
@@ -486,7 +950,6 @@ pub struct CreateThingTypeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub thing_type_name: Option<String>,
 }
-
 #[doc="<p>The input for the CreateTopicRule operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateTopicRuleRequest {
@@ -497,7 +960,35 @@ pub struct CreateTopicRuleRequest {
     #[serde(rename="topicRulePayload")]
     pub topic_rule_payload: TopicRulePayload,
 }
-
+impl CreateTopicRuleRequest {
+    /// Sets `rule_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTopicRuleRequest.rule_name = value.into();`.
+    pub fn rule_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_name = value.into();
+        self
+    }
+    /// Sets `topic_rule_payload`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTopicRuleRequest.topic_rule_payload = value.into();`.
+    pub fn topic_rule_payload<ValueType: Into<TopicRulePayload>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.topic_rule_payload = value.into();
+        self
+    }
+    /// Returns a new instance of CreateTopicRuleRequest with optional fields set to `None`.
+    pub fn new<ruleNameType: Into<String>, topicRulePayloadType: Into<TopicRulePayload>>
+        (rule_name: ruleNameType,
+         topic_rule_payload: topicRulePayloadType)
+         -> CreateTopicRuleRequest {
+        CreateTopicRuleRequest {
+            rule_name: rule_name.into(),
+            topic_rule_payload: topic_rule_payload.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Input for the DeleteCACertificate operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteCACertificateRequest {
@@ -505,7 +996,23 @@ pub struct DeleteCACertificateRequest {
     #[serde(rename="certificateId")]
     pub certificate_id: String,
 }
-
+impl DeleteCACertificateRequest {
+    /// Sets `certificate_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteCACertificateRequest.certificate_id = value.into();`.
+    pub fn certificate_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteCACertificateRequest with optional fields set to `None`.
+    pub fn new<certificateIdType: Into<String>>(certificate_id: certificateIdType)
+                                                -> DeleteCACertificateRequest {
+        DeleteCACertificateRequest {
+            certificate_id: certificate_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output for the DeleteCACertificate operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteCACertificateResponse;
@@ -517,7 +1024,23 @@ pub struct DeleteCertificateRequest {
     #[serde(rename="certificateId")]
     pub certificate_id: String,
 }
-
+impl DeleteCertificateRequest {
+    /// Sets `certificate_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteCertificateRequest.certificate_id = value.into();`.
+    pub fn certificate_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteCertificateRequest with optional fields set to `None`.
+    pub fn new<certificateIdType: Into<String>>(certificate_id: certificateIdType)
+                                                -> DeleteCertificateRequest {
+        DeleteCertificateRequest {
+            certificate_id: certificate_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input for the DeletePolicy operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeletePolicyRequest {
@@ -525,7 +1048,22 @@ pub struct DeletePolicyRequest {
     #[serde(rename="policyName")]
     pub policy_name: String,
 }
-
+impl DeletePolicyRequest {
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePolicyRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeletePolicyRequest with optional fields set to `None`.
+    pub fn new<policyNameType: Into<String>>(policy_name: policyNameType) -> DeletePolicyRequest {
+        DeletePolicyRequest {
+            policy_name: policy_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input for the DeletePolicyVersion operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeletePolicyVersionRequest {
@@ -536,7 +1074,33 @@ pub struct DeletePolicyVersionRequest {
     #[serde(rename="policyVersionId")]
     pub policy_version_id: String,
 }
-
+impl DeletePolicyVersionRequest {
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePolicyVersionRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Sets `policy_version_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePolicyVersionRequest.policy_version_id = value.into();`.
+    pub fn policy_version_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_version_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeletePolicyVersionRequest with optional fields set to `None`.
+    pub fn new<policyNameType: Into<String>, policyVersionIdType: Into<String>>
+        (policy_name: policyNameType,
+         policy_version_id: policyVersionIdType)
+         -> DeletePolicyVersionRequest {
+        DeletePolicyVersionRequest {
+            policy_name: policy_name.into(),
+            policy_version_id: policy_version_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input for the DeleteRegistrationCode operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteRegistrationCodeRequest;
@@ -556,7 +1120,29 @@ pub struct DeleteThingRequest {
     #[serde(rename="thingName")]
     pub thing_name: String,
 }
-
+impl DeleteThingRequest {
+    /// Sets `expected_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteThingRequest.expected_version = Some(value.into());`.
+    pub fn expected_version<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.expected_version = Some(value.into());
+        self
+    }
+    /// Sets `thing_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteThingRequest.thing_name = value.into();`.
+    pub fn thing_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.thing_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteThingRequest with optional fields set to `None`.
+    pub fn new<thingNameType: Into<String>>(thing_name: thingNameType) -> DeleteThingRequest {
+        DeleteThingRequest {
+            thing_name: thing_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output of the DeleteThing operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteThingResponse;
@@ -568,7 +1154,23 @@ pub struct DeleteThingTypeRequest {
     #[serde(rename="thingTypeName")]
     pub thing_type_name: String,
 }
-
+impl DeleteThingTypeRequest {
+    /// Sets `thing_type_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteThingTypeRequest.thing_type_name = value.into();`.
+    pub fn thing_type_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.thing_type_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteThingTypeRequest with optional fields set to `None`.
+    pub fn new<thingTypeNameType: Into<String>>(thing_type_name: thingTypeNameType)
+                                                -> DeleteThingTypeRequest {
+        DeleteThingTypeRequest {
+            thing_type_name: thing_type_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output for the DeleteThingType operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteThingTypeResponse;
@@ -580,7 +1182,22 @@ pub struct DeleteTopicRuleRequest {
     #[serde(rename="ruleName")]
     pub rule_name: String,
 }
-
+impl DeleteTopicRuleRequest {
+    /// Sets `rule_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTopicRuleRequest.rule_name = value.into();`.
+    pub fn rule_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteTopicRuleRequest with optional fields set to `None`.
+    pub fn new<ruleNameType: Into<String>>(rule_name: ruleNameType) -> DeleteTopicRuleRequest {
+        DeleteTopicRuleRequest {
+            rule_name: rule_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input for the DeprecateThingType operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeprecateThingTypeRequest {
@@ -592,7 +1209,30 @@ pub struct DeprecateThingTypeRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub undo_deprecate: Option<bool>,
 }
-
+impl DeprecateThingTypeRequest {
+    /// Sets `thing_type_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeprecateThingTypeRequest.thing_type_name = value.into();`.
+    pub fn thing_type_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.thing_type_name = value.into();
+        self
+    }
+    /// Sets `undo_deprecate`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeprecateThingTypeRequest.undo_deprecate = Some(value.into());`.
+    pub fn undo_deprecate<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.undo_deprecate = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeprecateThingTypeRequest with optional fields set to `None`.
+    pub fn new<thingTypeNameType: Into<String>>(thing_type_name: thingTypeNameType)
+                                                -> DeprecateThingTypeRequest {
+        DeprecateThingTypeRequest {
+            thing_type_name: thing_type_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output for the DeprecateThingType operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeprecateThingTypeResponse;
@@ -604,7 +1244,23 @@ pub struct DescribeCACertificateRequest {
     #[serde(rename="certificateId")]
     pub certificate_id: String,
 }
-
+impl DescribeCACertificateRequest {
+    /// Sets `certificate_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCACertificateRequest.certificate_id = value.into();`.
+    pub fn certificate_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeCACertificateRequest with optional fields set to `None`.
+    pub fn new<certificateIdType: Into<String>>(certificate_id: certificateIdType)
+                                                -> DescribeCACertificateRequest {
+        DescribeCACertificateRequest {
+            certificate_id: certificate_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output from the DescribeCACertificate operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeCACertificateResponse {
@@ -613,7 +1269,6 @@ pub struct DescribeCACertificateResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub certificate_description: Option<CACertificateDescription>,
 }
-
 #[doc="<p>The input for the DescribeCertificate operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeCertificateRequest {
@@ -621,7 +1276,23 @@ pub struct DescribeCertificateRequest {
     #[serde(rename="certificateId")]
     pub certificate_id: String,
 }
-
+impl DescribeCertificateRequest {
+    /// Sets `certificate_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCertificateRequest.certificate_id = value.into();`.
+    pub fn certificate_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeCertificateRequest with optional fields set to `None`.
+    pub fn new<certificateIdType: Into<String>>(certificate_id: certificateIdType)
+                                                -> DescribeCertificateRequest {
+        DescribeCertificateRequest {
+            certificate_id: certificate_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output of the DescribeCertificate operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeCertificateResponse {
@@ -630,7 +1301,6 @@ pub struct DescribeCertificateResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub certificate_description: Option<CertificateDescription>,
 }
-
 #[doc="<p>The input for the DescribeEndpoint operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeEndpointRequest;
@@ -643,7 +1313,6 @@ pub struct DescribeEndpointResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub endpoint_address: Option<String>,
 }
-
 #[doc="<p>The input for the DescribeThing operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeThingRequest {
@@ -651,7 +1320,22 @@ pub struct DescribeThingRequest {
     #[serde(rename="thingName")]
     pub thing_name: String,
 }
-
+impl DescribeThingRequest {
+    /// Sets `thing_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeThingRequest.thing_name = value.into();`.
+    pub fn thing_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.thing_name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeThingRequest with optional fields set to `None`.
+    pub fn new<thingNameType: Into<String>>(thing_name: thingNameType) -> DescribeThingRequest {
+        DescribeThingRequest {
+            thing_name: thing_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output from the DescribeThing operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeThingResponse {
@@ -676,7 +1360,6 @@ pub struct DescribeThingResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<i64>,
 }
-
 #[doc="<p>The input for the DescribeThingType operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeThingTypeRequest {
@@ -684,7 +1367,23 @@ pub struct DescribeThingTypeRequest {
     #[serde(rename="thingTypeName")]
     pub thing_type_name: String,
 }
-
+impl DescribeThingTypeRequest {
+    /// Sets `thing_type_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeThingTypeRequest.thing_type_name = value.into();`.
+    pub fn thing_type_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.thing_type_name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeThingTypeRequest with optional fields set to `None`.
+    pub fn new<thingTypeNameType: Into<String>>(thing_type_name: thingTypeNameType)
+                                                -> DescribeThingTypeRequest {
+        DescribeThingTypeRequest {
+            thing_type_name: thing_type_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output for the DescribeThingType operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeThingTypeResponse {
@@ -701,7 +1400,6 @@ pub struct DescribeThingTypeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub thing_type_properties: Option<ThingTypeProperties>,
 }
-
 #[doc="<p>The input for the DetachPrincipalPolicy operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DetachPrincipalPolicyRequest {
@@ -712,7 +1410,33 @@ pub struct DetachPrincipalPolicyRequest {
     #[serde(rename="principal")]
     pub principal: String,
 }
-
+impl DetachPrincipalPolicyRequest {
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachPrincipalPolicyRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Sets `principal`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachPrincipalPolicyRequest.principal = value.into();`.
+    pub fn principal<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.principal = value.into();
+        self
+    }
+    /// Returns a new instance of DetachPrincipalPolicyRequest with optional fields set to `None`.
+    pub fn new<policyNameType: Into<String>, principalType: Into<String>>
+        (policy_name: policyNameType,
+         principal: principalType)
+         -> DetachPrincipalPolicyRequest {
+        DetachPrincipalPolicyRequest {
+            policy_name: policy_name.into(),
+            principal: principal.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input for the DetachThingPrincipal operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DetachThingPrincipalRequest {
@@ -723,7 +1447,33 @@ pub struct DetachThingPrincipalRequest {
     #[serde(rename="thingName")]
     pub thing_name: String,
 }
-
+impl DetachThingPrincipalRequest {
+    /// Sets `principal`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachThingPrincipalRequest.principal = value.into();`.
+    pub fn principal<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.principal = value.into();
+        self
+    }
+    /// Sets `thing_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DetachThingPrincipalRequest.thing_name = value.into();`.
+    pub fn thing_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.thing_name = value.into();
+        self
+    }
+    /// Returns a new instance of DetachThingPrincipalRequest with optional fields set to `None`.
+    pub fn new<principalType: Into<String>, thingNameType: Into<String>>
+        (principal: principalType,
+         thing_name: thingNameType)
+         -> DetachThingPrincipalRequest {
+        DetachThingPrincipalRequest {
+            principal: principal.into(),
+            thing_name: thing_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output from the DetachThingPrincipal operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DetachThingPrincipalResponse;
@@ -735,7 +1485,22 @@ pub struct DisableTopicRuleRequest {
     #[serde(rename="ruleName")]
     pub rule_name: String,
 }
-
+impl DisableTopicRuleRequest {
+    /// Sets `rule_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableTopicRuleRequest.rule_name = value.into();`.
+    pub fn rule_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_name = value.into();
+        self
+    }
+    /// Returns a new instance of DisableTopicRuleRequest with optional fields set to `None`.
+    pub fn new<ruleNameType: Into<String>>(rule_name: ruleNameType) -> DisableTopicRuleRequest {
+        DisableTopicRuleRequest {
+            rule_name: rule_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes an action to write to a DynamoDB table.</p> <p>The <code>tableName</code>, <code>hashKeyField</code>, and <code>rangeKeyField</code> values must match the values used when you created the table.</p> <p>The <code>hashKeyValue</code> and <code>rangeKeyvalue</code> fields use a substitution template syntax. These templates provide data at runtime. The syntax is as follows: ${<i>sql-expression</i>}.</p> <p>You can specify any valid expression in a WHERE or SELECT clause, including JSON properties, comparisons, calculations, and functions. For example, the following field uses the third level of the topic:</p> <p> <code>\"hashKeyValue\": \"${topic(3)}\"</code> </p> <p>The following field uses the timestamp:</p> <p> <code>\"rangeKeyValue\": \"${timestamp()}\"</code> </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct DynamoDBAction {
@@ -776,7 +1541,96 @@ pub struct DynamoDBAction {
     #[serde(rename="tableName")]
     pub table_name: String,
 }
-
+impl DynamoDBAction {
+    /// Sets `hash_key_field`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DynamoDBAction.hash_key_field = value.into();`.
+    pub fn hash_key_field<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hash_key_field = value.into();
+        self
+    }
+    /// Sets `hash_key_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DynamoDBAction.hash_key_type = Some(value.into());`.
+    pub fn hash_key_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hash_key_type = Some(value.into());
+        self
+    }
+    /// Sets `hash_key_value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DynamoDBAction.hash_key_value = value.into();`.
+    pub fn hash_key_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hash_key_value = value.into();
+        self
+    }
+    /// Sets `operation`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DynamoDBAction.operation = Some(value.into());`.
+    pub fn operation<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.operation = Some(value.into());
+        self
+    }
+    /// Sets `payload_field`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DynamoDBAction.payload_field = Some(value.into());`.
+    pub fn payload_field<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.payload_field = Some(value.into());
+        self
+    }
+    /// Sets `range_key_field`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DynamoDBAction.range_key_field = Some(value.into());`.
+    pub fn range_key_field<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.range_key_field = Some(value.into());
+        self
+    }
+    /// Sets `range_key_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DynamoDBAction.range_key_type = Some(value.into());`.
+    pub fn range_key_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.range_key_type = Some(value.into());
+        self
+    }
+    /// Sets `range_key_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DynamoDBAction.range_key_value = Some(value.into());`.
+    pub fn range_key_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.range_key_value = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DynamoDBAction.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Sets `table_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DynamoDBAction.table_name = value.into();`.
+    pub fn table_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.table_name = value.into();
+        self
+    }
+    /// Returns a new instance of DynamoDBAction with optional fields set to `None`.
+    pub fn new<hashKeyFieldType: Into<String>,
+               hashKeyValueType: Into<String>,
+               roleArnType: Into<String>,
+               tableNameType: Into<String>>
+        (hash_key_field: hashKeyFieldType,
+         hash_key_value: hashKeyValueType,
+         role_arn: roleArnType,
+         table_name: tableNameType)
+         -> DynamoDBAction {
+        DynamoDBAction {
+            hash_key_field: hash_key_field.into(),
+            hash_key_value: hash_key_value.into(),
+            role_arn: role_arn.into(),
+            table_name: table_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes an action to write to a DynamoDB table.</p> <p>This DynamoDB action writes each attribute in the message payload into it's own column in the DynamoDB table.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct DynamoDBv2Action {
@@ -789,7 +1643,26 @@ pub struct DynamoDBv2Action {
     #[serde(skip_serializing_if="Option::is_none")]
     pub role_arn: Option<String>,
 }
-
+impl DynamoDBv2Action {
+    /// Sets `put_item`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DynamoDBv2Action.put_item = Some(value.into());`.
+    pub fn put_item<ValueType: Into<PutItemInput>>(mut self, value: ValueType) -> Self {
+        self.put_item = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DynamoDBv2Action.role_arn = Some(value.into());`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DynamoDBv2Action with optional fields set to `None`.
+    pub fn new() -> DynamoDBv2Action {
+        DynamoDBv2Action { ..Default::default() }
+    }
+}
 #[doc="<p>Describes an action that writes data to an Amazon Elasticsearch Service domain.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ElasticsearchAction {
@@ -809,7 +1682,64 @@ pub struct ElasticsearchAction {
     #[serde(rename="type")]
     pub type_: String,
 }
-
+impl ElasticsearchAction {
+    /// Sets `endpoint`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchAction.endpoint = value.into();`.
+    pub fn endpoint<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.endpoint = value.into();
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchAction.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `index`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchAction.index = value.into();`.
+    pub fn index<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.index = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchAction.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ElasticsearchAction.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of ElasticsearchAction with optional fields set to `None`.
+    pub fn new<endpointType: Into<String>,
+               idType: Into<String>,
+               indexType: Into<String>,
+               roleArnType: Into<String>,
+               typeType: Into<String>>
+        (endpoint: endpointType,
+         id: idType,
+         index: indexType,
+         role_arn: roleArnType,
+         type_: typeType)
+         -> ElasticsearchAction {
+        ElasticsearchAction {
+            endpoint: endpoint.into(),
+            id: id.into(),
+            index: index.into(),
+            role_arn: role_arn.into(),
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input for the EnableTopicRuleRequest operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct EnableTopicRuleRequest {
@@ -817,7 +1747,22 @@ pub struct EnableTopicRuleRequest {
     #[serde(rename="ruleName")]
     pub rule_name: String,
 }
-
+impl EnableTopicRuleRequest {
+    /// Sets `rule_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableTopicRuleRequest.rule_name = value.into();`.
+    pub fn rule_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_name = value.into();
+        self
+    }
+    /// Returns a new instance of EnableTopicRuleRequest with optional fields set to `None`.
+    pub fn new<ruleNameType: Into<String>>(rule_name: ruleNameType) -> EnableTopicRuleRequest {
+        EnableTopicRuleRequest {
+            rule_name: rule_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes an action that writes data to an Amazon Kinesis Firehose stream.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct FirehoseAction {
@@ -832,7 +1777,40 @@ pub struct FirehoseAction {
     #[serde(skip_serializing_if="Option::is_none")]
     pub separator: Option<String>,
 }
-
+impl FirehoseAction {
+    /// Sets `delivery_stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FirehoseAction.delivery_stream_name = value.into();`.
+    pub fn delivery_stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.delivery_stream_name = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FirehoseAction.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Sets `separator`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FirehoseAction.separator = Some(value.into());`.
+    pub fn separator<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.separator = Some(value.into());
+        self
+    }
+    /// Returns a new instance of FirehoseAction with optional fields set to `None`.
+    pub fn new<deliveryStreamNameType: Into<String>, roleArnType: Into<String>>
+        (delivery_stream_name: deliveryStreamNameType,
+         role_arn: roleArnType)
+         -> FirehoseAction {
+        FirehoseAction {
+            delivery_stream_name: delivery_stream_name.into(),
+            role_arn: role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input for the GetLoggingOptions operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetLoggingOptionsRequest;
@@ -849,7 +1827,6 @@ pub struct GetLoggingOptionsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub role_arn: Option<String>,
 }
-
 #[doc="<p>The input for the GetPolicy operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetPolicyRequest {
@@ -857,7 +1834,22 @@ pub struct GetPolicyRequest {
     #[serde(rename="policyName")]
     pub policy_name: String,
 }
-
+impl GetPolicyRequest {
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetPolicyRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetPolicyRequest with optional fields set to `None`.
+    pub fn new<policyNameType: Into<String>>(policy_name: policyNameType) -> GetPolicyRequest {
+        GetPolicyRequest {
+            policy_name: policy_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output from the GetPolicy operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetPolicyResponse {
@@ -878,7 +1870,6 @@ pub struct GetPolicyResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policy_name: Option<String>,
 }
-
 #[doc="<p>The input for the GetPolicyVersion operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetPolicyVersionRequest {
@@ -889,7 +1880,33 @@ pub struct GetPolicyVersionRequest {
     #[serde(rename="policyVersionId")]
     pub policy_version_id: String,
 }
-
+impl GetPolicyVersionRequest {
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetPolicyVersionRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Sets `policy_version_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetPolicyVersionRequest.policy_version_id = value.into();`.
+    pub fn policy_version_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_version_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetPolicyVersionRequest with optional fields set to `None`.
+    pub fn new<policyNameType: Into<String>, policyVersionIdType: Into<String>>
+        (policy_name: policyNameType,
+         policy_version_id: policyVersionIdType)
+         -> GetPolicyVersionRequest {
+        GetPolicyVersionRequest {
+            policy_name: policy_name.into(),
+            policy_version_id: policy_version_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output from the GetPolicyVersion operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetPolicyVersionResponse {
@@ -914,7 +1931,6 @@ pub struct GetPolicyVersionResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policy_version_id: Option<String>,
 }
-
 #[doc="<p>The input to the GetRegistrationCode operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetRegistrationCodeRequest;
@@ -927,7 +1943,6 @@ pub struct GetRegistrationCodeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub registration_code: Option<String>,
 }
-
 #[doc="<p>The input for the GetTopicRule operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetTopicRuleRequest {
@@ -935,7 +1950,22 @@ pub struct GetTopicRuleRequest {
     #[serde(rename="ruleName")]
     pub rule_name: String,
 }
-
+impl GetTopicRuleRequest {
+    /// Sets `rule_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetTopicRuleRequest.rule_name = value.into();`.
+    pub fn rule_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetTopicRuleRequest with optional fields set to `None`.
+    pub fn new<ruleNameType: Into<String>>(rule_name: ruleNameType) -> GetTopicRuleRequest {
+        GetTopicRuleRequest {
+            rule_name: rule_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output from the GetTopicRule operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetTopicRuleResponse {
@@ -948,7 +1978,6 @@ pub struct GetTopicRuleResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rule_arn: Option<String>,
 }
-
 #[doc="<p>Describes a key pair.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct KeyPair {
@@ -961,7 +1990,6 @@ pub struct KeyPair {
     #[serde(skip_serializing_if="Option::is_none")]
     pub public_key: Option<String>,
 }
-
 #[doc="<p>Describes an action to write data to an Amazon Kinesis stream.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct KinesisAction {
@@ -976,7 +2004,37 @@ pub struct KinesisAction {
     #[serde(rename="streamName")]
     pub stream_name: String,
 }
-
+impl KinesisAction {
+    /// Sets `partition_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisAction.partition_key = Some(value.into());`.
+    pub fn partition_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.partition_key = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisAction.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Sets `stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisAction.stream_name = value.into();`.
+    pub fn stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stream_name = value.into();
+        self
+    }
+    /// Returns a new instance of KinesisAction with optional fields set to `None`.
+pub fn new<roleArnType: Into<String>, streamNameType: Into<String>>(role_arn: roleArnType, stream_name: streamNameType) -> KinesisAction{
+        KinesisAction {
+            role_arn: role_arn.into(),
+            stream_name: stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes an action to invoke a Lambda function.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct LambdaAction {
@@ -984,7 +2042,22 @@ pub struct LambdaAction {
     #[serde(rename="functionArn")]
     pub function_arn: String,
 }
-
+impl LambdaAction {
+    /// Sets `function_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LambdaAction.function_arn = value.into();`.
+    pub fn function_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.function_arn = value.into();
+        self
+    }
+    /// Returns a new instance of LambdaAction with optional fields set to `None`.
+    pub fn new<functionArnType: Into<String>>(function_arn: functionArnType) -> LambdaAction {
+        LambdaAction {
+            function_arn: function_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Input for the ListCACertificates operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListCACertificatesRequest {
@@ -1001,7 +2074,33 @@ pub struct ListCACertificatesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub page_size: Option<i64>,
 }
-
+impl ListCACertificatesRequest {
+    /// Sets `ascending_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCACertificatesRequest.ascending_order = Some(value.into());`.
+    pub fn ascending_order<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.ascending_order = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCACertificatesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCACertificatesRequest.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListCACertificatesRequest with optional fields set to `None`.
+    pub fn new() -> ListCACertificatesRequest {
+        ListCACertificatesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The output from the ListCACertificates operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListCACertificatesResponse {
@@ -1014,7 +2113,6 @@ pub struct ListCACertificatesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_marker: Option<String>,
 }
-
 #[doc="<p>The input to the ListCertificatesByCA operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListCertificatesByCARequest {
@@ -1034,7 +2132,44 @@ pub struct ListCertificatesByCARequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub page_size: Option<i64>,
 }
-
+impl ListCertificatesByCARequest {
+    /// Sets `ascending_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCertificatesByCARequest.ascending_order = Some(value.into());`.
+    pub fn ascending_order<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.ascending_order = Some(value.into());
+        self
+    }
+    /// Sets `ca_certificate_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCertificatesByCARequest.ca_certificate_id = value.into();`.
+    pub fn ca_certificate_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ca_certificate_id = value.into();
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCertificatesByCARequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCertificatesByCARequest.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListCertificatesByCARequest with optional fields set to `None`.
+    pub fn new<caCertificateIdType: Into<String>>(ca_certificate_id: caCertificateIdType)
+                                                  -> ListCertificatesByCARequest {
+        ListCertificatesByCARequest {
+            ca_certificate_id: ca_certificate_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output of the ListCertificatesByCA operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListCertificatesByCAResponse {
@@ -1047,7 +2182,6 @@ pub struct ListCertificatesByCAResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_marker: Option<String>,
 }
-
 #[doc="<p>The input for the ListCertificates operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListCertificatesRequest {
@@ -1064,7 +2198,33 @@ pub struct ListCertificatesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub page_size: Option<i64>,
 }
-
+impl ListCertificatesRequest {
+    /// Sets `ascending_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCertificatesRequest.ascending_order = Some(value.into());`.
+    pub fn ascending_order<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.ascending_order = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCertificatesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListCertificatesRequest.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListCertificatesRequest with optional fields set to `None`.
+    pub fn new() -> ListCertificatesRequest {
+        ListCertificatesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The output of the ListCertificates operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListCertificatesResponse {
@@ -1077,7 +2237,6 @@ pub struct ListCertificatesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_marker: Option<String>,
 }
-
 #[doc="<p>The input to the ListOutgoingCertificates operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListOutgoingCertificatesRequest {
@@ -1094,7 +2253,33 @@ pub struct ListOutgoingCertificatesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub page_size: Option<i64>,
 }
-
+impl ListOutgoingCertificatesRequest {
+    /// Sets `ascending_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListOutgoingCertificatesRequest.ascending_order = Some(value.into());`.
+    pub fn ascending_order<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.ascending_order = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListOutgoingCertificatesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListOutgoingCertificatesRequest.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListOutgoingCertificatesRequest with optional fields set to `None`.
+    pub fn new() -> ListOutgoingCertificatesRequest {
+        ListOutgoingCertificatesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The output from the ListOutgoingCertificates operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListOutgoingCertificatesResponse {
@@ -1107,7 +2292,6 @@ pub struct ListOutgoingCertificatesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub outgoing_certificates: Option<Vec<OutgoingCertificate>>,
 }
-
 #[doc="<p>The input for the ListPolicies operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListPoliciesRequest {
@@ -1124,7 +2308,33 @@ pub struct ListPoliciesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub page_size: Option<i64>,
 }
-
+impl ListPoliciesRequest {
+    /// Sets `ascending_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPoliciesRequest.ascending_order = Some(value.into());`.
+    pub fn ascending_order<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.ascending_order = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPoliciesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPoliciesRequest.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListPoliciesRequest with optional fields set to `None`.
+    pub fn new() -> ListPoliciesRequest {
+        ListPoliciesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The output from the ListPolicies operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListPoliciesResponse {
@@ -1137,7 +2347,6 @@ pub struct ListPoliciesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policies: Option<Vec<Policy>>,
 }
-
 #[doc="<p>The input for the ListPolicyPrincipals operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListPolicyPrincipalsRequest {
@@ -1157,7 +2366,44 @@ pub struct ListPolicyPrincipalsRequest {
     #[serde(rename="policyName")]
     pub policy_name: String,
 }
-
+impl ListPolicyPrincipalsRequest {
+    /// Sets `ascending_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPolicyPrincipalsRequest.ascending_order = Some(value.into());`.
+    pub fn ascending_order<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.ascending_order = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPolicyPrincipalsRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPolicyPrincipalsRequest.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPolicyPrincipalsRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListPolicyPrincipalsRequest with optional fields set to `None`.
+    pub fn new<policyNameType: Into<String>>(policy_name: policyNameType)
+                                             -> ListPolicyPrincipalsRequest {
+        ListPolicyPrincipalsRequest {
+            policy_name: policy_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output from the ListPolicyPrincipals operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListPolicyPrincipalsResponse {
@@ -1170,7 +2416,6 @@ pub struct ListPolicyPrincipalsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub principals: Option<Vec<String>>,
 }
-
 #[doc="<p>The input for the ListPolicyVersions operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListPolicyVersionsRequest {
@@ -1178,7 +2423,23 @@ pub struct ListPolicyVersionsRequest {
     #[serde(rename="policyName")]
     pub policy_name: String,
 }
-
+impl ListPolicyVersionsRequest {
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPolicyVersionsRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListPolicyVersionsRequest with optional fields set to `None`.
+    pub fn new<policyNameType: Into<String>>(policy_name: policyNameType)
+                                             -> ListPolicyVersionsRequest {
+        ListPolicyVersionsRequest {
+            policy_name: policy_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output from the ListPolicyVersions operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListPolicyVersionsResponse {
@@ -1187,7 +2448,6 @@ pub struct ListPolicyVersionsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policy_versions: Option<Vec<PolicyVersion>>,
 }
-
 #[doc="<p>The input for the ListPrincipalPolicies operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListPrincipalPoliciesRequest {
@@ -1207,7 +2467,44 @@ pub struct ListPrincipalPoliciesRequest {
     #[serde(rename="principal")]
     pub principal: String,
 }
-
+impl ListPrincipalPoliciesRequest {
+    /// Sets `ascending_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPrincipalPoliciesRequest.ascending_order = Some(value.into());`.
+    pub fn ascending_order<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.ascending_order = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPrincipalPoliciesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPrincipalPoliciesRequest.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Sets `principal`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPrincipalPoliciesRequest.principal = value.into();`.
+    pub fn principal<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.principal = value.into();
+        self
+    }
+    /// Returns a new instance of ListPrincipalPoliciesRequest with optional fields set to `None`.
+    pub fn new<principalType: Into<String>>(principal: principalType)
+                                            -> ListPrincipalPoliciesRequest {
+        ListPrincipalPoliciesRequest {
+            principal: principal.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output from the ListPrincipalPolicies operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListPrincipalPoliciesResponse {
@@ -1220,7 +2517,6 @@ pub struct ListPrincipalPoliciesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policies: Option<Vec<Policy>>,
 }
-
 #[doc="<p>The input for the ListPrincipalThings operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListPrincipalThingsRequest {
@@ -1236,7 +2532,37 @@ pub struct ListPrincipalThingsRequest {
     #[serde(rename="principal")]
     pub principal: String,
 }
-
+impl ListPrincipalThingsRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPrincipalThingsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPrincipalThingsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `principal`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPrincipalThingsRequest.principal = value.into();`.
+    pub fn principal<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.principal = value.into();
+        self
+    }
+    /// Returns a new instance of ListPrincipalThingsRequest with optional fields set to `None`.
+    pub fn new<principalType: Into<String>>(principal: principalType)
+                                            -> ListPrincipalThingsRequest {
+        ListPrincipalThingsRequest {
+            principal: principal.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output from the ListPrincipalThings operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListPrincipalThingsResponse {
@@ -1249,7 +2575,6 @@ pub struct ListPrincipalThingsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub things: Option<Vec<String>>,
 }
-
 #[doc="<p>The input for the ListThingPrincipal operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListThingPrincipalsRequest {
@@ -1257,7 +2582,23 @@ pub struct ListThingPrincipalsRequest {
     #[serde(rename="thingName")]
     pub thing_name: String,
 }
-
+impl ListThingPrincipalsRequest {
+    /// Sets `thing_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListThingPrincipalsRequest.thing_name = value.into();`.
+    pub fn thing_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.thing_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListThingPrincipalsRequest with optional fields set to `None`.
+    pub fn new<thingNameType: Into<String>>(thing_name: thingNameType)
+                                            -> ListThingPrincipalsRequest {
+        ListThingPrincipalsRequest {
+            thing_name: thing_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output from the ListThingPrincipals operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListThingPrincipalsResponse {
@@ -1266,7 +2607,6 @@ pub struct ListThingPrincipalsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub principals: Option<Vec<String>>,
 }
-
 #[doc="<p>The input for the ListThingTypes operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListThingTypesRequest {
@@ -1283,7 +2623,33 @@ pub struct ListThingTypesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub thing_type_name: Option<String>,
 }
-
+impl ListThingTypesRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListThingTypesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListThingTypesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `thing_type_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListThingTypesRequest.thing_type_name = Some(value.into());`.
+    pub fn thing_type_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.thing_type_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListThingTypesRequest with optional fields set to `None`.
+    pub fn new() -> ListThingTypesRequest {
+        ListThingTypesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The output for the ListThingTypes operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListThingTypesResponse {
@@ -1296,7 +2662,6 @@ pub struct ListThingTypesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub thing_types: Option<Vec<ThingTypeDefinition>>,
 }
-
 #[doc="<p>The input for the ListThings operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListThingsRequest {
@@ -1321,7 +2686,47 @@ pub struct ListThingsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub thing_type_name: Option<String>,
 }
-
+impl ListThingsRequest {
+    /// Sets `attribute_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListThingsRequest.attribute_name = Some(value.into());`.
+    pub fn attribute_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute_name = Some(value.into());
+        self
+    }
+    /// Sets `attribute_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListThingsRequest.attribute_value = Some(value.into());`.
+    pub fn attribute_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute_value = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListThingsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListThingsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `thing_type_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListThingsRequest.thing_type_name = Some(value.into());`.
+    pub fn thing_type_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.thing_type_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListThingsRequest with optional fields set to `None`.
+    pub fn new() -> ListThingsRequest {
+        ListThingsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The output from the ListThings operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListThingsResponse {
@@ -1334,7 +2739,6 @@ pub struct ListThingsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub things: Option<Vec<ThingAttribute>>,
 }
-
 #[doc="<p>The input for the ListTopicRules operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTopicRulesRequest {
@@ -1355,7 +2759,40 @@ pub struct ListTopicRulesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub topic: Option<String>,
 }
-
+impl ListTopicRulesRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTopicRulesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTopicRulesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `rule_disabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTopicRulesRequest.rule_disabled = Some(value.into());`.
+    pub fn rule_disabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.rule_disabled = Some(value.into());
+        self
+    }
+    /// Sets `topic`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTopicRulesRequest.topic = Some(value.into());`.
+    pub fn topic<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListTopicRulesRequest with optional fields set to `None`.
+    pub fn new() -> ListTopicRulesRequest {
+        ListTopicRulesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The output from the ListTopicRules operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTopicRulesResponse {
@@ -1368,7 +2805,6 @@ pub struct ListTopicRulesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rules: Option<Vec<TopicRuleListItem>>,
 }
-
 #[doc="<p>Describes the logging options payload.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct LoggingOptionsPayload {
@@ -1380,7 +2816,29 @@ pub struct LoggingOptionsPayload {
     #[serde(rename="roleArn")]
     pub role_arn: String,
 }
-
+impl LoggingOptionsPayload {
+    /// Sets `log_level`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LoggingOptionsPayload.log_level = Some(value.into());`.
+    pub fn log_level<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_level = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LoggingOptionsPayload.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Returns a new instance of LoggingOptionsPayload with optional fields set to `None`.
+    pub fn new<roleArnType: Into<String>>(role_arn: roleArnType) -> LoggingOptionsPayload {
+        LoggingOptionsPayload {
+            role_arn: role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A certificate that has been transfered but not yet accepted.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct OutgoingCertificate {
@@ -1409,7 +2867,6 @@ pub struct OutgoingCertificate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub transferred_to: Option<String>,
 }
-
 #[doc="<p>Describes an AWS IoT policy.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Policy {
@@ -1422,7 +2879,6 @@ pub struct Policy {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policy_name: Option<String>,
 }
-
 #[doc="<p>Describes a policy version.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PolicyVersion {
@@ -1439,7 +2895,6 @@ pub struct PolicyVersion {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version_id: Option<String>,
 }
-
 #[doc="<p>The input for the DynamoActionVS action that specifies the DynamoDB table to which the message data will be written.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct PutItemInput {
@@ -1447,7 +2902,22 @@ pub struct PutItemInput {
     #[serde(rename="tableName")]
     pub table_name: String,
 }
-
+impl PutItemInput {
+    /// Sets `table_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutItemInput.table_name = value.into();`.
+    pub fn table_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.table_name = value.into();
+        self
+    }
+    /// Returns a new instance of PutItemInput with optional fields set to `None`.
+    pub fn new<tableNameType: Into<String>>(table_name: tableNameType) -> PutItemInput {
+        PutItemInput {
+            table_name: table_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input to the RegisterCACertificate operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RegisterCACertificateRequest {
@@ -1466,7 +2936,47 @@ pub struct RegisterCACertificateRequest {
     #[serde(rename="verificationCertificate")]
     pub verification_certificate: String,
 }
-
+impl RegisterCACertificateRequest {
+    /// Sets `allow_auto_registration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterCACertificateRequest.allow_auto_registration = Some(value.into());`.
+    pub fn allow_auto_registration<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.allow_auto_registration = Some(value.into());
+        self
+    }
+    /// Sets `ca_certificate`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterCACertificateRequest.ca_certificate = value.into();`.
+    pub fn ca_certificate<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ca_certificate = value.into();
+        self
+    }
+    /// Sets `set_as_active`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterCACertificateRequest.set_as_active = Some(value.into());`.
+    pub fn set_as_active<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.set_as_active = Some(value.into());
+        self
+    }
+    /// Sets `verification_certificate`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterCACertificateRequest.verification_certificate = value.into();`.
+    pub fn verification_certificate<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.verification_certificate = value.into();
+        self
+    }
+    /// Returns a new instance of RegisterCACertificateRequest with optional fields set to `None`.
+    pub fn new<caCertificateType: Into<String>, verificationCertificateType: Into<String>>
+        (ca_certificate: caCertificateType,
+         verification_certificate: verificationCertificateType)
+         -> RegisterCACertificateRequest {
+        RegisterCACertificateRequest {
+            ca_certificate: ca_certificate.into(),
+            verification_certificate: verification_certificate.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output from the RegisterCACertificateResponse operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RegisterCACertificateResponse {
@@ -1479,7 +2989,6 @@ pub struct RegisterCACertificateResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub certificate_id: Option<String>,
 }
-
 #[doc="<p>The input to the RegisterCertificate operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RegisterCertificateRequest {
@@ -1495,7 +3004,37 @@ pub struct RegisterCertificateRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
+impl RegisterCertificateRequest {
+    /// Sets `ca_certificate_pem`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterCertificateRequest.ca_certificate_pem = Some(value.into());`.
+    pub fn ca_certificate_pem<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ca_certificate_pem = Some(value.into());
+        self
+    }
+    /// Sets `certificate_pem`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterCertificateRequest.certificate_pem = value.into();`.
+    pub fn certificate_pem<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_pem = value.into();
+        self
+    }
+    /// Sets `status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterCertificateRequest.status = Some(value.into());`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RegisterCertificateRequest with optional fields set to `None`.
+    pub fn new<certificatePemType: Into<String>>(certificate_pem: certificatePemType)
+                                                 -> RegisterCertificateRequest {
+        RegisterCertificateRequest {
+            certificate_pem: certificate_pem.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output from the RegisterCertificate operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RegisterCertificateResponse {
@@ -1508,7 +3047,6 @@ pub struct RegisterCertificateResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub certificate_id: Option<String>,
 }
-
 #[doc="<p>The input for the RejectCertificateTransfer operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RejectCertificateTransferRequest {
@@ -1520,7 +3058,30 @@ pub struct RejectCertificateTransferRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub reject_reason: Option<String>,
 }
-
+impl RejectCertificateTransferRequest {
+    /// Sets `certificate_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RejectCertificateTransferRequest.certificate_id = value.into();`.
+    pub fn certificate_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_id = value.into();
+        self
+    }
+    /// Sets `reject_reason`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RejectCertificateTransferRequest.reject_reason = Some(value.into());`.
+    pub fn reject_reason<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reject_reason = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RejectCertificateTransferRequest with optional fields set to `None`.
+    pub fn new<certificateIdType: Into<String>>(certificate_id: certificateIdType)
+                                                -> RejectCertificateTransferRequest {
+        RejectCertificateTransferRequest {
+            certificate_id: certificate_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input for the ReplaceTopicRule operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ReplaceTopicRuleRequest {
@@ -1531,7 +3092,35 @@ pub struct ReplaceTopicRuleRequest {
     #[serde(rename="topicRulePayload")]
     pub topic_rule_payload: TopicRulePayload,
 }
-
+impl ReplaceTopicRuleRequest {
+    /// Sets `rule_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceTopicRuleRequest.rule_name = value.into();`.
+    pub fn rule_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_name = value.into();
+        self
+    }
+    /// Sets `topic_rule_payload`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceTopicRuleRequest.topic_rule_payload = value.into();`.
+    pub fn topic_rule_payload<ValueType: Into<TopicRulePayload>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.topic_rule_payload = value.into();
+        self
+    }
+    /// Returns a new instance of ReplaceTopicRuleRequest with optional fields set to `None`.
+    pub fn new<ruleNameType: Into<String>, topicRulePayloadType: Into<TopicRulePayload>>
+        (rule_name: ruleNameType,
+         topic_rule_payload: topicRulePayloadType)
+         -> ReplaceTopicRuleRequest {
+        ReplaceTopicRuleRequest {
+            rule_name: rule_name.into(),
+            topic_rule_payload: topic_rule_payload.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes an action to republish to another topic.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct RepublishAction {
@@ -1542,7 +3131,32 @@ pub struct RepublishAction {
     #[serde(rename="topic")]
     pub topic: String,
 }
-
+impl RepublishAction {
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RepublishAction.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Sets `topic`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RepublishAction.topic = value.into();`.
+    pub fn topic<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic = value.into();
+        self
+    }
+    /// Returns a new instance of RepublishAction with optional fields set to `None`.
+    pub fn new<roleArnType: Into<String>, topicType: Into<String>>(role_arn: roleArnType,
+                                                                   topic: topicType)
+                                                                   -> RepublishAction {
+        RepublishAction {
+            role_arn: role_arn.into(),
+            topic: topic.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes an action to write data to an Amazon S3 bucket.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct S3Action {
@@ -1560,7 +3174,49 @@ pub struct S3Action {
     #[serde(rename="roleArn")]
     pub role_arn: String,
 }
-
+impl S3Action {
+    /// Sets `bucket_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Action.bucket_name = value.into();`.
+    pub fn bucket_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket_name = value.into();
+        self
+    }
+    /// Sets `canned_acl`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Action.canned_acl = Some(value.into());`.
+    pub fn canned_acl<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.canned_acl = Some(value.into());
+        self
+    }
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Action.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Action.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Returns a new instance of S3Action with optional fields set to `None`.
+    pub fn new<bucketNameType: Into<String>, keyType: Into<String>, roleArnType: Into<String>>
+        (bucket_name: bucketNameType,
+         key: keyType,
+         role_arn: roleArnType)
+         -> S3Action {
+        S3Action {
+            bucket_name: bucket_name.into(),
+            key: key.into(),
+            role_arn: role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes an action to write a message to a Salesforce IoT Cloud Input Stream.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct SalesforceAction {
@@ -1571,7 +3227,32 @@ pub struct SalesforceAction {
     #[serde(rename="url")]
     pub url: String,
 }
-
+impl SalesforceAction {
+    /// Sets `token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SalesforceAction.token = value.into();`.
+    pub fn token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.token = value.into();
+        self
+    }
+    /// Sets `url`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SalesforceAction.url = value.into();`.
+    pub fn url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.url = value.into();
+        self
+    }
+    /// Returns a new instance of SalesforceAction with optional fields set to `None`.
+    pub fn new<tokenType: Into<String>, urlType: Into<String>>(token: tokenType,
+                                                               url: urlType)
+                                                               -> SalesforceAction {
+        SalesforceAction {
+            token: token.into(),
+            url: url.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input for the SetDefaultPolicyVersion operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SetDefaultPolicyVersionRequest {
@@ -1582,7 +3263,33 @@ pub struct SetDefaultPolicyVersionRequest {
     #[serde(rename="policyVersionId")]
     pub policy_version_id: String,
 }
-
+impl SetDefaultPolicyVersionRequest {
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetDefaultPolicyVersionRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Sets `policy_version_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetDefaultPolicyVersionRequest.policy_version_id = value.into();`.
+    pub fn policy_version_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_version_id = value.into();
+        self
+    }
+    /// Returns a new instance of SetDefaultPolicyVersionRequest with optional fields set to `None`.
+    pub fn new<policyNameType: Into<String>, policyVersionIdType: Into<String>>
+        (policy_name: policyNameType,
+         policy_version_id: policyVersionIdType)
+         -> SetDefaultPolicyVersionRequest {
+        SetDefaultPolicyVersionRequest {
+            policy_name: policy_name.into(),
+            policy_version_id: policy_version_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input for the SetLoggingOptions operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SetLoggingOptionsRequest {
@@ -1590,7 +3297,26 @@ pub struct SetLoggingOptionsRequest {
     #[serde(rename="loggingOptionsPayload")]
     pub logging_options_payload: LoggingOptionsPayload,
 }
-
+impl SetLoggingOptionsRequest {
+    /// Sets `logging_options_payload`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetLoggingOptionsRequest.logging_options_payload = value.into();`.
+    pub fn logging_options_payload<ValueType: Into<LoggingOptionsPayload>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.logging_options_payload = value.into();
+        self
+    }
+    /// Returns a new instance of SetLoggingOptionsRequest with optional fields set to `None`.
+    pub fn new<loggingOptionsPayloadType: Into<LoggingOptionsPayload>>
+        (logging_options_payload: loggingOptionsPayloadType)
+         -> SetLoggingOptionsRequest {
+        SetLoggingOptionsRequest {
+            logging_options_payload: logging_options_payload.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes an action to publish to an Amazon SNS topic.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct SnsAction {
@@ -1605,7 +3331,39 @@ pub struct SnsAction {
     #[serde(rename="targetArn")]
     pub target_arn: String,
 }
-
+impl SnsAction {
+    /// Sets `message_format`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SnsAction.message_format = Some(value.into());`.
+    pub fn message_format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.message_format = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SnsAction.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Sets `target_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SnsAction.target_arn = value.into();`.
+    pub fn target_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_arn = value.into();
+        self
+    }
+    /// Returns a new instance of SnsAction with optional fields set to `None`.
+    pub fn new<roleArnType: Into<String>, targetArnType: Into<String>>(role_arn: roleArnType,
+                                                                       target_arn: targetArnType)
+                                                                       -> SnsAction {
+        SnsAction {
+            role_arn: role_arn.into(),
+            target_arn: target_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes an action to publish data to an Amazon SQS queue.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct SqsAction {
@@ -1620,7 +3378,39 @@ pub struct SqsAction {
     #[serde(skip_serializing_if="Option::is_none")]
     pub use_base_64: Option<bool>,
 }
-
+impl SqsAction {
+    /// Sets `queue_url`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SqsAction.queue_url = value.into();`.
+    pub fn queue_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.queue_url = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SqsAction.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Sets `use_base_64`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SqsAction.use_base_64 = Some(value.into());`.
+    pub fn use_base_64<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.use_base_64 = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SqsAction with optional fields set to `None`.
+    pub fn new<queueUrlType: Into<String>, roleArnType: Into<String>>(queue_url: queueUrlType,
+                                                                      role_arn: roleArnType)
+                                                                      -> SqsAction {
+        SqsAction {
+            queue_url: queue_url.into(),
+            role_arn: role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The properties of the thing, including thing name, thing type name, and a list of thing attributes.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ThingAttribute {
@@ -1641,7 +3431,6 @@ pub struct ThingAttribute {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<i64>,
 }
-
 #[doc="<p>The definition of the thing type, including thing type name and description.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ThingTypeDefinition {
@@ -1658,7 +3447,6 @@ pub struct ThingTypeDefinition {
     #[serde(skip_serializing_if="Option::is_none")]
     pub thing_type_properties: Option<ThingTypeProperties>,
 }
-
 #[doc="<p>The ThingTypeMetadata contains additional information about the thing type including: creation date and time, a value indicating whether the thing type is deprecated, and a date and time when time was deprecated.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ThingTypeMetadata {
@@ -1675,7 +3463,6 @@ pub struct ThingTypeMetadata {
     #[serde(skip_serializing_if="Option::is_none")]
     pub deprecation_date: Option<f64>,
 }
-
 #[doc="<p>The ThingTypeProperties contains information about the thing type including: a thing type description, and a list of searchable thing attribute names.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ThingTypeProperties {
@@ -1688,7 +3475,26 @@ pub struct ThingTypeProperties {
     #[serde(skip_serializing_if="Option::is_none")]
     pub thing_type_description: Option<String>,
 }
-
+impl ThingTypeProperties {
+    /// Sets `searchable_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ThingTypeProperties.searchable_attributes = Some(value.into());`.
+    pub fn searchable_attributes<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.searchable_attributes = Some(value.into());
+        self
+    }
+    /// Sets `thing_type_description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ThingTypeProperties.thing_type_description = Some(value.into());`.
+    pub fn thing_type_description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.thing_type_description = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ThingTypeProperties with optional fields set to `None`.
+    pub fn new() -> ThingTypeProperties {
+        ThingTypeProperties { ..Default::default() }
+    }
+}
 #[doc="<p>Describes a rule.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TopicRule {
@@ -1721,7 +3527,6 @@ pub struct TopicRule {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sql: Option<String>,
 }
-
 #[doc="<p>Describes a rule.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TopicRuleListItem {
@@ -1746,7 +3551,6 @@ pub struct TopicRuleListItem {
     #[serde(skip_serializing_if="Option::is_none")]
     pub topic_pattern: Option<String>,
 }
-
 #[doc="<p>Describes a rule.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TopicRulePayload {
@@ -1769,7 +3573,53 @@ pub struct TopicRulePayload {
     #[serde(rename="sql")]
     pub sql: String,
 }
-
+impl TopicRulePayload {
+    /// Sets `actions`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TopicRulePayload.actions = value.into();`.
+    pub fn actions<ValueType: Into<Vec<Action>>>(mut self, value: ValueType) -> Self {
+        self.actions = value.into();
+        self
+    }
+    /// Sets `aws_iot_sql_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TopicRulePayload.aws_iot_sql_version = Some(value.into());`.
+    pub fn aws_iot_sql_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.aws_iot_sql_version = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TopicRulePayload.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `rule_disabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TopicRulePayload.rule_disabled = Some(value.into());`.
+    pub fn rule_disabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.rule_disabled = Some(value.into());
+        self
+    }
+    /// Sets `sql`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TopicRulePayload.sql = value.into();`.
+    pub fn sql<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sql = value.into();
+        self
+    }
+    /// Returns a new instance of TopicRulePayload with optional fields set to `None`.
+    pub fn new<actionsType: Into<Vec<Action>>, sqlType: Into<String>>(actions: actionsType,
+                                                                      sql: sqlType)
+                                                                      -> TopicRulePayload {
+        TopicRulePayload {
+            actions: actions.into(),
+            sql: sql.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input for the TransferCertificate operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TransferCertificateRequest {
@@ -1784,7 +3634,40 @@ pub struct TransferCertificateRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub transfer_message: Option<String>,
 }
-
+impl TransferCertificateRequest {
+    /// Sets `certificate_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TransferCertificateRequest.certificate_id = value.into();`.
+    pub fn certificate_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_id = value.into();
+        self
+    }
+    /// Sets `target_aws_account`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TransferCertificateRequest.target_aws_account = value.into();`.
+    pub fn target_aws_account<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_aws_account = value.into();
+        self
+    }
+    /// Sets `transfer_message`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TransferCertificateRequest.transfer_message = Some(value.into());`.
+    pub fn transfer_message<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.transfer_message = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TransferCertificateRequest with optional fields set to `None`.
+    pub fn new<certificateIdType: Into<String>, targetAwsAccountType: Into<String>>
+        (certificate_id: certificateIdType,
+         target_aws_account: targetAwsAccountType)
+         -> TransferCertificateRequest {
+        TransferCertificateRequest {
+            certificate_id: certificate_id.into(),
+            target_aws_account: target_aws_account.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output from the TransferCertificate operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TransferCertificateResponse {
@@ -1793,7 +3676,6 @@ pub struct TransferCertificateResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub transferred_certificate_arn: Option<String>,
 }
-
 #[doc="<p>Data used to transfer a certificate to an AWS account.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TransferData {
@@ -1818,7 +3700,6 @@ pub struct TransferData {
     #[serde(skip_serializing_if="Option::is_none")]
     pub transfer_message: Option<String>,
 }
-
 #[doc="<p>The input to the UpdateCACertificate operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateCACertificateRequest {
@@ -1834,7 +3715,39 @@ pub struct UpdateCACertificateRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub new_status: Option<String>,
 }
-
+impl UpdateCACertificateRequest {
+    /// Sets `certificate_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateCACertificateRequest.certificate_id = value.into();`.
+    pub fn certificate_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_id = value.into();
+        self
+    }
+    /// Sets `new_auto_registration_status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateCACertificateRequest.new_auto_registration_status = Some(value.into());`.
+    pub fn new_auto_registration_status<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.new_auto_registration_status = Some(value.into());
+        self
+    }
+    /// Sets `new_status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateCACertificateRequest.new_status = Some(value.into());`.
+    pub fn new_status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.new_status = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateCACertificateRequest with optional fields set to `None`.
+    pub fn new<certificateIdType: Into<String>>(certificate_id: certificateIdType)
+                                                -> UpdateCACertificateRequest {
+        UpdateCACertificateRequest {
+            certificate_id: certificate_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input for the UpdateCertificate operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateCertificateRequest {
@@ -1845,7 +3758,33 @@ pub struct UpdateCertificateRequest {
     #[serde(rename="newStatus")]
     pub new_status: String,
 }
-
+impl UpdateCertificateRequest {
+    /// Sets `certificate_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateCertificateRequest.certificate_id = value.into();`.
+    pub fn certificate_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_id = value.into();
+        self
+    }
+    /// Sets `new_status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateCertificateRequest.new_status = value.into();`.
+    pub fn new_status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.new_status = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateCertificateRequest with optional fields set to `None`.
+    pub fn new<certificateIdType: Into<String>, newStatusType: Into<String>>
+        (certificate_id: certificateIdType,
+         new_status: newStatusType)
+         -> UpdateCertificateRequest {
+        UpdateCertificateRequest {
+            certificate_id: certificate_id.into(),
+            new_status: new_status.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input for the UpdateThing operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateThingRequest {
@@ -1869,7 +3808,52 @@ pub struct UpdateThingRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub thing_type_name: Option<String>,
 }
-
+impl UpdateThingRequest {
+    /// Sets `attribute_payload`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateThingRequest.attribute_payload = Some(value.into());`.
+    pub fn attribute_payload<ValueType: Into<AttributePayload>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.attribute_payload = Some(value.into());
+        self
+    }
+    /// Sets `expected_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateThingRequest.expected_version = Some(value.into());`.
+    pub fn expected_version<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.expected_version = Some(value.into());
+        self
+    }
+    /// Sets `remove_thing_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateThingRequest.remove_thing_type = Some(value.into());`.
+    pub fn remove_thing_type<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.remove_thing_type = Some(value.into());
+        self
+    }
+    /// Sets `thing_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateThingRequest.thing_name = value.into();`.
+    pub fn thing_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.thing_name = value.into();
+        self
+    }
+    /// Sets `thing_type_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateThingRequest.thing_type_name = Some(value.into());`.
+    pub fn thing_type_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.thing_type_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateThingRequest with optional fields set to `None`.
+    pub fn new<thingNameType: Into<String>>(thing_name: thingNameType) -> UpdateThingRequest {
+        UpdateThingRequest {
+            thing_name: thing_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The output from the UpdateThing operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateThingResponse;

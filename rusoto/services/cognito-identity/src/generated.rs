@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -44,7 +45,33 @@ pub struct CognitoIdentityProvider {
     #[serde(skip_serializing_if="Option::is_none")]
     pub server_side_token_check: Option<bool>,
 }
-
+impl CognitoIdentityProvider {
+    /// Sets `client_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CognitoIdentityProvider.client_id = Some(value.into());`.
+    pub fn client_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_id = Some(value.into());
+        self
+    }
+    /// Sets `provider_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CognitoIdentityProvider.provider_name = Some(value.into());`.
+    pub fn provider_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provider_name = Some(value.into());
+        self
+    }
+    /// Sets `server_side_token_check`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CognitoIdentityProvider.server_side_token_check = Some(value.into());`.
+    pub fn server_side_token_check<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.server_side_token_check = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CognitoIdentityProvider with optional fields set to `None`.
+    pub fn new() -> CognitoIdentityProvider {
+        CognitoIdentityProvider { ..Default::default() }
+    }
+}
 #[doc="<p>Input to the CreateIdentityPool action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateIdentityPoolInput {
@@ -75,7 +102,75 @@ pub struct CreateIdentityPoolInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub supported_login_providers: Option<::std::collections::HashMap<String, String>>,
 }
-
+impl CreateIdentityPoolInput {
+    /// Sets `allow_unauthenticated_identities`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateIdentityPoolInput.allow_unauthenticated_identities = value.into();`.
+    pub fn allow_unauthenticated_identities<ValueType: Into<bool>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.allow_unauthenticated_identities = value.into();
+        self
+    }
+    /// Sets `cognito_identity_providers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateIdentityPoolInput.cognito_identity_providers = Some(value.into());`.
+pub fn cognito_identity_providers<ValueType: Into<Vec<CognitoIdentityProvider>>>(mut self, value: ValueType) -> Self{
+        self.cognito_identity_providers = Some(value.into());
+        self
+    }
+    /// Sets `developer_provider_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateIdentityPoolInput.developer_provider_name = Some(value.into());`.
+    pub fn developer_provider_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.developer_provider_name = Some(value.into());
+        self
+    }
+    /// Sets `identity_pool_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateIdentityPoolInput.identity_pool_name = value.into();`.
+    pub fn identity_pool_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity_pool_name = value.into();
+        self
+    }
+    /// Sets `open_id_connect_provider_ar_ns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateIdentityPoolInput.open_id_connect_provider_ar_ns = Some(value.into());`.
+    pub fn open_id_connect_provider_ar_ns<ValueType: Into<Vec<String>>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.open_id_connect_provider_ar_ns = Some(value.into());
+        self
+    }
+    /// Sets `saml_provider_ar_ns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateIdentityPoolInput.saml_provider_ar_ns = Some(value.into());`.
+    pub fn saml_provider_ar_ns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.saml_provider_ar_ns = Some(value.into());
+        self
+    }
+    /// Sets `supported_login_providers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateIdentityPoolInput.supported_login_providers = Some(value.into());`.
+    pub fn supported_login_providers<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.supported_login_providers = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateIdentityPoolInput with optional fields set to `None`.
+    pub fn new<AllowUnauthenticatedIdentitiesType: Into<bool>, IdentityPoolNameType: Into<String>>
+        (allow_unauthenticated_identities: AllowUnauthenticatedIdentitiesType,
+         identity_pool_name: IdentityPoolNameType)
+         -> CreateIdentityPoolInput {
+        CreateIdentityPoolInput {
+            allow_unauthenticated_identities: allow_unauthenticated_identities.into(),
+            identity_pool_name: identity_pool_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Credentials for the provided identity ID.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Credentials {
@@ -96,7 +191,6 @@ pub struct Credentials {
     #[serde(skip_serializing_if="Option::is_none")]
     pub session_token: Option<String>,
 }
-
 #[doc="<p>Input to the <code>DeleteIdentities</code> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteIdentitiesInput {
@@ -104,7 +198,24 @@ pub struct DeleteIdentitiesInput {
     #[serde(rename="IdentityIdsToDelete")]
     pub identity_ids_to_delete: Vec<String>,
 }
-
+impl DeleteIdentitiesInput {
+    /// Sets `identity_ids_to_delete`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteIdentitiesInput.identity_ids_to_delete = value.into();`.
+    pub fn identity_ids_to_delete<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.identity_ids_to_delete = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteIdentitiesInput with optional fields set to `None`.
+pub fn new<IdentityIdsToDeleteType: Into<Vec<String>>>(identity_ids_to_delete: IdentityIdsToDeleteType) -> DeleteIdentitiesInput{
+        DeleteIdentitiesInput {
+            identity_ids_to_delete: identity_ids_to_delete.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Returned in response to a successful <code>DeleteIdentities</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteIdentitiesResponse {
@@ -113,7 +224,6 @@ pub struct DeleteIdentitiesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub unprocessed_identity_ids: Option<Vec<UnprocessedIdentityId>>,
 }
-
 #[doc="<p>Input to the DeleteIdentityPool action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteIdentityPoolInput {
@@ -121,7 +231,23 @@ pub struct DeleteIdentityPoolInput {
     #[serde(rename="IdentityPoolId")]
     pub identity_pool_id: String,
 }
-
+impl DeleteIdentityPoolInput {
+    /// Sets `identity_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteIdentityPoolInput.identity_pool_id = value.into();`.
+    pub fn identity_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteIdentityPoolInput with optional fields set to `None`.
+    pub fn new<IdentityPoolIdType: Into<String>>(identity_pool_id: IdentityPoolIdType)
+                                                 -> DeleteIdentityPoolInput {
+        DeleteIdentityPoolInput {
+            identity_pool_id: identity_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Input to the <code>DescribeIdentity</code> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeIdentityInput {
@@ -129,7 +255,22 @@ pub struct DescribeIdentityInput {
     #[serde(rename="IdentityId")]
     pub identity_id: String,
 }
-
+impl DescribeIdentityInput {
+    /// Sets `identity_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeIdentityInput.identity_id = value.into();`.
+    pub fn identity_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeIdentityInput with optional fields set to `None`.
+    pub fn new<IdentityIdType: Into<String>>(identity_id: IdentityIdType) -> DescribeIdentityInput {
+        DescribeIdentityInput {
+            identity_id: identity_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Input to the DescribeIdentityPool action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeIdentityPoolInput {
@@ -137,7 +278,23 @@ pub struct DescribeIdentityPoolInput {
     #[serde(rename="IdentityPoolId")]
     pub identity_pool_id: String,
 }
-
+impl DescribeIdentityPoolInput {
+    /// Sets `identity_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeIdentityPoolInput.identity_pool_id = value.into();`.
+    pub fn identity_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeIdentityPoolInput with optional fields set to `None`.
+    pub fn new<IdentityPoolIdType: Into<String>>(identity_pool_id: IdentityPoolIdType)
+                                                 -> DescribeIdentityPoolInput {
+        DescribeIdentityPoolInput {
+            identity_pool_id: identity_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Input to the <code>GetCredentialsForIdentity</code> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetCredentialsForIdentityInput {
@@ -153,7 +310,39 @@ pub struct GetCredentialsForIdentityInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub logins: Option<::std::collections::HashMap<String, String>>,
 }
-
+impl GetCredentialsForIdentityInput {
+    /// Sets `custom_role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetCredentialsForIdentityInput.custom_role_arn = Some(value.into());`.
+    pub fn custom_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.custom_role_arn = Some(value.into());
+        self
+    }
+    /// Sets `identity_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetCredentialsForIdentityInput.identity_id = value.into();`.
+    pub fn identity_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity_id = value.into();
+        self
+    }
+    /// Sets `logins`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetCredentialsForIdentityInput.logins = Some(value.into());`.
+    pub fn logins<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.logins = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetCredentialsForIdentityInput with optional fields set to `None`.
+    pub fn new<IdentityIdType: Into<String>>(identity_id: IdentityIdType)
+                                             -> GetCredentialsForIdentityInput {
+        GetCredentialsForIdentityInput {
+            identity_id: identity_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Returned in response to a successful <code>GetCredentialsForIdentity</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetCredentialsForIdentityResponse {
@@ -166,7 +355,6 @@ pub struct GetCredentialsForIdentityResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub identity_id: Option<String>,
 }
-
 #[doc="<p>Input to the GetId action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetIdInput {
@@ -182,7 +370,39 @@ pub struct GetIdInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub logins: Option<::std::collections::HashMap<String, String>>,
 }
-
+impl GetIdInput {
+    /// Sets `account_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetIdInput.account_id = Some(value.into());`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = Some(value.into());
+        self
+    }
+    /// Sets `identity_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetIdInput.identity_pool_id = value.into();`.
+    pub fn identity_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity_pool_id = value.into();
+        self
+    }
+    /// Sets `logins`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetIdInput.logins = Some(value.into());`.
+    pub fn logins<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.logins = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetIdInput with optional fields set to `None`.
+    pub fn new<IdentityPoolIdType: Into<String>>(identity_pool_id: IdentityPoolIdType)
+                                                 -> GetIdInput {
+        GetIdInput {
+            identity_pool_id: identity_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Returned in response to a GetId request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetIdResponse {
@@ -191,7 +411,6 @@ pub struct GetIdResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub identity_id: Option<String>,
 }
-
 #[doc="<p>Input to the <code>GetIdentityPoolRoles</code> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetIdentityPoolRolesInput {
@@ -199,7 +418,23 @@ pub struct GetIdentityPoolRolesInput {
     #[serde(rename="IdentityPoolId")]
     pub identity_pool_id: String,
 }
-
+impl GetIdentityPoolRolesInput {
+    /// Sets `identity_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetIdentityPoolRolesInput.identity_pool_id = value.into();`.
+    pub fn identity_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetIdentityPoolRolesInput with optional fields set to `None`.
+    pub fn new<IdentityPoolIdType: Into<String>>(identity_pool_id: IdentityPoolIdType)
+                                                 -> GetIdentityPoolRolesInput {
+        GetIdentityPoolRolesInput {
+            identity_pool_id: identity_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Returned in response to a successful <code>GetIdentityPoolRoles</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetIdentityPoolRolesResponse {
@@ -216,7 +451,6 @@ pub struct GetIdentityPoolRolesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub roles: Option<::std::collections::HashMap<String, String>>,
 }
-
 #[doc="<p>Input to the <code>GetOpenIdTokenForDeveloperIdentity</code> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetOpenIdTokenForDeveloperIdentityInput {
@@ -235,7 +469,50 @@ pub struct GetOpenIdTokenForDeveloperIdentityInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub token_duration: Option<i64>,
 }
-
+impl GetOpenIdTokenForDeveloperIdentityInput {
+    /// Sets `identity_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetOpenIdTokenForDeveloperIdentityInput.identity_id = Some(value.into());`.
+    pub fn identity_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity_id = Some(value.into());
+        self
+    }
+    /// Sets `identity_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetOpenIdTokenForDeveloperIdentityInput.identity_pool_id = value.into();`.
+    pub fn identity_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity_pool_id = value.into();
+        self
+    }
+    /// Sets `logins`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetOpenIdTokenForDeveloperIdentityInput.logins = value.into();`.
+    pub fn logins<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.logins = value.into();
+        self
+    }
+    /// Sets `token_duration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetOpenIdTokenForDeveloperIdentityInput.token_duration = Some(value.into());`.
+    pub fn token_duration<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.token_duration = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetOpenIdTokenForDeveloperIdentityInput with optional fields set to `None`.
+    pub fn new<IdentityPoolIdType: Into<String>,
+               LoginsType: Into<::std::collections::HashMap<String, String>>>
+        (identity_pool_id: IdentityPoolIdType,
+         logins: LoginsType)
+         -> GetOpenIdTokenForDeveloperIdentityInput {
+        GetOpenIdTokenForDeveloperIdentityInput {
+            identity_pool_id: identity_pool_id.into(),
+            logins: logins.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Returned in response to a successful <code>GetOpenIdTokenForDeveloperIdentity</code> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetOpenIdTokenForDeveloperIdentityResponse {
@@ -248,7 +525,6 @@ pub struct GetOpenIdTokenForDeveloperIdentityResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub token: Option<String>,
 }
-
 #[doc="<p>Input to the GetOpenIdToken action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetOpenIdTokenInput {
@@ -260,7 +536,31 @@ pub struct GetOpenIdTokenInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub logins: Option<::std::collections::HashMap<String, String>>,
 }
-
+impl GetOpenIdTokenInput {
+    /// Sets `identity_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetOpenIdTokenInput.identity_id = value.into();`.
+    pub fn identity_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity_id = value.into();
+        self
+    }
+    /// Sets `logins`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetOpenIdTokenInput.logins = Some(value.into());`.
+    pub fn logins<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.logins = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetOpenIdTokenInput with optional fields set to `None`.
+    pub fn new<IdentityIdType: Into<String>>(identity_id: IdentityIdType) -> GetOpenIdTokenInput {
+        GetOpenIdTokenInput {
+            identity_id: identity_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Returned in response to a successful GetOpenIdToken request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetOpenIdTokenResponse {
@@ -273,7 +573,6 @@ pub struct GetOpenIdTokenResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub token: Option<String>,
 }
-
 #[doc="<p>A description of the identity.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct IdentityDescription {
@@ -294,7 +593,6 @@ pub struct IdentityDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub logins: Option<Vec<String>>,
 }
-
 #[doc="<p>An object representing an Amazon Cognito identity pool.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct IdentityPool {
@@ -328,7 +626,86 @@ pub struct IdentityPool {
     #[serde(skip_serializing_if="Option::is_none")]
     pub supported_login_providers: Option<::std::collections::HashMap<String, String>>,
 }
-
+impl IdentityPool {
+    /// Sets `allow_unauthenticated_identities`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IdentityPool.allow_unauthenticated_identities = value.into();`.
+    pub fn allow_unauthenticated_identities<ValueType: Into<bool>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.allow_unauthenticated_identities = value.into();
+        self
+    }
+    /// Sets `cognito_identity_providers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IdentityPool.cognito_identity_providers = Some(value.into());`.
+pub fn cognito_identity_providers<ValueType: Into<Vec<CognitoIdentityProvider>>>(mut self, value: ValueType) -> Self{
+        self.cognito_identity_providers = Some(value.into());
+        self
+    }
+    /// Sets `developer_provider_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IdentityPool.developer_provider_name = Some(value.into());`.
+    pub fn developer_provider_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.developer_provider_name = Some(value.into());
+        self
+    }
+    /// Sets `identity_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IdentityPool.identity_pool_id = value.into();`.
+    pub fn identity_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity_pool_id = value.into();
+        self
+    }
+    /// Sets `identity_pool_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IdentityPool.identity_pool_name = value.into();`.
+    pub fn identity_pool_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity_pool_name = value.into();
+        self
+    }
+    /// Sets `open_id_connect_provider_ar_ns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IdentityPool.open_id_connect_provider_ar_ns = Some(value.into());`.
+    pub fn open_id_connect_provider_ar_ns<ValueType: Into<Vec<String>>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.open_id_connect_provider_ar_ns = Some(value.into());
+        self
+    }
+    /// Sets `saml_provider_ar_ns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IdentityPool.saml_provider_ar_ns = Some(value.into());`.
+    pub fn saml_provider_ar_ns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.saml_provider_ar_ns = Some(value.into());
+        self
+    }
+    /// Sets `supported_login_providers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IdentityPool.supported_login_providers = Some(value.into());`.
+    pub fn supported_login_providers<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.supported_login_providers = Some(value.into());
+        self
+    }
+    /// Returns a new instance of IdentityPool with optional fields set to `None`.
+    pub fn new<AllowUnauthenticatedIdentitiesType: Into<bool>,
+               IdentityPoolIdType: Into<String>,
+               IdentityPoolNameType: Into<String>>
+        (allow_unauthenticated_identities: AllowUnauthenticatedIdentitiesType,
+         identity_pool_id: IdentityPoolIdType,
+         identity_pool_name: IdentityPoolNameType)
+         -> IdentityPool {
+        IdentityPool {
+            allow_unauthenticated_identities: allow_unauthenticated_identities.into(),
+            identity_pool_id: identity_pool_id.into(),
+            identity_pool_name: identity_pool_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A description of the identity pool.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct IdentityPoolShortDescription {
@@ -341,7 +718,6 @@ pub struct IdentityPoolShortDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub identity_pool_name: Option<String>,
 }
-
 #[doc="<p>Input to the ListIdentities action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListIdentitiesInput {
@@ -360,7 +736,47 @@ pub struct ListIdentitiesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListIdentitiesInput {
+    /// Sets `hide_disabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListIdentitiesInput.hide_disabled = Some(value.into());`.
+    pub fn hide_disabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.hide_disabled = Some(value.into());
+        self
+    }
+    /// Sets `identity_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListIdentitiesInput.identity_pool_id = value.into();`.
+    pub fn identity_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity_pool_id = value.into();
+        self
+    }
+    /// Sets `max_results`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListIdentitiesInput.max_results = value.into();`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListIdentitiesInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListIdentitiesInput with optional fields set to `None`.
+    pub fn new<IdentityPoolIdType: Into<String>, MaxResultsType: Into<i64>>
+        (identity_pool_id: IdentityPoolIdType,
+         max_results: MaxResultsType)
+         -> ListIdentitiesInput {
+        ListIdentitiesInput {
+            identity_pool_id: identity_pool_id.into(),
+            max_results: max_results.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response to a ListIdentities request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListIdentitiesResponse {
@@ -377,7 +793,6 @@ pub struct ListIdentitiesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Input to the ListIdentityPools action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListIdentityPoolsInput {
@@ -389,7 +804,29 @@ pub struct ListIdentityPoolsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListIdentityPoolsInput {
+    /// Sets `max_results`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListIdentityPoolsInput.max_results = value.into();`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListIdentityPoolsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListIdentityPoolsInput with optional fields set to `None`.
+    pub fn new<MaxResultsType: Into<i64>>(max_results: MaxResultsType) -> ListIdentityPoolsInput {
+        ListIdentityPoolsInput {
+            max_results: max_results.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The result of a successful ListIdentityPools action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListIdentityPoolsResponse {
@@ -402,7 +839,6 @@ pub struct ListIdentityPoolsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Input to the <code>LookupDeveloperIdentityInput</code> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct LookupDeveloperIdentityInput {
@@ -426,7 +862,51 @@ pub struct LookupDeveloperIdentityInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl LookupDeveloperIdentityInput {
+    /// Sets `developer_user_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LookupDeveloperIdentityInput.developer_user_identifier = Some(value.into());`.
+    pub fn developer_user_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.developer_user_identifier = Some(value.into());
+        self
+    }
+    /// Sets `identity_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LookupDeveloperIdentityInput.identity_id = Some(value.into());`.
+    pub fn identity_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity_id = Some(value.into());
+        self
+    }
+    /// Sets `identity_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LookupDeveloperIdentityInput.identity_pool_id = value.into();`.
+    pub fn identity_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity_pool_id = value.into();
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LookupDeveloperIdentityInput.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LookupDeveloperIdentityInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of LookupDeveloperIdentityInput with optional fields set to `None`.
+    pub fn new<IdentityPoolIdType: Into<String>>(identity_pool_id: IdentityPoolIdType)
+                                                 -> LookupDeveloperIdentityInput {
+        LookupDeveloperIdentityInput {
+            identity_pool_id: identity_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Returned in response to a successful <code>LookupDeveloperIdentity</code> action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LookupDeveloperIdentityResponse {
@@ -443,7 +923,6 @@ pub struct LookupDeveloperIdentityResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>A rule that maps a claim name, a claim value, and a match type to a role ARN.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct MappingRule {
@@ -460,7 +939,54 @@ pub struct MappingRule {
     #[serde(rename="Value")]
     pub value: String,
 }
-
+impl MappingRule {
+    /// Sets `claim`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MappingRule.claim = value.into();`.
+    pub fn claim<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.claim = value.into();
+        self
+    }
+    /// Sets `match_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MappingRule.match_type = value.into();`.
+    pub fn match_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.match_type = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MappingRule.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MappingRule.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of MappingRule with optional fields set to `None`.
+    pub fn new<ClaimType: Into<String>,
+               MatchTypeType: Into<String>,
+               RoleARNType: Into<String>,
+               ValueType: Into<String>>
+        (claim: ClaimType,
+         match_type: MatchTypeType,
+         role_arn: RoleARNType,
+         value: ValueType)
+         -> MappingRule {
+        MappingRule {
+            claim: claim.into(),
+            match_type: match_type.into(),
+            role_arn: role_arn.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Input to the <code>MergeDeveloperIdentities</code> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct MergeDeveloperIdentitiesInput {
@@ -477,7 +1003,56 @@ pub struct MergeDeveloperIdentitiesInput {
     #[serde(rename="SourceUserIdentifier")]
     pub source_user_identifier: String,
 }
-
+impl MergeDeveloperIdentitiesInput {
+    /// Sets `destination_user_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MergeDeveloperIdentitiesInput.destination_user_identifier = value.into();`.
+    pub fn destination_user_identifier<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.destination_user_identifier = value.into();
+        self
+    }
+    /// Sets `developer_provider_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MergeDeveloperIdentitiesInput.developer_provider_name = value.into();`.
+    pub fn developer_provider_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.developer_provider_name = value.into();
+        self
+    }
+    /// Sets `identity_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MergeDeveloperIdentitiesInput.identity_pool_id = value.into();`.
+    pub fn identity_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity_pool_id = value.into();
+        self
+    }
+    /// Sets `source_user_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MergeDeveloperIdentitiesInput.source_user_identifier = value.into();`.
+    pub fn source_user_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_user_identifier = value.into();
+        self
+    }
+    /// Returns a new instance of MergeDeveloperIdentitiesInput with optional fields set to `None`.
+    pub fn new<DestinationUserIdentifierType: Into<String>,
+               DeveloperProviderNameType: Into<String>,
+               IdentityPoolIdType: Into<String>,
+               SourceUserIdentifierType: Into<String>>
+        (destination_user_identifier: DestinationUserIdentifierType,
+         developer_provider_name: DeveloperProviderNameType,
+         identity_pool_id: IdentityPoolIdType,
+         source_user_identifier: SourceUserIdentifierType)
+         -> MergeDeveloperIdentitiesInput {
+        MergeDeveloperIdentitiesInput {
+            destination_user_identifier: destination_user_identifier.into(),
+            developer_provider_name: developer_provider_name.into(),
+            identity_pool_id: identity_pool_id.into(),
+            source_user_identifier: source_user_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Returned in response to a successful <code>MergeDeveloperIdentities</code> action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MergeDeveloperIdentitiesResponse {
@@ -486,7 +1061,6 @@ pub struct MergeDeveloperIdentitiesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub identity_id: Option<String>,
 }
-
 #[doc="<p>A role mapping.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct RoleMapping {
@@ -502,7 +1076,38 @@ pub struct RoleMapping {
     #[serde(rename="Type")]
     pub type_: String,
 }
-
+impl RoleMapping {
+    /// Sets `ambiguous_role_resolution`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RoleMapping.ambiguous_role_resolution = Some(value.into());`.
+    pub fn ambiguous_role_resolution<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ambiguous_role_resolution = Some(value.into());
+        self
+    }
+    /// Sets `rules_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RoleMapping.rules_configuration = Some(value.into());`.
+    pub fn rules_configuration<ValueType: Into<RulesConfigurationType>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.rules_configuration = Some(value.into());
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RoleMapping.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of RoleMapping with optional fields set to `None`.
+    pub fn new<TypeType: Into<String>>(type_: TypeType) -> RoleMapping {
+        RoleMapping {
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A container for rules.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct RulesConfigurationType {
@@ -510,7 +1115,22 @@ pub struct RulesConfigurationType {
     #[serde(rename="Rules")]
     pub rules: Vec<MappingRule>,
 }
-
+impl RulesConfigurationType {
+    /// Sets `rules`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RulesConfigurationType.rules = value.into();`.
+    pub fn rules<ValueType: Into<Vec<MappingRule>>>(mut self, value: ValueType) -> Self {
+        self.rules = value.into();
+        self
+    }
+    /// Returns a new instance of RulesConfigurationType with optional fields set to `None`.
+    pub fn new<RulesType: Into<Vec<MappingRule>>>(rules: RulesType) -> RulesConfigurationType {
+        RulesConfigurationType {
+            rules: rules.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Input to the <code>SetIdentityPoolRoles</code> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SetIdentityPoolRolesInput {
@@ -525,7 +1145,46 @@ pub struct SetIdentityPoolRolesInput {
     #[serde(rename="Roles")]
     pub roles: ::std::collections::HashMap<String, String>,
 }
-
+impl SetIdentityPoolRolesInput {
+    /// Sets `identity_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetIdentityPoolRolesInput.identity_pool_id = value.into();`.
+    pub fn identity_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity_pool_id = value.into();
+        self
+    }
+    /// Sets `role_mappings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetIdentityPoolRolesInput.role_mappings = Some(value.into());`.
+    pub fn role_mappings<ValueType: Into<::std::collections::HashMap<String, RoleMapping>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.role_mappings = Some(value.into());
+        self
+    }
+    /// Sets `roles`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetIdentityPoolRolesInput.roles = value.into();`.
+    pub fn roles<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                               value: ValueType)
+                                                                               -> Self {
+        self.roles = value.into();
+        self
+    }
+    /// Returns a new instance of SetIdentityPoolRolesInput with optional fields set to `None`.
+    pub fn new<IdentityPoolIdType: Into<String>,
+               RolesType: Into<::std::collections::HashMap<String, String>>>
+        (identity_pool_id: IdentityPoolIdType,
+         roles: RolesType)
+         -> SetIdentityPoolRolesInput {
+        SetIdentityPoolRolesInput {
+            identity_pool_id: identity_pool_id.into(),
+            roles: roles.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Input to the <code>UnlinkDeveloperIdentity</code> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UnlinkDeveloperIdentityInput {
@@ -542,7 +1201,54 @@ pub struct UnlinkDeveloperIdentityInput {
     #[serde(rename="IdentityPoolId")]
     pub identity_pool_id: String,
 }
-
+impl UnlinkDeveloperIdentityInput {
+    /// Sets `developer_provider_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UnlinkDeveloperIdentityInput.developer_provider_name = value.into();`.
+    pub fn developer_provider_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.developer_provider_name = value.into();
+        self
+    }
+    /// Sets `developer_user_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UnlinkDeveloperIdentityInput.developer_user_identifier = value.into();`.
+    pub fn developer_user_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.developer_user_identifier = value.into();
+        self
+    }
+    /// Sets `identity_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UnlinkDeveloperIdentityInput.identity_id = value.into();`.
+    pub fn identity_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity_id = value.into();
+        self
+    }
+    /// Sets `identity_pool_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UnlinkDeveloperIdentityInput.identity_pool_id = value.into();`.
+    pub fn identity_pool_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity_pool_id = value.into();
+        self
+    }
+    /// Returns a new instance of UnlinkDeveloperIdentityInput with optional fields set to `None`.
+    pub fn new<DeveloperProviderNameType: Into<String>,
+               DeveloperUserIdentifierType: Into<String>,
+               IdentityIdType: Into<String>,
+               IdentityPoolIdType: Into<String>>
+        (developer_provider_name: DeveloperProviderNameType,
+         developer_user_identifier: DeveloperUserIdentifierType,
+         identity_id: IdentityIdType,
+         identity_pool_id: IdentityPoolIdType)
+         -> UnlinkDeveloperIdentityInput {
+        UnlinkDeveloperIdentityInput {
+            developer_provider_name: developer_provider_name.into(),
+            developer_user_identifier: developer_user_identifier.into(),
+            identity_id: identity_id.into(),
+            identity_pool_id: identity_pool_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Input to the UnlinkIdentity action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UnlinkIdentityInput {
@@ -556,7 +1262,46 @@ pub struct UnlinkIdentityInput {
     #[serde(rename="LoginsToRemove")]
     pub logins_to_remove: Vec<String>,
 }
-
+impl UnlinkIdentityInput {
+    /// Sets `identity_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UnlinkIdentityInput.identity_id = value.into();`.
+    pub fn identity_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity_id = value.into();
+        self
+    }
+    /// Sets `logins`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UnlinkIdentityInput.logins = value.into();`.
+    pub fn logins<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.logins = value.into();
+        self
+    }
+    /// Sets `logins_to_remove`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UnlinkIdentityInput.logins_to_remove = value.into();`.
+    pub fn logins_to_remove<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.logins_to_remove = value.into();
+        self
+    }
+    /// Returns a new instance of UnlinkIdentityInput with optional fields set to `None`.
+    pub fn new<IdentityIdType: Into<String>,
+               LoginsType: Into<::std::collections::HashMap<String, String>>,
+               LoginsToRemoveType: Into<Vec<String>>>
+        (identity_id: IdentityIdType,
+         logins: LoginsType,
+         logins_to_remove: LoginsToRemoveType)
+         -> UnlinkIdentityInput {
+        UnlinkIdentityInput {
+            identity_id: identity_id.into(),
+            logins: logins.into(),
+            logins_to_remove: logins_to_remove.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>An array of UnprocessedIdentityId objects, each of which contains an ErrorCode and IdentityId.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UnprocessedIdentityId {
@@ -569,7 +1314,6 @@ pub struct UnprocessedIdentityId {
     #[serde(skip_serializing_if="Option::is_none")]
     pub identity_id: Option<String>,
 }
-
 /// Errors returned by CreateIdentityPool
 #[derive(Debug, PartialEq)]
 pub enum CreateIdentityPoolError {

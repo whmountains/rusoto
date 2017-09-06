@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -35,7 +36,23 @@ pub struct BatchGetRepositoriesInput {
     #[serde(rename="repositoryNames")]
     pub repository_names: Vec<String>,
 }
-
+impl BatchGetRepositoriesInput {
+    /// Sets `repository_names`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchGetRepositoriesInput.repository_names = value.into();`.
+    pub fn repository_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.repository_names = value.into();
+        self
+    }
+    /// Returns a new instance of BatchGetRepositoriesInput with optional fields set to `None`.
+    pub fn new<repositoryNamesType: Into<Vec<String>>>(repository_names: repositoryNamesType)
+                                                       -> BatchGetRepositoriesInput {
+        BatchGetRepositoriesInput {
+            repository_names: repository_names.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a batch get repositories operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BatchGetRepositoriesOutput {
@@ -48,7 +65,6 @@ pub struct BatchGetRepositoriesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub repositories_not_found: Option<Vec<String>>,
 }
-
 #[doc="<p>Returns information about a specific Git blob object.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BlobMetadata {
@@ -65,7 +81,6 @@ pub struct BlobMetadata {
     #[serde(skip_serializing_if="Option::is_none")]
     pub path: Option<String>,
 }
-
 #[doc="<p>Returns information about a branch.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BranchInfo {
@@ -78,7 +93,6 @@ pub struct BranchInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub commit_id: Option<String>,
 }
-
 #[doc="<p>Returns information about a specific commit.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Commit {
@@ -107,7 +121,6 @@ pub struct Commit {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tree_id: Option<String>,
 }
-
 #[doc="<p>Represents the input of a create branch operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateBranchInput {
@@ -121,7 +134,44 @@ pub struct CreateBranchInput {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl CreateBranchInput {
+    /// Sets `branch_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBranchInput.branch_name = value.into();`.
+    pub fn branch_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.branch_name = value.into();
+        self
+    }
+    /// Sets `commit_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBranchInput.commit_id = value.into();`.
+    pub fn commit_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.commit_id = value.into();
+        self
+    }
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBranchInput.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateBranchInput with optional fields set to `None`.
+    pub fn new<branchNameType: Into<String>,
+               commitIdType: Into<String>,
+               repositoryNameType: Into<String>>
+        (branch_name: branchNameType,
+         commit_id: commitIdType,
+         repository_name: repositoryNameType)
+         -> CreateBranchInput {
+        CreateBranchInput {
+            branch_name: branch_name.into(),
+            commit_id: commit_id.into(),
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of a create repository operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateRepositoryInput {
@@ -133,7 +183,30 @@ pub struct CreateRepositoryInput {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl CreateRepositoryInput {
+    /// Sets `repository_description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRepositoryInput.repository_description = Some(value.into());`.
+    pub fn repository_description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_description = Some(value.into());
+        self
+    }
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRepositoryInput.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateRepositoryInput with optional fields set to `None`.
+    pub fn new<repositoryNameType: Into<String>>(repository_name: repositoryNameType)
+                                                 -> CreateRepositoryInput {
+        CreateRepositoryInput {
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a create repository operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateRepositoryOutput {
@@ -142,7 +215,6 @@ pub struct CreateRepositoryOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub repository_metadata: Option<RepositoryMetadata>,
 }
-
 #[doc="<p>Represents the input of a delete repository operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteRepositoryInput {
@@ -150,7 +222,23 @@ pub struct DeleteRepositoryInput {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl DeleteRepositoryInput {
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRepositoryInput.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteRepositoryInput with optional fields set to `None`.
+    pub fn new<repositoryNameType: Into<String>>(repository_name: repositoryNameType)
+                                                 -> DeleteRepositoryInput {
+        DeleteRepositoryInput {
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a delete repository operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteRepositoryOutput {
@@ -159,7 +247,6 @@ pub struct DeleteRepositoryOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub repository_id: Option<String>,
 }
-
 #[doc="<p>Returns information about a set of differences for a commit specifier.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Difference {
@@ -176,7 +263,6 @@ pub struct Difference {
     #[serde(skip_serializing_if="Option::is_none")]
     pub change_type: Option<String>,
 }
-
 #[doc="<p>Represents the input of a get blob operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetBlobInput {
@@ -187,7 +273,30 @@ pub struct GetBlobInput {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl GetBlobInput {
+    /// Sets `blob_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBlobInput.blob_id = value.into();`.
+    pub fn blob_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.blob_id = value.into();
+        self
+    }
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBlobInput.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetBlobInput with optional fields set to `None`.
+pub fn new<blobIdType: Into<String>, repositoryNameType: Into<String>>(blob_id: blobIdType, repository_name: repositoryNameType) -> GetBlobInput{
+        GetBlobInput {
+            blob_id: blob_id.into(),
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a get blob operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetBlobOutput {
@@ -200,7 +309,6 @@ pub struct GetBlobOutput {
                         )]
     pub content: Vec<u8>,
 }
-
 #[doc="<p>Represents the input of a get branch operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetBranchInput {
@@ -213,7 +321,26 @@ pub struct GetBranchInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub repository_name: Option<String>,
 }
-
+impl GetBranchInput {
+    /// Sets `branch_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBranchInput.branch_name = Some(value.into());`.
+    pub fn branch_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.branch_name = Some(value.into());
+        self
+    }
+    /// Sets `repository_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBranchInput.repository_name = Some(value.into());`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetBranchInput with optional fields set to `None`.
+    pub fn new() -> GetBranchInput {
+        GetBranchInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the output of a get branch operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetBranchOutput {
@@ -222,7 +349,6 @@ pub struct GetBranchOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub branch: Option<BranchInfo>,
 }
-
 #[doc="<p>Represents the input of a get commit operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetCommitInput {
@@ -233,7 +359,30 @@ pub struct GetCommitInput {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl GetCommitInput {
+    /// Sets `commit_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetCommitInput.commit_id = value.into();`.
+    pub fn commit_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.commit_id = value.into();
+        self
+    }
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetCommitInput.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetCommitInput with optional fields set to `None`.
+pub fn new<commitIdType: Into<String>, repositoryNameType: Into<String>>(commit_id: commitIdType, repository_name: repositoryNameType) -> GetCommitInput{
+        GetCommitInput {
+            commit_id: commit_id.into(),
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a get commit operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetCommitOutput {
@@ -241,7 +390,6 @@ pub struct GetCommitOutput {
     #[serde(rename="commit")]
     pub commit: Commit,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDifferencesInput {
     #[doc="<p>A non-negative integer used to limit the number of returned results.</p>"]
@@ -271,7 +419,68 @@ pub struct GetDifferencesInput {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl GetDifferencesInput {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDifferencesInput.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDifferencesInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `after_commit_specifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDifferencesInput.after_commit_specifier = value.into();`.
+    pub fn after_commit_specifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.after_commit_specifier = value.into();
+        self
+    }
+    /// Sets `after_path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDifferencesInput.after_path = Some(value.into());`.
+    pub fn after_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.after_path = Some(value.into());
+        self
+    }
+    /// Sets `before_commit_specifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDifferencesInput.before_commit_specifier = Some(value.into());`.
+    pub fn before_commit_specifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.before_commit_specifier = Some(value.into());
+        self
+    }
+    /// Sets `before_path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDifferencesInput.before_path = Some(value.into());`.
+    pub fn before_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.before_path = Some(value.into());
+        self
+    }
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDifferencesInput.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetDifferencesInput with optional fields set to `None`.
+    pub fn new<afterCommitSpecifierType: Into<String>, repositoryNameType: Into<String>>
+        (after_commit_specifier: afterCommitSpecifierType,
+         repository_name: repositoryNameType)
+         -> GetDifferencesInput {
+        GetDifferencesInput {
+            after_commit_specifier: after_commit_specifier.into(),
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetDifferencesOutput {
     #[doc="<p>An enumeration token that can be used in a request to return the next batch of the results.</p>"]
@@ -283,7 +492,6 @@ pub struct GetDifferencesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub differences: Option<Vec<Difference>>,
 }
-
 #[doc="<p>Represents the input of a get repository operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetRepositoryInput {
@@ -291,7 +499,23 @@ pub struct GetRepositoryInput {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl GetRepositoryInput {
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRepositoryInput.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetRepositoryInput with optional fields set to `None`.
+    pub fn new<repositoryNameType: Into<String>>(repository_name: repositoryNameType)
+                                                 -> GetRepositoryInput {
+        GetRepositoryInput {
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a get repository operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetRepositoryOutput {
@@ -300,7 +524,6 @@ pub struct GetRepositoryOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub repository_metadata: Option<RepositoryMetadata>,
 }
-
 #[doc="<p>Represents the input of a get repository triggers operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetRepositoryTriggersInput {
@@ -308,7 +531,23 @@ pub struct GetRepositoryTriggersInput {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl GetRepositoryTriggersInput {
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRepositoryTriggersInput.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetRepositoryTriggersInput with optional fields set to `None`.
+    pub fn new<repositoryNameType: Into<String>>(repository_name: repositoryNameType)
+                                                 -> GetRepositoryTriggersInput {
+        GetRepositoryTriggersInput {
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a get repository triggers operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetRepositoryTriggersOutput {
@@ -321,7 +560,6 @@ pub struct GetRepositoryTriggersOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub triggers: Option<Vec<RepositoryTrigger>>,
 }
-
 #[doc="<p>Represents the input of a list branches operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListBranchesInput {
@@ -333,7 +571,30 @@ pub struct ListBranchesInput {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl ListBranchesInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListBranchesInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListBranchesInput.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListBranchesInput with optional fields set to `None`.
+    pub fn new<repositoryNameType: Into<String>>(repository_name: repositoryNameType)
+                                                 -> ListBranchesInput {
+        ListBranchesInput {
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a list branches operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListBranchesOutput {
@@ -346,7 +607,6 @@ pub struct ListBranchesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Represents the input of a list repositories operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListRepositoriesInput {
@@ -363,7 +623,33 @@ pub struct ListRepositoriesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sort_by: Option<String>,
 }
-
+impl ListRepositoriesInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRepositoriesInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRepositoriesInput.order = Some(value.into());`.
+    pub fn order<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.order = Some(value.into());
+        self
+    }
+    /// Sets `sort_by`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRepositoriesInput.sort_by = Some(value.into());`.
+    pub fn sort_by<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sort_by = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListRepositoriesInput with optional fields set to `None`.
+    pub fn new() -> ListRepositoriesInput {
+        ListRepositoriesInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the output of a list repositories operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListRepositoriesOutput {
@@ -376,7 +662,6 @@ pub struct ListRepositoriesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub repositories: Option<Vec<RepositoryNameIdPair>>,
 }
-
 #[doc="<p>Represents the input ofa put repository triggers operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutRepositoryTriggersInput {
@@ -387,7 +672,33 @@ pub struct PutRepositoryTriggersInput {
     #[serde(rename="triggers")]
     pub triggers: Vec<RepositoryTrigger>,
 }
-
+impl PutRepositoryTriggersInput {
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRepositoryTriggersInput.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Sets `triggers`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRepositoryTriggersInput.triggers = value.into();`.
+    pub fn triggers<ValueType: Into<Vec<RepositoryTrigger>>>(mut self, value: ValueType) -> Self {
+        self.triggers = value.into();
+        self
+    }
+    /// Returns a new instance of PutRepositoryTriggersInput with optional fields set to `None`.
+    pub fn new<repositoryNameType: Into<String>, triggersType: Into<Vec<RepositoryTrigger>>>
+        (repository_name: repositoryNameType,
+         triggers: triggersType)
+         -> PutRepositoryTriggersInput {
+        PutRepositoryTriggersInput {
+            repository_name: repository_name.into(),
+            triggers: triggers.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a put repository triggers operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutRepositoryTriggersOutput {
@@ -396,7 +707,6 @@ pub struct PutRepositoryTriggersOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub configuration_id: Option<String>,
 }
-
 #[doc="<p>Information about a repository.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RepositoryMetadata {
@@ -441,7 +751,6 @@ pub struct RepositoryMetadata {
     #[serde(skip_serializing_if="Option::is_none")]
     pub repository_name: Option<String>,
 }
-
 #[doc="<p>Information about a repository name and ID.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RepositoryNameIdPair {
@@ -454,7 +763,6 @@ pub struct RepositoryNameIdPair {
     #[serde(skip_serializing_if="Option::is_none")]
     pub repository_name: Option<String>,
 }
-
 #[doc="<p>Information about a trigger for a repository.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct RepositoryTrigger {
@@ -476,7 +784,58 @@ pub struct RepositoryTrigger {
     #[serde(rename="name")]
     pub name: String,
 }
-
+impl RepositoryTrigger {
+    /// Sets `branches`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RepositoryTrigger.branches = Some(value.into());`.
+    pub fn branches<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.branches = Some(value.into());
+        self
+    }
+    /// Sets `custom_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RepositoryTrigger.custom_data = Some(value.into());`.
+    pub fn custom_data<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.custom_data = Some(value.into());
+        self
+    }
+    /// Sets `destination_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RepositoryTrigger.destination_arn = value.into();`.
+    pub fn destination_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination_arn = value.into();
+        self
+    }
+    /// Sets `events`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RepositoryTrigger.events = value.into();`.
+    pub fn events<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.events = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RepositoryTrigger.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of RepositoryTrigger with optional fields set to `None`.
+    pub fn new<destinationArnType: Into<String>,
+               eventsType: Into<Vec<String>>,
+               nameType: Into<String>>
+        (destination_arn: destinationArnType,
+         events: eventsType,
+         name: nameType)
+         -> RepositoryTrigger {
+        RepositoryTrigger {
+            destination_arn: destination_arn.into(),
+            events: events.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A trigger failed to run.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RepositoryTriggerExecutionFailure {
@@ -489,7 +848,6 @@ pub struct RepositoryTriggerExecutionFailure {
     #[serde(skip_serializing_if="Option::is_none")]
     pub trigger: Option<String>,
 }
-
 #[doc="<p>Represents the input of a test repository triggers operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TestRepositoryTriggersInput {
@@ -500,7 +858,33 @@ pub struct TestRepositoryTriggersInput {
     #[serde(rename="triggers")]
     pub triggers: Vec<RepositoryTrigger>,
 }
-
+impl TestRepositoryTriggersInput {
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestRepositoryTriggersInput.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Sets `triggers`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestRepositoryTriggersInput.triggers = value.into();`.
+    pub fn triggers<ValueType: Into<Vec<RepositoryTrigger>>>(mut self, value: ValueType) -> Self {
+        self.triggers = value.into();
+        self
+    }
+    /// Returns a new instance of TestRepositoryTriggersInput with optional fields set to `None`.
+    pub fn new<repositoryNameType: Into<String>, triggersType: Into<Vec<RepositoryTrigger>>>
+        (repository_name: repositoryNameType,
+         triggers: triggersType)
+         -> TestRepositoryTriggersInput {
+        TestRepositoryTriggersInput {
+            repository_name: repository_name.into(),
+            triggers: triggers.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a test repository triggers operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TestRepositoryTriggersOutput {
@@ -513,7 +897,6 @@ pub struct TestRepositoryTriggersOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub successful_executions: Option<Vec<String>>,
 }
-
 #[doc="<p>Represents the input of an update default branch operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateDefaultBranchInput {
@@ -524,7 +907,33 @@ pub struct UpdateDefaultBranchInput {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl UpdateDefaultBranchInput {
+    /// Sets `default_branch_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDefaultBranchInput.default_branch_name = value.into();`.
+    pub fn default_branch_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_branch_name = value.into();
+        self
+    }
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDefaultBranchInput.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateDefaultBranchInput with optional fields set to `None`.
+    pub fn new<defaultBranchNameType: Into<String>, repositoryNameType: Into<String>>
+        (default_branch_name: defaultBranchNameType,
+         repository_name: repositoryNameType)
+         -> UpdateDefaultBranchInput {
+        UpdateDefaultBranchInput {
+            default_branch_name: default_branch_name.into(),
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of an update repository description operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateRepositoryDescriptionInput {
@@ -536,7 +945,30 @@ pub struct UpdateRepositoryDescriptionInput {
     #[serde(rename="repositoryName")]
     pub repository_name: String,
 }
-
+impl UpdateRepositoryDescriptionInput {
+    /// Sets `repository_description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRepositoryDescriptionInput.repository_description = Some(value.into());`.
+    pub fn repository_description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_description = Some(value.into());
+        self
+    }
+    /// Sets `repository_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRepositoryDescriptionInput.repository_name = value.into();`.
+    pub fn repository_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository_name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateRepositoryDescriptionInput with optional fields set to `None`.
+    pub fn new<repositoryNameType: Into<String>>(repository_name: repositoryNameType)
+                                                 -> UpdateRepositoryDescriptionInput {
+        UpdateRepositoryDescriptionInput {
+            repository_name: repository_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of an update repository description operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateRepositoryNameInput {
@@ -547,7 +979,33 @@ pub struct UpdateRepositoryNameInput {
     #[serde(rename="oldName")]
     pub old_name: String,
 }
-
+impl UpdateRepositoryNameInput {
+    /// Sets `new_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRepositoryNameInput.new_name = value.into();`.
+    pub fn new_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.new_name = value.into();
+        self
+    }
+    /// Sets `old_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRepositoryNameInput.old_name = value.into();`.
+    pub fn old_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.old_name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateRepositoryNameInput with optional fields set to `None`.
+    pub fn new<newNameType: Into<String>, oldNameType: Into<String>>
+        (new_name: newNameType,
+         old_name: oldNameType)
+         -> UpdateRepositoryNameInput {
+        UpdateRepositoryNameInput {
+            new_name: new_name.into(),
+            old_name: old_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Information about the user who made a specified commit.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UserInfo {
@@ -564,7 +1022,6 @@ pub struct UserInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 /// Errors returned by BatchGetRepositories
 #[derive(Debug, PartialEq)]
 pub enum BatchGetRepositoriesError {

@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -38,7 +39,33 @@ pub struct AddTagsToOnPremisesInstancesInput {
     #[serde(rename="tags")]
     pub tags: Vec<Tag>,
 }
-
+impl AddTagsToOnPremisesInstancesInput {
+    /// Sets `instance_names`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToOnPremisesInstancesInput.instance_names = value.into();`.
+    pub fn instance_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_names = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToOnPremisesInstancesInput.tags = value.into();`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of AddTagsToOnPremisesInstancesInput with optional fields set to `None`.
+    pub fn new<instanceNamesType: Into<Vec<String>>, tagsType: Into<Vec<Tag>>>
+        (instance_names: instanceNamesType,
+         tags: tagsType)
+         -> AddTagsToOnPremisesInstancesInput {
+        AddTagsToOnPremisesInstancesInput {
+            instance_names: instance_names.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Information about an alarm.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Alarm {
@@ -47,7 +74,19 @@ pub struct Alarm {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
+impl Alarm {
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Alarm.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Alarm with optional fields set to `None`.
+    pub fn new() -> Alarm {
+        Alarm { ..Default::default() }
+    }
+}
 #[doc="<p>Information about alarms associated with the deployment group.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct AlarmConfiguration {
@@ -64,7 +103,33 @@ pub struct AlarmConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ignore_poll_alarm_failure: Option<bool>,
 }
-
+impl AlarmConfiguration {
+    /// Sets `alarms`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AlarmConfiguration.alarms = Some(value.into());`.
+    pub fn alarms<ValueType: Into<Vec<Alarm>>>(mut self, value: ValueType) -> Self {
+        self.alarms = Some(value.into());
+        self
+    }
+    /// Sets `enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AlarmConfiguration.enabled = Some(value.into());`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = Some(value.into());
+        self
+    }
+    /// Sets `ignore_poll_alarm_failure`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AlarmConfiguration.ignore_poll_alarm_failure = Some(value.into());`.
+    pub fn ignore_poll_alarm_failure<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.ignore_poll_alarm_failure = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AlarmConfiguration with optional fields set to `None`.
+    pub fn new() -> AlarmConfiguration {
+        AlarmConfiguration { ..Default::default() }
+    }
+}
 #[doc="<p>Information about an application.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ApplicationInfo {
@@ -89,7 +154,6 @@ pub struct ApplicationInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub linked_to_git_hub: Option<bool>,
 }
-
 #[doc="<p>Information about a configuration for automatically rolling back to a previous version of an application revision when a deployment doesn't complete successfully.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct AutoRollbackConfiguration {
@@ -102,7 +166,26 @@ pub struct AutoRollbackConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub events: Option<Vec<String>>,
 }
-
+impl AutoRollbackConfiguration {
+    /// Sets `enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AutoRollbackConfiguration.enabled = Some(value.into());`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = Some(value.into());
+        self
+    }
+    /// Sets `events`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AutoRollbackConfiguration.events = Some(value.into());`.
+    pub fn events<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.events = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AutoRollbackConfiguration with optional fields set to `None`.
+    pub fn new() -> AutoRollbackConfiguration {
+        AutoRollbackConfiguration { ..Default::default() }
+    }
+}
 #[doc="<p>Information about an Auto Scaling group.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AutoScalingGroup {
@@ -115,7 +198,6 @@ pub struct AutoScalingGroup {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p>Represents the input of a BatchGetApplicationRevisions operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct BatchGetApplicationRevisionsInput {
@@ -126,7 +208,33 @@ pub struct BatchGetApplicationRevisionsInput {
     #[serde(rename="revisions")]
     pub revisions: Vec<RevisionLocation>,
 }
-
+impl BatchGetApplicationRevisionsInput {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchGetApplicationRevisionsInput.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `revisions`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchGetApplicationRevisionsInput.revisions = value.into();`.
+    pub fn revisions<ValueType: Into<Vec<RevisionLocation>>>(mut self, value: ValueType) -> Self {
+        self.revisions = value.into();
+        self
+    }
+    /// Returns a new instance of BatchGetApplicationRevisionsInput with optional fields set to `None`.
+    pub fn new<applicationNameType: Into<String>, revisionsType: Into<Vec<RevisionLocation>>>
+        (application_name: applicationNameType,
+         revisions: revisionsType)
+         -> BatchGetApplicationRevisionsInput {
+        BatchGetApplicationRevisionsInput {
+            application_name: application_name.into(),
+            revisions: revisions.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a BatchGetApplicationRevisions operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BatchGetApplicationRevisionsOutput {
@@ -143,7 +251,6 @@ pub struct BatchGetApplicationRevisionsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub revisions: Option<Vec<RevisionInfo>>,
 }
-
 #[doc="<p>Represents the input of a BatchGetApplications operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct BatchGetApplicationsInput {
@@ -152,7 +259,19 @@ pub struct BatchGetApplicationsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub application_names: Option<Vec<String>>,
 }
-
+impl BatchGetApplicationsInput {
+    /// Sets `application_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchGetApplicationsInput.application_names = Some(value.into());`.
+    pub fn application_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.application_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of BatchGetApplicationsInput with optional fields set to `None`.
+    pub fn new() -> BatchGetApplicationsInput {
+        BatchGetApplicationsInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the output of a BatchGetApplications operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BatchGetApplicationsOutput {
@@ -161,7 +280,6 @@ pub struct BatchGetApplicationsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub applications_info: Option<Vec<ApplicationInfo>>,
 }
-
 #[doc="<p>Represents the input of a BatchGetDeploymentGroups operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct BatchGetDeploymentGroupsInput {
@@ -172,7 +290,35 @@ pub struct BatchGetDeploymentGroupsInput {
     #[serde(rename="deploymentGroupNames")]
     pub deployment_group_names: Vec<String>,
 }
-
+impl BatchGetDeploymentGroupsInput {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchGetDeploymentGroupsInput.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `deployment_group_names`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchGetDeploymentGroupsInput.deployment_group_names = value.into();`.
+    pub fn deployment_group_names<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.deployment_group_names = value.into();
+        self
+    }
+    /// Returns a new instance of BatchGetDeploymentGroupsInput with optional fields set to `None`.
+    pub fn new<applicationNameType: Into<String>, deploymentGroupNamesType: Into<Vec<String>>>
+        (application_name: applicationNameType,
+         deployment_group_names: deploymentGroupNamesType)
+         -> BatchGetDeploymentGroupsInput {
+        BatchGetDeploymentGroupsInput {
+            application_name: application_name.into(),
+            deployment_group_names: deployment_group_names.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a BatchGetDeploymentGroups operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BatchGetDeploymentGroupsOutput {
@@ -185,7 +331,6 @@ pub struct BatchGetDeploymentGroupsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub error_message: Option<String>,
 }
-
 #[doc="<p>Represents the input of a BatchGetDeploymentInstances operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct BatchGetDeploymentInstancesInput {
@@ -196,7 +341,33 @@ pub struct BatchGetDeploymentInstancesInput {
     #[serde(rename="instanceIds")]
     pub instance_ids: Vec<String>,
 }
-
+impl BatchGetDeploymentInstancesInput {
+    /// Sets `deployment_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchGetDeploymentInstancesInput.deployment_id = value.into();`.
+    pub fn deployment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_id = value.into();
+        self
+    }
+    /// Sets `instance_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchGetDeploymentInstancesInput.instance_ids = value.into();`.
+    pub fn instance_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_ids = value.into();
+        self
+    }
+    /// Returns a new instance of BatchGetDeploymentInstancesInput with optional fields set to `None`.
+    pub fn new<deploymentIdType: Into<String>, instanceIdsType: Into<Vec<String>>>
+        (deployment_id: deploymentIdType,
+         instance_ids: instanceIdsType)
+         -> BatchGetDeploymentInstancesInput {
+        BatchGetDeploymentInstancesInput {
+            deployment_id: deployment_id.into(),
+            instance_ids: instance_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a BatchGetDeploymentInstances operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BatchGetDeploymentInstancesOutput {
@@ -209,7 +380,6 @@ pub struct BatchGetDeploymentInstancesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instances_summary: Option<Vec<InstanceSummary>>,
 }
-
 #[doc="<p>Represents the input of a BatchGetDeployments operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct BatchGetDeploymentsInput {
@@ -218,7 +388,19 @@ pub struct BatchGetDeploymentsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub deployment_ids: Option<Vec<String>>,
 }
-
+impl BatchGetDeploymentsInput {
+    /// Sets `deployment_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchGetDeploymentsInput.deployment_ids = Some(value.into());`.
+    pub fn deployment_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.deployment_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of BatchGetDeploymentsInput with optional fields set to `None`.
+    pub fn new() -> BatchGetDeploymentsInput {
+        BatchGetDeploymentsInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the output of a BatchGetDeployments operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BatchGetDeploymentsOutput {
@@ -227,7 +409,6 @@ pub struct BatchGetDeploymentsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub deployments_info: Option<Vec<DeploymentInfo>>,
 }
-
 #[doc="<p>Represents the input of a BatchGetOnPremisesInstances operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct BatchGetOnPremisesInstancesInput {
@@ -236,7 +417,19 @@ pub struct BatchGetOnPremisesInstancesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instance_names: Option<Vec<String>>,
 }
-
+impl BatchGetOnPremisesInstancesInput {
+    /// Sets `instance_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchGetOnPremisesInstancesInput.instance_names = Some(value.into());`.
+    pub fn instance_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of BatchGetOnPremisesInstancesInput with optional fields set to `None`.
+    pub fn new() -> BatchGetOnPremisesInstancesInput {
+        BatchGetOnPremisesInstancesInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the output of a BatchGetOnPremisesInstances operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BatchGetOnPremisesInstancesOutput {
@@ -245,7 +438,6 @@ pub struct BatchGetOnPremisesInstancesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instance_infos: Option<Vec<InstanceInfo>>,
 }
-
 #[doc="<p>Information about blue/green deployment options for a deployment group.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct BlueGreenDeploymentConfiguration {
@@ -262,7 +454,38 @@ pub struct BlueGreenDeploymentConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub terminate_blue_instances_on_deployment_success: Option<BlueInstanceTerminationOption>,
 }
-
+impl BlueGreenDeploymentConfiguration {
+    /// Sets `deployment_ready_option`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BlueGreenDeploymentConfiguration.deployment_ready_option = Some(value.into());`.
+    pub fn deployment_ready_option<ValueType: Into<DeploymentReadyOption>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.deployment_ready_option = Some(value.into());
+        self
+    }
+    /// Sets `green_fleet_provisioning_option`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BlueGreenDeploymentConfiguration.green_fleet_provisioning_option = Some(value.into());`.
+    pub fn green_fleet_provisioning_option<ValueType: Into<GreenFleetProvisioningOption>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.green_fleet_provisioning_option = Some(value.into());
+        self
+    }
+    /// Sets `terminate_blue_instances_on_deployment_success`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BlueGreenDeploymentConfiguration.terminate_blue_instances_on_deployment_success = Some(value.into());`.
+pub fn terminate_blue_instances_on_deployment_success<ValueType: Into<BlueInstanceTerminationOption>>(mut self, value: ValueType) -> Self{
+        self.terminate_blue_instances_on_deployment_success = Some(value.into());
+        self
+    }
+    /// Returns a new instance of BlueGreenDeploymentConfiguration with optional fields set to `None`.
+    pub fn new() -> BlueGreenDeploymentConfiguration {
+        BlueGreenDeploymentConfiguration { ..Default::default() }
+    }
+}
 #[doc="<p>Information about whether instances in the original environment are terminated when a blue/green deployment is successful.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct BlueInstanceTerminationOption {
@@ -275,7 +498,28 @@ pub struct BlueInstanceTerminationOption {
     #[serde(skip_serializing_if="Option::is_none")]
     pub termination_wait_time_in_minutes: Option<i64>,
 }
-
+impl BlueInstanceTerminationOption {
+    /// Sets `action`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BlueInstanceTerminationOption.action = Some(value.into());`.
+    pub fn action<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.action = Some(value.into());
+        self
+    }
+    /// Sets `termination_wait_time_in_minutes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BlueInstanceTerminationOption.termination_wait_time_in_minutes = Some(value.into());`.
+    pub fn termination_wait_time_in_minutes<ValueType: Into<i64>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.termination_wait_time_in_minutes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of BlueInstanceTerminationOption with optional fields set to `None`.
+    pub fn new() -> BlueInstanceTerminationOption {
+        BlueInstanceTerminationOption { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ContinueDeploymentInput {
     #[doc="<p>The deployment ID of the blue/green deployment for which you want to start rerouting traffic to the replacement environment.</p>"]
@@ -283,7 +527,19 @@ pub struct ContinueDeploymentInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub deployment_id: Option<String>,
 }
-
+impl ContinueDeploymentInput {
+    /// Sets `deployment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContinueDeploymentInput.deployment_id = Some(value.into());`.
+    pub fn deployment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ContinueDeploymentInput with optional fields set to `None`.
+    pub fn new() -> ContinueDeploymentInput {
+        ContinueDeploymentInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the input of a CreateApplication operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateApplicationInput {
@@ -291,7 +547,23 @@ pub struct CreateApplicationInput {
     #[serde(rename="applicationName")]
     pub application_name: String,
 }
-
+impl CreateApplicationInput {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApplicationInput.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateApplicationInput with optional fields set to `None`.
+    pub fn new<applicationNameType: Into<String>>(application_name: applicationNameType)
+                                                  -> CreateApplicationInput {
+        CreateApplicationInput {
+            application_name: application_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a CreateApplication operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateApplicationOutput {
@@ -300,7 +572,6 @@ pub struct CreateApplicationOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub application_id: Option<String>,
 }
-
 #[doc="<p>Represents the input of a CreateDeploymentConfig operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateDeploymentConfigInput {
@@ -311,7 +582,36 @@ pub struct CreateDeploymentConfigInput {
     #[serde(rename="minimumHealthyHosts")]
     pub minimum_healthy_hosts: MinimumHealthyHosts,
 }
-
+impl CreateDeploymentConfigInput {
+    /// Sets `deployment_config_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentConfigInput.deployment_config_name = value.into();`.
+    pub fn deployment_config_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_config_name = value.into();
+        self
+    }
+    /// Sets `minimum_healthy_hosts`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentConfigInput.minimum_healthy_hosts = value.into();`.
+    pub fn minimum_healthy_hosts<ValueType: Into<MinimumHealthyHosts>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.minimum_healthy_hosts = value.into();
+        self
+    }
+    /// Returns a new instance of CreateDeploymentConfigInput with optional fields set to `None`.
+    pub fn new<deploymentConfigNameType: Into<String>,
+               minimumHealthyHostsType: Into<MinimumHealthyHosts>>
+        (deployment_config_name: deploymentConfigNameType,
+         minimum_healthy_hosts: minimumHealthyHostsType)
+         -> CreateDeploymentConfigInput {
+        CreateDeploymentConfigInput {
+            deployment_config_name: deployment_config_name.into(),
+            minimum_healthy_hosts: minimum_healthy_hosts.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a CreateDeploymentConfig operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateDeploymentConfigOutput {
@@ -320,7 +620,6 @@ pub struct CreateDeploymentConfigOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub deployment_config_id: Option<String>,
 }
-
 #[doc="<p>Represents the input of a CreateDeploymentGroup operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateDeploymentGroupInput {
@@ -382,7 +681,143 @@ pub struct CreateDeploymentGroupInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub trigger_configurations: Option<Vec<TriggerConfig>>,
 }
-
+impl CreateDeploymentGroupInput {
+    /// Sets `alarm_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentGroupInput.alarm_configuration = Some(value.into());`.
+    pub fn alarm_configuration<ValueType: Into<AlarmConfiguration>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.alarm_configuration = Some(value.into());
+        self
+    }
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentGroupInput.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `auto_rollback_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentGroupInput.auto_rollback_configuration = Some(value.into());`.
+pub fn auto_rollback_configuration<ValueType: Into<AutoRollbackConfiguration>>(mut self, value: ValueType) -> Self{
+        self.auto_rollback_configuration = Some(value.into());
+        self
+    }
+    /// Sets `auto_scaling_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentGroupInput.auto_scaling_groups = Some(value.into());`.
+    pub fn auto_scaling_groups<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_groups = Some(value.into());
+        self
+    }
+    /// Sets `blue_green_deployment_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentGroupInput.blue_green_deployment_configuration = Some(value.into());`.
+    pub fn blue_green_deployment_configuration<ValueType: Into<BlueGreenDeploymentConfiguration>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.blue_green_deployment_configuration = Some(value.into());
+        self
+    }
+    /// Sets `deployment_config_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentGroupInput.deployment_config_name = Some(value.into());`.
+    pub fn deployment_config_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_config_name = Some(value.into());
+        self
+    }
+    /// Sets `deployment_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentGroupInput.deployment_group_name = value.into();`.
+    pub fn deployment_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_group_name = value.into();
+        self
+    }
+    /// Sets `deployment_style`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentGroupInput.deployment_style = Some(value.into());`.
+    pub fn deployment_style<ValueType: Into<DeploymentStyle>>(mut self, value: ValueType) -> Self {
+        self.deployment_style = Some(value.into());
+        self
+    }
+    /// Sets `ec_2_tag_filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentGroupInput.ec_2_tag_filters = Some(value.into());`.
+    pub fn ec_2_tag_filters<ValueType: Into<Vec<EC2TagFilter>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.ec_2_tag_filters = Some(value.into());
+        self
+    }
+    /// Sets `ec_2_tag_set`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentGroupInput.ec_2_tag_set = Some(value.into());`.
+    pub fn ec_2_tag_set<ValueType: Into<EC2TagSet>>(mut self, value: ValueType) -> Self {
+        self.ec_2_tag_set = Some(value.into());
+        self
+    }
+    /// Sets `load_balancer_info`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentGroupInput.load_balancer_info = Some(value.into());`.
+    pub fn load_balancer_info<ValueType: Into<LoadBalancerInfo>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.load_balancer_info = Some(value.into());
+        self
+    }
+    /// Sets `on_premises_instance_tag_filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentGroupInput.on_premises_instance_tag_filters = Some(value.into());`.
+    pub fn on_premises_instance_tag_filters<ValueType: Into<Vec<TagFilter>>>(mut self,
+                                                                             value: ValueType)
+                                                                             -> Self {
+        self.on_premises_instance_tag_filters = Some(value.into());
+        self
+    }
+    /// Sets `on_premises_tag_set`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentGroupInput.on_premises_tag_set = Some(value.into());`.
+    pub fn on_premises_tag_set<ValueType: Into<OnPremisesTagSet>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.on_premises_tag_set = Some(value.into());
+        self
+    }
+    /// Sets `service_role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentGroupInput.service_role_arn = value.into();`.
+    pub fn service_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_role_arn = value.into();
+        self
+    }
+    /// Sets `trigger_configurations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentGroupInput.trigger_configurations = Some(value.into());`.
+    pub fn trigger_configurations<ValueType: Into<Vec<TriggerConfig>>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.trigger_configurations = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateDeploymentGroupInput with optional fields set to `None`.
+    pub fn new<applicationNameType: Into<String>,
+               deploymentGroupNameType: Into<String>,
+               serviceRoleArnType: Into<String>>
+        (application_name: applicationNameType,
+         deployment_group_name: deploymentGroupNameType,
+         service_role_arn: serviceRoleArnType)
+         -> CreateDeploymentGroupInput {
+        CreateDeploymentGroupInput {
+            application_name: application_name.into(),
+            deployment_group_name: deployment_group_name.into(),
+            service_role_arn: service_role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a CreateDeploymentGroup operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateDeploymentGroupOutput {
@@ -391,7 +826,6 @@ pub struct CreateDeploymentGroupOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub deployment_group_id: Option<String>,
 }
-
 #[doc="<p>Represents the input of a CreateDeployment operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateDeploymentInput {
@@ -435,7 +869,90 @@ pub struct CreateDeploymentInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub update_outdated_instances_only: Option<bool>,
 }
-
+impl CreateDeploymentInput {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentInput.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `auto_rollback_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentInput.auto_rollback_configuration = Some(value.into());`.
+pub fn auto_rollback_configuration<ValueType: Into<AutoRollbackConfiguration>>(mut self, value: ValueType) -> Self{
+        self.auto_rollback_configuration = Some(value.into());
+        self
+    }
+    /// Sets `deployment_config_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentInput.deployment_config_name = Some(value.into());`.
+    pub fn deployment_config_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_config_name = Some(value.into());
+        self
+    }
+    /// Sets `deployment_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentInput.deployment_group_name = Some(value.into());`.
+    pub fn deployment_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_group_name = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `file_exists_behavior`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentInput.file_exists_behavior = Some(value.into());`.
+    pub fn file_exists_behavior<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.file_exists_behavior = Some(value.into());
+        self
+    }
+    /// Sets `ignore_application_stop_failures`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentInput.ignore_application_stop_failures = Some(value.into());`.
+    pub fn ignore_application_stop_failures<ValueType: Into<bool>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.ignore_application_stop_failures = Some(value.into());
+        self
+    }
+    /// Sets `revision`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentInput.revision = Some(value.into());`.
+    pub fn revision<ValueType: Into<RevisionLocation>>(mut self, value: ValueType) -> Self {
+        self.revision = Some(value.into());
+        self
+    }
+    /// Sets `target_instances`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentInput.target_instances = Some(value.into());`.
+    pub fn target_instances<ValueType: Into<TargetInstances>>(mut self, value: ValueType) -> Self {
+        self.target_instances = Some(value.into());
+        self
+    }
+    /// Sets `update_outdated_instances_only`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentInput.update_outdated_instances_only = Some(value.into());`.
+    pub fn update_outdated_instances_only<ValueType: Into<bool>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.update_outdated_instances_only = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateDeploymentInput with optional fields set to `None`.
+    pub fn new<applicationNameType: Into<String>>(application_name: applicationNameType)
+                                                  -> CreateDeploymentInput {
+        CreateDeploymentInput {
+            application_name: application_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a CreateDeployment operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateDeploymentOutput {
@@ -444,7 +961,6 @@ pub struct CreateDeploymentOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub deployment_id: Option<String>,
 }
-
 #[doc="<p>Represents the input of a DeleteApplication operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteApplicationInput {
@@ -452,7 +968,23 @@ pub struct DeleteApplicationInput {
     #[serde(rename="applicationName")]
     pub application_name: String,
 }
-
+impl DeleteApplicationInput {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteApplicationInput.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteApplicationInput with optional fields set to `None`.
+    pub fn new<applicationNameType: Into<String>>(application_name: applicationNameType)
+                                                  -> DeleteApplicationInput {
+        DeleteApplicationInput {
+            application_name: application_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of a DeleteDeploymentConfig operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteDeploymentConfigInput {
@@ -460,7 +992,22 @@ pub struct DeleteDeploymentConfigInput {
     #[serde(rename="deploymentConfigName")]
     pub deployment_config_name: String,
 }
-
+impl DeleteDeploymentConfigInput {
+    /// Sets `deployment_config_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDeploymentConfigInput.deployment_config_name = value.into();`.
+    pub fn deployment_config_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_config_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDeploymentConfigInput with optional fields set to `None`.
+pub fn new<deploymentConfigNameType: Into<String>>(deployment_config_name: deploymentConfigNameType) -> DeleteDeploymentConfigInput{
+        DeleteDeploymentConfigInput {
+            deployment_config_name: deployment_config_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of a DeleteDeploymentGroup operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteDeploymentGroupInput {
@@ -471,7 +1018,33 @@ pub struct DeleteDeploymentGroupInput {
     #[serde(rename="deploymentGroupName")]
     pub deployment_group_name: String,
 }
-
+impl DeleteDeploymentGroupInput {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDeploymentGroupInput.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `deployment_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDeploymentGroupInput.deployment_group_name = value.into();`.
+    pub fn deployment_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_group_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDeploymentGroupInput with optional fields set to `None`.
+    pub fn new<applicationNameType: Into<String>, deploymentGroupNameType: Into<String>>
+        (application_name: applicationNameType,
+         deployment_group_name: deploymentGroupNameType)
+         -> DeleteDeploymentGroupInput {
+        DeleteDeploymentGroupInput {
+            application_name: application_name.into(),
+            deployment_group_name: deployment_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a DeleteDeploymentGroup operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteDeploymentGroupOutput {
@@ -480,7 +1053,6 @@ pub struct DeleteDeploymentGroupOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub hooks_not_cleaned_up: Option<Vec<AutoScalingGroup>>,
 }
-
 #[doc="<p>Information about a deployment configuration.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeploymentConfigInfo {
@@ -501,7 +1073,6 @@ pub struct DeploymentConfigInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub minimum_healthy_hosts: Option<MinimumHealthyHosts>,
 }
-
 #[doc="<p>Information about a deployment group.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeploymentGroupInfo {
@@ -582,7 +1153,6 @@ pub struct DeploymentGroupInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub trigger_configurations: Option<Vec<TriggerConfig>>,
 }
-
 #[doc="<p>Information about a deployment.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeploymentInfo {
@@ -687,7 +1257,6 @@ pub struct DeploymentInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub update_outdated_instances_only: Option<bool>,
 }
-
 #[doc="<p>Information about the deployment status of the instances in the deployment.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeploymentOverview {
@@ -716,7 +1285,6 @@ pub struct DeploymentOverview {
     #[serde(skip_serializing_if="Option::is_none")]
     pub succeeded: Option<i64>,
 }
-
 #[doc="<p>Information about how traffic is rerouted to instances in a replacement environment in a blue/green deployment.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct DeploymentReadyOption {
@@ -729,7 +1297,26 @@ pub struct DeploymentReadyOption {
     #[serde(skip_serializing_if="Option::is_none")]
     pub wait_time_in_minutes: Option<i64>,
 }
-
+impl DeploymentReadyOption {
+    /// Sets `action_on_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeploymentReadyOption.action_on_timeout = Some(value.into());`.
+    pub fn action_on_timeout<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.action_on_timeout = Some(value.into());
+        self
+    }
+    /// Sets `wait_time_in_minutes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeploymentReadyOption.wait_time_in_minutes = Some(value.into());`.
+    pub fn wait_time_in_minutes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.wait_time_in_minutes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeploymentReadyOption with optional fields set to `None`.
+    pub fn new() -> DeploymentReadyOption {
+        DeploymentReadyOption { ..Default::default() }
+    }
+}
 #[doc="<p>Information about the type of deployment, either in-place or blue/green, you want to run and whether to route deployment traffic behind a load balancer.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct DeploymentStyle {
@@ -742,7 +1329,26 @@ pub struct DeploymentStyle {
     #[serde(skip_serializing_if="Option::is_none")]
     pub deployment_type: Option<String>,
 }
-
+impl DeploymentStyle {
+    /// Sets `deployment_option`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeploymentStyle.deployment_option = Some(value.into());`.
+    pub fn deployment_option<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_option = Some(value.into());
+        self
+    }
+    /// Sets `deployment_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeploymentStyle.deployment_type = Some(value.into());`.
+    pub fn deployment_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeploymentStyle with optional fields set to `None`.
+    pub fn new() -> DeploymentStyle {
+        DeploymentStyle { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the input of a DeregisterOnPremisesInstance operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeregisterOnPremisesInstanceInput {
@@ -750,7 +1356,23 @@ pub struct DeregisterOnPremisesInstanceInput {
     #[serde(rename="instanceName")]
     pub instance_name: String,
 }
-
+impl DeregisterOnPremisesInstanceInput {
+    /// Sets `instance_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterOnPremisesInstanceInput.instance_name = value.into();`.
+    pub fn instance_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeregisterOnPremisesInstanceInput with optional fields set to `None`.
+    pub fn new<instanceNameType: Into<String>>(instance_name: instanceNameType)
+                                               -> DeregisterOnPremisesInstanceInput {
+        DeregisterOnPremisesInstanceInput {
+            instance_name: instance_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Diagnostic information about executable scripts that are part of a deployment.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Diagnostics {
@@ -771,7 +1393,6 @@ pub struct Diagnostics {
     #[serde(skip_serializing_if="Option::is_none")]
     pub script_name: Option<String>,
 }
-
 #[doc="<p>Information about an EC2 tag filter.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct EC2TagFilter {
@@ -788,7 +1409,33 @@ pub struct EC2TagFilter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl EC2TagFilter {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EC2TagFilter.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EC2TagFilter.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EC2TagFilter.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of EC2TagFilter with optional fields set to `None`.
+    pub fn new() -> EC2TagFilter {
+        EC2TagFilter { ..Default::default() }
+    }
+}
 #[doc="<p>Information about groups of EC2 instance tags.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct EC2TagSet {
@@ -797,7 +1444,21 @@ pub struct EC2TagSet {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ec_2_tag_set_list: Option<Vec<Vec<EC2TagFilter>>>,
 }
-
+impl EC2TagSet {
+    /// Sets `ec_2_tag_set_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EC2TagSet.ec_2_tag_set_list = Some(value.into());`.
+    pub fn ec_2_tag_set_list<ValueType: Into<Vec<Vec<EC2TagFilter>>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.ec_2_tag_set_list = Some(value.into());
+        self
+    }
+    /// Returns a new instance of EC2TagSet with optional fields set to `None`.
+    pub fn new() -> EC2TagSet {
+        EC2TagSet { ..Default::default() }
+    }
+}
 #[doc="<p>Information about a load balancer in Elastic Load Balancing to use in a deployment. Instances are registered directly with a load balancer, and traffic is routed to the load balancer.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ELBInfo {
@@ -806,7 +1467,19 @@ pub struct ELBInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
+impl ELBInfo {
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ELBInfo.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ELBInfo with optional fields set to `None`.
+    pub fn new() -> ELBInfo {
+        ELBInfo { ..Default::default() }
+    }
+}
 #[doc="<p>Information about a deployment error.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ErrorInformation {
@@ -819,7 +1492,6 @@ pub struct ErrorInformation {
     #[serde(skip_serializing_if="Option::is_none")]
     pub message: Option<String>,
 }
-
 #[doc="<p>Information about an application revision.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GenericRevisionInfo {
@@ -844,7 +1516,6 @@ pub struct GenericRevisionInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub register_time: Option<f64>,
 }
-
 #[doc="<p>Represents the input of a GetApplication operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetApplicationInput {
@@ -852,7 +1523,23 @@ pub struct GetApplicationInput {
     #[serde(rename="applicationName")]
     pub application_name: String,
 }
-
+impl GetApplicationInput {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetApplicationInput.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetApplicationInput with optional fields set to `None`.
+    pub fn new<applicationNameType: Into<String>>(application_name: applicationNameType)
+                                                  -> GetApplicationInput {
+        GetApplicationInput {
+            application_name: application_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a GetApplication operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetApplicationOutput {
@@ -861,7 +1548,6 @@ pub struct GetApplicationOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub application: Option<ApplicationInfo>,
 }
-
 #[doc="<p>Represents the input of a GetApplicationRevision operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetApplicationRevisionInput {
@@ -872,7 +1558,33 @@ pub struct GetApplicationRevisionInput {
     #[serde(rename="revision")]
     pub revision: RevisionLocation,
 }
-
+impl GetApplicationRevisionInput {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetApplicationRevisionInput.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `revision`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetApplicationRevisionInput.revision = value.into();`.
+    pub fn revision<ValueType: Into<RevisionLocation>>(mut self, value: ValueType) -> Self {
+        self.revision = value.into();
+        self
+    }
+    /// Returns a new instance of GetApplicationRevisionInput with optional fields set to `None`.
+    pub fn new<applicationNameType: Into<String>, revisionType: Into<RevisionLocation>>
+        (application_name: applicationNameType,
+         revision: revisionType)
+         -> GetApplicationRevisionInput {
+        GetApplicationRevisionInput {
+            application_name: application_name.into(),
+            revision: revision.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a GetApplicationRevision operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetApplicationRevisionOutput {
@@ -889,7 +1601,6 @@ pub struct GetApplicationRevisionOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub revision_info: Option<GenericRevisionInfo>,
 }
-
 #[doc="<p>Represents the input of a GetDeploymentConfig operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDeploymentConfigInput {
@@ -897,7 +1608,22 @@ pub struct GetDeploymentConfigInput {
     #[serde(rename="deploymentConfigName")]
     pub deployment_config_name: String,
 }
-
+impl GetDeploymentConfigInput {
+    /// Sets `deployment_config_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDeploymentConfigInput.deployment_config_name = value.into();`.
+    pub fn deployment_config_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_config_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetDeploymentConfigInput with optional fields set to `None`.
+pub fn new<deploymentConfigNameType: Into<String>>(deployment_config_name: deploymentConfigNameType) -> GetDeploymentConfigInput{
+        GetDeploymentConfigInput {
+            deployment_config_name: deployment_config_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a GetDeploymentConfig operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetDeploymentConfigOutput {
@@ -906,7 +1632,6 @@ pub struct GetDeploymentConfigOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub deployment_config_info: Option<DeploymentConfigInfo>,
 }
-
 #[doc="<p>Represents the input of a GetDeploymentGroup operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDeploymentGroupInput {
@@ -917,7 +1642,33 @@ pub struct GetDeploymentGroupInput {
     #[serde(rename="deploymentGroupName")]
     pub deployment_group_name: String,
 }
-
+impl GetDeploymentGroupInput {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDeploymentGroupInput.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `deployment_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDeploymentGroupInput.deployment_group_name = value.into();`.
+    pub fn deployment_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_group_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetDeploymentGroupInput with optional fields set to `None`.
+    pub fn new<applicationNameType: Into<String>, deploymentGroupNameType: Into<String>>
+        (application_name: applicationNameType,
+         deployment_group_name: deploymentGroupNameType)
+         -> GetDeploymentGroupInput {
+        GetDeploymentGroupInput {
+            application_name: application_name.into(),
+            deployment_group_name: deployment_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a GetDeploymentGroup operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetDeploymentGroupOutput {
@@ -926,7 +1677,6 @@ pub struct GetDeploymentGroupOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub deployment_group_info: Option<DeploymentGroupInfo>,
 }
-
 #[doc="<p>Represents the input of a GetDeployment operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDeploymentInput {
@@ -934,7 +1684,23 @@ pub struct GetDeploymentInput {
     #[serde(rename="deploymentId")]
     pub deployment_id: String,
 }
-
+impl GetDeploymentInput {
+    /// Sets `deployment_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDeploymentInput.deployment_id = value.into();`.
+    pub fn deployment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetDeploymentInput with optional fields set to `None`.
+    pub fn new<deploymentIdType: Into<String>>(deployment_id: deploymentIdType)
+                                               -> GetDeploymentInput {
+        GetDeploymentInput {
+            deployment_id: deployment_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of a GetDeploymentInstance operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDeploymentInstanceInput {
@@ -945,7 +1711,33 @@ pub struct GetDeploymentInstanceInput {
     #[serde(rename="instanceId")]
     pub instance_id: String,
 }
-
+impl GetDeploymentInstanceInput {
+    /// Sets `deployment_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDeploymentInstanceInput.deployment_id = value.into();`.
+    pub fn deployment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_id = value.into();
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDeploymentInstanceInput.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetDeploymentInstanceInput with optional fields set to `None`.
+    pub fn new<deploymentIdType: Into<String>, instanceIdType: Into<String>>
+        (deployment_id: deploymentIdType,
+         instance_id: instanceIdType)
+         -> GetDeploymentInstanceInput {
+        GetDeploymentInstanceInput {
+            deployment_id: deployment_id.into(),
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a GetDeploymentInstance operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetDeploymentInstanceOutput {
@@ -954,7 +1746,6 @@ pub struct GetDeploymentInstanceOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instance_summary: Option<InstanceSummary>,
 }
-
 #[doc="<p>Represents the output of a GetDeployment operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetDeploymentOutput {
@@ -963,7 +1754,6 @@ pub struct GetDeploymentOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub deployment_info: Option<DeploymentInfo>,
 }
-
 #[doc="<p>Represents the input of a GetOnPremisesInstance operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetOnPremisesInstanceInput {
@@ -971,7 +1761,23 @@ pub struct GetOnPremisesInstanceInput {
     #[serde(rename="instanceName")]
     pub instance_name: String,
 }
-
+impl GetOnPremisesInstanceInput {
+    /// Sets `instance_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetOnPremisesInstanceInput.instance_name = value.into();`.
+    pub fn instance_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetOnPremisesInstanceInput with optional fields set to `None`.
+    pub fn new<instanceNameType: Into<String>>(instance_name: instanceNameType)
+                                               -> GetOnPremisesInstanceInput {
+        GetOnPremisesInstanceInput {
+            instance_name: instance_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a GetOnPremisesInstance operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetOnPremisesInstanceOutput {
@@ -980,7 +1786,6 @@ pub struct GetOnPremisesInstanceOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instance_info: Option<InstanceInfo>,
 }
-
 #[doc="<p>Information about the location of application artifacts stored in GitHub.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct GitHubLocation {
@@ -993,7 +1798,26 @@ pub struct GitHubLocation {
     #[serde(skip_serializing_if="Option::is_none")]
     pub repository: Option<String>,
 }
-
+impl GitHubLocation {
+    /// Sets `commit_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GitHubLocation.commit_id = Some(value.into());`.
+    pub fn commit_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.commit_id = Some(value.into());
+        self
+    }
+    /// Sets `repository`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GitHubLocation.repository = Some(value.into());`.
+    pub fn repository<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repository = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GitHubLocation with optional fields set to `None`.
+    pub fn new() -> GitHubLocation {
+        GitHubLocation { ..Default::default() }
+    }
+}
 #[doc="<p>Information about the instances that belong to the replacement environment in a blue/green deployment.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct GreenFleetProvisioningOption {
@@ -1002,7 +1826,19 @@ pub struct GreenFleetProvisioningOption {
     #[serde(skip_serializing_if="Option::is_none")]
     pub action: Option<String>,
 }
-
+impl GreenFleetProvisioningOption {
+    /// Sets `action`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GreenFleetProvisioningOption.action = Some(value.into());`.
+    pub fn action<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.action = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GreenFleetProvisioningOption with optional fields set to `None`.
+    pub fn new() -> GreenFleetProvisioningOption {
+        GreenFleetProvisioningOption { ..Default::default() }
+    }
+}
 #[doc="<p>Information about an on-premises instance.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceInfo {
@@ -1035,7 +1871,6 @@ pub struct InstanceInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
 #[doc="<p>Information about an instance in a deployment.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceSummary {
@@ -1064,7 +1899,6 @@ pub struct InstanceSummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[doc="<p>Information about the most recent attempted or successful deployment to a deployment group.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LastDeploymentInfo {
@@ -1085,7 +1919,6 @@ pub struct LastDeploymentInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[doc="<p>Information about a deployment lifecycle event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LifecycleEvent {
@@ -1110,7 +1943,6 @@ pub struct LifecycleEvent {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[doc="<p>Represents the input of a ListApplicationRevisions operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListApplicationRevisionsInput {
@@ -1142,7 +1974,65 @@ pub struct ListApplicationRevisionsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sort_order: Option<String>,
 }
-
+impl ListApplicationRevisionsInput {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListApplicationRevisionsInput.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `deployed`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListApplicationRevisionsInput.deployed = Some(value.into());`.
+    pub fn deployed<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployed = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListApplicationRevisionsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `s_3_bucket`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListApplicationRevisionsInput.s_3_bucket = Some(value.into());`.
+    pub fn s_3_bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s_3_bucket = Some(value.into());
+        self
+    }
+    /// Sets `s_3_key_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListApplicationRevisionsInput.s_3_key_prefix = Some(value.into());`.
+    pub fn s_3_key_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s_3_key_prefix = Some(value.into());
+        self
+    }
+    /// Sets `sort_by`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListApplicationRevisionsInput.sort_by = Some(value.into());`.
+    pub fn sort_by<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sort_by = Some(value.into());
+        self
+    }
+    /// Sets `sort_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListApplicationRevisionsInput.sort_order = Some(value.into());`.
+    pub fn sort_order<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sort_order = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListApplicationRevisionsInput with optional fields set to `None`.
+    pub fn new<applicationNameType: Into<String>>(application_name: applicationNameType)
+                                                  -> ListApplicationRevisionsInput {
+        ListApplicationRevisionsInput {
+            application_name: application_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a ListApplicationRevisions operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListApplicationRevisionsOutput {
@@ -1155,7 +2045,6 @@ pub struct ListApplicationRevisionsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub revisions: Option<Vec<RevisionLocation>>,
 }
-
 #[doc="<p>Represents the input of a ListApplications operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListApplicationsInput {
@@ -1164,7 +2053,19 @@ pub struct ListApplicationsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListApplicationsInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListApplicationsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListApplicationsInput with optional fields set to `None`.
+    pub fn new() -> ListApplicationsInput {
+        ListApplicationsInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the output of a ListApplications operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListApplicationsOutput {
@@ -1177,7 +2078,6 @@ pub struct ListApplicationsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Represents the input of a ListDeploymentConfigs operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListDeploymentConfigsInput {
@@ -1186,7 +2086,19 @@ pub struct ListDeploymentConfigsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListDeploymentConfigsInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDeploymentConfigsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListDeploymentConfigsInput with optional fields set to `None`.
+    pub fn new() -> ListDeploymentConfigsInput {
+        ListDeploymentConfigsInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the output of a ListDeploymentConfigs operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListDeploymentConfigsOutput {
@@ -1199,7 +2111,6 @@ pub struct ListDeploymentConfigsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Represents the input of a ListDeploymentGroups operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListDeploymentGroupsInput {
@@ -1211,7 +2122,30 @@ pub struct ListDeploymentGroupsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListDeploymentGroupsInput {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDeploymentGroupsInput.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDeploymentGroupsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListDeploymentGroupsInput with optional fields set to `None`.
+    pub fn new<applicationNameType: Into<String>>(application_name: applicationNameType)
+                                                  -> ListDeploymentGroupsInput {
+        ListDeploymentGroupsInput {
+            application_name: application_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a ListDeploymentGroups operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListDeploymentGroupsOutput {
@@ -1228,7 +2162,6 @@ pub struct ListDeploymentGroupsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Represents the input of a ListDeploymentInstances operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListDeploymentInstancesInput {
@@ -1248,7 +2181,46 @@ pub struct ListDeploymentInstancesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListDeploymentInstancesInput {
+    /// Sets `deployment_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDeploymentInstancesInput.deployment_id = value.into();`.
+    pub fn deployment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_id = value.into();
+        self
+    }
+    /// Sets `instance_status_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDeploymentInstancesInput.instance_status_filter = Some(value.into());`.
+    pub fn instance_status_filter<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.instance_status_filter = Some(value.into());
+        self
+    }
+    /// Sets `instance_type_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDeploymentInstancesInput.instance_type_filter = Some(value.into());`.
+    pub fn instance_type_filter<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_type_filter = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDeploymentInstancesInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListDeploymentInstancesInput with optional fields set to `None`.
+    pub fn new<deploymentIdType: Into<String>>(deployment_id: deploymentIdType)
+                                               -> ListDeploymentInstancesInput {
+        ListDeploymentInstancesInput {
+            deployment_id: deployment_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a ListDeploymentInstances operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListDeploymentInstancesOutput {
@@ -1261,7 +2233,6 @@ pub struct ListDeploymentInstancesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Represents the input of a ListDeployments operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListDeploymentsInput {
@@ -1286,7 +2257,47 @@ pub struct ListDeploymentsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListDeploymentsInput {
+    /// Sets `application_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDeploymentsInput.application_name = Some(value.into());`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = Some(value.into());
+        self
+    }
+    /// Sets `create_time_range`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDeploymentsInput.create_time_range = Some(value.into());`.
+    pub fn create_time_range<ValueType: Into<TimeRange>>(mut self, value: ValueType) -> Self {
+        self.create_time_range = Some(value.into());
+        self
+    }
+    /// Sets `deployment_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDeploymentsInput.deployment_group_name = Some(value.into());`.
+    pub fn deployment_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_group_name = Some(value.into());
+        self
+    }
+    /// Sets `include_only_statuses`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDeploymentsInput.include_only_statuses = Some(value.into());`.
+    pub fn include_only_statuses<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.include_only_statuses = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDeploymentsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListDeploymentsInput with optional fields set to `None`.
+    pub fn new() -> ListDeploymentsInput {
+        ListDeploymentsInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the output of a ListDeployments operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListDeploymentsOutput {
@@ -1299,7 +2310,6 @@ pub struct ListDeploymentsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Represents the input of a ListGitHubAccountTokenNames operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListGitHubAccountTokenNamesInput {
@@ -1308,7 +2318,19 @@ pub struct ListGitHubAccountTokenNamesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListGitHubAccountTokenNamesInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListGitHubAccountTokenNamesInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListGitHubAccountTokenNamesInput with optional fields set to `None`.
+    pub fn new() -> ListGitHubAccountTokenNamesInput {
+        ListGitHubAccountTokenNamesInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the output of a ListGitHubAccountTokenNames operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListGitHubAccountTokenNamesOutput {
@@ -1321,7 +2343,6 @@ pub struct ListGitHubAccountTokenNamesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub token_name_list: Option<Vec<String>>,
 }
-
 #[doc="<p>Represents the input of a ListOnPremisesInstances operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListOnPremisesInstancesInput {
@@ -1338,7 +2359,33 @@ pub struct ListOnPremisesInstancesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tag_filters: Option<Vec<TagFilter>>,
 }
-
+impl ListOnPremisesInstancesInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListOnPremisesInstancesInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `registration_status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListOnPremisesInstancesInput.registration_status = Some(value.into());`.
+    pub fn registration_status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.registration_status = Some(value.into());
+        self
+    }
+    /// Sets `tag_filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListOnPremisesInstancesInput.tag_filters = Some(value.into());`.
+    pub fn tag_filters<ValueType: Into<Vec<TagFilter>>>(mut self, value: ValueType) -> Self {
+        self.tag_filters = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListOnPremisesInstancesInput with optional fields set to `None`.
+    pub fn new() -> ListOnPremisesInstancesInput {
+        ListOnPremisesInstancesInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the output of list on-premises instances operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListOnPremisesInstancesOutput {
@@ -1351,7 +2398,6 @@ pub struct ListOnPremisesInstancesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Information about the Elastic Load Balancing load balancer or target group used in a deployment.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct LoadBalancerInfo {
@@ -1364,7 +2410,28 @@ pub struct LoadBalancerInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub target_group_info_list: Option<Vec<TargetGroupInfo>>,
 }
-
+impl LoadBalancerInfo {
+    /// Sets `elb_info_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LoadBalancerInfo.elb_info_list = Some(value.into());`.
+    pub fn elb_info_list<ValueType: Into<Vec<ELBInfo>>>(mut self, value: ValueType) -> Self {
+        self.elb_info_list = Some(value.into());
+        self
+    }
+    /// Sets `target_group_info_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LoadBalancerInfo.target_group_info_list = Some(value.into());`.
+    pub fn target_group_info_list<ValueType: Into<Vec<TargetGroupInfo>>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.target_group_info_list = Some(value.into());
+        self
+    }
+    /// Returns a new instance of LoadBalancerInfo with optional fields set to `None`.
+    pub fn new() -> LoadBalancerInfo {
+        LoadBalancerInfo { ..Default::default() }
+    }
+}
 #[doc="<p>Information about minimum healthy instance.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct MinimumHealthyHosts {
@@ -1377,7 +2444,26 @@ pub struct MinimumHealthyHosts {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<i64>,
 }
-
+impl MinimumHealthyHosts {
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MinimumHealthyHosts.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MinimumHealthyHosts.value = Some(value.into());`.
+    pub fn value<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of MinimumHealthyHosts with optional fields set to `None`.
+    pub fn new() -> MinimumHealthyHosts {
+        MinimumHealthyHosts { ..Default::default() }
+    }
+}
 #[doc="<p>Information about groups of on-premises instance tags.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct OnPremisesTagSet {
@@ -1386,7 +2472,21 @@ pub struct OnPremisesTagSet {
     #[serde(skip_serializing_if="Option::is_none")]
     pub on_premises_tag_set_list: Option<Vec<Vec<TagFilter>>>,
 }
-
+impl OnPremisesTagSet {
+    /// Sets `on_premises_tag_set_list`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OnPremisesTagSet.on_premises_tag_set_list = Some(value.into());`.
+    pub fn on_premises_tag_set_list<ValueType: Into<Vec<Vec<TagFilter>>>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.on_premises_tag_set_list = Some(value.into());
+        self
+    }
+    /// Returns a new instance of OnPremisesTagSet with optional fields set to `None`.
+    pub fn new() -> OnPremisesTagSet {
+        OnPremisesTagSet { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the input of a RegisterApplicationRevision operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RegisterApplicationRevisionInput {
@@ -1401,7 +2501,40 @@ pub struct RegisterApplicationRevisionInput {
     #[serde(rename="revision")]
     pub revision: RevisionLocation,
 }
-
+impl RegisterApplicationRevisionInput {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterApplicationRevisionInput.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterApplicationRevisionInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `revision`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterApplicationRevisionInput.revision = value.into();`.
+    pub fn revision<ValueType: Into<RevisionLocation>>(mut self, value: ValueType) -> Self {
+        self.revision = value.into();
+        self
+    }
+    /// Returns a new instance of RegisterApplicationRevisionInput with optional fields set to `None`.
+    pub fn new<applicationNameType: Into<String>, revisionType: Into<RevisionLocation>>
+        (application_name: applicationNameType,
+         revision: revisionType)
+         -> RegisterApplicationRevisionInput {
+        RegisterApplicationRevisionInput {
+            application_name: application_name.into(),
+            revision: revision.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of the register on-premises instance operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RegisterOnPremisesInstanceInput {
@@ -1417,7 +2550,37 @@ pub struct RegisterOnPremisesInstanceInput {
     #[serde(rename="instanceName")]
     pub instance_name: String,
 }
-
+impl RegisterOnPremisesInstanceInput {
+    /// Sets `iam_session_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterOnPremisesInstanceInput.iam_session_arn = Some(value.into());`.
+    pub fn iam_session_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.iam_session_arn = Some(value.into());
+        self
+    }
+    /// Sets `iam_user_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterOnPremisesInstanceInput.iam_user_arn = Some(value.into());`.
+    pub fn iam_user_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.iam_user_arn = Some(value.into());
+        self
+    }
+    /// Sets `instance_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterOnPremisesInstanceInput.instance_name = value.into();`.
+    pub fn instance_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_name = value.into();
+        self
+    }
+    /// Returns a new instance of RegisterOnPremisesInstanceInput with optional fields set to `None`.
+    pub fn new<instanceNameType: Into<String>>(instance_name: instanceNameType)
+                                               -> RegisterOnPremisesInstanceInput {
+        RegisterOnPremisesInstanceInput {
+            instance_name: instance_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input of a RemoveTagsFromOnPremisesInstances operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RemoveTagsFromOnPremisesInstancesInput {
@@ -1428,7 +2591,33 @@ pub struct RemoveTagsFromOnPremisesInstancesInput {
     #[serde(rename="tags")]
     pub tags: Vec<Tag>,
 }
-
+impl RemoveTagsFromOnPremisesInstancesInput {
+    /// Sets `instance_names`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromOnPremisesInstancesInput.instance_names = value.into();`.
+    pub fn instance_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_names = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromOnPremisesInstancesInput.tags = value.into();`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveTagsFromOnPremisesInstancesInput with optional fields set to `None`.
+    pub fn new<instanceNamesType: Into<Vec<String>>, tagsType: Into<Vec<Tag>>>
+        (instance_names: instanceNamesType,
+         tags: tagsType)
+         -> RemoveTagsFromOnPremisesInstancesInput {
+        RemoveTagsFromOnPremisesInstancesInput {
+            instance_names: instance_names.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Information about an application revision.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RevisionInfo {
@@ -1441,7 +2630,6 @@ pub struct RevisionInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub revision_location: Option<RevisionLocation>,
 }
-
 #[doc="<p>Information about the location of an application revision.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct RevisionLocation {
@@ -1458,7 +2646,33 @@ pub struct RevisionLocation {
     #[serde(skip_serializing_if="Option::is_none")]
     pub s_3_location: Option<S3Location>,
 }
-
+impl RevisionLocation {
+    /// Sets `git_hub_location`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevisionLocation.git_hub_location = Some(value.into());`.
+    pub fn git_hub_location<ValueType: Into<GitHubLocation>>(mut self, value: ValueType) -> Self {
+        self.git_hub_location = Some(value.into());
+        self
+    }
+    /// Sets `revision_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevisionLocation.revision_type = Some(value.into());`.
+    pub fn revision_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.revision_type = Some(value.into());
+        self
+    }
+    /// Sets `s_3_location`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevisionLocation.s_3_location = Some(value.into());`.
+    pub fn s_3_location<ValueType: Into<S3Location>>(mut self, value: ValueType) -> Self {
+        self.s_3_location = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RevisionLocation with optional fields set to `None`.
+    pub fn new() -> RevisionLocation {
+        RevisionLocation { ..Default::default() }
+    }
+}
 #[doc="<p>Information about a deployment rollback.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RollbackInfo {
@@ -1475,7 +2689,6 @@ pub struct RollbackInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rollback_triggering_deployment_id: Option<String>,
 }
-
 #[doc="<p>Information about the location of application artifacts stored in Amazon S3.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct S3Location {
@@ -1500,7 +2713,47 @@ pub struct S3Location {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<String>,
 }
-
+impl S3Location {
+    /// Sets `bucket`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Location.bucket = Some(value.into());`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = Some(value.into());
+        self
+    }
+    /// Sets `bundle_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Location.bundle_type = Some(value.into());`.
+    pub fn bundle_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bundle_type = Some(value.into());
+        self
+    }
+    /// Sets `e_tag`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Location.e_tag = Some(value.into());`.
+    pub fn e_tag<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.e_tag = Some(value.into());
+        self
+    }
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Location.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Location.version = Some(value.into());`.
+    pub fn version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version = Some(value.into());
+        self
+    }
+    /// Returns a new instance of S3Location with optional fields set to `None`.
+    pub fn new() -> S3Location {
+        S3Location { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SkipWaitTimeForInstanceTerminationInput {
     #[doc="<p>The ID of the blue/green deployment for which you want to skip the instance termination wait time.</p>"]
@@ -1508,7 +2761,19 @@ pub struct SkipWaitTimeForInstanceTerminationInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub deployment_id: Option<String>,
 }
-
+impl SkipWaitTimeForInstanceTerminationInput {
+    /// Sets `deployment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SkipWaitTimeForInstanceTerminationInput.deployment_id = Some(value.into());`.
+    pub fn deployment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SkipWaitTimeForInstanceTerminationInput with optional fields set to `None`.
+    pub fn new() -> SkipWaitTimeForInstanceTerminationInput {
+        SkipWaitTimeForInstanceTerminationInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the input of a StopDeployment operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StopDeploymentInput {
@@ -1520,7 +2785,30 @@ pub struct StopDeploymentInput {
     #[serde(rename="deploymentId")]
     pub deployment_id: String,
 }
-
+impl StopDeploymentInput {
+    /// Sets `auto_rollback_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopDeploymentInput.auto_rollback_enabled = Some(value.into());`.
+    pub fn auto_rollback_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.auto_rollback_enabled = Some(value.into());
+        self
+    }
+    /// Sets `deployment_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopDeploymentInput.deployment_id = value.into();`.
+    pub fn deployment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_id = value.into();
+        self
+    }
+    /// Returns a new instance of StopDeploymentInput with optional fields set to `None`.
+    pub fn new<deploymentIdType: Into<String>>(deployment_id: deploymentIdType)
+                                               -> StopDeploymentInput {
+        StopDeploymentInput {
+            deployment_id: deployment_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a StopDeployment operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StopDeploymentOutput {
@@ -1533,7 +2821,6 @@ pub struct StopDeploymentOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status_message: Option<String>,
 }
-
 #[doc="<p>Information about a tag.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Tag {
@@ -1546,7 +2833,26 @@ pub struct Tag {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl Tag {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new() -> Tag {
+        Tag { ..Default::default() }
+    }
+}
 #[doc="<p>Information about an on-premises instance tag filter.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct TagFilter {
@@ -1563,7 +2869,33 @@ pub struct TagFilter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl TagFilter {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TagFilter.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TagFilter.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TagFilter.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TagFilter with optional fields set to `None`.
+    pub fn new() -> TagFilter {
+        TagFilter { ..Default::default() }
+    }
+}
 #[doc="<p>Information about a target group in Elastic Load Balancing to use in a deployment. Instances are registered as targets in a target group, and traffic is routed to the target group.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct TargetGroupInfo {
@@ -1572,7 +2904,19 @@ pub struct TargetGroupInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
+impl TargetGroupInfo {
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TargetGroupInfo.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TargetGroupInfo with optional fields set to `None`.
+    pub fn new() -> TargetGroupInfo {
+        TargetGroupInfo { ..Default::default() }
+    }
+}
 #[doc="<p>Information about the instances to be used in the replacement environment in a blue/green deployment.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct TargetInstances {
@@ -1589,7 +2933,33 @@ pub struct TargetInstances {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tag_filters: Option<Vec<EC2TagFilter>>,
 }
-
+impl TargetInstances {
+    /// Sets `auto_scaling_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TargetInstances.auto_scaling_groups = Some(value.into());`.
+    pub fn auto_scaling_groups<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_groups = Some(value.into());
+        self
+    }
+    /// Sets `ec_2_tag_set`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TargetInstances.ec_2_tag_set = Some(value.into());`.
+    pub fn ec_2_tag_set<ValueType: Into<EC2TagSet>>(mut self, value: ValueType) -> Self {
+        self.ec_2_tag_set = Some(value.into());
+        self
+    }
+    /// Sets `tag_filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TargetInstances.tag_filters = Some(value.into());`.
+    pub fn tag_filters<ValueType: Into<Vec<EC2TagFilter>>>(mut self, value: ValueType) -> Self {
+        self.tag_filters = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TargetInstances with optional fields set to `None`.
+    pub fn new() -> TargetInstances {
+        TargetInstances { ..Default::default() }
+    }
+}
 #[doc="<p>Information about a time range.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TimeRange {
@@ -1602,7 +2972,26 @@ pub struct TimeRange {
     #[serde(skip_serializing_if="Option::is_none")]
     pub start: Option<f64>,
 }
-
+impl TimeRange {
+    /// Sets `end`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TimeRange.end = Some(value.into());`.
+    pub fn end<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.end = Some(value.into());
+        self
+    }
+    /// Sets `start`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TimeRange.start = Some(value.into());`.
+    pub fn start<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.start = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TimeRange with optional fields set to `None`.
+    pub fn new() -> TimeRange {
+        TimeRange { ..Default::default() }
+    }
+}
 #[doc="<p>Information about notification triggers for the deployment group.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct TriggerConfig {
@@ -1619,7 +3008,33 @@ pub struct TriggerConfig {
     #[serde(skip_serializing_if="Option::is_none")]
     pub trigger_target_arn: Option<String>,
 }
-
+impl TriggerConfig {
+    /// Sets `trigger_events`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TriggerConfig.trigger_events = Some(value.into());`.
+    pub fn trigger_events<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.trigger_events = Some(value.into());
+        self
+    }
+    /// Sets `trigger_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TriggerConfig.trigger_name = Some(value.into());`.
+    pub fn trigger_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.trigger_name = Some(value.into());
+        self
+    }
+    /// Sets `trigger_target_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TriggerConfig.trigger_target_arn = Some(value.into());`.
+    pub fn trigger_target_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.trigger_target_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TriggerConfig with optional fields set to `None`.
+    pub fn new() -> TriggerConfig {
+        TriggerConfig { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the input of an UpdateApplication operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateApplicationInput {
@@ -1632,7 +3047,26 @@ pub struct UpdateApplicationInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub new_application_name: Option<String>,
 }
-
+impl UpdateApplicationInput {
+    /// Sets `application_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateApplicationInput.application_name = Some(value.into());`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = Some(value.into());
+        self
+    }
+    /// Sets `new_application_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateApplicationInput.new_application_name = Some(value.into());`.
+    pub fn new_application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.new_application_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateApplicationInput with optional fields set to `None`.
+    pub fn new() -> UpdateApplicationInput {
+        UpdateApplicationInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the input of an UpdateDeploymentGroup operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateDeploymentGroupInput {
@@ -1699,7 +3133,148 @@ pub struct UpdateDeploymentGroupInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub trigger_configurations: Option<Vec<TriggerConfig>>,
 }
-
+impl UpdateDeploymentGroupInput {
+    /// Sets `alarm_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDeploymentGroupInput.alarm_configuration = Some(value.into());`.
+    pub fn alarm_configuration<ValueType: Into<AlarmConfiguration>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.alarm_configuration = Some(value.into());
+        self
+    }
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDeploymentGroupInput.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `auto_rollback_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDeploymentGroupInput.auto_rollback_configuration = Some(value.into());`.
+pub fn auto_rollback_configuration<ValueType: Into<AutoRollbackConfiguration>>(mut self, value: ValueType) -> Self{
+        self.auto_rollback_configuration = Some(value.into());
+        self
+    }
+    /// Sets `auto_scaling_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDeploymentGroupInput.auto_scaling_groups = Some(value.into());`.
+    pub fn auto_scaling_groups<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_groups = Some(value.into());
+        self
+    }
+    /// Sets `blue_green_deployment_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDeploymentGroupInput.blue_green_deployment_configuration = Some(value.into());`.
+    pub fn blue_green_deployment_configuration<ValueType: Into<BlueGreenDeploymentConfiguration>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.blue_green_deployment_configuration = Some(value.into());
+        self
+    }
+    /// Sets `current_deployment_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDeploymentGroupInput.current_deployment_group_name = value.into();`.
+    pub fn current_deployment_group_name<ValueType: Into<String>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.current_deployment_group_name = value.into();
+        self
+    }
+    /// Sets `deployment_config_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDeploymentGroupInput.deployment_config_name = Some(value.into());`.
+    pub fn deployment_config_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_config_name = Some(value.into());
+        self
+    }
+    /// Sets `deployment_style`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDeploymentGroupInput.deployment_style = Some(value.into());`.
+    pub fn deployment_style<ValueType: Into<DeploymentStyle>>(mut self, value: ValueType) -> Self {
+        self.deployment_style = Some(value.into());
+        self
+    }
+    /// Sets `ec_2_tag_filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDeploymentGroupInput.ec_2_tag_filters = Some(value.into());`.
+    pub fn ec_2_tag_filters<ValueType: Into<Vec<EC2TagFilter>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.ec_2_tag_filters = Some(value.into());
+        self
+    }
+    /// Sets `ec_2_tag_set`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDeploymentGroupInput.ec_2_tag_set = Some(value.into());`.
+    pub fn ec_2_tag_set<ValueType: Into<EC2TagSet>>(mut self, value: ValueType) -> Self {
+        self.ec_2_tag_set = Some(value.into());
+        self
+    }
+    /// Sets `load_balancer_info`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDeploymentGroupInput.load_balancer_info = Some(value.into());`.
+    pub fn load_balancer_info<ValueType: Into<LoadBalancerInfo>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.load_balancer_info = Some(value.into());
+        self
+    }
+    /// Sets `new_deployment_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDeploymentGroupInput.new_deployment_group_name = Some(value.into());`.
+    pub fn new_deployment_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.new_deployment_group_name = Some(value.into());
+        self
+    }
+    /// Sets `on_premises_instance_tag_filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDeploymentGroupInput.on_premises_instance_tag_filters = Some(value.into());`.
+    pub fn on_premises_instance_tag_filters<ValueType: Into<Vec<TagFilter>>>(mut self,
+                                                                             value: ValueType)
+                                                                             -> Self {
+        self.on_premises_instance_tag_filters = Some(value.into());
+        self
+    }
+    /// Sets `on_premises_tag_set`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDeploymentGroupInput.on_premises_tag_set = Some(value.into());`.
+    pub fn on_premises_tag_set<ValueType: Into<OnPremisesTagSet>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.on_premises_tag_set = Some(value.into());
+        self
+    }
+    /// Sets `service_role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDeploymentGroupInput.service_role_arn = Some(value.into());`.
+    pub fn service_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_role_arn = Some(value.into());
+        self
+    }
+    /// Sets `trigger_configurations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDeploymentGroupInput.trigger_configurations = Some(value.into());`.
+    pub fn trigger_configurations<ValueType: Into<Vec<TriggerConfig>>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.trigger_configurations = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateDeploymentGroupInput with optional fields set to `None`.
+    pub fn new<applicationNameType: Into<String>, currentDeploymentGroupNameType: Into<String>>
+        (application_name: applicationNameType,
+         current_deployment_group_name: currentDeploymentGroupNameType)
+         -> UpdateDeploymentGroupInput {
+        UpdateDeploymentGroupInput {
+            application_name: application_name.into(),
+            current_deployment_group_name: current_deployment_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of an UpdateDeploymentGroup operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateDeploymentGroupOutput {
@@ -1708,7 +3283,6 @@ pub struct UpdateDeploymentGroupOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub hooks_not_cleaned_up: Option<Vec<AutoScalingGroup>>,
 }
-
 /// Errors returned by AddTagsToOnPremisesInstances
 #[derive(Debug, PartialEq)]
 pub enum AddTagsToOnPremisesInstancesError {

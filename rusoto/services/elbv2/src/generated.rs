@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -47,7 +48,30 @@ pub struct Action {
     #[doc="<p>The type of action.</p>"]
     pub type_: String,
 }
-
+impl Action {
+    /// Sets `target_group_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Action.target_group_arn = value.into();`.
+    pub fn target_group_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_group_arn = value.into();
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Action.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of Action with optional fields set to `None`.
+pub fn new<TargetGroupArnType: Into<String>, TypeType: Into<String>>(target_group_arn: TargetGroupArnType, type_: TypeType) -> Action{
+        Action {
+            target_group_arn: target_group_arn.into(),
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 struct ActionDeserializer;
 impl ActionDeserializer {
     #[allow(unused_variables)]
@@ -186,7 +210,30 @@ pub struct AddTagsInput {
     #[doc="<p>The tags. Each resource can have a maximum of 10 tags.</p>"]
     pub tags: Vec<Tag>,
 }
-
+impl AddTagsInput {
+    /// Sets `resource_arns`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsInput.resource_arns = value.into();`.
+    pub fn resource_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resource_arns = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsInput.tags = value.into();`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of AddTagsInput with optional fields set to `None`.
+pub fn new<ResourceArnsType: Into<Vec<String>>, TagsType: Into<Vec<Tag>>>(resource_arns: ResourceArnsType, tags: TagsType) -> AddTagsInput{
+        AddTagsInput {
+            resource_arns: resource_arns.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AddTagsInput` contents to a `SignedRequest`.
 struct AddTagsInputSerializer;
@@ -232,7 +279,6 @@ pub struct AvailabilityZone {
     #[doc="<p>The name of the Availability Zone.</p>"]
     pub zone_name: Option<String>,
 }
-
 struct AvailabilityZoneDeserializer;
 impl AvailabilityZoneDeserializer {
     #[allow(unused_variables)]
@@ -340,7 +386,19 @@ pub struct Certificate {
     #[doc="<p>The Amazon Resource Name (ARN) of the certificate.</p>"]
     pub certificate_arn: Option<String>,
 }
-
+impl Certificate {
+    /// Sets `certificate_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Certificate.certificate_arn = Some(value.into());`.
+    pub fn certificate_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Certificate with optional fields set to `None`.
+    pub fn new() -> Certificate {
+        Certificate { ..Default::default() }
+    }
+}
 struct CertificateDeserializer;
 impl CertificateDeserializer {
     #[allow(unused_variables)]
@@ -476,7 +534,6 @@ pub struct Cipher {
     #[doc="<p>The priority of the cipher.</p>"]
     pub priority: Option<i64>,
 }
-
 struct CipherDeserializer;
 impl CipherDeserializer {
     #[allow(unused_variables)]
@@ -622,7 +679,68 @@ pub struct CreateListenerInput {
     #[doc="<p>The security policy that defines which ciphers and protocols are supported. The default is the current predefined security policy.</p>"]
     pub ssl_policy: Option<String>,
 }
-
+impl CreateListenerInput {
+    /// Sets `certificates`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateListenerInput.certificates = Some(value.into());`.
+    pub fn certificates<ValueType: Into<Vec<Certificate>>>(mut self, value: ValueType) -> Self {
+        self.certificates = Some(value.into());
+        self
+    }
+    /// Sets `default_actions`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateListenerInput.default_actions = value.into();`.
+    pub fn default_actions<ValueType: Into<Vec<Action>>>(mut self, value: ValueType) -> Self {
+        self.default_actions = value.into();
+        self
+    }
+    /// Sets `load_balancer_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateListenerInput.load_balancer_arn = value.into();`.
+    pub fn load_balancer_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.load_balancer_arn = value.into();
+        self
+    }
+    /// Sets `port`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateListenerInput.port = value.into();`.
+    pub fn port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.port = value.into();
+        self
+    }
+    /// Sets `protocol`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateListenerInput.protocol = value.into();`.
+    pub fn protocol<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.protocol = value.into();
+        self
+    }
+    /// Sets `ssl_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateListenerInput.ssl_policy = Some(value.into());`.
+    pub fn ssl_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ssl_policy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateListenerInput with optional fields set to `None`.
+    pub fn new<DefaultActionsType: Into<Vec<Action>>,
+               LoadBalancerArnType: Into<String>,
+               PortType: Into<i64>,
+               ProtocolType: Into<String>>
+        (default_actions: DefaultActionsType,
+         load_balancer_arn: LoadBalancerArnType,
+         port: PortType,
+         protocol: ProtocolType)
+         -> CreateListenerInput {
+        CreateListenerInput {
+            default_actions: default_actions.into(),
+            load_balancer_arn: load_balancer_arn.into(),
+            port: port.into(),
+            protocol: protocol.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateListenerInput` contents to a `SignedRequest`.
 struct CreateListenerInputSerializer;
@@ -657,7 +775,6 @@ pub struct CreateListenerOutput {
     #[doc="<p>Information about the listener.</p>"]
     pub listeners: Option<Vec<Listener>>,
 }
-
 struct CreateListenerOutputDeserializer;
 impl CreateListenerOutputDeserializer {
     #[allow(unused_variables)]
@@ -715,7 +832,61 @@ pub struct CreateLoadBalancerInput {
     #[doc="<p>One or more tags to assign to the load balancer.</p>"]
     pub tags: Option<Vec<Tag>>,
 }
-
+impl CreateLoadBalancerInput {
+    /// Sets `ip_address_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLoadBalancerInput.ip_address_type = Some(value.into());`.
+    pub fn ip_address_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ip_address_type = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLoadBalancerInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `scheme`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLoadBalancerInput.scheme = Some(value.into());`.
+    pub fn scheme<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.scheme = Some(value.into());
+        self
+    }
+    /// Sets `security_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLoadBalancerInput.security_groups = Some(value.into());`.
+    pub fn security_groups<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.security_groups = Some(value.into());
+        self
+    }
+    /// Sets `subnets`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLoadBalancerInput.subnets = value.into();`.
+    pub fn subnets<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.subnets = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLoadBalancerInput.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateLoadBalancerInput with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, SubnetsType: Into<Vec<String>>>
+        (name: NameType,
+         subnets: SubnetsType)
+         -> CreateLoadBalancerInput {
+        CreateLoadBalancerInput {
+            name: name.into(),
+            subnets: subnets.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateLoadBalancerInput` contents to a `SignedRequest`.
 struct CreateLoadBalancerInputSerializer;
@@ -751,7 +922,6 @@ pub struct CreateLoadBalancerOutput {
     #[doc="<p>Information about the load balancer.</p>"]
     pub load_balancers: Option<Vec<LoadBalancer>>,
 }
-
 struct CreateLoadBalancerOutputDeserializer;
 impl CreateLoadBalancerOutputDeserializer {
     #[allow(unused_variables)]
@@ -806,7 +976,54 @@ pub struct CreateRuleInput {
     #[doc="<p>The priority for the rule. A listener can't have multiple rules with the same priority.</p>"]
     pub priority: i64,
 }
-
+impl CreateRuleInput {
+    /// Sets `actions`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRuleInput.actions = value.into();`.
+    pub fn actions<ValueType: Into<Vec<Action>>>(mut self, value: ValueType) -> Self {
+        self.actions = value.into();
+        self
+    }
+    /// Sets `conditions`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRuleInput.conditions = value.into();`.
+    pub fn conditions<ValueType: Into<Vec<RuleCondition>>>(mut self, value: ValueType) -> Self {
+        self.conditions = value.into();
+        self
+    }
+    /// Sets `listener_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRuleInput.listener_arn = value.into();`.
+    pub fn listener_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.listener_arn = value.into();
+        self
+    }
+    /// Sets `priority`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRuleInput.priority = value.into();`.
+    pub fn priority<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.priority = value.into();
+        self
+    }
+    /// Returns a new instance of CreateRuleInput with optional fields set to `None`.
+    pub fn new<ActionsType: Into<Vec<Action>>,
+               ConditionsType: Into<Vec<RuleCondition>>,
+               ListenerArnType: Into<String>,
+               PriorityType: Into<i64>>
+        (actions: ActionsType,
+         conditions: ConditionsType,
+         listener_arn: ListenerArnType,
+         priority: PriorityType)
+         -> CreateRuleInput {
+        CreateRuleInput {
+            actions: actions.into(),
+            conditions: conditions.into(),
+            listener_arn: listener_arn.into(),
+            priority: priority.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateRuleInput` contents to a `SignedRequest`.
 struct CreateRuleInputSerializer;
@@ -833,7 +1050,6 @@ pub struct CreateRuleOutput {
     #[doc="<p>Information about the rule.</p>"]
     pub rules: Option<Vec<Rule>>,
 }
-
 struct CreateRuleOutputDeserializer;
 impl CreateRuleOutputDeserializer {
     #[allow(unused_variables)]
@@ -902,7 +1118,110 @@ pub struct CreateTargetGroupInput {
     #[doc="<p>The identifier of the virtual private cloud (VPC).</p>"]
     pub vpc_id: String,
 }
-
+impl CreateTargetGroupInput {
+    /// Sets `health_check_interval_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTargetGroupInput.health_check_interval_seconds = Some(value.into());`.
+    pub fn health_check_interval_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.health_check_interval_seconds = Some(value.into());
+        self
+    }
+    /// Sets `health_check_path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTargetGroupInput.health_check_path = Some(value.into());`.
+    pub fn health_check_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.health_check_path = Some(value.into());
+        self
+    }
+    /// Sets `health_check_port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTargetGroupInput.health_check_port = Some(value.into());`.
+    pub fn health_check_port<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.health_check_port = Some(value.into());
+        self
+    }
+    /// Sets `health_check_protocol`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTargetGroupInput.health_check_protocol = Some(value.into());`.
+    pub fn health_check_protocol<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.health_check_protocol = Some(value.into());
+        self
+    }
+    /// Sets `health_check_timeout_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTargetGroupInput.health_check_timeout_seconds = Some(value.into());`.
+    pub fn health_check_timeout_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.health_check_timeout_seconds = Some(value.into());
+        self
+    }
+    /// Sets `healthy_threshold_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTargetGroupInput.healthy_threshold_count = Some(value.into());`.
+    pub fn healthy_threshold_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.healthy_threshold_count = Some(value.into());
+        self
+    }
+    /// Sets `matcher`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTargetGroupInput.matcher = Some(value.into());`.
+    pub fn matcher<ValueType: Into<Matcher>>(mut self, value: ValueType) -> Self {
+        self.matcher = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTargetGroupInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `port`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTargetGroupInput.port = value.into();`.
+    pub fn port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.port = value.into();
+        self
+    }
+    /// Sets `protocol`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTargetGroupInput.protocol = value.into();`.
+    pub fn protocol<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.protocol = value.into();
+        self
+    }
+    /// Sets `unhealthy_threshold_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTargetGroupInput.unhealthy_threshold_count = Some(value.into());`.
+    pub fn unhealthy_threshold_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.unhealthy_threshold_count = Some(value.into());
+        self
+    }
+    /// Sets `vpc_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTargetGroupInput.vpc_id = value.into();`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateTargetGroupInput with optional fields set to `None`.
+    pub fn new<NameType: Into<String>,
+               PortType: Into<i64>,
+               ProtocolType: Into<String>,
+               VpcIdType: Into<String>>
+        (name: NameType,
+         port: PortType,
+         protocol: ProtocolType,
+         vpc_id: VpcIdType)
+         -> CreateTargetGroupInput {
+        CreateTargetGroupInput {
+            name: name.into(),
+            port: port.into(),
+            protocol: protocol.into(),
+            vpc_id: vpc_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateTargetGroupInput` contents to a `SignedRequest`.
 struct CreateTargetGroupInputSerializer;
@@ -955,7 +1274,6 @@ pub struct CreateTargetGroupOutput {
     #[doc="<p>Information about the target group.</p>"]
     pub target_groups: Option<Vec<TargetGroup>>,
 }
-
 struct CreateTargetGroupOutputDeserializer;
 impl CreateTargetGroupOutputDeserializer {
     #[allow(unused_variables)]
@@ -1032,7 +1350,23 @@ pub struct DeleteListenerInput {
     #[doc="<p>The Amazon Resource Name (ARN) of the listener.</p>"]
     pub listener_arn: String,
 }
-
+impl DeleteListenerInput {
+    /// Sets `listener_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteListenerInput.listener_arn = value.into();`.
+    pub fn listener_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.listener_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteListenerInput with optional fields set to `None`.
+    pub fn new<ListenerArnType: Into<String>>(listener_arn: ListenerArnType)
+                                              -> DeleteListenerInput {
+        DeleteListenerInput {
+            listener_arn: listener_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteListenerInput` contents to a `SignedRequest`.
 struct DeleteListenerInputSerializer;
@@ -1072,7 +1406,23 @@ pub struct DeleteLoadBalancerInput {
     #[doc="<p>The Amazon Resource Name (ARN) of the load balancer.</p>"]
     pub load_balancer_arn: String,
 }
-
+impl DeleteLoadBalancerInput {
+    /// Sets `load_balancer_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteLoadBalancerInput.load_balancer_arn = value.into();`.
+    pub fn load_balancer_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.load_balancer_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteLoadBalancerInput with optional fields set to `None`.
+    pub fn new<LoadBalancerArnType: Into<String>>(load_balancer_arn: LoadBalancerArnType)
+                                                  -> DeleteLoadBalancerInput {
+        DeleteLoadBalancerInput {
+            load_balancer_arn: load_balancer_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteLoadBalancerInput` contents to a `SignedRequest`.
 struct DeleteLoadBalancerInputSerializer;
@@ -1113,7 +1463,22 @@ pub struct DeleteRuleInput {
     #[doc="<p>The Amazon Resource Name (ARN) of the rule.</p>"]
     pub rule_arn: String,
 }
-
+impl DeleteRuleInput {
+    /// Sets `rule_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRuleInput.rule_arn = value.into();`.
+    pub fn rule_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteRuleInput with optional fields set to `None`.
+    pub fn new<RuleArnType: Into<String>>(rule_arn: RuleArnType) -> DeleteRuleInput {
+        DeleteRuleInput {
+            rule_arn: rule_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteRuleInput` contents to a `SignedRequest`.
 struct DeleteRuleInputSerializer;
@@ -1153,7 +1518,23 @@ pub struct DeleteTargetGroupInput {
     #[doc="<p>The Amazon Resource Name (ARN) of the target group.</p>"]
     pub target_group_arn: String,
 }
-
+impl DeleteTargetGroupInput {
+    /// Sets `target_group_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTargetGroupInput.target_group_arn = value.into();`.
+    pub fn target_group_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_group_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteTargetGroupInput with optional fields set to `None`.
+    pub fn new<TargetGroupArnType: Into<String>>(target_group_arn: TargetGroupArnType)
+                                                 -> DeleteTargetGroupInput {
+        DeleteTargetGroupInput {
+            target_group_arn: target_group_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteTargetGroupInput` contents to a `SignedRequest`.
 struct DeleteTargetGroupInputSerializer;
@@ -1196,7 +1577,33 @@ pub struct DeregisterTargetsInput {
     #[doc="<p>The targets. If you specified a port override when you registered a target, you must specify both the target ID and the port when you deregister it.</p>"]
     pub targets: Vec<TargetDescription>,
 }
-
+impl DeregisterTargetsInput {
+    /// Sets `target_group_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterTargetsInput.target_group_arn = value.into();`.
+    pub fn target_group_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_group_arn = value.into();
+        self
+    }
+    /// Sets `targets`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterTargetsInput.targets = value.into();`.
+    pub fn targets<ValueType: Into<Vec<TargetDescription>>>(mut self, value: ValueType) -> Self {
+        self.targets = value.into();
+        self
+    }
+    /// Returns a new instance of DeregisterTargetsInput with optional fields set to `None`.
+    pub fn new<TargetGroupArnType: Into<String>, TargetsType: Into<Vec<TargetDescription>>>
+        (target_group_arn: TargetGroupArnType,
+         targets: TargetsType)
+         -> DeregisterTargetsInput {
+        DeregisterTargetsInput {
+            target_group_arn: target_group_arn.into(),
+            targets: targets.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeregisterTargetsInput` contents to a `SignedRequest`.
 struct DeregisterTargetsInputSerializer;
@@ -1242,7 +1649,26 @@ pub struct DescribeAccountLimitsInput {
     #[doc="<p>The maximum number of results to return with this call.</p>"]
     pub page_size: Option<i64>,
 }
-
+impl DescribeAccountLimitsInput {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAccountLimitsInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAccountLimitsInput.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeAccountLimitsInput with optional fields set to `None`.
+    pub fn new() -> DescribeAccountLimitsInput {
+        DescribeAccountLimitsInput { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeAccountLimitsInput` contents to a `SignedRequest`.
 struct DescribeAccountLimitsInputSerializer;
@@ -1271,7 +1697,6 @@ pub struct DescribeAccountLimitsOutput {
     #[doc="<p>The marker to use when requesting the next set of results. If there are no additional results, the string is empty.</p>"]
     pub next_marker: Option<String>,
 }
-
 struct DescribeAccountLimitsOutputDeserializer;
 impl DescribeAccountLimitsOutputDeserializer {
     #[allow(unused_variables)]
@@ -1329,7 +1754,40 @@ pub struct DescribeListenersInput {
     #[doc="<p>The maximum number of results to return with this call.</p>"]
     pub page_size: Option<i64>,
 }
-
+impl DescribeListenersInput {
+    /// Sets `listener_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeListenersInput.listener_arns = Some(value.into());`.
+    pub fn listener_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.listener_arns = Some(value.into());
+        self
+    }
+    /// Sets `load_balancer_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeListenersInput.load_balancer_arn = Some(value.into());`.
+    pub fn load_balancer_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.load_balancer_arn = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeListenersInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeListenersInput.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeListenersInput with optional fields set to `None`.
+    pub fn new() -> DescribeListenersInput {
+        DescribeListenersInput { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeListenersInput` contents to a `SignedRequest`.
 struct DescribeListenersInputSerializer;
@@ -1366,7 +1824,6 @@ pub struct DescribeListenersOutput {
     #[doc="<p>The marker to use when requesting the next set of results. If there are no additional results, the string is empty.</p>"]
     pub next_marker: Option<String>,
 }
-
 struct DescribeListenersOutputDeserializer;
 impl DescribeListenersOutputDeserializer {
     #[allow(unused_variables)]
@@ -1418,7 +1875,23 @@ pub struct DescribeLoadBalancerAttributesInput {
     #[doc="<p>The Amazon Resource Name (ARN) of the load balancer.</p>"]
     pub load_balancer_arn: String,
 }
-
+impl DescribeLoadBalancerAttributesInput {
+    /// Sets `load_balancer_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLoadBalancerAttributesInput.load_balancer_arn = value.into();`.
+    pub fn load_balancer_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.load_balancer_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeLoadBalancerAttributesInput with optional fields set to `None`.
+    pub fn new<LoadBalancerArnType: Into<String>>(load_balancer_arn: LoadBalancerArnType)
+                                                  -> DescribeLoadBalancerAttributesInput {
+        DescribeLoadBalancerAttributesInput {
+            load_balancer_arn: load_balancer_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeLoadBalancerAttributesInput` contents to a `SignedRequest`.
 struct DescribeLoadBalancerAttributesInputSerializer;
@@ -1440,7 +1913,6 @@ pub struct DescribeLoadBalancerAttributesOutput {
     #[doc="<p>Information about the load balancer attributes.</p>"]
     pub attributes: Option<Vec<LoadBalancerAttribute>>,
 }
-
 struct DescribeLoadBalancerAttributesOutputDeserializer;
 impl DescribeLoadBalancerAttributesOutputDeserializer {
     #[allow(unused_variables)]
@@ -1496,7 +1968,40 @@ pub struct DescribeLoadBalancersInput {
     #[doc="<p>The maximum number of results to return with this call.</p>"]
     pub page_size: Option<i64>,
 }
-
+impl DescribeLoadBalancersInput {
+    /// Sets `load_balancer_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLoadBalancersInput.load_balancer_arns = Some(value.into());`.
+    pub fn load_balancer_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.load_balancer_arns = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLoadBalancersInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLoadBalancersInput.names = Some(value.into());`.
+    pub fn names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.names = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLoadBalancersInput.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeLoadBalancersInput with optional fields set to `None`.
+    pub fn new() -> DescribeLoadBalancersInput {
+        DescribeLoadBalancersInput { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeLoadBalancersInput` contents to a `SignedRequest`.
 struct DescribeLoadBalancersInputSerializer;
@@ -1535,7 +2040,6 @@ pub struct DescribeLoadBalancersOutput {
     #[doc="<p>The marker to use when requesting the next set of results. If there are no additional results, the string is empty.</p>"]
     pub next_marker: Option<String>,
 }
-
 struct DescribeLoadBalancersOutputDeserializer;
 impl DescribeLoadBalancersOutputDeserializer {
     #[allow(unused_variables)]
@@ -1594,7 +2098,40 @@ pub struct DescribeRulesInput {
     #[doc="<p>The Amazon Resource Names (ARN) of the rules.</p>"]
     pub rule_arns: Option<Vec<String>>,
 }
-
+impl DescribeRulesInput {
+    /// Sets `listener_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRulesInput.listener_arn = Some(value.into());`.
+    pub fn listener_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.listener_arn = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRulesInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRulesInput.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Sets `rule_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRulesInput.rule_arns = Some(value.into());`.
+    pub fn rule_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.rule_arns = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeRulesInput with optional fields set to `None`.
+    pub fn new() -> DescribeRulesInput {
+        DescribeRulesInput { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeRulesInput` contents to a `SignedRequest`.
 struct DescribeRulesInputSerializer;
@@ -1631,7 +2168,6 @@ pub struct DescribeRulesOutput {
     #[doc="<p>Information about the rules.</p>"]
     pub rules: Option<Vec<Rule>>,
 }
-
 struct DescribeRulesOutputDeserializer;
 impl DescribeRulesOutputDeserializer {
     #[allow(unused_variables)]
@@ -1686,7 +2222,33 @@ pub struct DescribeSSLPoliciesInput {
     #[doc="<p>The maximum number of results to return with this call.</p>"]
     pub page_size: Option<i64>,
 }
-
+impl DescribeSSLPoliciesInput {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSSLPoliciesInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSSLPoliciesInput.names = Some(value.into());`.
+    pub fn names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.names = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSSLPoliciesInput.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeSSLPoliciesInput with optional fields set to `None`.
+    pub fn new() -> DescribeSSLPoliciesInput {
+        DescribeSSLPoliciesInput { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeSSLPoliciesInput` contents to a `SignedRequest`.
 struct DescribeSSLPoliciesInputSerializer;
@@ -1720,7 +2282,6 @@ pub struct DescribeSSLPoliciesOutput {
     #[doc="<p>Information about the policies.</p>"]
     pub ssl_policies: Option<Vec<SslPolicy>>,
 }
-
 struct DescribeSSLPoliciesOutputDeserializer;
 impl DescribeSSLPoliciesOutputDeserializer {
     #[allow(unused_variables)]
@@ -1773,7 +2334,23 @@ pub struct DescribeTagsInput {
     #[doc="<p>The Amazon Resource Names (ARN) of the resources.</p>"]
     pub resource_arns: Vec<String>,
 }
-
+impl DescribeTagsInput {
+    /// Sets `resource_arns`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTagsInput.resource_arns = value.into();`.
+    pub fn resource_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resource_arns = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeTagsInput with optional fields set to `None`.
+    pub fn new<ResourceArnsType: Into<Vec<String>>>(resource_arns: ResourceArnsType)
+                                                    -> DescribeTagsInput {
+        DescribeTagsInput {
+            resource_arns: resource_arns.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeTagsInput` contents to a `SignedRequest`.
 struct DescribeTagsInputSerializer;
@@ -1796,7 +2373,6 @@ pub struct DescribeTagsOutput {
     #[doc="<p>Information about the tags.</p>"]
     pub tag_descriptions: Option<Vec<TagDescription>>,
 }
-
 struct DescribeTagsOutputDeserializer;
 impl DescribeTagsOutputDeserializer {
     #[allow(unused_variables)]
@@ -1845,7 +2421,23 @@ pub struct DescribeTargetGroupAttributesInput {
     #[doc="<p>The Amazon Resource Name (ARN) of the target group.</p>"]
     pub target_group_arn: String,
 }
-
+impl DescribeTargetGroupAttributesInput {
+    /// Sets `target_group_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTargetGroupAttributesInput.target_group_arn = value.into();`.
+    pub fn target_group_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_group_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeTargetGroupAttributesInput with optional fields set to `None`.
+    pub fn new<TargetGroupArnType: Into<String>>(target_group_arn: TargetGroupArnType)
+                                                 -> DescribeTargetGroupAttributesInput {
+        DescribeTargetGroupAttributesInput {
+            target_group_arn: target_group_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeTargetGroupAttributesInput` contents to a `SignedRequest`.
 struct DescribeTargetGroupAttributesInputSerializer;
@@ -1867,7 +2459,6 @@ pub struct DescribeTargetGroupAttributesOutput {
     #[doc="<p>Information about the target group attributes</p>"]
     pub attributes: Option<Vec<TargetGroupAttribute>>,
 }
-
 struct DescribeTargetGroupAttributesOutputDeserializer;
 impl DescribeTargetGroupAttributesOutputDeserializer {
     #[allow(unused_variables)]
@@ -1925,7 +2516,47 @@ pub struct DescribeTargetGroupsInput {
     #[doc="<p>The Amazon Resource Names (ARN) of the target groups.</p>"]
     pub target_group_arns: Option<Vec<String>>,
 }
-
+impl DescribeTargetGroupsInput {
+    /// Sets `load_balancer_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTargetGroupsInput.load_balancer_arn = Some(value.into());`.
+    pub fn load_balancer_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.load_balancer_arn = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTargetGroupsInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTargetGroupsInput.names = Some(value.into());`.
+    pub fn names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.names = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTargetGroupsInput.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Sets `target_group_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTargetGroupsInput.target_group_arns = Some(value.into());`.
+    pub fn target_group_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.target_group_arns = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeTargetGroupsInput with optional fields set to `None`.
+    pub fn new() -> DescribeTargetGroupsInput {
+        DescribeTargetGroupsInput { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeTargetGroupsInput` contents to a `SignedRequest`.
 struct DescribeTargetGroupsInputSerializer;
@@ -1967,7 +2598,6 @@ pub struct DescribeTargetGroupsOutput {
     #[doc="<p>Information about the target groups.</p>"]
     pub target_groups: Option<Vec<TargetGroup>>,
 }
-
 struct DescribeTargetGroupsOutputDeserializer;
 impl DescribeTargetGroupsOutputDeserializer {
     #[allow(unused_variables)]
@@ -2022,7 +2652,30 @@ pub struct DescribeTargetHealthInput {
     #[doc="<p>The targets.</p>"]
     pub targets: Option<Vec<TargetDescription>>,
 }
-
+impl DescribeTargetHealthInput {
+    /// Sets `target_group_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTargetHealthInput.target_group_arn = value.into();`.
+    pub fn target_group_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_group_arn = value.into();
+        self
+    }
+    /// Sets `targets`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTargetHealthInput.targets = Some(value.into());`.
+    pub fn targets<ValueType: Into<Vec<TargetDescription>>>(mut self, value: ValueType) -> Self {
+        self.targets = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeTargetHealthInput with optional fields set to `None`.
+    pub fn new<TargetGroupArnType: Into<String>>(target_group_arn: TargetGroupArnType)
+                                                 -> DescribeTargetHealthInput {
+        DescribeTargetHealthInput {
+            target_group_arn: target_group_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeTargetHealthInput` contents to a `SignedRequest`.
 struct DescribeTargetHealthInputSerializer;
@@ -2049,7 +2702,6 @@ pub struct DescribeTargetHealthOutput {
     #[doc="<p>Information about the health of the targets.</p>"]
     pub target_health_descriptions: Option<Vec<TargetHealthDescription>>,
 }
-
 struct DescribeTargetHealthOutputDeserializer;
 impl DescribeTargetHealthOutputDeserializer {
     #[allow(unused_variables)]
@@ -2211,7 +2863,6 @@ pub struct Limit {
     #[doc="<p>The name of the limit. The possible values are:</p> <ul> <li> <p>application-load-balancers</p> </li> <li> <p>listeners-per-application-load-balancer</p> </li> <li> <p>rules-per-application-load-balancer</p> </li> <li> <p>target-groups</p> </li> <li> <p>targets-per-application-load-balancer</p> </li> </ul>"]
     pub name: Option<String>,
 }
-
 struct LimitDeserializer;
 impl LimitDeserializer {
     #[allow(unused_variables)]
@@ -2368,7 +3019,6 @@ pub struct Listener {
     #[doc="<p>The security policy that defines which ciphers and protocols are supported. The default is the current predefined security policy.</p>"]
     pub ssl_policy: Option<String>,
 }
-
 struct ListenerDeserializer;
 impl ListenerDeserializer {
     #[allow(unused_variables)]
@@ -2534,7 +3184,6 @@ pub struct LoadBalancer {
     #[doc="<p>The ID of the VPC for the load balancer.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct LoadBalancerDeserializer;
 impl LoadBalancerDeserializer {
     #[allow(unused_variables)]
@@ -2705,7 +3354,26 @@ pub struct LoadBalancerAttribute {
     #[doc="<p>The value of the attribute.</p>"]
     pub value: Option<String>,
 }
-
+impl LoadBalancerAttribute {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LoadBalancerAttribute.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LoadBalancerAttribute.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of LoadBalancerAttribute with optional fields set to `None`.
+    pub fn new() -> LoadBalancerAttribute {
+        LoadBalancerAttribute { ..Default::default() }
+    }
+}
 struct LoadBalancerAttributeDeserializer;
 impl LoadBalancerAttributeDeserializer {
     #[allow(unused_variables)]
@@ -2900,7 +3568,6 @@ pub struct LoadBalancerState {
     #[doc="<p>A description of the state.</p>"]
     pub reason: Option<String>,
 }
-
 struct LoadBalancerStateDeserializer;
 impl LoadBalancerStateDeserializer {
     #[allow(unused_variables)]
@@ -3037,7 +3704,22 @@ pub struct Matcher {
     #[doc="<p>The HTTP codes. You can specify values between 200 and 499. The default value is 200. You can specify multiple values (for example, \"200,202\") or a range of values (for example, \"200-299\").</p>"]
     pub http_code: String,
 }
-
+impl Matcher {
+    /// Sets `http_code`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Matcher.http_code = value.into();`.
+    pub fn http_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.http_code = value.into();
+        self
+    }
+    /// Returns a new instance of Matcher with optional fields set to `None`.
+    pub fn new<HttpCodeType: Into<String>>(http_code: HttpCodeType) -> Matcher {
+        Matcher {
+            http_code: http_code.into(),
+            ..Default::default()
+        }
+    }
+}
 struct MatcherDeserializer;
 impl MatcherDeserializer {
     #[allow(unused_variables)]
@@ -3124,7 +3806,58 @@ pub struct ModifyListenerInput {
     #[doc="<p>The security policy that defines which protocols and ciphers are supported. For more information, see <a href=\"http://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-https-listener.html#describe-ssl-policies\">Security Policies</a> in the <i>Application Load Balancers Guide</i>.</p>"]
     pub ssl_policy: Option<String>,
 }
-
+impl ModifyListenerInput {
+    /// Sets `certificates`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyListenerInput.certificates = Some(value.into());`.
+    pub fn certificates<ValueType: Into<Vec<Certificate>>>(mut self, value: ValueType) -> Self {
+        self.certificates = Some(value.into());
+        self
+    }
+    /// Sets `default_actions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyListenerInput.default_actions = Some(value.into());`.
+    pub fn default_actions<ValueType: Into<Vec<Action>>>(mut self, value: ValueType) -> Self {
+        self.default_actions = Some(value.into());
+        self
+    }
+    /// Sets `listener_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyListenerInput.listener_arn = value.into();`.
+    pub fn listener_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.listener_arn = value.into();
+        self
+    }
+    /// Sets `port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyListenerInput.port = Some(value.into());`.
+    pub fn port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.port = Some(value.into());
+        self
+    }
+    /// Sets `protocol`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyListenerInput.protocol = Some(value.into());`.
+    pub fn protocol<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.protocol = Some(value.into());
+        self
+    }
+    /// Sets `ssl_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyListenerInput.ssl_policy = Some(value.into());`.
+    pub fn ssl_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ssl_policy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifyListenerInput with optional fields set to `None`.
+    pub fn new<ListenerArnType: Into<String>>(listener_arn: ListenerArnType)
+                                              -> ModifyListenerInput {
+        ModifyListenerInput {
+            listener_arn: listener_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyListenerInput` contents to a `SignedRequest`.
 struct ModifyListenerInputSerializer;
@@ -3164,7 +3897,6 @@ pub struct ModifyListenerOutput {
     #[doc="<p>Information about the modified listeners.</p>"]
     pub listeners: Option<Vec<Listener>>,
 }
-
 struct ModifyListenerOutputDeserializer;
 impl ModifyListenerOutputDeserializer {
     #[allow(unused_variables)]
@@ -3214,7 +3946,35 @@ pub struct ModifyLoadBalancerAttributesInput {
     #[doc="<p>The Amazon Resource Name (ARN) of the load balancer.</p>"]
     pub load_balancer_arn: String,
 }
-
+impl ModifyLoadBalancerAttributesInput {
+    /// Sets `attributes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyLoadBalancerAttributesInput.attributes = value.into();`.
+    pub fn attributes<ValueType: Into<Vec<LoadBalancerAttribute>>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.attributes = value.into();
+        self
+    }
+    /// Sets `load_balancer_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyLoadBalancerAttributesInput.load_balancer_arn = value.into();`.
+    pub fn load_balancer_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.load_balancer_arn = value.into();
+        self
+    }
+    /// Returns a new instance of ModifyLoadBalancerAttributesInput with optional fields set to `None`.
+    pub fn new<AttributesType: Into<Vec<LoadBalancerAttribute>>, LoadBalancerArnType: Into<String>>
+        (attributes: AttributesType,
+         load_balancer_arn: LoadBalancerArnType)
+         -> ModifyLoadBalancerAttributesInput {
+        ModifyLoadBalancerAttributesInput {
+            attributes: attributes.into(),
+            load_balancer_arn: load_balancer_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyLoadBalancerAttributesInput` contents to a `SignedRequest`.
 struct ModifyLoadBalancerAttributesInputSerializer;
@@ -3239,7 +3999,6 @@ pub struct ModifyLoadBalancerAttributesOutput {
     #[doc="<p>Information about the load balancer attributes.</p>"]
     pub attributes: Option<Vec<LoadBalancerAttribute>>,
 }
-
 struct ModifyLoadBalancerAttributesOutputDeserializer;
 impl ModifyLoadBalancerAttributesOutputDeserializer {
     #[allow(unused_variables)]
@@ -3293,7 +4052,36 @@ pub struct ModifyRuleInput {
     #[doc="<p>The Amazon Resource Name (ARN) of the rule.</p>"]
     pub rule_arn: String,
 }
-
+impl ModifyRuleInput {
+    /// Sets `actions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyRuleInput.actions = Some(value.into());`.
+    pub fn actions<ValueType: Into<Vec<Action>>>(mut self, value: ValueType) -> Self {
+        self.actions = Some(value.into());
+        self
+    }
+    /// Sets `conditions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyRuleInput.conditions = Some(value.into());`.
+    pub fn conditions<ValueType: Into<Vec<RuleCondition>>>(mut self, value: ValueType) -> Self {
+        self.conditions = Some(value.into());
+        self
+    }
+    /// Sets `rule_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyRuleInput.rule_arn = value.into();`.
+    pub fn rule_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_arn = value.into();
+        self
+    }
+    /// Returns a new instance of ModifyRuleInput with optional fields set to `None`.
+    pub fn new<RuleArnType: Into<String>>(rule_arn: RuleArnType) -> ModifyRuleInput {
+        ModifyRuleInput {
+            rule_arn: rule_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyRuleInput` contents to a `SignedRequest`.
 struct ModifyRuleInputSerializer;
@@ -3322,7 +4110,6 @@ pub struct ModifyRuleOutput {
     #[doc="<p>Information about the rule.</p>"]
     pub rules: Option<Vec<Rule>>,
 }
-
 struct ModifyRuleOutputDeserializer;
 impl ModifyRuleOutputDeserializer {
     #[allow(unused_variables)]
@@ -3371,7 +4158,35 @@ pub struct ModifyTargetGroupAttributesInput {
     #[doc="<p>The Amazon Resource Name (ARN) of the target group.</p>"]
     pub target_group_arn: String,
 }
-
+impl ModifyTargetGroupAttributesInput {
+    /// Sets `attributes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyTargetGroupAttributesInput.attributes = value.into();`.
+    pub fn attributes<ValueType: Into<Vec<TargetGroupAttribute>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.attributes = value.into();
+        self
+    }
+    /// Sets `target_group_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyTargetGroupAttributesInput.target_group_arn = value.into();`.
+    pub fn target_group_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_group_arn = value.into();
+        self
+    }
+    /// Returns a new instance of ModifyTargetGroupAttributesInput with optional fields set to `None`.
+    pub fn new<AttributesType: Into<Vec<TargetGroupAttribute>>, TargetGroupArnType: Into<String>>
+        (attributes: AttributesType,
+         target_group_arn: TargetGroupArnType)
+         -> ModifyTargetGroupAttributesInput {
+        ModifyTargetGroupAttributesInput {
+            attributes: attributes.into(),
+            target_group_arn: target_group_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyTargetGroupAttributesInput` contents to a `SignedRequest`.
 struct ModifyTargetGroupAttributesInputSerializer;
@@ -3396,7 +4211,6 @@ pub struct ModifyTargetGroupAttributesOutput {
     #[doc="<p>Information about the attributes.</p>"]
     pub attributes: Option<Vec<TargetGroupAttribute>>,
 }
-
 struct ModifyTargetGroupAttributesOutputDeserializer;
 impl ModifyTargetGroupAttributesOutputDeserializer {
     #[allow(unused_variables)]
@@ -3462,7 +4276,79 @@ pub struct ModifyTargetGroupInput {
     #[doc="<p>The number of consecutive health check failures required before considering the target unhealthy.</p>"]
     pub unhealthy_threshold_count: Option<i64>,
 }
-
+impl ModifyTargetGroupInput {
+    /// Sets `health_check_interval_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyTargetGroupInput.health_check_interval_seconds = Some(value.into());`.
+    pub fn health_check_interval_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.health_check_interval_seconds = Some(value.into());
+        self
+    }
+    /// Sets `health_check_path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyTargetGroupInput.health_check_path = Some(value.into());`.
+    pub fn health_check_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.health_check_path = Some(value.into());
+        self
+    }
+    /// Sets `health_check_port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyTargetGroupInput.health_check_port = Some(value.into());`.
+    pub fn health_check_port<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.health_check_port = Some(value.into());
+        self
+    }
+    /// Sets `health_check_protocol`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyTargetGroupInput.health_check_protocol = Some(value.into());`.
+    pub fn health_check_protocol<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.health_check_protocol = Some(value.into());
+        self
+    }
+    /// Sets `health_check_timeout_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyTargetGroupInput.health_check_timeout_seconds = Some(value.into());`.
+    pub fn health_check_timeout_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.health_check_timeout_seconds = Some(value.into());
+        self
+    }
+    /// Sets `healthy_threshold_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyTargetGroupInput.healthy_threshold_count = Some(value.into());`.
+    pub fn healthy_threshold_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.healthy_threshold_count = Some(value.into());
+        self
+    }
+    /// Sets `matcher`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyTargetGroupInput.matcher = Some(value.into());`.
+    pub fn matcher<ValueType: Into<Matcher>>(mut self, value: ValueType) -> Self {
+        self.matcher = Some(value.into());
+        self
+    }
+    /// Sets `target_group_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyTargetGroupInput.target_group_arn = value.into();`.
+    pub fn target_group_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_group_arn = value.into();
+        self
+    }
+    /// Sets `unhealthy_threshold_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyTargetGroupInput.unhealthy_threshold_count = Some(value.into());`.
+    pub fn unhealthy_threshold_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.unhealthy_threshold_count = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifyTargetGroupInput with optional fields set to `None`.
+    pub fn new<TargetGroupArnType: Into<String>>(target_group_arn: TargetGroupArnType)
+                                                 -> ModifyTargetGroupInput {
+        ModifyTargetGroupInput {
+            target_group_arn: target_group_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyTargetGroupInput` contents to a `SignedRequest`.
 struct ModifyTargetGroupInputSerializer;
@@ -3513,7 +4399,6 @@ pub struct ModifyTargetGroupOutput {
     #[doc="<p>Information about the target group.</p>"]
     pub target_groups: Option<Vec<TargetGroup>>,
 }
-
 struct ModifyTargetGroupOutputDeserializer;
 impl ModifyTargetGroupOutputDeserializer {
     #[allow(unused_variables)]
@@ -3620,7 +4505,33 @@ pub struct RegisterTargetsInput {
     #[doc="<p>The targets. The default port for a target is the port for the target group. You can specify a port override. If a target is already registered, you can register it again using a different port.</p>"]
     pub targets: Vec<TargetDescription>,
 }
-
+impl RegisterTargetsInput {
+    /// Sets `target_group_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTargetsInput.target_group_arn = value.into();`.
+    pub fn target_group_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_group_arn = value.into();
+        self
+    }
+    /// Sets `targets`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterTargetsInput.targets = value.into();`.
+    pub fn targets<ValueType: Into<Vec<TargetDescription>>>(mut self, value: ValueType) -> Self {
+        self.targets = value.into();
+        self
+    }
+    /// Returns a new instance of RegisterTargetsInput with optional fields set to `None`.
+    pub fn new<TargetGroupArnType: Into<String>, TargetsType: Into<Vec<TargetDescription>>>
+        (target_group_arn: TargetGroupArnType,
+         targets: TargetsType)
+         -> RegisterTargetsInput {
+        RegisterTargetsInput {
+            target_group_arn: target_group_arn.into(),
+            targets: targets.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RegisterTargetsInput` contents to a `SignedRequest`.
 struct RegisterTargetsInputSerializer;
@@ -3666,7 +4577,33 @@ pub struct RemoveTagsInput {
     #[doc="<p>The tag keys for the tags to remove.</p>"]
     pub tag_keys: Vec<String>,
 }
-
+impl RemoveTagsInput {
+    /// Sets `resource_arns`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsInput.resource_arns = value.into();`.
+    pub fn resource_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resource_arns = value.into();
+        self
+    }
+    /// Sets `tag_keys`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsInput.tag_keys = value.into();`.
+    pub fn tag_keys<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tag_keys = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveTagsInput with optional fields set to `None`.
+    pub fn new<ResourceArnsType: Into<Vec<String>>, TagKeysType: Into<Vec<String>>>
+        (resource_arns: ResourceArnsType,
+         tag_keys: TagKeysType)
+         -> RemoveTagsInput {
+        RemoveTagsInput {
+            resource_arns: resource_arns.into(),
+            tag_keys: tag_keys.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RemoveTagsInput` contents to a `SignedRequest`.
 struct RemoveTagsInputSerializer;
@@ -3744,7 +4681,6 @@ pub struct Rule {
     #[doc="<p>The Amazon Resource Name (ARN) of the rule.</p>"]
     pub rule_arn: Option<String>,
 }
-
 struct RuleDeserializer;
 impl RuleDeserializer {
     #[allow(unused_variables)]
@@ -3838,7 +4774,26 @@ pub struct RuleCondition {
     #[doc="<p>The condition value.</p> <p>If the field name is <code>host-header</code>, you can specify a single host name (for example, my.example.com). A host name is case insensitive, can be up to 128 characters in length, and can contain any of the following characters. Note that you can include up to three wildcard characters.</p> <ul> <li> <p>A-Z, a-z, 0-9</p> </li> <li> <p>- .</p> </li> <li> <p>* (matches 0 or more characters)</p> </li> <li> <p>? (matches exactly 1 character)</p> </li> </ul> <p>If the field name is <code>path-pattern</code>, you can specify a single path pattern (for example, /img/*). A path pattern is case sensitive, can be up to 128 characters in length, and can contain any of the following characters. Note that you can include up to three wildcard characters.</p> <ul> <li> <p>A-Z, a-z, 0-9</p> </li> <li> <p>_ - . $ / ~ \" ' @ : +</p> </li> <li> <p>&amp; (using &amp;amp;)</p> </li> <li> <p>* (matches 0 or more characters)</p> </li> <li> <p>? (matches exactly 1 character)</p> </li> </ul>"]
     pub values: Option<Vec<String>>,
 }
-
+impl RuleCondition {
+    /// Sets `field`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RuleCondition.field = Some(value.into());`.
+    pub fn field<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.field = Some(value.into());
+        self
+    }
+    /// Sets `values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RuleCondition.values = Some(value.into());`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RuleCondition with optional fields set to `None`.
+    pub fn new() -> RuleCondition {
+        RuleCondition { ..Default::default() }
+    }
+}
 struct RuleConditionDeserializer;
 impl RuleConditionDeserializer {
     #[allow(unused_variables)]
@@ -3981,7 +4936,26 @@ pub struct RulePriorityPair {
     #[doc="<p>The Amazon Resource Name (ARN) of the rule.</p>"]
     pub rule_arn: Option<String>,
 }
-
+impl RulePriorityPair {
+    /// Sets `priority`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RulePriorityPair.priority = Some(value.into());`.
+    pub fn priority<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.priority = Some(value.into());
+        self
+    }
+    /// Sets `rule_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RulePriorityPair.rule_arn = Some(value.into());`.
+    pub fn rule_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RulePriorityPair with optional fields set to `None`.
+    pub fn new() -> RulePriorityPair {
+        RulePriorityPair { ..Default::default() }
+    }
+}
 
 /// Serialize `RulePriorityPair` contents to a `SignedRequest`.
 struct RulePriorityPairSerializer;
@@ -4118,7 +5092,33 @@ pub struct SetIpAddressTypeInput {
     #[doc="<p>The Amazon Resource Name (ARN) of the load balancer.</p>"]
     pub load_balancer_arn: String,
 }
-
+impl SetIpAddressTypeInput {
+    /// Sets `ip_address_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetIpAddressTypeInput.ip_address_type = value.into();`.
+    pub fn ip_address_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ip_address_type = value.into();
+        self
+    }
+    /// Sets `load_balancer_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetIpAddressTypeInput.load_balancer_arn = value.into();`.
+    pub fn load_balancer_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.load_balancer_arn = value.into();
+        self
+    }
+    /// Returns a new instance of SetIpAddressTypeInput with optional fields set to `None`.
+    pub fn new<IpAddressTypeType: Into<String>, LoadBalancerArnType: Into<String>>
+        (ip_address_type: IpAddressTypeType,
+         load_balancer_arn: LoadBalancerArnType)
+         -> SetIpAddressTypeInput {
+        SetIpAddressTypeInput {
+            ip_address_type: ip_address_type.into(),
+            load_balancer_arn: load_balancer_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SetIpAddressTypeInput` contents to a `SignedRequest`.
 struct SetIpAddressTypeInputSerializer;
@@ -4142,7 +5142,6 @@ pub struct SetIpAddressTypeOutput {
     #[doc="<p>The IP address type.</p>"]
     pub ip_address_type: Option<String>,
 }
-
 struct SetIpAddressTypeOutputDeserializer;
 impl SetIpAddressTypeOutputDeserializer {
     #[allow(unused_variables)]
@@ -4191,7 +5190,24 @@ pub struct SetRulePrioritiesInput {
     #[doc="<p>The rule priorities.</p>"]
     pub rule_priorities: Vec<RulePriorityPair>,
 }
-
+impl SetRulePrioritiesInput {
+    /// Sets `rule_priorities`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetRulePrioritiesInput.rule_priorities = value.into();`.
+    pub fn rule_priorities<ValueType: Into<Vec<RulePriorityPair>>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.rule_priorities = value.into();
+        self
+    }
+    /// Returns a new instance of SetRulePrioritiesInput with optional fields set to `None`.
+pub fn new<RulePrioritiesType: Into<Vec<RulePriorityPair>>>(rule_priorities: RulePrioritiesType) -> SetRulePrioritiesInput{
+        SetRulePrioritiesInput {
+            rule_priorities: rule_priorities.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SetRulePrioritiesInput` contents to a `SignedRequest`.
 struct SetRulePrioritiesInputSerializer;
@@ -4214,7 +5230,6 @@ pub struct SetRulePrioritiesOutput {
     #[doc="<p>Information about the rules.</p>"]
     pub rules: Option<Vec<Rule>>,
 }
-
 struct SetRulePrioritiesOutputDeserializer;
 impl SetRulePrioritiesOutputDeserializer {
     #[allow(unused_variables)]
@@ -4263,7 +5278,33 @@ pub struct SetSecurityGroupsInput {
     #[doc="<p>The IDs of the security groups.</p>"]
     pub security_groups: Vec<String>,
 }
-
+impl SetSecurityGroupsInput {
+    /// Sets `load_balancer_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetSecurityGroupsInput.load_balancer_arn = value.into();`.
+    pub fn load_balancer_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.load_balancer_arn = value.into();
+        self
+    }
+    /// Sets `security_groups`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetSecurityGroupsInput.security_groups = value.into();`.
+    pub fn security_groups<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.security_groups = value.into();
+        self
+    }
+    /// Returns a new instance of SetSecurityGroupsInput with optional fields set to `None`.
+    pub fn new<LoadBalancerArnType: Into<String>, SecurityGroupsType: Into<Vec<String>>>
+        (load_balancer_arn: LoadBalancerArnType,
+         security_groups: SecurityGroupsType)
+         -> SetSecurityGroupsInput {
+        SetSecurityGroupsInput {
+            load_balancer_arn: load_balancer_arn.into(),
+            security_groups: security_groups.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SetSecurityGroupsInput` contents to a `SignedRequest`.
 struct SetSecurityGroupsInputSerializer;
@@ -4288,7 +5329,6 @@ pub struct SetSecurityGroupsOutput {
     #[doc="<p>The IDs of the security groups associated with the load balancer.</p>"]
     pub security_group_ids: Option<Vec<String>>,
 }
-
 struct SetSecurityGroupsOutputDeserializer;
 impl SetSecurityGroupsOutputDeserializer {
     #[allow(unused_variables)]
@@ -4339,7 +5379,33 @@ pub struct SetSubnetsInput {
     #[doc="<p>The IDs of the subnets. You must specify at least two subnets. You can add only one subnet per Availability Zone.</p>"]
     pub subnets: Vec<String>,
 }
-
+impl SetSubnetsInput {
+    /// Sets `load_balancer_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetSubnetsInput.load_balancer_arn = value.into();`.
+    pub fn load_balancer_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.load_balancer_arn = value.into();
+        self
+    }
+    /// Sets `subnets`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetSubnetsInput.subnets = value.into();`.
+    pub fn subnets<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.subnets = value.into();
+        self
+    }
+    /// Returns a new instance of SetSubnetsInput with optional fields set to `None`.
+    pub fn new<LoadBalancerArnType: Into<String>, SubnetsType: Into<Vec<String>>>
+        (load_balancer_arn: LoadBalancerArnType,
+         subnets: SubnetsType)
+         -> SetSubnetsInput {
+        SetSubnetsInput {
+            load_balancer_arn: load_balancer_arn.into(),
+            subnets: subnets.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SetSubnetsInput` contents to a `SignedRequest`.
 struct SetSubnetsInputSerializer;
@@ -4362,7 +5428,6 @@ pub struct SetSubnetsOutput {
     #[doc="<p>Information about the subnet and Availability Zone.</p>"]
     pub availability_zones: Option<Vec<AvailabilityZone>>,
 }
-
 struct SetSubnetsOutputDeserializer;
 impl SetSubnetsOutputDeserializer {
     #[allow(unused_variables)]
@@ -4457,7 +5522,6 @@ pub struct SslPolicy {
     #[doc="<p>The protocols.</p>"]
     pub ssl_protocols: Option<Vec<String>>,
 }
-
 struct SslPolicyDeserializer;
 impl SslPolicyDeserializer {
     #[allow(unused_variables)]
@@ -4666,7 +5730,29 @@ pub struct Tag {
     #[doc="<p>The value of the tag.</p>"]
     pub value: Option<String>,
 }
-
+impl Tag {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>>(key: KeyType) -> Tag {
+        Tag {
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 struct TagDeserializer;
 impl TagDeserializer {
     #[allow(unused_variables)]
@@ -4738,7 +5824,6 @@ pub struct TagDescription {
     #[doc="<p>Information about the tags.</p>"]
     pub tags: Option<Vec<Tag>>,
 }
-
 struct TagDescriptionDeserializer;
 impl TagDescriptionDeserializer {
     #[allow(unused_variables)]
@@ -4927,7 +6012,29 @@ pub struct TargetDescription {
     #[doc="<p>The port on which the target is listening.</p>"]
     pub port: Option<i64>,
 }
-
+impl TargetDescription {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TargetDescription.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TargetDescription.port = Some(value.into());`.
+    pub fn port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.port = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TargetDescription with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> TargetDescription {
+        TargetDescription {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 struct TargetDescriptionDeserializer;
 impl TargetDescriptionDeserializer {
     #[allow(unused_variables)]
@@ -5034,7 +6141,6 @@ pub struct TargetGroup {
     #[doc="<p>The ID of the VPC for the targets.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct TargetGroupDeserializer;
 impl TargetGroupDeserializer {
     #[allow(unused_variables)]
@@ -5162,7 +6268,26 @@ pub struct TargetGroupAttribute {
     #[doc="<p>The value of the attribute.</p>"]
     pub value: Option<String>,
 }
-
+impl TargetGroupAttribute {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TargetGroupAttribute.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TargetGroupAttribute.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TargetGroupAttribute with optional fields set to `None`.
+    pub fn new() -> TargetGroupAttribute {
+        TargetGroupAttribute { ..Default::default() }
+    }
+}
 struct TargetGroupAttributeDeserializer;
 impl TargetGroupAttributeDeserializer {
     #[allow(unused_variables)]
@@ -5388,7 +6513,6 @@ pub struct TargetHealth {
     #[doc="<p>The state of the target.</p>"]
     pub state: Option<String>,
 }
-
 struct TargetHealthDeserializer;
 impl TargetHealthDeserializer {
     #[allow(unused_variables)]
@@ -5452,7 +6576,6 @@ pub struct TargetHealthDescription {
     #[doc="<p>The health information for the target.</p>"]
     pub target_health: Option<TargetHealth>,
 }
-
 struct TargetHealthDescriptionDeserializer;
 impl TargetHealthDescriptionDeserializer {
     #[allow(unused_variables)]

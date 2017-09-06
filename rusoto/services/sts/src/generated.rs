@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -112,7 +113,68 @@ pub struct AssumeRoleRequest {
     #[doc="<p>The value provided by the MFA device, if the trust policy of the role being assumed requires MFA (that is, if the policy includes a condition that tests for MFA). If the role being assumed requires MFA and if the <code>TokenCode</code> value is missing or expired, the <code>AssumeRole</code> call returns an \"access denied\" error.</p> <p>The format for this parameter, as described by its regex pattern, is a sequence of six numeric digits.</p>"]
     pub token_code: Option<String>,
 }
-
+impl AssumeRoleRequest {
+    /// Sets `duration_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssumeRoleRequest.duration_seconds = Some(value.into());`.
+    pub fn duration_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.duration_seconds = Some(value.into());
+        self
+    }
+    /// Sets `external_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssumeRoleRequest.external_id = Some(value.into());`.
+    pub fn external_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.external_id = Some(value.into());
+        self
+    }
+    /// Sets `policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssumeRoleRequest.policy = Some(value.into());`.
+    pub fn policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssumeRoleRequest.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Sets `role_session_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssumeRoleRequest.role_session_name = value.into();`.
+    pub fn role_session_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_session_name = value.into();
+        self
+    }
+    /// Sets `serial_number`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssumeRoleRequest.serial_number = Some(value.into());`.
+    pub fn serial_number<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.serial_number = Some(value.into());
+        self
+    }
+    /// Sets `token_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssumeRoleRequest.token_code = Some(value.into());`.
+    pub fn token_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.token_code = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AssumeRoleRequest with optional fields set to `None`.
+    pub fn new<RoleArnType: Into<String>, RoleSessionNameType: Into<String>>
+        (role_arn: RoleArnType,
+         role_session_name: RoleSessionNameType)
+         -> AssumeRoleRequest {
+        AssumeRoleRequest {
+            role_arn: role_arn.into(),
+            role_session_name: role_session_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AssumeRoleRequest` contents to a `SignedRequest`.
 struct AssumeRoleRequestSerializer;
@@ -156,7 +218,6 @@ pub struct AssumeRoleResponse {
     #[doc="<p>A percentage value that indicates the size of the policy in packed form. The service rejects any policy with a packed size greater than 100 percent, which means the policy exceeded the allowed space.</p>"]
     pub packed_policy_size: Option<i64>,
 }
-
 struct AssumeRoleResponseDeserializer;
 impl AssumeRoleResponseDeserializer {
     #[allow(unused_variables)]
@@ -223,7 +284,58 @@ pub struct AssumeRoleWithSAMLRequest {
     #[doc="<p>The base-64 encoded SAML authentication response provided by the IdP.</p> <p>For more information, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/create-role-saml-IdP-tasks.html\">Configuring a Relying Party and Adding Claims</a> in the <i>Using IAM</i> guide. </p>"]
     pub saml_assertion: String,
 }
-
+impl AssumeRoleWithSAMLRequest {
+    /// Sets `duration_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssumeRoleWithSAMLRequest.duration_seconds = Some(value.into());`.
+    pub fn duration_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.duration_seconds = Some(value.into());
+        self
+    }
+    /// Sets `policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssumeRoleWithSAMLRequest.policy = Some(value.into());`.
+    pub fn policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy = Some(value.into());
+        self
+    }
+    /// Sets `principal_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssumeRoleWithSAMLRequest.principal_arn = value.into();`.
+    pub fn principal_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.principal_arn = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssumeRoleWithSAMLRequest.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Sets `saml_assertion`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssumeRoleWithSAMLRequest.saml_assertion = value.into();`.
+    pub fn saml_assertion<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.saml_assertion = value.into();
+        self
+    }
+    /// Returns a new instance of AssumeRoleWithSAMLRequest with optional fields set to `None`.
+    pub fn new<PrincipalArnType: Into<String>,
+               RoleArnType: Into<String>,
+               SAMLAssertionType: Into<String>>
+        (principal_arn: PrincipalArnType,
+         role_arn: RoleArnType,
+         saml_assertion: SAMLAssertionType)
+         -> AssumeRoleWithSAMLRequest {
+        AssumeRoleWithSAMLRequest {
+            principal_arn: principal_arn.into(),
+            role_arn: role_arn.into(),
+            saml_assertion: saml_assertion.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AssumeRoleWithSAMLRequest` contents to a `SignedRequest`.
 struct AssumeRoleWithSAMLRequestSerializer;
@@ -269,7 +381,6 @@ pub struct AssumeRoleWithSAMLResponse {
     #[doc="<p> The format of the name ID, as defined by the <code>Format</code> attribute in the <code>NameID</code> element of the SAML assertion. Typical examples of the format are <code>transient</code> or <code>persistent</code>. </p> <p> If the format includes the prefix <code>urn:oasis:names:tc:SAML:2.0:nameid-format</code>, that prefix is removed. For example, <code>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</code> is returned as <code>transient</code>. If the format includes any other prefix, the format is returned with no modifications.</p>"]
     pub subject_type: Option<String>,
 }
-
 struct AssumeRoleWithSAMLResponseDeserializer;
 impl AssumeRoleWithSAMLResponseDeserializer {
     #[allow(unused_variables)]
@@ -360,7 +471,65 @@ pub struct AssumeRoleWithWebIdentityRequest {
     #[doc="<p>The OAuth 2.0 access token or OpenID Connect ID token that is provided by the identity provider. Your application must get this token by authenticating the user who is using your application with a web identity provider before the application makes an <code>AssumeRoleWithWebIdentity</code> call. </p>"]
     pub web_identity_token: String,
 }
-
+impl AssumeRoleWithWebIdentityRequest {
+    /// Sets `duration_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssumeRoleWithWebIdentityRequest.duration_seconds = Some(value.into());`.
+    pub fn duration_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.duration_seconds = Some(value.into());
+        self
+    }
+    /// Sets `policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssumeRoleWithWebIdentityRequest.policy = Some(value.into());`.
+    pub fn policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy = Some(value.into());
+        self
+    }
+    /// Sets `provider_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssumeRoleWithWebIdentityRequest.provider_id = Some(value.into());`.
+    pub fn provider_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provider_id = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssumeRoleWithWebIdentityRequest.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Sets `role_session_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssumeRoleWithWebIdentityRequest.role_session_name = value.into();`.
+    pub fn role_session_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_session_name = value.into();
+        self
+    }
+    /// Sets `web_identity_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssumeRoleWithWebIdentityRequest.web_identity_token = value.into();`.
+    pub fn web_identity_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.web_identity_token = value.into();
+        self
+    }
+    /// Returns a new instance of AssumeRoleWithWebIdentityRequest with optional fields set to `None`.
+    pub fn new<RoleArnType: Into<String>,
+               RoleSessionNameType: Into<String>,
+               WebIdentityTokenType: Into<String>>
+        (role_arn: RoleArnType,
+         role_session_name: RoleSessionNameType,
+         web_identity_token: WebIdentityTokenType)
+         -> AssumeRoleWithWebIdentityRequest {
+        AssumeRoleWithWebIdentityRequest {
+            role_arn: role_arn.into(),
+            role_session_name: role_session_name.into(),
+            web_identity_token: web_identity_token.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AssumeRoleWithWebIdentityRequest` contents to a `SignedRequest`.
 struct AssumeRoleWithWebIdentityRequestSerializer;
@@ -406,7 +575,6 @@ pub struct AssumeRoleWithWebIdentityResponse {
     #[doc="<p>The unique user identifier that is returned by the identity provider. This identifier is associated with the <code>WebIdentityToken</code> that was submitted with the <code>AssumeRoleWithWebIdentity</code> call. The identifier is typically unique to the user and the application that acquired the <code>WebIdentityToken</code> (pairwise identifier). For OpenID Connect ID tokens, this field contains the value returned by the identity provider as the token's <code>sub</code> (Subject) claim. </p>"]
     pub subject_from_web_identity_token: Option<String>,
 }
-
 struct AssumeRoleWithWebIdentityResponseDeserializer;
 impl AssumeRoleWithWebIdentityResponseDeserializer {
     #[allow(unused_variables)]
@@ -496,7 +664,6 @@ pub struct AssumedRoleUser {
     #[doc="<p>A unique identifier that contains the role ID and the role session name of the role that is being assumed. The role ID is generated by AWS when the role is created.</p>"]
     pub assumed_role_id: String,
 }
-
 struct AssumedRoleUserDeserializer;
 impl AssumedRoleUserDeserializer {
     #[allow(unused_variables)]
@@ -569,7 +736,6 @@ pub struct Credentials {
     #[doc="<p>The token that users must pass to the service API to use the temporary credentials.</p>"]
     pub session_token: String,
 }
-
 struct CredentialsDeserializer;
 impl CredentialsDeserializer {
     #[allow(unused_variables)]
@@ -645,7 +811,23 @@ pub struct DecodeAuthorizationMessageRequest {
     #[doc="<p>The encoded message that was returned with the response.</p>"]
     pub encoded_message: String,
 }
-
+impl DecodeAuthorizationMessageRequest {
+    /// Sets `encoded_message`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DecodeAuthorizationMessageRequest.encoded_message = value.into();`.
+    pub fn encoded_message<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.encoded_message = value.into();
+        self
+    }
+    /// Returns a new instance of DecodeAuthorizationMessageRequest with optional fields set to `None`.
+    pub fn new<EncodedMessageType: Into<String>>(encoded_message: EncodedMessageType)
+                                                 -> DecodeAuthorizationMessageRequest {
+        DecodeAuthorizationMessageRequest {
+            encoded_message: encoded_message.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DecodeAuthorizationMessageRequest` contents to a `SignedRequest`.
 struct DecodeAuthorizationMessageRequestSerializer;
@@ -668,7 +850,6 @@ pub struct DecodeAuthorizationMessageResponse {
     #[doc="<p>An XML document that contains the decoded message.</p>"]
     pub decoded_message: Option<String>,
 }
-
 struct DecodeAuthorizationMessageResponseDeserializer;
 impl DecodeAuthorizationMessageResponseDeserializer {
     #[allow(unused_variables)]
@@ -749,7 +930,6 @@ pub struct FederatedUser {
     #[doc="<p>The string that identifies the federated user associated with the credentials, similar to the unique ID of an IAM user.</p>"]
     pub federated_user_id: String,
 }
-
 struct FederatedUserDeserializer;
 impl FederatedUserDeserializer {
     #[allow(unused_variables)]
@@ -824,7 +1004,6 @@ pub struct GetCallerIdentityResponse {
     #[doc="<p>The unique identifier of the calling entity. The exact value depends on the type of entity making the call. The values returned are those listed in the <b>aws:userid</b> column in the <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_variables.html#principaltable\">Principal table</a> found on the <b>Policy Variables</b> reference page in the <i>IAM User Guide</i>.</p>"]
     pub user_id: Option<String>,
 }
-
 struct GetCallerIdentityResponseDeserializer;
 impl GetCallerIdentityResponseDeserializer {
     #[allow(unused_variables)]
@@ -883,7 +1062,36 @@ pub struct GetFederationTokenRequest {
     #[doc="<p>An IAM policy in JSON format that is passed with the <code>GetFederationToken</code> call and evaluated along with the policy or policies that are attached to the IAM user whose credentials are used to call <code>GetFederationToken</code>. The passed policy is used to scope down the permissions that are available to the IAM user, by allowing only a subset of the permissions that are granted to the IAM user. The passed policy cannot grant more permissions than those granted to the IAM user. The final permissions for the federated user are the most restrictive set based on the intersection of the passed policy and the IAM user policy.</p> <p>If you do not pass a policy, the resulting temporary security credentials have no effective permissions. The only exception is when the temporary security credentials are used to access a resource that has a resource-based policy that specifically allows the federated user to access the resource.</p> <p>The format for this parameter, as described by its regex pattern, is a string of characters up to 2048 characters in length. The characters can be any ASCII character from the space character to the end of the valid character list (\\u0020-\\u00FF). It can also include the tab (\\u0009), linefeed (\\u000A), and carriage return (\\u000D) characters.</p> <note> <p>The policy plain text must be 2048 bytes or shorter. However, an internal conversion compresses it into a packed binary format with a separate limit. The PackedPolicySize response element indicates by percentage how close to the upper size limit the policy is, with 100% equaling the maximum allowed size.</p> </note> <p>For more information about how permissions work, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_control-access_getfederationtoken.html\">Permissions for GetFederationToken</a>.</p>"]
     pub policy: Option<String>,
 }
-
+impl GetFederationTokenRequest {
+    /// Sets `duration_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetFederationTokenRequest.duration_seconds = Some(value.into());`.
+    pub fn duration_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.duration_seconds = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetFederationTokenRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetFederationTokenRequest.policy = Some(value.into());`.
+    pub fn policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetFederationTokenRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> GetFederationTokenRequest {
+        GetFederationTokenRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetFederationTokenRequest` contents to a `SignedRequest`.
 struct GetFederationTokenRequestSerializer;
@@ -916,7 +1124,6 @@ pub struct GetFederationTokenResponse {
     #[doc="<p>A percentage value indicating the size of the policy in packed form. The service rejects policies for which the packed size is greater than 100 percent of the allowed value.</p>"]
     pub packed_policy_size: Option<i64>,
 }
-
 struct GetFederationTokenResponseDeserializer;
 impl GetFederationTokenResponseDeserializer {
     #[allow(unused_variables)]
@@ -979,7 +1186,33 @@ pub struct GetSessionTokenRequest {
     #[doc="<p>The value provided by the MFA device, if MFA is required. If any policy requires the IAM user to submit an MFA code, specify this value. If MFA authentication is required, and the user does not provide a code when requesting a set of temporary security credentials, the user will receive an \"access denied\" response when requesting resources that require MFA authentication.</p> <p>The format for this parameter, as described by its regex pattern, is a sequence of six numeric digits.</p>"]
     pub token_code: Option<String>,
 }
-
+impl GetSessionTokenRequest {
+    /// Sets `duration_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSessionTokenRequest.duration_seconds = Some(value.into());`.
+    pub fn duration_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.duration_seconds = Some(value.into());
+        self
+    }
+    /// Sets `serial_number`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSessionTokenRequest.serial_number = Some(value.into());`.
+    pub fn serial_number<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.serial_number = Some(value.into());
+        self
+    }
+    /// Sets `token_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSessionTokenRequest.token_code = Some(value.into());`.
+    pub fn token_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.token_code = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetSessionTokenRequest with optional fields set to `None`.
+    pub fn new() -> GetSessionTokenRequest {
+        GetSessionTokenRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `GetSessionTokenRequest` contents to a `SignedRequest`.
 struct GetSessionTokenRequestSerializer;
@@ -1010,7 +1243,6 @@ pub struct GetSessionTokenResponse {
     #[doc="<p>The temporary security credentials, which include an access key ID, a secret access key, and a security (or session) token.</p> <p> <b>Note:</b> The size of the security token that STS APIs return is not fixed. We strongly recommend that you make no assumptions about the maximum size. As of this writing, the typical size is less than 4096 bytes, but that can vary. Also, future updates to AWS might require larger sizes.</p>"]
     pub credentials: Option<Credentials>,
 }
-
 struct GetSessionTokenResponseDeserializer;
 impl GetSessionTokenResponseDeserializer {
     #[allow(unused_variables)]

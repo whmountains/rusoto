@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -37,7 +38,35 @@ pub struct AddInstanceFleetInput {
     #[serde(rename="InstanceFleet")]
     pub instance_fleet: InstanceFleetConfig,
 }
-
+impl AddInstanceFleetInput {
+    /// Sets `cluster_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddInstanceFleetInput.cluster_id = value.into();`.
+    pub fn cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster_id = value.into();
+        self
+    }
+    /// Sets `instance_fleet`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddInstanceFleetInput.instance_fleet = value.into();`.
+    pub fn instance_fleet<ValueType: Into<InstanceFleetConfig>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.instance_fleet = value.into();
+        self
+    }
+    /// Returns a new instance of AddInstanceFleetInput with optional fields set to `None`.
+    pub fn new<ClusterIdType: Into<String>, InstanceFleetType: Into<InstanceFleetConfig>>
+        (cluster_id: ClusterIdType,
+         instance_fleet: InstanceFleetType)
+         -> AddInstanceFleetInput {
+        AddInstanceFleetInput {
+            cluster_id: cluster_id.into(),
+            instance_fleet: instance_fleet.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddInstanceFleetOutput {
     #[doc="<p>The unique identifier of the cluster.</p>"]
@@ -49,7 +78,6 @@ pub struct AddInstanceFleetOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instance_fleet_id: Option<String>,
 }
-
 #[doc="<p>Input to an AddInstanceGroups call.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AddInstanceGroupsInput {
@@ -60,7 +88,35 @@ pub struct AddInstanceGroupsInput {
     #[serde(rename="JobFlowId")]
     pub job_flow_id: String,
 }
-
+impl AddInstanceGroupsInput {
+    /// Sets `instance_groups`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddInstanceGroupsInput.instance_groups = value.into();`.
+    pub fn instance_groups<ValueType: Into<Vec<InstanceGroupConfig>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.instance_groups = value.into();
+        self
+    }
+    /// Sets `job_flow_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddInstanceGroupsInput.job_flow_id = value.into();`.
+    pub fn job_flow_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_flow_id = value.into();
+        self
+    }
+    /// Returns a new instance of AddInstanceGroupsInput with optional fields set to `None`.
+    pub fn new<InstanceGroupsType: Into<Vec<InstanceGroupConfig>>, JobFlowIdType: Into<String>>
+        (instance_groups: InstanceGroupsType,
+         job_flow_id: JobFlowIdType)
+         -> AddInstanceGroupsInput {
+        AddInstanceGroupsInput {
+            instance_groups: instance_groups.into(),
+            job_flow_id: job_flow_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Output from an AddInstanceGroups call.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddInstanceGroupsOutput {
@@ -73,7 +129,6 @@ pub struct AddInstanceGroupsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub job_flow_id: Option<String>,
 }
-
 #[doc="<p> The input argument to the <a>AddJobFlowSteps</a> operation. </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AddJobFlowStepsInput {
@@ -84,7 +139,33 @@ pub struct AddJobFlowStepsInput {
     #[serde(rename="Steps")]
     pub steps: Vec<StepConfig>,
 }
-
+impl AddJobFlowStepsInput {
+    /// Sets `job_flow_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddJobFlowStepsInput.job_flow_id = value.into();`.
+    pub fn job_flow_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_flow_id = value.into();
+        self
+    }
+    /// Sets `steps`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddJobFlowStepsInput.steps = value.into();`.
+    pub fn steps<ValueType: Into<Vec<StepConfig>>>(mut self, value: ValueType) -> Self {
+        self.steps = value.into();
+        self
+    }
+    /// Returns a new instance of AddJobFlowStepsInput with optional fields set to `None`.
+    pub fn new<JobFlowIdType: Into<String>, StepsType: Into<Vec<StepConfig>>>
+        (job_flow_id: JobFlowIdType,
+         steps: StepsType)
+         -> AddJobFlowStepsInput {
+        AddJobFlowStepsInput {
+            job_flow_id: job_flow_id.into(),
+            steps: steps.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> The output for the <a>AddJobFlowSteps</a> operation. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddJobFlowStepsOutput {
@@ -93,7 +174,6 @@ pub struct AddJobFlowStepsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub step_ids: Option<Vec<String>>,
 }
-
 #[doc="<p>This input identifies a cluster and a list of tags to attach.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AddTagsInput {
@@ -104,7 +184,30 @@ pub struct AddTagsInput {
     #[serde(rename="Tags")]
     pub tags: Vec<Tag>,
 }
-
+impl AddTagsInput {
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsInput.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsInput.tags = value.into();`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of AddTagsInput with optional fields set to `None`.
+pub fn new<ResourceIdType: Into<String>, TagsType: Into<Vec<Tag>>>(resource_id: ResourceIdType, tags: TagsType) -> AddTagsInput{
+        AddTagsInput {
+            resource_id: resource_id.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>This output indicates the result of adding tags to a resource.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddTagsOutput;
@@ -129,7 +232,43 @@ pub struct Application {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<String>,
 }
-
+impl Application {
+    /// Sets `additional_info`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Application.additional_info = Some(value.into());`.
+    pub fn additional_info<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.additional_info = Some(value.into());
+        self
+    }
+    /// Sets `args`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Application.args = Some(value.into());`.
+    pub fn args<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.args = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Application.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Application.version = Some(value.into());`.
+    pub fn version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Application with optional fields set to `None`.
+    pub fn new() -> Application {
+        Application { ..Default::default() }
+    }
+}
 #[doc="<p>An automatic scaling policy for a core instance group or task instance group in an Amazon EMR cluster. An automatic scaling policy defines how an instance group dynamically adds and terminates EC2 instances in response to the value of a CloudWatch metric. See <a>PutAutoScalingPolicy</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AutoScalingPolicy {
@@ -140,7 +279,33 @@ pub struct AutoScalingPolicy {
     #[serde(rename="Rules")]
     pub rules: Vec<ScalingRule>,
 }
-
+impl AutoScalingPolicy {
+    /// Sets `constraints`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AutoScalingPolicy.constraints = value.into();`.
+    pub fn constraints<ValueType: Into<ScalingConstraints>>(mut self, value: ValueType) -> Self {
+        self.constraints = value.into();
+        self
+    }
+    /// Sets `rules`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AutoScalingPolicy.rules = value.into();`.
+    pub fn rules<ValueType: Into<Vec<ScalingRule>>>(mut self, value: ValueType) -> Self {
+        self.rules = value.into();
+        self
+    }
+    /// Returns a new instance of AutoScalingPolicy with optional fields set to `None`.
+    pub fn new<ConstraintsType: Into<ScalingConstraints>, RulesType: Into<Vec<ScalingRule>>>
+        (constraints: ConstraintsType,
+         rules: RulesType)
+         -> AutoScalingPolicy {
+        AutoScalingPolicy {
+            constraints: constraints.into(),
+            rules: rules.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>An automatic scaling policy for a core instance group or task instance group in an Amazon EMR cluster. The automatic scaling policy defines how an instance group dynamically adds and terminates EC2 instances in response to the value of a CloudWatch metric. See <a>PutAutoScalingPolicy</a>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AutoScalingPolicyDescription {
@@ -157,7 +322,6 @@ pub struct AutoScalingPolicyDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<AutoScalingPolicyStatus>,
 }
-
 #[doc="<p>The reason for an <a>AutoScalingPolicyStatus</a> change.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AutoScalingPolicyStateChangeReason {
@@ -170,7 +334,6 @@ pub struct AutoScalingPolicyStateChangeReason {
     #[serde(skip_serializing_if="Option::is_none")]
     pub message: Option<String>,
 }
-
 #[doc="<p>The status of an automatic scaling policy. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AutoScalingPolicyStatus {
@@ -183,7 +346,6 @@ pub struct AutoScalingPolicyStatus {
     #[serde(skip_serializing_if="Option::is_none")]
     pub state_change_reason: Option<AutoScalingPolicyStateChangeReason>,
 }
-
 #[doc="<p>Configuration of a bootstrap action.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct BootstrapActionConfig {
@@ -194,7 +356,35 @@ pub struct BootstrapActionConfig {
     #[serde(rename="ScriptBootstrapAction")]
     pub script_bootstrap_action: ScriptBootstrapActionConfig,
 }
-
+impl BootstrapActionConfig {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BootstrapActionConfig.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `script_bootstrap_action`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BootstrapActionConfig.script_bootstrap_action = value.into();`.
+    pub fn script_bootstrap_action<ValueType: Into<ScriptBootstrapActionConfig>>(mut self,
+                                                                                 value: ValueType)
+                                                                                 -> Self {
+        self.script_bootstrap_action = value.into();
+        self
+    }
+    /// Returns a new instance of BootstrapActionConfig with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, ScriptBootstrapActionType: Into<ScriptBootstrapActionConfig>>
+        (name: NameType,
+         script_bootstrap_action: ScriptBootstrapActionType)
+         -> BootstrapActionConfig {
+        BootstrapActionConfig {
+            name: name.into(),
+            script_bootstrap_action: script_bootstrap_action.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Reports the configuration of a bootstrap action in a cluster (job flow).</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BootstrapActionDetail {
@@ -203,7 +393,6 @@ pub struct BootstrapActionDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub bootstrap_action_config: Option<BootstrapActionConfig>,
 }
-
 #[doc="<p>Specification of the status of a CancelSteps request. Available only in Amazon EMR version 4.8.0 and later, excluding version 5.0.0.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CancelStepsInfo {
@@ -220,7 +409,6 @@ pub struct CancelStepsInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub step_id: Option<String>,
 }
-
 #[doc="<p>The input argument to the <a>CancelSteps</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CancelStepsInput {
@@ -233,7 +421,26 @@ pub struct CancelStepsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub step_ids: Option<Vec<String>>,
 }
-
+impl CancelStepsInput {
+    /// Sets `cluster_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelStepsInput.cluster_id = Some(value.into());`.
+    pub fn cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster_id = Some(value.into());
+        self
+    }
+    /// Sets `step_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelStepsInput.step_ids = Some(value.into());`.
+    pub fn step_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.step_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CancelStepsInput with optional fields set to `None`.
+    pub fn new() -> CancelStepsInput {
+        CancelStepsInput { ..Default::default() }
+    }
+}
 #[doc="<p> The output for the <a>CancelSteps</a> operation. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CancelStepsOutput {
@@ -242,7 +449,6 @@ pub struct CancelStepsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub cancel_steps_info_list: Option<Vec<CancelStepsInfo>>,
 }
-
 #[doc="<p>The definition of a CloudWatch metric alarm, which determines when an automatic scaling activity is triggered. When the defined alarm conditions are satisfied, scaling activity begins.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct CloudWatchAlarmDefinition {
@@ -279,7 +485,89 @@ pub struct CloudWatchAlarmDefinition {
     #[serde(skip_serializing_if="Option::is_none")]
     pub unit: Option<String>,
 }
-
+impl CloudWatchAlarmDefinition {
+    /// Sets `comparison_operator`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchAlarmDefinition.comparison_operator = value.into();`.
+    pub fn comparison_operator<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.comparison_operator = value.into();
+        self
+    }
+    /// Sets `dimensions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchAlarmDefinition.dimensions = Some(value.into());`.
+    pub fn dimensions<ValueType: Into<Vec<MetricDimension>>>(mut self, value: ValueType) -> Self {
+        self.dimensions = Some(value.into());
+        self
+    }
+    /// Sets `evaluation_periods`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchAlarmDefinition.evaluation_periods = Some(value.into());`.
+    pub fn evaluation_periods<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.evaluation_periods = Some(value.into());
+        self
+    }
+    /// Sets `metric_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchAlarmDefinition.metric_name = value.into();`.
+    pub fn metric_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_name = value.into();
+        self
+    }
+    /// Sets `namespace`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchAlarmDefinition.namespace = Some(value.into());`.
+    pub fn namespace<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.namespace = Some(value.into());
+        self
+    }
+    /// Sets `period`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchAlarmDefinition.period = value.into();`.
+    pub fn period<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.period = value.into();
+        self
+    }
+    /// Sets `statistic`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchAlarmDefinition.statistic = Some(value.into());`.
+    pub fn statistic<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.statistic = Some(value.into());
+        self
+    }
+    /// Sets `threshold`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchAlarmDefinition.threshold = value.into();`.
+    pub fn threshold<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.threshold = value.into();
+        self
+    }
+    /// Sets `unit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchAlarmDefinition.unit = Some(value.into());`.
+    pub fn unit<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.unit = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CloudWatchAlarmDefinition with optional fields set to `None`.
+    pub fn new<ComparisonOperatorType: Into<String>,
+               MetricNameType: Into<String>,
+               PeriodType: Into<i64>,
+               ThresholdType: Into<f64>>
+        (comparison_operator: ComparisonOperatorType,
+         metric_name: MetricNameType,
+         period: PeriodType,
+         threshold: ThresholdType)
+         -> CloudWatchAlarmDefinition {
+        CloudWatchAlarmDefinition {
+            comparison_operator: comparison_operator.into(),
+            metric_name: metric_name.into(),
+            period: period.into(),
+            threshold: threshold.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The detailed description of the cluster.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Cluster {
@@ -380,7 +668,6 @@ pub struct Cluster {
     #[serde(skip_serializing_if="Option::is_none")]
     pub visible_to_all_users: Option<bool>,
 }
-
 #[doc="<p>The reason that the cluster changed to its current state.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ClusterStateChangeReason {
@@ -393,7 +680,6 @@ pub struct ClusterStateChangeReason {
     #[serde(skip_serializing_if="Option::is_none")]
     pub message: Option<String>,
 }
-
 #[doc="<p>The detailed status of the cluster.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ClusterStatus {
@@ -410,7 +696,6 @@ pub struct ClusterStatus {
     #[serde(skip_serializing_if="Option::is_none")]
     pub timeline: Option<ClusterTimeline>,
 }
-
 #[doc="<p>The summary description of the cluster.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ClusterSummary {
@@ -431,7 +716,6 @@ pub struct ClusterSummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<ClusterStatus>,
 }
-
 #[doc="<p>Represents the timeline of the cluster's lifecycle.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ClusterTimeline {
@@ -448,7 +732,6 @@ pub struct ClusterTimeline {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ready_date_time: Option<f64>,
 }
-
 #[doc="<p>An entity describing an executable that runs on a cluster.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Command {
@@ -465,7 +748,6 @@ pub struct Command {
     #[serde(skip_serializing_if="Option::is_none")]
     pub script_path: Option<String>,
 }
-
 #[doc="<note> <p>Amazon EMR releases 4.x or later.</p> </note> <p>An optional configuration specification to be used when provisioning cluster instances, which can include configurations for applications and software bundled with Amazon EMR. A configuration consists of a classification, properties, and optional nested configurations. A classification refers to an application-specific configuration file. Properties are the settings you want to change in that file. For more information, see <a href=\"http://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-configure-apps.html\">Configuring Applications</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Configuration {
@@ -482,7 +764,33 @@ pub struct Configuration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub properties: Option<::std::collections::HashMap<String, String>>,
 }
-
+impl Configuration {
+    /// Sets `classification`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Configuration.classification = Some(value.into());`.
+    pub fn classification<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.classification = Some(value.into());
+        self
+    }
+    /// Sets `configurations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Configuration.configurations = Some(value.into());`.
+    pub fn configurations<ValueType: Into<Vec<Configuration>>>(mut self, value: ValueType) -> Self {
+        self.configurations = Some(value.into());
+        self
+    }
+    /// Sets `properties`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Configuration.properties = Some(value.into());`.
+pub fn properties<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.properties = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Configuration with optional fields set to `None`.
+    pub fn new() -> Configuration {
+        Configuration { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateSecurityConfigurationInput {
     #[doc="<p>The name of the security configuration.</p>"]
@@ -492,7 +800,33 @@ pub struct CreateSecurityConfigurationInput {
     #[serde(rename="SecurityConfiguration")]
     pub security_configuration: String,
 }
-
+impl CreateSecurityConfigurationInput {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSecurityConfigurationInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `security_configuration`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSecurityConfigurationInput.security_configuration = value.into();`.
+    pub fn security_configuration<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.security_configuration = value.into();
+        self
+    }
+    /// Returns a new instance of CreateSecurityConfigurationInput with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, SecurityConfigurationType: Into<String>>
+        (name: NameType,
+         security_configuration: SecurityConfigurationType)
+         -> CreateSecurityConfigurationInput {
+        CreateSecurityConfigurationInput {
+            name: name.into(),
+            security_configuration: security_configuration.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateSecurityConfigurationOutput {
     #[doc="<p>The date and time the security configuration was created.</p>"]
@@ -502,14 +836,28 @@ pub struct CreateSecurityConfigurationOutput {
     #[serde(rename="Name")]
     pub name: String,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteSecurityConfigurationInput {
     #[doc="<p>The name of the security configuration.</p>"]
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl DeleteSecurityConfigurationInput {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSecurityConfigurationInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteSecurityConfigurationInput with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> DeleteSecurityConfigurationInput {
+        DeleteSecurityConfigurationInput {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteSecurityConfigurationOutput;
 
@@ -520,7 +868,22 @@ pub struct DescribeClusterInput {
     #[serde(rename="ClusterId")]
     pub cluster_id: String,
 }
-
+impl DescribeClusterInput {
+    /// Sets `cluster_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeClusterInput.cluster_id = value.into();`.
+    pub fn cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeClusterInput with optional fields set to `None`.
+    pub fn new<ClusterIdType: Into<String>>(cluster_id: ClusterIdType) -> DescribeClusterInput {
+        DescribeClusterInput {
+            cluster_id: cluster_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>This output contains the description of the cluster.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeClusterOutput {
@@ -529,7 +892,6 @@ pub struct DescribeClusterOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub cluster: Option<Cluster>,
 }
-
 #[doc="<p> The input for the <a>DescribeJobFlows</a> operation. </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeJobFlowsInput {
@@ -550,7 +912,40 @@ pub struct DescribeJobFlowsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub job_flow_states: Option<Vec<String>>,
 }
-
+impl DescribeJobFlowsInput {
+    /// Sets `created_after`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeJobFlowsInput.created_after = Some(value.into());`.
+    pub fn created_after<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.created_after = Some(value.into());
+        self
+    }
+    /// Sets `created_before`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeJobFlowsInput.created_before = Some(value.into());`.
+    pub fn created_before<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.created_before = Some(value.into());
+        self
+    }
+    /// Sets `job_flow_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeJobFlowsInput.job_flow_ids = Some(value.into());`.
+    pub fn job_flow_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.job_flow_ids = Some(value.into());
+        self
+    }
+    /// Sets `job_flow_states`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeJobFlowsInput.job_flow_states = Some(value.into());`.
+    pub fn job_flow_states<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.job_flow_states = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeJobFlowsInput with optional fields set to `None`.
+    pub fn new() -> DescribeJobFlowsInput {
+        DescribeJobFlowsInput { ..Default::default() }
+    }
+}
 #[doc="<p> The output for the <a>DescribeJobFlows</a> operation. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeJobFlowsOutput {
@@ -559,14 +954,28 @@ pub struct DescribeJobFlowsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub job_flows: Option<Vec<JobFlowDetail>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeSecurityConfigurationInput {
     #[doc="<p>The name of the security configuration.</p>"]
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl DescribeSecurityConfigurationInput {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSecurityConfigurationInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeSecurityConfigurationInput with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> DescribeSecurityConfigurationInput {
+        DescribeSecurityConfigurationInput {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeSecurityConfigurationOutput {
     #[doc="<p>The date and time the security configuration was created</p>"]
@@ -582,7 +991,6 @@ pub struct DescribeSecurityConfigurationOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub security_configuration: Option<String>,
 }
-
 #[doc="<p>This input determines which step to describe.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeStepInput {
@@ -593,7 +1001,32 @@ pub struct DescribeStepInput {
     #[serde(rename="StepId")]
     pub step_id: String,
 }
-
+impl DescribeStepInput {
+    /// Sets `cluster_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStepInput.cluster_id = value.into();`.
+    pub fn cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster_id = value.into();
+        self
+    }
+    /// Sets `step_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeStepInput.step_id = value.into();`.
+    pub fn step_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.step_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeStepInput with optional fields set to `None`.
+    pub fn new<ClusterIdType: Into<String>, StepIdType: Into<String>>(cluster_id: ClusterIdType,
+                                                                      step_id: StepIdType)
+                                                                      -> DescribeStepInput {
+        DescribeStepInput {
+            cluster_id: cluster_id.into(),
+            step_id: step_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>This output contains the description of the cluster step.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeStepOutput {
@@ -602,7 +1035,6 @@ pub struct DescribeStepOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub step: Option<Step>,
 }
-
 #[doc="<p>Configuration of requested EBS block device associated with the instance group.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EbsBlockDevice {
@@ -615,7 +1047,6 @@ pub struct EbsBlockDevice {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_specification: Option<VolumeSpecification>,
 }
-
 #[doc="<p>Configuration of requested EBS block device associated with the instance group with count of volumes that will be associated to every instance.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct EbsBlockDeviceConfig {
@@ -627,7 +1058,31 @@ pub struct EbsBlockDeviceConfig {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volumes_per_instance: Option<i64>,
 }
-
+impl EbsBlockDeviceConfig {
+    /// Sets `volume_specification`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EbsBlockDeviceConfig.volume_specification = value.into();`.
+    pub fn volume_specification<ValueType: Into<VolumeSpecification>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.volume_specification = value.into();
+        self
+    }
+    /// Sets `volumes_per_instance`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EbsBlockDeviceConfig.volumes_per_instance = Some(value.into());`.
+    pub fn volumes_per_instance<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.volumes_per_instance = Some(value.into());
+        self
+    }
+    /// Returns a new instance of EbsBlockDeviceConfig with optional fields set to `None`.
+pub fn new<VolumeSpecificationType: Into<VolumeSpecification>>(volume_specification: VolumeSpecificationType) -> EbsBlockDeviceConfig{
+        EbsBlockDeviceConfig {
+            volume_specification: volume_specification.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The Amazon EBS configuration of a cluster instance.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct EbsConfiguration {
@@ -640,7 +1095,28 @@ pub struct EbsConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ebs_optimized: Option<bool>,
 }
-
+impl EbsConfiguration {
+    /// Sets `ebs_block_device_configs`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EbsConfiguration.ebs_block_device_configs = Some(value.into());`.
+    pub fn ebs_block_device_configs<ValueType: Into<Vec<EbsBlockDeviceConfig>>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.ebs_block_device_configs = Some(value.into());
+        self
+    }
+    /// Sets `ebs_optimized`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EbsConfiguration.ebs_optimized = Some(value.into());`.
+    pub fn ebs_optimized<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.ebs_optimized = Some(value.into());
+        self
+    }
+    /// Returns a new instance of EbsConfiguration with optional fields set to `None`.
+    pub fn new() -> EbsConfiguration {
+        EbsConfiguration { ..Default::default() }
+    }
+}
 #[doc="<p>EBS block device that's attached to an EC2 instance.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EbsVolume {
@@ -653,7 +1129,6 @@ pub struct EbsVolume {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volume_id: Option<String>,
 }
-
 #[doc="<p>Provides information about the EC2 instances in a cluster grouped by category. For example, key name, subnet ID, IAM instance profile, and so on.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Ec2InstanceAttributes {
@@ -702,7 +1177,6 @@ pub struct Ec2InstanceAttributes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub service_access_security_group: Option<String>,
 }
-
 #[doc="<p>The details of the step failure. The service attempts to detect the root cause for many common failures.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct FailureDetails {
@@ -719,7 +1193,6 @@ pub struct FailureDetails {
     #[serde(skip_serializing_if="Option::is_none")]
     pub reason: Option<String>,
 }
-
 #[doc="<p>A job flow step consisting of a JAR file whose main function will be executed. The main function submits a job for Hadoop to execute and waits for the job to finish or fail.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct HadoopJarStepConfig {
@@ -739,7 +1212,43 @@ pub struct HadoopJarStepConfig {
     #[serde(skip_serializing_if="Option::is_none")]
     pub properties: Option<Vec<KeyValue>>,
 }
-
+impl HadoopJarStepConfig {
+    /// Sets `args`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HadoopJarStepConfig.args = Some(value.into());`.
+    pub fn args<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.args = Some(value.into());
+        self
+    }
+    /// Sets `jar`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HadoopJarStepConfig.jar = value.into();`.
+    pub fn jar<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.jar = value.into();
+        self
+    }
+    /// Sets `main_class`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HadoopJarStepConfig.main_class = Some(value.into());`.
+    pub fn main_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.main_class = Some(value.into());
+        self
+    }
+    /// Sets `properties`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HadoopJarStepConfig.properties = Some(value.into());`.
+    pub fn properties<ValueType: Into<Vec<KeyValue>>>(mut self, value: ValueType) -> Self {
+        self.properties = Some(value.into());
+        self
+    }
+    /// Returns a new instance of HadoopJarStepConfig with optional fields set to `None`.
+    pub fn new<JarType: Into<String>>(jar: JarType) -> HadoopJarStepConfig {
+        HadoopJarStepConfig {
+            jar: jar.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A cluster step consisting of a JAR file whose main function will be executed. The main function submits a job for Hadoop to execute and waits for the job to finish or fail.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct HadoopStepConfig {
@@ -760,7 +1269,6 @@ pub struct HadoopStepConfig {
     #[serde(skip_serializing_if="Option::is_none")]
     pub properties: Option<::std::collections::HashMap<String, String>>,
 }
-
 #[doc="<p>Represents an EC2 instance provisioned as part of cluster.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Instance {
@@ -813,7 +1321,6 @@ pub struct Instance {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<InstanceStatus>,
 }
-
 #[doc="<p>Describes an instance fleet, which is a group of EC2 instances that host a particular node type (master, core, or task) in an Amazon EMR cluster. Instance fleets can consist of a mix of instance types and On-Demand and Spot instances, which are provisioned to meet a defined target capacity. </p> <note> <p>The instance fleet configuration is available only in Amazon EMR versions 4.8.0 and later, excluding 5.0.x versions.</p> </note>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceFleet {
@@ -858,7 +1365,6 @@ pub struct InstanceFleet {
     #[serde(skip_serializing_if="Option::is_none")]
     pub target_spot_capacity: Option<i64>,
 }
-
 #[doc="<p>The configuration that defines an instance fleet.</p> <note> <p>The instance fleet configuration is available only in Amazon EMR versions 4.8.0 and later, excluding 5.0.x versions.</p> </note>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InstanceFleetConfig {
@@ -886,7 +1392,63 @@ pub struct InstanceFleetConfig {
     #[serde(skip_serializing_if="Option::is_none")]
     pub target_spot_capacity: Option<i64>,
 }
-
+impl InstanceFleetConfig {
+    /// Sets `instance_fleet_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceFleetConfig.instance_fleet_type = value.into();`.
+    pub fn instance_fleet_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_fleet_type = value.into();
+        self
+    }
+    /// Sets `instance_type_configs`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceFleetConfig.instance_type_configs = Some(value.into());`.
+    pub fn instance_type_configs<ValueType: Into<Vec<InstanceTypeConfig>>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.instance_type_configs = Some(value.into());
+        self
+    }
+    /// Sets `launch_specifications`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceFleetConfig.launch_specifications = Some(value.into());`.
+    pub fn launch_specifications<ValueType: Into<InstanceFleetProvisioningSpecifications>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.launch_specifications = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceFleetConfig.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `target_on_demand_capacity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceFleetConfig.target_on_demand_capacity = Some(value.into());`.
+    pub fn target_on_demand_capacity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.target_on_demand_capacity = Some(value.into());
+        self
+    }
+    /// Sets `target_spot_capacity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceFleetConfig.target_spot_capacity = Some(value.into());`.
+    pub fn target_spot_capacity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.target_spot_capacity = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InstanceFleetConfig with optional fields set to `None`.
+    pub fn new<InstanceFleetTypeType: Into<String>>(instance_fleet_type: InstanceFleetTypeType)
+                                                    -> InstanceFleetConfig {
+        InstanceFleetConfig {
+            instance_fleet_type: instance_fleet_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Configuration parameters for an instance fleet modification request.</p> <note> <p>The instance fleet configuration is available only in Amazon EMR versions 4.8.0 and later, excluding 5.0.x versions.</p> </note>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InstanceFleetModifyConfig {
@@ -902,7 +1464,37 @@ pub struct InstanceFleetModifyConfig {
     #[serde(skip_serializing_if="Option::is_none")]
     pub target_spot_capacity: Option<i64>,
 }
-
+impl InstanceFleetModifyConfig {
+    /// Sets `instance_fleet_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceFleetModifyConfig.instance_fleet_id = value.into();`.
+    pub fn instance_fleet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_fleet_id = value.into();
+        self
+    }
+    /// Sets `target_on_demand_capacity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceFleetModifyConfig.target_on_demand_capacity = Some(value.into());`.
+    pub fn target_on_demand_capacity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.target_on_demand_capacity = Some(value.into());
+        self
+    }
+    /// Sets `target_spot_capacity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceFleetModifyConfig.target_spot_capacity = Some(value.into());`.
+    pub fn target_spot_capacity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.target_spot_capacity = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InstanceFleetModifyConfig with optional fields set to `None`.
+    pub fn new<InstanceFleetIdType: Into<String>>(instance_fleet_id: InstanceFleetIdType)
+                                                  -> InstanceFleetModifyConfig {
+        InstanceFleetModifyConfig {
+            instance_fleet_id: instance_fleet_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The launch specification for Spot instances in the fleet, which determines the defined duration and provisioning timeout behavior.</p> <note> <p>The instance fleet configuration is available only in Amazon EMR versions 4.8.0 and later, excluding 5.0.x versions.</p> </note>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct InstanceFleetProvisioningSpecifications {
@@ -910,7 +1502,26 @@ pub struct InstanceFleetProvisioningSpecifications {
     #[serde(rename="SpotSpecification")]
     pub spot_specification: SpotProvisioningSpecification,
 }
-
+impl InstanceFleetProvisioningSpecifications {
+    /// Sets `spot_specification`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceFleetProvisioningSpecifications.spot_specification = value.into();`.
+    pub fn spot_specification<ValueType: Into<SpotProvisioningSpecification>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.spot_specification = value.into();
+        self
+    }
+    /// Returns a new instance of InstanceFleetProvisioningSpecifications with optional fields set to `None`.
+    pub fn new<SpotSpecificationType: Into<SpotProvisioningSpecification>>
+        (spot_specification: SpotSpecificationType)
+         -> InstanceFleetProvisioningSpecifications {
+        InstanceFleetProvisioningSpecifications {
+            spot_specification: spot_specification.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides status change reason details for the instance fleet.</p> <note> <p>The instance fleet configuration is available only in Amazon EMR versions 4.8.0 and later, excluding 5.0.x versions.</p> </note>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceFleetStateChangeReason {
@@ -923,7 +1534,6 @@ pub struct InstanceFleetStateChangeReason {
     #[serde(skip_serializing_if="Option::is_none")]
     pub message: Option<String>,
 }
-
 #[doc="<p>The status of the instance fleet.</p> <note> <p>The instance fleet configuration is available only in Amazon EMR versions 4.8.0 and later, excluding 5.0.x versions.</p> </note>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceFleetStatus {
@@ -940,7 +1550,6 @@ pub struct InstanceFleetStatus {
     #[serde(skip_serializing_if="Option::is_none")]
     pub timeline: Option<InstanceFleetTimeline>,
 }
-
 #[doc="<p>Provides historical timestamps for the instance fleet, including the time of creation, the time it became ready to run jobs, and the time of termination.</p> <note> <p>The instance fleet configuration is available only in Amazon EMR versions 4.8.0 and later, excluding 5.0.x versions.</p> </note>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceFleetTimeline {
@@ -957,7 +1566,6 @@ pub struct InstanceFleetTimeline {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ready_date_time: Option<f64>,
 }
-
 #[doc="<p>This entity represents an instance group, which is a group of instances that have common purpose. For example, CORE instance group is used for HDFS.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceGroup {
@@ -1018,7 +1626,6 @@ pub struct InstanceGroup {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<InstanceGroupStatus>,
 }
-
 #[doc="<p>Configuration defining a new instance group.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InstanceGroupConfig {
@@ -1056,7 +1663,90 @@ pub struct InstanceGroupConfig {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
+impl InstanceGroupConfig {
+    /// Sets `auto_scaling_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceGroupConfig.auto_scaling_policy = Some(value.into());`.
+    pub fn auto_scaling_policy<ValueType: Into<AutoScalingPolicy>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.auto_scaling_policy = Some(value.into());
+        self
+    }
+    /// Sets `bid_price`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceGroupConfig.bid_price = Some(value.into());`.
+    pub fn bid_price<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bid_price = Some(value.into());
+        self
+    }
+    /// Sets `configurations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceGroupConfig.configurations = Some(value.into());`.
+    pub fn configurations<ValueType: Into<Vec<Configuration>>>(mut self, value: ValueType) -> Self {
+        self.configurations = Some(value.into());
+        self
+    }
+    /// Sets `ebs_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceGroupConfig.ebs_configuration = Some(value.into());`.
+    pub fn ebs_configuration<ValueType: Into<EbsConfiguration>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.ebs_configuration = Some(value.into());
+        self
+    }
+    /// Sets `instance_count`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceGroupConfig.instance_count = value.into();`.
+    pub fn instance_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.instance_count = value.into();
+        self
+    }
+    /// Sets `instance_role`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceGroupConfig.instance_role = value.into();`.
+    pub fn instance_role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_role = value.into();
+        self
+    }
+    /// Sets `instance_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceGroupConfig.instance_type = value.into();`.
+    pub fn instance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_type = value.into();
+        self
+    }
+    /// Sets `market`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceGroupConfig.market = Some(value.into());`.
+    pub fn market<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.market = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceGroupConfig.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InstanceGroupConfig with optional fields set to `None`.
+    pub fn new<InstanceCountType: Into<i64>,
+               InstanceRoleType: Into<String>,
+               InstanceTypeType: Into<String>>
+        (instance_count: InstanceCountType,
+         instance_role: InstanceRoleType,
+         instance_type: InstanceTypeType)
+         -> InstanceGroupConfig {
+        InstanceGroupConfig {
+            instance_count: instance_count.into(),
+            instance_role: instance_role.into(),
+            instance_type: instance_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Detailed information about an instance group.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceGroupDetail {
@@ -1110,7 +1800,6 @@ pub struct InstanceGroupDetail {
     #[serde(rename="State")]
     pub state: String,
 }
-
 #[doc="<p>Modify an instance group size.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InstanceGroupModifyConfig {
@@ -1130,7 +1819,46 @@ pub struct InstanceGroupModifyConfig {
     #[serde(skip_serializing_if="Option::is_none")]
     pub shrink_policy: Option<ShrinkPolicy>,
 }
-
+impl InstanceGroupModifyConfig {
+    /// Sets `ec2_instance_ids_to_terminate`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceGroupModifyConfig.ec2_instance_ids_to_terminate = Some(value.into());`.
+    pub fn ec2_instance_ids_to_terminate<ValueType: Into<Vec<String>>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.ec2_instance_ids_to_terminate = Some(value.into());
+        self
+    }
+    /// Sets `instance_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceGroupModifyConfig.instance_count = Some(value.into());`.
+    pub fn instance_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.instance_count = Some(value.into());
+        self
+    }
+    /// Sets `instance_group_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceGroupModifyConfig.instance_group_id = value.into();`.
+    pub fn instance_group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_group_id = value.into();
+        self
+    }
+    /// Sets `shrink_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceGroupModifyConfig.shrink_policy = Some(value.into());`.
+    pub fn shrink_policy<ValueType: Into<ShrinkPolicy>>(mut self, value: ValueType) -> Self {
+        self.shrink_policy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InstanceGroupModifyConfig with optional fields set to `None`.
+    pub fn new<InstanceGroupIdType: Into<String>>(instance_group_id: InstanceGroupIdType)
+                                                  -> InstanceGroupModifyConfig {
+        InstanceGroupModifyConfig {
+            instance_group_id: instance_group_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The status change reason details for the instance group.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceGroupStateChangeReason {
@@ -1143,7 +1871,6 @@ pub struct InstanceGroupStateChangeReason {
     #[serde(skip_serializing_if="Option::is_none")]
     pub message: Option<String>,
 }
-
 #[doc="<p>The details of the instance group status.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceGroupStatus {
@@ -1160,7 +1887,6 @@ pub struct InstanceGroupStatus {
     #[serde(skip_serializing_if="Option::is_none")]
     pub timeline: Option<InstanceGroupTimeline>,
 }
-
 #[doc="<p>The timeline of the instance group lifecycle.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceGroupTimeline {
@@ -1177,7 +1903,6 @@ pub struct InstanceGroupTimeline {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ready_date_time: Option<f64>,
 }
-
 #[doc="<p>Custom policy for requesting termination protection or termination of specific instances when shrinking an instance group.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct InstanceResizePolicy {
@@ -1194,7 +1919,35 @@ pub struct InstanceResizePolicy {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instances_to_terminate: Option<Vec<String>>,
 }
-
+impl InstanceResizePolicy {
+    /// Sets `instance_termination_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceResizePolicy.instance_termination_timeout = Some(value.into());`.
+    pub fn instance_termination_timeout<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.instance_termination_timeout = Some(value.into());
+        self
+    }
+    /// Sets `instances_to_protect`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceResizePolicy.instances_to_protect = Some(value.into());`.
+    pub fn instances_to_protect<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instances_to_protect = Some(value.into());
+        self
+    }
+    /// Sets `instances_to_terminate`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceResizePolicy.instances_to_terminate = Some(value.into());`.
+    pub fn instances_to_terminate<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.instances_to_terminate = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InstanceResizePolicy with optional fields set to `None`.
+    pub fn new() -> InstanceResizePolicy {
+        InstanceResizePolicy { ..Default::default() }
+    }
+}
 #[doc="<p>The details of the status change reason for the instance.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceStateChangeReason {
@@ -1207,7 +1960,6 @@ pub struct InstanceStateChangeReason {
     #[serde(skip_serializing_if="Option::is_none")]
     pub message: Option<String>,
 }
-
 #[doc="<p>The instance status details.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceStatus {
@@ -1224,7 +1976,6 @@ pub struct InstanceStatus {
     #[serde(skip_serializing_if="Option::is_none")]
     pub timeline: Option<InstanceTimeline>,
 }
-
 #[doc="<p>The timeline of the instance lifecycle.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceTimeline {
@@ -1241,7 +1992,6 @@ pub struct InstanceTimeline {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ready_date_time: Option<f64>,
 }
-
 #[doc="<p>An instance type configuration for each instance type in an instance fleet, which determines the EC2 instances Amazon EMR attempts to provision to fulfill On-Demand and Spot target capacities. There can be a maximum of 5 instance type configurations in a fleet.</p> <note> <p>The instance fleet configuration is available only in Amazon EMR versions 4.8.0 and later, excluding 5.0.x versions.</p> </note>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InstanceTypeConfig {
@@ -1269,7 +2019,62 @@ pub struct InstanceTypeConfig {
     #[serde(skip_serializing_if="Option::is_none")]
     pub weighted_capacity: Option<i64>,
 }
-
+impl InstanceTypeConfig {
+    /// Sets `bid_price`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceTypeConfig.bid_price = Some(value.into());`.
+    pub fn bid_price<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bid_price = Some(value.into());
+        self
+    }
+    /// Sets `bid_price_as_percentage_of_on_demand_price`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceTypeConfig.bid_price_as_percentage_of_on_demand_price = Some(value.into());`.
+    pub fn bid_price_as_percentage_of_on_demand_price<ValueType: Into<f64>>(mut self,
+                                                                            value: ValueType)
+                                                                            -> Self {
+        self.bid_price_as_percentage_of_on_demand_price = Some(value.into());
+        self
+    }
+    /// Sets `configurations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceTypeConfig.configurations = Some(value.into());`.
+    pub fn configurations<ValueType: Into<Vec<Configuration>>>(mut self, value: ValueType) -> Self {
+        self.configurations = Some(value.into());
+        self
+    }
+    /// Sets `ebs_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceTypeConfig.ebs_configuration = Some(value.into());`.
+    pub fn ebs_configuration<ValueType: Into<EbsConfiguration>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.ebs_configuration = Some(value.into());
+        self
+    }
+    /// Sets `instance_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceTypeConfig.instance_type = value.into();`.
+    pub fn instance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_type = value.into();
+        self
+    }
+    /// Sets `weighted_capacity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstanceTypeConfig.weighted_capacity = Some(value.into());`.
+    pub fn weighted_capacity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.weighted_capacity = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InstanceTypeConfig with optional fields set to `None`.
+    pub fn new<InstanceTypeType: Into<String>>(instance_type: InstanceTypeType)
+                                               -> InstanceTypeConfig {
+        InstanceTypeConfig {
+            instance_type: instance_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The configuration specification for each instance type in an instance fleet.</p> <note> <p>The instance fleet configuration is available only in Amazon EMR versions 4.8.0 and later, excluding 5.0.x versions.</p> </note>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceTypeSpecification {
@@ -1302,7 +2107,6 @@ pub struct InstanceTypeSpecification {
     #[serde(skip_serializing_if="Option::is_none")]
     pub weighted_capacity: Option<i64>,
 }
-
 #[doc="<p>A description of a cluster (job flow).</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct JobFlowDetail {
@@ -1359,7 +2163,6 @@ pub struct JobFlowDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub visible_to_all_users: Option<bool>,
 }
-
 #[doc="<p>Describes the status of the cluster (job flow).</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct JobFlowExecutionStatusDetail {
@@ -1386,7 +2189,6 @@ pub struct JobFlowExecutionStatusDetail {
     #[serde(rename="State")]
     pub state: String,
 }
-
 #[doc="<p>A description of the Amazon EC2 instance on which the cluster (job flow) runs. A valid JobFlowInstancesConfig must contain either InstanceGroups or InstanceFleets, which is the recommended configuration. They cannot be used together. You may also have MasterInstanceType, SlaveInstanceType, and InstanceCount (all three must be present), but we don't recommend this configuration.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct JobFlowInstancesConfig {
@@ -1459,7 +2261,147 @@ pub struct JobFlowInstancesConfig {
     #[serde(skip_serializing_if="Option::is_none")]
     pub termination_protected: Option<bool>,
 }
-
+impl JobFlowInstancesConfig {
+    /// Sets `additional_master_security_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobFlowInstancesConfig.additional_master_security_groups = Some(value.into());`.
+    pub fn additional_master_security_groups<ValueType: Into<Vec<String>>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.additional_master_security_groups = Some(value.into());
+        self
+    }
+    /// Sets `additional_slave_security_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobFlowInstancesConfig.additional_slave_security_groups = Some(value.into());`.
+    pub fn additional_slave_security_groups<ValueType: Into<Vec<String>>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.additional_slave_security_groups = Some(value.into());
+        self
+    }
+    /// Sets `ec_2_key_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobFlowInstancesConfig.ec_2_key_name = Some(value.into());`.
+    pub fn ec_2_key_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ec_2_key_name = Some(value.into());
+        self
+    }
+    /// Sets `ec_2_subnet_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobFlowInstancesConfig.ec_2_subnet_id = Some(value.into());`.
+    pub fn ec_2_subnet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ec_2_subnet_id = Some(value.into());
+        self
+    }
+    /// Sets `ec_2_subnet_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobFlowInstancesConfig.ec_2_subnet_ids = Some(value.into());`.
+    pub fn ec_2_subnet_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.ec_2_subnet_ids = Some(value.into());
+        self
+    }
+    /// Sets `emr_managed_master_security_group`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobFlowInstancesConfig.emr_managed_master_security_group = Some(value.into());`.
+    pub fn emr_managed_master_security_group<ValueType: Into<String>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.emr_managed_master_security_group = Some(value.into());
+        self
+    }
+    /// Sets `emr_managed_slave_security_group`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobFlowInstancesConfig.emr_managed_slave_security_group = Some(value.into());`.
+    pub fn emr_managed_slave_security_group<ValueType: Into<String>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.emr_managed_slave_security_group = Some(value.into());
+        self
+    }
+    /// Sets `hadoop_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobFlowInstancesConfig.hadoop_version = Some(value.into());`.
+    pub fn hadoop_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hadoop_version = Some(value.into());
+        self
+    }
+    /// Sets `instance_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobFlowInstancesConfig.instance_count = Some(value.into());`.
+    pub fn instance_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.instance_count = Some(value.into());
+        self
+    }
+    /// Sets `instance_fleets`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobFlowInstancesConfig.instance_fleets = Some(value.into());`.
+    pub fn instance_fleets<ValueType: Into<Vec<InstanceFleetConfig>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.instance_fleets = Some(value.into());
+        self
+    }
+    /// Sets `instance_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobFlowInstancesConfig.instance_groups = Some(value.into());`.
+    pub fn instance_groups<ValueType: Into<Vec<InstanceGroupConfig>>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.instance_groups = Some(value.into());
+        self
+    }
+    /// Sets `keep_job_flow_alive_when_no_steps`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobFlowInstancesConfig.keep_job_flow_alive_when_no_steps = Some(value.into());`.
+    pub fn keep_job_flow_alive_when_no_steps<ValueType: Into<bool>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.keep_job_flow_alive_when_no_steps = Some(value.into());
+        self
+    }
+    /// Sets `master_instance_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobFlowInstancesConfig.master_instance_type = Some(value.into());`.
+    pub fn master_instance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.master_instance_type = Some(value.into());
+        self
+    }
+    /// Sets `placement`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobFlowInstancesConfig.placement = Some(value.into());`.
+    pub fn placement<ValueType: Into<PlacementType>>(mut self, value: ValueType) -> Self {
+        self.placement = Some(value.into());
+        self
+    }
+    /// Sets `service_access_security_group`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobFlowInstancesConfig.service_access_security_group = Some(value.into());`.
+    pub fn service_access_security_group<ValueType: Into<String>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.service_access_security_group = Some(value.into());
+        self
+    }
+    /// Sets `slave_instance_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobFlowInstancesConfig.slave_instance_type = Some(value.into());`.
+    pub fn slave_instance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.slave_instance_type = Some(value.into());
+        self
+    }
+    /// Sets `termination_protected`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobFlowInstancesConfig.termination_protected = Some(value.into());`.
+    pub fn termination_protected<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.termination_protected = Some(value.into());
+        self
+    }
+    /// Returns a new instance of JobFlowInstancesConfig with optional fields set to `None`.
+    pub fn new() -> JobFlowInstancesConfig {
+        JobFlowInstancesConfig { ..Default::default() }
+    }
+}
 #[doc="<p>Specify the type of Amazon EC2 instances that the cluster (job flow) runs on.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct JobFlowInstancesDetail {
@@ -1513,7 +2455,6 @@ pub struct JobFlowInstancesDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub termination_protected: Option<bool>,
 }
-
 #[doc="<p>A key value pair.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct KeyValue {
@@ -1526,7 +2467,26 @@ pub struct KeyValue {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl KeyValue {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KeyValue.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KeyValue.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of KeyValue with optional fields set to `None`.
+    pub fn new() -> KeyValue {
+        KeyValue { ..Default::default() }
+    }
+}
 #[doc="<p>This input determines which bootstrap actions to retrieve.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListBootstrapActionsInput {
@@ -1538,7 +2498,30 @@ pub struct ListBootstrapActionsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
+impl ListBootstrapActionsInput {
+    /// Sets `cluster_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListBootstrapActionsInput.cluster_id = value.into();`.
+    pub fn cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster_id = value.into();
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListBootstrapActionsInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListBootstrapActionsInput with optional fields set to `None`.
+    pub fn new<ClusterIdType: Into<String>>(cluster_id: ClusterIdType)
+                                            -> ListBootstrapActionsInput {
+        ListBootstrapActionsInput {
+            cluster_id: cluster_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>This output contains the bootstrap actions detail.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListBootstrapActionsOutput {
@@ -1551,7 +2534,6 @@ pub struct ListBootstrapActionsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
 #[doc="<p>This input determines how the ListClusters action filters the list of clusters that it returns.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListClustersInput {
@@ -1572,7 +2554,40 @@ pub struct ListClustersInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
+impl ListClustersInput {
+    /// Sets `cluster_states`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListClustersInput.cluster_states = Some(value.into());`.
+    pub fn cluster_states<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.cluster_states = Some(value.into());
+        self
+    }
+    /// Sets `created_after`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListClustersInput.created_after = Some(value.into());`.
+    pub fn created_after<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.created_after = Some(value.into());
+        self
+    }
+    /// Sets `created_before`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListClustersInput.created_before = Some(value.into());`.
+    pub fn created_before<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.created_before = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListClustersInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListClustersInput with optional fields set to `None`.
+    pub fn new() -> ListClustersInput {
+        ListClustersInput { ..Default::default() }
+    }
+}
 #[doc="<p>This contains a ClusterSummaryList with the cluster details; for example, the cluster IDs, names, and status.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListClustersOutput {
@@ -1585,7 +2600,6 @@ pub struct ListClustersOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListInstanceFleetsInput {
     #[doc="<p>The unique identifier of the cluster.</p>"]
@@ -1596,7 +2610,29 @@ pub struct ListInstanceFleetsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
+impl ListInstanceFleetsInput {
+    /// Sets `cluster_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInstanceFleetsInput.cluster_id = value.into();`.
+    pub fn cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster_id = value.into();
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInstanceFleetsInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListInstanceFleetsInput with optional fields set to `None`.
+    pub fn new<ClusterIdType: Into<String>>(cluster_id: ClusterIdType) -> ListInstanceFleetsInput {
+        ListInstanceFleetsInput {
+            cluster_id: cluster_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListInstanceFleetsOutput {
     #[doc="<p>The list of instance fleets for the cluster and given filters.</p>"]
@@ -1608,7 +2644,6 @@ pub struct ListInstanceFleetsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
 #[doc="<p>This input determines which instance groups to retrieve.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListInstanceGroupsInput {
@@ -1620,7 +2655,29 @@ pub struct ListInstanceGroupsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
+impl ListInstanceGroupsInput {
+    /// Sets `cluster_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInstanceGroupsInput.cluster_id = value.into();`.
+    pub fn cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster_id = value.into();
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInstanceGroupsInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListInstanceGroupsInput with optional fields set to `None`.
+    pub fn new<ClusterIdType: Into<String>>(cluster_id: ClusterIdType) -> ListInstanceGroupsInput {
+        ListInstanceGroupsInput {
+            cluster_id: cluster_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>This input determines which instance groups to retrieve.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListInstanceGroupsOutput {
@@ -1633,7 +2690,6 @@ pub struct ListInstanceGroupsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
 #[doc="<p>This input determines which instances to list.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListInstancesInput {
@@ -1665,7 +2721,64 @@ pub struct ListInstancesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
+impl ListInstancesInput {
+    /// Sets `cluster_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInstancesInput.cluster_id = value.into();`.
+    pub fn cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster_id = value.into();
+        self
+    }
+    /// Sets `instance_fleet_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInstancesInput.instance_fleet_id = Some(value.into());`.
+    pub fn instance_fleet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_fleet_id = Some(value.into());
+        self
+    }
+    /// Sets `instance_fleet_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInstancesInput.instance_fleet_type = Some(value.into());`.
+    pub fn instance_fleet_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_fleet_type = Some(value.into());
+        self
+    }
+    /// Sets `instance_group_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInstancesInput.instance_group_id = Some(value.into());`.
+    pub fn instance_group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_group_id = Some(value.into());
+        self
+    }
+    /// Sets `instance_group_types`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInstancesInput.instance_group_types = Some(value.into());`.
+    pub fn instance_group_types<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_group_types = Some(value.into());
+        self
+    }
+    /// Sets `instance_states`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInstancesInput.instance_states = Some(value.into());`.
+    pub fn instance_states<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_states = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListInstancesInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListInstancesInput with optional fields set to `None`.
+    pub fn new<ClusterIdType: Into<String>>(cluster_id: ClusterIdType) -> ListInstancesInput {
+        ListInstancesInput {
+            cluster_id: cluster_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>This output contains the list of instances.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListInstancesOutput {
@@ -1678,7 +2791,6 @@ pub struct ListInstancesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListSecurityConfigurationsInput {
     #[doc="<p>The pagination token that indicates the set of results to retrieve.</p>"]
@@ -1686,7 +2798,19 @@ pub struct ListSecurityConfigurationsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
+impl ListSecurityConfigurationsInput {
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListSecurityConfigurationsInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListSecurityConfigurationsInput with optional fields set to `None`.
+    pub fn new() -> ListSecurityConfigurationsInput {
+        ListSecurityConfigurationsInput { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListSecurityConfigurationsOutput {
     #[doc="<p>A pagination token that indicates the next set of results to retrieve. Include the marker in the next ListSecurityConfiguration call to retrieve the next page of results, if required.</p>"]
@@ -1698,7 +2822,6 @@ pub struct ListSecurityConfigurationsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub security_configurations: Option<Vec<SecurityConfigurationSummary>>,
 }
-
 #[doc="<p>This input determines which steps to list.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListStepsInput {
@@ -1718,7 +2841,43 @@ pub struct ListStepsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub step_states: Option<Vec<String>>,
 }
-
+impl ListStepsInput {
+    /// Sets `cluster_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStepsInput.cluster_id = value.into();`.
+    pub fn cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster_id = value.into();
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStepsInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `step_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStepsInput.step_ids = Some(value.into());`.
+    pub fn step_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.step_ids = Some(value.into());
+        self
+    }
+    /// Sets `step_states`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListStepsInput.step_states = Some(value.into());`.
+    pub fn step_states<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.step_states = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListStepsInput with optional fields set to `None`.
+    pub fn new<ClusterIdType: Into<String>>(cluster_id: ClusterIdType) -> ListStepsInput {
+        ListStepsInput {
+            cluster_id: cluster_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>This output contains the list of steps returned in reverse order. This means that the last step is the first element in the list.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListStepsOutput {
@@ -1731,7 +2890,6 @@ pub struct ListStepsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub steps: Option<Vec<StepSummary>>,
 }
-
 #[doc="<p>A CloudWatch dimension, which is specified using a <code>Key</code> (known as a <code>Name</code> in CloudWatch), <code>Value</code> pair. By default, Amazon EMR uses one dimension whose <code>Key</code> is <code>JobFlowID</code> and <code>Value</code> is a variable representing the cluster ID, which is <code>${emr.clusterId}</code>. This enables the rule to bootstrap when the cluster ID becomes available.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct MetricDimension {
@@ -1744,7 +2902,26 @@ pub struct MetricDimension {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl MetricDimension {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MetricDimension.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MetricDimension.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of MetricDimension with optional fields set to `None`.
+    pub fn new() -> MetricDimension {
+        MetricDimension { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ModifyInstanceFleetInput {
     #[doc="<p>The unique identifier of the cluster.</p>"]
@@ -1754,7 +2931,35 @@ pub struct ModifyInstanceFleetInput {
     #[serde(rename="InstanceFleet")]
     pub instance_fleet: InstanceFleetModifyConfig,
 }
-
+impl ModifyInstanceFleetInput {
+    /// Sets `cluster_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstanceFleetInput.cluster_id = value.into();`.
+    pub fn cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster_id = value.into();
+        self
+    }
+    /// Sets `instance_fleet`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstanceFleetInput.instance_fleet = value.into();`.
+    pub fn instance_fleet<ValueType: Into<InstanceFleetModifyConfig>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.instance_fleet = value.into();
+        self
+    }
+    /// Returns a new instance of ModifyInstanceFleetInput with optional fields set to `None`.
+    pub fn new<ClusterIdType: Into<String>, InstanceFleetType: Into<InstanceFleetModifyConfig>>
+        (cluster_id: ClusterIdType,
+         instance_fleet: InstanceFleetType)
+         -> ModifyInstanceFleetInput {
+        ModifyInstanceFleetInput {
+            cluster_id: cluster_id.into(),
+            instance_fleet: instance_fleet.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Change the size of some instance groups.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ModifyInstanceGroupsInput {
@@ -1767,7 +2972,28 @@ pub struct ModifyInstanceGroupsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instance_groups: Option<Vec<InstanceGroupModifyConfig>>,
 }
-
+impl ModifyInstanceGroupsInput {
+    /// Sets `cluster_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstanceGroupsInput.cluster_id = Some(value.into());`.
+    pub fn cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster_id = Some(value.into());
+        self
+    }
+    /// Sets `instance_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyInstanceGroupsInput.instance_groups = Some(value.into());`.
+    pub fn instance_groups<ValueType: Into<Vec<InstanceGroupModifyConfig>>>(mut self,
+                                                                            value: ValueType)
+                                                                            -> Self {
+        self.instance_groups = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifyInstanceGroupsInput with optional fields set to `None`.
+    pub fn new() -> ModifyInstanceGroupsInput {
+        ModifyInstanceGroupsInput { ..Default::default() }
+    }
+}
 #[doc="<p>The Amazon EC2 Availability Zone configuration of the cluster (job flow).</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct PlacementType {
@@ -1780,7 +3006,26 @@ pub struct PlacementType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub availability_zones: Option<Vec<String>>,
 }
-
+impl PlacementType {
+    /// Sets `availability_zone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PlacementType.availability_zone = Some(value.into());`.
+    pub fn availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.availability_zone = Some(value.into());
+        self
+    }
+    /// Sets `availability_zones`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PlacementType.availability_zones = Some(value.into());`.
+    pub fn availability_zones<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.availability_zones = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PlacementType with optional fields set to `None`.
+    pub fn new() -> PlacementType {
+        PlacementType { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutAutoScalingPolicyInput {
     #[doc="<p>Specifies the definition of the automatic scaling policy.</p>"]
@@ -1793,7 +3038,46 @@ pub struct PutAutoScalingPolicyInput {
     #[serde(rename="InstanceGroupId")]
     pub instance_group_id: String,
 }
-
+impl PutAutoScalingPolicyInput {
+    /// Sets `auto_scaling_policy`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutAutoScalingPolicyInput.auto_scaling_policy = value.into();`.
+    pub fn auto_scaling_policy<ValueType: Into<AutoScalingPolicy>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.auto_scaling_policy = value.into();
+        self
+    }
+    /// Sets `cluster_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutAutoScalingPolicyInput.cluster_id = value.into();`.
+    pub fn cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster_id = value.into();
+        self
+    }
+    /// Sets `instance_group_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutAutoScalingPolicyInput.instance_group_id = value.into();`.
+    pub fn instance_group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_group_id = value.into();
+        self
+    }
+    /// Returns a new instance of PutAutoScalingPolicyInput with optional fields set to `None`.
+    pub fn new<AutoScalingPolicyType: Into<AutoScalingPolicy>,
+               ClusterIdType: Into<String>,
+               InstanceGroupIdType: Into<String>>
+        (auto_scaling_policy: AutoScalingPolicyType,
+         cluster_id: ClusterIdType,
+         instance_group_id: InstanceGroupIdType)
+         -> PutAutoScalingPolicyInput {
+        PutAutoScalingPolicyInput {
+            auto_scaling_policy: auto_scaling_policy.into(),
+            cluster_id: cluster_id.into(),
+            instance_group_id: instance_group_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutAutoScalingPolicyOutput {
     #[doc="<p>The automatic scaling policy definition.</p>"]
@@ -1809,7 +3093,6 @@ pub struct PutAutoScalingPolicyOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instance_group_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RemoveAutoScalingPolicyInput {
     #[doc="<p>Specifies the ID of a cluster. The instance group to which the automatic scaling policy is applied is within this cluster.</p>"]
@@ -1819,7 +3102,33 @@ pub struct RemoveAutoScalingPolicyInput {
     #[serde(rename="InstanceGroupId")]
     pub instance_group_id: String,
 }
-
+impl RemoveAutoScalingPolicyInput {
+    /// Sets `cluster_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveAutoScalingPolicyInput.cluster_id = value.into();`.
+    pub fn cluster_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster_id = value.into();
+        self
+    }
+    /// Sets `instance_group_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveAutoScalingPolicyInput.instance_group_id = value.into();`.
+    pub fn instance_group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_group_id = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveAutoScalingPolicyInput with optional fields set to `None`.
+    pub fn new<ClusterIdType: Into<String>, InstanceGroupIdType: Into<String>>
+        (cluster_id: ClusterIdType,
+         instance_group_id: InstanceGroupIdType)
+         -> RemoveAutoScalingPolicyInput {
+        RemoveAutoScalingPolicyInput {
+            cluster_id: cluster_id.into(),
+            instance_group_id: instance_group_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RemoveAutoScalingPolicyOutput;
 
@@ -1833,7 +3142,30 @@ pub struct RemoveTagsInput {
     #[serde(rename="TagKeys")]
     pub tag_keys: Vec<String>,
 }
-
+impl RemoveTagsInput {
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsInput.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `tag_keys`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsInput.tag_keys = value.into();`.
+    pub fn tag_keys<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tag_keys = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveTagsInput with optional fields set to `None`.
+pub fn new<ResourceIdType: Into<String>, TagKeysType: Into<Vec<String>>>(resource_id: ResourceIdType, tag_keys: TagKeysType) -> RemoveTagsInput{
+        RemoveTagsInput {
+            resource_id: resource_id.into(),
+            tag_keys: tag_keys.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>This output indicates the result of removing tags from a resource.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RemoveTagsOutput;
@@ -1928,7 +3260,177 @@ pub struct RunJobFlowInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub visible_to_all_users: Option<bool>,
 }
-
+impl RunJobFlowInput {
+    /// Sets `additional_info`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunJobFlowInput.additional_info = Some(value.into());`.
+    pub fn additional_info<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.additional_info = Some(value.into());
+        self
+    }
+    /// Sets `ami_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunJobFlowInput.ami_version = Some(value.into());`.
+    pub fn ami_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ami_version = Some(value.into());
+        self
+    }
+    /// Sets `applications`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunJobFlowInput.applications = Some(value.into());`.
+    pub fn applications<ValueType: Into<Vec<Application>>>(mut self, value: ValueType) -> Self {
+        self.applications = Some(value.into());
+        self
+    }
+    /// Sets `auto_scaling_role`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunJobFlowInput.auto_scaling_role = Some(value.into());`.
+    pub fn auto_scaling_role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auto_scaling_role = Some(value.into());
+        self
+    }
+    /// Sets `bootstrap_actions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunJobFlowInput.bootstrap_actions = Some(value.into());`.
+    pub fn bootstrap_actions<ValueType: Into<Vec<BootstrapActionConfig>>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.bootstrap_actions = Some(value.into());
+        self
+    }
+    /// Sets `configurations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunJobFlowInput.configurations = Some(value.into());`.
+    pub fn configurations<ValueType: Into<Vec<Configuration>>>(mut self, value: ValueType) -> Self {
+        self.configurations = Some(value.into());
+        self
+    }
+    /// Sets `custom_ami_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunJobFlowInput.custom_ami_id = Some(value.into());`.
+    pub fn custom_ami_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.custom_ami_id = Some(value.into());
+        self
+    }
+    /// Sets `ebs_root_volume_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunJobFlowInput.ebs_root_volume_size = Some(value.into());`.
+    pub fn ebs_root_volume_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.ebs_root_volume_size = Some(value.into());
+        self
+    }
+    /// Sets `instances`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunJobFlowInput.instances = value.into();`.
+    pub fn instances<ValueType: Into<JobFlowInstancesConfig>>(mut self, value: ValueType) -> Self {
+        self.instances = value.into();
+        self
+    }
+    /// Sets `job_flow_role`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunJobFlowInput.job_flow_role = Some(value.into());`.
+    pub fn job_flow_role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_flow_role = Some(value.into());
+        self
+    }
+    /// Sets `log_uri`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunJobFlowInput.log_uri = Some(value.into());`.
+    pub fn log_uri<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_uri = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunJobFlowInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `new_supported_products`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunJobFlowInput.new_supported_products = Some(value.into());`.
+    pub fn new_supported_products<ValueType: Into<Vec<SupportedProductConfig>>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.new_supported_products = Some(value.into());
+        self
+    }
+    /// Sets `release_label`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunJobFlowInput.release_label = Some(value.into());`.
+    pub fn release_label<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.release_label = Some(value.into());
+        self
+    }
+    /// Sets `repo_upgrade_on_boot`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunJobFlowInput.repo_upgrade_on_boot = Some(value.into());`.
+    pub fn repo_upgrade_on_boot<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.repo_upgrade_on_boot = Some(value.into());
+        self
+    }
+    /// Sets `scale_down_behavior`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunJobFlowInput.scale_down_behavior = Some(value.into());`.
+    pub fn scale_down_behavior<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.scale_down_behavior = Some(value.into());
+        self
+    }
+    /// Sets `security_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunJobFlowInput.security_configuration = Some(value.into());`.
+    pub fn security_configuration<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.security_configuration = Some(value.into());
+        self
+    }
+    /// Sets `service_role`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunJobFlowInput.service_role = Some(value.into());`.
+    pub fn service_role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_role = Some(value.into());
+        self
+    }
+    /// Sets `steps`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunJobFlowInput.steps = Some(value.into());`.
+    pub fn steps<ValueType: Into<Vec<StepConfig>>>(mut self, value: ValueType) -> Self {
+        self.steps = Some(value.into());
+        self
+    }
+    /// Sets `supported_products`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunJobFlowInput.supported_products = Some(value.into());`.
+    pub fn supported_products<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.supported_products = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunJobFlowInput.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `visible_to_all_users`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RunJobFlowInput.visible_to_all_users = Some(value.into());`.
+    pub fn visible_to_all_users<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.visible_to_all_users = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RunJobFlowInput with optional fields set to `None`.
+    pub fn new<InstancesType: Into<JobFlowInstancesConfig>, NameType: Into<String>>
+        (instances: InstancesType,
+         name: NameType)
+         -> RunJobFlowInput {
+        RunJobFlowInput {
+            instances: instances.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> The result of the <a>RunJobFlow</a> operation. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RunJobFlowOutput {
@@ -1937,7 +3439,6 @@ pub struct RunJobFlowOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub job_flow_id: Option<String>,
 }
-
 #[doc="<p>The type of adjustment the automatic scaling activity makes when triggered, and the periodicity of the adjustment.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ScalingAction {
@@ -1949,7 +3450,34 @@ pub struct ScalingAction {
     #[serde(rename="SimpleScalingPolicyConfiguration")]
     pub simple_scaling_policy_configuration: SimpleScalingPolicyConfiguration,
 }
-
+impl ScalingAction {
+    /// Sets `market`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScalingAction.market = Some(value.into());`.
+    pub fn market<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.market = Some(value.into());
+        self
+    }
+    /// Sets `simple_scaling_policy_configuration`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScalingAction.simple_scaling_policy_configuration = value.into();`.
+    pub fn simple_scaling_policy_configuration<ValueType: Into<SimpleScalingPolicyConfiguration>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.simple_scaling_policy_configuration = value.into();
+        self
+    }
+    /// Returns a new instance of ScalingAction with optional fields set to `None`.
+    pub fn new<SimpleScalingPolicyConfigurationType: Into<SimpleScalingPolicyConfiguration>>
+        (simple_scaling_policy_configuration: SimpleScalingPolicyConfigurationType)
+         -> ScalingAction {
+        ScalingAction {
+            simple_scaling_policy_configuration: simple_scaling_policy_configuration.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The upper and lower EC2 instance limits for an automatic scaling policy. Automatic scaling activities triggered by automatic scaling rules will not cause an instance group to grow above or below these limits.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ScalingConstraints {
@@ -1960,7 +3488,30 @@ pub struct ScalingConstraints {
     #[serde(rename="MinCapacity")]
     pub min_capacity: i64,
 }
-
+impl ScalingConstraints {
+    /// Sets `max_capacity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScalingConstraints.max_capacity = value.into();`.
+    pub fn max_capacity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_capacity = value.into();
+        self
+    }
+    /// Sets `min_capacity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScalingConstraints.min_capacity = value.into();`.
+    pub fn min_capacity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.min_capacity = value.into();
+        self
+    }
+    /// Returns a new instance of ScalingConstraints with optional fields set to `None`.
+pub fn new<MaxCapacityType: Into<i64>, MinCapacityType: Into<i64>>(max_capacity: MaxCapacityType, min_capacity: MinCapacityType) -> ScalingConstraints{
+        ScalingConstraints {
+            max_capacity: max_capacity.into(),
+            min_capacity: min_capacity.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A scale-in or scale-out rule that defines scaling activity, including the CloudWatch metric alarm that triggers activity, how EC2 instances are added or removed, and the periodicity of adjustments. The automatic scaling policy for an instance group can comprise one or more automatic scaling rules.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ScalingRule {
@@ -1978,7 +3529,51 @@ pub struct ScalingRule {
     #[serde(rename="Trigger")]
     pub trigger: ScalingTrigger,
 }
-
+impl ScalingRule {
+    /// Sets `action`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScalingRule.action = value.into();`.
+    pub fn action<ValueType: Into<ScalingAction>>(mut self, value: ValueType) -> Self {
+        self.action = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScalingRule.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScalingRule.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `trigger`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScalingRule.trigger = value.into();`.
+    pub fn trigger<ValueType: Into<ScalingTrigger>>(mut self, value: ValueType) -> Self {
+        self.trigger = value.into();
+        self
+    }
+    /// Returns a new instance of ScalingRule with optional fields set to `None`.
+    pub fn new<ActionType: Into<ScalingAction>,
+               NameType: Into<String>,
+               TriggerType: Into<ScalingTrigger>>
+        (action: ActionType,
+         name: NameType,
+         trigger: TriggerType)
+         -> ScalingRule {
+        ScalingRule {
+            action: action.into(),
+            name: name.into(),
+            trigger: trigger.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The conditions that trigger an automatic scaling activity.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ScalingTrigger {
@@ -1986,7 +3581,24 @@ pub struct ScalingTrigger {
     #[serde(rename="CloudWatchAlarmDefinition")]
     pub cloud_watch_alarm_definition: CloudWatchAlarmDefinition,
 }
-
+impl ScalingTrigger {
+    /// Sets `cloud_watch_alarm_definition`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScalingTrigger.cloud_watch_alarm_definition = value.into();`.
+pub fn cloud_watch_alarm_definition<ValueType: Into<CloudWatchAlarmDefinition>>(mut self, value: ValueType) -> Self{
+        self.cloud_watch_alarm_definition = value.into();
+        self
+    }
+    /// Returns a new instance of ScalingTrigger with optional fields set to `None`.
+    pub fn new<CloudWatchAlarmDefinitionType: Into<CloudWatchAlarmDefinition>>
+        (cloud_watch_alarm_definition: CloudWatchAlarmDefinitionType)
+         -> ScalingTrigger {
+        ScalingTrigger {
+            cloud_watch_alarm_definition: cloud_watch_alarm_definition.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Configuration of the script to run during a bootstrap action.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ScriptBootstrapActionConfig {
@@ -1998,7 +3610,29 @@ pub struct ScriptBootstrapActionConfig {
     #[serde(rename="Path")]
     pub path: String,
 }
-
+impl ScriptBootstrapActionConfig {
+    /// Sets `args`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScriptBootstrapActionConfig.args = Some(value.into());`.
+    pub fn args<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.args = Some(value.into());
+        self
+    }
+    /// Sets `path`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScriptBootstrapActionConfig.path = value.into();`.
+    pub fn path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path = value.into();
+        self
+    }
+    /// Returns a new instance of ScriptBootstrapActionConfig with optional fields set to `None`.
+    pub fn new<PathType: Into<String>>(path: PathType) -> ScriptBootstrapActionConfig {
+        ScriptBootstrapActionConfig {
+            path: path.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The creation date and time, and name, of a security configuration.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SecurityConfigurationSummary {
@@ -2011,7 +3645,6 @@ pub struct SecurityConfigurationSummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p> The input argument to the <a>TerminationProtection</a> operation. </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SetTerminationProtectionInput {
@@ -2022,7 +3655,33 @@ pub struct SetTerminationProtectionInput {
     #[serde(rename="TerminationProtected")]
     pub termination_protected: bool,
 }
-
+impl SetTerminationProtectionInput {
+    /// Sets `job_flow_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetTerminationProtectionInput.job_flow_ids = value.into();`.
+    pub fn job_flow_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.job_flow_ids = value.into();
+        self
+    }
+    /// Sets `termination_protected`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetTerminationProtectionInput.termination_protected = value.into();`.
+    pub fn termination_protected<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.termination_protected = value.into();
+        self
+    }
+    /// Returns a new instance of SetTerminationProtectionInput with optional fields set to `None`.
+    pub fn new<JobFlowIdsType: Into<Vec<String>>, TerminationProtectedType: Into<bool>>
+        (job_flow_ids: JobFlowIdsType,
+         termination_protected: TerminationProtectedType)
+         -> SetTerminationProtectionInput {
+        SetTerminationProtectionInput {
+            job_flow_ids: job_flow_ids.into(),
+            termination_protected: termination_protected.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The input to the SetVisibleToAllUsers action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SetVisibleToAllUsersInput {
@@ -2033,7 +3692,33 @@ pub struct SetVisibleToAllUsersInput {
     #[serde(rename="VisibleToAllUsers")]
     pub visible_to_all_users: bool,
 }
-
+impl SetVisibleToAllUsersInput {
+    /// Sets `job_flow_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetVisibleToAllUsersInput.job_flow_ids = value.into();`.
+    pub fn job_flow_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.job_flow_ids = value.into();
+        self
+    }
+    /// Sets `visible_to_all_users`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetVisibleToAllUsersInput.visible_to_all_users = value.into();`.
+    pub fn visible_to_all_users<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.visible_to_all_users = value.into();
+        self
+    }
+    /// Returns a new instance of SetVisibleToAllUsersInput with optional fields set to `None`.
+    pub fn new<JobFlowIdsType: Into<Vec<String>>, VisibleToAllUsersType: Into<bool>>
+        (job_flow_ids: JobFlowIdsType,
+         visible_to_all_users: VisibleToAllUsersType)
+         -> SetVisibleToAllUsersInput {
+        SetVisibleToAllUsersInput {
+            job_flow_ids: job_flow_ids.into(),
+            visible_to_all_users: visible_to_all_users.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Policy for customizing shrink operations. Allows configuration of decommissioning timeout and targeted instance shrinking.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ShrinkPolicy {
@@ -2046,7 +3731,28 @@ pub struct ShrinkPolicy {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instance_resize_policy: Option<InstanceResizePolicy>,
 }
-
+impl ShrinkPolicy {
+    /// Sets `decommission_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ShrinkPolicy.decommission_timeout = Some(value.into());`.
+    pub fn decommission_timeout<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.decommission_timeout = Some(value.into());
+        self
+    }
+    /// Sets `instance_resize_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ShrinkPolicy.instance_resize_policy = Some(value.into());`.
+    pub fn instance_resize_policy<ValueType: Into<InstanceResizePolicy>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.instance_resize_policy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ShrinkPolicy with optional fields set to `None`.
+    pub fn new() -> ShrinkPolicy {
+        ShrinkPolicy { ..Default::default() }
+    }
+}
 #[doc="<p>An automatic scaling configuration, which describes how the policy adds or removes instances, the cooldown period, and the number of EC2 instances that will be added each time the CloudWatch metric alarm condition is satisfied.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct SimpleScalingPolicyConfiguration {
@@ -2062,7 +3768,37 @@ pub struct SimpleScalingPolicyConfiguration {
     #[serde(rename="ScalingAdjustment")]
     pub scaling_adjustment: i64,
 }
-
+impl SimpleScalingPolicyConfiguration {
+    /// Sets `adjustment_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimpleScalingPolicyConfiguration.adjustment_type = Some(value.into());`.
+    pub fn adjustment_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.adjustment_type = Some(value.into());
+        self
+    }
+    /// Sets `cool_down`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimpleScalingPolicyConfiguration.cool_down = Some(value.into());`.
+    pub fn cool_down<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.cool_down = Some(value.into());
+        self
+    }
+    /// Sets `scaling_adjustment`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SimpleScalingPolicyConfiguration.scaling_adjustment = value.into();`.
+    pub fn scaling_adjustment<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.scaling_adjustment = value.into();
+        self
+    }
+    /// Returns a new instance of SimpleScalingPolicyConfiguration with optional fields set to `None`.
+    pub fn new<ScalingAdjustmentType: Into<i64>>(scaling_adjustment: ScalingAdjustmentType)
+                                                 -> SimpleScalingPolicyConfiguration {
+        SimpleScalingPolicyConfiguration {
+            scaling_adjustment: scaling_adjustment.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The launch specification for Spot instances in the instance fleet, which determines the defined duration and provisioning timeout behavior.</p> <note> <p>The instance fleet configuration is available only in Amazon EMR versions 4.8.0 and later, excluding 5.0.x versions.</p> </note>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct SpotProvisioningSpecification {
@@ -2077,7 +3813,40 @@ pub struct SpotProvisioningSpecification {
     #[serde(rename="TimeoutDurationMinutes")]
     pub timeout_duration_minutes: i64,
 }
-
+impl SpotProvisioningSpecification {
+    /// Sets `block_duration_minutes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotProvisioningSpecification.block_duration_minutes = Some(value.into());`.
+    pub fn block_duration_minutes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.block_duration_minutes = Some(value.into());
+        self
+    }
+    /// Sets `timeout_action`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotProvisioningSpecification.timeout_action = value.into();`.
+    pub fn timeout_action<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.timeout_action = value.into();
+        self
+    }
+    /// Sets `timeout_duration_minutes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SpotProvisioningSpecification.timeout_duration_minutes = value.into();`.
+    pub fn timeout_duration_minutes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.timeout_duration_minutes = value.into();
+        self
+    }
+    /// Returns a new instance of SpotProvisioningSpecification with optional fields set to `None`.
+    pub fn new<TimeoutActionType: Into<String>, TimeoutDurationMinutesType: Into<i64>>
+        (timeout_action: TimeoutActionType,
+         timeout_duration_minutes: TimeoutDurationMinutesType)
+         -> SpotProvisioningSpecification {
+        SpotProvisioningSpecification {
+            timeout_action: timeout_action.into(),
+            timeout_duration_minutes: timeout_duration_minutes.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>This represents a step in a cluster.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Step {
@@ -2102,7 +3871,6 @@ pub struct Step {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<StepStatus>,
 }
-
 #[doc="<p>Specification of a cluster (job flow) step.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct StepConfig {
@@ -2117,7 +3885,42 @@ pub struct StepConfig {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl StepConfig {
+    /// Sets `action_on_failure`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StepConfig.action_on_failure = Some(value.into());`.
+    pub fn action_on_failure<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.action_on_failure = Some(value.into());
+        self
+    }
+    /// Sets `hadoop_jar_step`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StepConfig.hadoop_jar_step = value.into();`.
+    pub fn hadoop_jar_step<ValueType: Into<HadoopJarStepConfig>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.hadoop_jar_step = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StepConfig.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of StepConfig with optional fields set to `None`.
+    pub fn new<HadoopJarStepType: Into<HadoopJarStepConfig>, NameType: Into<String>>
+        (hadoop_jar_step: HadoopJarStepType,
+         name: NameType)
+         -> StepConfig {
+        StepConfig {
+            hadoop_jar_step: hadoop_jar_step.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Combines the execution state and configuration of a step.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StepDetail {
@@ -2128,7 +3931,6 @@ pub struct StepDetail {
     #[serde(rename="StepConfig")]
     pub step_config: StepConfig,
 }
-
 #[doc="<p>The execution state of a step.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StepExecutionStatusDetail {
@@ -2151,7 +3953,6 @@ pub struct StepExecutionStatusDetail {
     #[serde(rename="State")]
     pub state: String,
 }
-
 #[doc="<p>The details of the step state change reason.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StepStateChangeReason {
@@ -2164,7 +3965,6 @@ pub struct StepStateChangeReason {
     #[serde(skip_serializing_if="Option::is_none")]
     pub message: Option<String>,
 }
-
 #[doc="<p>The execution status details of the cluster step.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StepStatus {
@@ -2185,7 +3985,6 @@ pub struct StepStatus {
     #[serde(skip_serializing_if="Option::is_none")]
     pub timeline: Option<StepTimeline>,
 }
-
 #[doc="<p>The summary of the cluster step.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StepSummary {
@@ -2210,7 +4009,6 @@ pub struct StepSummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<StepStatus>,
 }
-
 #[doc="<p>The timeline of the cluster step lifecycle.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StepTimeline {
@@ -2227,7 +4025,6 @@ pub struct StepTimeline {
     #[serde(skip_serializing_if="Option::is_none")]
     pub start_date_time: Option<f64>,
 }
-
 #[doc="<p>The list of supported product configurations which allow user-supplied arguments. EMR accepts these arguments and forwards them to the corresponding installation script as bootstrap action arguments.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SupportedProductConfig {
@@ -2240,7 +4037,26 @@ pub struct SupportedProductConfig {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
+impl SupportedProductConfig {
+    /// Sets `args`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SupportedProductConfig.args = Some(value.into());`.
+    pub fn args<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.args = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SupportedProductConfig.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SupportedProductConfig with optional fields set to `None`.
+    pub fn new() -> SupportedProductConfig {
+        SupportedProductConfig { ..Default::default() }
+    }
+}
 #[doc="<p>A key/value pair containing user-defined metadata that you can associate with an Amazon EMR resource. Tags make it easier to associate clusters in various ways, such as grouping clusters to track your Amazon EMR resource allocation costs. For more information, see <a href=\"http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-plan-tags.html\">Tagging Amazon EMR Resources</a>. </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Tag {
@@ -2253,7 +4069,26 @@ pub struct Tag {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl Tag {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new() -> Tag {
+        Tag { ..Default::default() }
+    }
+}
 #[doc="<p> Input to the <a>TerminateJobFlows</a> operation. </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TerminateJobFlowsInput {
@@ -2261,7 +4096,23 @@ pub struct TerminateJobFlowsInput {
     #[serde(rename="JobFlowIds")]
     pub job_flow_ids: Vec<String>,
 }
-
+impl TerminateJobFlowsInput {
+    /// Sets `job_flow_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateJobFlowsInput.job_flow_ids = value.into();`.
+    pub fn job_flow_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.job_flow_ids = value.into();
+        self
+    }
+    /// Returns a new instance of TerminateJobFlowsInput with optional fields set to `None`.
+    pub fn new<JobFlowIdsType: Into<Vec<String>>>(job_flow_ids: JobFlowIdsType)
+                                                  -> TerminateJobFlowsInput {
+        TerminateJobFlowsInput {
+            job_flow_ids: job_flow_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>EBS volume specifications such as volume type, IOPS, and size (GiB) that will be requested for the EBS volume attached to an EC2 instance in the cluster.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct VolumeSpecification {
@@ -2276,7 +4127,39 @@ pub struct VolumeSpecification {
     #[serde(rename="VolumeType")]
     pub volume_type: String,
 }
-
+impl VolumeSpecification {
+    /// Sets `iops`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VolumeSpecification.iops = Some(value.into());`.
+    pub fn iops<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.iops = Some(value.into());
+        self
+    }
+    /// Sets `size_in_gb`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VolumeSpecification.size_in_gb = value.into();`.
+    pub fn size_in_gb<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.size_in_gb = value.into();
+        self
+    }
+    /// Sets `volume_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VolumeSpecification.volume_type = value.into();`.
+    pub fn volume_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.volume_type = value.into();
+        self
+    }
+    /// Returns a new instance of VolumeSpecification with optional fields set to `None`.
+    pub fn new<SizeInGBType: Into<i64>, VolumeTypeType: Into<String>>(size_in_gb: SizeInGBType,
+                                                                      volume_type: VolumeTypeType)
+                                                                      -> VolumeSpecification {
+        VolumeSpecification {
+            size_in_gb: size_in_gb.into(),
+            volume_type: volume_type.into(),
+            ..Default::default()
+        }
+    }
+}
 /// Errors returned by AddInstanceFleet
 #[derive(Debug, PartialEq)]
 pub enum AddInstanceFleetError {

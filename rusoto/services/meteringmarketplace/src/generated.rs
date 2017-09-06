@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -38,7 +39,33 @@ pub struct BatchMeterUsageRequest {
     #[serde(rename="UsageRecords")]
     pub usage_records: Vec<UsageRecord>,
 }
-
+impl BatchMeterUsageRequest {
+    /// Sets `product_code`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchMeterUsageRequest.product_code = value.into();`.
+    pub fn product_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_code = value.into();
+        self
+    }
+    /// Sets `usage_records`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchMeterUsageRequest.usage_records = value.into();`.
+    pub fn usage_records<ValueType: Into<Vec<UsageRecord>>>(mut self, value: ValueType) -> Self {
+        self.usage_records = value.into();
+        self
+    }
+    /// Returns a new instance of BatchMeterUsageRequest with optional fields set to `None`.
+    pub fn new<ProductCodeType: Into<String>, UsageRecordsType: Into<Vec<UsageRecord>>>
+        (product_code: ProductCodeType,
+         usage_records: UsageRecordsType)
+         -> BatchMeterUsageRequest {
+        BatchMeterUsageRequest {
+            product_code: product_code.into(),
+            usage_records: usage_records.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the UsageRecords processed by BatchMeterUsage and any records that have failed due to transient error.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BatchMeterUsageResult {
@@ -51,7 +78,6 @@ pub struct BatchMeterUsageResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub unprocessed_records: Option<Vec<UsageRecord>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct MeterUsageRequest {
     #[doc="<p>Checks whether you have the permissions required for the action, but does not make the request. If you have the permissions, the request returns DryRunOperation; otherwise, it returns UnauthorizedException.</p>"]
@@ -70,14 +96,70 @@ pub struct MeterUsageRequest {
     #[serde(rename="UsageQuantity")]
     pub usage_quantity: i64,
 }
-
+impl MeterUsageRequest {
+    /// Sets `dry_run`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MeterUsageRequest.dry_run = value.into();`.
+    pub fn dry_run<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.dry_run = value.into();
+        self
+    }
+    /// Sets `product_code`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MeterUsageRequest.product_code = value.into();`.
+    pub fn product_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_code = value.into();
+        self
+    }
+    /// Sets `timestamp`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MeterUsageRequest.timestamp = value.into();`.
+    pub fn timestamp<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.timestamp = value.into();
+        self
+    }
+    /// Sets `usage_dimension`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MeterUsageRequest.usage_dimension = value.into();`.
+    pub fn usage_dimension<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.usage_dimension = value.into();
+        self
+    }
+    /// Sets `usage_quantity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MeterUsageRequest.usage_quantity = value.into();`.
+    pub fn usage_quantity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.usage_quantity = value.into();
+        self
+    }
+    /// Returns a new instance of MeterUsageRequest with optional fields set to `None`.
+    pub fn new<DryRunType: Into<bool>,
+               ProductCodeType: Into<String>,
+               TimestampType: Into<f64>,
+               UsageDimensionType: Into<String>,
+               UsageQuantityType: Into<i64>>
+        (dry_run: DryRunType,
+         product_code: ProductCodeType,
+         timestamp: TimestampType,
+         usage_dimension: UsageDimensionType,
+         usage_quantity: UsageQuantityType)
+         -> MeterUsageRequest {
+        MeterUsageRequest {
+            dry_run: dry_run.into(),
+            product_code: product_code.into(),
+            timestamp: timestamp.into(),
+            usage_dimension: usage_dimension.into(),
+            usage_quantity: usage_quantity.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MeterUsageResult {
     #[serde(rename="MeteringRecordId")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub metering_record_id: Option<String>,
 }
-
 #[doc="<p>Contains input to the ResolveCustomer operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ResolveCustomerRequest {
@@ -85,7 +167,23 @@ pub struct ResolveCustomerRequest {
     #[serde(rename="RegistrationToken")]
     pub registration_token: String,
 }
-
+impl ResolveCustomerRequest {
+    /// Sets `registration_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResolveCustomerRequest.registration_token = value.into();`.
+    pub fn registration_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.registration_token = value.into();
+        self
+    }
+    /// Returns a new instance of ResolveCustomerRequest with optional fields set to `None`.
+    pub fn new<RegistrationTokenType: Into<String>>(registration_token: RegistrationTokenType)
+                                                    -> ResolveCustomerRequest {
+        ResolveCustomerRequest {
+            registration_token: registration_token.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The result of the ResolveCustomer operation. Contains the CustomerIdentifier and product code.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ResolveCustomerResult {
@@ -98,7 +196,6 @@ pub struct ResolveCustomerResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub product_code: Option<String>,
 }
-
 #[doc="<p>A UsageRecord indicates a quantity of usage for a given product, customer, dimension and time.</p> <p>Multiple requests with the same UsageRecords as input will be deduplicated to prevent double charges.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct UsageRecord {
@@ -115,7 +212,54 @@ pub struct UsageRecord {
     #[serde(rename="Timestamp")]
     pub timestamp: f64,
 }
-
+impl UsageRecord {
+    /// Sets `customer_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UsageRecord.customer_identifier = value.into();`.
+    pub fn customer_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.customer_identifier = value.into();
+        self
+    }
+    /// Sets `dimension`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UsageRecord.dimension = value.into();`.
+    pub fn dimension<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.dimension = value.into();
+        self
+    }
+    /// Sets `quantity`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UsageRecord.quantity = value.into();`.
+    pub fn quantity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.quantity = value.into();
+        self
+    }
+    /// Sets `timestamp`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UsageRecord.timestamp = value.into();`.
+    pub fn timestamp<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.timestamp = value.into();
+        self
+    }
+    /// Returns a new instance of UsageRecord with optional fields set to `None`.
+    pub fn new<CustomerIdentifierType: Into<String>,
+               DimensionType: Into<String>,
+               QuantityType: Into<i64>,
+               TimestampType: Into<f64>>
+        (customer_identifier: CustomerIdentifierType,
+         dimension: DimensionType,
+         quantity: QuantityType,
+         timestamp: TimestampType)
+         -> UsageRecord {
+        UsageRecord {
+            customer_identifier: customer_identifier.into(),
+            dimension: dimension.into(),
+            quantity: quantity.into(),
+            timestamp: timestamp.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A UsageRecordResult indicates the status of a given UsageRecord processed by BatchMeterUsage.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UsageRecordResult {
@@ -132,7 +276,6 @@ pub struct UsageRecordResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub usage_record: Option<UsageRecord>,
 }
-
 /// Errors returned by BatchMeterUsage
 #[derive(Debug, PartialEq)]
 pub enum BatchMeterUsageError {

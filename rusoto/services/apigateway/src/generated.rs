@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -49,7 +50,6 @@ pub struct Account {
     #[serde(skip_serializing_if="Option::is_none")]
     pub throttle_settings: Option<ThrottleSettings>,
 }
-
 #[doc="<p>A resource that can be distributed to callers for executing <a>Method</a> resources that require an API key. API keys can be mapped to any <a>Stage</a> on any <a>RestApi</a>, which indicates that the callers with the API key can make requests to that stage.</p> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-api-keys.html\">Use API Keys</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ApiKey {
@@ -90,7 +90,6 @@ pub struct ApiKey {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
 #[doc="<p>The identifier of an <a>ApiKey</a> used in a <a>UsagePlan</a>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ApiKeyIds {
@@ -103,7 +102,6 @@ pub struct ApiKeyIds {
     #[serde(skip_serializing_if="Option::is_none")]
     pub warnings: Option<Vec<String>>,
 }
-
 #[doc="<p>Represents a collection of API keys as represented by an <a>ApiKeys</a> resource.</p> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-api-keys.html\">Use API Keys</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ApiKeys {
@@ -119,7 +117,6 @@ pub struct ApiKeys {
     #[serde(skip_serializing_if="Option::is_none")]
     pub warnings: Option<Vec<String>>,
 }
-
 #[doc="<p>API stage name of the associated API stage in a usage plan.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ApiStage {
@@ -132,7 +129,26 @@ pub struct ApiStage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stage: Option<String>,
 }
-
+impl ApiStage {
+    /// Sets `api_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ApiStage.api_id = Some(value.into());`.
+    pub fn api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.api_id = Some(value.into());
+        self
+    }
+    /// Sets `stage`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ApiStage.stage = Some(value.into());`.
+    pub fn stage<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stage = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ApiStage with optional fields set to `None`.
+    pub fn new() -> ApiStage {
+        ApiStage { ..Default::default() }
+    }
+}
 #[doc="<p>Represents an authorization layer for methods. If enabled on a method, API Gateway will activate the authorizer when a client calls the method.</p> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/use-custom-authorizer.html\">Enable custom authorization</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Authorizer {
@@ -177,7 +193,6 @@ pub struct Authorizer {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>Represents a collection of <a>Authorizer</a> resources.</p> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/use-custom-authorizer.html\">Enable custom authorization</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Authorizers {
@@ -189,7 +204,6 @@ pub struct Authorizers {
     #[serde(skip_serializing_if="Option::is_none")]
     pub position: Option<String>,
 }
-
 #[doc="<p>Represents the base path that callers of the API must provide as part of the URL after the domain name.</p> <div class=\"remarks\">A custom domain name plus a <code>BasePathMapping</code> specification identifies a deployed <a>RestApi</a> in a given stage of the owner <a>Account</a>.</div> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html\">Use Custom Domain Names</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BasePathMapping {
@@ -206,7 +220,6 @@ pub struct BasePathMapping {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stage: Option<String>,
 }
-
 #[doc="<p>Represents a collection of <a>BasePathMapping</a> resources.</p> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html\">Use Custom Domain Names</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BasePathMappings {
@@ -218,7 +231,6 @@ pub struct BasePathMappings {
     #[serde(skip_serializing_if="Option::is_none")]
     pub position: Option<String>,
 }
-
 #[doc="<p>Represents a client certificate used to configure client-side SSL authentication while sending requests to the integration endpoint.</p> <div class=\"remarks\">Client certificates are used authenticate an API by the back-end server. To authenticate an API client (or user), use a custom <a>Authorizer</a>.</div> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/getting-started-client-side-ssl-authentication.html\">Use Client-Side Certificate</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ClientCertificate {
@@ -243,7 +255,6 @@ pub struct ClientCertificate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pem_encoded_certificate: Option<String>,
 }
-
 #[doc="<p>Represents a collection of <a>ClientCertificate</a> resources.</p> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/getting-started-client-side-ssl-authentication.html\">Use Client-Side Certificate</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ClientCertificates {
@@ -255,7 +266,6 @@ pub struct ClientCertificates {
     #[serde(skip_serializing_if="Option::is_none")]
     pub position: Option<String>,
 }
-
 #[doc="<p>Request to create an <a>ApiKey</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateApiKeyRequest {
@@ -288,7 +298,61 @@ pub struct CreateApiKeyRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl CreateApiKeyRequest {
+    /// Sets `customer_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApiKeyRequest.customer_id = Some(value.into());`.
+    pub fn customer_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.customer_id = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApiKeyRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApiKeyRequest.enabled = Some(value.into());`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = Some(value.into());
+        self
+    }
+    /// Sets `generate_distinct_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApiKeyRequest.generate_distinct_id = Some(value.into());`.
+    pub fn generate_distinct_id<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.generate_distinct_id = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApiKeyRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `stage_keys`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApiKeyRequest.stage_keys = Some(value.into());`.
+    pub fn stage_keys<ValueType: Into<Vec<StageKey>>>(mut self, value: ValueType) -> Self {
+        self.stage_keys = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApiKeyRequest.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateApiKeyRequest with optional fields set to `None`.
+    pub fn new() -> CreateApiKeyRequest {
+        CreateApiKeyRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Request to add a new <a>Authorizer</a> to an existing <a>RestApi</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateAuthorizerRequest {
@@ -329,7 +393,100 @@ pub struct CreateAuthorizerRequest {
     #[serde(rename="type")]
     pub type_: String,
 }
-
+impl CreateAuthorizerRequest {
+    /// Sets `auth_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAuthorizerRequest.auth_type = Some(value.into());`.
+    pub fn auth_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auth_type = Some(value.into());
+        self
+    }
+    /// Sets `authorizer_credentials`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAuthorizerRequest.authorizer_credentials = Some(value.into());`.
+    pub fn authorizer_credentials<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.authorizer_credentials = Some(value.into());
+        self
+    }
+    /// Sets `authorizer_result_ttl_in_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAuthorizerRequest.authorizer_result_ttl_in_seconds = Some(value.into());`.
+    pub fn authorizer_result_ttl_in_seconds<ValueType: Into<i64>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.authorizer_result_ttl_in_seconds = Some(value.into());
+        self
+    }
+    /// Sets `authorizer_uri`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAuthorizerRequest.authorizer_uri = Some(value.into());`.
+    pub fn authorizer_uri<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.authorizer_uri = Some(value.into());
+        self
+    }
+    /// Sets `identity_source`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAuthorizerRequest.identity_source = value.into();`.
+    pub fn identity_source<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.identity_source = value.into();
+        self
+    }
+    /// Sets `identity_validation_expression`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAuthorizerRequest.identity_validation_expression = Some(value.into());`.
+    pub fn identity_validation_expression<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.identity_validation_expression = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAuthorizerRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `provider_ar_ns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAuthorizerRequest.provider_ar_ns = Some(value.into());`.
+    pub fn provider_ar_ns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.provider_ar_ns = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAuthorizerRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAuthorizerRequest.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of CreateAuthorizerRequest with optional fields set to `None`.
+    pub fn new<identitySourceType: Into<String>,
+               nameType: Into<String>,
+               restApiIdType: Into<String>,
+               typeType: Into<String>>
+        (identity_source: identitySourceType,
+         name: nameType,
+         rest_api_id: restApiIdType,
+         type_: typeType)
+         -> CreateAuthorizerRequest {
+        CreateAuthorizerRequest {
+            identity_source: identity_source.into(),
+            name: name.into(),
+            rest_api_id: rest_api_id.into(),
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Requests Amazon API Gateway to create a new <a>BasePathMapping</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateBasePathMappingRequest {
@@ -348,7 +505,47 @@ pub struct CreateBasePathMappingRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stage: Option<String>,
 }
-
+impl CreateBasePathMappingRequest {
+    /// Sets `base_path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBasePathMappingRequest.base_path = Some(value.into());`.
+    pub fn base_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.base_path = Some(value.into());
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBasePathMappingRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBasePathMappingRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `stage`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBasePathMappingRequest.stage = Some(value.into());`.
+    pub fn stage<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stage = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateBasePathMappingRequest with optional fields set to `None`.
+    pub fn new<domainNameType: Into<String>, restApiIdType: Into<String>>
+        (domain_name: domainNameType,
+         rest_api_id: restApiIdType)
+         -> CreateBasePathMappingRequest {
+        CreateBasePathMappingRequest {
+            domain_name: domain_name.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Requests Amazon API Gateway to create a <a>Deployment</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateDeploymentRequest {
@@ -380,7 +577,64 @@ pub struct CreateDeploymentRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub variables: Option<::std::collections::HashMap<String, String>>,
 }
-
+impl CreateDeploymentRequest {
+    /// Sets `cache_cluster_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentRequest.cache_cluster_enabled = Some(value.into());`.
+    pub fn cache_cluster_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.cache_cluster_enabled = Some(value.into());
+        self
+    }
+    /// Sets `cache_cluster_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentRequest.cache_cluster_size = Some(value.into());`.
+    pub fn cache_cluster_size<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_cluster_size = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `stage_description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentRequest.stage_description = Some(value.into());`.
+    pub fn stage_description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stage_description = Some(value.into());
+        self
+    }
+    /// Sets `stage_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentRequest.stage_name = Some(value.into());`.
+    pub fn stage_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stage_name = Some(value.into());
+        self
+    }
+    /// Sets `variables`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDeploymentRequest.variables = Some(value.into());`.
+pub fn variables<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.variables = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateDeploymentRequest with optional fields set to `None`.
+    pub fn new<restApiIdType: Into<String>>(rest_api_id: restApiIdType) -> CreateDeploymentRequest {
+        CreateDeploymentRequest {
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Creates a new documentation part of a given API.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateDocumentationPartRequest {
@@ -394,7 +648,46 @@ pub struct CreateDocumentationPartRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl CreateDocumentationPartRequest {
+    /// Sets `location`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDocumentationPartRequest.location = value.into();`.
+    pub fn location<ValueType: Into<DocumentationPartLocation>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.location = value.into();
+        self
+    }
+    /// Sets `properties`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDocumentationPartRequest.properties = value.into();`.
+    pub fn properties<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.properties = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDocumentationPartRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateDocumentationPartRequest with optional fields set to `None`.
+    pub fn new<locationType: Into<DocumentationPartLocation>,
+               propertiesType: Into<String>,
+               restApiIdType: Into<String>>
+        (location: locationType,
+         properties: propertiesType,
+         rest_api_id: restApiIdType)
+         -> CreateDocumentationPartRequest {
+        CreateDocumentationPartRequest {
+            location: location.into(),
+            properties: properties.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Creates a new documentation version of a given API.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateDocumentationVersionRequest {
@@ -413,7 +706,47 @@ pub struct CreateDocumentationVersionRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stage_name: Option<String>,
 }
-
+impl CreateDocumentationVersionRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDocumentationVersionRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `documentation_version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDocumentationVersionRequest.documentation_version = value.into();`.
+    pub fn documentation_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.documentation_version = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDocumentationVersionRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `stage_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDocumentationVersionRequest.stage_name = Some(value.into());`.
+    pub fn stage_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stage_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateDocumentationVersionRequest with optional fields set to `None`.
+    pub fn new<documentationVersionType: Into<String>, restApiIdType: Into<String>>
+        (documentation_version: documentationVersionType,
+         rest_api_id: restApiIdType)
+         -> CreateDocumentationVersionRequest {
+        CreateDocumentationVersionRequest {
+            documentation_version: documentation_version.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A request to create a new domain name.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateDomainNameRequest {
@@ -441,7 +774,58 @@ pub struct CreateDomainNameRequest {
     #[serde(rename="domainName")]
     pub domain_name: String,
 }
-
+impl CreateDomainNameRequest {
+    /// Sets `certificate_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDomainNameRequest.certificate_arn = Some(value.into());`.
+    pub fn certificate_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_arn = Some(value.into());
+        self
+    }
+    /// Sets `certificate_body`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDomainNameRequest.certificate_body = Some(value.into());`.
+    pub fn certificate_body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_body = Some(value.into());
+        self
+    }
+    /// Sets `certificate_chain`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDomainNameRequest.certificate_chain = Some(value.into());`.
+    pub fn certificate_chain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_chain = Some(value.into());
+        self
+    }
+    /// Sets `certificate_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDomainNameRequest.certificate_name = Some(value.into());`.
+    pub fn certificate_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_name = Some(value.into());
+        self
+    }
+    /// Sets `certificate_private_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDomainNameRequest.certificate_private_key = Some(value.into());`.
+    pub fn certificate_private_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_private_key = Some(value.into());
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDomainNameRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateDomainNameRequest with optional fields set to `None`.
+    pub fn new<domainNameType: Into<String>>(domain_name: domainNameType)
+                                             -> CreateDomainNameRequest {
+        CreateDomainNameRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to add a new <a>Model</a> to an existing <a>RestApi</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateModelRequest {
@@ -463,7 +847,56 @@ pub struct CreateModelRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub schema: Option<String>,
 }
-
+impl CreateModelRequest {
+    /// Sets `content_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateModelRequest.content_type = value.into();`.
+    pub fn content_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_type = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateModelRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateModelRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateModelRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `schema`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateModelRequest.schema = Some(value.into());`.
+    pub fn schema<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.schema = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateModelRequest with optional fields set to `None`.
+    pub fn new<contentTypeType: Into<String>, nameType: Into<String>, restApiIdType: Into<String>>
+        (content_type: contentTypeType,
+         name: nameType,
+         rest_api_id: restApiIdType)
+         -> CreateModelRequest {
+        CreateModelRequest {
+            content_type: content_type.into(),
+            name: name.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Creates a <a>RequestValidator</a> of a given <a>RestApi</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateRequestValidatorRequest {
@@ -483,7 +916,44 @@ pub struct CreateRequestValidatorRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub validate_request_parameters: Option<bool>,
 }
-
+impl CreateRequestValidatorRequest {
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRequestValidatorRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRequestValidatorRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `validate_request_body`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRequestValidatorRequest.validate_request_body = Some(value.into());`.
+    pub fn validate_request_body<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.validate_request_body = Some(value.into());
+        self
+    }
+    /// Sets `validate_request_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRequestValidatorRequest.validate_request_parameters = Some(value.into());`.
+    pub fn validate_request_parameters<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.validate_request_parameters = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateRequestValidatorRequest with optional fields set to `None`.
+    pub fn new<restApiIdType: Into<String>>(rest_api_id: restApiIdType)
+                                            -> CreateRequestValidatorRequest {
+        CreateRequestValidatorRequest {
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Requests Amazon API Gateway to create a <a>Resource</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateResourceRequest {
@@ -497,7 +967,42 @@ pub struct CreateResourceRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl CreateResourceRequest {
+    /// Sets `parent_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateResourceRequest.parent_id = value.into();`.
+    pub fn parent_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.parent_id = value.into();
+        self
+    }
+    /// Sets `path_part`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateResourceRequest.path_part = value.into();`.
+    pub fn path_part<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path_part = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateResourceRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateResourceRequest with optional fields set to `None`.
+    pub fn new<parentIdType: Into<String>, pathPartType: Into<String>, restApiIdType: Into<String>>
+        (parent_id: parentIdType,
+         path_part: pathPartType,
+         rest_api_id: restApiIdType)
+         -> CreateResourceRequest {
+        CreateResourceRequest {
+            parent_id: parent_id.into(),
+            path_part: path_part.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The POST Request to add a new <a>RestApi</a> resource to your collection.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateRestApiRequest {
@@ -521,7 +1026,50 @@ pub struct CreateRestApiRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<String>,
 }
-
+impl CreateRestApiRequest {
+    /// Sets `binary_media_types`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRestApiRequest.binary_media_types = Some(value.into());`.
+    pub fn binary_media_types<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.binary_media_types = Some(value.into());
+        self
+    }
+    /// Sets `clone_from`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRestApiRequest.clone_from = Some(value.into());`.
+    pub fn clone_from<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.clone_from = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRestApiRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRestApiRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRestApiRequest.version = Some(value.into());`.
+    pub fn version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateRestApiRequest with optional fields set to `None`.
+    pub fn new<nameType: Into<String>>(name: nameType) -> CreateRestApiRequest {
+        CreateRestApiRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Requests Amazon API Gateway to create a <a>Stage</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateStageRequest {
@@ -555,7 +1103,79 @@ pub struct CreateStageRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub variables: Option<::std::collections::HashMap<String, String>>,
 }
-
+impl CreateStageRequest {
+    /// Sets `cache_cluster_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStageRequest.cache_cluster_enabled = Some(value.into());`.
+    pub fn cache_cluster_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.cache_cluster_enabled = Some(value.into());
+        self
+    }
+    /// Sets `cache_cluster_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStageRequest.cache_cluster_size = Some(value.into());`.
+    pub fn cache_cluster_size<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_cluster_size = Some(value.into());
+        self
+    }
+    /// Sets `deployment_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStageRequest.deployment_id = value.into();`.
+    pub fn deployment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_id = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStageRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `documentation_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStageRequest.documentation_version = Some(value.into());`.
+    pub fn documentation_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.documentation_version = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStageRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `stage_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStageRequest.stage_name = value.into();`.
+    pub fn stage_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stage_name = value.into();
+        self
+    }
+    /// Sets `variables`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateStageRequest.variables = Some(value.into());`.
+pub fn variables<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.variables = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateStageRequest with optional fields set to `None`.
+    pub fn new<deploymentIdType: Into<String>,
+               restApiIdType: Into<String>,
+               stageNameType: Into<String>>
+        (deployment_id: deploymentIdType,
+         rest_api_id: restApiIdType,
+         stage_name: stageNameType)
+         -> CreateStageRequest {
+        CreateStageRequest {
+            deployment_id: deployment_id.into(),
+            rest_api_id: rest_api_id.into(),
+            stage_name: stage_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The POST request to create a usage plan key for adding an existing API key to a usage plan.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateUsagePlanKeyRequest {
@@ -569,7 +1189,42 @@ pub struct CreateUsagePlanKeyRequest {
     #[serde(rename="usagePlanId")]
     pub usage_plan_id: String,
 }
-
+impl CreateUsagePlanKeyRequest {
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUsagePlanKeyRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Sets `key_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUsagePlanKeyRequest.key_type = value.into();`.
+    pub fn key_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_type = value.into();
+        self
+    }
+    /// Sets `usage_plan_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUsagePlanKeyRequest.usage_plan_id = value.into();`.
+    pub fn usage_plan_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.usage_plan_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateUsagePlanKeyRequest with optional fields set to `None`.
+    pub fn new<keyIdType: Into<String>, keyTypeType: Into<String>, usagePlanIdType: Into<String>>
+        (key_id: keyIdType,
+         key_type: keyTypeType,
+         usage_plan_id: usagePlanIdType)
+         -> CreateUsagePlanKeyRequest {
+        CreateUsagePlanKeyRequest {
+            key_id: key_id.into(),
+            key_type: key_type.into(),
+            usage_plan_id: usage_plan_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The POST request to create a usage plan with the name, description, throttle limits and quota limits, as well as the associated API stages, specified in the payload.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateUsagePlanRequest {
@@ -593,7 +1248,50 @@ pub struct CreateUsagePlanRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub throttle: Option<ThrottleSettings>,
 }
-
+impl CreateUsagePlanRequest {
+    /// Sets `api_stages`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUsagePlanRequest.api_stages = Some(value.into());`.
+    pub fn api_stages<ValueType: Into<Vec<ApiStage>>>(mut self, value: ValueType) -> Self {
+        self.api_stages = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUsagePlanRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUsagePlanRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `quota`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUsagePlanRequest.quota = Some(value.into());`.
+    pub fn quota<ValueType: Into<QuotaSettings>>(mut self, value: ValueType) -> Self {
+        self.quota = Some(value.into());
+        self
+    }
+    /// Sets `throttle`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUsagePlanRequest.throttle = Some(value.into());`.
+    pub fn throttle<ValueType: Into<ThrottleSettings>>(mut self, value: ValueType) -> Self {
+        self.throttle = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateUsagePlanRequest with optional fields set to `None`.
+    pub fn new<nameType: Into<String>>(name: nameType) -> CreateUsagePlanRequest {
+        CreateUsagePlanRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A request to delete the <a>ApiKey</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteApiKeyRequest {
@@ -601,7 +1299,22 @@ pub struct DeleteApiKeyRequest {
     #[serde(rename="apiKey")]
     pub api_key: String,
 }
-
+impl DeleteApiKeyRequest {
+    /// Sets `api_key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteApiKeyRequest.api_key = value.into();`.
+    pub fn api_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.api_key = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteApiKeyRequest with optional fields set to `None`.
+    pub fn new<apiKeyType: Into<String>>(api_key: apiKeyType) -> DeleteApiKeyRequest {
+        DeleteApiKeyRequest {
+            api_key: api_key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to delete an existing <a>Authorizer</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteAuthorizerRequest {
@@ -612,7 +1325,33 @@ pub struct DeleteAuthorizerRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl DeleteAuthorizerRequest {
+    /// Sets `authorizer_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAuthorizerRequest.authorizer_id = value.into();`.
+    pub fn authorizer_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.authorizer_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAuthorizerRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteAuthorizerRequest with optional fields set to `None`.
+    pub fn new<authorizerIdType: Into<String>, restApiIdType: Into<String>>
+        (authorizer_id: authorizerIdType,
+         rest_api_id: restApiIdType)
+         -> DeleteAuthorizerRequest {
+        DeleteAuthorizerRequest {
+            authorizer_id: authorizer_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A request to delete the <a>BasePathMapping</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteBasePathMappingRequest {
@@ -623,7 +1362,33 @@ pub struct DeleteBasePathMappingRequest {
     #[serde(rename="domainName")]
     pub domain_name: String,
 }
-
+impl DeleteBasePathMappingRequest {
+    /// Sets `base_path`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBasePathMappingRequest.base_path = value.into();`.
+    pub fn base_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.base_path = value.into();
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBasePathMappingRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteBasePathMappingRequest with optional fields set to `None`.
+    pub fn new<basePathType: Into<String>, domainNameType: Into<String>>
+        (base_path: basePathType,
+         domain_name: domainNameType)
+         -> DeleteBasePathMappingRequest {
+        DeleteBasePathMappingRequest {
+            base_path: base_path.into(),
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A request to delete the <a>ClientCertificate</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteClientCertificateRequest {
@@ -631,7 +1396,22 @@ pub struct DeleteClientCertificateRequest {
     #[serde(rename="clientCertificateId")]
     pub client_certificate_id: String,
 }
-
+impl DeleteClientCertificateRequest {
+    /// Sets `client_certificate_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteClientCertificateRequest.client_certificate_id = value.into();`.
+    pub fn client_certificate_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_certificate_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteClientCertificateRequest with optional fields set to `None`.
+pub fn new<clientCertificateIdType: Into<String>>(client_certificate_id: clientCertificateIdType) -> DeleteClientCertificateRequest{
+        DeleteClientCertificateRequest {
+            client_certificate_id: client_certificate_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Requests Amazon API Gateway to delete a <a>Deployment</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteDeploymentRequest {
@@ -642,7 +1422,33 @@ pub struct DeleteDeploymentRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl DeleteDeploymentRequest {
+    /// Sets `deployment_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDeploymentRequest.deployment_id = value.into();`.
+    pub fn deployment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDeploymentRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDeploymentRequest with optional fields set to `None`.
+    pub fn new<deploymentIdType: Into<String>, restApiIdType: Into<String>>
+        (deployment_id: deploymentIdType,
+         rest_api_id: restApiIdType)
+         -> DeleteDeploymentRequest {
+        DeleteDeploymentRequest {
+            deployment_id: deployment_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Deletes an existing documentation part of an API.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteDocumentationPartRequest {
@@ -653,7 +1459,33 @@ pub struct DeleteDocumentationPartRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl DeleteDocumentationPartRequest {
+    /// Sets `documentation_part_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDocumentationPartRequest.documentation_part_id = value.into();`.
+    pub fn documentation_part_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.documentation_part_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDocumentationPartRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDocumentationPartRequest with optional fields set to `None`.
+    pub fn new<documentationPartIdType: Into<String>, restApiIdType: Into<String>>
+        (documentation_part_id: documentationPartIdType,
+         rest_api_id: restApiIdType)
+         -> DeleteDocumentationPartRequest {
+        DeleteDocumentationPartRequest {
+            documentation_part_id: documentation_part_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Deletes an existing documentation version of an API.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteDocumentationVersionRequest {
@@ -664,7 +1496,33 @@ pub struct DeleteDocumentationVersionRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl DeleteDocumentationVersionRequest {
+    /// Sets `documentation_version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDocumentationVersionRequest.documentation_version = value.into();`.
+    pub fn documentation_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.documentation_version = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDocumentationVersionRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDocumentationVersionRequest with optional fields set to `None`.
+    pub fn new<documentationVersionType: Into<String>, restApiIdType: Into<String>>
+        (documentation_version: documentationVersionType,
+         rest_api_id: restApiIdType)
+         -> DeleteDocumentationVersionRequest {
+        DeleteDocumentationVersionRequest {
+            documentation_version: documentation_version.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A request to delete the <a>DomainName</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteDomainNameRequest {
@@ -672,7 +1530,23 @@ pub struct DeleteDomainNameRequest {
     #[serde(rename="domainName")]
     pub domain_name: String,
 }
-
+impl DeleteDomainNameRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDomainNameRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDomainNameRequest with optional fields set to `None`.
+    pub fn new<domainNameType: Into<String>>(domain_name: domainNameType)
+                                             -> DeleteDomainNameRequest {
+        DeleteDomainNameRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Clears any customization of a <a>GatewayResponse</a> of a specified response type on the given <a>RestApi</a> and resets it with the default settings.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteGatewayResponseRequest {
@@ -683,7 +1557,33 @@ pub struct DeleteGatewayResponseRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl DeleteGatewayResponseRequest {
+    /// Sets `response_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteGatewayResponseRequest.response_type = value.into();`.
+    pub fn response_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.response_type = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteGatewayResponseRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteGatewayResponseRequest with optional fields set to `None`.
+    pub fn new<responseTypeType: Into<String>, restApiIdType: Into<String>>
+        (response_type: responseTypeType,
+         rest_api_id: restApiIdType)
+         -> DeleteGatewayResponseRequest {
+        DeleteGatewayResponseRequest {
+            response_type: response_type.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents a delete integration request.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteIntegrationRequest {
@@ -697,7 +1597,44 @@ pub struct DeleteIntegrationRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl DeleteIntegrationRequest {
+    /// Sets `http_method`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteIntegrationRequest.http_method = value.into();`.
+    pub fn http_method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.http_method = value.into();
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteIntegrationRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteIntegrationRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteIntegrationRequest with optional fields set to `None`.
+    pub fn new<httpMethodType: Into<String>,
+               resourceIdType: Into<String>,
+               restApiIdType: Into<String>>
+        (http_method: httpMethodType,
+         resource_id: resourceIdType,
+         rest_api_id: restApiIdType)
+         -> DeleteIntegrationRequest {
+        DeleteIntegrationRequest {
+            http_method: http_method.into(),
+            resource_id: resource_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents a delete integration response request.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteIntegrationResponseRequest {
@@ -714,7 +1651,54 @@ pub struct DeleteIntegrationResponseRequest {
     #[serde(rename="statusCode")]
     pub status_code: String,
 }
-
+impl DeleteIntegrationResponseRequest {
+    /// Sets `http_method`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteIntegrationResponseRequest.http_method = value.into();`.
+    pub fn http_method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.http_method = value.into();
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteIntegrationResponseRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteIntegrationResponseRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `status_code`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteIntegrationResponseRequest.status_code = value.into();`.
+    pub fn status_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status_code = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteIntegrationResponseRequest with optional fields set to `None`.
+    pub fn new<httpMethodType: Into<String>,
+               resourceIdType: Into<String>,
+               restApiIdType: Into<String>,
+               statusCodeType: Into<String>>
+        (http_method: httpMethodType,
+         resource_id: resourceIdType,
+         rest_api_id: restApiIdType,
+         status_code: statusCodeType)
+         -> DeleteIntegrationResponseRequest {
+        DeleteIntegrationResponseRequest {
+            http_method: http_method.into(),
+            resource_id: resource_id.into(),
+            rest_api_id: rest_api_id.into(),
+            status_code: status_code.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to delete an existing <a>Method</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteMethodRequest {
@@ -728,7 +1712,44 @@ pub struct DeleteMethodRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl DeleteMethodRequest {
+    /// Sets `http_method`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteMethodRequest.http_method = value.into();`.
+    pub fn http_method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.http_method = value.into();
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteMethodRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteMethodRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteMethodRequest with optional fields set to `None`.
+    pub fn new<httpMethodType: Into<String>,
+               resourceIdType: Into<String>,
+               restApiIdType: Into<String>>
+        (http_method: httpMethodType,
+         resource_id: resourceIdType,
+         rest_api_id: restApiIdType)
+         -> DeleteMethodRequest {
+        DeleteMethodRequest {
+            http_method: http_method.into(),
+            resource_id: resource_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A request to delete an existing <a>MethodResponse</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteMethodResponseRequest {
@@ -745,7 +1766,54 @@ pub struct DeleteMethodResponseRequest {
     #[serde(rename="statusCode")]
     pub status_code: String,
 }
-
+impl DeleteMethodResponseRequest {
+    /// Sets `http_method`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteMethodResponseRequest.http_method = value.into();`.
+    pub fn http_method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.http_method = value.into();
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteMethodResponseRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteMethodResponseRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `status_code`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteMethodResponseRequest.status_code = value.into();`.
+    pub fn status_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status_code = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteMethodResponseRequest with optional fields set to `None`.
+    pub fn new<httpMethodType: Into<String>,
+               resourceIdType: Into<String>,
+               restApiIdType: Into<String>,
+               statusCodeType: Into<String>>
+        (http_method: httpMethodType,
+         resource_id: resourceIdType,
+         rest_api_id: restApiIdType,
+         status_code: statusCodeType)
+         -> DeleteMethodResponseRequest {
+        DeleteMethodResponseRequest {
+            http_method: http_method.into(),
+            resource_id: resource_id.into(),
+            rest_api_id: rest_api_id.into(),
+            status_code: status_code.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to delete an existing model in an existing <a>RestApi</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteModelRequest {
@@ -756,7 +1824,30 @@ pub struct DeleteModelRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl DeleteModelRequest {
+    /// Sets `model_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteModelRequest.model_name = value.into();`.
+    pub fn model_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.model_name = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteModelRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteModelRequest with optional fields set to `None`.
+pub fn new<modelNameType: Into<String>, restApiIdType: Into<String>>(model_name: modelNameType, rest_api_id: restApiIdType) -> DeleteModelRequest{
+        DeleteModelRequest {
+            model_name: model_name.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Deletes a specified <a>RequestValidator</a> of a given <a>RestApi</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteRequestValidatorRequest {
@@ -767,7 +1858,33 @@ pub struct DeleteRequestValidatorRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl DeleteRequestValidatorRequest {
+    /// Sets `request_validator_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRequestValidatorRequest.request_validator_id = value.into();`.
+    pub fn request_validator_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_validator_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRequestValidatorRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteRequestValidatorRequest with optional fields set to `None`.
+    pub fn new<requestValidatorIdType: Into<String>, restApiIdType: Into<String>>
+        (request_validator_id: requestValidatorIdType,
+         rest_api_id: restApiIdType)
+         -> DeleteRequestValidatorRequest {
+        DeleteRequestValidatorRequest {
+            request_validator_id: request_validator_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to delete a <a>Resource</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteResourceRequest {
@@ -778,7 +1895,33 @@ pub struct DeleteResourceRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl DeleteResourceRequest {
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteResourceRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteResourceRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteResourceRequest with optional fields set to `None`.
+    pub fn new<resourceIdType: Into<String>, restApiIdType: Into<String>>
+        (resource_id: resourceIdType,
+         rest_api_id: restApiIdType)
+         -> DeleteResourceRequest {
+        DeleteResourceRequest {
+            resource_id: resource_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to delete the specified API from your collection.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteRestApiRequest {
@@ -786,7 +1929,22 @@ pub struct DeleteRestApiRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl DeleteRestApiRequest {
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRestApiRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteRestApiRequest with optional fields set to `None`.
+    pub fn new<restApiIdType: Into<String>>(rest_api_id: restApiIdType) -> DeleteRestApiRequest {
+        DeleteRestApiRequest {
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Requests Amazon API Gateway to delete a <a>Stage</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteStageRequest {
@@ -797,7 +1955,30 @@ pub struct DeleteStageRequest {
     #[serde(rename="stageName")]
     pub stage_name: String,
 }
-
+impl DeleteStageRequest {
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteStageRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `stage_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteStageRequest.stage_name = value.into();`.
+    pub fn stage_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stage_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteStageRequest with optional fields set to `None`.
+pub fn new<restApiIdType: Into<String>, stageNameType: Into<String>>(rest_api_id: restApiIdType, stage_name: stageNameType) -> DeleteStageRequest{
+        DeleteStageRequest {
+            rest_api_id: rest_api_id.into(),
+            stage_name: stage_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The DELETE request to delete a usage plan key and remove the underlying API key from the associated usage plan.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteUsagePlanKeyRequest {
@@ -808,7 +1989,33 @@ pub struct DeleteUsagePlanKeyRequest {
     #[serde(rename="usagePlanId")]
     pub usage_plan_id: String,
 }
-
+impl DeleteUsagePlanKeyRequest {
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteUsagePlanKeyRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Sets `usage_plan_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteUsagePlanKeyRequest.usage_plan_id = value.into();`.
+    pub fn usage_plan_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.usage_plan_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteUsagePlanKeyRequest with optional fields set to `None`.
+    pub fn new<keyIdType: Into<String>, usagePlanIdType: Into<String>>
+        (key_id: keyIdType,
+         usage_plan_id: usagePlanIdType)
+         -> DeleteUsagePlanKeyRequest {
+        DeleteUsagePlanKeyRequest {
+            key_id: key_id.into(),
+            usage_plan_id: usage_plan_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The DELETE request to delete a usage plan of a given plan Id.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteUsagePlanRequest {
@@ -816,7 +2023,23 @@ pub struct DeleteUsagePlanRequest {
     #[serde(rename="usagePlanId")]
     pub usage_plan_id: String,
 }
-
+impl DeleteUsagePlanRequest {
+    /// Sets `usage_plan_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteUsagePlanRequest.usage_plan_id = value.into();`.
+    pub fn usage_plan_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.usage_plan_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteUsagePlanRequest with optional fields set to `None`.
+    pub fn new<usagePlanIdType: Into<String>>(usage_plan_id: usagePlanIdType)
+                                              -> DeleteUsagePlanRequest {
+        DeleteUsagePlanRequest {
+            usage_plan_id: usage_plan_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>An immutable representation of a <a>RestApi</a> resource that can be called by users using <a>Stages</a>. A deployment must be associated with a <a>Stage</a> for it to be callable over the Internet.</p> <div class=\"remarks\">To create a deployment, call <code>POST</code> on the <a>Deployments</a> resource of a <a>RestApi</a>. To view, update, or delete a deployment, call <code>GET</code>, <code>PATCH</code>, or <code>DELETE</code> on the specified deployment resource (<code>/restapis/{restapi_id}/deployments/{deployment_id}</code>).</div> <div class=\"seeAlso\"><a>RestApi</a>, <a>Deployments</a>, <a>Stage</a>, <a href=\"http://docs.aws.amazon.com/cli/latest/reference/apigateway/get-deployment.html\">AWS CLI</a>, <a href=\"https://aws.amazon.com/tools/\">AWS SDKs</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Deployment {
@@ -839,7 +2062,6 @@ pub struct Deployment {
     #[serde(skip_serializing_if="Option::is_none")]
     pub id: Option<String>,
 }
-
 #[doc="<p>Represents a collection resource that contains zero or more references to your existing deployments, and links that guide you on how to interact with your collection. The collection offers a paginated view of the contained deployments.</p> <div class=\"remarks\">To create a new deployment of a <a>RestApi</a>, make a <code>POST</code> request against this resource. To view, update, or delete an existing deployment, make a <code>GET</code>, <code>PATCH</code>, or <code>DELETE</code> request, respectively, on a specified <a>Deployment</a> resource.</div> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-deploy-api.html\">Deploying an API</a>, <a href=\"http://docs.aws.amazon.com/cli/latest/reference/apigateway/get-deployment.html\">AWS CLI</a>, <a href=\"https://aws.amazon.com/tools/\">AWS SDKs</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Deployments {
@@ -851,7 +2073,6 @@ pub struct Deployments {
     #[serde(skip_serializing_if="Option::is_none")]
     pub position: Option<String>,
 }
-
 #[doc="<p>A documentation part for a targeted API entity.</p> <div class=\"remarks\"> <p>A documentation part consists of a content map (<code>properties</code>) and a target (<code>location</code>). The target specifies an API entity to which the documentation content applies. The supported API entity types are <code>API</code>, <code>AUTHORIZER</code>, <code>MODEL</code>, <code>RESOURCE</code>, <code>METHOD</code>, <code>PATH_PARAMETER</code>, <code>QUERY_PARAMETER</code>, <code>REQUEST_HEADER</code>, <code>REQUEST_BODY</code>, <code>RESPONSE</code>, <code>RESPONSE_HEADER</code>, and <code>RESPONSE_BODY</code>. Valid <code>location</code> fields depend on the API entity type. All valid fields are not required.</p> <p>The content map is a JSON string of API-specific key-value pairs. Although an API can use any shape for the content map, only the Swagger-compliant documentation fields will be injected into the associated API entity definition in the exported Swagger definition file.</p></div> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-documenting-api.html\">Documenting an API</a>, <a>DocumentationParts</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DocumentationPart {
@@ -868,7 +2089,6 @@ pub struct DocumentationPart {
     #[serde(skip_serializing_if="Option::is_none")]
     pub properties: Option<String>,
 }
-
 #[doc="<p>A collection of the imported <a>DocumentationPart</a> identifiers.</p> <div class=\"remarks\">This is used to return the result when documentation parts in an external (e.g., Swagger) file are imported into Amazon API Gateway</div> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-documenting-api.html\">Documenting an API</a>, <a href=\"http://docs.aws.amazon.com/apigateway/api-reference/link-relation/documentationpart-import/\">documentationpart:import</a>, <a>DocumentationPart</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DocumentationPartIds {
@@ -881,7 +2101,6 @@ pub struct DocumentationPartIds {
     #[serde(skip_serializing_if="Option::is_none")]
     pub warnings: Option<Vec<String>>,
 }
-
 #[doc="<p>Specifies the target API entity to which the documentation applies.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct DocumentationPartLocation {
@@ -905,7 +2124,50 @@ pub struct DocumentationPartLocation {
     #[serde(rename="type")]
     pub type_: String,
 }
-
+impl DocumentationPartLocation {
+    /// Sets `method`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DocumentationPartLocation.method = Some(value.into());`.
+    pub fn method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.method = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DocumentationPartLocation.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DocumentationPartLocation.path = Some(value.into());`.
+    pub fn path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path = Some(value.into());
+        self
+    }
+    /// Sets `status_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DocumentationPartLocation.status_code = Some(value.into());`.
+    pub fn status_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status_code = Some(value.into());
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DocumentationPartLocation.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of DocumentationPartLocation with optional fields set to `None`.
+    pub fn new<typeType: Into<String>>(type_: typeType) -> DocumentationPartLocation {
+        DocumentationPartLocation {
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The collection of documentation parts of an API.</p> <div class=\"remarks\"/> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-documenting-api.html\">Documenting an API</a>, <a>DocumentationPart</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DocumentationParts {
@@ -917,7 +2179,6 @@ pub struct DocumentationParts {
     #[serde(skip_serializing_if="Option::is_none")]
     pub position: Option<String>,
 }
-
 #[doc="<p>A snapshot of the documentation of an API.</p> <div class=\"remarks\"><p>Publishing API documentation involves creating a documentation version associated with an API stage and exporting the versioned documentation to an external (e.g., Swagger) file.</p></div> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-documenting-api.html\">Documenting an API</a>, <a>DocumentationPart</a>, <a>DocumentationVersions</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DocumentationVersion {
@@ -934,7 +2195,6 @@ pub struct DocumentationVersion {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<String>,
 }
-
 #[doc="<p>The collection of documentation snapshots of an API. </p> <div class=\"remarks\"><p>Use the <a>DocumentationVersions</a> to manage documentation snapshots associated with various API stages.</p></div> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-documenting-api.html\">Documenting an API</a>, <a>DocumentationPart</a>, <a>DocumentationVersion</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DocumentationVersions {
@@ -946,7 +2206,6 @@ pub struct DocumentationVersions {
     #[serde(skip_serializing_if="Option::is_none")]
     pub position: Option<String>,
 }
-
 #[doc="<p>Represents a domain name that is contained in a simpler, more intuitive URL that can be called.</p> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html\">Use Client-Side Certificate</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DomainName {
@@ -971,7 +2230,6 @@ pub struct DomainName {
     #[serde(skip_serializing_if="Option::is_none")]
     pub domain_name: Option<String>,
 }
-
 #[doc="<p>Represents a collection of <a>DomainName</a> resources.</p> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html\">Use Client-Side Certificate</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DomainNames {
@@ -983,7 +2241,6 @@ pub struct DomainNames {
     #[serde(skip_serializing_if="Option::is_none")]
     pub position: Option<String>,
 }
-
 #[doc="<p>The binary blob response to <a>GetExport</a>, which contains the generated SDK.</p>"]
 #[derive(Default,Debug,Clone)]
 pub struct ExportResponse {
@@ -994,7 +2251,6 @@ pub struct ExportResponse {
     #[doc="<p>The content-type header value in the HTTP response. This will correspond to a valid 'accept' type in the request.</p>"]
     pub content_type: Option<String>,
 }
-
 #[doc="<p>Request to flush authorizer cache entries on a specified stage.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct FlushStageAuthorizersCacheRequest {
@@ -1005,7 +2261,33 @@ pub struct FlushStageAuthorizersCacheRequest {
     #[serde(rename="stageName")]
     pub stage_name: String,
 }
-
+impl FlushStageAuthorizersCacheRequest {
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FlushStageAuthorizersCacheRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `stage_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FlushStageAuthorizersCacheRequest.stage_name = value.into();`.
+    pub fn stage_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stage_name = value.into();
+        self
+    }
+    /// Returns a new instance of FlushStageAuthorizersCacheRequest with optional fields set to `None`.
+    pub fn new<restApiIdType: Into<String>, stageNameType: Into<String>>
+        (rest_api_id: restApiIdType,
+         stage_name: stageNameType)
+         -> FlushStageAuthorizersCacheRequest {
+        FlushStageAuthorizersCacheRequest {
+            rest_api_id: rest_api_id.into(),
+            stage_name: stage_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Requests Amazon API Gateway to flush a stage's cache.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct FlushStageCacheRequest {
@@ -1016,7 +2298,33 @@ pub struct FlushStageCacheRequest {
     #[serde(rename="stageName")]
     pub stage_name: String,
 }
-
+impl FlushStageCacheRequest {
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FlushStageCacheRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `stage_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FlushStageCacheRequest.stage_name = value.into();`.
+    pub fn stage_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stage_name = value.into();
+        self
+    }
+    /// Returns a new instance of FlushStageCacheRequest with optional fields set to `None`.
+    pub fn new<restApiIdType: Into<String>, stageNameType: Into<String>>
+        (rest_api_id: restApiIdType,
+         stage_name: stageNameType)
+         -> FlushStageCacheRequest {
+        FlushStageCacheRequest {
+            rest_api_id: rest_api_id.into(),
+            stage_name: stage_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A gateway response of a given response type and status code, with optional response parameters and mapping templates.</p> <div class=\"remarks\"> For more information about valid gateway response types, see <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/supported-gateway-response-types.html\">Gateway Response Types Supported by Amazon API Gateway</a> <div class=\"example\"> <h4>Example: Get a Gateway Response of a given response type</h4> <h5>Request</h5> <p>This example shows how to get a gateway response of the <code>MISSING_AUTHNETICATION_TOKEN</code> type.</p> <pre><code>GET /restapis/o81lxisefl/gatewayresponses/MISSING_AUTHENTICATION_TOKEN HTTP/1.1 Host: beta-apigateway.us-east-1.amazonaws.com Content-Type: application/json X-Amz-Date: 20170503T202516Z Authorization: AWS4-HMAC-SHA256 Credential={access-key-id}/20170503/us-east-1/apigateway/aws4_request, SignedHeaders=content-type;host;x-amz-date, Signature=1b52460e3159c1a26cff29093855d50ea141c1c5b937528fecaf60f51129697a Cache-Control: no-cache Postman-Token: 3b2a1ce9-c848-2e26-2e2f-9c2caefbed45 </code></pre> <p>The response type is specified as a URL path.</p> <h5>Response</h5> <p>The successful operation returns the <code>200 OK</code> status code and a payload similar to the following:</p> <pre><code>{ \"_links\": { \"curies\": { \"href\": \"http://docs.aws.amazon.com/apigateway/latest/developerguide/restapi-gatewayresponse-{rel}.html\", \"name\": \"gatewayresponse\", \"templated\": true }, \"self\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/MISSING_AUTHENTICATION_TOKEN\" }, \"gatewayresponse:delete\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/MISSING_AUTHENTICATION_TOKEN\" }, \"gatewayresponse:put\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/{response_type}\", \"templated\": true }, \"gatewayresponse:update\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/MISSING_AUTHENTICATION_TOKEN\" } }, \"defaultResponse\": false, \"responseParameters\": { \"gatewayresponse.header.x-request-path\": \"method.request.path.petId\", \"gatewayresponse.header.Access-Control-Allow-Origin\": \"&apos;a.b.c&apos;\", \"gatewayresponse.header.x-request-query\": \"method.request.querystring.q\", \"gatewayresponse.header.x-request-header\": \"method.request.header.Accept\" }, \"responseTemplates\": { \"application/json\": \"{\\n \\\"message\\\": $context.error.messageString,\\n \\\"type\\\": \\\"$context.error.responseType\\\",\\n \\\"stage\\\": \\\"$context.stage\\\",\\n \\\"resourcePath\\\": \\\"$context.resourcePath\\\",\\n \\\"stageVariables.a\\\": \\\"$stageVariables.a\\\",\\n \\\"statusCode\\\": \\\"&apos;404&apos;\\\"\\n}\" }, \"responseType\": \"MISSING_AUTHENTICATION_TOKEN\", \"statusCode\": \"404\" }</code></pre> <p></p> </div> </div> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/customize-gateway-responses.html\">Customize Gateway Responses</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GatewayResponse {
@@ -1041,7 +2349,6 @@ pub struct GatewayResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status_code: Option<String>,
 }
-
 #[doc="<p>The collection of the <a>GatewayResponse</a> instances of a <a>RestApi</a> as a <code>responseType</code>-to-<a>GatewayResponse</a> object map of key-value pairs. As such, pagination is not supported for querying this collection.</p> <div class=\"remarks\"> For more information about valid gateway response types, see <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/supported-gateway-response-types.html\">Gateway Response Types Supported by Amazon API Gateway</a> <div class=\"example\"> <h4>Example: Get the collection of gateway responses of an API</h4> <h5>Request</h5> <p>This example request shows how to retrieve the <a>GatewayResponses</a> collection from an API.</p> <pre><code>GET /restapis/o81lxisefl/gatewayresponses HTTP/1.1 Host: beta-apigateway.us-east-1.amazonaws.com Content-Type: application/json X-Amz-Date: 20170503T220604Z Authorization: AWS4-HMAC-SHA256 Credential={access-key-id}/20170503/us-east-1/apigateway/aws4_request, SignedHeaders=content-type;host;x-amz-date, Signature=59b42fe54a76a5de8adf2c67baa6d39206f8e9ad49a1d77ccc6a5da3103a398a Cache-Control: no-cache Postman-Token: 5637af27-dc29-fc5c-9dfe-0645d52cb515 </code></pre> <p></p> <h5>Response</h5> <p>The successful operation returns the <code>200 OK</code> status code and a payload similar to the following:</p> <pre><code>{ \"_links\": { \"curies\": { \"href\": \"http://docs.aws.amazon.com/apigateway/latest/developerguide/restapi-gatewayresponse-{rel}.html\", \"name\": \"gatewayresponse\", \"templated\": true }, \"self\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses\" }, \"first\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses\" }, \"gatewayresponse:by-type\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/{response_type}\", \"templated\": true }, \"item\": [ { \"href\": \"/restapis/o81lxisefl/gatewayresponses/INTEGRATION_FAILURE\" }, { \"href\": \"/restapis/o81lxisefl/gatewayresponses/RESOURCE_NOT_FOUND\" }, { \"href\": \"/restapis/o81lxisefl/gatewayresponses/REQUEST_TOO_LARGE\" }, { \"href\": \"/restapis/o81lxisefl/gatewayresponses/THROTTLED\" }, { \"href\": \"/restapis/o81lxisefl/gatewayresponses/UNSUPPORTED_MEDIA_TYPE\" }, { \"href\": \"/restapis/o81lxisefl/gatewayresponses/AUTHORIZER_CONFIGURATION_ERROR\" }, { \"href\": \"/restapis/o81lxisefl/gatewayresponses/DEFAULT_5XX\" }, { \"href\": \"/restapis/o81lxisefl/gatewayresponses/DEFAULT_4XX\" }, { \"href\": \"/restapis/o81lxisefl/gatewayresponses/BAD_REQUEST_PARAMETERS\" }, { \"href\": \"/restapis/o81lxisefl/gatewayresponses/BAD_REQUEST_BODY\" }, { \"href\": \"/restapis/o81lxisefl/gatewayresponses/EXPIRED_TOKEN\" }, { \"href\": \"/restapis/o81lxisefl/gatewayresponses/ACCESS_DENIED\" }, { \"href\": \"/restapis/o81lxisefl/gatewayresponses/INVALID_API_KEY\" }, { \"href\": \"/restapis/o81lxisefl/gatewayresponses/UNAUTHORIZED\" }, { \"href\": \"/restapis/o81lxisefl/gatewayresponses/API_CONFIGURATION_ERROR\" }, { \"href\": \"/restapis/o81lxisefl/gatewayresponses/QUOTA_EXCEEDED\" }, { \"href\": \"/restapis/o81lxisefl/gatewayresponses/INTEGRATION_TIMEOUT\" }, { \"href\": \"/restapis/o81lxisefl/gatewayresponses/MISSING_AUTHENTICATION_TOKEN\" }, { \"href\": \"/restapis/o81lxisefl/gatewayresponses/INVALID_SIGNATURE\" }, { \"href\": \"/restapis/o81lxisefl/gatewayresponses/AUTHORIZER_FAILURE\" } ] }, \"_embedded\": { \"item\": [ { \"_links\": { \"self\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/INTEGRATION_FAILURE\" }, \"gatewayresponse:put\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/{response_type}\", \"templated\": true }, \"gatewayresponse:update\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/INTEGRATION_FAILURE\" } }, \"defaultResponse\": true, \"responseParameters\": {}, \"responseTemplates\": { \"application/json\": \"{\\\"message\\\":$context.error.messageString}\" }, \"responseType\": \"INTEGRATION_FAILURE\", \"statusCode\": \"504\" }, { \"_links\": { \"self\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/RESOURCE_NOT_FOUND\" }, \"gatewayresponse:put\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/{response_type}\", \"templated\": true }, \"gatewayresponse:update\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/RESOURCE_NOT_FOUND\" } }, \"defaultResponse\": true, \"responseParameters\": {}, \"responseTemplates\": { \"application/json\": \"{\\\"message\\\":$context.error.messageString}\" }, \"responseType\": \"RESOURCE_NOT_FOUND\", \"statusCode\": \"404\" }, { \"_links\": { \"self\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/REQUEST_TOO_LARGE\" }, \"gatewayresponse:put\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/{response_type}\", \"templated\": true }, \"gatewayresponse:update\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/REQUEST_TOO_LARGE\" } }, \"defaultResponse\": true, \"responseParameters\": {}, \"responseTemplates\": { \"application/json\": \"{\\\"message\\\":$context.error.messageString}\" }, \"responseType\": \"REQUEST_TOO_LARGE\", \"statusCode\": \"413\" }, { \"_links\": { \"self\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/THROTTLED\" }, \"gatewayresponse:put\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/{response_type}\", \"templated\": true }, \"gatewayresponse:update\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/THROTTLED\" } }, \"defaultResponse\": true, \"responseParameters\": {}, \"responseTemplates\": { \"application/json\": \"{\\\"message\\\":$context.error.messageString}\" }, \"responseType\": \"THROTTLED\", \"statusCode\": \"429\" }, { \"_links\": { \"self\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/UNSUPPORTED_MEDIA_TYPE\" }, \"gatewayresponse:put\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/{response_type}\", \"templated\": true }, \"gatewayresponse:update\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/UNSUPPORTED_MEDIA_TYPE\" } }, \"defaultResponse\": true, \"responseParameters\": {}, \"responseTemplates\": { \"application/json\": \"{\\\"message\\\":$context.error.messageString}\" }, \"responseType\": \"UNSUPPORTED_MEDIA_TYPE\", \"statusCode\": \"415\" }, { \"_links\": { \"self\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/AUTHORIZER_CONFIGURATION_ERROR\" }, \"gatewayresponse:put\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/{response_type}\", \"templated\": true }, \"gatewayresponse:update\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/AUTHORIZER_CONFIGURATION_ERROR\" } }, \"defaultResponse\": true, \"responseParameters\": {}, \"responseTemplates\": { \"application/json\": \"{\\\"message\\\":$context.error.messageString}\" }, \"responseType\": \"AUTHORIZER_CONFIGURATION_ERROR\", \"statusCode\": \"500\" }, { \"_links\": { \"self\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/DEFAULT_5XX\" }, \"gatewayresponse:put\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/{response_type}\", \"templated\": true }, \"gatewayresponse:update\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/DEFAULT_5XX\" } }, \"defaultResponse\": true, \"responseParameters\": {}, \"responseTemplates\": { \"application/json\": \"{\\\"message\\\":$context.error.messageString}\" }, \"responseType\": \"DEFAULT_5XX\" }, { \"_links\": { \"self\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/DEFAULT_4XX\" }, \"gatewayresponse:put\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/{response_type}\", \"templated\": true }, \"gatewayresponse:update\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/DEFAULT_4XX\" } }, \"defaultResponse\": true, \"responseParameters\": {}, \"responseTemplates\": { \"application/json\": \"{\\\"message\\\":$context.error.messageString}\" }, \"responseType\": \"DEFAULT_4XX\" }, { \"_links\": { \"self\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/BAD_REQUEST_PARAMETERS\" }, \"gatewayresponse:put\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/{response_type}\", \"templated\": true }, \"gatewayresponse:update\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/BAD_REQUEST_PARAMETERS\" } }, \"defaultResponse\": true, \"responseParameters\": {}, \"responseTemplates\": { \"application/json\": \"{\\\"message\\\":$context.error.messageString}\" }, \"responseType\": \"BAD_REQUEST_PARAMETERS\", \"statusCode\": \"400\" }, { \"_links\": { \"self\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/BAD_REQUEST_BODY\" }, \"gatewayresponse:put\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/{response_type}\", \"templated\": true }, \"gatewayresponse:update\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/BAD_REQUEST_BODY\" } }, \"defaultResponse\": true, \"responseParameters\": {}, \"responseTemplates\": { \"application/json\": \"{\\\"message\\\":$context.error.messageString}\" }, \"responseType\": \"BAD_REQUEST_BODY\", \"statusCode\": \"400\" }, { \"_links\": { \"self\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/EXPIRED_TOKEN\" }, \"gatewayresponse:put\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/{response_type}\", \"templated\": true }, \"gatewayresponse:update\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/EXPIRED_TOKEN\" } }, \"defaultResponse\": true, \"responseParameters\": {}, \"responseTemplates\": { \"application/json\": \"{\\\"message\\\":$context.error.messageString}\" }, \"responseType\": \"EXPIRED_TOKEN\", \"statusCode\": \"403\" }, { \"_links\": { \"self\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/ACCESS_DENIED\" }, \"gatewayresponse:put\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/{response_type}\", \"templated\": true }, \"gatewayresponse:update\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/ACCESS_DENIED\" } }, \"defaultResponse\": true, \"responseParameters\": {}, \"responseTemplates\": { \"application/json\": \"{\\\"message\\\":$context.error.messageString}\" }, \"responseType\": \"ACCESS_DENIED\", \"statusCode\": \"403\" }, { \"_links\": { \"self\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/INVALID_API_KEY\" }, \"gatewayresponse:put\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/{response_type}\", \"templated\": true }, \"gatewayresponse:update\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/INVALID_API_KEY\" } }, \"defaultResponse\": true, \"responseParameters\": {}, \"responseTemplates\": { \"application/json\": \"{\\\"message\\\":$context.error.messageString}\" }, \"responseType\": \"INVALID_API_KEY\", \"statusCode\": \"403\" }, { \"_links\": { \"self\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/UNAUTHORIZED\" }, \"gatewayresponse:put\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/{response_type}\", \"templated\": true }, \"gatewayresponse:update\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/UNAUTHORIZED\" } }, \"defaultResponse\": true, \"responseParameters\": {}, \"responseTemplates\": { \"application/json\": \"{\\\"message\\\":$context.error.messageString}\" }, \"responseType\": \"UNAUTHORIZED\", \"statusCode\": \"401\" }, { \"_links\": { \"self\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/API_CONFIGURATION_ERROR\" }, \"gatewayresponse:put\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/{response_type}\", \"templated\": true }, \"gatewayresponse:update\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/API_CONFIGURATION_ERROR\" } }, \"defaultResponse\": true, \"responseParameters\": {}, \"responseTemplates\": { \"application/json\": \"{\\\"message\\\":$context.error.messageString}\" }, \"responseType\": \"API_CONFIGURATION_ERROR\", \"statusCode\": \"500\" }, { \"_links\": { \"self\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/QUOTA_EXCEEDED\" }, \"gatewayresponse:put\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/{response_type}\", \"templated\": true }, \"gatewayresponse:update\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/QUOTA_EXCEEDED\" } }, \"defaultResponse\": true, \"responseParameters\": {}, \"responseTemplates\": { \"application/json\": \"{\\\"message\\\":$context.error.messageString}\" }, \"responseType\": \"QUOTA_EXCEEDED\", \"statusCode\": \"429\" }, { \"_links\": { \"self\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/INTEGRATION_TIMEOUT\" }, \"gatewayresponse:put\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/{response_type}\", \"templated\": true }, \"gatewayresponse:update\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/INTEGRATION_TIMEOUT\" } }, \"defaultResponse\": true, \"responseParameters\": {}, \"responseTemplates\": { \"application/json\": \"{\\\"message\\\":$context.error.messageString}\" }, \"responseType\": \"INTEGRATION_TIMEOUT\", \"statusCode\": \"504\" }, { \"_links\": { \"self\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/MISSING_AUTHENTICATION_TOKEN\" }, \"gatewayresponse:put\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/{response_type}\", \"templated\": true }, \"gatewayresponse:update\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/MISSING_AUTHENTICATION_TOKEN\" } }, \"defaultResponse\": true, \"responseParameters\": {}, \"responseTemplates\": { \"application/json\": \"{\\\"message\\\":$context.error.messageString}\" }, \"responseType\": \"MISSING_AUTHENTICATION_TOKEN\", \"statusCode\": \"403\" }, { \"_links\": { \"self\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/INVALID_SIGNATURE\" }, \"gatewayresponse:put\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/{response_type}\", \"templated\": true }, \"gatewayresponse:update\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/INVALID_SIGNATURE\" } }, \"defaultResponse\": true, \"responseParameters\": {}, \"responseTemplates\": { \"application/json\": \"{\\\"message\\\":$context.error.messageString}\" }, \"responseType\": \"INVALID_SIGNATURE\", \"statusCode\": \"403\" }, { \"_links\": { \"self\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/AUTHORIZER_FAILURE\" }, \"gatewayresponse:put\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/{response_type}\", \"templated\": true }, \"gatewayresponse:update\": { \"href\": \"/restapis/o81lxisefl/gatewayresponses/AUTHORIZER_FAILURE\" } }, \"defaultResponse\": true, \"responseParameters\": {}, \"responseTemplates\": { \"application/json\": \"{\\\"message\\\":$context.error.messageString}\" }, \"responseType\": \"AUTHORIZER_FAILURE\", \"statusCode\": \"500\" } ] } }</code></pre> <p></p> </div> </div> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/customize-gateway-responses.html\">Customize Gateway Responses</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GatewayResponses {
@@ -1053,7 +2360,6 @@ pub struct GatewayResponses {
     #[serde(skip_serializing_if="Option::is_none")]
     pub position: Option<String>,
 }
-
 #[doc="<p>A request to generate a <a>ClientCertificate</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GenerateClientCertificateRequest {
@@ -1062,7 +2368,19 @@ pub struct GenerateClientCertificateRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub description: Option<String>,
 }
-
+impl GenerateClientCertificateRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GenerateClientCertificateRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GenerateClientCertificateRequest with optional fields set to `None`.
+    pub fn new() -> GenerateClientCertificateRequest {
+        GenerateClientCertificateRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Requests Amazon API Gateway to get information about the current <a>Account</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetAccountRequest;
@@ -1078,7 +2396,29 @@ pub struct GetApiKeyRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub include_value: Option<bool>,
 }
-
+impl GetApiKeyRequest {
+    /// Sets `api_key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetApiKeyRequest.api_key = value.into();`.
+    pub fn api_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.api_key = value.into();
+        self
+    }
+    /// Sets `include_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetApiKeyRequest.include_value = Some(value.into());`.
+    pub fn include_value<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.include_value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetApiKeyRequest with optional fields set to `None`.
+    pub fn new<apiKeyType: Into<String>>(api_key: apiKeyType) -> GetApiKeyRequest {
+        GetApiKeyRequest {
+            api_key: api_key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A request to get information about the current <a>ApiKeys</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetApiKeysRequest {
@@ -1103,7 +2443,47 @@ pub struct GetApiKeysRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub position: Option<String>,
 }
-
+impl GetApiKeysRequest {
+    /// Sets `customer_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetApiKeysRequest.customer_id = Some(value.into());`.
+    pub fn customer_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.customer_id = Some(value.into());
+        self
+    }
+    /// Sets `include_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetApiKeysRequest.include_values = Some(value.into());`.
+    pub fn include_values<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.include_values = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetApiKeysRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `name_query`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetApiKeysRequest.name_query = Some(value.into());`.
+    pub fn name_query<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name_query = Some(value.into());
+        self
+    }
+    /// Sets `position`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetApiKeysRequest.position = Some(value.into());`.
+    pub fn position<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.position = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetApiKeysRequest with optional fields set to `None`.
+    pub fn new() -> GetApiKeysRequest {
+        GetApiKeysRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Request to describe an existing <a>Authorizer</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetAuthorizerRequest {
@@ -1114,7 +2494,33 @@ pub struct GetAuthorizerRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl GetAuthorizerRequest {
+    /// Sets `authorizer_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetAuthorizerRequest.authorizer_id = value.into();`.
+    pub fn authorizer_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.authorizer_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetAuthorizerRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetAuthorizerRequest with optional fields set to `None`.
+    pub fn new<authorizerIdType: Into<String>, restApiIdType: Into<String>>
+        (authorizer_id: authorizerIdType,
+         rest_api_id: restApiIdType)
+         -> GetAuthorizerRequest {
+        GetAuthorizerRequest {
+            authorizer_id: authorizer_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to describe an existing <a>Authorizers</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetAuthorizersRequest {
@@ -1130,7 +2536,36 @@ pub struct GetAuthorizersRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl GetAuthorizersRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetAuthorizersRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `position`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetAuthorizersRequest.position = Some(value.into());`.
+    pub fn position<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.position = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetAuthorizersRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetAuthorizersRequest with optional fields set to `None`.
+    pub fn new<restApiIdType: Into<String>>(rest_api_id: restApiIdType) -> GetAuthorizersRequest {
+        GetAuthorizersRequest {
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to describe a <a>BasePathMapping</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetBasePathMappingRequest {
@@ -1141,7 +2576,33 @@ pub struct GetBasePathMappingRequest {
     #[serde(rename="domainName")]
     pub domain_name: String,
 }
-
+impl GetBasePathMappingRequest {
+    /// Sets `base_path`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBasePathMappingRequest.base_path = value.into();`.
+    pub fn base_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.base_path = value.into();
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBasePathMappingRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetBasePathMappingRequest with optional fields set to `None`.
+    pub fn new<basePathType: Into<String>, domainNameType: Into<String>>
+        (base_path: basePathType,
+         domain_name: domainNameType)
+         -> GetBasePathMappingRequest {
+        GetBasePathMappingRequest {
+            base_path: base_path.into(),
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A request to get information about a collection of <a>BasePathMapping</a> resources.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetBasePathMappingsRequest {
@@ -1157,7 +2618,37 @@ pub struct GetBasePathMappingsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub position: Option<String>,
 }
-
+impl GetBasePathMappingsRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBasePathMappingsRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBasePathMappingsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `position`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBasePathMappingsRequest.position = Some(value.into());`.
+    pub fn position<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.position = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetBasePathMappingsRequest with optional fields set to `None`.
+    pub fn new<domainNameType: Into<String>>(domain_name: domainNameType)
+                                             -> GetBasePathMappingsRequest {
+        GetBasePathMappingsRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A request to get information about the current <a>ClientCertificate</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetClientCertificateRequest {
@@ -1165,7 +2656,22 @@ pub struct GetClientCertificateRequest {
     #[serde(rename="clientCertificateId")]
     pub client_certificate_id: String,
 }
-
+impl GetClientCertificateRequest {
+    /// Sets `client_certificate_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetClientCertificateRequest.client_certificate_id = value.into();`.
+    pub fn client_certificate_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_certificate_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetClientCertificateRequest with optional fields set to `None`.
+pub fn new<clientCertificateIdType: Into<String>>(client_certificate_id: clientCertificateIdType) -> GetClientCertificateRequest{
+        GetClientCertificateRequest {
+            client_certificate_id: client_certificate_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A request to get information about a collection of <a>ClientCertificate</a> resources.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetClientCertificatesRequest {
@@ -1178,7 +2684,26 @@ pub struct GetClientCertificatesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub position: Option<String>,
 }
-
+impl GetClientCertificatesRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetClientCertificatesRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `position`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetClientCertificatesRequest.position = Some(value.into());`.
+    pub fn position<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.position = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetClientCertificatesRequest with optional fields set to `None`.
+    pub fn new() -> GetClientCertificatesRequest {
+        GetClientCertificatesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Requests Amazon API Gateway to get information about a <a>Deployment</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDeploymentRequest {
@@ -1193,7 +2718,40 @@ pub struct GetDeploymentRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl GetDeploymentRequest {
+    /// Sets `deployment_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDeploymentRequest.deployment_id = value.into();`.
+    pub fn deployment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_id = value.into();
+        self
+    }
+    /// Sets `embed`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDeploymentRequest.embed = Some(value.into());`.
+    pub fn embed<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.embed = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDeploymentRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetDeploymentRequest with optional fields set to `None`.
+    pub fn new<deploymentIdType: Into<String>, restApiIdType: Into<String>>
+        (deployment_id: deploymentIdType,
+         rest_api_id: restApiIdType)
+         -> GetDeploymentRequest {
+        GetDeploymentRequest {
+            deployment_id: deployment_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Requests Amazon API Gateway to get information about a <a>Deployments</a> collection.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDeploymentsRequest {
@@ -1209,7 +2767,36 @@ pub struct GetDeploymentsRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl GetDeploymentsRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDeploymentsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `position`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDeploymentsRequest.position = Some(value.into());`.
+    pub fn position<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.position = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDeploymentsRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetDeploymentsRequest with optional fields set to `None`.
+    pub fn new<restApiIdType: Into<String>>(rest_api_id: restApiIdType) -> GetDeploymentsRequest {
+        GetDeploymentsRequest {
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Gets a specified documentation part of a given API.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDocumentationPartRequest {
@@ -1220,7 +2807,33 @@ pub struct GetDocumentationPartRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl GetDocumentationPartRequest {
+    /// Sets `documentation_part_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDocumentationPartRequest.documentation_part_id = value.into();`.
+    pub fn documentation_part_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.documentation_part_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDocumentationPartRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetDocumentationPartRequest with optional fields set to `None`.
+    pub fn new<documentationPartIdType: Into<String>, restApiIdType: Into<String>>
+        (documentation_part_id: documentationPartIdType,
+         rest_api_id: restApiIdType)
+         -> GetDocumentationPartRequest {
+        GetDocumentationPartRequest {
+            documentation_part_id: documentation_part_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Gets the documentation parts of an API. The result may be filtered by the type, name, or path of API entities (targets).</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDocumentationPartsRequest {
@@ -1248,7 +2861,58 @@ pub struct GetDocumentationPartsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
+impl GetDocumentationPartsRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDocumentationPartsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `name_query`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDocumentationPartsRequest.name_query = Some(value.into());`.
+    pub fn name_query<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name_query = Some(value.into());
+        self
+    }
+    /// Sets `path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDocumentationPartsRequest.path = Some(value.into());`.
+    pub fn path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path = Some(value.into());
+        self
+    }
+    /// Sets `position`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDocumentationPartsRequest.position = Some(value.into());`.
+    pub fn position<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.position = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDocumentationPartsRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDocumentationPartsRequest.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetDocumentationPartsRequest with optional fields set to `None`.
+    pub fn new<restApiIdType: Into<String>>(rest_api_id: restApiIdType)
+                                            -> GetDocumentationPartsRequest {
+        GetDocumentationPartsRequest {
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Gets a documentation snapshot of an API.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDocumentationVersionRequest {
@@ -1259,7 +2923,33 @@ pub struct GetDocumentationVersionRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl GetDocumentationVersionRequest {
+    /// Sets `documentation_version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDocumentationVersionRequest.documentation_version = value.into();`.
+    pub fn documentation_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.documentation_version = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDocumentationVersionRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetDocumentationVersionRequest with optional fields set to `None`.
+    pub fn new<documentationVersionType: Into<String>, restApiIdType: Into<String>>
+        (documentation_version: documentationVersionType,
+         rest_api_id: restApiIdType)
+         -> GetDocumentationVersionRequest {
+        GetDocumentationVersionRequest {
+            documentation_version: documentation_version.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Gets the documentation versions of an API.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDocumentationVersionsRequest {
@@ -1275,7 +2965,37 @@ pub struct GetDocumentationVersionsRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl GetDocumentationVersionsRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDocumentationVersionsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `position`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDocumentationVersionsRequest.position = Some(value.into());`.
+    pub fn position<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.position = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDocumentationVersionsRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetDocumentationVersionsRequest with optional fields set to `None`.
+    pub fn new<restApiIdType: Into<String>>(rest_api_id: restApiIdType)
+                                            -> GetDocumentationVersionsRequest {
+        GetDocumentationVersionsRequest {
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to get the name of a <a>DomainName</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDomainNameRequest {
@@ -1283,7 +3003,22 @@ pub struct GetDomainNameRequest {
     #[serde(rename="domainName")]
     pub domain_name: String,
 }
-
+impl GetDomainNameRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDomainNameRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetDomainNameRequest with optional fields set to `None`.
+    pub fn new<domainNameType: Into<String>>(domain_name: domainNameType) -> GetDomainNameRequest {
+        GetDomainNameRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to describe a collection of <a>DomainName</a> resources.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDomainNamesRequest {
@@ -1296,7 +3031,26 @@ pub struct GetDomainNamesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub position: Option<String>,
 }
-
+impl GetDomainNamesRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDomainNamesRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `position`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDomainNamesRequest.position = Some(value.into());`.
+    pub fn position<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.position = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetDomainNamesRequest with optional fields set to `None`.
+    pub fn new() -> GetDomainNamesRequest {
+        GetDomainNamesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Request a new export of a <a>RestApi</a> for a particular <a>Stage</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetExportRequest {
@@ -1318,7 +3072,58 @@ pub struct GetExportRequest {
     #[serde(rename="stageName")]
     pub stage_name: String,
 }
-
+impl GetExportRequest {
+    /// Sets `accepts`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetExportRequest.accepts = Some(value.into());`.
+    pub fn accepts<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accepts = Some(value.into());
+        self
+    }
+    /// Sets `export_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetExportRequest.export_type = value.into();`.
+    pub fn export_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.export_type = value.into();
+        self
+    }
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetExportRequest.parameters = Some(value.into());`.
+pub fn parameters<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetExportRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `stage_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetExportRequest.stage_name = value.into();`.
+    pub fn stage_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stage_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetExportRequest with optional fields set to `None`.
+    pub fn new<exportTypeType: Into<String>,
+               restApiIdType: Into<String>,
+               stageNameType: Into<String>>
+        (export_type: exportTypeType,
+         rest_api_id: restApiIdType,
+         stage_name: stageNameType)
+         -> GetExportRequest {
+        GetExportRequest {
+            export_type: export_type.into(),
+            rest_api_id: rest_api_id.into(),
+            stage_name: stage_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Gets a <a>GatewayResponse</a> of a specified response type on the given <a>RestApi</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetGatewayResponseRequest {
@@ -1329,7 +3134,33 @@ pub struct GetGatewayResponseRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl GetGatewayResponseRequest {
+    /// Sets `response_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetGatewayResponseRequest.response_type = value.into();`.
+    pub fn response_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.response_type = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetGatewayResponseRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetGatewayResponseRequest with optional fields set to `None`.
+    pub fn new<responseTypeType: Into<String>, restApiIdType: Into<String>>
+        (response_type: responseTypeType,
+         rest_api_id: restApiIdType)
+         -> GetGatewayResponseRequest {
+        GetGatewayResponseRequest {
+            response_type: response_type.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Gets the <a>GatewayResponses</a> collection on the given <a>RestApi</a>. If an API developer has not added any definitions for gateway responses, the result will be the Amazon API Gateway-generated default <a>GatewayResponses</a> collection for the supported response types.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetGatewayResponsesRequest {
@@ -1345,7 +3176,37 @@ pub struct GetGatewayResponsesRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl GetGatewayResponsesRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetGatewayResponsesRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `position`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetGatewayResponsesRequest.position = Some(value.into());`.
+    pub fn position<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.position = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetGatewayResponsesRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetGatewayResponsesRequest with optional fields set to `None`.
+    pub fn new<restApiIdType: Into<String>>(rest_api_id: restApiIdType)
+                                            -> GetGatewayResponsesRequest {
+        GetGatewayResponsesRequest {
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents a get integration request.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetIntegrationRequest {
@@ -1359,7 +3220,44 @@ pub struct GetIntegrationRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl GetIntegrationRequest {
+    /// Sets `http_method`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetIntegrationRequest.http_method = value.into();`.
+    pub fn http_method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.http_method = value.into();
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetIntegrationRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetIntegrationRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetIntegrationRequest with optional fields set to `None`.
+    pub fn new<httpMethodType: Into<String>,
+               resourceIdType: Into<String>,
+               restApiIdType: Into<String>>
+        (http_method: httpMethodType,
+         resource_id: resourceIdType,
+         rest_api_id: restApiIdType)
+         -> GetIntegrationRequest {
+        GetIntegrationRequest {
+            http_method: http_method.into(),
+            resource_id: resource_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents a get integration response request.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetIntegrationResponseRequest {
@@ -1376,7 +3274,54 @@ pub struct GetIntegrationResponseRequest {
     #[serde(rename="statusCode")]
     pub status_code: String,
 }
-
+impl GetIntegrationResponseRequest {
+    /// Sets `http_method`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetIntegrationResponseRequest.http_method = value.into();`.
+    pub fn http_method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.http_method = value.into();
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetIntegrationResponseRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetIntegrationResponseRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `status_code`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetIntegrationResponseRequest.status_code = value.into();`.
+    pub fn status_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status_code = value.into();
+        self
+    }
+    /// Returns a new instance of GetIntegrationResponseRequest with optional fields set to `None`.
+    pub fn new<httpMethodType: Into<String>,
+               resourceIdType: Into<String>,
+               restApiIdType: Into<String>,
+               statusCodeType: Into<String>>
+        (http_method: httpMethodType,
+         resource_id: resourceIdType,
+         rest_api_id: restApiIdType,
+         status_code: statusCodeType)
+         -> GetIntegrationResponseRequest {
+        GetIntegrationResponseRequest {
+            http_method: http_method.into(),
+            resource_id: resource_id.into(),
+            rest_api_id: rest_api_id.into(),
+            status_code: status_code.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to describe an existing <a>Method</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetMethodRequest {
@@ -1390,7 +3335,44 @@ pub struct GetMethodRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl GetMethodRequest {
+    /// Sets `http_method`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMethodRequest.http_method = value.into();`.
+    pub fn http_method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.http_method = value.into();
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMethodRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMethodRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetMethodRequest with optional fields set to `None`.
+    pub fn new<httpMethodType: Into<String>,
+               resourceIdType: Into<String>,
+               restApiIdType: Into<String>>
+        (http_method: httpMethodType,
+         resource_id: resourceIdType,
+         rest_api_id: restApiIdType)
+         -> GetMethodRequest {
+        GetMethodRequest {
+            http_method: http_method.into(),
+            resource_id: resource_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to describe a <a>MethodResponse</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetMethodResponseRequest {
@@ -1407,7 +3389,54 @@ pub struct GetMethodResponseRequest {
     #[serde(rename="statusCode")]
     pub status_code: String,
 }
-
+impl GetMethodResponseRequest {
+    /// Sets `http_method`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMethodResponseRequest.http_method = value.into();`.
+    pub fn http_method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.http_method = value.into();
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMethodResponseRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMethodResponseRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `status_code`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMethodResponseRequest.status_code = value.into();`.
+    pub fn status_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status_code = value.into();
+        self
+    }
+    /// Returns a new instance of GetMethodResponseRequest with optional fields set to `None`.
+    pub fn new<httpMethodType: Into<String>,
+               resourceIdType: Into<String>,
+               restApiIdType: Into<String>,
+               statusCodeType: Into<String>>
+        (http_method: httpMethodType,
+         resource_id: resourceIdType,
+         rest_api_id: restApiIdType,
+         status_code: statusCodeType)
+         -> GetMethodResponseRequest {
+        GetMethodResponseRequest {
+            http_method: http_method.into(),
+            resource_id: resource_id.into(),
+            rest_api_id: rest_api_id.into(),
+            status_code: status_code.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to list information about a model in an existing <a>RestApi</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetModelRequest {
@@ -1422,7 +3451,37 @@ pub struct GetModelRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl GetModelRequest {
+    /// Sets `flatten`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetModelRequest.flatten = Some(value.into());`.
+    pub fn flatten<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.flatten = Some(value.into());
+        self
+    }
+    /// Sets `model_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetModelRequest.model_name = value.into();`.
+    pub fn model_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.model_name = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetModelRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetModelRequest with optional fields set to `None`.
+pub fn new<modelNameType: Into<String>, restApiIdType: Into<String>>(model_name: modelNameType, rest_api_id: restApiIdType) -> GetModelRequest{
+        GetModelRequest {
+            model_name: model_name.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to generate a sample mapping template used to transform the payload.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetModelTemplateRequest {
@@ -1433,7 +3492,33 @@ pub struct GetModelTemplateRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl GetModelTemplateRequest {
+    /// Sets `model_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetModelTemplateRequest.model_name = value.into();`.
+    pub fn model_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.model_name = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetModelTemplateRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetModelTemplateRequest with optional fields set to `None`.
+    pub fn new<modelNameType: Into<String>, restApiIdType: Into<String>>
+        (model_name: modelNameType,
+         rest_api_id: restApiIdType)
+         -> GetModelTemplateRequest {
+        GetModelTemplateRequest {
+            model_name: model_name.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to list existing <a>Models</a> defined for a <a>RestApi</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetModelsRequest {
@@ -1449,7 +3534,36 @@ pub struct GetModelsRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl GetModelsRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetModelsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `position`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetModelsRequest.position = Some(value.into());`.
+    pub fn position<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.position = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetModelsRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetModelsRequest with optional fields set to `None`.
+    pub fn new<restApiIdType: Into<String>>(rest_api_id: restApiIdType) -> GetModelsRequest {
+        GetModelsRequest {
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Gets a <a>RequestValidator</a> of a given <a>RestApi</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetRequestValidatorRequest {
@@ -1460,7 +3574,33 @@ pub struct GetRequestValidatorRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl GetRequestValidatorRequest {
+    /// Sets `request_validator_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRequestValidatorRequest.request_validator_id = value.into();`.
+    pub fn request_validator_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_validator_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRequestValidatorRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetRequestValidatorRequest with optional fields set to `None`.
+    pub fn new<requestValidatorIdType: Into<String>, restApiIdType: Into<String>>
+        (request_validator_id: requestValidatorIdType,
+         rest_api_id: restApiIdType)
+         -> GetRequestValidatorRequest {
+        GetRequestValidatorRequest {
+            request_validator_id: request_validator_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Gets the <a>RequestValidators</a> collection of a given <a>RestApi</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetRequestValidatorsRequest {
@@ -1476,7 +3616,37 @@ pub struct GetRequestValidatorsRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl GetRequestValidatorsRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRequestValidatorsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `position`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRequestValidatorsRequest.position = Some(value.into());`.
+    pub fn position<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.position = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRequestValidatorsRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetRequestValidatorsRequest with optional fields set to `None`.
+    pub fn new<restApiIdType: Into<String>>(rest_api_id: restApiIdType)
+                                            -> GetRequestValidatorsRequest {
+        GetRequestValidatorsRequest {
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to list information about a resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetResourceRequest {
@@ -1491,7 +3661,37 @@ pub struct GetResourceRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl GetResourceRequest {
+    /// Sets `embed`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetResourceRequest.embed = Some(value.into());`.
+    pub fn embed<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.embed = Some(value.into());
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetResourceRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetResourceRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetResourceRequest with optional fields set to `None`.
+pub fn new<resourceIdType: Into<String>, restApiIdType: Into<String>>(resource_id: resourceIdType, rest_api_id: restApiIdType) -> GetResourceRequest{
+        GetResourceRequest {
+            resource_id: resource_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to list information about a collection of resources.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetResourcesRequest {
@@ -1511,7 +3711,43 @@ pub struct GetResourcesRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl GetResourcesRequest {
+    /// Sets `embed`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetResourcesRequest.embed = Some(value.into());`.
+    pub fn embed<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.embed = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetResourcesRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `position`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetResourcesRequest.position = Some(value.into());`.
+    pub fn position<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.position = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetResourcesRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetResourcesRequest with optional fields set to `None`.
+    pub fn new<restApiIdType: Into<String>>(rest_api_id: restApiIdType) -> GetResourcesRequest {
+        GetResourcesRequest {
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The GET request to list an existing <a>RestApi</a> defined for your collection. </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetRestApiRequest {
@@ -1519,7 +3755,22 @@ pub struct GetRestApiRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl GetRestApiRequest {
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRestApiRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetRestApiRequest with optional fields set to `None`.
+    pub fn new<restApiIdType: Into<String>>(rest_api_id: restApiIdType) -> GetRestApiRequest {
+        GetRestApiRequest {
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The GET request to list existing <a>RestApis</a> defined for your collection.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetRestApisRequest {
@@ -1532,7 +3783,26 @@ pub struct GetRestApisRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub position: Option<String>,
 }
-
+impl GetRestApisRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRestApisRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `position`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRestApisRequest.position = Some(value.into());`.
+    pub fn position<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.position = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetRestApisRequest with optional fields set to `None`.
+    pub fn new() -> GetRestApisRequest {
+        GetRestApisRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Request a new generated client SDK for a <a>RestApi</a> and <a>Stage</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetSdkRequest {
@@ -1550,7 +3820,49 @@ pub struct GetSdkRequest {
     #[serde(rename="stageName")]
     pub stage_name: String,
 }
-
+impl GetSdkRequest {
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSdkRequest.parameters = Some(value.into());`.
+pub fn parameters<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSdkRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `sdk_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSdkRequest.sdk_type = value.into();`.
+    pub fn sdk_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sdk_type = value.into();
+        self
+    }
+    /// Sets `stage_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSdkRequest.stage_name = value.into();`.
+    pub fn stage_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stage_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetSdkRequest with optional fields set to `None`.
+    pub fn new<restApiIdType: Into<String>, sdkTypeType: Into<String>, stageNameType: Into<String>>
+        (rest_api_id: restApiIdType,
+         sdk_type: sdkTypeType,
+         stage_name: stageNameType)
+         -> GetSdkRequest {
+        GetSdkRequest {
+            rest_api_id: rest_api_id.into(),
+            sdk_type: sdk_type.into(),
+            stage_name: stage_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Get an <a>SdkType</a> instance.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetSdkTypeRequest {
@@ -1558,7 +3870,22 @@ pub struct GetSdkTypeRequest {
     #[serde(rename="id")]
     pub id: String,
 }
-
+impl GetSdkTypeRequest {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSdkTypeRequest.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of GetSdkTypeRequest with optional fields set to `None`.
+    pub fn new<idType: Into<String>>(id: idType) -> GetSdkTypeRequest {
+        GetSdkTypeRequest {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Get the <a>SdkTypes</a> collection.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetSdkTypesRequest {
@@ -1571,7 +3898,26 @@ pub struct GetSdkTypesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub position: Option<String>,
 }
-
+impl GetSdkTypesRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSdkTypesRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `position`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSdkTypesRequest.position = Some(value.into());`.
+    pub fn position<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.position = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetSdkTypesRequest with optional fields set to `None`.
+    pub fn new() -> GetSdkTypesRequest {
+        GetSdkTypesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Requests Amazon API Gateway to get information about a <a>Stage</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetStageRequest {
@@ -1582,7 +3928,30 @@ pub struct GetStageRequest {
     #[serde(rename="stageName")]
     pub stage_name: String,
 }
-
+impl GetStageRequest {
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetStageRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `stage_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetStageRequest.stage_name = value.into();`.
+    pub fn stage_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stage_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetStageRequest with optional fields set to `None`.
+pub fn new<restApiIdType: Into<String>, stageNameType: Into<String>>(rest_api_id: restApiIdType, stage_name: stageNameType) -> GetStageRequest{
+        GetStageRequest {
+            rest_api_id: rest_api_id.into(),
+            stage_name: stage_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Requests Amazon API Gateway to get information about one or more <a>Stage</a> resources.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetStagesRequest {
@@ -1594,7 +3963,29 @@ pub struct GetStagesRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl GetStagesRequest {
+    /// Sets `deployment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetStagesRequest.deployment_id = Some(value.into());`.
+    pub fn deployment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_id = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetStagesRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetStagesRequest with optional fields set to `None`.
+    pub fn new<restApiIdType: Into<String>>(rest_api_id: restApiIdType) -> GetStagesRequest {
+        GetStagesRequest {
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The GET request to get a usage plan key of a given key identifier.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetUsagePlanKeyRequest {
@@ -1605,7 +3996,33 @@ pub struct GetUsagePlanKeyRequest {
     #[serde(rename="usagePlanId")]
     pub usage_plan_id: String,
 }
-
+impl GetUsagePlanKeyRequest {
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUsagePlanKeyRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Sets `usage_plan_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUsagePlanKeyRequest.usage_plan_id = value.into();`.
+    pub fn usage_plan_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.usage_plan_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetUsagePlanKeyRequest with optional fields set to `None`.
+    pub fn new<keyIdType: Into<String>, usagePlanIdType: Into<String>>
+        (key_id: keyIdType,
+         usage_plan_id: usagePlanIdType)
+         -> GetUsagePlanKeyRequest {
+        GetUsagePlanKeyRequest {
+            key_id: key_id.into(),
+            usage_plan_id: usage_plan_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The GET request to get all the usage plan keys representing the API keys added to a specified usage plan.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetUsagePlanKeysRequest {
@@ -1625,7 +4042,44 @@ pub struct GetUsagePlanKeysRequest {
     #[serde(rename="usagePlanId")]
     pub usage_plan_id: String,
 }
-
+impl GetUsagePlanKeysRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUsagePlanKeysRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `name_query`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUsagePlanKeysRequest.name_query = Some(value.into());`.
+    pub fn name_query<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name_query = Some(value.into());
+        self
+    }
+    /// Sets `position`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUsagePlanKeysRequest.position = Some(value.into());`.
+    pub fn position<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.position = Some(value.into());
+        self
+    }
+    /// Sets `usage_plan_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUsagePlanKeysRequest.usage_plan_id = value.into();`.
+    pub fn usage_plan_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.usage_plan_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetUsagePlanKeysRequest with optional fields set to `None`.
+    pub fn new<usagePlanIdType: Into<String>>(usage_plan_id: usagePlanIdType)
+                                              -> GetUsagePlanKeysRequest {
+        GetUsagePlanKeysRequest {
+            usage_plan_id: usage_plan_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The GET request to get a usage plan of a given plan identifier.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetUsagePlanRequest {
@@ -1633,7 +4087,23 @@ pub struct GetUsagePlanRequest {
     #[serde(rename="usagePlanId")]
     pub usage_plan_id: String,
 }
-
+impl GetUsagePlanRequest {
+    /// Sets `usage_plan_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUsagePlanRequest.usage_plan_id = value.into();`.
+    pub fn usage_plan_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.usage_plan_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetUsagePlanRequest with optional fields set to `None`.
+    pub fn new<usagePlanIdType: Into<String>>(usage_plan_id: usagePlanIdType)
+                                              -> GetUsagePlanRequest {
+        GetUsagePlanRequest {
+            usage_plan_id: usage_plan_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The GET request to get all the usage plans of the caller's account.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetUsagePlansRequest {
@@ -1650,7 +4120,33 @@ pub struct GetUsagePlansRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub position: Option<String>,
 }
-
+impl GetUsagePlansRequest {
+    /// Sets `key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUsagePlansRequest.key_id = Some(value.into());`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUsagePlansRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `position`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUsagePlansRequest.position = Some(value.into());`.
+    pub fn position<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.position = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetUsagePlansRequest with optional fields set to `None`.
+    pub fn new() -> GetUsagePlansRequest {
+        GetUsagePlansRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The GET request to get the usage data of a usage plan in a specified time interval.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetUsageRequest {
@@ -1676,7 +4172,65 @@ pub struct GetUsageRequest {
     #[serde(rename="usagePlanId")]
     pub usage_plan_id: String,
 }
-
+impl GetUsageRequest {
+    /// Sets `end_date`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUsageRequest.end_date = value.into();`.
+    pub fn end_date<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.end_date = value.into();
+        self
+    }
+    /// Sets `key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUsageRequest.key_id = Some(value.into());`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUsageRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `position`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUsageRequest.position = Some(value.into());`.
+    pub fn position<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.position = Some(value.into());
+        self
+    }
+    /// Sets `start_date`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUsageRequest.start_date = value.into();`.
+    pub fn start_date<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_date = value.into();
+        self
+    }
+    /// Sets `usage_plan_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUsageRequest.usage_plan_id = value.into();`.
+    pub fn usage_plan_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.usage_plan_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetUsageRequest with optional fields set to `None`.
+    pub fn new<endDateType: Into<String>,
+               startDateType: Into<String>,
+               usagePlanIdType: Into<String>>
+        (end_date: endDateType,
+         start_date: startDateType,
+         usage_plan_id: usagePlanIdType)
+         -> GetUsageRequest {
+        GetUsageRequest {
+            end_date: end_date.into(),
+            start_date: start_date.into(),
+            usage_plan_id: usage_plan_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The POST request to import API keys from an external source, such as a CSV-formatted file.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ImportApiKeysRequest {
@@ -1696,7 +4250,39 @@ pub struct ImportApiKeysRequest {
     #[serde(rename="format")]
     pub format: String,
 }
-
+impl ImportApiKeysRequest {
+    /// Sets `body`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportApiKeysRequest.body = value.into();`.
+    pub fn body<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.body = value.into();
+        self
+    }
+    /// Sets `fail_on_warnings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportApiKeysRequest.fail_on_warnings = Some(value.into());`.
+    pub fn fail_on_warnings<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.fail_on_warnings = Some(value.into());
+        self
+    }
+    /// Sets `format`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportApiKeysRequest.format = value.into();`.
+    pub fn format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.format = value.into();
+        self
+    }
+    /// Returns a new instance of ImportApiKeysRequest with optional fields set to `None`.
+    pub fn new<bodyType: Into<Vec<u8>>, formatType: Into<String>>(body: bodyType,
+                                                                  format: formatType)
+                                                                  -> ImportApiKeysRequest {
+        ImportApiKeysRequest {
+            body: body.into(),
+            format: format.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Import documentation parts from an external (e.g., Swagger) definition file. </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ImportDocumentationPartsRequest {
@@ -1720,7 +4306,47 @@ pub struct ImportDocumentationPartsRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl ImportDocumentationPartsRequest {
+    /// Sets `body`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportDocumentationPartsRequest.body = value.into();`.
+    pub fn body<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.body = value.into();
+        self
+    }
+    /// Sets `fail_on_warnings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportDocumentationPartsRequest.fail_on_warnings = Some(value.into());`.
+    pub fn fail_on_warnings<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.fail_on_warnings = Some(value.into());
+        self
+    }
+    /// Sets `mode`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportDocumentationPartsRequest.mode = Some(value.into());`.
+    pub fn mode<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.mode = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportDocumentationPartsRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of ImportDocumentationPartsRequest with optional fields set to `None`.
+    pub fn new<bodyType: Into<Vec<u8>>, restApiIdType: Into<String>>
+        (body: bodyType,
+         rest_api_id: restApiIdType)
+         -> ImportDocumentationPartsRequest {
+        ImportDocumentationPartsRequest {
+            body: body.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A POST request to import an API to Amazon API Gateway using an input of an API definition file.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ImportRestApiRequest {
@@ -1741,7 +4367,36 @@ pub struct ImportRestApiRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub parameters: Option<::std::collections::HashMap<String, String>>,
 }
-
+impl ImportRestApiRequest {
+    /// Sets `body`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportRestApiRequest.body = value.into();`.
+    pub fn body<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.body = value.into();
+        self
+    }
+    /// Sets `fail_on_warnings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportRestApiRequest.fail_on_warnings = Some(value.into());`.
+    pub fn fail_on_warnings<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.fail_on_warnings = Some(value.into());
+        self
+    }
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportRestApiRequest.parameters = Some(value.into());`.
+pub fn parameters<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ImportRestApiRequest with optional fields set to `None`.
+    pub fn new<bodyType: Into<Vec<u8>>>(body: bodyType) -> ImportRestApiRequest {
+        ImportRestApiRequest {
+            body: body.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents an HTTP, HTTP_PROXY, AWS, AWS_PROXY, or Mock integration.</p> <div class=\"remarks\">In the API Gateway console, the built-in Lambda integration is an AWS integration.</div> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-create-api.html\">Creating an API</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Integration {
@@ -1790,7 +4445,6 @@ pub struct Integration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub uri: Option<String>,
 }
-
 #[doc="<p>Represents an integration response. The status code must map to an existing <a>MethodResponse</a>, and parameters and templates can be used to transform the back-end response.</p> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-create-api.html\">Creating an API</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct IntegrationResponse {
@@ -1815,7 +4469,6 @@ pub struct IntegrationResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status_code: Option<String>,
 }
-
 #[doc="<p> Represents a client-facing interface by which the client calls the API to access back-end resources. A <b>Method</b> resource is integrated with an <a>Integration</a> resource. Both consist of a request and one or more responses. The method request takes the client input that is passed to the back end through the integration request. A method response returns the output from the back end to the client through an integration response. A method request is embodied in a <b>Method</b> resource, whereas an integration request is embodied in an <a>Integration</a> resource. On the other hand, a method response is represented by a <a>MethodResponse</a> resource, whereas an integration response is represented by an <a>IntegrationResponse</a> resource. </p> <div class=\"remarks\"> <p/> <h4>Example: Retrive the GET method on a specified resource</h4> <h5>Request</h5> <p>The following example request retrieves the information about the GET method on an API resource (<code>3kzxbg5sa2</code>) of an API (<code>fugvjdxtri</code>). </p> <pre><code>GET /restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET HTTP/1.1 Content-Type: application/json Host: apigateway.us-east-1.amazonaws.com X-Amz-Date: 20160603T210259Z Authorization: AWS4-HMAC-SHA256 Credential={access_key_ID}/20160603/us-east-1/apigateway/aws4_request, SignedHeaders=content-type;host;x-amz-date, Signature={sig4_hash}</code></pre> <h5>Response</h5> <p>The successful response returns a <code>200 OK</code> status code and a payload similar to the following:</p> <pre><code>{ \"_links\": { \"curies\": [ { \"href\": \"http://docs.aws.amazon.com/apigateway/latest/developerguide/restapi-integration-{rel}.html\", \"name\": \"integration\", \"templated\": true }, { \"href\": \"http://docs.aws.amazon.com/apigateway/latest/developerguide/restapi-integration-response-{rel}.html\", \"name\": \"integrationresponse\", \"templated\": true }, { \"href\": \"http://docs.aws.amazon.com/apigateway/latest/developerguide/restapi-method-{rel}.html\", \"name\": \"method\", \"templated\": true }, { \"href\": \"http://docs.aws.amazon.com/apigateway/latest/developerguide/restapi-method-response-{rel}.html\", \"name\": \"methodresponse\", \"templated\": true } ], \"self\": { \"href\": \"/restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET\", \"name\": \"GET\", \"title\": \"GET\" }, \"integration:put\": { \"href\": \"/restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET/integration\" }, \"method:delete\": { \"href\": \"/restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET\" }, \"method:integration\": { \"href\": \"/restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET/integration\" }, \"method:responses\": { \"href\": \"/restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET/responses/200\", \"name\": \"200\", \"title\": \"200\" }, \"method:update\": { \"href\": \"/restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET\" }, \"methodresponse:put\": { \"href\": \"/restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET/responses/{status_code}\", \"templated\": true } }, \"apiKeyRequired\": true, \"authorizationType\": \"NONE\", \"httpMethod\": \"GET\", \"_embedded\": { \"method:integration\": { \"_links\": { \"self\": { \"href\": \"/restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET/integration\" }, \"integration:delete\": { \"href\": \"/restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET/integration\" }, \"integration:responses\": { \"href\": \"/restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET/integration/responses/200\", \"name\": \"200\", \"title\": \"200\" }, \"integration:update\": { \"href\": \"/restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET/integration\" }, \"integrationresponse:put\": { \"href\": \"/restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET/integration/responses/{status_code}\", \"templated\": true } }, \"cacheKeyParameters\": [], \"cacheNamespace\": \"3kzxbg5sa2\", \"credentials\": \"arn:aws:iam::123456789012:role/apigAwsProxyRole\", \"httpMethod\": \"POST\", \"passthroughBehavior\": \"WHEN_NO_MATCH\", \"requestParameters\": { \"integration.request.header.Content-Type\": \"'application/x-amz-json-1.1'\" }, \"requestTemplates\": { \"application/json\": \"{\\n}\" }, \"type\": \"AWS\", \"uri\": \"arn:aws:apigateway:us-east-1:kinesis:action/ListStreams\", \"_embedded\": { \"integration:responses\": { \"_links\": { \"self\": { \"href\": \"/restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET/integration/responses/200\", \"name\": \"200\", \"title\": \"200\" }, \"integrationresponse:delete\": { \"href\": \"/restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET/integration/responses/200\" }, \"integrationresponse:update\": { \"href\": \"/restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET/integration/responses/200\" } }, \"responseParameters\": { \"method.response.header.Content-Type\": \"'application/xml'\" }, \"responseTemplates\": { \"application/json\": \"$util.urlDecode(\\\"%3CkinesisStreams%3E%23foreach(%24stream%20in%20%24input.path(%27%24.StreamNames%27))%3Cstream%3E%3Cname%3E%24stream%3C%2Fname%3E%3C%2Fstream%3E%23end%3C%2FkinesisStreams%3E\\\")\" }, \"statusCode\": \"200\" } } }, \"method:responses\": { \"_links\": { \"self\": { \"href\": \"/restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET/responses/200\", \"name\": \"200\", \"title\": \"200\" }, \"methodresponse:delete\": { \"href\": \"/restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET/responses/200\" }, \"methodresponse:update\": { \"href\": \"/restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET/responses/200\" } }, \"responseModels\": { \"application/json\": \"Empty\" }, \"responseParameters\": { \"method.response.header.Content-Type\": false }, \"statusCode\": \"200\" } } }</code></pre> <p>In the example above, the response template for the <code>200 OK</code> response maps the JSON output from the <code>ListStreams</code> action in the back end to an XML output. The mapping template is URL-encoded as <code>%3CkinesisStreams%3E%23foreach(%24stream%20in%20%24input.path(%27%24.StreamNames%27))%3Cstream%3E%3Cname%3E%24stream%3C%2Fname%3E%3C%2Fstream%3E%23end%3C%2FkinesisStreams%3E</code> and the output is decoded using the <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html#util-templat-reference\">$util.urlDecode()</a> helper function.</p> </div> <div class=\"seeAlso\"> <a>MethodResponse</a>, <a>Integration</a>, <a>IntegrationResponse</a>, <a>Resource</a>, <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-method-settings.html\">Set up an API's method</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Method {
@@ -1860,7 +4513,6 @@ pub struct Method {
     #[serde(skip_serializing_if="Option::is_none")]
     pub request_validator_id: Option<String>,
 }
-
 #[doc="<p>Represents a method response of a given HTTP status code returned to the client. The method response is passed from the back end through the associated integration response that can be transformed using a mapping template. </p> <div class=\"remarks\"> <p/> <h4>Example: A <b>MethodResponse</b> instance of an API</h4> <h5>Request</h5> <p>The example request retrieves a <b>MethodResponse</b> of the 200 status code.</p> <pre><code>GET /restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET/responses/200 HTTP/1.1 Content-Type: application/json Host: apigateway.us-east-1.amazonaws.com X-Amz-Date: 20160603T222952Z Authorization: AWS4-HMAC-SHA256 Credential={access_key_ID}/20160603/us-east-1/apigateway/aws4_request, SignedHeaders=content-type;host;x-amz-date, Signature={sig4_hash}</code></pre> <h5>Response</h5> <p>The successful response returns <code>200 OK</code> status and a payload as follows:</p> <pre><code>{ \"_links\": { \"curies\": { \"href\": \"http://docs.aws.amazon.com/apigateway/latest/developerguide/restapi-method-response-{rel}.html\", \"name\": \"methodresponse\", \"templated\": true }, \"self\": { \"href\": \"/restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET/responses/200\", \"title\": \"200\" }, \"methodresponse:delete\": { \"href\": \"/restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET/responses/200\" }, \"methodresponse:update\": { \"href\": \"/restapis/fugvjdxtri/resources/3kzxbg5sa2/methods/GET/responses/200\" } }, \"responseModels\": { \"application/json\": \"Empty\" }, \"responseParameters\": { \"method.response.header.Content-Type\": false }, \"statusCode\": \"200\" }</code></pre> <p/> </div> <div class=\"seeAlso\"> <a>Method</a>, <a>IntegrationResponse</a>, <a>Integration</a> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-create-api.html\">Creating an API</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MethodResponse {
@@ -1877,7 +4529,6 @@ pub struct MethodResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status_code: Option<String>,
 }
-
 #[doc="<p>Specifies the method setting properties.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MethodSetting {
@@ -1922,7 +4573,6 @@ pub struct MethodSetting {
     #[serde(skip_serializing_if="Option::is_none")]
     pub unauthorized_cache_control_header_strategy: Option<String>,
 }
-
 #[doc="<p>Represents a summary of a <a>Method</a> resource, given a particular date and time.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MethodSnapshot {
@@ -1935,7 +4585,6 @@ pub struct MethodSnapshot {
     #[serde(skip_serializing_if="Option::is_none")]
     pub authorization_type: Option<String>,
 }
-
 #[doc="<p>Represents the data structure of a method's request or response payload.</p> <div class=\"remarks\"> <p>A request model defines the data structure of the client-supplied request payload. A response model defines the data structure of the response payload returned by the back end. Although not required, models are useful for mapping payloads between the front end and back end.</p> <p>A model is used for generating an API's SDK, validating the input request body, and creating a skeletal mapping template.</p> </div> <div class=\"seeAlso\"> <a>Method</a>, <a>MethodResponse</a>, <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/models-mappings.html\">Models and Mappings</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Model {
@@ -1960,7 +4609,6 @@ pub struct Model {
     #[serde(skip_serializing_if="Option::is_none")]
     pub schema: Option<String>,
 }
-
 #[doc="<p>Represents a collection of <a>Model</a> resources.</p> <div class=\"seeAlso\"> <a>Method</a>, <a>MethodResponse</a>, <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/models-mappings.html\">Models and Mappings</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Models {
@@ -1972,7 +4620,6 @@ pub struct Models {
     #[serde(skip_serializing_if="Option::is_none")]
     pub position: Option<String>,
 }
-
 #[doc="A single patch operation to apply to the specified resource. Please refer to http://tools.ietf.org/html/rfc6902#section-4 for an explanation of how each operation is used."]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PatchOperation {
@@ -1993,7 +4640,40 @@ pub struct PatchOperation {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl PatchOperation {
+    /// Sets `from`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PatchOperation.from = Some(value.into());`.
+    pub fn from<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.from = Some(value.into());
+        self
+    }
+    /// Sets `op`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PatchOperation.op = Some(value.into());`.
+    pub fn op<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.op = Some(value.into());
+        self
+    }
+    /// Sets `path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PatchOperation.path = Some(value.into());`.
+    pub fn path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PatchOperation.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PatchOperation with optional fields set to `None`.
+    pub fn new() -> PatchOperation {
+        PatchOperation { ..Default::default() }
+    }
+}
 #[doc="<p>Creates a customization of a <a>GatewayResponse</a> of a specified response type and status code on the given <a>RestApi</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutGatewayResponseRequest {
@@ -2016,7 +4696,60 @@ pub struct PutGatewayResponseRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status_code: Option<String>,
 }
-
+impl PutGatewayResponseRequest {
+    /// Sets `response_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutGatewayResponseRequest.response_parameters = Some(value.into());`.
+    pub fn response_parameters<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.response_parameters = Some(value.into());
+        self
+    }
+    /// Sets `response_templates`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutGatewayResponseRequest.response_templates = Some(value.into());`.
+    pub fn response_templates<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.response_templates = Some(value.into());
+        self
+    }
+    /// Sets `response_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutGatewayResponseRequest.response_type = value.into();`.
+    pub fn response_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.response_type = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutGatewayResponseRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `status_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutGatewayResponseRequest.status_code = Some(value.into());`.
+    pub fn status_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status_code = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PutGatewayResponseRequest with optional fields set to `None`.
+    pub fn new<responseTypeType: Into<String>, restApiIdType: Into<String>>
+        (response_type: responseTypeType,
+         rest_api_id: restApiIdType)
+         -> PutGatewayResponseRequest {
+        PutGatewayResponseRequest {
+            response_type: response_type.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Sets up a method's integration.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutIntegrationRequest {
@@ -2069,7 +4802,123 @@ pub struct PutIntegrationRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub uri: Option<String>,
 }
-
+impl PutIntegrationRequest {
+    /// Sets `cache_key_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIntegrationRequest.cache_key_parameters = Some(value.into());`.
+    pub fn cache_key_parameters<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.cache_key_parameters = Some(value.into());
+        self
+    }
+    /// Sets `cache_namespace`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIntegrationRequest.cache_namespace = Some(value.into());`.
+    pub fn cache_namespace<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cache_namespace = Some(value.into());
+        self
+    }
+    /// Sets `content_handling`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIntegrationRequest.content_handling = Some(value.into());`.
+    pub fn content_handling<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_handling = Some(value.into());
+        self
+    }
+    /// Sets `credentials`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIntegrationRequest.credentials = Some(value.into());`.
+    pub fn credentials<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.credentials = Some(value.into());
+        self
+    }
+    /// Sets `http_method`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIntegrationRequest.http_method = value.into();`.
+    pub fn http_method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.http_method = value.into();
+        self
+    }
+    /// Sets `integration_http_method`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIntegrationRequest.integration_http_method = Some(value.into());`.
+    pub fn integration_http_method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.integration_http_method = Some(value.into());
+        self
+    }
+    /// Sets `passthrough_behavior`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIntegrationRequest.passthrough_behavior = Some(value.into());`.
+    pub fn passthrough_behavior<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.passthrough_behavior = Some(value.into());
+        self
+    }
+    /// Sets `request_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIntegrationRequest.request_parameters = Some(value.into());`.
+    pub fn request_parameters<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.request_parameters = Some(value.into());
+        self
+    }
+    /// Sets `request_templates`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIntegrationRequest.request_templates = Some(value.into());`.
+    pub fn request_templates<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.request_templates = Some(value.into());
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIntegrationRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIntegrationRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIntegrationRequest.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Sets `uri`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIntegrationRequest.uri = Some(value.into());`.
+    pub fn uri<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.uri = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PutIntegrationRequest with optional fields set to `None`.
+    pub fn new<httpMethodType: Into<String>,
+               resourceIdType: Into<String>,
+               restApiIdType: Into<String>,
+               typeType: Into<String>>
+        (http_method: httpMethodType,
+         resource_id: resourceIdType,
+         rest_api_id: restApiIdType,
+         type_: typeType)
+         -> PutIntegrationRequest {
+        PutIntegrationRequest {
+            http_method: http_method.into(),
+            resource_id: resource_id.into(),
+            rest_api_id: rest_api_id.into(),
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents a put integration response request.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutIntegrationResponseRequest {
@@ -2102,7 +4951,88 @@ pub struct PutIntegrationResponseRequest {
     #[serde(rename="statusCode")]
     pub status_code: String,
 }
-
+impl PutIntegrationResponseRequest {
+    /// Sets `content_handling`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIntegrationResponseRequest.content_handling = Some(value.into());`.
+    pub fn content_handling<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_handling = Some(value.into());
+        self
+    }
+    /// Sets `http_method`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIntegrationResponseRequest.http_method = value.into();`.
+    pub fn http_method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.http_method = value.into();
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIntegrationResponseRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `response_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIntegrationResponseRequest.response_parameters = Some(value.into());`.
+    pub fn response_parameters<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.response_parameters = Some(value.into());
+        self
+    }
+    /// Sets `response_templates`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIntegrationResponseRequest.response_templates = Some(value.into());`.
+    pub fn response_templates<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.response_templates = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIntegrationResponseRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `selection_pattern`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIntegrationResponseRequest.selection_pattern = Some(value.into());`.
+    pub fn selection_pattern<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.selection_pattern = Some(value.into());
+        self
+    }
+    /// Sets `status_code`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutIntegrationResponseRequest.status_code = value.into();`.
+    pub fn status_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status_code = value.into();
+        self
+    }
+    /// Returns a new instance of PutIntegrationResponseRequest with optional fields set to `None`.
+    pub fn new<httpMethodType: Into<String>,
+               resourceIdType: Into<String>,
+               restApiIdType: Into<String>,
+               statusCodeType: Into<String>>
+        (http_method: httpMethodType,
+         resource_id: resourceIdType,
+         rest_api_id: restApiIdType,
+         status_code: statusCodeType)
+         -> PutIntegrationResponseRequest {
+        PutIntegrationResponseRequest {
+            http_method: http_method.into(),
+            resource_id: resource_id.into(),
+            rest_api_id: rest_api_id.into(),
+            status_code: status_code.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to add a method to an existing <a>Resource</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutMethodRequest {
@@ -2143,7 +5073,99 @@ pub struct PutMethodRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl PutMethodRequest {
+    /// Sets `api_key_required`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMethodRequest.api_key_required = Some(value.into());`.
+    pub fn api_key_required<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.api_key_required = Some(value.into());
+        self
+    }
+    /// Sets `authorization_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMethodRequest.authorization_type = value.into();`.
+    pub fn authorization_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.authorization_type = value.into();
+        self
+    }
+    /// Sets `authorizer_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMethodRequest.authorizer_id = Some(value.into());`.
+    pub fn authorizer_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.authorizer_id = Some(value.into());
+        self
+    }
+    /// Sets `http_method`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMethodRequest.http_method = value.into();`.
+    pub fn http_method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.http_method = value.into();
+        self
+    }
+    /// Sets `operation_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMethodRequest.operation_name = Some(value.into());`.
+    pub fn operation_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.operation_name = Some(value.into());
+        self
+    }
+    /// Sets `request_models`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMethodRequest.request_models = Some(value.into());`.
+pub fn request_models<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.request_models = Some(value.into());
+        self
+    }
+    /// Sets `request_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMethodRequest.request_parameters = Some(value.into());`.
+    pub fn request_parameters<ValueType: Into<::std::collections::HashMap<String, bool>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.request_parameters = Some(value.into());
+        self
+    }
+    /// Sets `request_validator_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMethodRequest.request_validator_id = Some(value.into());`.
+    pub fn request_validator_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_validator_id = Some(value.into());
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMethodRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMethodRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of PutMethodRequest with optional fields set to `None`.
+    pub fn new<authorizationTypeType: Into<String>,
+               httpMethodType: Into<String>,
+               resourceIdType: Into<String>,
+               restApiIdType: Into<String>>
+        (authorization_type: authorizationTypeType,
+         http_method: httpMethodType,
+         resource_id: resourceIdType,
+         rest_api_id: restApiIdType)
+         -> PutMethodRequest {
+        PutMethodRequest {
+            authorization_type: authorization_type.into(),
+            http_method: http_method.into(),
+            resource_id: resource_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to add a <a>MethodResponse</a> to an existing <a>Method</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutMethodResponseRequest {
@@ -2168,7 +5190,74 @@ pub struct PutMethodResponseRequest {
     #[serde(rename="statusCode")]
     pub status_code: String,
 }
-
+impl PutMethodResponseRequest {
+    /// Sets `http_method`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMethodResponseRequest.http_method = value.into();`.
+    pub fn http_method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.http_method = value.into();
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMethodResponseRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `response_models`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMethodResponseRequest.response_models = Some(value.into());`.
+    pub fn response_models<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.response_models = Some(value.into());
+        self
+    }
+    /// Sets `response_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMethodResponseRequest.response_parameters = Some(value.into());`.
+    pub fn response_parameters<ValueType: Into<::std::collections::HashMap<String, bool>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.response_parameters = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMethodResponseRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `status_code`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMethodResponseRequest.status_code = value.into();`.
+    pub fn status_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status_code = value.into();
+        self
+    }
+    /// Returns a new instance of PutMethodResponseRequest with optional fields set to `None`.
+    pub fn new<httpMethodType: Into<String>,
+               resourceIdType: Into<String>,
+               restApiIdType: Into<String>,
+               statusCodeType: Into<String>>
+        (http_method: httpMethodType,
+         resource_id: resourceIdType,
+         rest_api_id: restApiIdType,
+         status_code: statusCodeType)
+         -> PutMethodResponseRequest {
+        PutMethodResponseRequest {
+            http_method: http_method.into(),
+            resource_id: resource_id.into(),
+            rest_api_id: rest_api_id.into(),
+            status_code: status_code.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A PUT request to update an existing API, with external API definitions specified as the request body.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutRestApiRequest {
@@ -2196,7 +5285,53 @@ pub struct PutRestApiRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl PutRestApiRequest {
+    /// Sets `body`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRestApiRequest.body = value.into();`.
+    pub fn body<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.body = value.into();
+        self
+    }
+    /// Sets `fail_on_warnings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRestApiRequest.fail_on_warnings = Some(value.into());`.
+    pub fn fail_on_warnings<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.fail_on_warnings = Some(value.into());
+        self
+    }
+    /// Sets `mode`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRestApiRequest.mode = Some(value.into());`.
+    pub fn mode<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.mode = Some(value.into());
+        self
+    }
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRestApiRequest.parameters = Some(value.into());`.
+pub fn parameters<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRestApiRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of PutRestApiRequest with optional fields set to `None`.
+    pub fn new<bodyType: Into<Vec<u8>>, restApiIdType: Into<String>>(body: bodyType,
+                                                                     rest_api_id: restApiIdType)
+                                                                     -> PutRestApiRequest {
+        PutRestApiRequest {
+            body: body.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Quotas configured for a usage plan.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct QuotaSettings {
@@ -2213,7 +5348,33 @@ pub struct QuotaSettings {
     #[serde(skip_serializing_if="Option::is_none")]
     pub period: Option<String>,
 }
-
+impl QuotaSettings {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QuotaSettings.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `offset`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QuotaSettings.offset = Some(value.into());`.
+    pub fn offset<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.offset = Some(value.into());
+        self
+    }
+    /// Sets `period`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QuotaSettings.period = Some(value.into());`.
+    pub fn period<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.period = Some(value.into());
+        self
+    }
+    /// Returns a new instance of QuotaSettings with optional fields set to `None`.
+    pub fn new() -> QuotaSettings {
+        QuotaSettings { ..Default::default() }
+    }
+}
 #[doc="<p>A set of validation rules for incoming <a>Method</a> requests.</p> <div class=\"remarks\"> <p>In Swagger, a <a>RequestValidator</a> of an API is defined by the <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-swagger-extensions.html#api-gateway-swagger-extensions-request-validators.requestValidator.html\">x-amazon-apigateway-request-validators.requestValidator</a> object. It the referenced using the <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-swagger-extensions.html#api-gateway-swagger-extensions-request-validator\">x-amazon-apigateway-request-validator</a> property.</p> </div> <div class=\"seeAlso\"><a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-method-request-validation.html\">Enable Basic Request Validation in API Gateway</a></div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RequestValidator {
@@ -2234,7 +5395,6 @@ pub struct RequestValidator {
     #[serde(skip_serializing_if="Option::is_none")]
     pub validate_request_parameters: Option<bool>,
 }
-
 #[doc="<p>A collection of <a>RequestValidator</a> resources of a given <a>RestApi</a>.</p> <div class=\"remarks\"> <p>In Swagger, the <a>RequestValidators</a> of an API is defined by the <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-swagger-extensions.html#api-gateway-swagger-extensions-request-validators.html\">x-amazon-apigateway-request-validators</a> extension.</p> </div> <div class=\"seeAlso\"><a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-method-request-validation.html\">Enable Basic Request Validation in API Gateway</a></div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RequestValidators {
@@ -2246,7 +5406,6 @@ pub struct RequestValidators {
     #[serde(skip_serializing_if="Option::is_none")]
     pub position: Option<String>,
 }
-
 #[doc="<p>Represents an API resource.</p> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-create-api.html\">Create an API</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Resource {
@@ -2271,7 +5430,6 @@ pub struct Resource {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_methods: Option<::std::collections::HashMap<String, Method>>,
 }
-
 #[doc="<p>Represents a collection of <a>Resource</a> resources.</p> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-create-api.html\">Create an API</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Resources {
@@ -2283,7 +5441,6 @@ pub struct Resources {
     #[serde(skip_serializing_if="Option::is_none")]
     pub position: Option<String>,
 }
-
 #[doc="<p>Represents a REST API.</p> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-create-api.html\">Create an API</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RestApi {
@@ -2316,7 +5473,6 @@ pub struct RestApi {
     #[serde(skip_serializing_if="Option::is_none")]
     pub warnings: Option<Vec<String>>,
 }
-
 #[doc="<p>Contains references to your APIs and links that guide you in how to interact with your collection. A collection offers a paginated view of your APIs.</p> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-create-api.html\">Create an API</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RestApis {
@@ -2328,7 +5484,6 @@ pub struct RestApis {
     #[serde(skip_serializing_if="Option::is_none")]
     pub position: Option<String>,
 }
-
 #[doc="<p>A configuration property of an SDK type.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SdkConfigurationProperty {
@@ -2353,7 +5508,6 @@ pub struct SdkConfigurationProperty {
     #[serde(skip_serializing_if="Option::is_none")]
     pub required: Option<bool>,
 }
-
 #[doc="<p>The binary blob response to <a>GetSdk</a>, which contains the generated SDK.</p>"]
 #[derive(Default,Debug,Clone)]
 pub struct SdkResponse {
@@ -2364,7 +5518,6 @@ pub struct SdkResponse {
     #[doc="<p>The content-type header value in the HTTP response.</p>"]
     pub content_type: Option<String>,
 }
-
 #[doc="<p>A type of SDK that API Gateway can generate.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SdkType {
@@ -2385,7 +5538,6 @@ pub struct SdkType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub id: Option<String>,
 }
-
 #[doc="<p>The collection of <a>SdkType</a> instances.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SdkTypes {
@@ -2397,7 +5549,6 @@ pub struct SdkTypes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub position: Option<String>,
 }
-
 #[doc="<p>Represents a unique identifier for a version of a deployed <a>RestApi</a> that is callable by users.</p> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-deploy-api.html\">Deploy an API</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Stage {
@@ -2450,7 +5601,6 @@ pub struct Stage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub variables: Option<::std::collections::HashMap<String, String>>,
 }
-
 #[doc="<p>A reference to a unique stage identified in the format <code>{restApiId}/{stage}</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StageKey {
@@ -2463,7 +5613,26 @@ pub struct StageKey {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stage_name: Option<String>,
 }
-
+impl StageKey {
+    /// Sets `rest_api_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StageKey.rest_api_id = Some(value.into());`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = Some(value.into());
+        self
+    }
+    /// Sets `stage_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StageKey.stage_name = Some(value.into());`.
+    pub fn stage_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stage_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of StageKey with optional fields set to `None`.
+    pub fn new() -> StageKey {
+        StageKey { ..Default::default() }
+    }
+}
 #[doc="<p>A list of <a>Stage</a> resources that are associated with the <a>ApiKey</a> resource.</p> <div class=\"seeAlso\"><a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/stages.html\">Deploying API in Stages</a></div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Stages {
@@ -2472,7 +5641,6 @@ pub struct Stages {
     #[serde(skip_serializing_if="Option::is_none")]
     pub item: Option<Vec<Stage>>,
 }
-
 #[doc="<p>Represents a mapping template used to transform a payload.</p> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/models-mappings.html#models-mappings-mappings\">Mapping Templates</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Template {
@@ -2481,7 +5649,6 @@ pub struct Template {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
 #[doc="<p>Make a request to simulate the execution of an <a>Authorizer</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TestInvokeAuthorizerRequest {
@@ -2512,7 +5679,76 @@ pub struct TestInvokeAuthorizerRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stage_variables: Option<::std::collections::HashMap<String, String>>,
 }
-
+impl TestInvokeAuthorizerRequest {
+    /// Sets `additional_context`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestInvokeAuthorizerRequest.additional_context = Some(value.into());`.
+    pub fn additional_context<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.additional_context = Some(value.into());
+        self
+    }
+    /// Sets `authorizer_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestInvokeAuthorizerRequest.authorizer_id = value.into();`.
+    pub fn authorizer_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.authorizer_id = value.into();
+        self
+    }
+    /// Sets `body`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestInvokeAuthorizerRequest.body = Some(value.into());`.
+    pub fn body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.body = Some(value.into());
+        self
+    }
+    /// Sets `headers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestInvokeAuthorizerRequest.headers = Some(value.into());`.
+    pub fn headers<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                                 value: ValueType)
+                                                                                 -> Self {
+        self.headers = Some(value.into());
+        self
+    }
+    /// Sets `path_with_query_string`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestInvokeAuthorizerRequest.path_with_query_string = Some(value.into());`.
+    pub fn path_with_query_string<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path_with_query_string = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestInvokeAuthorizerRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `stage_variables`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestInvokeAuthorizerRequest.stage_variables = Some(value.into());`.
+    pub fn stage_variables<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.stage_variables = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TestInvokeAuthorizerRequest with optional fields set to `None`.
+    pub fn new<authorizerIdType: Into<String>, restApiIdType: Into<String>>
+        (authorizer_id: authorizerIdType,
+         rest_api_id: restApiIdType)
+         -> TestInvokeAuthorizerRequest {
+        TestInvokeAuthorizerRequest {
+            authorizer_id: authorizer_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response of the test invoke request for a custom <a>Authorizer</a></p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TestInvokeAuthorizerResponse {
@@ -2544,7 +5780,6 @@ pub struct TestInvokeAuthorizerResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub principal_id: Option<String>,
 }
-
 #[doc="<p>Make a request to simulate the execution of a <a>Method</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TestInvokeMethodRequest {
@@ -2578,7 +5813,84 @@ pub struct TestInvokeMethodRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stage_variables: Option<::std::collections::HashMap<String, String>>,
 }
-
+impl TestInvokeMethodRequest {
+    /// Sets `body`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestInvokeMethodRequest.body = Some(value.into());`.
+    pub fn body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.body = Some(value.into());
+        self
+    }
+    /// Sets `client_certificate_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestInvokeMethodRequest.client_certificate_id = Some(value.into());`.
+    pub fn client_certificate_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_certificate_id = Some(value.into());
+        self
+    }
+    /// Sets `headers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestInvokeMethodRequest.headers = Some(value.into());`.
+    pub fn headers<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                                 value: ValueType)
+                                                                                 -> Self {
+        self.headers = Some(value.into());
+        self
+    }
+    /// Sets `http_method`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestInvokeMethodRequest.http_method = value.into();`.
+    pub fn http_method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.http_method = value.into();
+        self
+    }
+    /// Sets `path_with_query_string`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestInvokeMethodRequest.path_with_query_string = Some(value.into());`.
+    pub fn path_with_query_string<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path_with_query_string = Some(value.into());
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestInvokeMethodRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestInvokeMethodRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `stage_variables`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestInvokeMethodRequest.stage_variables = Some(value.into());`.
+    pub fn stage_variables<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.stage_variables = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TestInvokeMethodRequest with optional fields set to `None`.
+    pub fn new<httpMethodType: Into<String>,
+               resourceIdType: Into<String>,
+               restApiIdType: Into<String>>
+        (http_method: httpMethodType,
+         resource_id: resourceIdType,
+         rest_api_id: restApiIdType)
+         -> TestInvokeMethodRequest {
+        TestInvokeMethodRequest {
+            http_method: http_method.into(),
+            resource_id: resource_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response of the test invoke request in the HTTP method.</p> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-test-method.html#how-to-test-method-console\">Test API using the API Gateway console</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TestInvokeMethodResponse {
@@ -2603,7 +5915,6 @@ pub struct TestInvokeMethodResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<i64>,
 }
-
 #[doc="<p> The API request rate limits.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ThrottleSettings {
@@ -2616,7 +5927,26 @@ pub struct ThrottleSettings {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rate_limit: Option<f64>,
 }
-
+impl ThrottleSettings {
+    /// Sets `burst_limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ThrottleSettings.burst_limit = Some(value.into());`.
+    pub fn burst_limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.burst_limit = Some(value.into());
+        self
+    }
+    /// Sets `rate_limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ThrottleSettings.rate_limit = Some(value.into());`.
+    pub fn rate_limit<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.rate_limit = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ThrottleSettings with optional fields set to `None`.
+    pub fn new() -> ThrottleSettings {
+        ThrottleSettings { ..Default::default() }
+    }
+}
 #[doc="<p>Requests Amazon API Gateway to change information about the current <a>Account</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateAccountRequest {
@@ -2625,7 +5955,21 @@ pub struct UpdateAccountRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub patch_operations: Option<Vec<PatchOperation>>,
 }
-
+impl UpdateAccountRequest {
+    /// Sets `patch_operations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAccountRequest.patch_operations = Some(value.into());`.
+    pub fn patch_operations<ValueType: Into<Vec<PatchOperation>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.patch_operations = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateAccountRequest with optional fields set to `None`.
+    pub fn new() -> UpdateAccountRequest {
+        UpdateAccountRequest { ..Default::default() }
+    }
+}
 #[doc="<p>A request to change information about an <a>ApiKey</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateApiKeyRequest {
@@ -2637,7 +5981,31 @@ pub struct UpdateApiKeyRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub patch_operations: Option<Vec<PatchOperation>>,
 }
-
+impl UpdateApiKeyRequest {
+    /// Sets `api_key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateApiKeyRequest.api_key = value.into();`.
+    pub fn api_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.api_key = value.into();
+        self
+    }
+    /// Sets `patch_operations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateApiKeyRequest.patch_operations = Some(value.into());`.
+    pub fn patch_operations<ValueType: Into<Vec<PatchOperation>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.patch_operations = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateApiKeyRequest with optional fields set to `None`.
+    pub fn new<apiKeyType: Into<String>>(api_key: apiKeyType) -> UpdateApiKeyRequest {
+        UpdateApiKeyRequest {
+            api_key: api_key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to update an existing <a>Authorizer</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateAuthorizerRequest {
@@ -2652,7 +6020,42 @@ pub struct UpdateAuthorizerRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl UpdateAuthorizerRequest {
+    /// Sets `authorizer_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAuthorizerRequest.authorizer_id = value.into();`.
+    pub fn authorizer_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.authorizer_id = value.into();
+        self
+    }
+    /// Sets `patch_operations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAuthorizerRequest.patch_operations = Some(value.into());`.
+    pub fn patch_operations<ValueType: Into<Vec<PatchOperation>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.patch_operations = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAuthorizerRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateAuthorizerRequest with optional fields set to `None`.
+    pub fn new<authorizerIdType: Into<String>, restApiIdType: Into<String>>
+        (authorizer_id: authorizerIdType,
+         rest_api_id: restApiIdType)
+         -> UpdateAuthorizerRequest {
+        UpdateAuthorizerRequest {
+            authorizer_id: authorizer_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A request to change information about the <a>BasePathMapping</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateBasePathMappingRequest {
@@ -2667,7 +6070,42 @@ pub struct UpdateBasePathMappingRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub patch_operations: Option<Vec<PatchOperation>>,
 }
-
+impl UpdateBasePathMappingRequest {
+    /// Sets `base_path`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateBasePathMappingRequest.base_path = value.into();`.
+    pub fn base_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.base_path = value.into();
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateBasePathMappingRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `patch_operations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateBasePathMappingRequest.patch_operations = Some(value.into());`.
+    pub fn patch_operations<ValueType: Into<Vec<PatchOperation>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.patch_operations = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateBasePathMappingRequest with optional fields set to `None`.
+    pub fn new<basePathType: Into<String>, domainNameType: Into<String>>
+        (base_path: basePathType,
+         domain_name: domainNameType)
+         -> UpdateBasePathMappingRequest {
+        UpdateBasePathMappingRequest {
+            base_path: base_path.into(),
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A request to change information about an <a>ClientCertificate</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateClientCertificateRequest {
@@ -2679,7 +6117,31 @@ pub struct UpdateClientCertificateRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub patch_operations: Option<Vec<PatchOperation>>,
 }
-
+impl UpdateClientCertificateRequest {
+    /// Sets `client_certificate_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateClientCertificateRequest.client_certificate_id = value.into();`.
+    pub fn client_certificate_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.client_certificate_id = value.into();
+        self
+    }
+    /// Sets `patch_operations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateClientCertificateRequest.patch_operations = Some(value.into());`.
+    pub fn patch_operations<ValueType: Into<Vec<PatchOperation>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.patch_operations = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateClientCertificateRequest with optional fields set to `None`.
+pub fn new<clientCertificateIdType: Into<String>>(client_certificate_id: clientCertificateIdType) -> UpdateClientCertificateRequest{
+        UpdateClientCertificateRequest {
+            client_certificate_id: client_certificate_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Requests Amazon API Gateway to change information about a <a>Deployment</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateDeploymentRequest {
@@ -2694,7 +6156,42 @@ pub struct UpdateDeploymentRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl UpdateDeploymentRequest {
+    /// Sets `deployment_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDeploymentRequest.deployment_id = value.into();`.
+    pub fn deployment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.deployment_id = value.into();
+        self
+    }
+    /// Sets `patch_operations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDeploymentRequest.patch_operations = Some(value.into());`.
+    pub fn patch_operations<ValueType: Into<Vec<PatchOperation>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.patch_operations = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDeploymentRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateDeploymentRequest with optional fields set to `None`.
+    pub fn new<deploymentIdType: Into<String>, restApiIdType: Into<String>>
+        (deployment_id: deploymentIdType,
+         rest_api_id: restApiIdType)
+         -> UpdateDeploymentRequest {
+        UpdateDeploymentRequest {
+            deployment_id: deployment_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Updates an existing documentation part of a given API.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateDocumentationPartRequest {
@@ -2709,7 +6206,42 @@ pub struct UpdateDocumentationPartRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl UpdateDocumentationPartRequest {
+    /// Sets `documentation_part_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDocumentationPartRequest.documentation_part_id = value.into();`.
+    pub fn documentation_part_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.documentation_part_id = value.into();
+        self
+    }
+    /// Sets `patch_operations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDocumentationPartRequest.patch_operations = Some(value.into());`.
+    pub fn patch_operations<ValueType: Into<Vec<PatchOperation>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.patch_operations = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDocumentationPartRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateDocumentationPartRequest with optional fields set to `None`.
+    pub fn new<documentationPartIdType: Into<String>, restApiIdType: Into<String>>
+        (documentation_part_id: documentationPartIdType,
+         rest_api_id: restApiIdType)
+         -> UpdateDocumentationPartRequest {
+        UpdateDocumentationPartRequest {
+            documentation_part_id: documentation_part_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Updates an existing documentation version of an API.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateDocumentationVersionRequest {
@@ -2724,7 +6256,42 @@ pub struct UpdateDocumentationVersionRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl UpdateDocumentationVersionRequest {
+    /// Sets `documentation_version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDocumentationVersionRequest.documentation_version = value.into();`.
+    pub fn documentation_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.documentation_version = value.into();
+        self
+    }
+    /// Sets `patch_operations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDocumentationVersionRequest.patch_operations = Some(value.into());`.
+    pub fn patch_operations<ValueType: Into<Vec<PatchOperation>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.patch_operations = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDocumentationVersionRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateDocumentationVersionRequest with optional fields set to `None`.
+    pub fn new<documentationVersionType: Into<String>, restApiIdType: Into<String>>
+        (documentation_version: documentationVersionType,
+         rest_api_id: restApiIdType)
+         -> UpdateDocumentationVersionRequest {
+        UpdateDocumentationVersionRequest {
+            documentation_version: documentation_version.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A request to change information about the <a>DomainName</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateDomainNameRequest {
@@ -2736,7 +6303,32 @@ pub struct UpdateDomainNameRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub patch_operations: Option<Vec<PatchOperation>>,
 }
-
+impl UpdateDomainNameRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDomainNameRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `patch_operations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDomainNameRequest.patch_operations = Some(value.into());`.
+    pub fn patch_operations<ValueType: Into<Vec<PatchOperation>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.patch_operations = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateDomainNameRequest with optional fields set to `None`.
+    pub fn new<domainNameType: Into<String>>(domain_name: domainNameType)
+                                             -> UpdateDomainNameRequest {
+        UpdateDomainNameRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Updates a <a>GatewayResponse</a> of a specified response type on the given <a>RestApi</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateGatewayResponseRequest {
@@ -2751,7 +6343,42 @@ pub struct UpdateGatewayResponseRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl UpdateGatewayResponseRequest {
+    /// Sets `patch_operations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGatewayResponseRequest.patch_operations = Some(value.into());`.
+    pub fn patch_operations<ValueType: Into<Vec<PatchOperation>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.patch_operations = Some(value.into());
+        self
+    }
+    /// Sets `response_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGatewayResponseRequest.response_type = value.into();`.
+    pub fn response_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.response_type = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGatewayResponseRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateGatewayResponseRequest with optional fields set to `None`.
+    pub fn new<responseTypeType: Into<String>, restApiIdType: Into<String>>
+        (response_type: responseTypeType,
+         rest_api_id: restApiIdType)
+         -> UpdateGatewayResponseRequest {
+        UpdateGatewayResponseRequest {
+            response_type: response_type.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents an update integration request.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateIntegrationRequest {
@@ -2769,7 +6396,53 @@ pub struct UpdateIntegrationRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl UpdateIntegrationRequest {
+    /// Sets `http_method`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateIntegrationRequest.http_method = value.into();`.
+    pub fn http_method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.http_method = value.into();
+        self
+    }
+    /// Sets `patch_operations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateIntegrationRequest.patch_operations = Some(value.into());`.
+    pub fn patch_operations<ValueType: Into<Vec<PatchOperation>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.patch_operations = Some(value.into());
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateIntegrationRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateIntegrationRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateIntegrationRequest with optional fields set to `None`.
+    pub fn new<httpMethodType: Into<String>,
+               resourceIdType: Into<String>,
+               restApiIdType: Into<String>>
+        (http_method: httpMethodType,
+         resource_id: resourceIdType,
+         rest_api_id: restApiIdType)
+         -> UpdateIntegrationRequest {
+        UpdateIntegrationRequest {
+            http_method: http_method.into(),
+            resource_id: resource_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents an update integration response request.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateIntegrationResponseRequest {
@@ -2790,7 +6463,63 @@ pub struct UpdateIntegrationResponseRequest {
     #[serde(rename="statusCode")]
     pub status_code: String,
 }
-
+impl UpdateIntegrationResponseRequest {
+    /// Sets `http_method`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateIntegrationResponseRequest.http_method = value.into();`.
+    pub fn http_method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.http_method = value.into();
+        self
+    }
+    /// Sets `patch_operations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateIntegrationResponseRequest.patch_operations = Some(value.into());`.
+    pub fn patch_operations<ValueType: Into<Vec<PatchOperation>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.patch_operations = Some(value.into());
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateIntegrationResponseRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateIntegrationResponseRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `status_code`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateIntegrationResponseRequest.status_code = value.into();`.
+    pub fn status_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status_code = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateIntegrationResponseRequest with optional fields set to `None`.
+    pub fn new<httpMethodType: Into<String>,
+               resourceIdType: Into<String>,
+               restApiIdType: Into<String>,
+               statusCodeType: Into<String>>
+        (http_method: httpMethodType,
+         resource_id: resourceIdType,
+         rest_api_id: restApiIdType,
+         status_code: statusCodeType)
+         -> UpdateIntegrationResponseRequest {
+        UpdateIntegrationResponseRequest {
+            http_method: http_method.into(),
+            resource_id: resource_id.into(),
+            rest_api_id: rest_api_id.into(),
+            status_code: status_code.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to update an existing <a>Method</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateMethodRequest {
@@ -2808,7 +6537,53 @@ pub struct UpdateMethodRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl UpdateMethodRequest {
+    /// Sets `http_method`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMethodRequest.http_method = value.into();`.
+    pub fn http_method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.http_method = value.into();
+        self
+    }
+    /// Sets `patch_operations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMethodRequest.patch_operations = Some(value.into());`.
+    pub fn patch_operations<ValueType: Into<Vec<PatchOperation>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.patch_operations = Some(value.into());
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMethodRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMethodRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateMethodRequest with optional fields set to `None`.
+    pub fn new<httpMethodType: Into<String>,
+               resourceIdType: Into<String>,
+               restApiIdType: Into<String>>
+        (http_method: httpMethodType,
+         resource_id: resourceIdType,
+         rest_api_id: restApiIdType)
+         -> UpdateMethodRequest {
+        UpdateMethodRequest {
+            http_method: http_method.into(),
+            resource_id: resource_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A request to update an existing <a>MethodResponse</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateMethodResponseRequest {
@@ -2829,7 +6604,63 @@ pub struct UpdateMethodResponseRequest {
     #[serde(rename="statusCode")]
     pub status_code: String,
 }
-
+impl UpdateMethodResponseRequest {
+    /// Sets `http_method`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMethodResponseRequest.http_method = value.into();`.
+    pub fn http_method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.http_method = value.into();
+        self
+    }
+    /// Sets `patch_operations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMethodResponseRequest.patch_operations = Some(value.into());`.
+    pub fn patch_operations<ValueType: Into<Vec<PatchOperation>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.patch_operations = Some(value.into());
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMethodResponseRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMethodResponseRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `status_code`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMethodResponseRequest.status_code = value.into();`.
+    pub fn status_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status_code = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateMethodResponseRequest with optional fields set to `None`.
+    pub fn new<httpMethodType: Into<String>,
+               resourceIdType: Into<String>,
+               restApiIdType: Into<String>,
+               statusCodeType: Into<String>>
+        (http_method: httpMethodType,
+         resource_id: resourceIdType,
+         rest_api_id: restApiIdType,
+         status_code: statusCodeType)
+         -> UpdateMethodResponseRequest {
+        UpdateMethodResponseRequest {
+            http_method: http_method.into(),
+            resource_id: resource_id.into(),
+            rest_api_id: rest_api_id.into(),
+            status_code: status_code.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to update an existing model in an existing <a>RestApi</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateModelRequest {
@@ -2844,7 +6675,39 @@ pub struct UpdateModelRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl UpdateModelRequest {
+    /// Sets `model_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateModelRequest.model_name = value.into();`.
+    pub fn model_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.model_name = value.into();
+        self
+    }
+    /// Sets `patch_operations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateModelRequest.patch_operations = Some(value.into());`.
+    pub fn patch_operations<ValueType: Into<Vec<PatchOperation>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.patch_operations = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateModelRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateModelRequest with optional fields set to `None`.
+pub fn new<modelNameType: Into<String>, restApiIdType: Into<String>>(model_name: modelNameType, rest_api_id: restApiIdType) -> UpdateModelRequest{
+        UpdateModelRequest {
+            model_name: model_name.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Updates a <a>RequestValidator</a> of a given <a>RestApi</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateRequestValidatorRequest {
@@ -2859,7 +6722,42 @@ pub struct UpdateRequestValidatorRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl UpdateRequestValidatorRequest {
+    /// Sets `patch_operations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRequestValidatorRequest.patch_operations = Some(value.into());`.
+    pub fn patch_operations<ValueType: Into<Vec<PatchOperation>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.patch_operations = Some(value.into());
+        self
+    }
+    /// Sets `request_validator_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRequestValidatorRequest.request_validator_id = value.into();`.
+    pub fn request_validator_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_validator_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRequestValidatorRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateRequestValidatorRequest with optional fields set to `None`.
+    pub fn new<requestValidatorIdType: Into<String>, restApiIdType: Into<String>>
+        (request_validator_id: requestValidatorIdType,
+         rest_api_id: restApiIdType)
+         -> UpdateRequestValidatorRequest {
+        UpdateRequestValidatorRequest {
+            request_validator_id: request_validator_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to change information about a <a>Resource</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateResourceRequest {
@@ -2874,7 +6772,42 @@ pub struct UpdateResourceRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl UpdateResourceRequest {
+    /// Sets `patch_operations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateResourceRequest.patch_operations = Some(value.into());`.
+    pub fn patch_operations<ValueType: Into<Vec<PatchOperation>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.patch_operations = Some(value.into());
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateResourceRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateResourceRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateResourceRequest with optional fields set to `None`.
+    pub fn new<resourceIdType: Into<String>, restApiIdType: Into<String>>
+        (resource_id: resourceIdType,
+         rest_api_id: restApiIdType)
+         -> UpdateResourceRequest {
+        UpdateResourceRequest {
+            resource_id: resource_id.into(),
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Request to update an existing <a>RestApi</a> resource in your collection.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateRestApiRequest {
@@ -2886,7 +6819,31 @@ pub struct UpdateRestApiRequest {
     #[serde(rename="restApiId")]
     pub rest_api_id: String,
 }
-
+impl UpdateRestApiRequest {
+    /// Sets `patch_operations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRestApiRequest.patch_operations = Some(value.into());`.
+    pub fn patch_operations<ValueType: Into<Vec<PatchOperation>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.patch_operations = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRestApiRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateRestApiRequest with optional fields set to `None`.
+    pub fn new<restApiIdType: Into<String>>(rest_api_id: restApiIdType) -> UpdateRestApiRequest {
+        UpdateRestApiRequest {
+            rest_api_id: rest_api_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Requests Amazon API Gateway to change information about a <a>Stage</a> resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateStageRequest {
@@ -2901,7 +6858,39 @@ pub struct UpdateStageRequest {
     #[serde(rename="stageName")]
     pub stage_name: String,
 }
-
+impl UpdateStageRequest {
+    /// Sets `patch_operations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStageRequest.patch_operations = Some(value.into());`.
+    pub fn patch_operations<ValueType: Into<Vec<PatchOperation>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.patch_operations = Some(value.into());
+        self
+    }
+    /// Sets `rest_api_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStageRequest.rest_api_id = value.into();`.
+    pub fn rest_api_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rest_api_id = value.into();
+        self
+    }
+    /// Sets `stage_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateStageRequest.stage_name = value.into();`.
+    pub fn stage_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stage_name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateStageRequest with optional fields set to `None`.
+pub fn new<restApiIdType: Into<String>, stageNameType: Into<String>>(rest_api_id: restApiIdType, stage_name: stageNameType) -> UpdateStageRequest{
+        UpdateStageRequest {
+            rest_api_id: rest_api_id.into(),
+            stage_name: stage_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The PATCH request to update a usage plan of a given plan Id.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateUsagePlanRequest {
@@ -2913,7 +6902,32 @@ pub struct UpdateUsagePlanRequest {
     #[serde(rename="usagePlanId")]
     pub usage_plan_id: String,
 }
-
+impl UpdateUsagePlanRequest {
+    /// Sets `patch_operations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUsagePlanRequest.patch_operations = Some(value.into());`.
+    pub fn patch_operations<ValueType: Into<Vec<PatchOperation>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.patch_operations = Some(value.into());
+        self
+    }
+    /// Sets `usage_plan_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUsagePlanRequest.usage_plan_id = value.into();`.
+    pub fn usage_plan_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.usage_plan_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateUsagePlanRequest with optional fields set to `None`.
+    pub fn new<usagePlanIdType: Into<String>>(usage_plan_id: usagePlanIdType)
+                                              -> UpdateUsagePlanRequest {
+        UpdateUsagePlanRequest {
+            usage_plan_id: usage_plan_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The PATCH request to grant a temporary extension to the remaining quota of a usage plan associated with a specified API key.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateUsageRequest {
@@ -2928,7 +6942,39 @@ pub struct UpdateUsageRequest {
     #[serde(rename="usagePlanId")]
     pub usage_plan_id: String,
 }
-
+impl UpdateUsageRequest {
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUsageRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Sets `patch_operations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUsageRequest.patch_operations = Some(value.into());`.
+    pub fn patch_operations<ValueType: Into<Vec<PatchOperation>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.patch_operations = Some(value.into());
+        self
+    }
+    /// Sets `usage_plan_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateUsageRequest.usage_plan_id = value.into();`.
+    pub fn usage_plan_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.usage_plan_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateUsageRequest with optional fields set to `None`.
+pub fn new<keyIdType: Into<String>, usagePlanIdType: Into<String>>(key_id: keyIdType, usage_plan_id: usagePlanIdType) -> UpdateUsageRequest{
+        UpdateUsageRequest {
+            key_id: key_id.into(),
+            usage_plan_id: usage_plan_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the usage data of a usage plan.</p> <div class=\"remarks\"/> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html\">Create and Use Usage Plans</a>, <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-create-usage-plans-with-console.html#api-gateway-usage-plan-manage-usage\">Manage Usage in a Usage Plan</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Usage {
@@ -2952,7 +6998,6 @@ pub struct Usage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub usage_plan_id: Option<String>,
 }
-
 #[doc="<p>Represents a usage plan than can specify who can assess associated API stages with specified request limits and quotas.</p> <div class=\"remarks\"> <p>In a usage plan, you associate an API by specifying the API's Id and a stage name of the specified API. You add plan customers by adding API keys to the plan. </p> </div> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html\">Create and Use Usage Plans</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UsagePlan {
@@ -2985,7 +7030,6 @@ pub struct UsagePlan {
     #[serde(skip_serializing_if="Option::is_none")]
     pub throttle: Option<ThrottleSettings>,
 }
-
 #[doc="<p>Represents a usage plan key to identify a plan customer.</p> <div class=\"remarks\"> <p>To associate an API stage with a selected API key in a usage plan, you must create a UsagePlanKey resource to represent the selected <a>ApiKey</a>.</p> </div>\" <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html\">Create and Use Usage Plans</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UsagePlanKey {
@@ -3006,7 +7050,6 @@ pub struct UsagePlanKey {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
 #[doc="<p>Represents the collection of usage plan keys added to usage plans for the associated API keys and, possibly, other types of keys.</p> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html\">Create and Use Usage Plans</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UsagePlanKeys {
@@ -3018,7 +7061,6 @@ pub struct UsagePlanKeys {
     #[serde(skip_serializing_if="Option::is_none")]
     pub position: Option<String>,
 }
-
 #[doc="<p>Represents a collection of usage plans for an AWS account.</p> <div class=\"seeAlso\"> <a href=\"http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html\">Create and Use Usage Plans</a> </div>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UsagePlans {
@@ -3030,7 +7072,6 @@ pub struct UsagePlans {
     #[serde(skip_serializing_if="Option::is_none")]
     pub position: Option<String>,
 }
-
 /// Errors returned by CreateApiKey
 #[derive(Debug, PartialEq)]
 pub enum CreateApiKeyError {

@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -73,7 +74,6 @@ pub struct AccessPoliciesStatus {
     pub options: String,
     pub status: OptionStatus,
 }
-
 struct AccessPoliciesStatusDeserializer;
 impl AccessPoliciesStatusDeserializer {
     #[allow(unused_variables)]
@@ -148,7 +148,49 @@ pub struct AnalysisOptions {
     #[doc="<p>A JSON object that defines synonym groups and aliases. A synonym group is an array of arrays, where each sub-array is a group of terms where each term in the group is considered a synonym of every other term in the group. The aliases value is an object that contains a collection of string:value pairs where the string specifies a term and the array of values specifies each of the aliases for that term. An alias is considered a synonym of the specified term, but the term is not considered a synonym of the alias. For more information about specifying synonyms, see <a href=\"http://docs.aws.amazon.com/cloudsearch/latest/developerguide/configuring-analysis-schemes.html#synonyms\">Synonyms</a> in the <i>Amazon CloudSearch Developer Guide</i>.</p>"]
     pub synonyms: Option<String>,
 }
-
+impl AnalysisOptions {
+    /// Sets `algorithmic_stemming`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AnalysisOptions.algorithmic_stemming = Some(value.into());`.
+    pub fn algorithmic_stemming<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.algorithmic_stemming = Some(value.into());
+        self
+    }
+    /// Sets `japanese_tokenization_dictionary`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AnalysisOptions.japanese_tokenization_dictionary = Some(value.into());`.
+    pub fn japanese_tokenization_dictionary<ValueType: Into<String>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.japanese_tokenization_dictionary = Some(value.into());
+        self
+    }
+    /// Sets `stemming_dictionary`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AnalysisOptions.stemming_dictionary = Some(value.into());`.
+    pub fn stemming_dictionary<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stemming_dictionary = Some(value.into());
+        self
+    }
+    /// Sets `stopwords`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AnalysisOptions.stopwords = Some(value.into());`.
+    pub fn stopwords<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.stopwords = Some(value.into());
+        self
+    }
+    /// Sets `synonyms`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AnalysisOptions.synonyms = Some(value.into());`.
+    pub fn synonyms<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.synonyms = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AnalysisOptions with optional fields set to `None`.
+    pub fn new() -> AnalysisOptions {
+        AnalysisOptions { ..Default::default() }
+    }
+}
 struct AnalysisOptionsDeserializer;
 impl AnalysisOptionsDeserializer {
     #[allow(unused_variables)]
@@ -248,7 +290,40 @@ pub struct AnalysisScheme {
     pub analysis_scheme_language: String,
     pub analysis_scheme_name: String,
 }
-
+impl AnalysisScheme {
+    /// Sets `analysis_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AnalysisScheme.analysis_options = Some(value.into());`.
+    pub fn analysis_options<ValueType: Into<AnalysisOptions>>(mut self, value: ValueType) -> Self {
+        self.analysis_options = Some(value.into());
+        self
+    }
+    /// Sets `analysis_scheme_language`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AnalysisScheme.analysis_scheme_language = value.into();`.
+    pub fn analysis_scheme_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.analysis_scheme_language = value.into();
+        self
+    }
+    /// Sets `analysis_scheme_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AnalysisScheme.analysis_scheme_name = value.into();`.
+    pub fn analysis_scheme_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.analysis_scheme_name = value.into();
+        self
+    }
+    /// Returns a new instance of AnalysisScheme with optional fields set to `None`.
+    pub fn new<AnalysisSchemeLanguageType: Into<String>, AnalysisSchemeNameType: Into<String>>
+        (analysis_scheme_language: AnalysisSchemeLanguageType,
+         analysis_scheme_name: AnalysisSchemeNameType)
+         -> AnalysisScheme {
+        AnalysisScheme {
+            analysis_scheme_language: analysis_scheme_language.into(),
+            analysis_scheme_name: analysis_scheme_name.into(),
+            ..Default::default()
+        }
+    }
+}
 struct AnalysisSchemeDeserializer;
 impl AnalysisSchemeDeserializer {
     #[allow(unused_variables)]
@@ -345,7 +420,6 @@ pub struct AnalysisSchemeStatus {
     pub options: AnalysisScheme,
     pub status: OptionStatus,
 }
-
 struct AnalysisSchemeStatusDeserializer;
 impl AnalysisSchemeStatusDeserializer {
     #[allow(unused_variables)]
@@ -441,7 +515,6 @@ pub struct AvailabilityOptionsStatus {
     pub options: bool,
     pub status: OptionStatus,
 }
-
 struct AvailabilityOptionsStatusDeserializer;
 impl AvailabilityOptionsStatusDeserializer {
     #[allow(unused_variables)]
@@ -506,7 +579,23 @@ impl BooleanDeserializer {
 pub struct BuildSuggestersRequest {
     pub domain_name: String,
 }
-
+impl BuildSuggestersRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BuildSuggestersRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of BuildSuggestersRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType)
+                                             -> BuildSuggestersRequest {
+        BuildSuggestersRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `BuildSuggestersRequest` contents to a `SignedRequest`.
 struct BuildSuggestersRequestSerializer;
@@ -527,7 +616,6 @@ impl BuildSuggestersRequestSerializer {
 pub struct BuildSuggestersResponse {
     pub field_names: Option<Vec<String>>,
 }
-
 struct BuildSuggestersResponseDeserializer;
 impl BuildSuggestersResponseDeserializer {
     #[allow(unused_variables)]
@@ -577,7 +665,22 @@ pub struct CreateDomainRequest {
     #[doc="<p>A name for the domain you are creating. Allowed characters are a-z (lower-case letters), 0-9, and hyphen (-). Domain names must start with a letter or number and be at least 3 and no more than 28 characters long.</p>"]
     pub domain_name: String,
 }
-
+impl CreateDomainRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDomainRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateDomainRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType) -> CreateDomainRequest {
+        CreateDomainRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateDomainRequest` contents to a `SignedRequest`.
 struct CreateDomainRequestSerializer;
@@ -598,7 +701,6 @@ impl CreateDomainRequestSerializer {
 pub struct CreateDomainResponse {
     pub domain_status: Option<DomainStatus>,
 }
-
 struct CreateDomainResponseDeserializer;
 impl CreateDomainResponseDeserializer {
     #[allow(unused_variables)]
@@ -656,7 +758,47 @@ pub struct DateArrayOptions {
     #[doc="<p>A list of source fields to map to the field. </p>"]
     pub source_fields: Option<String>,
 }
-
+impl DateArrayOptions {
+    /// Sets `default_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DateArrayOptions.default_value = Some(value.into());`.
+    pub fn default_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_value = Some(value.into());
+        self
+    }
+    /// Sets `facet_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DateArrayOptions.facet_enabled = Some(value.into());`.
+    pub fn facet_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.facet_enabled = Some(value.into());
+        self
+    }
+    /// Sets `return_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DateArrayOptions.return_enabled = Some(value.into());`.
+    pub fn return_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.return_enabled = Some(value.into());
+        self
+    }
+    /// Sets `search_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DateArrayOptions.search_enabled = Some(value.into());`.
+    pub fn search_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.search_enabled = Some(value.into());
+        self
+    }
+    /// Sets `source_fields`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DateArrayOptions.source_fields = Some(value.into());`.
+    pub fn source_fields<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_fields = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DateArrayOptions with optional fields set to `None`.
+    pub fn new() -> DateArrayOptions {
+        DateArrayOptions { ..Default::default() }
+    }
+}
 struct DateArrayOptionsDeserializer;
 impl DateArrayOptionsDeserializer {
     #[allow(unused_variables)]
@@ -766,7 +908,54 @@ pub struct DateOptions {
     pub sort_enabled: Option<bool>,
     pub source_field: Option<String>,
 }
-
+impl DateOptions {
+    /// Sets `default_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DateOptions.default_value = Some(value.into());`.
+    pub fn default_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_value = Some(value.into());
+        self
+    }
+    /// Sets `facet_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DateOptions.facet_enabled = Some(value.into());`.
+    pub fn facet_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.facet_enabled = Some(value.into());
+        self
+    }
+    /// Sets `return_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DateOptions.return_enabled = Some(value.into());`.
+    pub fn return_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.return_enabled = Some(value.into());
+        self
+    }
+    /// Sets `search_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DateOptions.search_enabled = Some(value.into());`.
+    pub fn search_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.search_enabled = Some(value.into());
+        self
+    }
+    /// Sets `sort_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DateOptions.sort_enabled = Some(value.into());`.
+    pub fn sort_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.sort_enabled = Some(value.into());
+        self
+    }
+    /// Sets `source_field`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DateOptions.source_field = Some(value.into());`.
+    pub fn source_field<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_field = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DateOptions with optional fields set to `None`.
+    pub fn new() -> DateOptions {
+        DateOptions { ..Default::default() }
+    }
+}
 struct DateOptionsDeserializer;
 impl DateOptionsDeserializer {
     #[allow(unused_variables)]
@@ -875,7 +1064,33 @@ pub struct DefineAnalysisSchemeRequest {
     pub analysis_scheme: AnalysisScheme,
     pub domain_name: String,
 }
-
+impl DefineAnalysisSchemeRequest {
+    /// Sets `analysis_scheme`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DefineAnalysisSchemeRequest.analysis_scheme = value.into();`.
+    pub fn analysis_scheme<ValueType: Into<AnalysisScheme>>(mut self, value: ValueType) -> Self {
+        self.analysis_scheme = value.into();
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DefineAnalysisSchemeRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of DefineAnalysisSchemeRequest with optional fields set to `None`.
+    pub fn new<AnalysisSchemeType: Into<AnalysisScheme>, DomainNameType: Into<String>>
+        (analysis_scheme: AnalysisSchemeType,
+         domain_name: DomainNameType)
+         -> DefineAnalysisSchemeRequest {
+        DefineAnalysisSchemeRequest {
+            analysis_scheme: analysis_scheme.into(),
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DefineAnalysisSchemeRequest` contents to a `SignedRequest`.
 struct DefineAnalysisSchemeRequestSerializer;
@@ -899,7 +1114,6 @@ impl DefineAnalysisSchemeRequestSerializer {
 pub struct DefineAnalysisSchemeResponse {
     pub analysis_scheme: AnalysisSchemeStatus,
 }
-
 struct DefineAnalysisSchemeResponseDeserializer;
 impl DefineAnalysisSchemeResponseDeserializer {
     #[allow(unused_variables)]
@@ -949,7 +1163,33 @@ pub struct DefineExpressionRequest {
     pub domain_name: String,
     pub expression: Expression,
 }
-
+impl DefineExpressionRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DefineExpressionRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `expression`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DefineExpressionRequest.expression = value.into();`.
+    pub fn expression<ValueType: Into<Expression>>(mut self, value: ValueType) -> Self {
+        self.expression = value.into();
+        self
+    }
+    /// Returns a new instance of DefineExpressionRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>, ExpressionType: Into<Expression>>
+        (domain_name: DomainNameType,
+         expression: ExpressionType)
+         -> DefineExpressionRequest {
+        DefineExpressionRequest {
+            domain_name: domain_name.into(),
+            expression: expression.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DefineExpressionRequest` contents to a `SignedRequest`.
 struct DefineExpressionRequestSerializer;
@@ -973,7 +1213,6 @@ impl DefineExpressionRequestSerializer {
 pub struct DefineExpressionResponse {
     pub expression: ExpressionStatus,
 }
-
 struct DefineExpressionResponseDeserializer;
 impl DefineExpressionResponseDeserializer {
     #[allow(unused_variables)]
@@ -1023,7 +1262,33 @@ pub struct DefineIndexFieldRequest {
     #[doc="<p>The index field and field options you want to configure. </p>"]
     pub index_field: IndexField,
 }
-
+impl DefineIndexFieldRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DefineIndexFieldRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `index_field`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DefineIndexFieldRequest.index_field = value.into();`.
+    pub fn index_field<ValueType: Into<IndexField>>(mut self, value: ValueType) -> Self {
+        self.index_field = value.into();
+        self
+    }
+    /// Returns a new instance of DefineIndexFieldRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>, IndexFieldType: Into<IndexField>>
+        (domain_name: DomainNameType,
+         index_field: IndexFieldType)
+         -> DefineIndexFieldRequest {
+        DefineIndexFieldRequest {
+            domain_name: domain_name.into(),
+            index_field: index_field.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DefineIndexFieldRequest` contents to a `SignedRequest`.
 struct DefineIndexFieldRequestSerializer;
@@ -1047,7 +1312,6 @@ impl DefineIndexFieldRequestSerializer {
 pub struct DefineIndexFieldResponse {
     pub index_field: IndexFieldStatus,
 }
-
 struct DefineIndexFieldResponseDeserializer;
 impl DefineIndexFieldResponseDeserializer {
     #[allow(unused_variables)]
@@ -1097,7 +1361,33 @@ pub struct DefineSuggesterRequest {
     pub domain_name: String,
     pub suggester: Suggester,
 }
-
+impl DefineSuggesterRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DefineSuggesterRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `suggester`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DefineSuggesterRequest.suggester = value.into();`.
+    pub fn suggester<ValueType: Into<Suggester>>(mut self, value: ValueType) -> Self {
+        self.suggester = value.into();
+        self
+    }
+    /// Returns a new instance of DefineSuggesterRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>, SuggesterType: Into<Suggester>>
+        (domain_name: DomainNameType,
+         suggester: SuggesterType)
+         -> DefineSuggesterRequest {
+        DefineSuggesterRequest {
+            domain_name: domain_name.into(),
+            suggester: suggester.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DefineSuggesterRequest` contents to a `SignedRequest`.
 struct DefineSuggesterRequestSerializer;
@@ -1121,7 +1411,6 @@ impl DefineSuggesterRequestSerializer {
 pub struct DefineSuggesterResponse {
     pub suggester: SuggesterStatus,
 }
-
 struct DefineSuggesterResponseDeserializer;
 impl DefineSuggesterResponseDeserializer {
     #[allow(unused_variables)]
@@ -1171,7 +1460,33 @@ pub struct DeleteAnalysisSchemeRequest {
     pub analysis_scheme_name: String,
     pub domain_name: String,
 }
-
+impl DeleteAnalysisSchemeRequest {
+    /// Sets `analysis_scheme_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAnalysisSchemeRequest.analysis_scheme_name = value.into();`.
+    pub fn analysis_scheme_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.analysis_scheme_name = value.into();
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAnalysisSchemeRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteAnalysisSchemeRequest with optional fields set to `None`.
+    pub fn new<AnalysisSchemeNameType: Into<String>, DomainNameType: Into<String>>
+        (analysis_scheme_name: AnalysisSchemeNameType,
+         domain_name: DomainNameType)
+         -> DeleteAnalysisSchemeRequest {
+        DeleteAnalysisSchemeRequest {
+            analysis_scheme_name: analysis_scheme_name.into(),
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteAnalysisSchemeRequest` contents to a `SignedRequest`.
 struct DeleteAnalysisSchemeRequestSerializer;
@@ -1195,7 +1510,6 @@ pub struct DeleteAnalysisSchemeResponse {
     #[doc="<p>The status of the analysis scheme being deleted.</p>"]
     pub analysis_scheme: AnalysisSchemeStatus,
 }
-
 struct DeleteAnalysisSchemeResponseDeserializer;
 impl DeleteAnalysisSchemeResponseDeserializer {
     #[allow(unused_variables)]
@@ -1245,7 +1559,22 @@ pub struct DeleteDomainRequest {
     #[doc="<p>The name of the domain you want to permanently delete.</p>"]
     pub domain_name: String,
 }
-
+impl DeleteDomainRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDomainRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDomainRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType) -> DeleteDomainRequest {
+        DeleteDomainRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteDomainRequest` contents to a `SignedRequest`.
 struct DeleteDomainRequestSerializer;
@@ -1266,7 +1595,6 @@ impl DeleteDomainRequestSerializer {
 pub struct DeleteDomainResponse {
     pub domain_status: Option<DomainStatus>,
 }
-
 struct DeleteDomainResponseDeserializer;
 impl DeleteDomainResponseDeserializer {
     #[allow(unused_variables)]
@@ -1317,7 +1645,33 @@ pub struct DeleteExpressionRequest {
     #[doc="<p>The name of the <code><a>Expression</a></code> to delete.</p>"]
     pub expression_name: String,
 }
-
+impl DeleteExpressionRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteExpressionRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `expression_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteExpressionRequest.expression_name = value.into();`.
+    pub fn expression_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.expression_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteExpressionRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>, ExpressionNameType: Into<String>>
+        (domain_name: DomainNameType,
+         expression_name: ExpressionNameType)
+         -> DeleteExpressionRequest {
+        DeleteExpressionRequest {
+            domain_name: domain_name.into(),
+            expression_name: expression_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteExpressionRequest` contents to a `SignedRequest`.
 struct DeleteExpressionRequestSerializer;
@@ -1341,7 +1695,6 @@ pub struct DeleteExpressionResponse {
     #[doc="<p>The status of the expression being deleted.</p>"]
     pub expression: ExpressionStatus,
 }
-
 struct DeleteExpressionResponseDeserializer;
 impl DeleteExpressionResponseDeserializer {
     #[allow(unused_variables)]
@@ -1391,7 +1744,33 @@ pub struct DeleteIndexFieldRequest {
     #[doc="<p>The name of the index field your want to remove from the domain's indexing options.</p>"]
     pub index_field_name: String,
 }
-
+impl DeleteIndexFieldRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteIndexFieldRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `index_field_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteIndexFieldRequest.index_field_name = value.into();`.
+    pub fn index_field_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.index_field_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteIndexFieldRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>, IndexFieldNameType: Into<String>>
+        (domain_name: DomainNameType,
+         index_field_name: IndexFieldNameType)
+         -> DeleteIndexFieldRequest {
+        DeleteIndexFieldRequest {
+            domain_name: domain_name.into(),
+            index_field_name: index_field_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteIndexFieldRequest` contents to a `SignedRequest`.
 struct DeleteIndexFieldRequestSerializer;
@@ -1415,7 +1794,6 @@ pub struct DeleteIndexFieldResponse {
     #[doc="<p>The status of the index field being deleted.</p>"]
     pub index_field: IndexFieldStatus,
 }
-
 struct DeleteIndexFieldResponseDeserializer;
 impl DeleteIndexFieldResponseDeserializer {
     #[allow(unused_variables)]
@@ -1466,7 +1844,33 @@ pub struct DeleteSuggesterRequest {
     #[doc="<p>Specifies the name of the suggester you want to delete.</p>"]
     pub suggester_name: String,
 }
-
+impl DeleteSuggesterRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSuggesterRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `suggester_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSuggesterRequest.suggester_name = value.into();`.
+    pub fn suggester_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.suggester_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteSuggesterRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>, SuggesterNameType: Into<String>>
+        (domain_name: DomainNameType,
+         suggester_name: SuggesterNameType)
+         -> DeleteSuggesterRequest {
+        DeleteSuggesterRequest {
+            domain_name: domain_name.into(),
+            suggester_name: suggester_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteSuggesterRequest` contents to a `SignedRequest`.
 struct DeleteSuggesterRequestSerializer;
@@ -1490,7 +1894,6 @@ pub struct DeleteSuggesterResponse {
     #[doc="<p>The status of the suggester being deleted.</p>"]
     pub suggester: SuggesterStatus,
 }
-
 struct DeleteSuggesterResponseDeserializer;
 impl DeleteSuggesterResponseDeserializer {
     #[allow(unused_variables)]
@@ -1543,7 +1946,37 @@ pub struct DescribeAnalysisSchemesRequest {
     #[doc="<p>The name of the domain you want to describe.</p>"]
     pub domain_name: String,
 }
-
+impl DescribeAnalysisSchemesRequest {
+    /// Sets `analysis_scheme_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAnalysisSchemesRequest.analysis_scheme_names = Some(value.into());`.
+    pub fn analysis_scheme_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.analysis_scheme_names = Some(value.into());
+        self
+    }
+    /// Sets `deployed`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAnalysisSchemesRequest.deployed = Some(value.into());`.
+    pub fn deployed<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.deployed = Some(value.into());
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAnalysisSchemesRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeAnalysisSchemesRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType)
+                                             -> DescribeAnalysisSchemesRequest {
+        DescribeAnalysisSchemesRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeAnalysisSchemesRequest` contents to a `SignedRequest`.
 struct DescribeAnalysisSchemesRequestSerializer;
@@ -1574,7 +2007,6 @@ pub struct DescribeAnalysisSchemesResponse {
     #[doc="<p>The analysis scheme descriptions.</p>"]
     pub analysis_schemes: Vec<AnalysisSchemeStatus>,
 }
-
 struct DescribeAnalysisSchemesResponseDeserializer;
 impl DescribeAnalysisSchemesResponseDeserializer {
     #[allow(unused_variables)]
@@ -1627,7 +2059,30 @@ pub struct DescribeAvailabilityOptionsRequest {
     #[doc="<p>The name of the domain you want to describe.</p>"]
     pub domain_name: String,
 }
-
+impl DescribeAvailabilityOptionsRequest {
+    /// Sets `deployed`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAvailabilityOptionsRequest.deployed = Some(value.into());`.
+    pub fn deployed<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.deployed = Some(value.into());
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAvailabilityOptionsRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeAvailabilityOptionsRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType)
+                                             -> DescribeAvailabilityOptionsRequest {
+        DescribeAvailabilityOptionsRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeAvailabilityOptionsRequest` contents to a `SignedRequest`.
 struct DescribeAvailabilityOptionsRequestSerializer;
@@ -1653,7 +2108,6 @@ pub struct DescribeAvailabilityOptionsResponse {
     #[doc="<p>The availability options configured for the domain. Indicates whether Multi-AZ is enabled for the domain. </p>"]
     pub availability_options: Option<AvailabilityOptionsStatus>,
 }
-
 struct DescribeAvailabilityOptionsResponseDeserializer;
 impl DescribeAvailabilityOptionsResponseDeserializer {
     #[allow(unused_variables)]
@@ -1702,7 +2156,19 @@ pub struct DescribeDomainsRequest {
     #[doc="<p>The names of the domains you want to include in the response.</p>"]
     pub domain_names: Option<Vec<String>>,
 }
-
+impl DescribeDomainsRequest {
+    /// Sets `domain_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDomainsRequest.domain_names = Some(value.into());`.
+    pub fn domain_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.domain_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDomainsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeDomainsRequest {
+        DescribeDomainsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeDomainsRequest` contents to a `SignedRequest`.
 struct DescribeDomainsRequestSerializer;
@@ -1727,7 +2193,6 @@ impl DescribeDomainsRequestSerializer {
 pub struct DescribeDomainsResponse {
     pub domain_status_list: Vec<DomainStatus>,
 }
-
 struct DescribeDomainsResponseDeserializer;
 impl DescribeDomainsResponseDeserializer {
     #[allow(unused_variables)]
@@ -1781,7 +2246,37 @@ pub struct DescribeExpressionsRequest {
     #[doc="<p>Limits the <code><a>DescribeExpressions</a></code> response to the specified expressions. If not specified, all expressions are shown.</p>"]
     pub expression_names: Option<Vec<String>>,
 }
-
+impl DescribeExpressionsRequest {
+    /// Sets `deployed`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeExpressionsRequest.deployed = Some(value.into());`.
+    pub fn deployed<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.deployed = Some(value.into());
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeExpressionsRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `expression_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeExpressionsRequest.expression_names = Some(value.into());`.
+    pub fn expression_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.expression_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeExpressionsRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType)
+                                             -> DescribeExpressionsRequest {
+        DescribeExpressionsRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeExpressionsRequest` contents to a `SignedRequest`.
 struct DescribeExpressionsRequestSerializer;
@@ -1812,7 +2307,6 @@ pub struct DescribeExpressionsResponse {
     #[doc="<p>The expressions configured for the domain.</p>"]
     pub expressions: Vec<ExpressionStatus>,
 }
-
 struct DescribeExpressionsResponseDeserializer;
 impl DescribeExpressionsResponseDeserializer {
     #[allow(unused_variables)]
@@ -1866,7 +2360,37 @@ pub struct DescribeIndexFieldsRequest {
     #[doc="<p>A list of the index fields you want to describe. If not specified, information is returned for all configured index fields.</p>"]
     pub field_names: Option<Vec<String>>,
 }
-
+impl DescribeIndexFieldsRequest {
+    /// Sets `deployed`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeIndexFieldsRequest.deployed = Some(value.into());`.
+    pub fn deployed<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.deployed = Some(value.into());
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeIndexFieldsRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `field_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeIndexFieldsRequest.field_names = Some(value.into());`.
+    pub fn field_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.field_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeIndexFieldsRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType)
+                                             -> DescribeIndexFieldsRequest {
+        DescribeIndexFieldsRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeIndexFieldsRequest` contents to a `SignedRequest`.
 struct DescribeIndexFieldsRequestSerializer;
@@ -1897,7 +2421,6 @@ pub struct DescribeIndexFieldsResponse {
     #[doc="<p>The index fields configured for the domain.</p>"]
     pub index_fields: Vec<IndexFieldStatus>,
 }
-
 struct DescribeIndexFieldsResponseDeserializer;
 impl DescribeIndexFieldsResponseDeserializer {
     #[allow(unused_variables)]
@@ -1946,7 +2469,23 @@ impl DescribeIndexFieldsResponseDeserializer {
 pub struct DescribeScalingParametersRequest {
     pub domain_name: String,
 }
-
+impl DescribeScalingParametersRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScalingParametersRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeScalingParametersRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType)
+                                             -> DescribeScalingParametersRequest {
+        DescribeScalingParametersRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeScalingParametersRequest` contents to a `SignedRequest`.
 struct DescribeScalingParametersRequestSerializer;
@@ -1967,7 +2506,6 @@ impl DescribeScalingParametersRequestSerializer {
 pub struct DescribeScalingParametersResponse {
     pub scaling_parameters: ScalingParametersStatus,
 }
-
 struct DescribeScalingParametersResponseDeserializer;
 impl DescribeScalingParametersResponseDeserializer {
     #[allow(unused_variables)]
@@ -2020,7 +2558,30 @@ pub struct DescribeServiceAccessPoliciesRequest {
     #[doc="<p>The name of the domain you want to describe.</p>"]
     pub domain_name: String,
 }
-
+impl DescribeServiceAccessPoliciesRequest {
+    /// Sets `deployed`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeServiceAccessPoliciesRequest.deployed = Some(value.into());`.
+    pub fn deployed<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.deployed = Some(value.into());
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeServiceAccessPoliciesRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeServiceAccessPoliciesRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType)
+                                             -> DescribeServiceAccessPoliciesRequest {
+        DescribeServiceAccessPoliciesRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeServiceAccessPoliciesRequest` contents to a `SignedRequest`.
 struct DescribeServiceAccessPoliciesRequestSerializer;
@@ -2046,7 +2607,6 @@ pub struct DescribeServiceAccessPoliciesResponse {
     #[doc="<p>The access rules configured for the domain specified in the request.</p>"]
     pub access_policies: AccessPoliciesStatus,
 }
-
 struct DescribeServiceAccessPoliciesResponseDeserializer;
 impl DescribeServiceAccessPoliciesResponseDeserializer {
     #[allow(unused_variables)]
@@ -2101,7 +2661,37 @@ pub struct DescribeSuggestersRequest {
     #[doc="<p>The suggesters you want to describe.</p>"]
     pub suggester_names: Option<Vec<String>>,
 }
-
+impl DescribeSuggestersRequest {
+    /// Sets `deployed`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSuggestersRequest.deployed = Some(value.into());`.
+    pub fn deployed<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.deployed = Some(value.into());
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSuggestersRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `suggester_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSuggestersRequest.suggester_names = Some(value.into());`.
+    pub fn suggester_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.suggester_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeSuggestersRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType)
+                                             -> DescribeSuggestersRequest {
+        DescribeSuggestersRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeSuggestersRequest` contents to a `SignedRequest`.
 struct DescribeSuggestersRequestSerializer;
@@ -2132,7 +2722,6 @@ pub struct DescribeSuggestersResponse {
     #[doc="<p>The suggesters configured for the domain specified in the request.</p>"]
     pub suggesters: Vec<SuggesterStatus>,
 }
-
 struct DescribeSuggestersResponseDeserializer;
 impl DescribeSuggestersResponseDeserializer {
     #[allow(unused_variables)]
@@ -2186,7 +2775,37 @@ pub struct DocumentSuggesterOptions {
     #[doc="<p>The name of the index field you want to use for suggestions. </p>"]
     pub source_field: String,
 }
-
+impl DocumentSuggesterOptions {
+    /// Sets `fuzzy_matching`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DocumentSuggesterOptions.fuzzy_matching = Some(value.into());`.
+    pub fn fuzzy_matching<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fuzzy_matching = Some(value.into());
+        self
+    }
+    /// Sets `sort_expression`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DocumentSuggesterOptions.sort_expression = Some(value.into());`.
+    pub fn sort_expression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sort_expression = Some(value.into());
+        self
+    }
+    /// Sets `source_field`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DocumentSuggesterOptions.source_field = value.into();`.
+    pub fn source_field<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_field = value.into();
+        self
+    }
+    /// Returns a new instance of DocumentSuggesterOptions with optional fields set to `None`.
+    pub fn new<SourceFieldType: Into<String>>(source_field: SourceFieldType)
+                                              -> DocumentSuggesterOptions {
+        DocumentSuggesterOptions {
+            source_field: source_field.into(),
+            ..Default::default()
+        }
+    }
+}
 struct DocumentSuggesterOptionsDeserializer;
 impl DocumentSuggesterOptionsDeserializer {
     #[allow(unused_variables)]
@@ -2350,7 +2969,6 @@ pub struct DomainStatus {
     #[doc="<p>The service endpoint for requesting search results from a search domain.</p>"]
     pub search_service: Option<ServiceEndpoint>,
 }
-
 struct DomainStatusDeserializer;
 impl DomainStatusDeserializer {
     #[allow(unused_variables)]
@@ -2515,7 +3133,47 @@ pub struct DoubleArrayOptions {
     #[doc="<p>A list of source fields to map to the field. </p>"]
     pub source_fields: Option<String>,
 }
-
+impl DoubleArrayOptions {
+    /// Sets `default_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DoubleArrayOptions.default_value = Some(value.into());`.
+    pub fn default_value<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.default_value = Some(value.into());
+        self
+    }
+    /// Sets `facet_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DoubleArrayOptions.facet_enabled = Some(value.into());`.
+    pub fn facet_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.facet_enabled = Some(value.into());
+        self
+    }
+    /// Sets `return_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DoubleArrayOptions.return_enabled = Some(value.into());`.
+    pub fn return_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.return_enabled = Some(value.into());
+        self
+    }
+    /// Sets `search_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DoubleArrayOptions.search_enabled = Some(value.into());`.
+    pub fn search_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.search_enabled = Some(value.into());
+        self
+    }
+    /// Sets `source_fields`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DoubleArrayOptions.source_fields = Some(value.into());`.
+    pub fn source_fields<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_fields = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DoubleArrayOptions with optional fields set to `None`.
+    pub fn new() -> DoubleArrayOptions {
+        DoubleArrayOptions { ..Default::default() }
+    }
+}
 struct DoubleArrayOptionsDeserializer;
 impl DoubleArrayOptionsDeserializer {
     #[allow(unused_variables)]
@@ -2626,7 +3284,54 @@ pub struct DoubleOptions {
     #[doc="<p>The name of the source field to map to the field. </p>"]
     pub source_field: Option<String>,
 }
-
+impl DoubleOptions {
+    /// Sets `default_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DoubleOptions.default_value = Some(value.into());`.
+    pub fn default_value<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.default_value = Some(value.into());
+        self
+    }
+    /// Sets `facet_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DoubleOptions.facet_enabled = Some(value.into());`.
+    pub fn facet_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.facet_enabled = Some(value.into());
+        self
+    }
+    /// Sets `return_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DoubleOptions.return_enabled = Some(value.into());`.
+    pub fn return_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.return_enabled = Some(value.into());
+        self
+    }
+    /// Sets `search_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DoubleOptions.search_enabled = Some(value.into());`.
+    pub fn search_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.search_enabled = Some(value.into());
+        self
+    }
+    /// Sets `sort_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DoubleOptions.sort_enabled = Some(value.into());`.
+    pub fn sort_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.sort_enabled = Some(value.into());
+        self
+    }
+    /// Sets `source_field`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DoubleOptions.source_field = Some(value.into());`.
+    pub fn source_field<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_field = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DoubleOptions with optional fields set to `None`.
+    pub fn new() -> DoubleOptions {
+        DoubleOptions { ..Default::default() }
+    }
+}
 struct DoubleOptionsDeserializer;
 impl DoubleOptionsDeserializer {
     #[allow(unused_variables)]
@@ -2761,7 +3466,33 @@ pub struct Expression {
     pub expression_name: String,
     pub expression_value: String,
 }
-
+impl Expression {
+    /// Sets `expression_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Expression.expression_name = value.into();`.
+    pub fn expression_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.expression_name = value.into();
+        self
+    }
+    /// Sets `expression_value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Expression.expression_value = value.into();`.
+    pub fn expression_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.expression_value = value.into();
+        self
+    }
+    /// Returns a new instance of Expression with optional fields set to `None`.
+    pub fn new<ExpressionNameType: Into<String>, ExpressionValueType: Into<String>>
+        (expression_name: ExpressionNameType,
+         expression_value: ExpressionValueType)
+         -> Expression {
+        Expression {
+            expression_name: expression_name.into(),
+            expression_value: expression_value.into(),
+            ..Default::default()
+        }
+    }
+}
 struct ExpressionDeserializer;
 impl ExpressionDeserializer {
     #[allow(unused_variables)]
@@ -2835,7 +3566,6 @@ pub struct ExpressionStatus {
     pub options: Expression,
     pub status: OptionStatus,
 }
-
 struct ExpressionStatusDeserializer;
 impl ExpressionStatusDeserializer {
     #[allow(unused_variables)]
@@ -3025,7 +3755,22 @@ impl FieldValueDeserializer {
 pub struct IndexDocumentsRequest {
     pub domain_name: String,
 }
-
+impl IndexDocumentsRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IndexDocumentsRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of IndexDocumentsRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType) -> IndexDocumentsRequest {
+        IndexDocumentsRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `IndexDocumentsRequest` contents to a `SignedRequest`.
 struct IndexDocumentsRequestSerializer;
@@ -3047,7 +3792,6 @@ pub struct IndexDocumentsResponse {
     #[doc="<p>The names of the fields that are currently being indexed.</p>"]
     pub field_names: Option<Vec<String>>,
 }
-
 struct IndexDocumentsResponseDeserializer;
 impl IndexDocumentsResponseDeserializer {
     #[allow(unused_variables)]
@@ -3109,7 +3853,118 @@ pub struct IndexField {
     pub text_array_options: Option<TextArrayOptions>,
     pub text_options: Option<TextOptions>,
 }
-
+impl IndexField {
+    /// Sets `date_array_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IndexField.date_array_options = Some(value.into());`.
+    pub fn date_array_options<ValueType: Into<DateArrayOptions>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.date_array_options = Some(value.into());
+        self
+    }
+    /// Sets `date_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IndexField.date_options = Some(value.into());`.
+    pub fn date_options<ValueType: Into<DateOptions>>(mut self, value: ValueType) -> Self {
+        self.date_options = Some(value.into());
+        self
+    }
+    /// Sets `double_array_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IndexField.double_array_options = Some(value.into());`.
+    pub fn double_array_options<ValueType: Into<DoubleArrayOptions>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.double_array_options = Some(value.into());
+        self
+    }
+    /// Sets `double_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IndexField.double_options = Some(value.into());`.
+    pub fn double_options<ValueType: Into<DoubleOptions>>(mut self, value: ValueType) -> Self {
+        self.double_options = Some(value.into());
+        self
+    }
+    /// Sets `index_field_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IndexField.index_field_name = value.into();`.
+    pub fn index_field_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.index_field_name = value.into();
+        self
+    }
+    /// Sets `index_field_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IndexField.index_field_type = value.into();`.
+    pub fn index_field_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.index_field_type = value.into();
+        self
+    }
+    /// Sets `int_array_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IndexField.int_array_options = Some(value.into());`.
+    pub fn int_array_options<ValueType: Into<IntArrayOptions>>(mut self, value: ValueType) -> Self {
+        self.int_array_options = Some(value.into());
+        self
+    }
+    /// Sets `int_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IndexField.int_options = Some(value.into());`.
+    pub fn int_options<ValueType: Into<IntOptions>>(mut self, value: ValueType) -> Self {
+        self.int_options = Some(value.into());
+        self
+    }
+    /// Sets `lat_lon_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IndexField.lat_lon_options = Some(value.into());`.
+    pub fn lat_lon_options<ValueType: Into<LatLonOptions>>(mut self, value: ValueType) -> Self {
+        self.lat_lon_options = Some(value.into());
+        self
+    }
+    /// Sets `literal_array_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IndexField.literal_array_options = Some(value.into());`.
+    pub fn literal_array_options<ValueType: Into<LiteralArrayOptions>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.literal_array_options = Some(value.into());
+        self
+    }
+    /// Sets `literal_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IndexField.literal_options = Some(value.into());`.
+    pub fn literal_options<ValueType: Into<LiteralOptions>>(mut self, value: ValueType) -> Self {
+        self.literal_options = Some(value.into());
+        self
+    }
+    /// Sets `text_array_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IndexField.text_array_options = Some(value.into());`.
+    pub fn text_array_options<ValueType: Into<TextArrayOptions>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.text_array_options = Some(value.into());
+        self
+    }
+    /// Sets `text_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IndexField.text_options = Some(value.into());`.
+    pub fn text_options<ValueType: Into<TextOptions>>(mut self, value: ValueType) -> Self {
+        self.text_options = Some(value.into());
+        self
+    }
+    /// Returns a new instance of IndexField with optional fields set to `None`.
+    pub fn new<IndexFieldNameType: Into<String>, IndexFieldTypeType: Into<String>>
+        (index_field_name: IndexFieldNameType,
+         index_field_type: IndexFieldTypeType)
+         -> IndexField {
+        IndexField {
+            index_field_name: index_field_name.into(),
+            index_field_type: index_field_type.into(),
+            ..Default::default()
+        }
+    }
+}
 struct IndexFieldDeserializer;
 impl IndexFieldDeserializer {
     #[allow(unused_variables)]
@@ -3294,7 +4149,6 @@ pub struct IndexFieldStatus {
     pub options: IndexField,
     pub status: OptionStatus,
 }
-
 struct IndexFieldStatusDeserializer;
 impl IndexFieldStatusDeserializer {
     #[allow(unused_variables)]
@@ -3424,7 +4278,47 @@ pub struct IntArrayOptions {
     #[doc="<p>A list of source fields to map to the field. </p>"]
     pub source_fields: Option<String>,
 }
-
+impl IntArrayOptions {
+    /// Sets `default_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IntArrayOptions.default_value = Some(value.into());`.
+    pub fn default_value<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.default_value = Some(value.into());
+        self
+    }
+    /// Sets `facet_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IntArrayOptions.facet_enabled = Some(value.into());`.
+    pub fn facet_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.facet_enabled = Some(value.into());
+        self
+    }
+    /// Sets `return_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IntArrayOptions.return_enabled = Some(value.into());`.
+    pub fn return_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.return_enabled = Some(value.into());
+        self
+    }
+    /// Sets `search_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IntArrayOptions.search_enabled = Some(value.into());`.
+    pub fn search_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.search_enabled = Some(value.into());
+        self
+    }
+    /// Sets `source_fields`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IntArrayOptions.source_fields = Some(value.into());`.
+    pub fn source_fields<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_fields = Some(value.into());
+        self
+    }
+    /// Returns a new instance of IntArrayOptions with optional fields set to `None`.
+    pub fn new() -> IntArrayOptions {
+        IntArrayOptions { ..Default::default() }
+    }
+}
 struct IntArrayOptionsDeserializer;
 impl IntArrayOptionsDeserializer {
     #[allow(unused_variables)]
@@ -3535,7 +4429,54 @@ pub struct IntOptions {
     #[doc="<p>The name of the source field to map to the field. </p>"]
     pub source_field: Option<String>,
 }
-
+impl IntOptions {
+    /// Sets `default_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IntOptions.default_value = Some(value.into());`.
+    pub fn default_value<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.default_value = Some(value.into());
+        self
+    }
+    /// Sets `facet_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IntOptions.facet_enabled = Some(value.into());`.
+    pub fn facet_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.facet_enabled = Some(value.into());
+        self
+    }
+    /// Sets `return_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IntOptions.return_enabled = Some(value.into());`.
+    pub fn return_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.return_enabled = Some(value.into());
+        self
+    }
+    /// Sets `search_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IntOptions.search_enabled = Some(value.into());`.
+    pub fn search_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.search_enabled = Some(value.into());
+        self
+    }
+    /// Sets `sort_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IntOptions.sort_enabled = Some(value.into());`.
+    pub fn sort_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.sort_enabled = Some(value.into());
+        self
+    }
+    /// Sets `source_field`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IntOptions.source_field = Some(value.into());`.
+    pub fn source_field<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_field = Some(value.into());
+        self
+    }
+    /// Returns a new instance of IntOptions with optional fields set to `None`.
+    pub fn new() -> IntOptions {
+        IntOptions { ..Default::default() }
+    }
+}
 struct IntOptionsDeserializer;
 impl IntOptionsDeserializer {
     #[allow(unused_variables)]
@@ -3653,7 +4594,54 @@ pub struct LatLonOptions {
     pub sort_enabled: Option<bool>,
     pub source_field: Option<String>,
 }
-
+impl LatLonOptions {
+    /// Sets `default_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LatLonOptions.default_value = Some(value.into());`.
+    pub fn default_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_value = Some(value.into());
+        self
+    }
+    /// Sets `facet_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LatLonOptions.facet_enabled = Some(value.into());`.
+    pub fn facet_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.facet_enabled = Some(value.into());
+        self
+    }
+    /// Sets `return_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LatLonOptions.return_enabled = Some(value.into());`.
+    pub fn return_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.return_enabled = Some(value.into());
+        self
+    }
+    /// Sets `search_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LatLonOptions.search_enabled = Some(value.into());`.
+    pub fn search_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.search_enabled = Some(value.into());
+        self
+    }
+    /// Sets `sort_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LatLonOptions.sort_enabled = Some(value.into());`.
+    pub fn sort_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.sort_enabled = Some(value.into());
+        self
+    }
+    /// Sets `source_field`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LatLonOptions.source_field = Some(value.into());`.
+    pub fn source_field<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_field = Some(value.into());
+        self
+    }
+    /// Returns a new instance of LatLonOptions with optional fields set to `None`.
+    pub fn new() -> LatLonOptions {
+        LatLonOptions { ..Default::default() }
+    }
+}
 struct LatLonOptionsDeserializer;
 impl LatLonOptionsDeserializer {
     #[allow(unused_variables)]
@@ -3761,7 +4749,6 @@ pub struct Limits {
     pub maximum_partition_count: i64,
     pub maximum_replication_count: i64,
 }
-
 struct LimitsDeserializer;
 impl LimitsDeserializer {
     #[allow(unused_variables)]
@@ -3816,7 +4803,6 @@ pub struct ListDomainNamesResponse {
     #[doc="<p>The names of the search domains owned by an account.</p>"]
     pub domain_names: Option<::std::collections::HashMap<String, String>>,
 }
-
 struct ListDomainNamesResponseDeserializer;
 impl ListDomainNamesResponseDeserializer {
     #[allow(unused_variables)]
@@ -3874,7 +4860,47 @@ pub struct LiteralArrayOptions {
     #[doc="<p>A list of source fields to map to the field. </p>"]
     pub source_fields: Option<String>,
 }
-
+impl LiteralArrayOptions {
+    /// Sets `default_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LiteralArrayOptions.default_value = Some(value.into());`.
+    pub fn default_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_value = Some(value.into());
+        self
+    }
+    /// Sets `facet_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LiteralArrayOptions.facet_enabled = Some(value.into());`.
+    pub fn facet_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.facet_enabled = Some(value.into());
+        self
+    }
+    /// Sets `return_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LiteralArrayOptions.return_enabled = Some(value.into());`.
+    pub fn return_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.return_enabled = Some(value.into());
+        self
+    }
+    /// Sets `search_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LiteralArrayOptions.search_enabled = Some(value.into());`.
+    pub fn search_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.search_enabled = Some(value.into());
+        self
+    }
+    /// Sets `source_fields`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LiteralArrayOptions.source_fields = Some(value.into());`.
+    pub fn source_fields<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_fields = Some(value.into());
+        self
+    }
+    /// Returns a new instance of LiteralArrayOptions with optional fields set to `None`.
+    pub fn new() -> LiteralArrayOptions {
+        LiteralArrayOptions { ..Default::default() }
+    }
+}
 struct LiteralArrayOptionsDeserializer;
 impl LiteralArrayOptionsDeserializer {
     #[allow(unused_variables)]
@@ -3984,7 +5010,54 @@ pub struct LiteralOptions {
     pub sort_enabled: Option<bool>,
     pub source_field: Option<String>,
 }
-
+impl LiteralOptions {
+    /// Sets `default_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LiteralOptions.default_value = Some(value.into());`.
+    pub fn default_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_value = Some(value.into());
+        self
+    }
+    /// Sets `facet_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LiteralOptions.facet_enabled = Some(value.into());`.
+    pub fn facet_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.facet_enabled = Some(value.into());
+        self
+    }
+    /// Sets `return_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LiteralOptions.return_enabled = Some(value.into());`.
+    pub fn return_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.return_enabled = Some(value.into());
+        self
+    }
+    /// Sets `search_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LiteralOptions.search_enabled = Some(value.into());`.
+    pub fn search_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.search_enabled = Some(value.into());
+        self
+    }
+    /// Sets `sort_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LiteralOptions.sort_enabled = Some(value.into());`.
+    pub fn sort_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.sort_enabled = Some(value.into());
+        self
+    }
+    /// Sets `source_field`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `LiteralOptions.source_field = Some(value.into());`.
+    pub fn source_field<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_field = Some(value.into());
+        self
+    }
+    /// Returns a new instance of LiteralOptions with optional fields set to `None`.
+    pub fn new() -> LiteralOptions {
+        LiteralOptions { ..Default::default() }
+    }
+}
 struct LiteralOptionsDeserializer;
 impl LiteralOptionsDeserializer {
     #[allow(unused_variables)]
@@ -4171,7 +5244,6 @@ pub struct OptionStatus {
     #[doc="<p>A unique integer that indicates when this option was last updated.</p>"]
     pub update_version: Option<i64>,
 }
-
 struct OptionStatusDeserializer;
 impl OptionStatusDeserializer {
     #[allow(unused_variables)]
@@ -4284,7 +5356,33 @@ pub struct ScalingParameters {
     #[doc="<p>The number of replicas you want to preconfigure for each index partition.</p>"]
     pub desired_replication_count: Option<i64>,
 }
-
+impl ScalingParameters {
+    /// Sets `desired_instance_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScalingParameters.desired_instance_type = Some(value.into());`.
+    pub fn desired_instance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.desired_instance_type = Some(value.into());
+        self
+    }
+    /// Sets `desired_partition_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScalingParameters.desired_partition_count = Some(value.into());`.
+    pub fn desired_partition_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.desired_partition_count = Some(value.into());
+        self
+    }
+    /// Sets `desired_replication_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScalingParameters.desired_replication_count = Some(value.into());`.
+    pub fn desired_replication_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.desired_replication_count = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ScalingParameters with optional fields set to `None`.
+    pub fn new() -> ScalingParameters {
+        ScalingParameters { ..Default::default() }
+    }
+}
 struct ScalingParametersDeserializer;
 impl ScalingParametersDeserializer {
     #[allow(unused_variables)]
@@ -4370,7 +5468,6 @@ pub struct ScalingParametersStatus {
     pub options: ScalingParameters,
     pub status: OptionStatus,
 }
-
 struct ScalingParametersStatusDeserializer;
 impl ScalingParametersStatusDeserializer {
     #[allow(unused_variables)]
@@ -4436,7 +5533,6 @@ impl SearchInstanceTypeDeserializer {
 pub struct ServiceEndpoint {
     pub endpoint: Option<String>,
 }
-
 struct ServiceEndpointDeserializer;
 impl ServiceEndpointDeserializer {
     #[allow(unused_variables)]
@@ -4539,7 +5635,36 @@ pub struct Suggester {
     pub document_suggester_options: DocumentSuggesterOptions,
     pub suggester_name: String,
 }
-
+impl Suggester {
+    /// Sets `document_suggester_options`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Suggester.document_suggester_options = value.into();`.
+    pub fn document_suggester_options<ValueType: Into<DocumentSuggesterOptions>>(mut self,
+                                                                                 value: ValueType)
+                                                                                 -> Self {
+        self.document_suggester_options = value.into();
+        self
+    }
+    /// Sets `suggester_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Suggester.suggester_name = value.into();`.
+    pub fn suggester_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.suggester_name = value.into();
+        self
+    }
+    /// Returns a new instance of Suggester with optional fields set to `None`.
+    pub fn new<DocumentSuggesterOptionsType: Into<DocumentSuggesterOptions>,
+               SuggesterNameType: Into<String>>
+        (document_suggester_options: DocumentSuggesterOptionsType,
+         suggester_name: SuggesterNameType)
+         -> Suggester {
+        Suggester {
+            document_suggester_options: document_suggester_options.into(),
+            suggester_name: suggester_name.into(),
+            ..Default::default()
+        }
+    }
+}
 struct SuggesterDeserializer;
 impl SuggesterDeserializer {
     #[allow(unused_variables)]
@@ -4628,7 +5753,6 @@ pub struct SuggesterStatus {
     pub options: Suggester,
     pub status: OptionStatus,
 }
-
 struct SuggesterStatusDeserializer;
 impl SuggesterStatusDeserializer {
     #[allow(unused_variables)]
@@ -4730,7 +5854,47 @@ pub struct TextArrayOptions {
     #[doc="<p>A list of source fields to map to the field. </p>"]
     pub source_fields: Option<String>,
 }
-
+impl TextArrayOptions {
+    /// Sets `analysis_scheme`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TextArrayOptions.analysis_scheme = Some(value.into());`.
+    pub fn analysis_scheme<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.analysis_scheme = Some(value.into());
+        self
+    }
+    /// Sets `default_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TextArrayOptions.default_value = Some(value.into());`.
+    pub fn default_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_value = Some(value.into());
+        self
+    }
+    /// Sets `highlight_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TextArrayOptions.highlight_enabled = Some(value.into());`.
+    pub fn highlight_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.highlight_enabled = Some(value.into());
+        self
+    }
+    /// Sets `return_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TextArrayOptions.return_enabled = Some(value.into());`.
+    pub fn return_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.return_enabled = Some(value.into());
+        self
+    }
+    /// Sets `source_fields`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TextArrayOptions.source_fields = Some(value.into());`.
+    pub fn source_fields<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_fields = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TextArrayOptions with optional fields set to `None`.
+    pub fn new() -> TextArrayOptions {
+        TextArrayOptions { ..Default::default() }
+    }
+}
 struct TextArrayOptionsDeserializer;
 impl TextArrayOptionsDeserializer {
     #[allow(unused_variables)]
@@ -4839,7 +6003,54 @@ pub struct TextOptions {
     pub sort_enabled: Option<bool>,
     pub source_field: Option<String>,
 }
-
+impl TextOptions {
+    /// Sets `analysis_scheme`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TextOptions.analysis_scheme = Some(value.into());`.
+    pub fn analysis_scheme<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.analysis_scheme = Some(value.into());
+        self
+    }
+    /// Sets `default_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TextOptions.default_value = Some(value.into());`.
+    pub fn default_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_value = Some(value.into());
+        self
+    }
+    /// Sets `highlight_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TextOptions.highlight_enabled = Some(value.into());`.
+    pub fn highlight_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.highlight_enabled = Some(value.into());
+        self
+    }
+    /// Sets `return_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TextOptions.return_enabled = Some(value.into());`.
+    pub fn return_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.return_enabled = Some(value.into());
+        self
+    }
+    /// Sets `sort_enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TextOptions.sort_enabled = Some(value.into());`.
+    pub fn sort_enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.sort_enabled = Some(value.into());
+        self
+    }
+    /// Sets `source_field`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TextOptions.source_field = Some(value.into());`.
+    pub fn source_field<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_field = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TextOptions with optional fields set to `None`.
+    pub fn new() -> TextOptions {
+        TextOptions { ..Default::default() }
+    }
+}
 struct TextOptionsDeserializer;
 impl TextOptionsDeserializer {
     #[allow(unused_variables)]
@@ -4962,7 +6173,33 @@ pub struct UpdateAvailabilityOptionsRequest {
     #[doc="<p>You expand an existing search domain to a second Availability Zone by setting the Multi-AZ option to true. Similarly, you can turn off the Multi-AZ option to downgrade the domain to a single Availability Zone by setting the Multi-AZ option to <code>false</code>. </p>"]
     pub multi_az: bool,
 }
-
+impl UpdateAvailabilityOptionsRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAvailabilityOptionsRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `multi_az`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAvailabilityOptionsRequest.multi_az = value.into();`.
+    pub fn multi_az<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.multi_az = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateAvailabilityOptionsRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>, MultiAZType: Into<bool>>
+        (domain_name: DomainNameType,
+         multi_az: MultiAZType)
+         -> UpdateAvailabilityOptionsRequest {
+        UpdateAvailabilityOptionsRequest {
+            domain_name: domain_name.into(),
+            multi_az: multi_az.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateAvailabilityOptionsRequest` contents to a `SignedRequest`.
 struct UpdateAvailabilityOptionsRequestSerializer;
@@ -4986,7 +6223,6 @@ pub struct UpdateAvailabilityOptionsResponse {
     #[doc="<p>The newly-configured availability options. Indicates whether Multi-AZ is enabled for the domain. </p>"]
     pub availability_options: Option<AvailabilityOptionsStatus>,
 }
-
 struct UpdateAvailabilityOptionsResponseDeserializer;
 impl UpdateAvailabilityOptionsResponseDeserializer {
     #[allow(unused_variables)]
@@ -5035,7 +6271,35 @@ pub struct UpdateScalingParametersRequest {
     pub domain_name: String,
     pub scaling_parameters: ScalingParameters,
 }
-
+impl UpdateScalingParametersRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateScalingParametersRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `scaling_parameters`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateScalingParametersRequest.scaling_parameters = value.into();`.
+    pub fn scaling_parameters<ValueType: Into<ScalingParameters>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.scaling_parameters = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateScalingParametersRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>, ScalingParametersType: Into<ScalingParameters>>
+        (domain_name: DomainNameType,
+         scaling_parameters: ScalingParametersType)
+         -> UpdateScalingParametersRequest {
+        UpdateScalingParametersRequest {
+            domain_name: domain_name.into(),
+            scaling_parameters: scaling_parameters.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateScalingParametersRequest` contents to a `SignedRequest`.
 struct UpdateScalingParametersRequestSerializer;
@@ -5059,7 +6323,6 @@ impl UpdateScalingParametersRequestSerializer {
 pub struct UpdateScalingParametersResponse {
     pub scaling_parameters: ScalingParametersStatus,
 }
-
 struct UpdateScalingParametersResponseDeserializer;
 impl UpdateScalingParametersResponseDeserializer {
     #[allow(unused_variables)]
@@ -5111,7 +6374,33 @@ pub struct UpdateServiceAccessPoliciesRequest {
     pub access_policies: String,
     pub domain_name: String,
 }
-
+impl UpdateServiceAccessPoliciesRequest {
+    /// Sets `access_policies`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateServiceAccessPoliciesRequest.access_policies = value.into();`.
+    pub fn access_policies<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.access_policies = value.into();
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateServiceAccessPoliciesRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateServiceAccessPoliciesRequest with optional fields set to `None`.
+    pub fn new<AccessPoliciesType: Into<String>, DomainNameType: Into<String>>
+        (access_policies: AccessPoliciesType,
+         domain_name: DomainNameType)
+         -> UpdateServiceAccessPoliciesRequest {
+        UpdateServiceAccessPoliciesRequest {
+            access_policies: access_policies.into(),
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateServiceAccessPoliciesRequest` contents to a `SignedRequest`.
 struct UpdateServiceAccessPoliciesRequestSerializer;
@@ -5135,7 +6424,6 @@ pub struct UpdateServiceAccessPoliciesResponse {
     #[doc="<p>The access rules configured for the domain.</p>"]
     pub access_policies: AccessPoliciesStatus,
 }
-
 struct UpdateServiceAccessPoliciesResponseDeserializer;
 impl UpdateServiceAccessPoliciesResponseDeserializer {
     #[allow(unused_variables)]

@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -47,7 +48,64 @@ pub struct AllocateConnectionOnInterconnectRequest {
     #[serde(rename="vlan")]
     pub vlan: i64,
 }
-
+impl AllocateConnectionOnInterconnectRequest {
+    /// Sets `bandwidth`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocateConnectionOnInterconnectRequest.bandwidth = value.into();`.
+    pub fn bandwidth<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bandwidth = value.into();
+        self
+    }
+    /// Sets `connection_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocateConnectionOnInterconnectRequest.connection_name = value.into();`.
+    pub fn connection_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connection_name = value.into();
+        self
+    }
+    /// Sets `interconnect_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocateConnectionOnInterconnectRequest.interconnect_id = value.into();`.
+    pub fn interconnect_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.interconnect_id = value.into();
+        self
+    }
+    /// Sets `owner_account`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocateConnectionOnInterconnectRequest.owner_account = value.into();`.
+    pub fn owner_account<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.owner_account = value.into();
+        self
+    }
+    /// Sets `vlan`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocateConnectionOnInterconnectRequest.vlan = value.into();`.
+    pub fn vlan<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.vlan = value.into();
+        self
+    }
+    /// Returns a new instance of AllocateConnectionOnInterconnectRequest with optional fields set to `None`.
+    pub fn new<bandwidthType: Into<String>,
+               connectionNameType: Into<String>,
+               interconnectIdType: Into<String>,
+               ownerAccountType: Into<String>,
+               vlanType: Into<i64>>
+        (bandwidth: bandwidthType,
+         connection_name: connectionNameType,
+         interconnect_id: interconnectIdType,
+         owner_account: ownerAccountType,
+         vlan: vlanType)
+         -> AllocateConnectionOnInterconnectRequest {
+        AllocateConnectionOnInterconnectRequest {
+            bandwidth: bandwidth.into(),
+            connection_name: connection_name.into(),
+            interconnect_id: interconnect_id.into(),
+            owner_account: owner_account.into(),
+            vlan: vlan.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Container for the parameters to theHostedConnection operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AllocateHostedConnectionRequest {
@@ -67,7 +125,64 @@ pub struct AllocateHostedConnectionRequest {
     #[serde(rename="vlan")]
     pub vlan: i64,
 }
-
+impl AllocateHostedConnectionRequest {
+    /// Sets `bandwidth`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocateHostedConnectionRequest.bandwidth = value.into();`.
+    pub fn bandwidth<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bandwidth = value.into();
+        self
+    }
+    /// Sets `connection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocateHostedConnectionRequest.connection_id = value.into();`.
+    pub fn connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connection_id = value.into();
+        self
+    }
+    /// Sets `connection_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocateHostedConnectionRequest.connection_name = value.into();`.
+    pub fn connection_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connection_name = value.into();
+        self
+    }
+    /// Sets `owner_account`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocateHostedConnectionRequest.owner_account = value.into();`.
+    pub fn owner_account<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.owner_account = value.into();
+        self
+    }
+    /// Sets `vlan`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocateHostedConnectionRequest.vlan = value.into();`.
+    pub fn vlan<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.vlan = value.into();
+        self
+    }
+    /// Returns a new instance of AllocateHostedConnectionRequest with optional fields set to `None`.
+    pub fn new<bandwidthType: Into<String>,
+               connectionIdType: Into<String>,
+               connectionNameType: Into<String>,
+               ownerAccountType: Into<String>,
+               vlanType: Into<i64>>
+        (bandwidth: bandwidthType,
+         connection_id: connectionIdType,
+         connection_name: connectionNameType,
+         owner_account: ownerAccountType,
+         vlan: vlanType)
+         -> AllocateHostedConnectionRequest {
+        AllocateHostedConnectionRequest {
+            bandwidth: bandwidth.into(),
+            connection_id: connection_id.into(),
+            connection_name: connection_name.into(),
+            owner_account: owner_account.into(),
+            vlan: vlan.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Container for the parameters to the AllocatePrivateVirtualInterface operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AllocatePrivateVirtualInterfaceRequest {
@@ -81,7 +196,45 @@ pub struct AllocatePrivateVirtualInterfaceRequest {
     #[serde(rename="ownerAccount")]
     pub owner_account: String,
 }
-
+impl AllocatePrivateVirtualInterfaceRequest {
+    /// Sets `connection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocatePrivateVirtualInterfaceRequest.connection_id = value.into();`.
+    pub fn connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connection_id = value.into();
+        self
+    }
+    /// Sets `new_private_virtual_interface_allocation`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocatePrivateVirtualInterfaceRequest.new_private_virtual_interface_allocation = value.into();`.
+pub fn new_private_virtual_interface_allocation<ValueType: Into<NewPrivateVirtualInterfaceAllocation>>(mut self, value: ValueType) -> Self{
+        self.new_private_virtual_interface_allocation = value.into();
+        self
+    }
+    /// Sets `owner_account`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocatePrivateVirtualInterfaceRequest.owner_account = value.into();`.
+    pub fn owner_account<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.owner_account = value.into();
+        self
+    }
+    /// Returns a new instance of AllocatePrivateVirtualInterfaceRequest with optional fields set to `None`.
+    pub fn new<connectionIdType: Into<String>,
+               newPrivateVirtualInterfaceAllocationType: Into<NewPrivateVirtualInterfaceAllocation>,
+               ownerAccountType: Into<String>>
+        (connection_id: connectionIdType,
+         new_private_virtual_interface_allocation: newPrivateVirtualInterfaceAllocationType,
+         owner_account: ownerAccountType)
+         -> AllocatePrivateVirtualInterfaceRequest {
+        AllocatePrivateVirtualInterfaceRequest {
+            connection_id: connection_id.into(),
+            new_private_virtual_interface_allocation: new_private_virtual_interface_allocation
+                .into(),
+            owner_account: owner_account.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Container for the parameters to the AllocatePublicVirtualInterface operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AllocatePublicVirtualInterfaceRequest {
@@ -95,7 +248,44 @@ pub struct AllocatePublicVirtualInterfaceRequest {
     #[serde(rename="ownerAccount")]
     pub owner_account: String,
 }
-
+impl AllocatePublicVirtualInterfaceRequest {
+    /// Sets `connection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocatePublicVirtualInterfaceRequest.connection_id = value.into();`.
+    pub fn connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connection_id = value.into();
+        self
+    }
+    /// Sets `new_public_virtual_interface_allocation`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocatePublicVirtualInterfaceRequest.new_public_virtual_interface_allocation = value.into();`.
+pub fn new_public_virtual_interface_allocation<ValueType: Into<NewPublicVirtualInterfaceAllocation>>(mut self, value: ValueType) -> Self{
+        self.new_public_virtual_interface_allocation = value.into();
+        self
+    }
+    /// Sets `owner_account`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AllocatePublicVirtualInterfaceRequest.owner_account = value.into();`.
+    pub fn owner_account<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.owner_account = value.into();
+        self
+    }
+    /// Returns a new instance of AllocatePublicVirtualInterfaceRequest with optional fields set to `None`.
+    pub fn new<connectionIdType: Into<String>,
+               newPublicVirtualInterfaceAllocationType: Into<NewPublicVirtualInterfaceAllocation>,
+               ownerAccountType: Into<String>>
+        (connection_id: connectionIdType,
+         new_public_virtual_interface_allocation: newPublicVirtualInterfaceAllocationType,
+         owner_account: ownerAccountType)
+         -> AllocatePublicVirtualInterfaceRequest {
+        AllocatePublicVirtualInterfaceRequest {
+            connection_id: connection_id.into(),
+            new_public_virtual_interface_allocation: new_public_virtual_interface_allocation.into(),
+            owner_account: owner_account.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Container for the parameters to the AssociateConnectionWithLag operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AssociateConnectionWithLagRequest {
@@ -106,7 +296,33 @@ pub struct AssociateConnectionWithLagRequest {
     #[serde(rename="lagId")]
     pub lag_id: String,
 }
-
+impl AssociateConnectionWithLagRequest {
+    /// Sets `connection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateConnectionWithLagRequest.connection_id = value.into();`.
+    pub fn connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connection_id = value.into();
+        self
+    }
+    /// Sets `lag_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateConnectionWithLagRequest.lag_id = value.into();`.
+    pub fn lag_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lag_id = value.into();
+        self
+    }
+    /// Returns a new instance of AssociateConnectionWithLagRequest with optional fields set to `None`.
+    pub fn new<connectionIdType: Into<String>, lagIdType: Into<String>>
+        (connection_id: connectionIdType,
+         lag_id: lagIdType)
+         -> AssociateConnectionWithLagRequest {
+        AssociateConnectionWithLagRequest {
+            connection_id: connection_id.into(),
+            lag_id: lag_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Container for the parameters to the AssociateHostedConnection operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AssociateHostedConnectionRequest {
@@ -117,7 +333,33 @@ pub struct AssociateHostedConnectionRequest {
     #[serde(rename="parentConnectionId")]
     pub parent_connection_id: String,
 }
-
+impl AssociateHostedConnectionRequest {
+    /// Sets `connection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateHostedConnectionRequest.connection_id = value.into();`.
+    pub fn connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connection_id = value.into();
+        self
+    }
+    /// Sets `parent_connection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateHostedConnectionRequest.parent_connection_id = value.into();`.
+    pub fn parent_connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.parent_connection_id = value.into();
+        self
+    }
+    /// Returns a new instance of AssociateHostedConnectionRequest with optional fields set to `None`.
+    pub fn new<connectionIdType: Into<String>, parentConnectionIdType: Into<String>>
+        (connection_id: connectionIdType,
+         parent_connection_id: parentConnectionIdType)
+         -> AssociateHostedConnectionRequest {
+        AssociateHostedConnectionRequest {
+            connection_id: connection_id.into(),
+            parent_connection_id: parent_connection_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Container for the parameters to the AssociateVirtualInterface operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AssociateVirtualInterfaceRequest {
@@ -128,7 +370,33 @@ pub struct AssociateVirtualInterfaceRequest {
     #[serde(rename="virtualInterfaceId")]
     pub virtual_interface_id: String,
 }
-
+impl AssociateVirtualInterfaceRequest {
+    /// Sets `connection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateVirtualInterfaceRequest.connection_id = value.into();`.
+    pub fn connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connection_id = value.into();
+        self
+    }
+    /// Sets `virtual_interface_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateVirtualInterfaceRequest.virtual_interface_id = value.into();`.
+    pub fn virtual_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.virtual_interface_id = value.into();
+        self
+    }
+    /// Returns a new instance of AssociateVirtualInterfaceRequest with optional fields set to `None`.
+    pub fn new<connectionIdType: Into<String>, virtualInterfaceIdType: Into<String>>
+        (connection_id: connectionIdType,
+         virtual_interface_id: virtualInterfaceIdType)
+         -> AssociateVirtualInterfaceRequest {
+        AssociateVirtualInterfaceRequest {
+            connection_id: connection_id.into(),
+            virtual_interface_id: virtual_interface_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A structure containing information about a BGP peer.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BGPPeer {
@@ -154,14 +422,29 @@ pub struct BGPPeer {
     #[serde(skip_serializing_if="Option::is_none")]
     pub customer_address: Option<String>,
 }
-
 #[doc="<p>Container for the parameters to the ConfirmConnection operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ConfirmConnectionRequest {
     #[serde(rename="connectionId")]
     pub connection_id: String,
 }
-
+impl ConfirmConnectionRequest {
+    /// Sets `connection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmConnectionRequest.connection_id = value.into();`.
+    pub fn connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connection_id = value.into();
+        self
+    }
+    /// Returns a new instance of ConfirmConnectionRequest with optional fields set to `None`.
+    pub fn new<connectionIdType: Into<String>>(connection_id: connectionIdType)
+                                               -> ConfirmConnectionRequest {
+        ConfirmConnectionRequest {
+            connection_id: connection_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response received when ConfirmConnection is called.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ConfirmConnectionResponse {
@@ -169,7 +452,6 @@ pub struct ConfirmConnectionResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub connection_state: Option<String>,
 }
-
 #[doc="<p>Container for the parameters to the ConfirmPrivateVirtualInterface operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ConfirmPrivateVirtualInterfaceRequest {
@@ -179,7 +461,33 @@ pub struct ConfirmPrivateVirtualInterfaceRequest {
     #[serde(rename="virtualInterfaceId")]
     pub virtual_interface_id: String,
 }
-
+impl ConfirmPrivateVirtualInterfaceRequest {
+    /// Sets `virtual_gateway_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmPrivateVirtualInterfaceRequest.virtual_gateway_id = value.into();`.
+    pub fn virtual_gateway_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.virtual_gateway_id = value.into();
+        self
+    }
+    /// Sets `virtual_interface_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmPrivateVirtualInterfaceRequest.virtual_interface_id = value.into();`.
+    pub fn virtual_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.virtual_interface_id = value.into();
+        self
+    }
+    /// Returns a new instance of ConfirmPrivateVirtualInterfaceRequest with optional fields set to `None`.
+    pub fn new<virtualGatewayIdType: Into<String>, virtualInterfaceIdType: Into<String>>
+        (virtual_gateway_id: virtualGatewayIdType,
+         virtual_interface_id: virtualInterfaceIdType)
+         -> ConfirmPrivateVirtualInterfaceRequest {
+        ConfirmPrivateVirtualInterfaceRequest {
+            virtual_gateway_id: virtual_gateway_id.into(),
+            virtual_interface_id: virtual_interface_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response received when ConfirmPrivateVirtualInterface is called.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ConfirmPrivateVirtualInterfaceResponse {
@@ -187,14 +495,29 @@ pub struct ConfirmPrivateVirtualInterfaceResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub virtual_interface_state: Option<String>,
 }
-
 #[doc="<p>Container for the parameters to the ConfirmPublicVirtualInterface operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ConfirmPublicVirtualInterfaceRequest {
     #[serde(rename="virtualInterfaceId")]
     pub virtual_interface_id: String,
 }
-
+impl ConfirmPublicVirtualInterfaceRequest {
+    /// Sets `virtual_interface_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmPublicVirtualInterfaceRequest.virtual_interface_id = value.into();`.
+    pub fn virtual_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.virtual_interface_id = value.into();
+        self
+    }
+    /// Returns a new instance of ConfirmPublicVirtualInterfaceRequest with optional fields set to `None`.
+    pub fn new<virtualInterfaceIdType: Into<String>>(virtual_interface_id: virtualInterfaceIdType)
+                                                     -> ConfirmPublicVirtualInterfaceRequest {
+        ConfirmPublicVirtualInterfaceRequest {
+            virtual_interface_id: virtual_interface_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response received when ConfirmPublicVirtualInterface is called.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ConfirmPublicVirtualInterfaceResponse {
@@ -202,7 +525,6 @@ pub struct ConfirmPublicVirtualInterfaceResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub virtual_interface_state: Option<String>,
 }
-
 #[doc="<p>A connection represents the physical network connection between the AWS Direct Connect location and the customer.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Connection {
@@ -248,7 +570,6 @@ pub struct Connection {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vlan: Option<i64>,
 }
-
 #[doc="<p>A structure containing a list of connections.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Connections {
@@ -257,7 +578,6 @@ pub struct Connections {
     #[serde(skip_serializing_if="Option::is_none")]
     pub connections: Option<Vec<Connection>>,
 }
-
 #[doc="<p>Container for the parameters to the CreateBGPPeer operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateBGPPeerRequest {
@@ -270,7 +590,26 @@ pub struct CreateBGPPeerRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub virtual_interface_id: Option<String>,
 }
-
+impl CreateBGPPeerRequest {
+    /// Sets `new_bgp_peer`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBGPPeerRequest.new_bgp_peer = Some(value.into());`.
+    pub fn new_bgp_peer<ValueType: Into<NewBGPPeer>>(mut self, value: ValueType) -> Self {
+        self.new_bgp_peer = Some(value.into());
+        self
+    }
+    /// Sets `virtual_interface_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBGPPeerRequest.virtual_interface_id = Some(value.into());`.
+    pub fn virtual_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.virtual_interface_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateBGPPeerRequest with optional fields set to `None`.
+    pub fn new() -> CreateBGPPeerRequest {
+        CreateBGPPeerRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The response received when CreateBGPPeer is called.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateBGPPeerResponse {
@@ -278,7 +617,6 @@ pub struct CreateBGPPeerResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub virtual_interface: Option<VirtualInterface>,
 }
-
 #[doc="<p>Container for the parameters to the CreateConnection operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateConnectionRequest {
@@ -292,7 +630,51 @@ pub struct CreateConnectionRequest {
     #[serde(rename="location")]
     pub location: String,
 }
-
+impl CreateConnectionRequest {
+    /// Sets `bandwidth`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConnectionRequest.bandwidth = value.into();`.
+    pub fn bandwidth<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bandwidth = value.into();
+        self
+    }
+    /// Sets `connection_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConnectionRequest.connection_name = value.into();`.
+    pub fn connection_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connection_name = value.into();
+        self
+    }
+    /// Sets `lag_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConnectionRequest.lag_id = Some(value.into());`.
+    pub fn lag_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lag_id = Some(value.into());
+        self
+    }
+    /// Sets `location`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConnectionRequest.location = value.into();`.
+    pub fn location<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.location = value.into();
+        self
+    }
+    /// Returns a new instance of CreateConnectionRequest with optional fields set to `None`.
+    pub fn new<bandwidthType: Into<String>,
+               connectionNameType: Into<String>,
+               locationType: Into<String>>
+        (bandwidth: bandwidthType,
+         connection_name: connectionNameType,
+         location: locationType)
+         -> CreateConnectionRequest {
+        CreateConnectionRequest {
+            bandwidth: bandwidth.into(),
+            connection_name: connection_name.into(),
+            location: location.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Container for the parameters to the CreateInterconnect operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateInterconnectRequest {
@@ -309,7 +691,51 @@ pub struct CreateInterconnectRequest {
     #[serde(rename="location")]
     pub location: String,
 }
-
+impl CreateInterconnectRequest {
+    /// Sets `bandwidth`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInterconnectRequest.bandwidth = value.into();`.
+    pub fn bandwidth<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bandwidth = value.into();
+        self
+    }
+    /// Sets `interconnect_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInterconnectRequest.interconnect_name = value.into();`.
+    pub fn interconnect_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.interconnect_name = value.into();
+        self
+    }
+    /// Sets `lag_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInterconnectRequest.lag_id = Some(value.into());`.
+    pub fn lag_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lag_id = Some(value.into());
+        self
+    }
+    /// Sets `location`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateInterconnectRequest.location = value.into();`.
+    pub fn location<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.location = value.into();
+        self
+    }
+    /// Returns a new instance of CreateInterconnectRequest with optional fields set to `None`.
+    pub fn new<bandwidthType: Into<String>,
+               interconnectNameType: Into<String>,
+               locationType: Into<String>>
+        (bandwidth: bandwidthType,
+         interconnect_name: interconnectNameType,
+         location: locationType)
+         -> CreateInterconnectRequest {
+        CreateInterconnectRequest {
+            bandwidth: bandwidth.into(),
+            interconnect_name: interconnect_name.into(),
+            location: location.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Container for the parameters to the CreateLag operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateLagRequest {
@@ -330,7 +756,61 @@ pub struct CreateLagRequest {
     #[serde(rename="numberOfConnections")]
     pub number_of_connections: i64,
 }
-
+impl CreateLagRequest {
+    /// Sets `connection_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLagRequest.connection_id = Some(value.into());`.
+    pub fn connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connection_id = Some(value.into());
+        self
+    }
+    /// Sets `connections_bandwidth`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLagRequest.connections_bandwidth = value.into();`.
+    pub fn connections_bandwidth<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connections_bandwidth = value.into();
+        self
+    }
+    /// Sets `lag_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLagRequest.lag_name = value.into();`.
+    pub fn lag_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lag_name = value.into();
+        self
+    }
+    /// Sets `location`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLagRequest.location = value.into();`.
+    pub fn location<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.location = value.into();
+        self
+    }
+    /// Sets `number_of_connections`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLagRequest.number_of_connections = value.into();`.
+    pub fn number_of_connections<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.number_of_connections = value.into();
+        self
+    }
+    /// Returns a new instance of CreateLagRequest with optional fields set to `None`.
+    pub fn new<connectionsBandwidthType: Into<String>,
+               lagNameType: Into<String>,
+               locationType: Into<String>,
+               numberOfConnectionsType: Into<i64>>
+        (connections_bandwidth: connectionsBandwidthType,
+         lag_name: lagNameType,
+         location: locationType,
+         number_of_connections: numberOfConnectionsType)
+         -> CreateLagRequest {
+        CreateLagRequest {
+            connections_bandwidth: connections_bandwidth.into(),
+            lag_name: lag_name.into(),
+            location: location.into(),
+            number_of_connections: number_of_connections.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Container for the parameters to the CreatePrivateVirtualInterface operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreatePrivateVirtualInterfaceRequest {
@@ -340,7 +820,34 @@ pub struct CreatePrivateVirtualInterfaceRequest {
     #[serde(rename="newPrivateVirtualInterface")]
     pub new_private_virtual_interface: NewPrivateVirtualInterface,
 }
-
+impl CreatePrivateVirtualInterfaceRequest {
+    /// Sets `connection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePrivateVirtualInterfaceRequest.connection_id = value.into();`.
+    pub fn connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connection_id = value.into();
+        self
+    }
+    /// Sets `new_private_virtual_interface`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePrivateVirtualInterfaceRequest.new_private_virtual_interface = value.into();`.
+pub fn new_private_virtual_interface<ValueType: Into<NewPrivateVirtualInterface>>(mut self, value: ValueType) -> Self{
+        self.new_private_virtual_interface = value.into();
+        self
+    }
+    /// Returns a new instance of CreatePrivateVirtualInterfaceRequest with optional fields set to `None`.
+    pub fn new<connectionIdType: Into<String>,
+               newPrivateVirtualInterfaceType: Into<NewPrivateVirtualInterface>>
+        (connection_id: connectionIdType,
+         new_private_virtual_interface: newPrivateVirtualInterfaceType)
+         -> CreatePrivateVirtualInterfaceRequest {
+        CreatePrivateVirtualInterfaceRequest {
+            connection_id: connection_id.into(),
+            new_private_virtual_interface: new_private_virtual_interface.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Container for the parameters to the CreatePublicVirtualInterface operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreatePublicVirtualInterfaceRequest {
@@ -350,7 +857,34 @@ pub struct CreatePublicVirtualInterfaceRequest {
     #[serde(rename="newPublicVirtualInterface")]
     pub new_public_virtual_interface: NewPublicVirtualInterface,
 }
-
+impl CreatePublicVirtualInterfaceRequest {
+    /// Sets `connection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePublicVirtualInterfaceRequest.connection_id = value.into();`.
+    pub fn connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connection_id = value.into();
+        self
+    }
+    /// Sets `new_public_virtual_interface`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePublicVirtualInterfaceRequest.new_public_virtual_interface = value.into();`.
+pub fn new_public_virtual_interface<ValueType: Into<NewPublicVirtualInterface>>(mut self, value: ValueType) -> Self{
+        self.new_public_virtual_interface = value.into();
+        self
+    }
+    /// Returns a new instance of CreatePublicVirtualInterfaceRequest with optional fields set to `None`.
+    pub fn new<connectionIdType: Into<String>,
+               newPublicVirtualInterfaceType: Into<NewPublicVirtualInterface>>
+        (connection_id: connectionIdType,
+         new_public_virtual_interface: newPublicVirtualInterfaceType)
+         -> CreatePublicVirtualInterfaceRequest {
+        CreatePublicVirtualInterfaceRequest {
+            connection_id: connection_id.into(),
+            new_public_virtual_interface: new_public_virtual_interface.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Container for the parameters to the DeleteBGPPeer operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteBGPPeerRequest {
@@ -365,7 +899,33 @@ pub struct DeleteBGPPeerRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub virtual_interface_id: Option<String>,
 }
-
+impl DeleteBGPPeerRequest {
+    /// Sets `asn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBGPPeerRequest.asn = Some(value.into());`.
+    pub fn asn<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.asn = Some(value.into());
+        self
+    }
+    /// Sets `customer_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBGPPeerRequest.customer_address = Some(value.into());`.
+    pub fn customer_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.customer_address = Some(value.into());
+        self
+    }
+    /// Sets `virtual_interface_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBGPPeerRequest.virtual_interface_id = Some(value.into());`.
+    pub fn virtual_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.virtual_interface_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteBGPPeerRequest with optional fields set to `None`.
+    pub fn new() -> DeleteBGPPeerRequest {
+        DeleteBGPPeerRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The response received when DeleteBGPPeer is called.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteBGPPeerResponse {
@@ -373,21 +933,52 @@ pub struct DeleteBGPPeerResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub virtual_interface: Option<VirtualInterface>,
 }
-
 #[doc="<p>Container for the parameters to the DeleteConnection operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteConnectionRequest {
     #[serde(rename="connectionId")]
     pub connection_id: String,
 }
-
+impl DeleteConnectionRequest {
+    /// Sets `connection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteConnectionRequest.connection_id = value.into();`.
+    pub fn connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connection_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteConnectionRequest with optional fields set to `None`.
+    pub fn new<connectionIdType: Into<String>>(connection_id: connectionIdType)
+                                               -> DeleteConnectionRequest {
+        DeleteConnectionRequest {
+            connection_id: connection_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Container for the parameters to the DeleteInterconnect operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteInterconnectRequest {
     #[serde(rename="interconnectId")]
     pub interconnect_id: String,
 }
-
+impl DeleteInterconnectRequest {
+    /// Sets `interconnect_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteInterconnectRequest.interconnect_id = value.into();`.
+    pub fn interconnect_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.interconnect_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteInterconnectRequest with optional fields set to `None`.
+    pub fn new<interconnectIdType: Into<String>>(interconnect_id: interconnectIdType)
+                                                 -> DeleteInterconnectRequest {
+        DeleteInterconnectRequest {
+            interconnect_id: interconnect_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response received when DeleteInterconnect is called.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteInterconnectResponse {
@@ -395,7 +986,6 @@ pub struct DeleteInterconnectResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub interconnect_state: Option<String>,
 }
-
 #[doc="<p>Container for the parameters to the DeleteLag operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteLagRequest {
@@ -403,14 +993,45 @@ pub struct DeleteLagRequest {
     #[serde(rename="lagId")]
     pub lag_id: String,
 }
-
+impl DeleteLagRequest {
+    /// Sets `lag_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteLagRequest.lag_id = value.into();`.
+    pub fn lag_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lag_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteLagRequest with optional fields set to `None`.
+    pub fn new<lagIdType: Into<String>>(lag_id: lagIdType) -> DeleteLagRequest {
+        DeleteLagRequest {
+            lag_id: lag_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Container for the parameters to the DeleteVirtualInterface operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteVirtualInterfaceRequest {
     #[serde(rename="virtualInterfaceId")]
     pub virtual_interface_id: String,
 }
-
+impl DeleteVirtualInterfaceRequest {
+    /// Sets `virtual_interface_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteVirtualInterfaceRequest.virtual_interface_id = value.into();`.
+    pub fn virtual_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.virtual_interface_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteVirtualInterfaceRequest with optional fields set to `None`.
+    pub fn new<virtualInterfaceIdType: Into<String>>(virtual_interface_id: virtualInterfaceIdType)
+                                                     -> DeleteVirtualInterfaceRequest {
+        DeleteVirtualInterfaceRequest {
+            virtual_interface_id: virtual_interface_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response received when DeleteVirtualInterface is called.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteVirtualInterfaceResponse {
@@ -418,7 +1039,6 @@ pub struct DeleteVirtualInterfaceResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub virtual_interface_state: Option<String>,
 }
-
 #[doc="<p>Container for the parameters to the DescribeConnectionLoa operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeConnectionLoaRequest {
@@ -432,7 +1052,37 @@ pub struct DescribeConnectionLoaRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub provider_name: Option<String>,
 }
-
+impl DescribeConnectionLoaRequest {
+    /// Sets `connection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConnectionLoaRequest.connection_id = value.into();`.
+    pub fn connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connection_id = value.into();
+        self
+    }
+    /// Sets `loa_content_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConnectionLoaRequest.loa_content_type = Some(value.into());`.
+    pub fn loa_content_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.loa_content_type = Some(value.into());
+        self
+    }
+    /// Sets `provider_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConnectionLoaRequest.provider_name = Some(value.into());`.
+    pub fn provider_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provider_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeConnectionLoaRequest with optional fields set to `None`.
+    pub fn new<connectionIdType: Into<String>>(connection_id: connectionIdType)
+                                               -> DescribeConnectionLoaRequest {
+        DescribeConnectionLoaRequest {
+            connection_id: connection_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response received when DescribeConnectionLoa is called.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeConnectionLoaResponse {
@@ -440,7 +1090,6 @@ pub struct DescribeConnectionLoaResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub loa: Option<Loa>,
 }
-
 #[doc="<p>Container for the parameters to the DescribeConnectionsOnInterconnect operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeConnectionsOnInterconnectRequest {
@@ -448,7 +1097,23 @@ pub struct DescribeConnectionsOnInterconnectRequest {
     #[serde(rename="interconnectId")]
     pub interconnect_id: String,
 }
-
+impl DescribeConnectionsOnInterconnectRequest {
+    /// Sets `interconnect_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConnectionsOnInterconnectRequest.interconnect_id = value.into();`.
+    pub fn interconnect_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.interconnect_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeConnectionsOnInterconnectRequest with optional fields set to `None`.
+    pub fn new<interconnectIdType: Into<String>>(interconnect_id: interconnectIdType)
+                                                 -> DescribeConnectionsOnInterconnectRequest {
+        DescribeConnectionsOnInterconnectRequest {
+            interconnect_id: interconnect_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Container for the parameters to the DescribeConnections operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeConnectionsRequest {
@@ -456,7 +1121,19 @@ pub struct DescribeConnectionsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub connection_id: Option<String>,
 }
-
+impl DescribeConnectionsRequest {
+    /// Sets `connection_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConnectionsRequest.connection_id = Some(value.into());`.
+    pub fn connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connection_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeConnectionsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeConnectionsRequest {
+        DescribeConnectionsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Container for the parameters to the DescribeHostedConnections operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeHostedConnectionsRequest {
@@ -464,7 +1141,23 @@ pub struct DescribeHostedConnectionsRequest {
     #[serde(rename="connectionId")]
     pub connection_id: String,
 }
-
+impl DescribeHostedConnectionsRequest {
+    /// Sets `connection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeHostedConnectionsRequest.connection_id = value.into();`.
+    pub fn connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connection_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeHostedConnectionsRequest with optional fields set to `None`.
+    pub fn new<connectionIdType: Into<String>>(connection_id: connectionIdType)
+                                               -> DescribeHostedConnectionsRequest {
+        DescribeHostedConnectionsRequest {
+            connection_id: connection_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Container for the parameters to the DescribeInterconnectLoa operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeInterconnectLoaRequest {
@@ -478,7 +1171,37 @@ pub struct DescribeInterconnectLoaRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub provider_name: Option<String>,
 }
-
+impl DescribeInterconnectLoaRequest {
+    /// Sets `interconnect_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInterconnectLoaRequest.interconnect_id = value.into();`.
+    pub fn interconnect_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.interconnect_id = value.into();
+        self
+    }
+    /// Sets `loa_content_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInterconnectLoaRequest.loa_content_type = Some(value.into());`.
+    pub fn loa_content_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.loa_content_type = Some(value.into());
+        self
+    }
+    /// Sets `provider_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInterconnectLoaRequest.provider_name = Some(value.into());`.
+    pub fn provider_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provider_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeInterconnectLoaRequest with optional fields set to `None`.
+    pub fn new<interconnectIdType: Into<String>>(interconnect_id: interconnectIdType)
+                                                 -> DescribeInterconnectLoaRequest {
+        DescribeInterconnectLoaRequest {
+            interconnect_id: interconnect_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response received when DescribeInterconnectLoa is called.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeInterconnectLoaResponse {
@@ -486,7 +1209,6 @@ pub struct DescribeInterconnectLoaResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub loa: Option<Loa>,
 }
-
 #[doc="<p>Container for the parameters to the DescribeInterconnects operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeInterconnectsRequest {
@@ -494,7 +1216,19 @@ pub struct DescribeInterconnectsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub interconnect_id: Option<String>,
 }
-
+impl DescribeInterconnectsRequest {
+    /// Sets `interconnect_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInterconnectsRequest.interconnect_id = Some(value.into());`.
+    pub fn interconnect_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.interconnect_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeInterconnectsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeInterconnectsRequest {
+        DescribeInterconnectsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Container for the parameters to the DescribeLags operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeLagsRequest {
@@ -503,7 +1237,19 @@ pub struct DescribeLagsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub lag_id: Option<String>,
 }
-
+impl DescribeLagsRequest {
+    /// Sets `lag_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLagsRequest.lag_id = Some(value.into());`.
+    pub fn lag_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lag_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeLagsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeLagsRequest {
+        DescribeLagsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Container for the parameters to the DescribeLoa operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeLoaRequest {
@@ -519,7 +1265,37 @@ pub struct DescribeLoaRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub provider_name: Option<String>,
 }
-
+impl DescribeLoaRequest {
+    /// Sets `connection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLoaRequest.connection_id = value.into();`.
+    pub fn connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connection_id = value.into();
+        self
+    }
+    /// Sets `loa_content_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLoaRequest.loa_content_type = Some(value.into());`.
+    pub fn loa_content_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.loa_content_type = Some(value.into());
+        self
+    }
+    /// Sets `provider_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLoaRequest.provider_name = Some(value.into());`.
+    pub fn provider_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provider_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeLoaRequest with optional fields set to `None`.
+    pub fn new<connectionIdType: Into<String>>(connection_id: connectionIdType)
+                                               -> DescribeLoaRequest {
+        DescribeLoaRequest {
+            connection_id: connection_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Container for the parameters to the DescribeTags operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeTagsRequest {
@@ -527,7 +1303,23 @@ pub struct DescribeTagsRequest {
     #[serde(rename="resourceArns")]
     pub resource_arns: Vec<String>,
 }
-
+impl DescribeTagsRequest {
+    /// Sets `resource_arns`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTagsRequest.resource_arns = value.into();`.
+    pub fn resource_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.resource_arns = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeTagsRequest with optional fields set to `None`.
+    pub fn new<resourceArnsType: Into<Vec<String>>>(resource_arns: resourceArnsType)
+                                                    -> DescribeTagsRequest {
+        DescribeTagsRequest {
+            resource_arns: resource_arns.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response received when DescribeTags is called.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeTagsResponse {
@@ -536,7 +1328,6 @@ pub struct DescribeTagsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_tags: Option<Vec<ResourceTag>>,
 }
-
 #[doc="<p>Container for the parameters to the DescribeVirtualInterfaces operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeVirtualInterfacesRequest {
@@ -547,7 +1338,26 @@ pub struct DescribeVirtualInterfacesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub virtual_interface_id: Option<String>,
 }
-
+impl DescribeVirtualInterfacesRequest {
+    /// Sets `connection_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVirtualInterfacesRequest.connection_id = Some(value.into());`.
+    pub fn connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connection_id = Some(value.into());
+        self
+    }
+    /// Sets `virtual_interface_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVirtualInterfacesRequest.virtual_interface_id = Some(value.into());`.
+    pub fn virtual_interface_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.virtual_interface_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeVirtualInterfacesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeVirtualInterfacesRequest {
+        DescribeVirtualInterfacesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Container for the parameters to the DisassociateConnectionFromLag operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DisassociateConnectionFromLagRequest {
@@ -558,7 +1368,33 @@ pub struct DisassociateConnectionFromLagRequest {
     #[serde(rename="lagId")]
     pub lag_id: String,
 }
-
+impl DisassociateConnectionFromLagRequest {
+    /// Sets `connection_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateConnectionFromLagRequest.connection_id = value.into();`.
+    pub fn connection_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.connection_id = value.into();
+        self
+    }
+    /// Sets `lag_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateConnectionFromLagRequest.lag_id = value.into();`.
+    pub fn lag_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lag_id = value.into();
+        self
+    }
+    /// Returns a new instance of DisassociateConnectionFromLagRequest with optional fields set to `None`.
+    pub fn new<connectionIdType: Into<String>, lagIdType: Into<String>>
+        (connection_id: connectionIdType,
+         lag_id: lagIdType)
+         -> DisassociateConnectionFromLagRequest {
+        DisassociateConnectionFromLagRequest {
+            connection_id: connection_id.into(),
+            lag_id: lag_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>An interconnect is a connection that can host other connections.</p> <p>Like a standard AWS Direct Connect connection, an interconnect represents the physical connection between an AWS Direct Connect partner's network and a specific Direct Connect location. An AWS Direct Connect partner who owns an interconnect can provision hosted connections on the interconnect for their end customers, thereby providing the end customers with connectivity to AWS services.</p> <p>The resources of the interconnect, including bandwidth and VLAN numbers, are shared by all of the hosted connections on the interconnect, and the owner of the interconnect determines how these resources are assigned.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Interconnect {
@@ -592,7 +1428,6 @@ pub struct Interconnect {
     #[serde(skip_serializing_if="Option::is_none")]
     pub region: Option<String>,
 }
-
 #[doc="<p>A structure containing a list of interconnects.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Interconnects {
@@ -601,7 +1436,6 @@ pub struct Interconnects {
     #[serde(skip_serializing_if="Option::is_none")]
     pub interconnects: Option<Vec<Interconnect>>,
 }
-
 #[doc="<p>Describes a link aggregation group (LAG). A LAG is a connection that uses the Link Aggregation Control Protocol (LACP) to logically aggregate a bundle of physical connections. Like an interconnect, it can host other connections. All connections in a LAG must terminate on the same physical AWS Direct Connect endpoint, and must be the same bandwidth.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Lag {
@@ -650,7 +1484,6 @@ pub struct Lag {
     #[serde(skip_serializing_if="Option::is_none")]
     pub region: Option<String>,
 }
-
 #[doc="<p>A structure containing a list of LAGs.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Lags {
@@ -659,7 +1492,6 @@ pub struct Lags {
     #[serde(skip_serializing_if="Option::is_none")]
     pub lags: Option<Vec<Lag>>,
 }
-
 #[doc="<p>A structure containing the Letter of Authorization - Connecting Facility Assignment (LOA-CFA) for a connection.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Loa {
@@ -674,7 +1506,6 @@ pub struct Loa {
     #[serde(skip_serializing_if="Option::is_none")]
     pub loa_content_type: Option<String>,
 }
-
 #[doc="<p>An AWS Direct Connect location where connections and interconnects can be requested.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Location {
@@ -687,7 +1518,6 @@ pub struct Location {
     #[serde(skip_serializing_if="Option::is_none")]
     pub location_name: Option<String>,
 }
-
 #[doc="<p>A location is a network facility where AWS Direct Connect routers are available to be connected. Generally, these are colocation hubs where many network providers have equipment, and where cross connects can be delivered. Locations include a name and facility code, and must be provided when creating a connection.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Locations {
@@ -696,7 +1526,6 @@ pub struct Locations {
     #[serde(skip_serializing_if="Option::is_none")]
     pub locations: Option<Vec<Location>>,
 }
-
 #[doc="<p>A structure containing information about a new BGP peer.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct NewBGPPeer {
@@ -716,7 +1545,47 @@ pub struct NewBGPPeer {
     #[serde(skip_serializing_if="Option::is_none")]
     pub customer_address: Option<String>,
 }
-
+impl NewBGPPeer {
+    /// Sets `address_family`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewBGPPeer.address_family = Some(value.into());`.
+    pub fn address_family<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.address_family = Some(value.into());
+        self
+    }
+    /// Sets `amazon_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewBGPPeer.amazon_address = Some(value.into());`.
+    pub fn amazon_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.amazon_address = Some(value.into());
+        self
+    }
+    /// Sets `asn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewBGPPeer.asn = Some(value.into());`.
+    pub fn asn<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.asn = Some(value.into());
+        self
+    }
+    /// Sets `auth_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewBGPPeer.auth_key = Some(value.into());`.
+    pub fn auth_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auth_key = Some(value.into());
+        self
+    }
+    /// Sets `customer_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewBGPPeer.customer_address = Some(value.into());`.
+    pub fn customer_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.customer_address = Some(value.into());
+        self
+    }
+    /// Returns a new instance of NewBGPPeer with optional fields set to `None`.
+    pub fn new() -> NewBGPPeer {
+        NewBGPPeer { ..Default::default() }
+    }
+}
 #[doc="<p>A structure containing information about a new private virtual interface.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct NewPrivateVirtualInterface {
@@ -741,7 +1610,82 @@ pub struct NewPrivateVirtualInterface {
     #[serde(rename="vlan")]
     pub vlan: i64,
 }
-
+impl NewPrivateVirtualInterface {
+    /// Sets `address_family`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPrivateVirtualInterface.address_family = Some(value.into());`.
+    pub fn address_family<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.address_family = Some(value.into());
+        self
+    }
+    /// Sets `amazon_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPrivateVirtualInterface.amazon_address = Some(value.into());`.
+    pub fn amazon_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.amazon_address = Some(value.into());
+        self
+    }
+    /// Sets `asn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPrivateVirtualInterface.asn = value.into();`.
+    pub fn asn<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.asn = value.into();
+        self
+    }
+    /// Sets `auth_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPrivateVirtualInterface.auth_key = Some(value.into());`.
+    pub fn auth_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auth_key = Some(value.into());
+        self
+    }
+    /// Sets `customer_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPrivateVirtualInterface.customer_address = Some(value.into());`.
+    pub fn customer_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.customer_address = Some(value.into());
+        self
+    }
+    /// Sets `virtual_gateway_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPrivateVirtualInterface.virtual_gateway_id = value.into();`.
+    pub fn virtual_gateway_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.virtual_gateway_id = value.into();
+        self
+    }
+    /// Sets `virtual_interface_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPrivateVirtualInterface.virtual_interface_name = value.into();`.
+    pub fn virtual_interface_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.virtual_interface_name = value.into();
+        self
+    }
+    /// Sets `vlan`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPrivateVirtualInterface.vlan = value.into();`.
+    pub fn vlan<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.vlan = value.into();
+        self
+    }
+    /// Returns a new instance of NewPrivateVirtualInterface with optional fields set to `None`.
+    pub fn new<asnType: Into<i64>,
+               virtualGatewayIdType: Into<String>,
+               virtualInterfaceNameType: Into<String>,
+               vlanType: Into<i64>>
+        (asn: asnType,
+         virtual_gateway_id: virtualGatewayIdType,
+         virtual_interface_name: virtualInterfaceNameType,
+         vlan: vlanType)
+         -> NewPrivateVirtualInterface {
+        NewPrivateVirtualInterface {
+            asn: asn.into(),
+            virtual_gateway_id: virtual_gateway_id.into(),
+            virtual_interface_name: virtual_interface_name.into(),
+            vlan: vlan.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A structure containing information about a private virtual interface that will be provisioned on a connection.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct NewPrivateVirtualInterfaceAllocation {
@@ -764,7 +1708,70 @@ pub struct NewPrivateVirtualInterfaceAllocation {
     #[serde(rename="vlan")]
     pub vlan: i64,
 }
-
+impl NewPrivateVirtualInterfaceAllocation {
+    /// Sets `address_family`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPrivateVirtualInterfaceAllocation.address_family = Some(value.into());`.
+    pub fn address_family<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.address_family = Some(value.into());
+        self
+    }
+    /// Sets `amazon_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPrivateVirtualInterfaceAllocation.amazon_address = Some(value.into());`.
+    pub fn amazon_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.amazon_address = Some(value.into());
+        self
+    }
+    /// Sets `asn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPrivateVirtualInterfaceAllocation.asn = value.into();`.
+    pub fn asn<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.asn = value.into();
+        self
+    }
+    /// Sets `auth_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPrivateVirtualInterfaceAllocation.auth_key = Some(value.into());`.
+    pub fn auth_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auth_key = Some(value.into());
+        self
+    }
+    /// Sets `customer_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPrivateVirtualInterfaceAllocation.customer_address = Some(value.into());`.
+    pub fn customer_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.customer_address = Some(value.into());
+        self
+    }
+    /// Sets `virtual_interface_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPrivateVirtualInterfaceAllocation.virtual_interface_name = value.into();`.
+    pub fn virtual_interface_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.virtual_interface_name = value.into();
+        self
+    }
+    /// Sets `vlan`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPrivateVirtualInterfaceAllocation.vlan = value.into();`.
+    pub fn vlan<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.vlan = value.into();
+        self
+    }
+    /// Returns a new instance of NewPrivateVirtualInterfaceAllocation with optional fields set to `None`.
+    pub fn new<asnType: Into<i64>, virtualInterfaceNameType: Into<String>, vlanType: Into<i64>>
+        (asn: asnType,
+         virtual_interface_name: virtualInterfaceNameType,
+         vlan: vlanType)
+         -> NewPrivateVirtualInterfaceAllocation {
+        NewPrivateVirtualInterfaceAllocation {
+            asn: asn.into(),
+            virtual_interface_name: virtual_interface_name.into(),
+            vlan: vlan.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A structure containing information about a new public virtual interface.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct NewPublicVirtualInterface {
@@ -790,7 +1797,79 @@ pub struct NewPublicVirtualInterface {
     #[serde(rename="vlan")]
     pub vlan: i64,
 }
-
+impl NewPublicVirtualInterface {
+    /// Sets `address_family`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPublicVirtualInterface.address_family = Some(value.into());`.
+    pub fn address_family<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.address_family = Some(value.into());
+        self
+    }
+    /// Sets `amazon_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPublicVirtualInterface.amazon_address = Some(value.into());`.
+    pub fn amazon_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.amazon_address = Some(value.into());
+        self
+    }
+    /// Sets `asn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPublicVirtualInterface.asn = value.into();`.
+    pub fn asn<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.asn = value.into();
+        self
+    }
+    /// Sets `auth_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPublicVirtualInterface.auth_key = Some(value.into());`.
+    pub fn auth_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auth_key = Some(value.into());
+        self
+    }
+    /// Sets `customer_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPublicVirtualInterface.customer_address = Some(value.into());`.
+    pub fn customer_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.customer_address = Some(value.into());
+        self
+    }
+    /// Sets `route_filter_prefixes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPublicVirtualInterface.route_filter_prefixes = Some(value.into());`.
+    pub fn route_filter_prefixes<ValueType: Into<Vec<RouteFilterPrefix>>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.route_filter_prefixes = Some(value.into());
+        self
+    }
+    /// Sets `virtual_interface_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPublicVirtualInterface.virtual_interface_name = value.into();`.
+    pub fn virtual_interface_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.virtual_interface_name = value.into();
+        self
+    }
+    /// Sets `vlan`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPublicVirtualInterface.vlan = value.into();`.
+    pub fn vlan<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.vlan = value.into();
+        self
+    }
+    /// Returns a new instance of NewPublicVirtualInterface with optional fields set to `None`.
+    pub fn new<asnType: Into<i64>, virtualInterfaceNameType: Into<String>, vlanType: Into<i64>>
+        (asn: asnType,
+         virtual_interface_name: virtualInterfaceNameType,
+         vlan: vlanType)
+         -> NewPublicVirtualInterface {
+        NewPublicVirtualInterface {
+            asn: asn.into(),
+            virtual_interface_name: virtual_interface_name.into(),
+            vlan: vlan.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A structure containing information about a public virtual interface that will be provisioned on a connection.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct NewPublicVirtualInterfaceAllocation {
@@ -816,7 +1895,79 @@ pub struct NewPublicVirtualInterfaceAllocation {
     #[serde(rename="vlan")]
     pub vlan: i64,
 }
-
+impl NewPublicVirtualInterfaceAllocation {
+    /// Sets `address_family`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPublicVirtualInterfaceAllocation.address_family = Some(value.into());`.
+    pub fn address_family<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.address_family = Some(value.into());
+        self
+    }
+    /// Sets `amazon_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPublicVirtualInterfaceAllocation.amazon_address = Some(value.into());`.
+    pub fn amazon_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.amazon_address = Some(value.into());
+        self
+    }
+    /// Sets `asn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPublicVirtualInterfaceAllocation.asn = value.into();`.
+    pub fn asn<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.asn = value.into();
+        self
+    }
+    /// Sets `auth_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPublicVirtualInterfaceAllocation.auth_key = Some(value.into());`.
+    pub fn auth_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.auth_key = Some(value.into());
+        self
+    }
+    /// Sets `customer_address`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPublicVirtualInterfaceAllocation.customer_address = Some(value.into());`.
+    pub fn customer_address<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.customer_address = Some(value.into());
+        self
+    }
+    /// Sets `route_filter_prefixes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPublicVirtualInterfaceAllocation.route_filter_prefixes = Some(value.into());`.
+    pub fn route_filter_prefixes<ValueType: Into<Vec<RouteFilterPrefix>>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.route_filter_prefixes = Some(value.into());
+        self
+    }
+    /// Sets `virtual_interface_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPublicVirtualInterfaceAllocation.virtual_interface_name = value.into();`.
+    pub fn virtual_interface_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.virtual_interface_name = value.into();
+        self
+    }
+    /// Sets `vlan`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NewPublicVirtualInterfaceAllocation.vlan = value.into();`.
+    pub fn vlan<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.vlan = value.into();
+        self
+    }
+    /// Returns a new instance of NewPublicVirtualInterfaceAllocation with optional fields set to `None`.
+    pub fn new<asnType: Into<i64>, virtualInterfaceNameType: Into<String>, vlanType: Into<i64>>
+        (asn: asnType,
+         virtual_interface_name: virtualInterfaceNameType,
+         vlan: vlanType)
+         -> NewPublicVirtualInterfaceAllocation {
+        NewPublicVirtualInterfaceAllocation {
+            asn: asn.into(),
+            virtual_interface_name: virtual_interface_name.into(),
+            vlan: vlan.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The tags associated with a Direct Connect resource.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ResourceTag {
@@ -829,7 +1980,6 @@ pub struct ResourceTag {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
 #[doc="<p>A route filter prefix that the customer can advertise through Border Gateway Protocol (BGP) over a public virtual interface.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct RouteFilterPrefix {
@@ -838,7 +1988,19 @@ pub struct RouteFilterPrefix {
     #[serde(skip_serializing_if="Option::is_none")]
     pub cidr: Option<String>,
 }
-
+impl RouteFilterPrefix {
+    /// Sets `cidr`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RouteFilterPrefix.cidr = Some(value.into());`.
+    pub fn cidr<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cidr = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RouteFilterPrefix with optional fields set to `None`.
+    pub fn new() -> RouteFilterPrefix {
+        RouteFilterPrefix { ..Default::default() }
+    }
+}
 #[doc="<p>Information about a tag.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Tag {
@@ -850,7 +2012,29 @@ pub struct Tag {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl Tag {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new<keyType: Into<String>>(key: keyType) -> Tag {
+        Tag {
+            key: key.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Container for the parameters to the TagResource operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TagResourceRequest {
@@ -861,7 +2045,30 @@ pub struct TagResourceRequest {
     #[serde(rename="tags")]
     pub tags: Vec<Tag>,
 }
-
+impl TagResourceRequest {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TagResourceRequest.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TagResourceRequest.tags = value.into();`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of TagResourceRequest with optional fields set to `None`.
+pub fn new<resourceArnType: Into<String>, tagsType: Into<Vec<Tag>>>(resource_arn: resourceArnType, tags: tagsType) -> TagResourceRequest{
+        TagResourceRequest {
+            resource_arn: resource_arn.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response received when TagResource is called.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TagResourceResponse;
@@ -876,7 +2083,33 @@ pub struct UntagResourceRequest {
     #[serde(rename="tagKeys")]
     pub tag_keys: Vec<String>,
 }
-
+impl UntagResourceRequest {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UntagResourceRequest.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Sets `tag_keys`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UntagResourceRequest.tag_keys = value.into();`.
+    pub fn tag_keys<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tag_keys = value.into();
+        self
+    }
+    /// Returns a new instance of UntagResourceRequest with optional fields set to `None`.
+    pub fn new<resourceArnType: Into<String>, tagKeysType: Into<Vec<String>>>
+        (resource_arn: resourceArnType,
+         tag_keys: tagKeysType)
+         -> UntagResourceRequest {
+        UntagResourceRequest {
+            resource_arn: resource_arn.into(),
+            tag_keys: tag_keys.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response received when UntagResource is called.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UntagResourceResponse;
@@ -896,7 +2129,36 @@ pub struct UpdateLagRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub minimum_links: Option<i64>,
 }
-
+impl UpdateLagRequest {
+    /// Sets `lag_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLagRequest.lag_id = value.into();`.
+    pub fn lag_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lag_id = value.into();
+        self
+    }
+    /// Sets `lag_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLagRequest.lag_name = Some(value.into());`.
+    pub fn lag_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lag_name = Some(value.into());
+        self
+    }
+    /// Sets `minimum_links`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateLagRequest.minimum_links = Some(value.into());`.
+    pub fn minimum_links<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.minimum_links = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateLagRequest with optional fields set to `None`.
+    pub fn new<lagIdType: Into<String>>(lag_id: lagIdType) -> UpdateLagRequest {
+        UpdateLagRequest {
+            lag_id: lag_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>You can create one or more AWS Direct Connect private virtual interfaces linking to your virtual private gateway.</p> <p>Virtual private gateways can be managed using the Amazon Virtual Private Cloud (Amazon VPC) console or the <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-CreateVpnGateway.html\">Amazon EC2 CreateVpnGateway action</a>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct VirtualGateway {
@@ -907,7 +2169,6 @@ pub struct VirtualGateway {
     #[serde(skip_serializing_if="Option::is_none")]
     pub virtual_gateway_state: Option<String>,
 }
-
 #[doc="<p>A structure containing a list of virtual private gateways.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct VirtualGateways {
@@ -916,7 +2177,6 @@ pub struct VirtualGateways {
     #[serde(skip_serializing_if="Option::is_none")]
     pub virtual_gateways: Option<Vec<VirtualGateway>>,
 }
-
 #[doc="<p>A virtual interface (VLAN) transmits the traffic between the AWS Direct Connect location and the customer.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct VirtualInterface {
@@ -974,7 +2234,6 @@ pub struct VirtualInterface {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vlan: Option<i64>,
 }
-
 #[doc="<p>A structure containing a list of virtual interfaces.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct VirtualInterfaces {
@@ -983,7 +2242,6 @@ pub struct VirtualInterfaces {
     #[serde(skip_serializing_if="Option::is_none")]
     pub virtual_interfaces: Option<Vec<VirtualInterface>>,
 }
-
 /// Errors returned by AllocateConnectionOnInterconnect
 #[derive(Debug, PartialEq)]
 pub enum AllocateConnectionOnInterconnectError {

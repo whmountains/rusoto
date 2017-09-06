@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -61,7 +62,26 @@ pub struct AbortEnvironmentUpdateMessage {
     #[doc="<p>This specifies the name of the environment with the in-progress update that you want to cancel.</p>"]
     pub environment_name: Option<String>,
 }
-
+impl AbortEnvironmentUpdateMessage {
+    /// Sets `environment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AbortEnvironmentUpdateMessage.environment_id = Some(value.into());`.
+    pub fn environment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_id = Some(value.into());
+        self
+    }
+    /// Sets `environment_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AbortEnvironmentUpdateMessage.environment_name = Some(value.into());`.
+    pub fn environment_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AbortEnvironmentUpdateMessage with optional fields set to `None`.
+    pub fn new() -> AbortEnvironmentUpdateMessage {
+        AbortEnvironmentUpdateMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `AbortEnvironmentUpdateMessage` contents to a `SignedRequest`.
 struct AbortEnvironmentUpdateMessageSerializer;
@@ -156,7 +176,6 @@ pub struct ApplicationDescription {
     #[doc="<p>The names of the versions for this application.</p>"]
     pub versions: Option<Vec<String>>,
 }
-
 struct ApplicationDescriptionDeserializer;
 impl ApplicationDescriptionDeserializer {
     #[allow(unused_variables)]
@@ -274,7 +293,6 @@ pub struct ApplicationDescriptionMessage {
     #[doc="<p> The <a>ApplicationDescription</a> of the application. </p>"]
     pub application: Option<ApplicationDescription>,
 }
-
 struct ApplicationDescriptionMessageDeserializer;
 impl ApplicationDescriptionMessageDeserializer {
     #[allow(unused_variables)]
@@ -324,7 +342,6 @@ pub struct ApplicationDescriptionsMessage {
     #[doc="<p>This parameter contains a list of <a>ApplicationDescription</a>.</p>"]
     pub applications: Option<Vec<ApplicationDescription>>,
 }
-
 struct ApplicationDescriptionsMessageDeserializer;
 impl ApplicationDescriptionsMessageDeserializer {
     #[allow(unused_variables)]
@@ -378,7 +395,6 @@ pub struct ApplicationMetrics {
     #[doc="<p>Represents the percentage of requests over the last 10 seconds that resulted in each type of status code response.</p>"]
     pub status_codes: Option<StatusCodes>,
 }
-
 struct ApplicationMetricsDeserializer;
 impl ApplicationMetricsDeserializer {
     #[allow(unused_variables)]
@@ -470,7 +486,26 @@ pub struct ApplicationResourceLifecycleConfig {
     #[doc="<p>The application version lifecycle configuration.</p>"]
     pub version_lifecycle_config: Option<ApplicationVersionLifecycleConfig>,
 }
-
+impl ApplicationResourceLifecycleConfig {
+    /// Sets `service_role`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ApplicationResourceLifecycleConfig.service_role = Some(value.into());`.
+    pub fn service_role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_role = Some(value.into());
+        self
+    }
+    /// Sets `version_lifecycle_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ApplicationResourceLifecycleConfig.version_lifecycle_config = Some(value.into());`.
+pub fn version_lifecycle_config<ValueType: Into<ApplicationVersionLifecycleConfig>>(mut self, value: ValueType) -> Self{
+        self.version_lifecycle_config = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ApplicationResourceLifecycleConfig with optional fields set to `None`.
+    pub fn new() -> ApplicationResourceLifecycleConfig {
+        ApplicationResourceLifecycleConfig { ..Default::default() }
+    }
+}
 struct ApplicationResourceLifecycleConfigDeserializer;
 impl ApplicationResourceLifecycleConfigDeserializer {
     #[allow(unused_variables)]
@@ -548,7 +583,6 @@ pub struct ApplicationResourceLifecycleDescriptionMessage {
     #[doc="<p>The lifecycle configuration.</p>"]
     pub resource_lifecycle_config: Option<ApplicationResourceLifecycleConfig>,
 }
-
 struct ApplicationResourceLifecycleDescriptionMessageDeserializer;
 impl ApplicationResourceLifecycleDescriptionMessageDeserializer {
     #[allow(unused_variables)]
@@ -618,7 +652,6 @@ pub struct ApplicationVersionDescription {
     #[doc="<p>A unique identifier for the application version.</p>"]
     pub version_label: Option<String>,
 }
-
 struct ApplicationVersionDescriptionDeserializer;
 impl ApplicationVersionDescriptionDeserializer {
     #[allow(unused_variables)]
@@ -747,7 +780,6 @@ pub struct ApplicationVersionDescriptionMessage {
     #[doc="<p> The <a>ApplicationVersionDescription</a> of the application version. </p>"]
     pub application_version: Option<ApplicationVersionDescription>,
 }
-
 struct ApplicationVersionDescriptionMessageDeserializer;
 impl ApplicationVersionDescriptionMessageDeserializer {
     #[allow(unused_variables)]
@@ -798,7 +830,6 @@ pub struct ApplicationVersionDescriptionsMessage {
     #[doc="<p>In a paginated request, the token that you can pass in a subsequent request to get the next response page.</p>"]
     pub next_token: Option<String>,
 }
-
 struct ApplicationVersionDescriptionsMessageDeserializer;
 impl ApplicationVersionDescriptionsMessageDeserializer {
     #[allow(unused_variables)]
@@ -853,7 +884,26 @@ pub struct ApplicationVersionLifecycleConfig {
     #[doc="<p>Specify a max count rule to restrict the number of application versions that are retained for an application.</p>"]
     pub max_count_rule: Option<MaxCountRule>,
 }
-
+impl ApplicationVersionLifecycleConfig {
+    /// Sets `max_age_rule`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ApplicationVersionLifecycleConfig.max_age_rule = Some(value.into());`.
+    pub fn max_age_rule<ValueType: Into<MaxAgeRule>>(mut self, value: ValueType) -> Self {
+        self.max_age_rule = Some(value.into());
+        self
+    }
+    /// Sets `max_count_rule`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ApplicationVersionLifecycleConfig.max_count_rule = Some(value.into());`.
+    pub fn max_count_rule<ValueType: Into<MaxCountRule>>(mut self, value: ValueType) -> Self {
+        self.max_count_rule = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ApplicationVersionLifecycleConfig with optional fields set to `None`.
+    pub fn new() -> ApplicationVersionLifecycleConfig {
+        ApplicationVersionLifecycleConfig { ..Default::default() }
+    }
+}
 struct ApplicationVersionLifecycleConfigDeserializer;
 impl ApplicationVersionLifecycleConfigDeserializer {
     #[allow(unused_variables)]
@@ -951,7 +1001,37 @@ pub struct ApplyEnvironmentManagedActionRequest {
     #[doc="<p>The name of the target environment.</p>"]
     pub environment_name: Option<String>,
 }
-
+impl ApplyEnvironmentManagedActionRequest {
+    /// Sets `action_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ApplyEnvironmentManagedActionRequest.action_id = value.into();`.
+    pub fn action_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.action_id = value.into();
+        self
+    }
+    /// Sets `environment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ApplyEnvironmentManagedActionRequest.environment_id = Some(value.into());`.
+    pub fn environment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_id = Some(value.into());
+        self
+    }
+    /// Sets `environment_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ApplyEnvironmentManagedActionRequest.environment_name = Some(value.into());`.
+    pub fn environment_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ApplyEnvironmentManagedActionRequest with optional fields set to `None`.
+    pub fn new<ActionIdType: Into<String>>(action_id: ActionIdType)
+                                           -> ApplyEnvironmentManagedActionRequest {
+        ApplyEnvironmentManagedActionRequest {
+            action_id: action_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ApplyEnvironmentManagedActionRequest` contents to a `SignedRequest`.
 struct ApplyEnvironmentManagedActionRequestSerializer;
@@ -985,7 +1065,6 @@ pub struct ApplyEnvironmentManagedActionResult {
     #[doc="<p>The status of the managed action.</p>"]
     pub status: Option<String>,
 }
-
 struct ApplyEnvironmentManagedActionResultDeserializer;
 impl ApplyEnvironmentManagedActionResultDeserializer {
     #[allow(unused_variables)]
@@ -1049,7 +1128,6 @@ pub struct AutoScalingGroup {
     #[doc="<p>The name of the <code>AutoScalingGroup</code> . </p>"]
     pub name: Option<String>,
 }
-
 struct AutoScalingGroupDeserializer;
 impl AutoScalingGroupDeserializer {
     #[allow(unused_variables)]
@@ -1258,7 +1336,54 @@ pub struct BuildConfiguration {
     #[doc="<p>How long in minutes, from 5 to 480 (8 hours), for AWS CodeBuild to wait until timing out any related build that does not get marked as completed. The default is 60 minutes.</p>"]
     pub timeout_in_minutes: Option<i64>,
 }
-
+impl BuildConfiguration {
+    /// Sets `artifact_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BuildConfiguration.artifact_name = Some(value.into());`.
+    pub fn artifact_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.artifact_name = Some(value.into());
+        self
+    }
+    /// Sets `code_build_service_role`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BuildConfiguration.code_build_service_role = value.into();`.
+    pub fn code_build_service_role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.code_build_service_role = value.into();
+        self
+    }
+    /// Sets `compute_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BuildConfiguration.compute_type = Some(value.into());`.
+    pub fn compute_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.compute_type = Some(value.into());
+        self
+    }
+    /// Sets `image`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BuildConfiguration.image = value.into();`.
+    pub fn image<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.image = value.into();
+        self
+    }
+    /// Sets `timeout_in_minutes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BuildConfiguration.timeout_in_minutes = Some(value.into());`.
+    pub fn timeout_in_minutes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.timeout_in_minutes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of BuildConfiguration with optional fields set to `None`.
+    pub fn new<CodeBuildServiceRoleType: Into<String>, ImageType: Into<String>>
+        (code_build_service_role: CodeBuildServiceRoleType,
+         image: ImageType)
+         -> BuildConfiguration {
+        BuildConfiguration {
+            code_build_service_role: code_build_service_role.into(),
+            image: image.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `BuildConfiguration` contents to a `SignedRequest`.
 struct BuildConfigurationSerializer;
@@ -1292,7 +1417,6 @@ pub struct Builder {
     #[doc="<p>The ARN of the builder.</p>"]
     pub arn: Option<String>,
 }
-
 struct BuilderDeserializer;
 impl BuilderDeserializer {
     #[allow(unused_variables)]
@@ -1352,7 +1476,6 @@ pub struct CPUUtilization {
     #[doc="<p>Percentage of time that the CPU has spent in the <code>User</code> state over the last 10 seconds.</p>"]
     pub user: Option<f64>,
 }
-
 struct CPUUtilizationDeserializer;
 impl CPUUtilizationDeserializer {
     #[allow(unused_variables)]
@@ -1482,7 +1605,23 @@ pub struct CheckDNSAvailabilityMessage {
     #[doc="<p>The prefix used when this CNAME is reserved.</p>"]
     pub cname_prefix: String,
 }
-
+impl CheckDNSAvailabilityMessage {
+    /// Sets `cname_prefix`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CheckDNSAvailabilityMessage.cname_prefix = value.into();`.
+    pub fn cname_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cname_prefix = value.into();
+        self
+    }
+    /// Returns a new instance of CheckDNSAvailabilityMessage with optional fields set to `None`.
+    pub fn new<CNAMEPrefixType: Into<String>>(cname_prefix: CNAMEPrefixType)
+                                              -> CheckDNSAvailabilityMessage {
+        CheckDNSAvailabilityMessage {
+            cname_prefix: cname_prefix.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CheckDNSAvailabilityMessage` contents to a `SignedRequest`.
 struct CheckDNSAvailabilityMessageSerializer;
@@ -1506,7 +1645,6 @@ pub struct CheckDNSAvailabilityResultMessage {
     #[doc="<p>The fully qualified CNAME to reserve when <a>CreateEnvironment</a> is called with the provided prefix.</p>"]
     pub fully_qualified_cname: Option<String>,
 }
-
 struct CheckDNSAvailabilityResultMessageDeserializer;
 impl CheckDNSAvailabilityResultMessageDeserializer {
     #[allow(unused_variables)]
@@ -1580,7 +1718,33 @@ pub struct ComposeEnvironmentsMessage {
     #[doc="<p>A list of version labels, specifying one or more application source bundles that belong to the target application. Each source bundle must include an environment manifest that specifies the name of the environment and the name of the solution stack to use, and optionally can specify environment links to create.</p>"]
     pub version_labels: Option<Vec<String>>,
 }
-
+impl ComposeEnvironmentsMessage {
+    /// Sets `application_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComposeEnvironmentsMessage.application_name = Some(value.into());`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = Some(value.into());
+        self
+    }
+    /// Sets `group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComposeEnvironmentsMessage.group_name = Some(value.into());`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = Some(value.into());
+        self
+    }
+    /// Sets `version_labels`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComposeEnvironmentsMessage.version_labels = Some(value.into());`.
+    pub fn version_labels<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.version_labels = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ComposeEnvironmentsMessage with optional fields set to `None`.
+    pub fn new() -> ComposeEnvironmentsMessage {
+        ComposeEnvironmentsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `ComposeEnvironmentsMessage` contents to a `SignedRequest`.
 struct ComposeEnvironmentsMessageSerializer;
@@ -1660,7 +1824,6 @@ pub struct ConfigurationOptionDescription {
     #[doc="<p>An indication of which type of values this option has and whether it is allowable to select one or more than one of the possible values:</p> <ul> <li> <p> <code>Scalar</code> : Values for this option are a single selection from the possible values, or an unformatted string, or numeric value governed by the <code>MIN/MAX/Regex</code> constraints.</p> </li> <li> <p> <code>List</code> : Values for this option are multiple selections from the possible values.</p> </li> <li> <p> <code>Boolean</code> : Values for this option are either <code>true</code> or <code>false</code> .</p> </li> <li> <p> <code>Json</code> : Values for this option are a JSON representation of a <code>ConfigDocument</code>.</p> </li> </ul>"]
     pub value_type: Option<String>,
 }
-
 struct ConfigurationOptionDescriptionDeserializer;
 impl ConfigurationOptionDescriptionDeserializer {
     #[allow(unused_variables)]
@@ -1863,7 +2026,40 @@ pub struct ConfigurationOptionSetting {
     #[doc="<p>The current value for the configuration option.</p>"]
     pub value: Option<String>,
 }
-
+impl ConfigurationOptionSetting {
+    /// Sets `namespace`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfigurationOptionSetting.namespace = Some(value.into());`.
+    pub fn namespace<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.namespace = Some(value.into());
+        self
+    }
+    /// Sets `option_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfigurationOptionSetting.option_name = Some(value.into());`.
+    pub fn option_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.option_name = Some(value.into());
+        self
+    }
+    /// Sets `resource_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfigurationOptionSetting.resource_name = Some(value.into());`.
+    pub fn resource_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_name = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfigurationOptionSetting.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ConfigurationOptionSetting with optional fields set to `None`.
+    pub fn new() -> ConfigurationOptionSetting {
+        ConfigurationOptionSetting { ..Default::default() }
+    }
+}
 struct ConfigurationOptionSettingDeserializer;
 impl ConfigurationOptionSettingDeserializer {
     #[allow(unused_variables)]
@@ -2053,7 +2249,6 @@ pub struct ConfigurationOptionsDescription {
     #[doc="<p>The name of the solution stack these configuration options belong to.</p>"]
     pub solution_stack_name: Option<String>,
 }
-
 struct ConfigurationOptionsDescriptionDeserializer;
 impl ConfigurationOptionsDescriptionDeserializer {
     #[allow(unused_variables)]
@@ -2130,7 +2325,6 @@ pub struct ConfigurationSettingsDescription {
     #[doc="<p> If not <code>null</code>, the name of the configuration template for this configuration set. </p>"]
     pub template_name: Option<String>,
 }
-
 struct ConfigurationSettingsDescriptionDeserializer;
 impl ConfigurationSettingsDescriptionDeserializer {
     #[allow(unused_variables)]
@@ -2262,7 +2456,6 @@ pub struct ConfigurationSettingsDescriptions {
     #[doc="<p> A list of <a>ConfigurationSettingsDescription</a>. </p>"]
     pub configuration_settings: Option<Vec<ConfigurationSettingsDescription>>,
 }
-
 struct ConfigurationSettingsDescriptionsDeserializer;
 impl ConfigurationSettingsDescriptionsDeserializer {
     #[allow(unused_variables)]
@@ -2311,7 +2504,6 @@ pub struct ConfigurationSettingsValidationMessages {
     #[doc="<p> A list of <a>ValidationMessage</a>. </p>"]
     pub messages: Option<Vec<ValidationMessage>>,
 }
-
 struct ConfigurationSettingsValidationMessagesDeserializer;
 impl ConfigurationSettingsValidationMessagesDeserializer {
     #[allow(unused_variables)]
@@ -2422,7 +2614,40 @@ pub struct CreateApplicationMessage {
     #[doc="<p>Specify an application resource lifecycle configuration to prevent your application from accumulating too many versions.</p>"]
     pub resource_lifecycle_config: Option<ApplicationResourceLifecycleConfig>,
 }
-
+impl CreateApplicationMessage {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApplicationMessage.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApplicationMessage.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `resource_lifecycle_config`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApplicationMessage.resource_lifecycle_config = Some(value.into());`.
+    pub fn resource_lifecycle_config<ValueType: Into<ApplicationResourceLifecycleConfig>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.resource_lifecycle_config = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateApplicationMessage with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>>(application_name: ApplicationNameType)
+                                                  -> CreateApplicationMessage {
+        CreateApplicationMessage {
+            application_name: application_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateApplicationMessage` contents to a `SignedRequest`.
 struct CreateApplicationMessageSerializer;
@@ -2469,7 +2694,79 @@ pub struct CreateApplicationVersionMessage {
     #[doc="<p>A label identifying this version.</p> <p>Constraint: Must be unique per application. If an application version already exists with this label for the specified application, AWS Elastic Beanstalk returns an <code>InvalidParameterValue</code> error. </p>"]
     pub version_label: String,
 }
-
+impl CreateApplicationVersionMessage {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApplicationVersionMessage.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `auto_create_application`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApplicationVersionMessage.auto_create_application = Some(value.into());`.
+    pub fn auto_create_application<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.auto_create_application = Some(value.into());
+        self
+    }
+    /// Sets `build_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApplicationVersionMessage.build_configuration = Some(value.into());`.
+    pub fn build_configuration<ValueType: Into<BuildConfiguration>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.build_configuration = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApplicationVersionMessage.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `process`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApplicationVersionMessage.process = Some(value.into());`.
+    pub fn process<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.process = Some(value.into());
+        self
+    }
+    /// Sets `source_build_information`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApplicationVersionMessage.source_build_information = Some(value.into());`.
+    pub fn source_build_information<ValueType: Into<SourceBuildInformation>>(mut self,
+                                                                             value: ValueType)
+                                                                             -> Self {
+        self.source_build_information = Some(value.into());
+        self
+    }
+    /// Sets `source_bundle`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApplicationVersionMessage.source_bundle = Some(value.into());`.
+    pub fn source_bundle<ValueType: Into<S3Location>>(mut self, value: ValueType) -> Self {
+        self.source_bundle = Some(value.into());
+        self
+    }
+    /// Sets `version_label`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApplicationVersionMessage.version_label = value.into();`.
+    pub fn version_label<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version_label = value.into();
+        self
+    }
+    /// Returns a new instance of CreateApplicationVersionMessage with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>, VersionLabelType: Into<String>>
+        (application_name: ApplicationNameType,
+         version_label: VersionLabelType)
+         -> CreateApplicationVersionMessage {
+        CreateApplicationVersionMessage {
+            application_name: application_name.into(),
+            version_label: version_label.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateApplicationVersionMessage` contents to a `SignedRequest`.
 struct CreateApplicationVersionMessageSerializer;
@@ -2535,7 +2832,79 @@ pub struct CreateConfigurationTemplateMessage {
     #[doc="<p>The name of the configuration template.</p> <p>Constraint: This name must be unique per application.</p> <p>Default: If a configuration template already exists with this name, AWS Elastic Beanstalk returns an <code>InvalidParameterValue</code> error. </p>"]
     pub template_name: String,
 }
-
+impl CreateConfigurationTemplateMessage {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConfigurationTemplateMessage.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConfigurationTemplateMessage.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `environment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConfigurationTemplateMessage.environment_id = Some(value.into());`.
+    pub fn environment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_id = Some(value.into());
+        self
+    }
+    /// Sets `option_settings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConfigurationTemplateMessage.option_settings = Some(value.into());`.
+    pub fn option_settings<ValueType: Into<Vec<ConfigurationOptionSetting>>>(mut self,
+                                                                             value: ValueType)
+                                                                             -> Self {
+        self.option_settings = Some(value.into());
+        self
+    }
+    /// Sets `platform_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConfigurationTemplateMessage.platform_arn = Some(value.into());`.
+    pub fn platform_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.platform_arn = Some(value.into());
+        self
+    }
+    /// Sets `solution_stack_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConfigurationTemplateMessage.solution_stack_name = Some(value.into());`.
+    pub fn solution_stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.solution_stack_name = Some(value.into());
+        self
+    }
+    /// Sets `source_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConfigurationTemplateMessage.source_configuration = Some(value.into());`.
+    pub fn source_configuration<ValueType: Into<SourceConfiguration>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.source_configuration = Some(value.into());
+        self
+    }
+    /// Sets `template_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConfigurationTemplateMessage.template_name = value.into();`.
+    pub fn template_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateConfigurationTemplateMessage with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>, TemplateNameType: Into<String>>
+        (application_name: ApplicationNameType,
+         template_name: TemplateNameType)
+         -> CreateConfigurationTemplateMessage {
+        CreateConfigurationTemplateMessage {
+            application_name: application_name.into(),
+            template_name: template_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateConfigurationTemplateMessage` contents to a `SignedRequest`.
 struct CreateConfigurationTemplateMessageSerializer;
@@ -2609,7 +2978,111 @@ pub struct CreateEnvironmentMessage {
     #[doc="<p>The name of the application version to deploy.</p> <p> If the specified application has no associated application versions, AWS Elastic Beanstalk <code>UpdateEnvironment</code> returns an <code>InvalidParameterValue</code> error. </p> <p>Default: If not specified, AWS Elastic Beanstalk attempts to launch the sample application in the container.</p>"]
     pub version_label: Option<String>,
 }
-
+impl CreateEnvironmentMessage {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEnvironmentMessage.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `cname_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEnvironmentMessage.cname_prefix = Some(value.into());`.
+    pub fn cname_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cname_prefix = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEnvironmentMessage.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `environment_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEnvironmentMessage.environment_name = Some(value.into());`.
+    pub fn environment_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_name = Some(value.into());
+        self
+    }
+    /// Sets `group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEnvironmentMessage.group_name = Some(value.into());`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = Some(value.into());
+        self
+    }
+    /// Sets `option_settings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEnvironmentMessage.option_settings = Some(value.into());`.
+    pub fn option_settings<ValueType: Into<Vec<ConfigurationOptionSetting>>>(mut self,
+                                                                             value: ValueType)
+                                                                             -> Self {
+        self.option_settings = Some(value.into());
+        self
+    }
+    /// Sets `options_to_remove`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEnvironmentMessage.options_to_remove = Some(value.into());`.
+    pub fn options_to_remove<ValueType: Into<Vec<OptionSpecification>>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.options_to_remove = Some(value.into());
+        self
+    }
+    /// Sets `platform_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEnvironmentMessage.platform_arn = Some(value.into());`.
+    pub fn platform_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.platform_arn = Some(value.into());
+        self
+    }
+    /// Sets `solution_stack_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEnvironmentMessage.solution_stack_name = Some(value.into());`.
+    pub fn solution_stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.solution_stack_name = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEnvironmentMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `template_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEnvironmentMessage.template_name = Some(value.into());`.
+    pub fn template_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_name = Some(value.into());
+        self
+    }
+    /// Sets `tier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEnvironmentMessage.tier = Some(value.into());`.
+    pub fn tier<ValueType: Into<EnvironmentTier>>(mut self, value: ValueType) -> Self {
+        self.tier = Some(value.into());
+        self
+    }
+    /// Sets `version_label`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEnvironmentMessage.version_label = Some(value.into());`.
+    pub fn version_label<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version_label = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateEnvironmentMessage with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>>(application_name: ApplicationNameType)
+                                                  -> CreateEnvironmentMessage {
+        CreateEnvironmentMessage {
+            application_name: application_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateEnvironmentMessage` contents to a `SignedRequest`.
 struct CreateEnvironmentMessageSerializer;
@@ -2684,7 +3157,62 @@ pub struct CreatePlatformVersionRequest {
     #[doc="<p>The number, such as 1.0.2, for the new platform version.</p>"]
     pub platform_version: String,
 }
-
+impl CreatePlatformVersionRequest {
+    /// Sets `environment_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePlatformVersionRequest.environment_name = Some(value.into());`.
+    pub fn environment_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_name = Some(value.into());
+        self
+    }
+    /// Sets `option_settings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePlatformVersionRequest.option_settings = Some(value.into());`.
+    pub fn option_settings<ValueType: Into<Vec<ConfigurationOptionSetting>>>(mut self,
+                                                                             value: ValueType)
+                                                                             -> Self {
+        self.option_settings = Some(value.into());
+        self
+    }
+    /// Sets `platform_definition_bundle`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePlatformVersionRequest.platform_definition_bundle = value.into();`.
+    pub fn platform_definition_bundle<ValueType: Into<S3Location>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.platform_definition_bundle = value.into();
+        self
+    }
+    /// Sets `platform_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePlatformVersionRequest.platform_name = value.into();`.
+    pub fn platform_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.platform_name = value.into();
+        self
+    }
+    /// Sets `platform_version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePlatformVersionRequest.platform_version = value.into();`.
+    pub fn platform_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.platform_version = value.into();
+        self
+    }
+    /// Returns a new instance of CreatePlatformVersionRequest with optional fields set to `None`.
+    pub fn new<PlatformDefinitionBundleType: Into<S3Location>,
+               PlatformNameType: Into<String>,
+               PlatformVersionType: Into<String>>
+        (platform_definition_bundle: PlatformDefinitionBundleType,
+         platform_name: PlatformNameType,
+         platform_version: PlatformVersionType)
+         -> CreatePlatformVersionRequest {
+        CreatePlatformVersionRequest {
+            platform_definition_bundle: platform_definition_bundle.into(),
+            platform_name: platform_name.into(),
+            platform_version: platform_version.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreatePlatformVersionRequest` contents to a `SignedRequest`.
 struct CreatePlatformVersionRequestSerializer;
@@ -2722,7 +3250,6 @@ pub struct CreatePlatformVersionResult {
     #[doc="<p>Detailed information about the new version of the custom platform.</p>"]
     pub platform_summary: Option<PlatformSummary>,
 }
-
 struct CreatePlatformVersionResultDeserializer;
 impl CreatePlatformVersionResultDeserializer {
     #[allow(unused_variables)]
@@ -2776,7 +3303,6 @@ pub struct CreateStorageLocationResultMessage {
     #[doc="<p>The name of the Amazon S3 bucket created.</p>"]
     pub s3_bucket: Option<String>,
 }
-
 struct CreateStorageLocationResultMessageDeserializer;
 impl CreateStorageLocationResultMessageDeserializer {
     #[allow(unused_variables)]
@@ -2842,7 +3368,6 @@ pub struct CustomAmi {
     #[doc="<p>The type of virtualization used to create the custom AMI.</p>"]
     pub virtualization_type: Option<String>,
 }
-
 struct CustomAmiDeserializer;
 impl CustomAmiDeserializer {
     #[allow(unused_variables)]
@@ -2953,7 +3478,30 @@ pub struct DeleteApplicationMessage {
     #[doc="<p>When set to true, running environments will be terminated before deleting the application.</p>"]
     pub terminate_env_by_force: Option<bool>,
 }
-
+impl DeleteApplicationMessage {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteApplicationMessage.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `terminate_env_by_force`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteApplicationMessage.terminate_env_by_force = Some(value.into());`.
+    pub fn terminate_env_by_force<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.terminate_env_by_force = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteApplicationMessage with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>>(application_name: ApplicationNameType)
+                                                  -> DeleteApplicationMessage {
+        DeleteApplicationMessage {
+            application_name: application_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteApplicationMessage` contents to a `SignedRequest`.
 struct DeleteApplicationMessageSerializer;
@@ -2984,7 +3532,40 @@ pub struct DeleteApplicationVersionMessage {
     #[doc="<p>The label of the version to delete.</p>"]
     pub version_label: String,
 }
-
+impl DeleteApplicationVersionMessage {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteApplicationVersionMessage.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `delete_source_bundle`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteApplicationVersionMessage.delete_source_bundle = Some(value.into());`.
+    pub fn delete_source_bundle<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.delete_source_bundle = Some(value.into());
+        self
+    }
+    /// Sets `version_label`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteApplicationVersionMessage.version_label = value.into();`.
+    pub fn version_label<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version_label = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteApplicationVersionMessage with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>, VersionLabelType: Into<String>>
+        (application_name: ApplicationNameType,
+         version_label: VersionLabelType)
+         -> DeleteApplicationVersionMessage {
+        DeleteApplicationVersionMessage {
+            application_name: application_name.into(),
+            version_label: version_label.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteApplicationVersionMessage` contents to a `SignedRequest`.
 struct DeleteApplicationVersionMessageSerializer;
@@ -3014,7 +3595,33 @@ pub struct DeleteConfigurationTemplateMessage {
     #[doc="<p>The name of the configuration template to delete.</p>"]
     pub template_name: String,
 }
-
+impl DeleteConfigurationTemplateMessage {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteConfigurationTemplateMessage.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `template_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteConfigurationTemplateMessage.template_name = value.into();`.
+    pub fn template_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteConfigurationTemplateMessage with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>, TemplateNameType: Into<String>>
+        (application_name: ApplicationNameType,
+         template_name: TemplateNameType)
+         -> DeleteConfigurationTemplateMessage {
+        DeleteConfigurationTemplateMessage {
+            application_name: application_name.into(),
+            template_name: template_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteConfigurationTemplateMessage` contents to a `SignedRequest`.
 struct DeleteConfigurationTemplateMessageSerializer;
@@ -3040,7 +3647,33 @@ pub struct DeleteEnvironmentConfigurationMessage {
     #[doc="<p>The name of the environment to delete the draft configuration from.</p>"]
     pub environment_name: String,
 }
-
+impl DeleteEnvironmentConfigurationMessage {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteEnvironmentConfigurationMessage.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `environment_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteEnvironmentConfigurationMessage.environment_name = value.into();`.
+    pub fn environment_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteEnvironmentConfigurationMessage with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>, EnvironmentNameType: Into<String>>
+        (application_name: ApplicationNameType,
+         environment_name: EnvironmentNameType)
+         -> DeleteEnvironmentConfigurationMessage {
+        DeleteEnvironmentConfigurationMessage {
+            application_name: application_name.into(),
+            environment_name: environment_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteEnvironmentConfigurationMessage` contents to a `SignedRequest`.
 struct DeleteEnvironmentConfigurationMessageSerializer;
@@ -3064,7 +3697,19 @@ pub struct DeletePlatformVersionRequest {
     #[doc="<p>The ARN of the version of the custom platform.</p>"]
     pub platform_arn: Option<String>,
 }
-
+impl DeletePlatformVersionRequest {
+    /// Sets `platform_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePlatformVersionRequest.platform_arn = Some(value.into());`.
+    pub fn platform_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.platform_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeletePlatformVersionRequest with optional fields set to `None`.
+    pub fn new() -> DeletePlatformVersionRequest {
+        DeletePlatformVersionRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DeletePlatformVersionRequest` contents to a `SignedRequest`.
 struct DeletePlatformVersionRequestSerializer;
@@ -3087,7 +3732,6 @@ pub struct DeletePlatformVersionResult {
     #[doc="<p>Detailed information about the version of the custom platform.</p>"]
     pub platform_summary: Option<PlatformSummary>,
 }
-
 struct DeletePlatformVersionResultDeserializer;
 impl DeletePlatformVersionResultDeserializer {
     #[allow(unused_variables)]
@@ -3143,7 +3787,6 @@ pub struct Deployment {
     #[doc="<p>The version label of the application version in the deployment.</p>"]
     pub version_label: Option<String>,
 }
-
 struct DeploymentDeserializer;
 impl DeploymentDeserializer {
     #[allow(unused_variables)]
@@ -3226,7 +3869,40 @@ pub struct DescribeApplicationVersionsMessage {
     #[doc="<p>Specify a version label to show a specific application version.</p>"]
     pub version_labels: Option<Vec<String>>,
 }
-
+impl DescribeApplicationVersionsMessage {
+    /// Sets `application_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeApplicationVersionsMessage.application_name = Some(value.into());`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeApplicationVersionsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeApplicationVersionsMessage.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `version_labels`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeApplicationVersionsMessage.version_labels = Some(value.into());`.
+    pub fn version_labels<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.version_labels = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeApplicationVersionsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeApplicationVersionsMessage {
+        DescribeApplicationVersionsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeApplicationVersionsMessage` contents to a `SignedRequest`.
 struct DescribeApplicationVersionsMessageSerializer;
@@ -3262,7 +3938,19 @@ pub struct DescribeApplicationsMessage {
     #[doc="<p>If specified, AWS Elastic Beanstalk restricts the returned descriptions to only include those with the specified names.</p>"]
     pub application_names: Option<Vec<String>>,
 }
-
+impl DescribeApplicationsMessage {
+    /// Sets `application_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeApplicationsMessage.application_names = Some(value.into());`.
+    pub fn application_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.application_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeApplicationsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeApplicationsMessage {
+        DescribeApplicationsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeApplicationsMessage` contents to a `SignedRequest`.
 struct DescribeApplicationsMessageSerializer;
@@ -3298,7 +3986,54 @@ pub struct DescribeConfigurationOptionsMessage {
     #[doc="<p>The name of the configuration template whose configuration options you want to describe.</p>"]
     pub template_name: Option<String>,
 }
-
+impl DescribeConfigurationOptionsMessage {
+    /// Sets `application_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConfigurationOptionsMessage.application_name = Some(value.into());`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = Some(value.into());
+        self
+    }
+    /// Sets `environment_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConfigurationOptionsMessage.environment_name = Some(value.into());`.
+    pub fn environment_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_name = Some(value.into());
+        self
+    }
+    /// Sets `options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConfigurationOptionsMessage.options = Some(value.into());`.
+    pub fn options<ValueType: Into<Vec<OptionSpecification>>>(mut self, value: ValueType) -> Self {
+        self.options = Some(value.into());
+        self
+    }
+    /// Sets `platform_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConfigurationOptionsMessage.platform_arn = Some(value.into());`.
+    pub fn platform_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.platform_arn = Some(value.into());
+        self
+    }
+    /// Sets `solution_stack_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConfigurationOptionsMessage.solution_stack_name = Some(value.into());`.
+    pub fn solution_stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.solution_stack_name = Some(value.into());
+        self
+    }
+    /// Sets `template_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConfigurationOptionsMessage.template_name = Some(value.into());`.
+    pub fn template_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeConfigurationOptionsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeConfigurationOptionsMessage {
+        DescribeConfigurationOptionsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeConfigurationOptionsMessage` contents to a `SignedRequest`.
 struct DescribeConfigurationOptionsMessageSerializer;
@@ -3343,7 +4078,37 @@ pub struct DescribeConfigurationSettingsMessage {
     #[doc="<p>The name of the configuration template to describe.</p> <p> Conditional: You must specify either this parameter or an EnvironmentName, but not both. If you specify both, AWS Elastic Beanstalk returns an <code>InvalidParameterCombination</code> error. If you do not specify either, AWS Elastic Beanstalk returns a <code>MissingRequiredParameter</code> error. </p>"]
     pub template_name: Option<String>,
 }
-
+impl DescribeConfigurationSettingsMessage {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConfigurationSettingsMessage.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `environment_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConfigurationSettingsMessage.environment_name = Some(value.into());`.
+    pub fn environment_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_name = Some(value.into());
+        self
+    }
+    /// Sets `template_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConfigurationSettingsMessage.template_name = Some(value.into());`.
+    pub fn template_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeConfigurationSettingsMessage with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>>(application_name: ApplicationNameType)
+                                                  -> DescribeConfigurationSettingsMessage {
+        DescribeConfigurationSettingsMessage {
+            application_name: application_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeConfigurationSettingsMessage` contents to a `SignedRequest`.
 struct DescribeConfigurationSettingsMessageSerializer;
@@ -3376,7 +4141,33 @@ pub struct DescribeEnvironmentHealthRequest {
     #[doc="<p>Specify the environment by name.</p> <p>You must specify either this or an EnvironmentName, or both.</p>"]
     pub environment_name: Option<String>,
 }
-
+impl DescribeEnvironmentHealthRequest {
+    /// Sets `attribute_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEnvironmentHealthRequest.attribute_names = Some(value.into());`.
+    pub fn attribute_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.attribute_names = Some(value.into());
+        self
+    }
+    /// Sets `environment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEnvironmentHealthRequest.environment_id = Some(value.into());`.
+    pub fn environment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_id = Some(value.into());
+        self
+    }
+    /// Sets `environment_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEnvironmentHealthRequest.environment_name = Some(value.into());`.
+    pub fn environment_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEnvironmentHealthRequest with optional fields set to `None`.
+    pub fn new() -> DescribeEnvironmentHealthRequest {
+        DescribeEnvironmentHealthRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeEnvironmentHealthRequest` contents to a `SignedRequest`.
 struct DescribeEnvironmentHealthRequestSerializer;
@@ -3424,7 +4215,6 @@ pub struct DescribeEnvironmentHealthResult {
     #[doc="<p>The environment's operational status. <code>Ready</code>, <code>Launching</code>, <code>Updating</code>, <code>Terminating</code>, or <code>Terminated</code>.</p>"]
     pub status: Option<String>,
 }
-
 struct DescribeEnvironmentHealthResultDeserializer;
 impl DescribeEnvironmentHealthResultDeserializer {
     #[allow(unused_variables)]
@@ -3512,7 +4302,40 @@ pub struct DescribeEnvironmentManagedActionHistoryRequest {
     #[doc="<p>The pagination token returned by a previous request.</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeEnvironmentManagedActionHistoryRequest {
+    /// Sets `environment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEnvironmentManagedActionHistoryRequest.environment_id = Some(value.into());`.
+    pub fn environment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_id = Some(value.into());
+        self
+    }
+    /// Sets `environment_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEnvironmentManagedActionHistoryRequest.environment_name = Some(value.into());`.
+    pub fn environment_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_name = Some(value.into());
+        self
+    }
+    /// Sets `max_items`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEnvironmentManagedActionHistoryRequest.max_items = Some(value.into());`.
+    pub fn max_items<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_items = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEnvironmentManagedActionHistoryRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEnvironmentManagedActionHistoryRequest with optional fields set to `None`.
+    pub fn new() -> DescribeEnvironmentManagedActionHistoryRequest {
+        DescribeEnvironmentManagedActionHistoryRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeEnvironmentManagedActionHistoryRequest` contents to a `SignedRequest`.
 struct DescribeEnvironmentManagedActionHistoryRequestSerializer;
@@ -3550,7 +4373,6 @@ pub struct DescribeEnvironmentManagedActionHistoryResult {
     #[doc="<p>A pagination token that you pass to <a>DescribeEnvironmentManagedActionHistory</a> to get the next page of results.</p>"]
     pub next_token: Option<String>,
 }
-
 struct DescribeEnvironmentManagedActionHistoryResultDeserializer;
 impl DescribeEnvironmentManagedActionHistoryResultDeserializer {
     #[allow(unused_variables)]
@@ -3607,7 +4429,33 @@ pub struct DescribeEnvironmentManagedActionsRequest {
     #[doc="<p>To show only actions with a particular status, specify a status.</p>"]
     pub status: Option<String>,
 }
-
+impl DescribeEnvironmentManagedActionsRequest {
+    /// Sets `environment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEnvironmentManagedActionsRequest.environment_id = Some(value.into());`.
+    pub fn environment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_id = Some(value.into());
+        self
+    }
+    /// Sets `environment_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEnvironmentManagedActionsRequest.environment_name = Some(value.into());`.
+    pub fn environment_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_name = Some(value.into());
+        self
+    }
+    /// Sets `status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEnvironmentManagedActionsRequest.status = Some(value.into());`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEnvironmentManagedActionsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeEnvironmentManagedActionsRequest {
+        DescribeEnvironmentManagedActionsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeEnvironmentManagedActionsRequest` contents to a `SignedRequest`.
 struct DescribeEnvironmentManagedActionsRequestSerializer;
@@ -3637,7 +4485,6 @@ pub struct DescribeEnvironmentManagedActionsResult {
     #[doc="<p>A list of upcoming and in-progress managed actions.</p>"]
     pub managed_actions: Option<Vec<ManagedAction>>,
 }
-
 struct DescribeEnvironmentManagedActionsResultDeserializer;
 impl DescribeEnvironmentManagedActionsResultDeserializer {
     #[allow(unused_variables)]
@@ -3690,7 +4537,26 @@ pub struct DescribeEnvironmentResourcesMessage {
     #[doc="<p>The name of the environment to retrieve AWS resource usage data.</p> <p> Condition: You must specify either this or an EnvironmentId, or both. If you do not specify either, AWS Elastic Beanstalk returns <code>MissingRequiredParameter</code> error. </p>"]
     pub environment_name: Option<String>,
 }
-
+impl DescribeEnvironmentResourcesMessage {
+    /// Sets `environment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEnvironmentResourcesMessage.environment_id = Some(value.into());`.
+    pub fn environment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_id = Some(value.into());
+        self
+    }
+    /// Sets `environment_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEnvironmentResourcesMessage.environment_name = Some(value.into());`.
+    pub fn environment_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEnvironmentResourcesMessage with optional fields set to `None`.
+    pub fn new() -> DescribeEnvironmentResourcesMessage {
+        DescribeEnvironmentResourcesMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeEnvironmentResourcesMessage` contents to a `SignedRequest`.
 struct DescribeEnvironmentResourcesMessageSerializer;
@@ -3731,7 +4597,68 @@ pub struct DescribeEnvironmentsMessage {
     #[doc="<p>If specified, AWS Elastic Beanstalk restricts the returned descriptions to include only those that are associated with this application version.</p>"]
     pub version_label: Option<String>,
 }
-
+impl DescribeEnvironmentsMessage {
+    /// Sets `application_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEnvironmentsMessage.application_name = Some(value.into());`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = Some(value.into());
+        self
+    }
+    /// Sets `environment_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEnvironmentsMessage.environment_ids = Some(value.into());`.
+    pub fn environment_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.environment_ids = Some(value.into());
+        self
+    }
+    /// Sets `environment_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEnvironmentsMessage.environment_names = Some(value.into());`.
+    pub fn environment_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.environment_names = Some(value.into());
+        self
+    }
+    /// Sets `include_deleted`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEnvironmentsMessage.include_deleted = Some(value.into());`.
+    pub fn include_deleted<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.include_deleted = Some(value.into());
+        self
+    }
+    /// Sets `included_deleted_back_to`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEnvironmentsMessage.included_deleted_back_to = Some(value.into());`.
+    pub fn included_deleted_back_to<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.included_deleted_back_to = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEnvironmentsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEnvironmentsMessage.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `version_label`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEnvironmentsMessage.version_label = Some(value.into());`.
+    pub fn version_label<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version_label = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEnvironmentsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeEnvironmentsMessage {
+        DescribeEnvironmentsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeEnvironmentsMessage` contents to a `SignedRequest`.
 struct DescribeEnvironmentsMessageSerializer;
@@ -3805,7 +4732,96 @@ pub struct DescribeEventsMessage {
     #[doc="<p>If specified, AWS Elastic Beanstalk restricts the returned descriptions to those associated with this application version.</p>"]
     pub version_label: Option<String>,
 }
-
+impl DescribeEventsMessage {
+    /// Sets `application_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.application_name = Some(value.into());`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = Some(value.into());
+        self
+    }
+    /// Sets `end_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.end_time = Some(value.into());`.
+    pub fn end_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.end_time = Some(value.into());
+        self
+    }
+    /// Sets `environment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.environment_id = Some(value.into());`.
+    pub fn environment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_id = Some(value.into());
+        self
+    }
+    /// Sets `environment_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.environment_name = Some(value.into());`.
+    pub fn environment_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_name = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `platform_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.platform_arn = Some(value.into());`.
+    pub fn platform_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.platform_arn = Some(value.into());
+        self
+    }
+    /// Sets `request_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.request_id = Some(value.into());`.
+    pub fn request_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.request_id = Some(value.into());
+        self
+    }
+    /// Sets `severity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.severity = Some(value.into());`.
+    pub fn severity<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.severity = Some(value.into());
+        self
+    }
+    /// Sets `start_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.start_time = Some(value.into());`.
+    pub fn start_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_time = Some(value.into());
+        self
+    }
+    /// Sets `template_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.template_name = Some(value.into());`.
+    pub fn template_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_name = Some(value.into());
+        self
+    }
+    /// Sets `version_label`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.version_label = Some(value.into());`.
+    pub fn version_label<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version_label = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEventsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeEventsMessage {
+        DescribeEventsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeEventsMessage` contents to a `SignedRequest`.
 struct DescribeEventsMessageSerializer;
@@ -3869,7 +4885,40 @@ pub struct DescribeInstancesHealthRequest {
     #[doc="<p>Specify the pagination token returned by a previous call.</p>"]
     pub next_token: Option<String>,
 }
-
+impl DescribeInstancesHealthRequest {
+    /// Sets `attribute_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancesHealthRequest.attribute_names = Some(value.into());`.
+    pub fn attribute_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.attribute_names = Some(value.into());
+        self
+    }
+    /// Sets `environment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancesHealthRequest.environment_id = Some(value.into());`.
+    pub fn environment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_id = Some(value.into());
+        self
+    }
+    /// Sets `environment_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancesHealthRequest.environment_name = Some(value.into());`.
+    pub fn environment_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_name = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancesHealthRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeInstancesHealthRequest with optional fields set to `None`.
+    pub fn new() -> DescribeInstancesHealthRequest {
+        DescribeInstancesHealthRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeInstancesHealthRequest` contents to a `SignedRequest`.
 struct DescribeInstancesHealthRequestSerializer;
@@ -3910,7 +4959,6 @@ pub struct DescribeInstancesHealthResult {
     #[doc="<p>The date and time that the health information was retrieved.</p>"]
     pub refreshed_at: Option<String>,
 }
-
 struct DescribeInstancesHealthResultDeserializer;
 impl DescribeInstancesHealthResultDeserializer {
     #[allow(unused_variables)]
@@ -3968,7 +5016,19 @@ pub struct DescribePlatformVersionRequest {
     #[doc="<p>The ARN of the version of the platform.</p>"]
     pub platform_arn: Option<String>,
 }
-
+impl DescribePlatformVersionRequest {
+    /// Sets `platform_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePlatformVersionRequest.platform_arn = Some(value.into());`.
+    pub fn platform_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.platform_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribePlatformVersionRequest with optional fields set to `None`.
+    pub fn new() -> DescribePlatformVersionRequest {
+        DescribePlatformVersionRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribePlatformVersionRequest` contents to a `SignedRequest`.
 struct DescribePlatformVersionRequestSerializer;
@@ -3991,7 +5051,6 @@ pub struct DescribePlatformVersionResult {
     #[doc="<p>Detailed information about the version of the platform.</p>"]
     pub platform_description: Option<PlatformDescription>,
 }
-
 struct DescribePlatformVersionResultDeserializer;
 impl DescribePlatformVersionResultDeserializer {
     #[allow(unused_variables)]
@@ -4135,7 +5194,6 @@ pub struct EnvironmentDescription {
     #[doc="<p>The application version deployed in this environment.</p>"]
     pub version_label: Option<String>,
 }
-
 struct EnvironmentDescriptionDeserializer;
 impl EnvironmentDescriptionDeserializer {
     #[allow(unused_variables)]
@@ -4316,7 +5374,6 @@ pub struct EnvironmentDescriptionsMessage {
     #[doc="<p>In a paginated request, the token that you can pass in a subsequent request to get the next response page.</p>"]
     pub next_token: Option<String>,
 }
-
 struct EnvironmentDescriptionsMessageDeserializer;
 impl EnvironmentDescriptionsMessageDeserializer {
     #[allow(unused_variables)]
@@ -4440,7 +5497,6 @@ pub struct EnvironmentInfoDescription {
     #[doc="<p>The time stamp when this information was retrieved.</p>"]
     pub sample_timestamp: Option<String>,
 }
-
 struct EnvironmentInfoDescriptionDeserializer;
 impl EnvironmentInfoDescriptionDeserializer {
     #[allow(unused_variables)]
@@ -4563,7 +5619,6 @@ pub struct EnvironmentLink {
     #[doc="<p>The name of the link.</p>"]
     pub link_name: Option<String>,
 }
-
 struct EnvironmentLinkDeserializer;
 impl EnvironmentLinkDeserializer {
     #[allow(unused_variables)]
@@ -4696,7 +5751,6 @@ pub struct EnvironmentResourceDescription {
     #[doc="<p>The <code>AutoScaling</code> triggers in use by this environment. </p>"]
     pub triggers: Option<Vec<Trigger>>,
 }
-
 struct EnvironmentResourceDescriptionDeserializer;
 impl EnvironmentResourceDescriptionDeserializer {
     #[allow(unused_variables)]
@@ -4774,7 +5828,6 @@ pub struct EnvironmentResourceDescriptionsMessage {
     #[doc="<p> A list of <a>EnvironmentResourceDescription</a>. </p>"]
     pub environment_resources: Option<EnvironmentResourceDescription>,
 }
-
 struct EnvironmentResourceDescriptionsMessageDeserializer;
 impl EnvironmentResourceDescriptionsMessageDeserializer {
     #[allow(unused_variables)]
@@ -4823,7 +5876,6 @@ pub struct EnvironmentResourcesDescription {
     #[doc="<p>Describes the LoadBalancer.</p>"]
     pub load_balancer: Option<LoadBalancerDescription>,
 }
-
 struct EnvironmentResourcesDescriptionDeserializer;
 impl EnvironmentResourcesDescriptionDeserializer {
     #[allow(unused_variables)]
@@ -4892,7 +5944,33 @@ pub struct EnvironmentTier {
     #[doc="<p>The version of this environment tier.</p>"]
     pub version: Option<String>,
 }
-
+impl EnvironmentTier {
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnvironmentTier.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnvironmentTier.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Sets `version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnvironmentTier.version = Some(value.into());`.
+    pub fn version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version = Some(value.into());
+        self
+    }
+    /// Returns a new instance of EnvironmentTier with optional fields set to `None`.
+    pub fn new() -> EnvironmentTier {
+        EnvironmentTier { ..Default::default() }
+    }
+}
 struct EnvironmentTierDeserializer;
 impl EnvironmentTierDeserializer {
     #[allow(unused_variables)]
@@ -5000,7 +6078,6 @@ pub struct EventDescription {
     #[doc="<p>The release label for the application version associated with this event.</p>"]
     pub version_label: Option<String>,
 }
-
 struct EventDescriptionDeserializer;
 impl EventDescriptionDeserializer {
     #[allow(unused_variables)]
@@ -5128,7 +6205,6 @@ pub struct EventDescriptionsMessage {
     #[doc="<p> If returned, this indicates that there are more results to obtain. Use this token in the next <a>DescribeEvents</a> call to get the next batch of events. </p>"]
     pub next_token: Option<String>,
 }
-
 struct EventDescriptionsMessageDeserializer;
 impl EventDescriptionsMessageDeserializer {
     #[allow(unused_variables)]
@@ -5252,7 +6328,6 @@ pub struct Instance {
     #[doc="<p>The ID of the Amazon EC2 instance.</p>"]
     pub id: Option<String>,
 }
-
 struct InstanceDeserializer;
 impl InstanceDeserializer {
     #[allow(unused_variables)]
@@ -5356,7 +6431,6 @@ pub struct InstanceHealthSummary {
     #[doc="<p> <b>Yellow.</b> The health agent is reporting a moderate number of request failures or other issues for an instance or environment.</p>"]
     pub warning: Option<i64>,
 }
-
 struct InstanceHealthSummaryDeserializer;
 impl InstanceHealthSummaryDeserializer {
     #[allow(unused_variables)]
@@ -5534,7 +6608,6 @@ pub struct Latency {
     #[doc="<p>The average latency for the slowest 0.1 percent of requests over the last 10 seconds.</p>"]
     pub p999: Option<f64>,
 }
-
 struct LatencyDeserializer;
 impl LatencyDeserializer {
     #[allow(unused_variables)]
@@ -5611,7 +6684,6 @@ pub struct LaunchConfiguration {
     #[doc="<p>The name of the launch configuration.</p>"]
     pub name: Option<String>,
 }
-
 struct LaunchConfigurationDeserializer;
 impl LaunchConfigurationDeserializer {
     #[allow(unused_variables)]
@@ -5718,7 +6790,6 @@ pub struct ListAvailableSolutionStacksResultMessage {
     #[doc="<p>A list of available solution stacks.</p>"]
     pub solution_stacks: Option<Vec<String>>,
 }
-
 struct ListAvailableSolutionStacksResultMessageDeserializer;
 impl ListAvailableSolutionStacksResultMessageDeserializer {
     #[allow(unused_variables)]
@@ -5773,7 +6844,33 @@ pub struct ListPlatformVersionsRequest {
     #[doc="<p>The starting index into the remaining list of platforms. Use the <code>NextToken</code> value from a previous <code>ListPlatformVersion</code> call.</p>"]
     pub next_token: Option<String>,
 }
-
+impl ListPlatformVersionsRequest {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPlatformVersionsRequest.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<PlatformFilter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPlatformVersionsRequest.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPlatformVersionsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListPlatformVersionsRequest with optional fields set to `None`.
+    pub fn new() -> ListPlatformVersionsRequest {
+        ListPlatformVersionsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ListPlatformVersionsRequest` contents to a `SignedRequest`.
 struct ListPlatformVersionsRequestSerializer;
@@ -5807,7 +6904,6 @@ pub struct ListPlatformVersionsResult {
     #[doc="<p>Detailed information about the platforms.</p>"]
     pub platform_summary_list: Option<Vec<PlatformSummary>>,
 }
-
 struct ListPlatformVersionsResultDeserializer;
 impl ListPlatformVersionsResultDeserializer {
     #[allow(unused_variables)]
@@ -5863,7 +6959,6 @@ pub struct Listener {
     #[doc="<p>The protocol that is used by the Listener.</p>"]
     pub protocol: Option<String>,
 }
-
 struct ListenerDeserializer;
 impl ListenerDeserializer {
     #[allow(unused_variables)]
@@ -5970,7 +7065,6 @@ pub struct LoadBalancer {
     #[doc="<p>The name of the LoadBalancer.</p>"]
     pub name: Option<String>,
 }
-
 struct LoadBalancerDeserializer;
 impl LoadBalancerDeserializer {
     #[allow(unused_variables)]
@@ -6023,7 +7117,6 @@ pub struct LoadBalancerDescription {
     #[doc="<p>The name of the LoadBalancer.</p>"]
     pub load_balancer_name: Option<String>,
 }
-
 struct LoadBalancerDescriptionDeserializer;
 impl LoadBalancerDescriptionDeserializer {
     #[allow(unused_variables)]
@@ -6184,7 +7277,6 @@ pub struct ManagedAction {
     #[doc="<p>The start time of the maintenance window in which the managed action will execute.</p>"]
     pub window_start_time: Option<String>,
 }
-
 struct ManagedActionDeserializer;
 impl ManagedActionDeserializer {
     #[allow(unused_variables)]
@@ -6266,7 +7358,6 @@ pub struct ManagedActionHistoryItem {
     #[doc="<p>The status of the action.</p>"]
     pub status: Option<String>,
 }
-
 struct ManagedActionHistoryItemDeserializer;
 impl ManagedActionHistoryItemDeserializer {
     #[allow(unused_variables)]
@@ -6437,7 +7528,36 @@ pub struct MaxAgeRule {
     #[doc="<p>Specify the number of days to retain an application versions.</p>"]
     pub max_age_in_days: Option<i64>,
 }
-
+impl MaxAgeRule {
+    /// Sets `delete_source_from_s3`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaxAgeRule.delete_source_from_s3 = Some(value.into());`.
+    pub fn delete_source_from_s3<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.delete_source_from_s3 = Some(value.into());
+        self
+    }
+    /// Sets `enabled`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaxAgeRule.enabled = value.into();`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = value.into();
+        self
+    }
+    /// Sets `max_age_in_days`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaxAgeRule.max_age_in_days = Some(value.into());`.
+    pub fn max_age_in_days<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_age_in_days = Some(value.into());
+        self
+    }
+    /// Returns a new instance of MaxAgeRule with optional fields set to `None`.
+    pub fn new<EnabledType: Into<bool>>(enabled: EnabledType) -> MaxAgeRule {
+        MaxAgeRule {
+            enabled: enabled.into(),
+            ..Default::default()
+        }
+    }
+}
 struct MaxAgeRuleDeserializer;
 impl MaxAgeRuleDeserializer {
     #[allow(unused_variables)]
@@ -6524,7 +7644,36 @@ pub struct MaxCountRule {
     #[doc="<p>Specify the maximum number of application versions to retain.</p>"]
     pub max_count: Option<i64>,
 }
-
+impl MaxCountRule {
+    /// Sets `delete_source_from_s3`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaxCountRule.delete_source_from_s3 = Some(value.into());`.
+    pub fn delete_source_from_s3<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.delete_source_from_s3 = Some(value.into());
+        self
+    }
+    /// Sets `enabled`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaxCountRule.enabled = value.into();`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = value.into();
+        self
+    }
+    /// Sets `max_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MaxCountRule.max_count = Some(value.into());`.
+    pub fn max_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_count = Some(value.into());
+        self
+    }
+    /// Returns a new instance of MaxCountRule with optional fields set to `None`.
+    pub fn new<EnabledType: Into<bool>>(enabled: EnabledType) -> MaxCountRule {
+        MaxCountRule {
+            enabled: enabled.into(),
+            ..Default::default()
+        }
+    }
+}
 struct MaxCountRuleDeserializer;
 impl MaxCountRuleDeserializer {
     #[allow(unused_variables)]
@@ -6762,7 +7911,6 @@ pub struct OptionRestrictionRegex {
     #[doc="<p>The regular expression pattern that a string configuration option value with this restriction must match.</p>"]
     pub pattern: Option<String>,
 }
-
 struct OptionRestrictionRegexDeserializer;
 impl OptionRestrictionRegexDeserializer {
     #[allow(unused_variables)]
@@ -6819,7 +7967,33 @@ pub struct OptionSpecification {
     #[doc="<p>A unique resource name for a time-based scaling configuration option.</p>"]
     pub resource_name: Option<String>,
 }
-
+impl OptionSpecification {
+    /// Sets `namespace`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OptionSpecification.namespace = Some(value.into());`.
+    pub fn namespace<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.namespace = Some(value.into());
+        self
+    }
+    /// Sets `option_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OptionSpecification.option_name = Some(value.into());`.
+    pub fn option_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.option_name = Some(value.into());
+        self
+    }
+    /// Sets `resource_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OptionSpecification.resource_name = Some(value.into());`.
+    pub fn resource_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of OptionSpecification with optional fields set to `None`.
+    pub fn new() -> OptionSpecification {
+        OptionSpecification { ..Default::default() }
+    }
+}
 
 /// Serialize `OptionSpecification` contents to a `SignedRequest`.
 struct OptionSpecificationSerializer;
@@ -6923,7 +8097,6 @@ pub struct PlatformDescription {
     #[doc="<p>The tiers supported by the platform.</p>"]
     pub supported_tier_list: Option<Vec<String>>,
 }
-
 struct PlatformDescriptionDeserializer;
 impl PlatformDescriptionDeserializer {
     #[allow(unused_variables)]
@@ -7059,7 +8232,33 @@ pub struct PlatformFilter {
     #[doc="<p>The list of values applied to the custom platform attribute.</p>"]
     pub values: Option<Vec<String>>,
 }
-
+impl PlatformFilter {
+    /// Sets `operator`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PlatformFilter.operator = Some(value.into());`.
+    pub fn operator<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.operator = Some(value.into());
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PlatformFilter.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Sets `values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PlatformFilter.values = Some(value.into());`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PlatformFilter with optional fields set to `None`.
+    pub fn new() -> PlatformFilter {
+        PlatformFilter { ..Default::default() }
+    }
+}
 
 /// Serialize `PlatformFilter` contents to a `SignedRequest`.
 struct PlatformFilterSerializer;
@@ -7117,7 +8316,6 @@ pub struct PlatformFramework {
     #[doc="<p>The version of the framework.</p>"]
     pub version: Option<String>,
 }
-
 struct PlatformFrameworkDeserializer;
 impl PlatformFrameworkDeserializer {
     #[allow(unused_variables)]
@@ -7240,7 +8438,6 @@ pub struct PlatformProgrammingLanguage {
     #[doc="<p>The version of the programming language.</p>"]
     pub version: Option<String>,
 }
-
 struct PlatformProgrammingLanguageDeserializer;
 impl PlatformProgrammingLanguageDeserializer {
     #[allow(unused_variables)]
@@ -7362,7 +8559,6 @@ pub struct PlatformSummary {
     #[doc="<p>The tiers in which the platform runs.</p>"]
     pub supported_tier_list: Option<Vec<String>>,
 }
-
 struct PlatformSummaryDeserializer;
 impl PlatformSummaryDeserializer {
     #[allow(unused_variables)]
@@ -7504,7 +8700,6 @@ pub struct Queue {
     #[doc="<p>The URL of the queue.</p>"]
     pub url: Option<String>,
 }
-
 struct QueueDeserializer;
 impl QueueDeserializer {
     #[allow(unused_variables)]
@@ -7598,7 +8793,26 @@ pub struct RebuildEnvironmentMessage {
     #[doc="<p>The name of the environment to rebuild.</p> <p> Condition: You must specify either this or an EnvironmentId, or both. If you do not specify either, AWS Elastic Beanstalk returns <code>MissingRequiredParameter</code> error. </p>"]
     pub environment_name: Option<String>,
 }
-
+impl RebuildEnvironmentMessage {
+    /// Sets `environment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RebuildEnvironmentMessage.environment_id = Some(value.into());`.
+    pub fn environment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_id = Some(value.into());
+        self
+    }
+    /// Sets `environment_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RebuildEnvironmentMessage.environment_name = Some(value.into());`.
+    pub fn environment_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RebuildEnvironmentMessage with optional fields set to `None`.
+    pub fn new() -> RebuildEnvironmentMessage {
+        RebuildEnvironmentMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `RebuildEnvironmentMessage` contents to a `SignedRequest`.
 struct RebuildEnvironmentMessageSerializer;
@@ -7685,7 +8899,37 @@ pub struct RequestEnvironmentInfoMessage {
     #[doc="<p>The type of information to request.</p>"]
     pub info_type: String,
 }
-
+impl RequestEnvironmentInfoMessage {
+    /// Sets `environment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestEnvironmentInfoMessage.environment_id = Some(value.into());`.
+    pub fn environment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_id = Some(value.into());
+        self
+    }
+    /// Sets `environment_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestEnvironmentInfoMessage.environment_name = Some(value.into());`.
+    pub fn environment_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_name = Some(value.into());
+        self
+    }
+    /// Sets `info_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestEnvironmentInfoMessage.info_type = value.into();`.
+    pub fn info_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.info_type = value.into();
+        self
+    }
+    /// Returns a new instance of RequestEnvironmentInfoMessage with optional fields set to `None`.
+    pub fn new<InfoTypeType: Into<String>>(info_type: InfoTypeType)
+                                           -> RequestEnvironmentInfoMessage {
+        RequestEnvironmentInfoMessage {
+            info_type: info_type.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RequestEnvironmentInfoMessage` contents to a `SignedRequest`.
 struct RequestEnvironmentInfoMessageSerializer;
@@ -7757,7 +9001,26 @@ pub struct RestartAppServerMessage {
     #[doc="<p>The name of the environment to restart the server for.</p> <p> Condition: You must specify either this or an EnvironmentId, or both. If you do not specify either, AWS Elastic Beanstalk returns <code>MissingRequiredParameter</code> error. </p>"]
     pub environment_name: Option<String>,
 }
-
+impl RestartAppServerMessage {
+    /// Sets `environment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestartAppServerMessage.environment_id = Some(value.into());`.
+    pub fn environment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_id = Some(value.into());
+        self
+    }
+    /// Sets `environment_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestartAppServerMessage.environment_name = Some(value.into());`.
+    pub fn environment_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RestartAppServerMessage with optional fields set to `None`.
+    pub fn new() -> RestartAppServerMessage {
+        RestartAppServerMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `RestartAppServerMessage` contents to a `SignedRequest`.
 struct RestartAppServerMessageSerializer;
@@ -7788,7 +9051,37 @@ pub struct RetrieveEnvironmentInfoMessage {
     #[doc="<p>The type of information to retrieve.</p>"]
     pub info_type: String,
 }
-
+impl RetrieveEnvironmentInfoMessage {
+    /// Sets `environment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RetrieveEnvironmentInfoMessage.environment_id = Some(value.into());`.
+    pub fn environment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_id = Some(value.into());
+        self
+    }
+    /// Sets `environment_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RetrieveEnvironmentInfoMessage.environment_name = Some(value.into());`.
+    pub fn environment_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_name = Some(value.into());
+        self
+    }
+    /// Sets `info_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RetrieveEnvironmentInfoMessage.info_type = value.into();`.
+    pub fn info_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.info_type = value.into();
+        self
+    }
+    /// Returns a new instance of RetrieveEnvironmentInfoMessage with optional fields set to `None`.
+    pub fn new<InfoTypeType: Into<String>>(info_type: InfoTypeType)
+                                           -> RetrieveEnvironmentInfoMessage {
+        RetrieveEnvironmentInfoMessage {
+            info_type: info_type.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RetrieveEnvironmentInfoMessage` contents to a `SignedRequest`.
 struct RetrieveEnvironmentInfoMessageSerializer;
@@ -7816,7 +9109,6 @@ pub struct RetrieveEnvironmentInfoResultMessage {
     #[doc="<p> The <a>EnvironmentInfoDescription</a> of the environment. </p>"]
     pub environment_info: Option<Vec<EnvironmentInfoDescription>>,
 }
-
 struct RetrieveEnvironmentInfoResultMessageDeserializer;
 impl RetrieveEnvironmentInfoResultMessageDeserializer {
     #[allow(unused_variables)]
@@ -7895,7 +9187,26 @@ pub struct S3Location {
     #[doc="<p>The Amazon S3 key where the data is located.</p>"]
     pub s3_key: Option<String>,
 }
-
+impl S3Location {
+    /// Sets `s3_bucket`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Location.s3_bucket = Some(value.into());`.
+    pub fn s3_bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_bucket = Some(value.into());
+        self
+    }
+    /// Sets `s3_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Location.s3_key = Some(value.into());`.
+    pub fn s3_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_key = Some(value.into());
+        self
+    }
+    /// Returns a new instance of S3Location with optional fields set to `None`.
+    pub fn new() -> S3Location {
+        S3Location { ..Default::default() }
+    }
+}
 struct S3LocationDeserializer;
 impl S3LocationDeserializer {
     #[allow(unused_variables)]
@@ -7999,7 +9310,6 @@ pub struct SingleInstanceHealth {
     #[doc="<p>Operating system metrics from the instance.</p>"]
     pub system: Option<SystemStatus>,
 }
-
 struct SingleInstanceHealthDeserializer;
 impl SingleInstanceHealthDeserializer {
     #[allow(unused_variables)]
@@ -8089,7 +9399,6 @@ pub struct SolutionStackDescription {
     #[doc="<p>The name of the solution stack.</p>"]
     pub solution_stack_name: Option<String>,
 }
-
 struct SolutionStackDescriptionDeserializer;
 impl SolutionStackDescriptionDeserializer {
     #[allow(unused_variables)]
@@ -8201,7 +9510,44 @@ pub struct SourceBuildInformation {
     #[doc="<p>The type of repository.</p> <ul> <li> <p> <code>Git</code> </p> </li> <li> <p> <code>Zip</code> </p> </li> </ul>"]
     pub source_type: String,
 }
-
+impl SourceBuildInformation {
+    /// Sets `source_location`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SourceBuildInformation.source_location = value.into();`.
+    pub fn source_location<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_location = value.into();
+        self
+    }
+    /// Sets `source_repository`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SourceBuildInformation.source_repository = value.into();`.
+    pub fn source_repository<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_repository = value.into();
+        self
+    }
+    /// Sets `source_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SourceBuildInformation.source_type = value.into();`.
+    pub fn source_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_type = value.into();
+        self
+    }
+    /// Returns a new instance of SourceBuildInformation with optional fields set to `None`.
+    pub fn new<SourceLocationType: Into<String>,
+               SourceRepositoryType: Into<String>,
+               SourceTypeType: Into<String>>
+        (source_location: SourceLocationType,
+         source_repository: SourceRepositoryType,
+         source_type: SourceTypeType)
+         -> SourceBuildInformation {
+        SourceBuildInformation {
+            source_location: source_location.into(),
+            source_repository: source_repository.into(),
+            source_type: source_type.into(),
+            ..Default::default()
+        }
+    }
+}
 struct SourceBuildInformationDeserializer;
 impl SourceBuildInformationDeserializer {
     #[allow(unused_variables)]
@@ -8281,7 +9627,26 @@ pub struct SourceConfiguration {
     #[doc="<p>The name of the configuration template.</p>"]
     pub template_name: Option<String>,
 }
-
+impl SourceConfiguration {
+    /// Sets `application_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SourceConfiguration.application_name = Some(value.into());`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = Some(value.into());
+        self
+    }
+    /// Sets `template_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SourceConfiguration.template_name = Some(value.into());`.
+    pub fn template_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SourceConfiguration with optional fields set to `None`.
+    pub fn new() -> SourceConfiguration {
+        SourceConfiguration { ..Default::default() }
+    }
+}
 
 /// Serialize `SourceConfiguration` contents to a `SignedRequest`.
 struct SourceConfigurationSerializer;
@@ -8356,7 +9721,6 @@ pub struct StatusCodes {
     #[doc="<p>The percentage of requests over the last 10 seconds that resulted in a 5xx (500, 501, etc.) status code.</p>"]
     pub status_5xx: Option<i64>,
 }
-
 struct StatusCodesDeserializer;
 impl StatusCodesDeserializer {
     #[allow(unused_variables)]
@@ -8551,7 +9915,42 @@ pub struct SwapEnvironmentCNAMEsMessage {
     #[doc="<p>The name of the source environment.</p> <p> Condition: You must specify at least the <code>SourceEnvironmentID</code> or the <code>SourceEnvironmentName</code>. You may also specify both. If you specify the <code>SourceEnvironmentName</code>, you must specify the <code>DestinationEnvironmentName</code>. </p>"]
     pub source_environment_name: Option<String>,
 }
-
+impl SwapEnvironmentCNAMEsMessage {
+    /// Sets `destination_environment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SwapEnvironmentCNAMEsMessage.destination_environment_id = Some(value.into());`.
+    pub fn destination_environment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination_environment_id = Some(value.into());
+        self
+    }
+    /// Sets `destination_environment_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SwapEnvironmentCNAMEsMessage.destination_environment_name = Some(value.into());`.
+    pub fn destination_environment_name<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.destination_environment_name = Some(value.into());
+        self
+    }
+    /// Sets `source_environment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SwapEnvironmentCNAMEsMessage.source_environment_id = Some(value.into());`.
+    pub fn source_environment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_environment_id = Some(value.into());
+        self
+    }
+    /// Sets `source_environment_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SwapEnvironmentCNAMEsMessage.source_environment_name = Some(value.into());`.
+    pub fn source_environment_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_environment_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SwapEnvironmentCNAMEsMessage with optional fields set to `None`.
+    pub fn new() -> SwapEnvironmentCNAMEsMessage {
+        SwapEnvironmentCNAMEsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `SwapEnvironmentCNAMEsMessage` contents to a `SignedRequest`.
 struct SwapEnvironmentCNAMEsMessageSerializer;
@@ -8590,7 +9989,6 @@ pub struct SystemStatus {
     #[doc="<p>Load average in the last 1-minute, 5-minute, and 15-minute periods. For more information, see <a href=\"http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/health-enhanced-metrics.html#health-enhanced-metrics-os\">Operating System Metrics</a>.</p>"]
     pub load_average: Option<Vec<f64>>,
 }
-
 struct SystemStatusDeserializer;
 impl SystemStatusDeserializer {
     #[allow(unused_variables)]
@@ -8647,7 +10045,26 @@ pub struct Tag {
     #[doc="<p>The value of the tag.</p>"]
     pub value: Option<String>,
 }
-
+impl Tag {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new() -> Tag {
+        Tag { ..Default::default() }
+    }
+}
 
 /// Serialize `Tag` contents to a `SignedRequest`.
 struct TagSerializer;
@@ -8692,7 +10109,40 @@ pub struct TerminateEnvironmentMessage {
     #[doc="<p>Indicates whether the associated AWS resources should shut down when the environment is terminated:</p> <ul> <li> <p> <code>true</code>: The specified environment as well as the associated AWS resources, such as Auto Scaling group and LoadBalancer, are terminated.</p> </li> <li> <p> <code>false</code>: AWS Elastic Beanstalk resource management is removed from the environment, but the AWS resources continue to operate.</p> </li> </ul> <p> For more information, see the <a href=\"http://docs.aws.amazon.com/elasticbeanstalk/latest/ug/\"> AWS Elastic Beanstalk User Guide. </a> </p> <p> Default: <code>true</code> </p> <p> Valid Values: <code>true</code> | <code>false</code> </p>"]
     pub terminate_resources: Option<bool>,
 }
-
+impl TerminateEnvironmentMessage {
+    /// Sets `environment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateEnvironmentMessage.environment_id = Some(value.into());`.
+    pub fn environment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_id = Some(value.into());
+        self
+    }
+    /// Sets `environment_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateEnvironmentMessage.environment_name = Some(value.into());`.
+    pub fn environment_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_name = Some(value.into());
+        self
+    }
+    /// Sets `force_terminate`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateEnvironmentMessage.force_terminate = Some(value.into());`.
+    pub fn force_terminate<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.force_terminate = Some(value.into());
+        self
+    }
+    /// Sets `terminate_resources`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateEnvironmentMessage.terminate_resources = Some(value.into());`.
+    pub fn terminate_resources<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.terminate_resources = Some(value.into());
+        self
+    }
+    /// Returns a new instance of TerminateEnvironmentMessage with optional fields set to `None`.
+    pub fn new() -> TerminateEnvironmentMessage {
+        TerminateEnvironmentMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `TerminateEnvironmentMessage` contents to a `SignedRequest`.
 struct TerminateEnvironmentMessageSerializer;
@@ -8755,7 +10205,6 @@ pub struct Trigger {
     #[doc="<p>The name of the trigger.</p>"]
     pub name: Option<String>,
 }
-
 struct TriggerDeserializer;
 impl TriggerDeserializer {
     #[allow(unused_variables)]
@@ -8847,7 +10296,30 @@ pub struct UpdateApplicationMessage {
     #[doc="<p>A new description for the application.</p> <p>Default: If not specified, AWS Elastic Beanstalk does not update the description.</p>"]
     pub description: Option<String>,
 }
-
+impl UpdateApplicationMessage {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateApplicationMessage.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateApplicationMessage.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateApplicationMessage with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>>(application_name: ApplicationNameType)
+                                                  -> UpdateApplicationMessage {
+        UpdateApplicationMessage {
+            application_name: application_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateApplicationMessage` contents to a `SignedRequest`.
 struct UpdateApplicationMessageSerializer;
@@ -8874,7 +10346,37 @@ pub struct UpdateApplicationResourceLifecycleMessage {
     #[doc="<p>The lifecycle configuration.</p>"]
     pub resource_lifecycle_config: ApplicationResourceLifecycleConfig,
 }
-
+impl UpdateApplicationResourceLifecycleMessage {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateApplicationResourceLifecycleMessage.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `resource_lifecycle_config`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateApplicationResourceLifecycleMessage.resource_lifecycle_config = value.into();`.
+    pub fn resource_lifecycle_config<ValueType: Into<ApplicationResourceLifecycleConfig>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.resource_lifecycle_config = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateApplicationResourceLifecycleMessage with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>,
+               ResourceLifecycleConfigType: Into<ApplicationResourceLifecycleConfig>>
+        (application_name: ApplicationNameType,
+         resource_lifecycle_config: ResourceLifecycleConfigType)
+         -> UpdateApplicationResourceLifecycleMessage {
+        UpdateApplicationResourceLifecycleMessage {
+            application_name: application_name.into(),
+            resource_lifecycle_config: resource_lifecycle_config.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateApplicationResourceLifecycleMessage` contents to a `SignedRequest`.
 struct UpdateApplicationResourceLifecycleMessageSerializer;
@@ -8908,7 +10410,40 @@ pub struct UpdateApplicationVersionMessage {
     #[doc="<p>The name of the version to update.</p> <p>If no application version is found with this label, <code>UpdateApplication</code> returns an <code>InvalidParameterValue</code> error. </p>"]
     pub version_label: String,
 }
-
+impl UpdateApplicationVersionMessage {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateApplicationVersionMessage.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateApplicationVersionMessage.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `version_label`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateApplicationVersionMessage.version_label = value.into();`.
+    pub fn version_label<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version_label = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateApplicationVersionMessage with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>, VersionLabelType: Into<String>>
+        (application_name: ApplicationNameType,
+         version_label: VersionLabelType)
+         -> UpdateApplicationVersionMessage {
+        UpdateApplicationVersionMessage {
+            application_name: application_name.into(),
+            version_label: version_label.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateApplicationVersionMessage` contents to a `SignedRequest`.
 struct UpdateApplicationVersionMessageSerializer;
@@ -8943,7 +10478,58 @@ pub struct UpdateConfigurationTemplateMessage {
     #[doc="<p>The name of the configuration template to update.</p> <p> If no configuration template is found with this name, <code>UpdateConfigurationTemplate</code> returns an <code>InvalidParameterValue</code> error. </p>"]
     pub template_name: String,
 }
-
+impl UpdateConfigurationTemplateMessage {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateConfigurationTemplateMessage.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateConfigurationTemplateMessage.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `option_settings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateConfigurationTemplateMessage.option_settings = Some(value.into());`.
+    pub fn option_settings<ValueType: Into<Vec<ConfigurationOptionSetting>>>(mut self,
+                                                                             value: ValueType)
+                                                                             -> Self {
+        self.option_settings = Some(value.into());
+        self
+    }
+    /// Sets `options_to_remove`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateConfigurationTemplateMessage.options_to_remove = Some(value.into());`.
+    pub fn options_to_remove<ValueType: Into<Vec<OptionSpecification>>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.options_to_remove = Some(value.into());
+        self
+    }
+    /// Sets `template_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateConfigurationTemplateMessage.template_name = value.into();`.
+    pub fn template_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateConfigurationTemplateMessage with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>, TemplateNameType: Into<String>>
+        (application_name: ApplicationNameType,
+         template_name: TemplateNameType)
+         -> UpdateConfigurationTemplateMessage {
+        UpdateConfigurationTemplateMessage {
+            application_name: application_name.into(),
+            template_name: template_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateConfigurationTemplateMessage` contents to a `SignedRequest`.
 struct UpdateConfigurationTemplateMessageSerializer;
@@ -9018,7 +10604,100 @@ pub struct UpdateEnvironmentMessage {
     #[doc="<p>If this parameter is specified, AWS Elastic Beanstalk deploys the named application version to the environment. If no such application version is found, returns an <code>InvalidParameterValue</code> error. </p>"]
     pub version_label: Option<String>,
 }
-
+impl UpdateEnvironmentMessage {
+    /// Sets `application_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateEnvironmentMessage.application_name = Some(value.into());`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateEnvironmentMessage.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `environment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateEnvironmentMessage.environment_id = Some(value.into());`.
+    pub fn environment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_id = Some(value.into());
+        self
+    }
+    /// Sets `environment_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateEnvironmentMessage.environment_name = Some(value.into());`.
+    pub fn environment_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_name = Some(value.into());
+        self
+    }
+    /// Sets `group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateEnvironmentMessage.group_name = Some(value.into());`.
+    pub fn group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.group_name = Some(value.into());
+        self
+    }
+    /// Sets `option_settings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateEnvironmentMessage.option_settings = Some(value.into());`.
+    pub fn option_settings<ValueType: Into<Vec<ConfigurationOptionSetting>>>(mut self,
+                                                                             value: ValueType)
+                                                                             -> Self {
+        self.option_settings = Some(value.into());
+        self
+    }
+    /// Sets `options_to_remove`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateEnvironmentMessage.options_to_remove = Some(value.into());`.
+    pub fn options_to_remove<ValueType: Into<Vec<OptionSpecification>>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.options_to_remove = Some(value.into());
+        self
+    }
+    /// Sets `platform_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateEnvironmentMessage.platform_arn = Some(value.into());`.
+    pub fn platform_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.platform_arn = Some(value.into());
+        self
+    }
+    /// Sets `solution_stack_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateEnvironmentMessage.solution_stack_name = Some(value.into());`.
+    pub fn solution_stack_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.solution_stack_name = Some(value.into());
+        self
+    }
+    /// Sets `template_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateEnvironmentMessage.template_name = Some(value.into());`.
+    pub fn template_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_name = Some(value.into());
+        self
+    }
+    /// Sets `tier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateEnvironmentMessage.tier = Some(value.into());`.
+    pub fn tier<ValueType: Into<EnvironmentTier>>(mut self, value: ValueType) -> Self {
+        self.tier = Some(value.into());
+        self
+    }
+    /// Sets `version_label`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateEnvironmentMessage.version_label = Some(value.into());`.
+    pub fn version_label<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version_label = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateEnvironmentMessage with optional fields set to `None`.
+    pub fn new() -> UpdateEnvironmentMessage {
+        UpdateEnvironmentMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `UpdateEnvironmentMessage` contents to a `SignedRequest`.
 struct UpdateEnvironmentMessageSerializer;
@@ -9103,7 +10782,50 @@ pub struct ValidateConfigurationSettingsMessage {
     #[doc="<p>The name of the configuration template to validate the settings against.</p> <p>Condition: You cannot specify both this and an environment name.</p>"]
     pub template_name: Option<String>,
 }
-
+impl ValidateConfigurationSettingsMessage {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ValidateConfigurationSettingsMessage.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `environment_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ValidateConfigurationSettingsMessage.environment_name = Some(value.into());`.
+    pub fn environment_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.environment_name = Some(value.into());
+        self
+    }
+    /// Sets `option_settings`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ValidateConfigurationSettingsMessage.option_settings = value.into();`.
+    pub fn option_settings<ValueType: Into<Vec<ConfigurationOptionSetting>>>(mut self,
+                                                                             value: ValueType)
+                                                                             -> Self {
+        self.option_settings = value.into();
+        self
+    }
+    /// Sets `template_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ValidateConfigurationSettingsMessage.template_name = Some(value.into());`.
+    pub fn template_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.template_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ValidateConfigurationSettingsMessage with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>,
+               OptionSettingsType: Into<Vec<ConfigurationOptionSetting>>>
+        (application_name: ApplicationNameType,
+         option_settings: OptionSettingsType)
+         -> ValidateConfigurationSettingsMessage {
+        ValidateConfigurationSettingsMessage {
+            application_name: application_name.into(),
+            option_settings: option_settings.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ValidateConfigurationSettingsMessage` contents to a `SignedRequest`.
 struct ValidateConfigurationSettingsMessageSerializer;
@@ -9143,7 +10865,6 @@ pub struct ValidationMessage {
     #[doc="<p>An indication of the severity of this message:</p> <ul> <li> <p> <code>error</code>: This message indicates that this is not a valid setting for an option.</p> </li> <li> <p> <code>warning</code>: This message is providing information you should take into account.</p> </li> </ul>"]
     pub severity: Option<String>,
 }
-
 struct ValidationMessageDeserializer;
 impl ValidationMessageDeserializer {
     #[allow(unused_variables)]

@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -41,7 +42,44 @@ pub struct AcceptMatchInput {
     #[serde(rename="TicketId")]
     pub ticket_id: String,
 }
-
+impl AcceptMatchInput {
+    /// Sets `acceptance_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AcceptMatchInput.acceptance_type = value.into();`.
+    pub fn acceptance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.acceptance_type = value.into();
+        self
+    }
+    /// Sets `player_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AcceptMatchInput.player_ids = value.into();`.
+    pub fn player_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.player_ids = value.into();
+        self
+    }
+    /// Sets `ticket_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AcceptMatchInput.ticket_id = value.into();`.
+    pub fn ticket_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ticket_id = value.into();
+        self
+    }
+    /// Returns a new instance of AcceptMatchInput with optional fields set to `None`.
+    pub fn new<AcceptanceTypeType: Into<String>,
+               PlayerIdsType: Into<Vec<String>>,
+               TicketIdType: Into<String>>
+        (acceptance_type: AcceptanceTypeType,
+         player_ids: PlayerIdsType,
+         ticket_id: TicketIdType)
+         -> AcceptMatchInput {
+        AcceptMatchInput {
+            acceptance_type: acceptance_type.into(),
+            player_ids: player_ids.into(),
+            ticket_id: ticket_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AcceptMatchOutput;
 
@@ -77,7 +115,6 @@ pub struct Alias {
     #[serde(skip_serializing_if="Option::is_none")]
     pub routing_strategy: Option<RoutingStrategy>,
 }
-
 #[doc="<p>Values for use in <a>Player</a> attribute type:value pairs. This object lets you specify an attribute value using any of the valid data types: string, number, string array or data map. Each <code>AttributeValue</code> object can use only one of the available properties.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct AttributeValue {
@@ -98,7 +135,42 @@ pub struct AttributeValue {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sl: Option<Vec<String>>,
 }
-
+impl AttributeValue {
+    /// Sets `n`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributeValue.n = Some(value.into());`.
+    pub fn n<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.n = Some(value.into());
+        self
+    }
+    /// Sets `s`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributeValue.s = Some(value.into());`.
+    pub fn s<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s = Some(value.into());
+        self
+    }
+    /// Sets `sdm`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributeValue.sdm = Some(value.into());`.
+    pub fn sdm<ValueType: Into<::std::collections::HashMap<String, f64>>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.sdm = Some(value.into());
+        self
+    }
+    /// Sets `sl`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AttributeValue.sl = Some(value.into());`.
+    pub fn sl<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.sl = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AttributeValue with optional fields set to `None`.
+    pub fn new() -> AttributeValue {
+        AttributeValue { ..Default::default() }
+    }
+}
 #[doc="<p>Temporary access credentials used for uploading game build files to Amazon GameLift. They are valid for a limited time. If they expire before you upload your game build, get a new set by calling <a>RequestUploadCredentials</a>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AwsCredentials {
@@ -115,7 +187,6 @@ pub struct AwsCredentials {
     #[serde(skip_serializing_if="Option::is_none")]
     pub session_token: Option<String>,
 }
-
 #[doc="<p>Properties describing a game build.</p> <p>Build-related operations include:</p> <ul> <li> <p> <a>CreateBuild</a> </p> </li> <li> <p> <a>ListBuilds</a> </p> </li> <li> <p> <a>DescribeBuild</a> </p> </li> <li> <p> <a>UpdateBuild</a> </p> </li> <li> <p> <a>DeleteBuild</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Build {
@@ -148,7 +219,6 @@ pub struct Build {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<String>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateAliasInput {
@@ -163,7 +233,40 @@ pub struct CreateAliasInput {
     #[serde(rename="RoutingStrategy")]
     pub routing_strategy: RoutingStrategy,
 }
-
+impl CreateAliasInput {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAliasInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAliasInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `routing_strategy`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAliasInput.routing_strategy = value.into();`.
+    pub fn routing_strategy<ValueType: Into<RoutingStrategy>>(mut self, value: ValueType) -> Self {
+        self.routing_strategy = value.into();
+        self
+    }
+    /// Returns a new instance of CreateAliasInput with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, RoutingStrategyType: Into<RoutingStrategy>>
+        (name: NameType,
+         routing_strategy: RoutingStrategyType)
+         -> CreateAliasInput {
+        CreateAliasInput {
+            name: name.into(),
+            routing_strategy: routing_strategy.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateAliasOutput {
@@ -172,7 +275,6 @@ pub struct CreateAliasOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub alias: Option<Alias>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateBuildInput {
@@ -193,7 +295,40 @@ pub struct CreateBuildInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<String>,
 }
-
+impl CreateBuildInput {
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBuildInput.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `operating_system`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBuildInput.operating_system = Some(value.into());`.
+    pub fn operating_system<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.operating_system = Some(value.into());
+        self
+    }
+    /// Sets `storage_location`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBuildInput.storage_location = Some(value.into());`.
+    pub fn storage_location<ValueType: Into<S3Location>>(mut self, value: ValueType) -> Self {
+        self.storage_location = Some(value.into());
+        self
+    }
+    /// Sets `version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBuildInput.version = Some(value.into());`.
+    pub fn version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateBuildInput with optional fields set to `None`.
+    pub fn new() -> CreateBuildInput {
+        CreateBuildInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateBuildOutput {
@@ -210,7 +345,6 @@ pub struct CreateBuildOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub upload_credentials: Option<AwsCredentials>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateFleetInput {
@@ -260,7 +394,111 @@ pub struct CreateFleetInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub server_launch_path: Option<String>,
 }
-
+impl CreateFleetInput {
+    /// Sets `build_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetInput.build_id = value.into();`.
+    pub fn build_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.build_id = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `ec2_inbound_permissions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetInput.ec2_inbound_permissions = Some(value.into());`.
+    pub fn ec2_inbound_permissions<ValueType: Into<Vec<IpPermission>>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.ec2_inbound_permissions = Some(value.into());
+        self
+    }
+    /// Sets `ec2_instance_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetInput.ec2_instance_type = value.into();`.
+    pub fn ec2_instance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ec2_instance_type = value.into();
+        self
+    }
+    /// Sets `log_paths`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetInput.log_paths = Some(value.into());`.
+    pub fn log_paths<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.log_paths = Some(value.into());
+        self
+    }
+    /// Sets `metric_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetInput.metric_groups = Some(value.into());`.
+    pub fn metric_groups<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.metric_groups = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `new_game_session_protection_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetInput.new_game_session_protection_policy = Some(value.into());`.
+    pub fn new_game_session_protection_policy<ValueType: Into<String>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.new_game_session_protection_policy = Some(value.into());
+        self
+    }
+    /// Sets `resource_creation_limit_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetInput.resource_creation_limit_policy = Some(value.into());`.
+pub fn resource_creation_limit_policy<ValueType: Into<ResourceCreationLimitPolicy>>(mut self, value: ValueType) -> Self{
+        self.resource_creation_limit_policy = Some(value.into());
+        self
+    }
+    /// Sets `runtime_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetInput.runtime_configuration = Some(value.into());`.
+    pub fn runtime_configuration<ValueType: Into<RuntimeConfiguration>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.runtime_configuration = Some(value.into());
+        self
+    }
+    /// Sets `server_launch_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetInput.server_launch_parameters = Some(value.into());`.
+    pub fn server_launch_parameters<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_launch_parameters = Some(value.into());
+        self
+    }
+    /// Sets `server_launch_path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateFleetInput.server_launch_path = Some(value.into());`.
+    pub fn server_launch_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.server_launch_path = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateFleetInput with optional fields set to `None`.
+    pub fn new<BuildIdType: Into<String>, EC2InstanceTypeType: Into<String>, NameType: Into<String>>
+        (build_id: BuildIdType,
+         ec2_instance_type: EC2InstanceTypeType,
+         name: NameType)
+         -> CreateFleetInput {
+        CreateFleetInput {
+            build_id: build_id.into(),
+            ec2_instance_type: ec2_instance_type.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateFleetOutput {
@@ -269,7 +507,6 @@ pub struct CreateFleetOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub fleet_attributes: Option<FleetAttributes>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateGameSessionInput {
@@ -309,7 +546,78 @@ pub struct CreateGameSessionInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
+impl CreateGameSessionInput {
+    /// Sets `alias_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGameSessionInput.alias_id = Some(value.into());`.
+    pub fn alias_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.alias_id = Some(value.into());
+        self
+    }
+    /// Sets `creator_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGameSessionInput.creator_id = Some(value.into());`.
+    pub fn creator_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.creator_id = Some(value.into());
+        self
+    }
+    /// Sets `fleet_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGameSessionInput.fleet_id = Some(value.into());`.
+    pub fn fleet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_id = Some(value.into());
+        self
+    }
+    /// Sets `game_properties`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGameSessionInput.game_properties = Some(value.into());`.
+    pub fn game_properties<ValueType: Into<Vec<GameProperty>>>(mut self, value: ValueType) -> Self {
+        self.game_properties = Some(value.into());
+        self
+    }
+    /// Sets `game_session_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGameSessionInput.game_session_data = Some(value.into());`.
+    pub fn game_session_data<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.game_session_data = Some(value.into());
+        self
+    }
+    /// Sets `game_session_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGameSessionInput.game_session_id = Some(value.into());`.
+    pub fn game_session_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.game_session_id = Some(value.into());
+        self
+    }
+    /// Sets `idempotency_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGameSessionInput.idempotency_token = Some(value.into());`.
+    pub fn idempotency_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.idempotency_token = Some(value.into());
+        self
+    }
+    /// Sets `maximum_player_session_count`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGameSessionInput.maximum_player_session_count = value.into();`.
+    pub fn maximum_player_session_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.maximum_player_session_count = value.into();
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGameSessionInput.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateGameSessionInput with optional fields set to `None`.
+pub fn new<MaximumPlayerSessionCountType: Into<i64>>(maximum_player_session_count: MaximumPlayerSessionCountType) -> CreateGameSessionInput{
+        CreateGameSessionInput {
+            maximum_player_session_count: maximum_player_session_count.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateGameSessionOutput {
@@ -318,7 +626,6 @@ pub struct CreateGameSessionOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub game_session: Option<GameSession>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateGameSessionQueueInput {
@@ -338,7 +645,47 @@ pub struct CreateGameSessionQueueInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub timeout_in_seconds: Option<i64>,
 }
-
+impl CreateGameSessionQueueInput {
+    /// Sets `destinations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGameSessionQueueInput.destinations = Some(value.into());`.
+    pub fn destinations<ValueType: Into<Vec<GameSessionQueueDestination>>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.destinations = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGameSessionQueueInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `player_latency_policies`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGameSessionQueueInput.player_latency_policies = Some(value.into());`.
+    pub fn player_latency_policies<ValueType: Into<Vec<PlayerLatencyPolicy>>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.player_latency_policies = Some(value.into());
+        self
+    }
+    /// Sets `timeout_in_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGameSessionQueueInput.timeout_in_seconds = Some(value.into());`.
+    pub fn timeout_in_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.timeout_in_seconds = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateGameSessionQueueInput with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> CreateGameSessionQueueInput {
+        CreateGameSessionQueueInput {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateGameSessionQueueOutput {
@@ -347,7 +694,6 @@ pub struct CreateGameSessionQueueOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub game_session_queue: Option<GameSessionQueue>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateMatchmakingConfigurationInput {
@@ -395,7 +741,115 @@ pub struct CreateMatchmakingConfigurationInput {
     #[serde(rename="RuleSetName")]
     pub rule_set_name: String,
 }
-
+impl CreateMatchmakingConfigurationInput {
+    /// Sets `acceptance_required`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMatchmakingConfigurationInput.acceptance_required = value.into();`.
+    pub fn acceptance_required<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.acceptance_required = value.into();
+        self
+    }
+    /// Sets `acceptance_timeout_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMatchmakingConfigurationInput.acceptance_timeout_seconds = Some(value.into());`.
+    pub fn acceptance_timeout_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.acceptance_timeout_seconds = Some(value.into());
+        self
+    }
+    /// Sets `additional_player_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMatchmakingConfigurationInput.additional_player_count = Some(value.into());`.
+    pub fn additional_player_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.additional_player_count = Some(value.into());
+        self
+    }
+    /// Sets `custom_event_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMatchmakingConfigurationInput.custom_event_data = Some(value.into());`.
+    pub fn custom_event_data<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.custom_event_data = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMatchmakingConfigurationInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `game_properties`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMatchmakingConfigurationInput.game_properties = Some(value.into());`.
+    pub fn game_properties<ValueType: Into<Vec<GameProperty>>>(mut self, value: ValueType) -> Self {
+        self.game_properties = Some(value.into());
+        self
+    }
+    /// Sets `game_session_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMatchmakingConfigurationInput.game_session_data = Some(value.into());`.
+    pub fn game_session_data<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.game_session_data = Some(value.into());
+        self
+    }
+    /// Sets `game_session_queue_arns`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMatchmakingConfigurationInput.game_session_queue_arns = value.into();`.
+    pub fn game_session_queue_arns<ValueType: Into<Vec<String>>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.game_session_queue_arns = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMatchmakingConfigurationInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `notification_target`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMatchmakingConfigurationInput.notification_target = Some(value.into());`.
+    pub fn notification_target<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.notification_target = Some(value.into());
+        self
+    }
+    /// Sets `request_timeout_seconds`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMatchmakingConfigurationInput.request_timeout_seconds = value.into();`.
+    pub fn request_timeout_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.request_timeout_seconds = value.into();
+        self
+    }
+    /// Sets `rule_set_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMatchmakingConfigurationInput.rule_set_name = value.into();`.
+    pub fn rule_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_set_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateMatchmakingConfigurationInput with optional fields set to `None`.
+    pub fn new<AcceptanceRequiredType: Into<bool>,
+               GameSessionQueueArnsType: Into<Vec<String>>,
+               NameType: Into<String>,
+               RequestTimeoutSecondsType: Into<i64>,
+               RuleSetNameType: Into<String>>
+        (acceptance_required: AcceptanceRequiredType,
+         game_session_queue_arns: GameSessionQueueArnsType,
+         name: NameType,
+         request_timeout_seconds: RequestTimeoutSecondsType,
+         rule_set_name: RuleSetNameType)
+         -> CreateMatchmakingConfigurationInput {
+        CreateMatchmakingConfigurationInput {
+            acceptance_required: acceptance_required.into(),
+            game_session_queue_arns: game_session_queue_arns.into(),
+            name: name.into(),
+            request_timeout_seconds: request_timeout_seconds.into(),
+            rule_set_name: rule_set_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateMatchmakingConfigurationOutput {
@@ -404,7 +858,6 @@ pub struct CreateMatchmakingConfigurationOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub configuration: Option<MatchmakingConfiguration>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateMatchmakingRuleSetInput {
@@ -415,7 +868,33 @@ pub struct CreateMatchmakingRuleSetInput {
     #[serde(rename="RuleSetBody")]
     pub rule_set_body: String,
 }
-
+impl CreateMatchmakingRuleSetInput {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMatchmakingRuleSetInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `rule_set_body`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMatchmakingRuleSetInput.rule_set_body = value.into();`.
+    pub fn rule_set_body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_set_body = value.into();
+        self
+    }
+    /// Returns a new instance of CreateMatchmakingRuleSetInput with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, RuleSetBodyType: Into<String>>
+        (name: NameType,
+         rule_set_body: RuleSetBodyType)
+         -> CreateMatchmakingRuleSetInput {
+        CreateMatchmakingRuleSetInput {
+            name: name.into(),
+            rule_set_body: rule_set_body.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateMatchmakingRuleSetOutput {
@@ -423,7 +902,6 @@ pub struct CreateMatchmakingRuleSetOutput {
     #[serde(rename="RuleSet")]
     pub rule_set: MatchmakingRuleSet,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreatePlayerSessionInput {
@@ -438,7 +916,40 @@ pub struct CreatePlayerSessionInput {
     #[serde(rename="PlayerId")]
     pub player_id: String,
 }
-
+impl CreatePlayerSessionInput {
+    /// Sets `game_session_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePlayerSessionInput.game_session_id = value.into();`.
+    pub fn game_session_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.game_session_id = value.into();
+        self
+    }
+    /// Sets `player_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePlayerSessionInput.player_data = Some(value.into());`.
+    pub fn player_data<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.player_data = Some(value.into());
+        self
+    }
+    /// Sets `player_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePlayerSessionInput.player_id = value.into();`.
+    pub fn player_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.player_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreatePlayerSessionInput with optional fields set to `None`.
+    pub fn new<GameSessionIdType: Into<String>, PlayerIdType: Into<String>>
+        (game_session_id: GameSessionIdType,
+         player_id: PlayerIdType)
+         -> CreatePlayerSessionInput {
+        CreatePlayerSessionInput {
+            game_session_id: game_session_id.into(),
+            player_id: player_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreatePlayerSessionOutput {
@@ -447,7 +958,6 @@ pub struct CreatePlayerSessionOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub player_session: Option<PlayerSession>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreatePlayerSessionsInput {
@@ -462,7 +972,43 @@ pub struct CreatePlayerSessionsInput {
     #[serde(rename="PlayerIds")]
     pub player_ids: Vec<String>,
 }
-
+impl CreatePlayerSessionsInput {
+    /// Sets `game_session_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePlayerSessionsInput.game_session_id = value.into();`.
+    pub fn game_session_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.game_session_id = value.into();
+        self
+    }
+    /// Sets `player_data_map`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePlayerSessionsInput.player_data_map = Some(value.into());`.
+    pub fn player_data_map<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.player_data_map = Some(value.into());
+        self
+    }
+    /// Sets `player_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePlayerSessionsInput.player_ids = value.into();`.
+    pub fn player_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.player_ids = value.into();
+        self
+    }
+    /// Returns a new instance of CreatePlayerSessionsInput with optional fields set to `None`.
+    pub fn new<GameSessionIdType: Into<String>, PlayerIdsType: Into<Vec<String>>>
+        (game_session_id: GameSessionIdType,
+         player_ids: PlayerIdsType)
+         -> CreatePlayerSessionsInput {
+        CreatePlayerSessionsInput {
+            game_session_id: game_session_id.into(),
+            player_ids: player_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreatePlayerSessionsOutput {
@@ -471,7 +1017,6 @@ pub struct CreatePlayerSessionsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub player_sessions: Option<Vec<PlayerSession>>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteAliasInput {
@@ -479,7 +1024,22 @@ pub struct DeleteAliasInput {
     #[serde(rename="AliasId")]
     pub alias_id: String,
 }
-
+impl DeleteAliasInput {
+    /// Sets `alias_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAliasInput.alias_id = value.into();`.
+    pub fn alias_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.alias_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteAliasInput with optional fields set to `None`.
+    pub fn new<AliasIdType: Into<String>>(alias_id: AliasIdType) -> DeleteAliasInput {
+        DeleteAliasInput {
+            alias_id: alias_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteBuildInput {
@@ -487,7 +1047,22 @@ pub struct DeleteBuildInput {
     #[serde(rename="BuildId")]
     pub build_id: String,
 }
-
+impl DeleteBuildInput {
+    /// Sets `build_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBuildInput.build_id = value.into();`.
+    pub fn build_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.build_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteBuildInput with optional fields set to `None`.
+    pub fn new<BuildIdType: Into<String>>(build_id: BuildIdType) -> DeleteBuildInput {
+        DeleteBuildInput {
+            build_id: build_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteFleetInput {
@@ -495,7 +1070,22 @@ pub struct DeleteFleetInput {
     #[serde(rename="FleetId")]
     pub fleet_id: String,
 }
-
+impl DeleteFleetInput {
+    /// Sets `fleet_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteFleetInput.fleet_id = value.into();`.
+    pub fn fleet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteFleetInput with optional fields set to `None`.
+    pub fn new<FleetIdType: Into<String>>(fleet_id: FleetIdType) -> DeleteFleetInput {
+        DeleteFleetInput {
+            fleet_id: fleet_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteGameSessionQueueInput {
@@ -503,7 +1093,22 @@ pub struct DeleteGameSessionQueueInput {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl DeleteGameSessionQueueInput {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteGameSessionQueueInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteGameSessionQueueInput with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> DeleteGameSessionQueueInput {
+        DeleteGameSessionQueueInput {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteGameSessionQueueOutput;
 
@@ -514,7 +1119,22 @@ pub struct DeleteMatchmakingConfigurationInput {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl DeleteMatchmakingConfigurationInput {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteMatchmakingConfigurationInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteMatchmakingConfigurationInput with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> DeleteMatchmakingConfigurationInput {
+        DeleteMatchmakingConfigurationInput {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteMatchmakingConfigurationOutput;
 
@@ -528,7 +1148,32 @@ pub struct DeleteScalingPolicyInput {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl DeleteScalingPolicyInput {
+    /// Sets `fleet_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteScalingPolicyInput.fleet_id = value.into();`.
+    pub fn fleet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_id = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteScalingPolicyInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteScalingPolicyInput with optional fields set to `None`.
+    pub fn new<FleetIdType: Into<String>, NameType: Into<String>>(fleet_id: FleetIdType,
+                                                                  name: NameType)
+                                                                  -> DeleteScalingPolicyInput {
+        DeleteScalingPolicyInput {
+            fleet_id: fleet_id.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeAliasInput {
@@ -536,7 +1181,22 @@ pub struct DescribeAliasInput {
     #[serde(rename="AliasId")]
     pub alias_id: String,
 }
-
+impl DescribeAliasInput {
+    /// Sets `alias_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeAliasInput.alias_id = value.into();`.
+    pub fn alias_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.alias_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeAliasInput with optional fields set to `None`.
+    pub fn new<AliasIdType: Into<String>>(alias_id: AliasIdType) -> DescribeAliasInput {
+        DescribeAliasInput {
+            alias_id: alias_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeAliasOutput {
@@ -545,7 +1205,6 @@ pub struct DescribeAliasOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub alias: Option<Alias>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeBuildInput {
@@ -553,7 +1212,22 @@ pub struct DescribeBuildInput {
     #[serde(rename="BuildId")]
     pub build_id: String,
 }
-
+impl DescribeBuildInput {
+    /// Sets `build_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeBuildInput.build_id = value.into();`.
+    pub fn build_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.build_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeBuildInput with optional fields set to `None`.
+    pub fn new<BuildIdType: Into<String>>(build_id: BuildIdType) -> DescribeBuildInput {
+        DescribeBuildInput {
+            build_id: build_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeBuildOutput {
@@ -562,7 +1236,6 @@ pub struct DescribeBuildOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub build: Option<Build>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeEC2InstanceLimitsInput {
@@ -571,7 +1244,19 @@ pub struct DescribeEC2InstanceLimitsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ec2_instance_type: Option<String>,
 }
-
+impl DescribeEC2InstanceLimitsInput {
+    /// Sets `ec2_instance_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEC2InstanceLimitsInput.ec2_instance_type = Some(value.into());`.
+    pub fn ec2_instance_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ec2_instance_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEC2InstanceLimitsInput with optional fields set to `None`.
+    pub fn new() -> DescribeEC2InstanceLimitsInput {
+        DescribeEC2InstanceLimitsInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeEC2InstanceLimitsOutput {
@@ -580,7 +1265,6 @@ pub struct DescribeEC2InstanceLimitsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ec2_instance_limits: Option<Vec<EC2InstanceLimit>>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeFleetAttributesInput {
@@ -597,7 +1281,33 @@ pub struct DescribeFleetAttributesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeFleetAttributesInput {
+    /// Sets `fleet_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFleetAttributesInput.fleet_ids = Some(value.into());`.
+    pub fn fleet_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.fleet_ids = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFleetAttributesInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFleetAttributesInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeFleetAttributesInput with optional fields set to `None`.
+    pub fn new() -> DescribeFleetAttributesInput {
+        DescribeFleetAttributesInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeFleetAttributesOutput {
@@ -610,7 +1320,6 @@ pub struct DescribeFleetAttributesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeFleetCapacityInput {
@@ -627,7 +1336,33 @@ pub struct DescribeFleetCapacityInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeFleetCapacityInput {
+    /// Sets `fleet_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFleetCapacityInput.fleet_ids = Some(value.into());`.
+    pub fn fleet_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.fleet_ids = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFleetCapacityInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFleetCapacityInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeFleetCapacityInput with optional fields set to `None`.
+    pub fn new() -> DescribeFleetCapacityInput {
+        DescribeFleetCapacityInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeFleetCapacityOutput {
@@ -640,7 +1375,6 @@ pub struct DescribeFleetCapacityOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeFleetEventsInput {
@@ -664,7 +1398,50 @@ pub struct DescribeFleetEventsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub start_time: Option<f64>,
 }
-
+impl DescribeFleetEventsInput {
+    /// Sets `end_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFleetEventsInput.end_time = Some(value.into());`.
+    pub fn end_time<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.end_time = Some(value.into());
+        self
+    }
+    /// Sets `fleet_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFleetEventsInput.fleet_id = value.into();`.
+    pub fn fleet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_id = value.into();
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFleetEventsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFleetEventsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `start_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFleetEventsInput.start_time = Some(value.into());`.
+    pub fn start_time<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.start_time = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeFleetEventsInput with optional fields set to `None`.
+    pub fn new<FleetIdType: Into<String>>(fleet_id: FleetIdType) -> DescribeFleetEventsInput {
+        DescribeFleetEventsInput {
+            fleet_id: fleet_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeFleetEventsOutput {
@@ -677,7 +1454,6 @@ pub struct DescribeFleetEventsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeFleetPortSettingsInput {
@@ -685,7 +1461,22 @@ pub struct DescribeFleetPortSettingsInput {
     #[serde(rename="FleetId")]
     pub fleet_id: String,
 }
-
+impl DescribeFleetPortSettingsInput {
+    /// Sets `fleet_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFleetPortSettingsInput.fleet_id = value.into();`.
+    pub fn fleet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeFleetPortSettingsInput with optional fields set to `None`.
+    pub fn new<FleetIdType: Into<String>>(fleet_id: FleetIdType) -> DescribeFleetPortSettingsInput {
+        DescribeFleetPortSettingsInput {
+            fleet_id: fleet_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeFleetPortSettingsOutput {
@@ -694,7 +1485,6 @@ pub struct DescribeFleetPortSettingsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub inbound_permissions: Option<Vec<IpPermission>>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeFleetUtilizationInput {
@@ -711,7 +1501,33 @@ pub struct DescribeFleetUtilizationInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeFleetUtilizationInput {
+    /// Sets `fleet_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFleetUtilizationInput.fleet_ids = Some(value.into());`.
+    pub fn fleet_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.fleet_ids = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFleetUtilizationInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeFleetUtilizationInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeFleetUtilizationInput with optional fields set to `None`.
+    pub fn new() -> DescribeFleetUtilizationInput {
+        DescribeFleetUtilizationInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeFleetUtilizationOutput {
@@ -724,7 +1540,6 @@ pub struct DescribeFleetUtilizationOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeGameSessionDetailsInput {
@@ -753,7 +1568,54 @@ pub struct DescribeGameSessionDetailsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status_filter: Option<String>,
 }
-
+impl DescribeGameSessionDetailsInput {
+    /// Sets `alias_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeGameSessionDetailsInput.alias_id = Some(value.into());`.
+    pub fn alias_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.alias_id = Some(value.into());
+        self
+    }
+    /// Sets `fleet_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeGameSessionDetailsInput.fleet_id = Some(value.into());`.
+    pub fn fleet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_id = Some(value.into());
+        self
+    }
+    /// Sets `game_session_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeGameSessionDetailsInput.game_session_id = Some(value.into());`.
+    pub fn game_session_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.game_session_id = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeGameSessionDetailsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeGameSessionDetailsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `status_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeGameSessionDetailsInput.status_filter = Some(value.into());`.
+    pub fn status_filter<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status_filter = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeGameSessionDetailsInput with optional fields set to `None`.
+    pub fn new() -> DescribeGameSessionDetailsInput {
+        DescribeGameSessionDetailsInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeGameSessionDetailsOutput {
@@ -766,7 +1628,6 @@ pub struct DescribeGameSessionDetailsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeGameSessionPlacementInput {
@@ -774,7 +1635,23 @@ pub struct DescribeGameSessionPlacementInput {
     #[serde(rename="PlacementId")]
     pub placement_id: String,
 }
-
+impl DescribeGameSessionPlacementInput {
+    /// Sets `placement_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeGameSessionPlacementInput.placement_id = value.into();`.
+    pub fn placement_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.placement_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeGameSessionPlacementInput with optional fields set to `None`.
+    pub fn new<PlacementIdType: Into<String>>(placement_id: PlacementIdType)
+                                              -> DescribeGameSessionPlacementInput {
+        DescribeGameSessionPlacementInput {
+            placement_id: placement_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeGameSessionPlacementOutput {
@@ -783,7 +1660,6 @@ pub struct DescribeGameSessionPlacementOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub game_session_placement: Option<GameSessionPlacement>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeGameSessionQueuesInput {
@@ -800,7 +1676,33 @@ pub struct DescribeGameSessionQueuesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeGameSessionQueuesInput {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeGameSessionQueuesInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeGameSessionQueuesInput.names = Some(value.into());`.
+    pub fn names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.names = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeGameSessionQueuesInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeGameSessionQueuesInput with optional fields set to `None`.
+    pub fn new() -> DescribeGameSessionQueuesInput {
+        DescribeGameSessionQueuesInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeGameSessionQueuesOutput {
@@ -813,7 +1715,6 @@ pub struct DescribeGameSessionQueuesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeGameSessionsInput {
@@ -842,7 +1743,54 @@ pub struct DescribeGameSessionsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status_filter: Option<String>,
 }
-
+impl DescribeGameSessionsInput {
+    /// Sets `alias_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeGameSessionsInput.alias_id = Some(value.into());`.
+    pub fn alias_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.alias_id = Some(value.into());
+        self
+    }
+    /// Sets `fleet_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeGameSessionsInput.fleet_id = Some(value.into());`.
+    pub fn fleet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_id = Some(value.into());
+        self
+    }
+    /// Sets `game_session_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeGameSessionsInput.game_session_id = Some(value.into());`.
+    pub fn game_session_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.game_session_id = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeGameSessionsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeGameSessionsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `status_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeGameSessionsInput.status_filter = Some(value.into());`.
+    pub fn status_filter<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status_filter = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeGameSessionsInput with optional fields set to `None`.
+    pub fn new() -> DescribeGameSessionsInput {
+        DescribeGameSessionsInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeGameSessionsOutput {
@@ -855,7 +1803,6 @@ pub struct DescribeGameSessionsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeInstancesInput {
@@ -875,7 +1822,43 @@ pub struct DescribeInstancesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeInstancesInput {
+    /// Sets `fleet_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancesInput.fleet_id = value.into();`.
+    pub fn fleet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_id = value.into();
+        self
+    }
+    /// Sets `instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancesInput.instance_id = Some(value.into());`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancesInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeInstancesInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeInstancesInput with optional fields set to `None`.
+    pub fn new<FleetIdType: Into<String>>(fleet_id: FleetIdType) -> DescribeInstancesInput {
+        DescribeInstancesInput {
+            fleet_id: fleet_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeInstancesOutput {
@@ -888,7 +1871,6 @@ pub struct DescribeInstancesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeMatchmakingConfigurationsInput {
@@ -909,7 +1891,40 @@ pub struct DescribeMatchmakingConfigurationsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rule_set_name: Option<String>,
 }
-
+impl DescribeMatchmakingConfigurationsInput {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMatchmakingConfigurationsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMatchmakingConfigurationsInput.names = Some(value.into());`.
+    pub fn names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.names = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMatchmakingConfigurationsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `rule_set_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMatchmakingConfigurationsInput.rule_set_name = Some(value.into());`.
+    pub fn rule_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_set_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeMatchmakingConfigurationsInput with optional fields set to `None`.
+    pub fn new() -> DescribeMatchmakingConfigurationsInput {
+        DescribeMatchmakingConfigurationsInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeMatchmakingConfigurationsOutput {
@@ -922,7 +1937,6 @@ pub struct DescribeMatchmakingConfigurationsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeMatchmakingInput {
@@ -930,7 +1944,23 @@ pub struct DescribeMatchmakingInput {
     #[serde(rename="TicketIds")]
     pub ticket_ids: Vec<String>,
 }
-
+impl DescribeMatchmakingInput {
+    /// Sets `ticket_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMatchmakingInput.ticket_ids = value.into();`.
+    pub fn ticket_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.ticket_ids = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeMatchmakingInput with optional fields set to `None`.
+    pub fn new<TicketIdsType: Into<Vec<String>>>(ticket_ids: TicketIdsType)
+                                                 -> DescribeMatchmakingInput {
+        DescribeMatchmakingInput {
+            ticket_ids: ticket_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeMatchmakingOutput {
@@ -939,7 +1969,6 @@ pub struct DescribeMatchmakingOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ticket_list: Option<Vec<MatchmakingTicket>>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeMatchmakingRuleSetsInput {
@@ -956,7 +1985,33 @@ pub struct DescribeMatchmakingRuleSetsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeMatchmakingRuleSetsInput {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMatchmakingRuleSetsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMatchmakingRuleSetsInput.names = Some(value.into());`.
+    pub fn names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.names = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMatchmakingRuleSetsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeMatchmakingRuleSetsInput with optional fields set to `None`.
+    pub fn new() -> DescribeMatchmakingRuleSetsInput {
+        DescribeMatchmakingRuleSetsInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeMatchmakingRuleSetsOutput {
@@ -968,7 +2023,6 @@ pub struct DescribeMatchmakingRuleSetsOutput {
     #[serde(rename="RuleSets")]
     pub rule_sets: Vec<MatchmakingRuleSet>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribePlayerSessionsInput {
@@ -997,7 +2051,56 @@ pub struct DescribePlayerSessionsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub player_session_status_filter: Option<String>,
 }
-
+impl DescribePlayerSessionsInput {
+    /// Sets `game_session_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePlayerSessionsInput.game_session_id = Some(value.into());`.
+    pub fn game_session_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.game_session_id = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePlayerSessionsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePlayerSessionsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `player_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePlayerSessionsInput.player_id = Some(value.into());`.
+    pub fn player_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.player_id = Some(value.into());
+        self
+    }
+    /// Sets `player_session_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePlayerSessionsInput.player_session_id = Some(value.into());`.
+    pub fn player_session_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.player_session_id = Some(value.into());
+        self
+    }
+    /// Sets `player_session_status_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePlayerSessionsInput.player_session_status_filter = Some(value.into());`.
+    pub fn player_session_status_filter<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.player_session_status_filter = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribePlayerSessionsInput with optional fields set to `None`.
+    pub fn new() -> DescribePlayerSessionsInput {
+        DescribePlayerSessionsInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribePlayerSessionsOutput {
@@ -1010,7 +2113,6 @@ pub struct DescribePlayerSessionsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub player_sessions: Option<Vec<PlayerSession>>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeRuntimeConfigurationInput {
@@ -1018,7 +2120,23 @@ pub struct DescribeRuntimeConfigurationInput {
     #[serde(rename="FleetId")]
     pub fleet_id: String,
 }
-
+impl DescribeRuntimeConfigurationInput {
+    /// Sets `fleet_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRuntimeConfigurationInput.fleet_id = value.into();`.
+    pub fn fleet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeRuntimeConfigurationInput with optional fields set to `None`.
+    pub fn new<FleetIdType: Into<String>>(fleet_id: FleetIdType)
+                                          -> DescribeRuntimeConfigurationInput {
+        DescribeRuntimeConfigurationInput {
+            fleet_id: fleet_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeRuntimeConfigurationOutput {
@@ -1027,7 +2145,6 @@ pub struct DescribeRuntimeConfigurationOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub runtime_configuration: Option<RuntimeConfiguration>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeScalingPoliciesInput {
@@ -1047,7 +2164,43 @@ pub struct DescribeScalingPoliciesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status_filter: Option<String>,
 }
-
+impl DescribeScalingPoliciesInput {
+    /// Sets `fleet_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScalingPoliciesInput.fleet_id = value.into();`.
+    pub fn fleet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_id = value.into();
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScalingPoliciesInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScalingPoliciesInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `status_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeScalingPoliciesInput.status_filter = Some(value.into());`.
+    pub fn status_filter<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status_filter = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeScalingPoliciesInput with optional fields set to `None`.
+    pub fn new<FleetIdType: Into<String>>(fleet_id: FleetIdType) -> DescribeScalingPoliciesInput {
+        DescribeScalingPoliciesInput {
+            fleet_id: fleet_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeScalingPoliciesOutput {
@@ -1060,7 +2213,6 @@ pub struct DescribeScalingPoliciesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub scaling_policies: Option<Vec<ScalingPolicy>>,
 }
-
 #[doc="<p>Player information for use when creating player sessions using a game session placement request with <a>StartGameSessionPlacement</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DesiredPlayerSession {
@@ -1073,7 +2225,26 @@ pub struct DesiredPlayerSession {
     #[serde(skip_serializing_if="Option::is_none")]
     pub player_id: Option<String>,
 }
-
+impl DesiredPlayerSession {
+    /// Sets `player_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DesiredPlayerSession.player_data = Some(value.into());`.
+    pub fn player_data<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.player_data = Some(value.into());
+        self
+    }
+    /// Sets `player_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DesiredPlayerSession.player_id = Some(value.into());`.
+    pub fn player_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.player_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DesiredPlayerSession with optional fields set to `None`.
+    pub fn new() -> DesiredPlayerSession {
+        DesiredPlayerSession { ..Default::default() }
+    }
+}
 #[doc="<p>Current status of fleet capacity. The number of active instances should match or be in the process of matching the number of desired instances. Pending and terminating counts are non-zero only if fleet capacity is adjusting to an <a>UpdateFleetCapacity</a> request, or if access to resources is temporarily affected.</p> <p>Fleet-related operations include:</p> <ul> <li> <p> <a>CreateFleet</a> </p> </li> <li> <p> <a>ListFleets</a> </p> </li> <li> <p>Describe fleets:</p> <ul> <li> <p> <a>DescribeFleetAttributes</a> </p> </li> <li> <p> <a>DescribeFleetPortSettings</a> </p> </li> <li> <p> <a>DescribeFleetUtilization</a> </p> </li> <li> <p> <a>DescribeRuntimeConfiguration</a> </p> </li> <li> <p> <a>DescribeFleetEvents</a> </p> </li> </ul> </li> <li> <p>Update fleets:</p> <ul> <li> <p> <a>UpdateFleetAttributes</a> </p> </li> <li> <p> <a>UpdateFleetCapacity</a> </p> </li> <li> <p> <a>UpdateFleetPortSettings</a> </p> </li> <li> <p> <a>UpdateRuntimeConfiguration</a> </p> </li> </ul> </li> <li> <p>Manage fleet capacity:</p> <ul> <li> <p> <a>DescribeFleetCapacity</a> </p> </li> <li> <p> <a>UpdateFleetCapacity</a> </p> </li> <li> <p> <a>PutScalingPolicy</a> (automatic scaling)</p> </li> <li> <p> <a>DescribeScalingPolicies</a> (automatic scaling)</p> </li> <li> <p> <a>DeleteScalingPolicy</a> (automatic scaling)</p> </li> <li> <p> <a>DescribeEC2InstanceLimits</a> </p> </li> </ul> </li> <li> <p> <a>DeleteFleet</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EC2InstanceCounts {
@@ -1106,7 +2277,6 @@ pub struct EC2InstanceCounts {
     #[serde(skip_serializing_if="Option::is_none")]
     pub terminating: Option<i64>,
 }
-
 #[doc="<p>Maximum number of instances allowed based on the Amazon Elastic Compute Cloud (Amazon EC2) instance type. Instance limits can be retrieved by calling <a>DescribeEC2InstanceLimits</a>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EC2InstanceLimit {
@@ -1123,7 +2293,6 @@ pub struct EC2InstanceLimit {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instance_limit: Option<i64>,
 }
-
 #[doc="<p>Log entry describing an event that involves Amazon GameLift resources (such as a fleet). In addition to tracking activity, event codes and messages can provide additional information for troubleshooting and debugging problems.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Event {
@@ -1152,7 +2321,6 @@ pub struct Event {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_id: Option<String>,
 }
-
 #[doc="<p>General properties describing a fleet.</p> <p>Fleet-related operations include:</p> <ul> <li> <p> <a>CreateFleet</a> </p> </li> <li> <p> <a>ListFleets</a> </p> </li> <li> <p>Describe fleets:</p> <ul> <li> <p> <a>DescribeFleetAttributes</a> </p> </li> <li> <p> <a>DescribeFleetPortSettings</a> </p> </li> <li> <p> <a>DescribeFleetUtilization</a> </p> </li> <li> <p> <a>DescribeRuntimeConfiguration</a> </p> </li> <li> <p> <a>DescribeFleetEvents</a> </p> </li> </ul> </li> <li> <p>Update fleets:</p> <ul> <li> <p> <a>UpdateFleetAttributes</a> </p> </li> <li> <p> <a>UpdateFleetCapacity</a> </p> </li> <li> <p> <a>UpdateFleetPortSettings</a> </p> </li> <li> <p> <a>UpdateRuntimeConfiguration</a> </p> </li> </ul> </li> <li> <p>Manage fleet capacity:</p> <ul> <li> <p> <a>DescribeFleetCapacity</a> </p> </li> <li> <p> <a>UpdateFleetCapacity</a> </p> </li> <li> <p> <a>PutScalingPolicy</a> (automatic scaling)</p> </li> <li> <p> <a>DescribeScalingPolicies</a> (automatic scaling)</p> </li> <li> <p> <a>DeleteScalingPolicy</a> (automatic scaling)</p> </li> <li> <p> <a>DescribeEC2InstanceLimits</a> </p> </li> </ul> </li> <li> <p> <a>DeleteFleet</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct FleetAttributes {
@@ -1217,7 +2385,6 @@ pub struct FleetAttributes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub termination_time: Option<f64>,
 }
-
 #[doc="<p>Information about the fleet's capacity. Fleet capacity is measured in EC2 instances. By default, new fleets have a capacity of one instance, but can be updated as needed. The maximum number of instances for a fleet is determined by the fleet's instance type.</p> <p>Fleet-related operations include:</p> <ul> <li> <p> <a>CreateFleet</a> </p> </li> <li> <p> <a>ListFleets</a> </p> </li> <li> <p>Describe fleets:</p> <ul> <li> <p> <a>DescribeFleetAttributes</a> </p> </li> <li> <p> <a>DescribeFleetPortSettings</a> </p> </li> <li> <p> <a>DescribeFleetUtilization</a> </p> </li> <li> <p> <a>DescribeRuntimeConfiguration</a> </p> </li> <li> <p> <a>DescribeFleetEvents</a> </p> </li> </ul> </li> <li> <p>Update fleets:</p> <ul> <li> <p> <a>UpdateFleetAttributes</a> </p> </li> <li> <p> <a>UpdateFleetCapacity</a> </p> </li> <li> <p> <a>UpdateFleetPortSettings</a> </p> </li> <li> <p> <a>UpdateRuntimeConfiguration</a> </p> </li> </ul> </li> <li> <p>Manage fleet capacity:</p> <ul> <li> <p> <a>DescribeFleetCapacity</a> </p> </li> <li> <p> <a>UpdateFleetCapacity</a> </p> </li> <li> <p> <a>PutScalingPolicy</a> (automatic scaling)</p> </li> <li> <p> <a>DescribeScalingPolicies</a> (automatic scaling)</p> </li> <li> <p> <a>DeleteScalingPolicy</a> (automatic scaling)</p> </li> <li> <p> <a>DescribeEC2InstanceLimits</a> </p> </li> </ul> </li> <li> <p> <a>DeleteFleet</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct FleetCapacity {
@@ -1234,7 +2401,6 @@ pub struct FleetCapacity {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instance_type: Option<String>,
 }
-
 #[doc="<p>Current status of fleet utilization, including the number of game and player sessions being hosted.</p> <p>Fleet-related operations include:</p> <ul> <li> <p> <a>CreateFleet</a> </p> </li> <li> <p> <a>ListFleets</a> </p> </li> <li> <p>Describe fleets:</p> <ul> <li> <p> <a>DescribeFleetAttributes</a> </p> </li> <li> <p> <a>DescribeFleetPortSettings</a> </p> </li> <li> <p> <a>DescribeFleetUtilization</a> </p> </li> <li> <p> <a>DescribeRuntimeConfiguration</a> </p> </li> <li> <p> <a>DescribeFleetEvents</a> </p> </li> </ul> </li> <li> <p>Update fleets:</p> <ul> <li> <p> <a>UpdateFleetAttributes</a> </p> </li> <li> <p> <a>UpdateFleetCapacity</a> </p> </li> <li> <p> <a>UpdateFleetPortSettings</a> </p> </li> <li> <p> <a>UpdateRuntimeConfiguration</a> </p> </li> </ul> </li> <li> <p>Manage fleet capacity:</p> <ul> <li> <p> <a>DescribeFleetCapacity</a> </p> </li> <li> <p> <a>UpdateFleetCapacity</a> </p> </li> <li> <p> <a>PutScalingPolicy</a> (automatic scaling)</p> </li> <li> <p> <a>DescribeScalingPolicies</a> (automatic scaling)</p> </li> <li> <p> <a>DeleteScalingPolicy</a> (automatic scaling)</p> </li> <li> <p> <a>DescribeEC2InstanceLimits</a> </p> </li> </ul> </li> <li> <p> <a>DeleteFleet</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct FleetUtilization {
@@ -1259,7 +2425,6 @@ pub struct FleetUtilization {
     #[serde(skip_serializing_if="Option::is_none")]
     pub maximum_player_session_count: Option<i64>,
 }
-
 #[doc="<p>Set of key-value pairs that contain information about a game session. When included in a game session request, these properties communicate details to be used when setting up the new game session, such as to specify a game mode, level, or map. Game properties are passed to the game server process when initiating a new game session; the server process uses the properties as appropriate. For more information, see the <a href=\"http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-client-api.html#gamelift-sdk-client-api-create\"> Amazon GameLift Developer Guide</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct GameProperty {
@@ -1270,7 +2435,32 @@ pub struct GameProperty {
     #[serde(rename="Value")]
     pub value: String,
 }
-
+impl GameProperty {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GameProperty.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GameProperty.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of GameProperty with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>, ValueType: Into<String>>(key: KeyType,
+                                                               value: ValueType)
+                                                               -> GameProperty {
+        GameProperty {
+            key: key.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Properties describing a game session.</p> <p>A game session in ACTIVE status can host players. When a game session ends, its status is set to <code>TERMINATED</code>. </p> <p>Once the session ends, the game session object is retained for 30 days. This means you can reuse idempotency token values after this time. Game session logs are retained for 14 days.</p> <p>Game-session-related operations include:</p> <ul> <li> <p> <a>CreateGameSession</a> </p> </li> <li> <p> <a>DescribeGameSessions</a> </p> </li> <li> <p> <a>DescribeGameSessionDetails</a> </p> </li> <li> <p> <a>SearchGameSessions</a> </p> </li> <li> <p> <a>UpdateGameSession</a> </p> </li> <li> <p> <a>GetGameSessionLogUrl</a> </p> </li> <li> <p>Game session placements</p> <ul> <li> <p> <a>StartGameSessionPlacement</a> </p> </li> <li> <p> <a>DescribeGameSessionPlacement</a> </p> </li> <li> <p> <a>StopGameSessionPlacement</a> </p> </li> </ul> </li> </ul>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GameSession {
@@ -1331,7 +2521,6 @@ pub struct GameSession {
     #[serde(skip_serializing_if="Option::is_none")]
     pub termination_time: Option<f64>,
 }
-
 #[doc="<p>Connection information for the new game session that is created with matchmaking. (with <a>StartMatchmaking</a>). Once a match is set, the FlexMatch engine places the match and creates a new game session for it. This information, including the game session endpoint and player sessions for each player in the original matchmaking request, is added to the <a>MatchmakingTicket</a>, which can be retrieved by calling <a>DescribeMatchmaking</a>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GameSessionConnectionInfo {
@@ -1352,7 +2541,6 @@ pub struct GameSessionConnectionInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub port: Option<i64>,
 }
-
 #[doc="<p>A game session's properties plus the protection policy currently in force.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GameSessionDetail {
@@ -1365,7 +2553,6 @@ pub struct GameSessionDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub protection_policy: Option<String>,
 }
-
 #[doc="<p>Object that describes a <a>StartGameSessionPlacement</a> request. This object includes the full details of the original request plus the current status and start/end time stamps.</p> <p>Game session placement-related operations include:</p> <ul> <li> <p> <a>StartGameSessionPlacement</a> </p> </li> <li> <p> <a>DescribeGameSessionPlacement</a> </p> </li> <li> <p> <a>StopGameSessionPlacement</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GameSessionPlacement {
@@ -1434,7 +2621,6 @@ pub struct GameSessionPlacement {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[doc="<p>Configuration of a queue that is used to process game session placement requests. The queue configuration identifies several game features:</p> <ul> <li> <p>The destinations where a new game session can potentially be hosted. Amazon GameLift tries these destinations in an order based on either the queue's default order or player latency information, if provided in a placement request. With latency information, Amazon GameLift can place game sessions where the majority of players are reporting the lowest possible latency. </p> </li> <li> <p>The length of time that placement requests can wait in the queue before timing out. </p> </li> <li> <p>A set of optional latency policies that protect individual players from high latencies, preventing game sessions from being placed where any individual player is reporting latency higher than a policy's maximum.</p> </li> </ul> <p>Queue-related operations include:</p> <ul> <li> <p> <a>CreateGameSessionQueue</a> </p> </li> <li> <p> <a>DescribeGameSessionQueues</a> </p> </li> <li> <p> <a>UpdateGameSessionQueue</a> </p> </li> <li> <p> <a>DeleteGameSessionQueue</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GameSessionQueue {
@@ -1459,7 +2645,6 @@ pub struct GameSessionQueue {
     #[serde(skip_serializing_if="Option::is_none")]
     pub timeout_in_seconds: Option<i64>,
 }
-
 #[doc="<p>Fleet designated in a game session queue. Requests for new game sessions in the queue are fulfilled by starting a new game session on any destination configured for a queue. </p> <p>Queue-related operations include:</p> <ul> <li> <p> <a>CreateGameSessionQueue</a> </p> </li> <li> <p> <a>DescribeGameSessionQueues</a> </p> </li> <li> <p> <a>UpdateGameSessionQueue</a> </p> </li> <li> <p> <a>DeleteGameSessionQueue</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct GameSessionQueueDestination {
@@ -1468,7 +2653,19 @@ pub struct GameSessionQueueDestination {
     #[serde(skip_serializing_if="Option::is_none")]
     pub destination_arn: Option<String>,
 }
-
+impl GameSessionQueueDestination {
+    /// Sets `destination_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GameSessionQueueDestination.destination_arn = Some(value.into());`.
+    pub fn destination_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GameSessionQueueDestination with optional fields set to `None`.
+    pub fn new() -> GameSessionQueueDestination {
+        GameSessionQueueDestination { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetGameSessionLogUrlInput {
@@ -1476,7 +2673,23 @@ pub struct GetGameSessionLogUrlInput {
     #[serde(rename="GameSessionId")]
     pub game_session_id: String,
 }
-
+impl GetGameSessionLogUrlInput {
+    /// Sets `game_session_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetGameSessionLogUrlInput.game_session_id = value.into();`.
+    pub fn game_session_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.game_session_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetGameSessionLogUrlInput with optional fields set to `None`.
+    pub fn new<GameSessionIdType: Into<String>>(game_session_id: GameSessionIdType)
+                                                -> GetGameSessionLogUrlInput {
+        GetGameSessionLogUrlInput {
+            game_session_id: game_session_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetGameSessionLogUrlOutput {
@@ -1485,7 +2698,6 @@ pub struct GetGameSessionLogUrlOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pre_signed_url: Option<String>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetInstanceAccessInput {
@@ -1496,7 +2708,33 @@ pub struct GetInstanceAccessInput {
     #[serde(rename="InstanceId")]
     pub instance_id: String,
 }
-
+impl GetInstanceAccessInput {
+    /// Sets `fleet_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInstanceAccessInput.fleet_id = value.into();`.
+    pub fn fleet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_id = value.into();
+        self
+    }
+    /// Sets `instance_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetInstanceAccessInput.instance_id = value.into();`.
+    pub fn instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetInstanceAccessInput with optional fields set to `None`.
+    pub fn new<FleetIdType: Into<String>, InstanceIdType: Into<String>>
+        (fleet_id: FleetIdType,
+         instance_id: InstanceIdType)
+         -> GetInstanceAccessInput {
+        GetInstanceAccessInput {
+            fleet_id: fleet_id.into(),
+            instance_id: instance_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetInstanceAccessOutput {
@@ -1505,7 +2743,6 @@ pub struct GetInstanceAccessOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub instance_access: Option<InstanceAccess>,
 }
-
 #[doc="<p>Properties that describe an instance of a virtual computing resource that hosts one or more game servers. A fleet may contain zero or more instances.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Instance {
@@ -1538,7 +2775,6 @@ pub struct Instance {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>Information required to remotely connect to a fleet instance. Access is requested by calling <a>GetInstanceAccess</a>. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceAccess {
@@ -1563,7 +2799,6 @@ pub struct InstanceAccess {
     #[serde(skip_serializing_if="Option::is_none")]
     pub operating_system: Option<String>,
 }
-
 #[doc="<p>Set of credentials required to remotely access a fleet instance. Access credentials are requested by calling <a>GetInstanceAccess</a> and returned in an <a>InstanceAccess</a> object.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstanceCredentials {
@@ -1576,7 +2811,6 @@ pub struct InstanceCredentials {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_name: Option<String>,
 }
-
 #[doc="<p>A range of IP addresses and port settings that allow inbound traffic to connect to server processes on Amazon GameLift. Each game session hosted on a fleet is assigned a unique combination of IP address and port number, which must fall into the fleet's allowed ranges. This combination is included in the <a>GameSession</a> object. </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct IpPermission {
@@ -1593,7 +2827,54 @@ pub struct IpPermission {
     #[serde(rename="ToPort")]
     pub to_port: i64,
 }
-
+impl IpPermission {
+    /// Sets `from_port`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IpPermission.from_port = value.into();`.
+    pub fn from_port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.from_port = value.into();
+        self
+    }
+    /// Sets `ip_range`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IpPermission.ip_range = value.into();`.
+    pub fn ip_range<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ip_range = value.into();
+        self
+    }
+    /// Sets `protocol`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IpPermission.protocol = value.into();`.
+    pub fn protocol<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.protocol = value.into();
+        self
+    }
+    /// Sets `to_port`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IpPermission.to_port = value.into();`.
+    pub fn to_port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.to_port = value.into();
+        self
+    }
+    /// Returns a new instance of IpPermission with optional fields set to `None`.
+    pub fn new<FromPortType: Into<i64>,
+               IpRangeType: Into<String>,
+               ProtocolType: Into<String>,
+               ToPortType: Into<i64>>
+        (from_port: FromPortType,
+         ip_range: IpRangeType,
+         protocol: ProtocolType,
+         to_port: ToPortType)
+         -> IpPermission {
+        IpPermission {
+            from_port: from_port.into(),
+            ip_range: ip_range.into(),
+            protocol: protocol.into(),
+            to_port: to_port.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListAliasesInput {
@@ -1614,7 +2895,40 @@ pub struct ListAliasesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub routing_strategy_type: Option<String>,
 }
-
+impl ListAliasesInput {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAliasesInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAliasesInput.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAliasesInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `routing_strategy_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAliasesInput.routing_strategy_type = Some(value.into());`.
+    pub fn routing_strategy_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.routing_strategy_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListAliasesInput with optional fields set to `None`.
+    pub fn new() -> ListAliasesInput {
+        ListAliasesInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListAliasesOutput {
@@ -1627,7 +2941,6 @@ pub struct ListAliasesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListBuildsInput {
@@ -1644,7 +2957,33 @@ pub struct ListBuildsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
+impl ListBuildsInput {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListBuildsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListBuildsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListBuildsInput.status = Some(value.into());`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListBuildsInput with optional fields set to `None`.
+    pub fn new() -> ListBuildsInput {
+        ListBuildsInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListBuildsOutput {
@@ -1657,7 +2996,6 @@ pub struct ListBuildsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListFleetsInput {
@@ -1674,7 +3012,33 @@ pub struct ListFleetsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListFleetsInput {
+    /// Sets `build_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListFleetsInput.build_id = Some(value.into());`.
+    pub fn build_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.build_id = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListFleetsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListFleetsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListFleetsInput with optional fields set to `None`.
+    pub fn new() -> ListFleetsInput {
+        ListFleetsInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListFleetsOutput {
@@ -1687,7 +3051,6 @@ pub struct ListFleetsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>New player session created as a result of a successful FlexMatch match. A successful match automatically creates new player sessions for every player ID in the original matchmaking request. </p> <p>When players connect to the match's game session, they must include both player ID and player session ID in order to claim their assigned player slot.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MatchedPlayerSession {
@@ -1700,7 +3063,6 @@ pub struct MatchedPlayerSession {
     #[serde(skip_serializing_if="Option::is_none")]
     pub player_session_id: Option<String>,
 }
-
 #[doc="<p>Guidelines for use with FlexMatch to match players into games. All matchmaking requests must specify a matchmaking configuration.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MatchmakingConfiguration {
@@ -1757,7 +3119,6 @@ pub struct MatchmakingConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rule_set_name: Option<String>,
 }
-
 #[doc="<p>Set of rule statements, used with FlexMatch, that determine how to build a certain kind of player match. Each rule set describes a type of group to be created and defines the parameters for acceptable player matches. Rule sets are used in <a>MatchmakingConfiguration</a> objects.</p> <p>A rule set may define the following elements for a match. For detailed information and examples showing how to construct a rule set, see <a href=\"http://docs.aws.amazon.com/gamelift/latest/developerguide/match-rules.html\">Create Matchmaking Rules for Your Game</a>. </p> <ul> <li> <p>Teams -- Required. A rule set must define one or multiple teams for the match and set minimum and maximum team sizes. For example, a rule set might describe a 4x4 match that requires all eight slots to be filled. </p> </li> <li> <p>Player attributes -- Optional. These attributes specify a set of player characteristics to evaluate when looking for a match. Matchmaking requests that use a rule set with player attributes must provide the corresponding attribute values. For example, an attribute might specify a player's skill or level.</p> </li> <li> <p>Rules -- Optional. Rules define how to evaluate potential players for a match based on player attributes. A rule might specify minimum requirements for individual players--such as each player must meet a certain skill level, or may describe an entire group--such as all teams must be evenly matched or have at least one player in a certain role. </p> </li> <li> <p>Expansions -- Optional. Expansions allow you to relax the rules after a period of time if no acceptable matches are found. This feature lets you balance getting players into games in a reasonable amount of time instead of making them wait indefinitely for the best possible match. For example, you might use an expansion to increase the maximum skill variance between players after 30 seconds.</p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MatchmakingRuleSet {
@@ -1773,7 +3134,6 @@ pub struct MatchmakingRuleSet {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rule_set_name: Option<String>,
 }
-
 #[doc="<p>Ticket generated to track the progress of a matchmaking request. Each ticket is uniquely identified by a ticket ID, supplied by the requester, when creating a matchmaking request with <a>StartMatchmaking</a>. Tickets can be retrieved by calling <a>DescribeMatchmaking</a> with the ticket ID.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MatchmakingTicket {
@@ -1810,7 +3170,6 @@ pub struct MatchmakingTicket {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ticket_id: Option<String>,
 }
-
 #[doc="<p>Information about a player session that was created as part of a <a>StartGameSessionPlacement</a> request. This object contains only the player ID and player session ID. To retrieve full details on a player session, call <a>DescribePlayerSessions</a> with the player session ID.</p> <p>Player-session-related operations include:</p> <ul> <li> <p> <a>CreatePlayerSession</a> </p> </li> <li> <p> <a>CreatePlayerSessions</a> </p> </li> <li> <p> <a>DescribePlayerSessions</a> </p> </li> <li> <p>Game session placements</p> <ul> <li> <p> <a>StartGameSessionPlacement</a> </p> </li> <li> <p> <a>DescribeGameSessionPlacement</a> </p> </li> <li> <p> <a>StopGameSessionPlacement</a> </p> </li> </ul> </li> </ul>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PlacedPlayerSession {
@@ -1823,7 +3182,6 @@ pub struct PlacedPlayerSession {
     #[serde(skip_serializing_if="Option::is_none")]
     pub player_session_id: Option<String>,
 }
-
 #[doc="<p>Object used in matchmaking to represent a player. When starting a matchmaking request, a player has a player ID and may have latency data. Team information is added after a match has been successfully completed.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Player {
@@ -1844,7 +3202,43 @@ pub struct Player {
     #[serde(skip_serializing_if="Option::is_none")]
     pub team: Option<String>,
 }
-
+impl Player {
+    /// Sets `latency_in_ms`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Player.latency_in_ms = Some(value.into());`.
+pub fn latency_in_ms<ValueType: Into<::std::collections::HashMap<String, i64>>>(mut self, value: ValueType) -> Self{
+        self.latency_in_ms = Some(value.into());
+        self
+    }
+    /// Sets `player_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Player.player_attributes = Some(value.into());`.
+    pub fn player_attributes<ValueType: Into<::std::collections::HashMap<String, AttributeValue>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.player_attributes = Some(value.into());
+        self
+    }
+    /// Sets `player_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Player.player_id = Some(value.into());`.
+    pub fn player_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.player_id = Some(value.into());
+        self
+    }
+    /// Sets `team`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Player.team = Some(value.into());`.
+    pub fn team<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.team = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Player with optional fields set to `None`.
+    pub fn new() -> Player {
+        Player { ..Default::default() }
+    }
+}
 #[doc="<p>Regional latency information for a player, used when requesting a new game session with <a>StartGameSessionPlacement</a>. This value indicates the amount of time lag that exists when the player is connected to a fleet in the specified region. The relative difference between a player's latency values for multiple regions are used to determine which fleets are best suited to place a new game session for the player. </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct PlayerLatency {
@@ -1861,7 +3255,33 @@ pub struct PlayerLatency {
     #[serde(skip_serializing_if="Option::is_none")]
     pub region_identifier: Option<String>,
 }
-
+impl PlayerLatency {
+    /// Sets `latency_in_milliseconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PlayerLatency.latency_in_milliseconds = Some(value.into());`.
+    pub fn latency_in_milliseconds<ValueType: Into<f32>>(mut self, value: ValueType) -> Self {
+        self.latency_in_milliseconds = Some(value.into());
+        self
+    }
+    /// Sets `player_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PlayerLatency.player_id = Some(value.into());`.
+    pub fn player_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.player_id = Some(value.into());
+        self
+    }
+    /// Sets `region_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PlayerLatency.region_identifier = Some(value.into());`.
+    pub fn region_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.region_identifier = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PlayerLatency with optional fields set to `None`.
+    pub fn new() -> PlayerLatency {
+        PlayerLatency { ..Default::default() }
+    }
+}
 #[doc="<p>Queue setting that determines the highest latency allowed for individual players when placing a game session. When a latency policy is in force, a game session cannot be placed at any destination in a region where a player is reporting latency higher than the cap. Latency policies are only enforced when the placement request contains player latency information.</p> <p>Queue-related operations include:</p> <ul> <li> <p> <a>CreateGameSessionQueue</a> </p> </li> <li> <p> <a>DescribeGameSessionQueues</a> </p> </li> <li> <p> <a>UpdateGameSessionQueue</a> </p> </li> <li> <p> <a>DeleteGameSessionQueue</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct PlayerLatencyPolicy {
@@ -1874,7 +3294,28 @@ pub struct PlayerLatencyPolicy {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policy_duration_seconds: Option<i64>,
 }
-
+impl PlayerLatencyPolicy {
+    /// Sets `maximum_individual_player_latency_milliseconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PlayerLatencyPolicy.maximum_individual_player_latency_milliseconds = Some(value.into());`.
+    pub fn maximum_individual_player_latency_milliseconds<ValueType: Into<i64>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.maximum_individual_player_latency_milliseconds = Some(value.into());
+        self
+    }
+    /// Sets `policy_duration_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PlayerLatencyPolicy.policy_duration_seconds = Some(value.into());`.
+    pub fn policy_duration_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.policy_duration_seconds = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PlayerLatencyPolicy with optional fields set to `None`.
+    pub fn new() -> PlayerLatencyPolicy {
+        PlayerLatencyPolicy { ..Default::default() }
+    }
+}
 #[doc="<p>Properties describing a player session. Player session objects are created either by creating a player session for a specific game session, or as part of a game session placement. A player session represents either a player reservation for a game session (status <code>RESERVED</code>) or actual player activity in a game session (status <code>ACTIVE</code>). A player session object (including player data) is automatically passed to a game session when the player connects to the game session and is validated.</p> <p>When a player disconnects, the player session status changes to <code>COMPLETED</code>. Once the session ends, the player session object is retained for 30 days and then removed.</p> <p>Player-session-related operations include:</p> <ul> <li> <p> <a>CreatePlayerSession</a> </p> </li> <li> <p> <a>CreatePlayerSessions</a> </p> </li> <li> <p> <a>DescribePlayerSessions</a> </p> </li> <li> <p>Game session placements</p> <ul> <li> <p> <a>StartGameSessionPlacement</a> </p> </li> <li> <p> <a>DescribeGameSessionPlacement</a> </p> </li> <li> <p> <a>StopGameSessionPlacement</a> </p> </li> </ul> </li> </ul>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PlayerSession {
@@ -1919,7 +3360,6 @@ pub struct PlayerSession {
     #[serde(skip_serializing_if="Option::is_none")]
     pub termination_time: Option<f64>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutScalingPolicyInput {
@@ -1948,7 +3388,94 @@ pub struct PutScalingPolicyInput {
     #[serde(rename="Threshold")]
     pub threshold: f64,
 }
-
+impl PutScalingPolicyInput {
+    /// Sets `comparison_operator`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScalingPolicyInput.comparison_operator = value.into();`.
+    pub fn comparison_operator<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.comparison_operator = value.into();
+        self
+    }
+    /// Sets `evaluation_periods`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScalingPolicyInput.evaluation_periods = value.into();`.
+    pub fn evaluation_periods<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.evaluation_periods = value.into();
+        self
+    }
+    /// Sets `fleet_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScalingPolicyInput.fleet_id = value.into();`.
+    pub fn fleet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_id = value.into();
+        self
+    }
+    /// Sets `metric_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScalingPolicyInput.metric_name = value.into();`.
+    pub fn metric_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_name = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScalingPolicyInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `scaling_adjustment`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScalingPolicyInput.scaling_adjustment = value.into();`.
+    pub fn scaling_adjustment<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.scaling_adjustment = value.into();
+        self
+    }
+    /// Sets `scaling_adjustment_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScalingPolicyInput.scaling_adjustment_type = value.into();`.
+    pub fn scaling_adjustment_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.scaling_adjustment_type = value.into();
+        self
+    }
+    /// Sets `threshold`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutScalingPolicyInput.threshold = value.into();`.
+    pub fn threshold<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.threshold = value.into();
+        self
+    }
+    /// Returns a new instance of PutScalingPolicyInput with optional fields set to `None`.
+    pub fn new<ComparisonOperatorType: Into<String>,
+               EvaluationPeriodsType: Into<i64>,
+               FleetIdType: Into<String>,
+               MetricNameType: Into<String>,
+               NameType: Into<String>,
+               ScalingAdjustmentType: Into<i64>,
+               ScalingAdjustmentTypeType: Into<String>,
+               ThresholdType: Into<f64>>
+        (comparison_operator: ComparisonOperatorType,
+         evaluation_periods: EvaluationPeriodsType,
+         fleet_id: FleetIdType,
+         metric_name: MetricNameType,
+         name: NameType,
+         scaling_adjustment: ScalingAdjustmentType,
+         scaling_adjustment_type: ScalingAdjustmentTypeType,
+         threshold: ThresholdType)
+         -> PutScalingPolicyInput {
+        PutScalingPolicyInput {
+            comparison_operator: comparison_operator.into(),
+            evaluation_periods: evaluation_periods.into(),
+            fleet_id: fleet_id.into(),
+            metric_name: metric_name.into(),
+            name: name.into(),
+            scaling_adjustment: scaling_adjustment.into(),
+            scaling_adjustment_type: scaling_adjustment_type.into(),
+            threshold: threshold.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutScalingPolicyOutput {
@@ -1957,7 +3484,6 @@ pub struct PutScalingPolicyOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RequestUploadCredentialsInput {
@@ -1965,7 +3491,22 @@ pub struct RequestUploadCredentialsInput {
     #[serde(rename="BuildId")]
     pub build_id: String,
 }
-
+impl RequestUploadCredentialsInput {
+    /// Sets `build_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RequestUploadCredentialsInput.build_id = value.into();`.
+    pub fn build_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.build_id = value.into();
+        self
+    }
+    /// Returns a new instance of RequestUploadCredentialsInput with optional fields set to `None`.
+    pub fn new<BuildIdType: Into<String>>(build_id: BuildIdType) -> RequestUploadCredentialsInput {
+        RequestUploadCredentialsInput {
+            build_id: build_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RequestUploadCredentialsOutput {
@@ -1978,7 +3519,6 @@ pub struct RequestUploadCredentialsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub upload_credentials: Option<AwsCredentials>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ResolveAliasInput {
@@ -1986,7 +3526,22 @@ pub struct ResolveAliasInput {
     #[serde(rename="AliasId")]
     pub alias_id: String,
 }
-
+impl ResolveAliasInput {
+    /// Sets `alias_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResolveAliasInput.alias_id = value.into();`.
+    pub fn alias_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.alias_id = value.into();
+        self
+    }
+    /// Returns a new instance of ResolveAliasInput with optional fields set to `None`.
+    pub fn new<AliasIdType: Into<String>>(alias_id: AliasIdType) -> ResolveAliasInput {
+        ResolveAliasInput {
+            alias_id: alias_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ResolveAliasOutput {
@@ -1995,7 +3550,6 @@ pub struct ResolveAliasOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub fleet_id: Option<String>,
 }
-
 #[doc="<p>Policy that limits the number of game sessions a player can create on the same fleet. This optional policy gives game owners control over how players can consume available game server resources. A resource creation policy makes the following statement: \"An individual player can create a maximum number of new game sessions within a specified time period\".</p> <p>The policy is evaluated when a player tries to create a new game session. For example, with a policy of 10 new game sessions and a time period of 60 minutes, on receiving a <code>CreateGameSession</code> request, Amazon GameLift checks that the player (identified by <code>CreatorId</code>) has created fewer than 10 game sessions in the past 60 minutes.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ResourceCreationLimitPolicy {
@@ -2008,7 +3562,26 @@ pub struct ResourceCreationLimitPolicy {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policy_period_in_minutes: Option<i64>,
 }
-
+impl ResourceCreationLimitPolicy {
+    /// Sets `new_game_sessions_per_creator`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceCreationLimitPolicy.new_game_sessions_per_creator = Some(value.into());`.
+    pub fn new_game_sessions_per_creator<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.new_game_sessions_per_creator = Some(value.into());
+        self
+    }
+    /// Sets `policy_period_in_minutes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResourceCreationLimitPolicy.policy_period_in_minutes = Some(value.into());`.
+    pub fn policy_period_in_minutes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.policy_period_in_minutes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ResourceCreationLimitPolicy with optional fields set to `None`.
+    pub fn new() -> ResourceCreationLimitPolicy {
+        ResourceCreationLimitPolicy { ..Default::default() }
+    }
+}
 #[doc="<p>Routing configuration for a fleet alias.</p> <p>Fleet-related operations include:</p> <ul> <li> <p> <a>CreateFleet</a> </p> </li> <li> <p> <a>ListFleets</a> </p> </li> <li> <p>Describe fleets:</p> <ul> <li> <p> <a>DescribeFleetAttributes</a> </p> </li> <li> <p> <a>DescribeFleetPortSettings</a> </p> </li> <li> <p> <a>DescribeFleetUtilization</a> </p> </li> <li> <p> <a>DescribeRuntimeConfiguration</a> </p> </li> <li> <p> <a>DescribeFleetEvents</a> </p> </li> </ul> </li> <li> <p>Update fleets:</p> <ul> <li> <p> <a>UpdateFleetAttributes</a> </p> </li> <li> <p> <a>UpdateFleetCapacity</a> </p> </li> <li> <p> <a>UpdateFleetPortSettings</a> </p> </li> <li> <p> <a>UpdateRuntimeConfiguration</a> </p> </li> </ul> </li> <li> <p>Manage fleet capacity:</p> <ul> <li> <p> <a>DescribeFleetCapacity</a> </p> </li> <li> <p> <a>UpdateFleetCapacity</a> </p> </li> <li> <p> <a>PutScalingPolicy</a> (automatic scaling)</p> </li> <li> <p> <a>DescribeScalingPolicies</a> (automatic scaling)</p> </li> <li> <p> <a>DeleteScalingPolicy</a> (automatic scaling)</p> </li> <li> <p> <a>DescribeEC2InstanceLimits</a> </p> </li> </ul> </li> <li> <p> <a>DeleteFleet</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct RoutingStrategy {
@@ -2025,7 +3598,33 @@ pub struct RoutingStrategy {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
+impl RoutingStrategy {
+    /// Sets `fleet_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RoutingStrategy.fleet_id = Some(value.into());`.
+    pub fn fleet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_id = Some(value.into());
+        self
+    }
+    /// Sets `message`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RoutingStrategy.message = Some(value.into());`.
+    pub fn message<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.message = Some(value.into());
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RoutingStrategy.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RoutingStrategy with optional fields set to `None`.
+    pub fn new() -> RoutingStrategy {
+        RoutingStrategy { ..Default::default() }
+    }
+}
 #[doc="<p>A collection of server process configurations that describe what processes to run on each instance in a fleet. All fleets must have a run-time configuration. Each instance in the fleet launches the server processes specified in the run-time configuration and launches new ones as existing processes end. Each instance regularly checks for an updated run-time configuration and follows the new instructions. </p> <p>The run-time configuration enables the instances in a fleet to run multiple processes simultaneously. Potential scenarios are as follows: (1) Run multiple processes of a single game server executable to maximize usage of your hosting resources. (2) Run one or more processes of different build executables, such as your game server executable and a related program, or two or more different versions of a game server. (3) Run multiple processes of a single game server but with different launch parameters, for example to run one process on each instance in debug mode.</p> <p>A Amazon GameLift instance is limited to 50 processes running simultaneously. A run-time configuration must specify fewer than this limit. To calculate the total number of processes specified in a run-time configuration, add the values of the <code>ConcurrentExecutions</code> parameter for each <code> <a>ServerProcess</a> </code> object in the run-time configuration.</p> <p>Fleet-related operations include:</p> <ul> <li> <p> <a>CreateFleet</a> </p> </li> <li> <p> <a>ListFleets</a> </p> </li> <li> <p>Describe fleets:</p> <ul> <li> <p> <a>DescribeFleetAttributes</a> </p> </li> <li> <p> <a>DescribeFleetPortSettings</a> </p> </li> <li> <p> <a>DescribeFleetUtilization</a> </p> </li> <li> <p> <a>DescribeRuntimeConfiguration</a> </p> </li> <li> <p> <a>DescribeFleetEvents</a> </p> </li> </ul> </li> <li> <p>Update fleets:</p> <ul> <li> <p> <a>UpdateFleetAttributes</a> </p> </li> <li> <p> <a>UpdateFleetCapacity</a> </p> </li> <li> <p> <a>UpdateFleetPortSettings</a> </p> </li> <li> <p> <a>UpdateRuntimeConfiguration</a> </p> </li> </ul> </li> <li> <p>Manage fleet capacity:</p> <ul> <li> <p> <a>DescribeFleetCapacity</a> </p> </li> <li> <p> <a>UpdateFleetCapacity</a> </p> </li> <li> <p> <a>PutScalingPolicy</a> (automatic scaling)</p> </li> <li> <p> <a>DescribeScalingPolicies</a> (automatic scaling)</p> </li> <li> <p> <a>DeleteScalingPolicy</a> (automatic scaling)</p> </li> <li> <p> <a>DescribeEC2InstanceLimits</a> </p> </li> </ul> </li> <li> <p> <a>DeleteFleet</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct RuntimeConfiguration {
@@ -2042,7 +3641,39 @@ pub struct RuntimeConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub server_processes: Option<Vec<ServerProcess>>,
 }
-
+impl RuntimeConfiguration {
+    /// Sets `game_session_activation_timeout_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RuntimeConfiguration.game_session_activation_timeout_seconds = Some(value.into());`.
+    pub fn game_session_activation_timeout_seconds<ValueType: Into<i64>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.game_session_activation_timeout_seconds = Some(value.into());
+        self
+    }
+    /// Sets `max_concurrent_game_session_activations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RuntimeConfiguration.max_concurrent_game_session_activations = Some(value.into());`.
+    pub fn max_concurrent_game_session_activations<ValueType: Into<i64>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.max_concurrent_game_session_activations = Some(value.into());
+        self
+    }
+    /// Sets `server_processes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RuntimeConfiguration.server_processes = Some(value.into());`.
+    pub fn server_processes<ValueType: Into<Vec<ServerProcess>>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.server_processes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RuntimeConfiguration with optional fields set to `None`.
+    pub fn new() -> RuntimeConfiguration {
+        RuntimeConfiguration { ..Default::default() }
+    }
+}
 #[doc="<p>Location in Amazon Simple Storage Service (Amazon S3) where build files can be stored for access by Amazon GameLift. This location is specified in a <a>CreateBuild</a> request. For more details, see the <a href=\"http://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-build-cli-uploading.html#gamelift-build-cli-uploading-create-build\">Create a Build with Files in Amazon S3</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct S3Location {
@@ -2059,7 +3690,33 @@ pub struct S3Location {
     #[serde(skip_serializing_if="Option::is_none")]
     pub role_arn: Option<String>,
 }
-
+impl S3Location {
+    /// Sets `bucket`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Location.bucket = Some(value.into());`.
+    pub fn bucket<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket = Some(value.into());
+        self
+    }
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Location.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3Location.role_arn = Some(value.into());`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of S3Location with optional fields set to `None`.
+    pub fn new() -> S3Location {
+        S3Location { ..Default::default() }
+    }
+}
 #[doc="<p>Rule that controls how a fleet is scaled. Scaling policies are uniquely identified by the combination of name and fleet ID.</p> <p>Fleet-related operations include:</p> <ul> <li> <p> <a>CreateFleet</a> </p> </li> <li> <p> <a>ListFleets</a> </p> </li> <li> <p>Describe fleets:</p> <ul> <li> <p> <a>DescribeFleetAttributes</a> </p> </li> <li> <p> <a>DescribeFleetPortSettings</a> </p> </li> <li> <p> <a>DescribeFleetUtilization</a> </p> </li> <li> <p> <a>DescribeRuntimeConfiguration</a> </p> </li> <li> <p> <a>DescribeFleetEvents</a> </p> </li> </ul> </li> <li> <p>Update fleets:</p> <ul> <li> <p> <a>UpdateFleetAttributes</a> </p> </li> <li> <p> <a>UpdateFleetCapacity</a> </p> </li> <li> <p> <a>UpdateFleetPortSettings</a> </p> </li> <li> <p> <a>UpdateRuntimeConfiguration</a> </p> </li> </ul> </li> <li> <p>Manage fleet capacity:</p> <ul> <li> <p> <a>DescribeFleetCapacity</a> </p> </li> <li> <p> <a>UpdateFleetCapacity</a> </p> </li> <li> <p> <a>PutScalingPolicy</a> (automatic scaling)</p> </li> <li> <p> <a>DescribeScalingPolicies</a> (automatic scaling)</p> </li> <li> <p> <a>DeleteScalingPolicy</a> (automatic scaling)</p> </li> <li> <p> <a>DescribeEC2InstanceLimits</a> </p> </li> </ul> </li> <li> <p> <a>DeleteFleet</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ScalingPolicy {
@@ -2100,7 +3757,6 @@ pub struct ScalingPolicy {
     #[serde(skip_serializing_if="Option::is_none")]
     pub threshold: Option<f64>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SearchGameSessionsInput {
@@ -2129,7 +3785,54 @@ pub struct SearchGameSessionsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sort_expression: Option<String>,
 }
-
+impl SearchGameSessionsInput {
+    /// Sets `alias_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchGameSessionsInput.alias_id = Some(value.into());`.
+    pub fn alias_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.alias_id = Some(value.into());
+        self
+    }
+    /// Sets `filter_expression`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchGameSessionsInput.filter_expression = Some(value.into());`.
+    pub fn filter_expression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter_expression = Some(value.into());
+        self
+    }
+    /// Sets `fleet_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchGameSessionsInput.fleet_id = Some(value.into());`.
+    pub fn fleet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_id = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchGameSessionsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchGameSessionsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `sort_expression`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchGameSessionsInput.sort_expression = Some(value.into());`.
+    pub fn sort_expression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sort_expression = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SearchGameSessionsInput with optional fields set to `None`.
+    pub fn new() -> SearchGameSessionsInput {
+        SearchGameSessionsInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SearchGameSessionsOutput {
@@ -2142,7 +3845,6 @@ pub struct SearchGameSessionsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>A set of instructions for launching server processes on each instance in a fleet. Each instruction set identifies the location of the server executable, optional launch parameters, and the number of server processes with this configuration to maintain concurrently on the instance. Server process configurations make up a fleet's <code> <a>RuntimeConfiguration</a> </code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ServerProcess {
@@ -2157,7 +3859,40 @@ pub struct ServerProcess {
     #[serde(skip_serializing_if="Option::is_none")]
     pub parameters: Option<String>,
 }
-
+impl ServerProcess {
+    /// Sets `concurrent_executions`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ServerProcess.concurrent_executions = value.into();`.
+    pub fn concurrent_executions<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.concurrent_executions = value.into();
+        self
+    }
+    /// Sets `launch_path`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ServerProcess.launch_path = value.into();`.
+    pub fn launch_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.launch_path = value.into();
+        self
+    }
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ServerProcess.parameters = Some(value.into());`.
+    pub fn parameters<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ServerProcess with optional fields set to `None`.
+    pub fn new<ConcurrentExecutionsType: Into<i64>, LaunchPathType: Into<String>>
+        (concurrent_executions: ConcurrentExecutionsType,
+         launch_path: LaunchPathType)
+         -> ServerProcess {
+        ServerProcess {
+            concurrent_executions: concurrent_executions.into(),
+            launch_path: launch_path.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartGameSessionPlacementInput {
@@ -2191,7 +3926,83 @@ pub struct StartGameSessionPlacementInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub player_latencies: Option<Vec<PlayerLatency>>,
 }
-
+impl StartGameSessionPlacementInput {
+    /// Sets `desired_player_sessions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartGameSessionPlacementInput.desired_player_sessions = Some(value.into());`.
+    pub fn desired_player_sessions<ValueType: Into<Vec<DesiredPlayerSession>>>(mut self,
+                                                                               value: ValueType)
+                                                                               -> Self {
+        self.desired_player_sessions = Some(value.into());
+        self
+    }
+    /// Sets `game_properties`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartGameSessionPlacementInput.game_properties = Some(value.into());`.
+    pub fn game_properties<ValueType: Into<Vec<GameProperty>>>(mut self, value: ValueType) -> Self {
+        self.game_properties = Some(value.into());
+        self
+    }
+    /// Sets `game_session_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartGameSessionPlacementInput.game_session_data = Some(value.into());`.
+    pub fn game_session_data<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.game_session_data = Some(value.into());
+        self
+    }
+    /// Sets `game_session_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartGameSessionPlacementInput.game_session_name = Some(value.into());`.
+    pub fn game_session_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.game_session_name = Some(value.into());
+        self
+    }
+    /// Sets `game_session_queue_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartGameSessionPlacementInput.game_session_queue_name = value.into();`.
+    pub fn game_session_queue_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.game_session_queue_name = value.into();
+        self
+    }
+    /// Sets `maximum_player_session_count`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartGameSessionPlacementInput.maximum_player_session_count = value.into();`.
+    pub fn maximum_player_session_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.maximum_player_session_count = value.into();
+        self
+    }
+    /// Sets `placement_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartGameSessionPlacementInput.placement_id = value.into();`.
+    pub fn placement_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.placement_id = value.into();
+        self
+    }
+    /// Sets `player_latencies`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartGameSessionPlacementInput.player_latencies = Some(value.into());`.
+    pub fn player_latencies<ValueType: Into<Vec<PlayerLatency>>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.player_latencies = Some(value.into());
+        self
+    }
+    /// Returns a new instance of StartGameSessionPlacementInput with optional fields set to `None`.
+    pub fn new<GameSessionQueueNameType: Into<String>,
+               MaximumPlayerSessionCountType: Into<i64>,
+               PlacementIdType: Into<String>>
+        (game_session_queue_name: GameSessionQueueNameType,
+         maximum_player_session_count: MaximumPlayerSessionCountType,
+         placement_id: PlacementIdType)
+         -> StartGameSessionPlacementInput {
+        StartGameSessionPlacementInput {
+            game_session_queue_name: game_session_queue_name.into(),
+            maximum_player_session_count: maximum_player_session_count.into(),
+            placement_id: placement_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartGameSessionPlacementOutput {
@@ -2200,7 +4011,6 @@ pub struct StartGameSessionPlacementOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub game_session_placement: Option<GameSessionPlacement>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartMatchmakingInput {
@@ -2215,7 +4025,40 @@ pub struct StartMatchmakingInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ticket_id: Option<String>,
 }
-
+impl StartMatchmakingInput {
+    /// Sets `configuration_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartMatchmakingInput.configuration_name = value.into();`.
+    pub fn configuration_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.configuration_name = value.into();
+        self
+    }
+    /// Sets `players`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartMatchmakingInput.players = value.into();`.
+    pub fn players<ValueType: Into<Vec<Player>>>(mut self, value: ValueType) -> Self {
+        self.players = value.into();
+        self
+    }
+    /// Sets `ticket_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartMatchmakingInput.ticket_id = Some(value.into());`.
+    pub fn ticket_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ticket_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of StartMatchmakingInput with optional fields set to `None`.
+    pub fn new<ConfigurationNameType: Into<String>, PlayersType: Into<Vec<Player>>>
+        (configuration_name: ConfigurationNameType,
+         players: PlayersType)
+         -> StartMatchmakingInput {
+        StartMatchmakingInput {
+            configuration_name: configuration_name.into(),
+            players: players.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartMatchmakingOutput {
@@ -2224,7 +4067,6 @@ pub struct StartMatchmakingOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub matchmaking_ticket: Option<MatchmakingTicket>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StopGameSessionPlacementInput {
@@ -2232,7 +4074,23 @@ pub struct StopGameSessionPlacementInput {
     #[serde(rename="PlacementId")]
     pub placement_id: String,
 }
-
+impl StopGameSessionPlacementInput {
+    /// Sets `placement_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopGameSessionPlacementInput.placement_id = value.into();`.
+    pub fn placement_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.placement_id = value.into();
+        self
+    }
+    /// Returns a new instance of StopGameSessionPlacementInput with optional fields set to `None`.
+    pub fn new<PlacementIdType: Into<String>>(placement_id: PlacementIdType)
+                                              -> StopGameSessionPlacementInput {
+        StopGameSessionPlacementInput {
+            placement_id: placement_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StopGameSessionPlacementOutput {
@@ -2241,7 +4099,6 @@ pub struct StopGameSessionPlacementOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub game_session_placement: Option<GameSessionPlacement>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StopMatchmakingInput {
@@ -2249,7 +4106,22 @@ pub struct StopMatchmakingInput {
     #[serde(rename="TicketId")]
     pub ticket_id: String,
 }
-
+impl StopMatchmakingInput {
+    /// Sets `ticket_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopMatchmakingInput.ticket_id = value.into();`.
+    pub fn ticket_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ticket_id = value.into();
+        self
+    }
+    /// Returns a new instance of StopMatchmakingInput with optional fields set to `None`.
+    pub fn new<TicketIdType: Into<String>>(ticket_id: TicketIdType) -> StopMatchmakingInput {
+        StopMatchmakingInput {
+            ticket_id: ticket_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StopMatchmakingOutput;
 
@@ -2272,7 +4144,43 @@ pub struct UpdateAliasInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub routing_strategy: Option<RoutingStrategy>,
 }
-
+impl UpdateAliasInput {
+    /// Sets `alias_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAliasInput.alias_id = value.into();`.
+    pub fn alias_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.alias_id = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAliasInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAliasInput.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `routing_strategy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAliasInput.routing_strategy = Some(value.into());`.
+    pub fn routing_strategy<ValueType: Into<RoutingStrategy>>(mut self, value: ValueType) -> Self {
+        self.routing_strategy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateAliasInput with optional fields set to `None`.
+    pub fn new<AliasIdType: Into<String>>(alias_id: AliasIdType) -> UpdateAliasInput {
+        UpdateAliasInput {
+            alias_id: alias_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateAliasOutput {
@@ -2281,7 +4189,6 @@ pub struct UpdateAliasOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub alias: Option<Alias>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateBuildInput {
@@ -2297,7 +4204,36 @@ pub struct UpdateBuildInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<String>,
 }
-
+impl UpdateBuildInput {
+    /// Sets `build_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateBuildInput.build_id = value.into();`.
+    pub fn build_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.build_id = value.into();
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateBuildInput.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateBuildInput.version = Some(value.into());`.
+    pub fn version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateBuildInput with optional fields set to `None`.
+    pub fn new<BuildIdType: Into<String>>(build_id: BuildIdType) -> UpdateBuildInput {
+        UpdateBuildInput {
+            build_id: build_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateBuildOutput {
@@ -2306,7 +4242,6 @@ pub struct UpdateBuildOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub build: Option<Build>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateFleetAttributesInput {
@@ -2334,7 +4269,59 @@ pub struct UpdateFleetAttributesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_creation_limit_policy: Option<ResourceCreationLimitPolicy>,
 }
-
+impl UpdateFleetAttributesInput {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetAttributesInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `fleet_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetAttributesInput.fleet_id = value.into();`.
+    pub fn fleet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_id = value.into();
+        self
+    }
+    /// Sets `metric_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetAttributesInput.metric_groups = Some(value.into());`.
+    pub fn metric_groups<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.metric_groups = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetAttributesInput.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `new_game_session_protection_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetAttributesInput.new_game_session_protection_policy = Some(value.into());`.
+    pub fn new_game_session_protection_policy<ValueType: Into<String>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.new_game_session_protection_policy = Some(value.into());
+        self
+    }
+    /// Sets `resource_creation_limit_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetAttributesInput.resource_creation_limit_policy = Some(value.into());`.
+pub fn resource_creation_limit_policy<ValueType: Into<ResourceCreationLimitPolicy>>(mut self, value: ValueType) -> Self{
+        self.resource_creation_limit_policy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateFleetAttributesInput with optional fields set to `None`.
+    pub fn new<FleetIdType: Into<String>>(fleet_id: FleetIdType) -> UpdateFleetAttributesInput {
+        UpdateFleetAttributesInput {
+            fleet_id: fleet_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateFleetAttributesOutput {
@@ -2343,7 +4330,6 @@ pub struct UpdateFleetAttributesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub fleet_id: Option<String>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateFleetCapacityInput {
@@ -2363,7 +4349,43 @@ pub struct UpdateFleetCapacityInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub min_size: Option<i64>,
 }
-
+impl UpdateFleetCapacityInput {
+    /// Sets `desired_instances`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetCapacityInput.desired_instances = Some(value.into());`.
+    pub fn desired_instances<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.desired_instances = Some(value.into());
+        self
+    }
+    /// Sets `fleet_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetCapacityInput.fleet_id = value.into();`.
+    pub fn fleet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_id = value.into();
+        self
+    }
+    /// Sets `max_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetCapacityInput.max_size = Some(value.into());`.
+    pub fn max_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_size = Some(value.into());
+        self
+    }
+    /// Sets `min_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetCapacityInput.min_size = Some(value.into());`.
+    pub fn min_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.min_size = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateFleetCapacityInput with optional fields set to `None`.
+    pub fn new<FleetIdType: Into<String>>(fleet_id: FleetIdType) -> UpdateFleetCapacityInput {
+        UpdateFleetCapacityInput {
+            fleet_id: fleet_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateFleetCapacityOutput {
@@ -2372,7 +4394,6 @@ pub struct UpdateFleetCapacityOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub fleet_id: Option<String>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateFleetPortSettingsInput {
@@ -2388,7 +4409,40 @@ pub struct UpdateFleetPortSettingsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub inbound_permission_revocations: Option<Vec<IpPermission>>,
 }
-
+impl UpdateFleetPortSettingsInput {
+    /// Sets `fleet_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetPortSettingsInput.fleet_id = value.into();`.
+    pub fn fleet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_id = value.into();
+        self
+    }
+    /// Sets `inbound_permission_authorizations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetPortSettingsInput.inbound_permission_authorizations = Some(value.into());`.
+    pub fn inbound_permission_authorizations<ValueType: Into<Vec<IpPermission>>>(mut self,
+                                                                                 value: ValueType)
+                                                                                 -> Self {
+        self.inbound_permission_authorizations = Some(value.into());
+        self
+    }
+    /// Sets `inbound_permission_revocations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateFleetPortSettingsInput.inbound_permission_revocations = Some(value.into());`.
+    pub fn inbound_permission_revocations<ValueType: Into<Vec<IpPermission>>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.inbound_permission_revocations = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateFleetPortSettingsInput with optional fields set to `None`.
+    pub fn new<FleetIdType: Into<String>>(fleet_id: FleetIdType) -> UpdateFleetPortSettingsInput {
+        UpdateFleetPortSettingsInput {
+            fleet_id: fleet_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateFleetPortSettingsOutput {
@@ -2397,7 +4451,6 @@ pub struct UpdateFleetPortSettingsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub fleet_id: Option<String>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateGameSessionInput {
@@ -2421,7 +4474,53 @@ pub struct UpdateGameSessionInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub protection_policy: Option<String>,
 }
-
+impl UpdateGameSessionInput {
+    /// Sets `game_session_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGameSessionInput.game_session_id = value.into();`.
+    pub fn game_session_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.game_session_id = value.into();
+        self
+    }
+    /// Sets `maximum_player_session_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGameSessionInput.maximum_player_session_count = Some(value.into());`.
+    pub fn maximum_player_session_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.maximum_player_session_count = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGameSessionInput.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `player_session_creation_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGameSessionInput.player_session_creation_policy = Some(value.into());`.
+    pub fn player_session_creation_policy<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.player_session_creation_policy = Some(value.into());
+        self
+    }
+    /// Sets `protection_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGameSessionInput.protection_policy = Some(value.into());`.
+    pub fn protection_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.protection_policy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateGameSessionInput with optional fields set to `None`.
+    pub fn new<GameSessionIdType: Into<String>>(game_session_id: GameSessionIdType)
+                                                -> UpdateGameSessionInput {
+        UpdateGameSessionInput {
+            game_session_id: game_session_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateGameSessionOutput {
@@ -2430,7 +4529,6 @@ pub struct UpdateGameSessionOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub game_session: Option<GameSession>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateGameSessionQueueInput {
@@ -2450,7 +4548,47 @@ pub struct UpdateGameSessionQueueInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub timeout_in_seconds: Option<i64>,
 }
-
+impl UpdateGameSessionQueueInput {
+    /// Sets `destinations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGameSessionQueueInput.destinations = Some(value.into());`.
+    pub fn destinations<ValueType: Into<Vec<GameSessionQueueDestination>>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.destinations = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGameSessionQueueInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `player_latency_policies`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGameSessionQueueInput.player_latency_policies = Some(value.into());`.
+    pub fn player_latency_policies<ValueType: Into<Vec<PlayerLatencyPolicy>>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.player_latency_policies = Some(value.into());
+        self
+    }
+    /// Sets `timeout_in_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateGameSessionQueueInput.timeout_in_seconds = Some(value.into());`.
+    pub fn timeout_in_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.timeout_in_seconds = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateGameSessionQueueInput with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> UpdateGameSessionQueueInput {
+        UpdateGameSessionQueueInput {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateGameSessionQueueOutput {
@@ -2459,7 +4597,6 @@ pub struct UpdateGameSessionQueueOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub game_session_queue: Option<GameSessionQueue>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateMatchmakingConfigurationInput {
@@ -2511,7 +4648,101 @@ pub struct UpdateMatchmakingConfigurationInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rule_set_name: Option<String>,
 }
-
+impl UpdateMatchmakingConfigurationInput {
+    /// Sets `acceptance_required`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMatchmakingConfigurationInput.acceptance_required = Some(value.into());`.
+    pub fn acceptance_required<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.acceptance_required = Some(value.into());
+        self
+    }
+    /// Sets `acceptance_timeout_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMatchmakingConfigurationInput.acceptance_timeout_seconds = Some(value.into());`.
+    pub fn acceptance_timeout_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.acceptance_timeout_seconds = Some(value.into());
+        self
+    }
+    /// Sets `additional_player_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMatchmakingConfigurationInput.additional_player_count = Some(value.into());`.
+    pub fn additional_player_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.additional_player_count = Some(value.into());
+        self
+    }
+    /// Sets `custom_event_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMatchmakingConfigurationInput.custom_event_data = Some(value.into());`.
+    pub fn custom_event_data<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.custom_event_data = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMatchmakingConfigurationInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `game_properties`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMatchmakingConfigurationInput.game_properties = Some(value.into());`.
+    pub fn game_properties<ValueType: Into<Vec<GameProperty>>>(mut self, value: ValueType) -> Self {
+        self.game_properties = Some(value.into());
+        self
+    }
+    /// Sets `game_session_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMatchmakingConfigurationInput.game_session_data = Some(value.into());`.
+    pub fn game_session_data<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.game_session_data = Some(value.into());
+        self
+    }
+    /// Sets `game_session_queue_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMatchmakingConfigurationInput.game_session_queue_arns = Some(value.into());`.
+    pub fn game_session_queue_arns<ValueType: Into<Vec<String>>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.game_session_queue_arns = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMatchmakingConfigurationInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `notification_target`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMatchmakingConfigurationInput.notification_target = Some(value.into());`.
+    pub fn notification_target<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.notification_target = Some(value.into());
+        self
+    }
+    /// Sets `request_timeout_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMatchmakingConfigurationInput.request_timeout_seconds = Some(value.into());`.
+    pub fn request_timeout_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.request_timeout_seconds = Some(value.into());
+        self
+    }
+    /// Sets `rule_set_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMatchmakingConfigurationInput.rule_set_name = Some(value.into());`.
+    pub fn rule_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_set_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateMatchmakingConfigurationInput with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> UpdateMatchmakingConfigurationInput {
+        UpdateMatchmakingConfigurationInput {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateMatchmakingConfigurationOutput {
@@ -2520,7 +4751,6 @@ pub struct UpdateMatchmakingConfigurationOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub configuration: Option<MatchmakingConfiguration>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateRuntimeConfigurationInput {
@@ -2531,7 +4761,35 @@ pub struct UpdateRuntimeConfigurationInput {
     #[serde(rename="RuntimeConfiguration")]
     pub runtime_configuration: RuntimeConfiguration,
 }
-
+impl UpdateRuntimeConfigurationInput {
+    /// Sets `fleet_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRuntimeConfigurationInput.fleet_id = value.into();`.
+    pub fn fleet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.fleet_id = value.into();
+        self
+    }
+    /// Sets `runtime_configuration`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRuntimeConfigurationInput.runtime_configuration = value.into();`.
+    pub fn runtime_configuration<ValueType: Into<RuntimeConfiguration>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.runtime_configuration = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateRuntimeConfigurationInput with optional fields set to `None`.
+    pub fn new<FleetIdType: Into<String>, RuntimeConfigurationType: Into<RuntimeConfiguration>>
+        (fleet_id: FleetIdType,
+         runtime_configuration: RuntimeConfigurationType)
+         -> UpdateRuntimeConfigurationInput {
+        UpdateRuntimeConfigurationInput {
+            fleet_id: fleet_id.into(),
+            runtime_configuration: runtime_configuration.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateRuntimeConfigurationOutput {
@@ -2540,7 +4798,6 @@ pub struct UpdateRuntimeConfigurationOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub runtime_configuration: Option<RuntimeConfiguration>,
 }
-
 #[doc="<p>Represents the input for a request action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ValidateMatchmakingRuleSetInput {
@@ -2548,7 +4805,23 @@ pub struct ValidateMatchmakingRuleSetInput {
     #[serde(rename="RuleSetBody")]
     pub rule_set_body: String,
 }
-
+impl ValidateMatchmakingRuleSetInput {
+    /// Sets `rule_set_body`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ValidateMatchmakingRuleSetInput.rule_set_body = value.into();`.
+    pub fn rule_set_body<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.rule_set_body = value.into();
+        self
+    }
+    /// Returns a new instance of ValidateMatchmakingRuleSetInput with optional fields set to `None`.
+    pub fn new<RuleSetBodyType: Into<String>>(rule_set_body: RuleSetBodyType)
+                                              -> ValidateMatchmakingRuleSetInput {
+        ValidateMatchmakingRuleSetInput {
+            rule_set_body: rule_set_body.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the returned data in response to a request action.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ValidateMatchmakingRuleSetOutput {
@@ -2557,7 +4830,6 @@ pub struct ValidateMatchmakingRuleSetOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub valid: Option<bool>,
 }
-
 /// Errors returned by AcceptMatch
 #[derive(Debug, PartialEq)]
 pub enum AcceptMatchError {

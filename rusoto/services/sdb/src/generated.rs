@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -51,7 +52,46 @@ pub struct Attribute {
     #[doc="The value of the attribute."]
     pub value: String,
 }
-
+impl Attribute {
+    /// Sets `alternate_name_encoding`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Attribute.alternate_name_encoding = Some(value.into());`.
+    pub fn alternate_name_encoding<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.alternate_name_encoding = Some(value.into());
+        self
+    }
+    /// Sets `alternate_value_encoding`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Attribute.alternate_value_encoding = Some(value.into());`.
+    pub fn alternate_value_encoding<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.alternate_value_encoding = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Attribute.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Attribute.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of Attribute with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, ValueType: Into<String>>(name: NameType,
+                                                                value: ValueType)
+                                                                -> Attribute {
+        Attribute {
+            name: name.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 struct AttributeDeserializer;
 impl AttributeDeserializer {
     #[allow(unused_variables)]
@@ -189,7 +229,33 @@ pub struct BatchDeleteAttributesRequest {
     #[doc="A list of items on which to perform the operation."]
     pub items: Vec<DeletableItem>,
 }
-
+impl BatchDeleteAttributesRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchDeleteAttributesRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `items`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchDeleteAttributesRequest.items = value.into();`.
+    pub fn items<ValueType: Into<Vec<DeletableItem>>>(mut self, value: ValueType) -> Self {
+        self.items = value.into();
+        self
+    }
+    /// Returns a new instance of BatchDeleteAttributesRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>, ItemsType: Into<Vec<DeletableItem>>>
+        (domain_name: DomainNameType,
+         items: ItemsType)
+         -> BatchDeleteAttributesRequest {
+        BatchDeleteAttributesRequest {
+            domain_name: domain_name.into(),
+            items: items.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `BatchDeleteAttributesRequest` contents to a `SignedRequest`.
 struct BatchDeleteAttributesRequestSerializer;
@@ -215,7 +281,33 @@ pub struct BatchPutAttributesRequest {
     #[doc="A list of items on which to perform the operation."]
     pub items: Vec<ReplaceableItem>,
 }
-
+impl BatchPutAttributesRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchPutAttributesRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `items`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `BatchPutAttributesRequest.items = value.into();`.
+    pub fn items<ValueType: Into<Vec<ReplaceableItem>>>(mut self, value: ValueType) -> Self {
+        self.items = value.into();
+        self
+    }
+    /// Returns a new instance of BatchPutAttributesRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>, ItemsType: Into<Vec<ReplaceableItem>>>
+        (domain_name: DomainNameType,
+         items: ItemsType)
+         -> BatchPutAttributesRequest {
+        BatchPutAttributesRequest {
+            domain_name: domain_name.into(),
+            items: items.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `BatchPutAttributesRequest` contents to a `SignedRequest`.
 struct BatchPutAttributesRequestSerializer;
@@ -239,7 +331,22 @@ pub struct CreateDomainRequest {
     #[doc="The name of the domain to create. The name can range between 3 and 255 characters and can contain the following characters: a-z, A-Z, 0-9, '_', '-', and '.'."]
     pub domain_name: String,
 }
-
+impl CreateDomainRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDomainRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateDomainRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType) -> CreateDomainRequest {
+        CreateDomainRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateDomainRequest` contents to a `SignedRequest`.
 struct CreateDomainRequestSerializer;
@@ -260,7 +367,29 @@ pub struct DeletableItem {
     pub attributes: Option<Vec<Attribute>>,
     pub name: String,
 }
-
+impl DeletableItem {
+    /// Sets `attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletableItem.attributes = Some(value.into());`.
+    pub fn attributes<ValueType: Into<Vec<Attribute>>>(mut self, value: ValueType) -> Self {
+        self.attributes = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletableItem.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of DeletableItem with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> DeletableItem {
+        DeletableItem {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeletableItem` contents to a `SignedRequest`.
 struct DeletableItemSerializer;
@@ -304,7 +433,47 @@ pub struct DeleteAttributesRequest {
     #[doc="The name of the item. Similar to rows on a spreadsheet, items represent individual objects that contain one or more value-attribute pairs."]
     pub item_name: String,
 }
-
+impl DeleteAttributesRequest {
+    /// Sets `attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAttributesRequest.attributes = Some(value.into());`.
+    pub fn attributes<ValueType: Into<Vec<Attribute>>>(mut self, value: ValueType) -> Self {
+        self.attributes = Some(value.into());
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAttributesRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `expected`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAttributesRequest.expected = Some(value.into());`.
+    pub fn expected<ValueType: Into<UpdateCondition>>(mut self, value: ValueType) -> Self {
+        self.expected = Some(value.into());
+        self
+    }
+    /// Sets `item_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAttributesRequest.item_name = value.into();`.
+    pub fn item_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.item_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteAttributesRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>, ItemNameType: Into<String>>
+        (domain_name: DomainNameType,
+         item_name: ItemNameType)
+         -> DeleteAttributesRequest {
+        DeleteAttributesRequest {
+            domain_name: domain_name.into(),
+            item_name: item_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteAttributesRequest` contents to a `SignedRequest`.
 struct DeleteAttributesRequestSerializer;
@@ -336,7 +505,22 @@ pub struct DeleteDomainRequest {
     #[doc="The name of the domain to delete."]
     pub domain_name: String,
 }
-
+impl DeleteDomainRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDomainRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDomainRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType) -> DeleteDomainRequest {
+        DeleteDomainRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteDomainRequest` contents to a `SignedRequest`.
 struct DeleteDomainRequestSerializer;
@@ -357,7 +541,22 @@ pub struct DomainMetadataRequest {
     #[doc="The name of the domain for which to display the metadata of."]
     pub domain_name: String,
 }
-
+impl DomainMetadataRequest {
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DomainMetadataRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of DomainMetadataRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>>(domain_name: DomainNameType) -> DomainMetadataRequest {
+        DomainMetadataRequest {
+            domain_name: domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DomainMetadataRequest` contents to a `SignedRequest`.
 struct DomainMetadataRequestSerializer;
@@ -390,7 +589,6 @@ pub struct DomainMetadataResult {
     #[doc="The data and time when metadata was calculated, in Epoch (UNIX) seconds."]
     pub timestamp: Option<i64>,
 }
-
 struct DomainMetadataResultDeserializer;
 impl DomainMetadataResultDeserializer {
     #[allow(unused_variables)]
@@ -501,7 +699,47 @@ pub struct GetAttributesRequest {
     #[doc="The name of the item."]
     pub item_name: String,
 }
-
+impl GetAttributesRequest {
+    /// Sets `attribute_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetAttributesRequest.attribute_names = Some(value.into());`.
+    pub fn attribute_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.attribute_names = Some(value.into());
+        self
+    }
+    /// Sets `consistent_read`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetAttributesRequest.consistent_read = Some(value.into());`.
+    pub fn consistent_read<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.consistent_read = Some(value.into());
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetAttributesRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `item_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetAttributesRequest.item_name = value.into();`.
+    pub fn item_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.item_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetAttributesRequest with optional fields set to `None`.
+    pub fn new<DomainNameType: Into<String>, ItemNameType: Into<String>>
+        (domain_name: DomainNameType,
+         item_name: ItemNameType)
+         -> GetAttributesRequest {
+        GetAttributesRequest {
+            domain_name: domain_name.into(),
+            item_name: item_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetAttributesRequest` contents to a `SignedRequest`.
 struct GetAttributesRequestSerializer;
@@ -532,7 +770,6 @@ pub struct GetAttributesResult {
     #[doc="The list of attributes returned by the operation."]
     pub attributes: Option<Vec<Attribute>>,
 }
-
 struct GetAttributesResultDeserializer;
 impl GetAttributesResultDeserializer {
     #[allow(unused_variables)]
@@ -600,7 +837,6 @@ pub struct Item {
     #[doc="The name of the item."]
     pub name: String,
 }
-
 struct ItemDeserializer;
 impl ItemDeserializer {
     #[allow(unused_variables)]
@@ -686,7 +922,26 @@ pub struct ListDomainsRequest {
     #[doc="A string informing Amazon SimpleDB where to start the next list of domain names."]
     pub next_token: Option<String>,
 }
-
+impl ListDomainsRequest {
+    /// Sets `max_number_of_domains`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDomainsRequest.max_number_of_domains = Some(value.into());`.
+    pub fn max_number_of_domains<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_number_of_domains = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDomainsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListDomainsRequest with optional fields set to `None`.
+    pub fn new() -> ListDomainsRequest {
+        ListDomainsRequest { ..Default::default() }
+    }
+}
 
 /// Serialize `ListDomainsRequest` contents to a `SignedRequest`.
 struct ListDomainsRequestSerializer;
@@ -715,7 +970,6 @@ pub struct ListDomainsResult {
     #[doc="An opaque token indicating that there are more domains than the specified <code>MaxNumberOfDomains</code> still available."]
     pub next_token: Option<String>,
 }
-
 struct ListDomainsResultDeserializer;
 impl ListDomainsResultDeserializer {
     #[allow(unused_variables)]
@@ -788,7 +1042,53 @@ pub struct PutAttributesRequest {
     #[doc="The name of the item."]
     pub item_name: String,
 }
-
+impl PutAttributesRequest {
+    /// Sets `attributes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutAttributesRequest.attributes = value.into();`.
+    pub fn attributes<ValueType: Into<Vec<ReplaceableAttribute>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.attributes = value.into();
+        self
+    }
+    /// Sets `domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutAttributesRequest.domain_name = value.into();`.
+    pub fn domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_name = value.into();
+        self
+    }
+    /// Sets `expected`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutAttributesRequest.expected = Some(value.into());`.
+    pub fn expected<ValueType: Into<UpdateCondition>>(mut self, value: ValueType) -> Self {
+        self.expected = Some(value.into());
+        self
+    }
+    /// Sets `item_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutAttributesRequest.item_name = value.into();`.
+    pub fn item_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.item_name = value.into();
+        self
+    }
+    /// Returns a new instance of PutAttributesRequest with optional fields set to `None`.
+    pub fn new<AttributesType: Into<Vec<ReplaceableAttribute>>,
+               DomainNameType: Into<String>,
+               ItemNameType: Into<String>>
+        (attributes: AttributesType,
+         domain_name: DomainNameType,
+         item_name: ItemNameType)
+         -> PutAttributesRequest {
+        PutAttributesRequest {
+            attributes: attributes.into(),
+            domain_name: domain_name.into(),
+            item_name: item_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `PutAttributesRequest` contents to a `SignedRequest`.
 struct PutAttributesRequestSerializer;
@@ -823,7 +1123,39 @@ pub struct ReplaceableAttribute {
     #[doc="The value of the replaceable attribute."]
     pub value: String,
 }
-
+impl ReplaceableAttribute {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceableAttribute.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `replace`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceableAttribute.replace = Some(value.into());`.
+    pub fn replace<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.replace = Some(value.into());
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceableAttribute.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of ReplaceableAttribute with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, ValueType: Into<String>>(name: NameType,
+                                                                value: ValueType)
+                                                                -> ReplaceableAttribute {
+        ReplaceableAttribute {
+            name: name.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ReplaceableAttribute` contents to a `SignedRequest`.
 struct ReplaceableAttributeSerializer;
@@ -864,7 +1196,35 @@ pub struct ReplaceableItem {
     #[doc="The name of the replaceable item."]
     pub name: String,
 }
-
+impl ReplaceableItem {
+    /// Sets `attributes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceableItem.attributes = value.into();`.
+    pub fn attributes<ValueType: Into<Vec<ReplaceableAttribute>>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.attributes = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReplaceableItem.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of ReplaceableItem with optional fields set to `None`.
+    pub fn new<AttributesType: Into<Vec<ReplaceableAttribute>>, NameType: Into<String>>
+        (attributes: AttributesType,
+         name: NameType)
+         -> ReplaceableItem {
+        ReplaceableItem {
+            attributes: attributes.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ReplaceableItem` contents to a `SignedRequest`.
 struct ReplaceableItemSerializer;
@@ -904,7 +1264,37 @@ pub struct SelectRequest {
     #[doc="The expression used to query the domain."]
     pub select_expression: String,
 }
-
+impl SelectRequest {
+    /// Sets `consistent_read`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SelectRequest.consistent_read = Some(value.into());`.
+    pub fn consistent_read<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.consistent_read = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SelectRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `select_expression`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SelectRequest.select_expression = value.into();`.
+    pub fn select_expression<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.select_expression = value.into();
+        self
+    }
+    /// Returns a new instance of SelectRequest with optional fields set to `None`.
+    pub fn new<SelectExpressionType: Into<String>>(select_expression: SelectExpressionType)
+                                                   -> SelectRequest {
+        SelectRequest {
+            select_expression: select_expression.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SelectRequest` contents to a `SignedRequest`.
 struct SelectRequestSerializer;
@@ -935,7 +1325,6 @@ pub struct SelectResult {
     #[doc="An opaque token indicating that more items than <code>MaxNumberOfItems</code> were matched, the response size exceeded 1 megabyte, or the execution time exceeded 5 seconds."]
     pub next_token: Option<String>,
 }
-
 struct SelectResultDeserializer;
 impl SelectResultDeserializer {
     #[allow(unused_variables)]
@@ -1006,7 +1395,33 @@ pub struct UpdateCondition {
     #[doc="<p>The value of an attribute. This value can only be specified when the <code>Exists</code> parameter is equal to <code>true</code>.</p>"]
     pub value: Option<String>,
 }
-
+impl UpdateCondition {
+    /// Sets `exists`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateCondition.exists = Some(value.into());`.
+    pub fn exists<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.exists = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateCondition.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateCondition.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateCondition with optional fields set to `None`.
+    pub fn new() -> UpdateCondition {
+        UpdateCondition { ..Default::default() }
+    }
+}
 
 /// Serialize `UpdateCondition` contents to a `SignedRequest`.
 struct UpdateConditionSerializer;

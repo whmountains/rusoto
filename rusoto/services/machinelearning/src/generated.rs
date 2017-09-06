@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -40,7 +41,44 @@ pub struct AddTagsInput {
     #[serde(rename="Tags")]
     pub tags: Vec<Tag>,
 }
-
+impl AddTagsInput {
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsInput.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `resource_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsInput.resource_type = value.into();`.
+    pub fn resource_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_type = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsInput.tags = value.into();`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of AddTagsInput with optional fields set to `None`.
+    pub fn new<ResourceIdType: Into<String>,
+               ResourceTypeType: Into<String>,
+               TagsType: Into<Vec<Tag>>>
+        (resource_id: ResourceIdType,
+         resource_type: ResourceTypeType,
+         tags: TagsType)
+         -> AddTagsInput {
+        AddTagsInput {
+            resource_id: resource_id.into(),
+            resource_type: resource_type.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Amazon ML returns the following elements. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddTagsOutput {
@@ -53,7 +91,6 @@ pub struct AddTagsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_type: Option<String>,
 }
-
 #[doc="<p> Represents the output of a <code>GetBatchPrediction</code> operation.</p> <p> The content consists of the detailed metadata, the status, and the data file information of a <code>Batch Prediction</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct BatchPrediction {
@@ -117,7 +154,6 @@ pub struct BatchPrediction {
     #[serde(skip_serializing_if="Option::is_none")]
     pub total_record_count: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateBatchPredictionInput {
     #[doc="<p>The ID of the <code>DataSource</code> that points to the group of observations to predict.</p>"]
@@ -137,7 +173,63 @@ pub struct CreateBatchPredictionInput {
     #[serde(rename="OutputUri")]
     pub output_uri: String,
 }
-
+impl CreateBatchPredictionInput {
+    /// Sets `batch_prediction_data_source_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBatchPredictionInput.batch_prediction_data_source_id = value.into();`.
+    pub fn batch_prediction_data_source_id<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.batch_prediction_data_source_id = value.into();
+        self
+    }
+    /// Sets `batch_prediction_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBatchPredictionInput.batch_prediction_id = value.into();`.
+    pub fn batch_prediction_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.batch_prediction_id = value.into();
+        self
+    }
+    /// Sets `batch_prediction_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBatchPredictionInput.batch_prediction_name = Some(value.into());`.
+    pub fn batch_prediction_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.batch_prediction_name = Some(value.into());
+        self
+    }
+    /// Sets `ml_model_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBatchPredictionInput.ml_model_id = value.into();`.
+    pub fn ml_model_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ml_model_id = value.into();
+        self
+    }
+    /// Sets `output_uri`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateBatchPredictionInput.output_uri = value.into();`.
+    pub fn output_uri<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.output_uri = value.into();
+        self
+    }
+    /// Returns a new instance of CreateBatchPredictionInput with optional fields set to `None`.
+    pub fn new<BatchPredictionDataSourceIdType: Into<String>,
+               BatchPredictionIdType: Into<String>,
+               MLModelIdType: Into<String>,
+               OutputUriType: Into<String>>
+        (batch_prediction_data_source_id: BatchPredictionDataSourceIdType,
+         batch_prediction_id: BatchPredictionIdType,
+         ml_model_id: MLModelIdType,
+         output_uri: OutputUriType)
+         -> CreateBatchPredictionInput {
+        CreateBatchPredictionInput {
+            batch_prediction_data_source_id: batch_prediction_data_source_id.into(),
+            batch_prediction_id: batch_prediction_id.into(),
+            ml_model_id: ml_model_id.into(),
+            output_uri: output_uri.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> Represents the output of a <code>CreateBatchPrediction</code> operation, and is an acknowledgement that Amazon ML received the request.</p> <p>The <code>CreateBatchPrediction</code> operation is asynchronous. You can poll for status updates by using the <code>&gt;GetBatchPrediction</code> operation and checking the <code>Status</code> parameter of the result. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateBatchPredictionOutput {
@@ -146,7 +238,6 @@ pub struct CreateBatchPredictionOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub batch_prediction_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateDataSourceFromRDSInput {
     #[doc="<p>The compute statistics for a <code>DataSource</code>. The statistics are generated from the observation data referenced by a <code>DataSource</code>. Amazon ML uses the statistics internally during <code>MLModel</code> training. This parameter must be set to <code>true</code> if the <code></code>DataSource<code></code> needs to be used for <code>MLModel</code> training. </p>"]
@@ -167,7 +258,58 @@ pub struct CreateDataSourceFromRDSInput {
     #[serde(rename="RoleARN")]
     pub role_arn: String,
 }
-
+impl CreateDataSourceFromRDSInput {
+    /// Sets `compute_statistics`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDataSourceFromRDSInput.compute_statistics = Some(value.into());`.
+    pub fn compute_statistics<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.compute_statistics = Some(value.into());
+        self
+    }
+    /// Sets `data_source_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDataSourceFromRDSInput.data_source_id = value.into();`.
+    pub fn data_source_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_source_id = value.into();
+        self
+    }
+    /// Sets `data_source_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDataSourceFromRDSInput.data_source_name = Some(value.into());`.
+    pub fn data_source_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_source_name = Some(value.into());
+        self
+    }
+    /// Sets `rds_data`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDataSourceFromRDSInput.rds_data = value.into();`.
+    pub fn rds_data<ValueType: Into<RDSDataSpec>>(mut self, value: ValueType) -> Self {
+        self.rds_data = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDataSourceFromRDSInput.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Returns a new instance of CreateDataSourceFromRDSInput with optional fields set to `None`.
+    pub fn new<DataSourceIdType: Into<String>,
+               RDSDataType: Into<RDSDataSpec>,
+               RoleARNType: Into<String>>
+        (data_source_id: DataSourceIdType,
+         rds_data: RDSDataType,
+         role_arn: RoleARNType)
+         -> CreateDataSourceFromRDSInput {
+        CreateDataSourceFromRDSInput {
+            data_source_id: data_source_id.into(),
+            rds_data: rds_data.into(),
+            role_arn: role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> Represents the output of a <code>CreateDataSourceFromRDS</code> operation, and is an acknowledgement that Amazon ML received the request.</p> <p>The <code>CreateDataSourceFromRDS</code>&gt; operation is asynchronous. You can poll for updates by using the <code>GetBatchPrediction</code> operation and checking the <code>Status</code> parameter. You can inspect the <code>Message</code> when <code>Status</code> shows up as <code>FAILED</code>. You can also check the progress of the copy operation by going to the <code>DataPipeline</code> console and looking up the pipeline using the <code>pipelineId </code> from the describe call.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateDataSourceFromRDSOutput {
@@ -176,7 +318,6 @@ pub struct CreateDataSourceFromRDSOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub data_source_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateDataSourceFromRedshiftInput {
     #[doc="<p>The compute statistics for a <code>DataSource</code>. The statistics are generated from the observation data referenced by a <code>DataSource</code>. Amazon ML uses the statistics internally during <code>MLModel</code> training. This parameter must be set to <code>true</code> if the <code>DataSource</code> needs to be used for <code>MLModel</code> training.</p>"]
@@ -197,7 +338,58 @@ pub struct CreateDataSourceFromRedshiftInput {
     #[serde(rename="RoleARN")]
     pub role_arn: String,
 }
-
+impl CreateDataSourceFromRedshiftInput {
+    /// Sets `compute_statistics`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDataSourceFromRedshiftInput.compute_statistics = Some(value.into());`.
+    pub fn compute_statistics<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.compute_statistics = Some(value.into());
+        self
+    }
+    /// Sets `data_source_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDataSourceFromRedshiftInput.data_source_id = value.into();`.
+    pub fn data_source_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_source_id = value.into();
+        self
+    }
+    /// Sets `data_source_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDataSourceFromRedshiftInput.data_source_name = Some(value.into());`.
+    pub fn data_source_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_source_name = Some(value.into());
+        self
+    }
+    /// Sets `data_spec`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDataSourceFromRedshiftInput.data_spec = value.into();`.
+    pub fn data_spec<ValueType: Into<RedshiftDataSpec>>(mut self, value: ValueType) -> Self {
+        self.data_spec = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDataSourceFromRedshiftInput.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Returns a new instance of CreateDataSourceFromRedshiftInput with optional fields set to `None`.
+    pub fn new<DataSourceIdType: Into<String>,
+               DataSpecType: Into<RedshiftDataSpec>,
+               RoleARNType: Into<String>>
+        (data_source_id: DataSourceIdType,
+         data_spec: DataSpecType,
+         role_arn: RoleARNType)
+         -> CreateDataSourceFromRedshiftInput {
+        CreateDataSourceFromRedshiftInput {
+            data_source_id: data_source_id.into(),
+            data_spec: data_spec.into(),
+            role_arn: role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> Represents the output of a <code>CreateDataSourceFromRedshift</code> operation, and is an acknowledgement that Amazon ML received the request.</p> <p>The <code>CreateDataSourceFromRedshift</code> operation is asynchronous. You can poll for updates by using the <code>GetBatchPrediction</code> operation and checking the <code>Status</code> parameter. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateDataSourceFromRedshiftOutput {
@@ -206,7 +398,6 @@ pub struct CreateDataSourceFromRedshiftOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub data_source_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateDataSourceFromS3Input {
     #[doc="<p>The compute statistics for a <code>DataSource</code>. The statistics are generated from the observation data referenced by a <code>DataSource</code>. Amazon ML uses the statistics internally during <code>MLModel</code> training. This parameter must be set to <code>true</code> if the <code></code>DataSource<code></code> needs to be used for <code>MLModel</code> training.</p>"]
@@ -224,7 +415,47 @@ pub struct CreateDataSourceFromS3Input {
     #[serde(rename="DataSpec")]
     pub data_spec: S3DataSpec,
 }
-
+impl CreateDataSourceFromS3Input {
+    /// Sets `compute_statistics`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDataSourceFromS3Input.compute_statistics = Some(value.into());`.
+    pub fn compute_statistics<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.compute_statistics = Some(value.into());
+        self
+    }
+    /// Sets `data_source_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDataSourceFromS3Input.data_source_id = value.into();`.
+    pub fn data_source_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_source_id = value.into();
+        self
+    }
+    /// Sets `data_source_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDataSourceFromS3Input.data_source_name = Some(value.into());`.
+    pub fn data_source_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_source_name = Some(value.into());
+        self
+    }
+    /// Sets `data_spec`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDataSourceFromS3Input.data_spec = value.into();`.
+    pub fn data_spec<ValueType: Into<S3DataSpec>>(mut self, value: ValueType) -> Self {
+        self.data_spec = value.into();
+        self
+    }
+    /// Returns a new instance of CreateDataSourceFromS3Input with optional fields set to `None`.
+    pub fn new<DataSourceIdType: Into<String>, DataSpecType: Into<S3DataSpec>>
+        (data_source_id: DataSourceIdType,
+         data_spec: DataSpecType)
+         -> CreateDataSourceFromS3Input {
+        CreateDataSourceFromS3Input {
+            data_source_id: data_source_id.into(),
+            data_spec: data_spec.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> Represents the output of a <code>CreateDataSourceFromS3</code> operation, and is an acknowledgement that Amazon ML received the request.</p> <p>The <code>CreateDataSourceFromS3</code> operation is asynchronous. You can poll for updates by using the <code>GetBatchPrediction</code> operation and checking the <code>Status</code> parameter. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateDataSourceFromS3Output {
@@ -233,7 +464,6 @@ pub struct CreateDataSourceFromS3Output {
     #[serde(skip_serializing_if="Option::is_none")]
     pub data_source_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateEvaluationInput {
     #[doc="<p>The ID of the <code>DataSource</code> for the evaluation. The schema of the <code>DataSource</code> must match the schema used to create the <code>MLModel</code>.</p>"]
@@ -250,7 +480,51 @@ pub struct CreateEvaluationInput {
     #[serde(rename="MLModelId")]
     pub ml_model_id: String,
 }
-
+impl CreateEvaluationInput {
+    /// Sets `evaluation_data_source_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEvaluationInput.evaluation_data_source_id = value.into();`.
+    pub fn evaluation_data_source_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.evaluation_data_source_id = value.into();
+        self
+    }
+    /// Sets `evaluation_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEvaluationInput.evaluation_id = value.into();`.
+    pub fn evaluation_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.evaluation_id = value.into();
+        self
+    }
+    /// Sets `evaluation_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEvaluationInput.evaluation_name = Some(value.into());`.
+    pub fn evaluation_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.evaluation_name = Some(value.into());
+        self
+    }
+    /// Sets `ml_model_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEvaluationInput.ml_model_id = value.into();`.
+    pub fn ml_model_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ml_model_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateEvaluationInput with optional fields set to `None`.
+    pub fn new<EvaluationDataSourceIdType: Into<String>,
+               EvaluationIdType: Into<String>,
+               MLModelIdType: Into<String>>
+        (evaluation_data_source_id: EvaluationDataSourceIdType,
+         evaluation_id: EvaluationIdType,
+         ml_model_id: MLModelIdType)
+         -> CreateEvaluationInput {
+        CreateEvaluationInput {
+            evaluation_data_source_id: evaluation_data_source_id.into(),
+            evaluation_id: evaluation_id.into(),
+            ml_model_id: ml_model_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> Represents the output of a <code>CreateEvaluation</code> operation, and is an acknowledgement that Amazon ML received the request.</p> <p><code>CreateEvaluation</code> operation is asynchronous. You can poll for status updates by using the <code>GetEvcaluation</code> operation and checking the <code>Status</code> parameter. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateEvaluationOutput {
@@ -259,7 +533,6 @@ pub struct CreateEvaluationOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub evaluation_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateMLModelInput {
     #[doc="<p>A user-supplied ID that uniquely identifies the <code>MLModel</code>.</p>"]
@@ -288,7 +561,72 @@ pub struct CreateMLModelInput {
     #[serde(rename="TrainingDataSourceId")]
     pub training_data_source_id: String,
 }
-
+impl CreateMLModelInput {
+    /// Sets `ml_model_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMLModelInput.ml_model_id = value.into();`.
+    pub fn ml_model_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ml_model_id = value.into();
+        self
+    }
+    /// Sets `ml_model_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMLModelInput.ml_model_name = Some(value.into());`.
+    pub fn ml_model_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ml_model_name = Some(value.into());
+        self
+    }
+    /// Sets `ml_model_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMLModelInput.ml_model_type = value.into();`.
+    pub fn ml_model_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ml_model_type = value.into();
+        self
+    }
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMLModelInput.parameters = Some(value.into());`.
+pub fn parameters<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Sets `recipe`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMLModelInput.recipe = Some(value.into());`.
+    pub fn recipe<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.recipe = Some(value.into());
+        self
+    }
+    /// Sets `recipe_uri`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMLModelInput.recipe_uri = Some(value.into());`.
+    pub fn recipe_uri<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.recipe_uri = Some(value.into());
+        self
+    }
+    /// Sets `training_data_source_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMLModelInput.training_data_source_id = value.into();`.
+    pub fn training_data_source_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.training_data_source_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateMLModelInput with optional fields set to `None`.
+    pub fn new<MLModelIdType: Into<String>,
+               MLModelTypeType: Into<String>,
+               TrainingDataSourceIdType: Into<String>>
+        (ml_model_id: MLModelIdType,
+         ml_model_type: MLModelTypeType,
+         training_data_source_id: TrainingDataSourceIdType)
+         -> CreateMLModelInput {
+        CreateMLModelInput {
+            ml_model_id: ml_model_id.into(),
+            ml_model_type: ml_model_type.into(),
+            training_data_source_id: training_data_source_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> Represents the output of a <code>CreateMLModel</code> operation, and is an acknowledgement that Amazon ML received the request.</p> <p>The <code>CreateMLModel</code> operation is asynchronous. You can poll for status updates by using the <code>GetMLModel</code> operation and checking the <code>Status</code> parameter. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateMLModelOutput {
@@ -297,14 +635,29 @@ pub struct CreateMLModelOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ml_model_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateRealtimeEndpointInput {
     #[doc="<p>The ID assigned to the <code>MLModel</code> during creation.</p>"]
     #[serde(rename="MLModelId")]
     pub ml_model_id: String,
 }
-
+impl CreateRealtimeEndpointInput {
+    /// Sets `ml_model_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRealtimeEndpointInput.ml_model_id = value.into();`.
+    pub fn ml_model_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ml_model_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateRealtimeEndpointInput with optional fields set to `None`.
+    pub fn new<MLModelIdType: Into<String>>(ml_model_id: MLModelIdType)
+                                            -> CreateRealtimeEndpointInput {
+        CreateRealtimeEndpointInput {
+            ml_model_id: ml_model_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of an <code>CreateRealtimeEndpoint</code> operation.</p> <p>The result contains the <code>MLModelId</code> and the endpoint information for the <code>MLModel</code>.</p> <note> <p>The endpoint information includes the URI of the <code>MLModel</code>; that is, the location to send online prediction requests for the specified <code>MLModel</code>.</p> </note>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateRealtimeEndpointOutput {
@@ -317,7 +670,6 @@ pub struct CreateRealtimeEndpointOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub realtime_endpoint_info: Option<RealtimeEndpointInfo>,
 }
-
 #[doc="<p> Represents the output of the <code>GetDataSource</code> operation. </p> <p> The content consists of the detailed metadata and data file information and the current status of the <code>DataSource</code>. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DataSource {
@@ -388,14 +740,29 @@ pub struct DataSource {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteBatchPredictionInput {
     #[doc="<p>A user-supplied ID that uniquely identifies the <code>BatchPrediction</code>.</p>"]
     #[serde(rename="BatchPredictionId")]
     pub batch_prediction_id: String,
 }
-
+impl DeleteBatchPredictionInput {
+    /// Sets `batch_prediction_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteBatchPredictionInput.batch_prediction_id = value.into();`.
+    pub fn batch_prediction_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.batch_prediction_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteBatchPredictionInput with optional fields set to `None`.
+    pub fn new<BatchPredictionIdType: Into<String>>(batch_prediction_id: BatchPredictionIdType)
+                                                    -> DeleteBatchPredictionInput {
+        DeleteBatchPredictionInput {
+            batch_prediction_id: batch_prediction_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> Represents the output of a <code>DeleteBatchPrediction</code> operation.</p> <p>You can use the <code>GetBatchPrediction</code> operation and check the value of the <code>Status</code> parameter to see whether a <code>BatchPrediction</code> is marked as <code>DELETED</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteBatchPredictionOutput {
@@ -404,14 +771,29 @@ pub struct DeleteBatchPredictionOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub batch_prediction_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteDataSourceInput {
     #[doc="<p>A user-supplied ID that uniquely identifies the <code>DataSource</code>.</p>"]
     #[serde(rename="DataSourceId")]
     pub data_source_id: String,
 }
-
+impl DeleteDataSourceInput {
+    /// Sets `data_source_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDataSourceInput.data_source_id = value.into();`.
+    pub fn data_source_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_source_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDataSourceInput with optional fields set to `None`.
+    pub fn new<DataSourceIdType: Into<String>>(data_source_id: DataSourceIdType)
+                                               -> DeleteDataSourceInput {
+        DeleteDataSourceInput {
+            data_source_id: data_source_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> Represents the output of a <code>DeleteDataSource</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteDataSourceOutput {
@@ -420,14 +802,29 @@ pub struct DeleteDataSourceOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub data_source_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteEvaluationInput {
     #[doc="<p>A user-supplied ID that uniquely identifies the <code>Evaluation</code> to delete.</p>"]
     #[serde(rename="EvaluationId")]
     pub evaluation_id: String,
 }
-
+impl DeleteEvaluationInput {
+    /// Sets `evaluation_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteEvaluationInput.evaluation_id = value.into();`.
+    pub fn evaluation_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.evaluation_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteEvaluationInput with optional fields set to `None`.
+    pub fn new<EvaluationIdType: Into<String>>(evaluation_id: EvaluationIdType)
+                                               -> DeleteEvaluationInput {
+        DeleteEvaluationInput {
+            evaluation_id: evaluation_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> Represents the output of a <code>DeleteEvaluation</code> operation. The output indicates that Amazon Machine Learning (Amazon ML) received the request.</p> <p>You can use the <code>GetEvaluation</code> operation and check the value of the <code>Status</code> parameter to see whether an <code>Evaluation</code> is marked as <code>DELETED</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteEvaluationOutput {
@@ -436,14 +833,28 @@ pub struct DeleteEvaluationOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub evaluation_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteMLModelInput {
     #[doc="<p>A user-supplied ID that uniquely identifies the <code>MLModel</code>.</p>"]
     #[serde(rename="MLModelId")]
     pub ml_model_id: String,
 }
-
+impl DeleteMLModelInput {
+    /// Sets `ml_model_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteMLModelInput.ml_model_id = value.into();`.
+    pub fn ml_model_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ml_model_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteMLModelInput with optional fields set to `None`.
+    pub fn new<MLModelIdType: Into<String>>(ml_model_id: MLModelIdType) -> DeleteMLModelInput {
+        DeleteMLModelInput {
+            ml_model_id: ml_model_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a <code>DeleteMLModel</code> operation.</p> <p>You can use the <code>GetMLModel</code> operation and check the value of the <code>Status</code> parameter to see whether an <code>MLModel</code> is marked as <code>DELETED</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteMLModelOutput {
@@ -452,14 +863,29 @@ pub struct DeleteMLModelOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ml_model_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteRealtimeEndpointInput {
     #[doc="<p>The ID assigned to the <code>MLModel</code> during creation.</p>"]
     #[serde(rename="MLModelId")]
     pub ml_model_id: String,
 }
-
+impl DeleteRealtimeEndpointInput {
+    /// Sets `ml_model_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRealtimeEndpointInput.ml_model_id = value.into();`.
+    pub fn ml_model_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ml_model_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteRealtimeEndpointInput with optional fields set to `None`.
+    pub fn new<MLModelIdType: Into<String>>(ml_model_id: MLModelIdType)
+                                            -> DeleteRealtimeEndpointInput {
+        DeleteRealtimeEndpointInput {
+            ml_model_id: ml_model_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of an <code>DeleteRealtimeEndpoint</code> operation.</p> <p>The result contains the <code>MLModelId</code> and the endpoint information for the <code>MLModel</code>. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteRealtimeEndpointOutput {
@@ -472,7 +898,6 @@ pub struct DeleteRealtimeEndpointOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub realtime_endpoint_info: Option<RealtimeEndpointInfo>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteTagsInput {
     #[doc="<p>The ID of the tagged ML object. For example, <code>exampleModelId</code>.</p>"]
@@ -485,7 +910,44 @@ pub struct DeleteTagsInput {
     #[serde(rename="TagKeys")]
     pub tag_keys: Vec<String>,
 }
-
+impl DeleteTagsInput {
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTagsInput.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `resource_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTagsInput.resource_type = value.into();`.
+    pub fn resource_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_type = value.into();
+        self
+    }
+    /// Sets `tag_keys`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTagsInput.tag_keys = value.into();`.
+    pub fn tag_keys<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tag_keys = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteTagsInput with optional fields set to `None`.
+    pub fn new<ResourceIdType: Into<String>,
+               ResourceTypeType: Into<String>,
+               TagKeysType: Into<Vec<String>>>
+        (resource_id: ResourceIdType,
+         resource_type: ResourceTypeType,
+         tag_keys: TagKeysType)
+         -> DeleteTagsInput {
+        DeleteTagsInput {
+            resource_id: resource_id.into(),
+            resource_type: resource_type.into(),
+            tag_keys: tag_keys.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Amazon ML returns the following elements. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteTagsOutput {
@@ -498,7 +960,6 @@ pub struct DeleteTagsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_type: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeBatchPredictionsInput {
     #[doc="<p>The equal to operator. The <code>BatchPrediction</code> results will have <code>FilterVariable</code> values that exactly match the value specified with <code>EQ</code>.</p>"]
@@ -546,7 +1007,89 @@ pub struct DescribeBatchPredictionsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sort_order: Option<String>,
 }
-
+impl DescribeBatchPredictionsInput {
+    /// Sets `eq`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeBatchPredictionsInput.eq = Some(value.into());`.
+    pub fn eq<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.eq = Some(value.into());
+        self
+    }
+    /// Sets `filter_variable`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeBatchPredictionsInput.filter_variable = Some(value.into());`.
+    pub fn filter_variable<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter_variable = Some(value.into());
+        self
+    }
+    /// Sets `ge`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeBatchPredictionsInput.ge = Some(value.into());`.
+    pub fn ge<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ge = Some(value.into());
+        self
+    }
+    /// Sets `gt`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeBatchPredictionsInput.gt = Some(value.into());`.
+    pub fn gt<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gt = Some(value.into());
+        self
+    }
+    /// Sets `le`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeBatchPredictionsInput.le = Some(value.into());`.
+    pub fn le<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.le = Some(value.into());
+        self
+    }
+    /// Sets `lt`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeBatchPredictionsInput.lt = Some(value.into());`.
+    pub fn lt<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lt = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeBatchPredictionsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `ne`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeBatchPredictionsInput.ne = Some(value.into());`.
+    pub fn ne<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ne = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeBatchPredictionsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeBatchPredictionsInput.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Sets `sort_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeBatchPredictionsInput.sort_order = Some(value.into());`.
+    pub fn sort_order<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sort_order = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeBatchPredictionsInput with optional fields set to `None`.
+    pub fn new() -> DescribeBatchPredictionsInput {
+        DescribeBatchPredictionsInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the output of a <code>DescribeBatchPredictions</code> operation. The content is essentially a list of <code>BatchPrediction</code>s.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeBatchPredictionsOutput {
@@ -559,7 +1102,6 @@ pub struct DescribeBatchPredictionsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub results: Option<Vec<BatchPrediction>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeDataSourcesInput {
     #[doc="<p>The equal to operator. The <code>DataSource</code> results will have <code>FilterVariable</code> values that exactly match the value specified with <code>EQ</code>.</p>"]
@@ -607,7 +1149,89 @@ pub struct DescribeDataSourcesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sort_order: Option<String>,
 }
-
+impl DescribeDataSourcesInput {
+    /// Sets `eq`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDataSourcesInput.eq = Some(value.into());`.
+    pub fn eq<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.eq = Some(value.into());
+        self
+    }
+    /// Sets `filter_variable`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDataSourcesInput.filter_variable = Some(value.into());`.
+    pub fn filter_variable<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter_variable = Some(value.into());
+        self
+    }
+    /// Sets `ge`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDataSourcesInput.ge = Some(value.into());`.
+    pub fn ge<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ge = Some(value.into());
+        self
+    }
+    /// Sets `gt`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDataSourcesInput.gt = Some(value.into());`.
+    pub fn gt<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gt = Some(value.into());
+        self
+    }
+    /// Sets `le`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDataSourcesInput.le = Some(value.into());`.
+    pub fn le<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.le = Some(value.into());
+        self
+    }
+    /// Sets `lt`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDataSourcesInput.lt = Some(value.into());`.
+    pub fn lt<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lt = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDataSourcesInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `ne`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDataSourcesInput.ne = Some(value.into());`.
+    pub fn ne<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ne = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDataSourcesInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDataSourcesInput.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Sets `sort_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDataSourcesInput.sort_order = Some(value.into());`.
+    pub fn sort_order<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sort_order = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDataSourcesInput with optional fields set to `None`.
+    pub fn new() -> DescribeDataSourcesInput {
+        DescribeDataSourcesInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the query results from a <a>DescribeDataSources</a> operation. The content is essentially a list of <code>DataSource</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeDataSourcesOutput {
@@ -620,7 +1244,6 @@ pub struct DescribeDataSourcesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub results: Option<Vec<DataSource>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeEvaluationsInput {
     #[doc="<p>The equal to operator. The <code>Evaluation</code> results will have <code>FilterVariable</code> values that exactly match the value specified with <code>EQ</code>.</p>"]
@@ -668,7 +1291,89 @@ pub struct DescribeEvaluationsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sort_order: Option<String>,
 }
-
+impl DescribeEvaluationsInput {
+    /// Sets `eq`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEvaluationsInput.eq = Some(value.into());`.
+    pub fn eq<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.eq = Some(value.into());
+        self
+    }
+    /// Sets `filter_variable`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEvaluationsInput.filter_variable = Some(value.into());`.
+    pub fn filter_variable<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter_variable = Some(value.into());
+        self
+    }
+    /// Sets `ge`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEvaluationsInput.ge = Some(value.into());`.
+    pub fn ge<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ge = Some(value.into());
+        self
+    }
+    /// Sets `gt`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEvaluationsInput.gt = Some(value.into());`.
+    pub fn gt<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gt = Some(value.into());
+        self
+    }
+    /// Sets `le`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEvaluationsInput.le = Some(value.into());`.
+    pub fn le<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.le = Some(value.into());
+        self
+    }
+    /// Sets `lt`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEvaluationsInput.lt = Some(value.into());`.
+    pub fn lt<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lt = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEvaluationsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `ne`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEvaluationsInput.ne = Some(value.into());`.
+    pub fn ne<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ne = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEvaluationsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEvaluationsInput.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Sets `sort_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEvaluationsInput.sort_order = Some(value.into());`.
+    pub fn sort_order<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sort_order = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEvaluationsInput with optional fields set to `None`.
+    pub fn new() -> DescribeEvaluationsInput {
+        DescribeEvaluationsInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the query results from a <code>DescribeEvaluations</code> operation. The content is essentially a list of <code>Evaluation</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeEvaluationsOutput {
@@ -681,7 +1386,6 @@ pub struct DescribeEvaluationsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub results: Option<Vec<Evaluation>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeMLModelsInput {
     #[doc="<p>The equal to operator. The <code>MLModel</code> results will have <code>FilterVariable</code> values that exactly match the value specified with <code>EQ</code>.</p>"]
@@ -729,7 +1433,89 @@ pub struct DescribeMLModelsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sort_order: Option<String>,
 }
-
+impl DescribeMLModelsInput {
+    /// Sets `eq`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMLModelsInput.eq = Some(value.into());`.
+    pub fn eq<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.eq = Some(value.into());
+        self
+    }
+    /// Sets `filter_variable`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMLModelsInput.filter_variable = Some(value.into());`.
+    pub fn filter_variable<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter_variable = Some(value.into());
+        self
+    }
+    /// Sets `ge`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMLModelsInput.ge = Some(value.into());`.
+    pub fn ge<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ge = Some(value.into());
+        self
+    }
+    /// Sets `gt`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMLModelsInput.gt = Some(value.into());`.
+    pub fn gt<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.gt = Some(value.into());
+        self
+    }
+    /// Sets `le`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMLModelsInput.le = Some(value.into());`.
+    pub fn le<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.le = Some(value.into());
+        self
+    }
+    /// Sets `lt`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMLModelsInput.lt = Some(value.into());`.
+    pub fn lt<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.lt = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMLModelsInput.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `ne`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMLModelsInput.ne = Some(value.into());`.
+    pub fn ne<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ne = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMLModelsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMLModelsInput.prefix = Some(value.into());`.
+    pub fn prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.prefix = Some(value.into());
+        self
+    }
+    /// Sets `sort_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMLModelsInput.sort_order = Some(value.into());`.
+    pub fn sort_order<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sort_order = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeMLModelsInput with optional fields set to `None`.
+    pub fn new() -> DescribeMLModelsInput {
+        DescribeMLModelsInput { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the output of a <code>DescribeMLModels</code> operation. The content is essentially a list of <code>MLModel</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeMLModelsOutput {
@@ -742,7 +1528,6 @@ pub struct DescribeMLModelsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub results: Option<Vec<MLModel>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeTagsInput {
     #[doc="<p>The ID of the ML object. For example, <code>exampleModelId</code>. </p>"]
@@ -752,7 +1537,33 @@ pub struct DescribeTagsInput {
     #[serde(rename="ResourceType")]
     pub resource_type: String,
 }
-
+impl DescribeTagsInput {
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTagsInput.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `resource_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTagsInput.resource_type = value.into();`.
+    pub fn resource_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_type = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeTagsInput with optional fields set to `None`.
+    pub fn new<ResourceIdType: Into<String>, ResourceTypeType: Into<String>>
+        (resource_id: ResourceIdType,
+         resource_type: ResourceTypeType)
+         -> DescribeTagsInput {
+        DescribeTagsInput {
+            resource_id: resource_id.into(),
+            resource_type: resource_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Amazon ML returns the following elements. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeTagsOutput {
@@ -769,7 +1580,6 @@ pub struct DescribeTagsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
 #[doc="<p> Represents the output of <code>GetEvaluation</code> operation. </p> <p>The content consists of the detailed metadata and data file information and the current status of the <code>Evaluation</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Evaluation {
@@ -827,14 +1637,29 @@ pub struct Evaluation {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetBatchPredictionInput {
     #[doc="<p>An ID assigned to the <code>BatchPrediction</code> at creation.</p>"]
     #[serde(rename="BatchPredictionId")]
     pub batch_prediction_id: String,
 }
-
+impl GetBatchPredictionInput {
+    /// Sets `batch_prediction_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetBatchPredictionInput.batch_prediction_id = value.into();`.
+    pub fn batch_prediction_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.batch_prediction_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetBatchPredictionInput with optional fields set to `None`.
+    pub fn new<BatchPredictionIdType: Into<String>>(batch_prediction_id: BatchPredictionIdType)
+                                                    -> GetBatchPredictionInput {
+        GetBatchPredictionInput {
+            batch_prediction_id: batch_prediction_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a <code>GetBatchPrediction</code> operation and describes a <code>BatchPrediction</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetBatchPredictionOutput {
@@ -907,7 +1732,6 @@ pub struct GetBatchPredictionOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub total_record_count: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDataSourceInput {
     #[doc="<p>The ID assigned to the <code>DataSource</code> at creation.</p>"]
@@ -918,7 +1742,30 @@ pub struct GetDataSourceInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub verbose: Option<bool>,
 }
-
+impl GetDataSourceInput {
+    /// Sets `data_source_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDataSourceInput.data_source_id = value.into();`.
+    pub fn data_source_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_source_id = value.into();
+        self
+    }
+    /// Sets `verbose`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDataSourceInput.verbose = Some(value.into());`.
+    pub fn verbose<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.verbose = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetDataSourceInput with optional fields set to `None`.
+    pub fn new<DataSourceIdType: Into<String>>(data_source_id: DataSourceIdType)
+                                               -> GetDataSourceInput {
+        GetDataSourceInput {
+            data_source_id: data_source_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a <code>GetDataSource</code> operation and describes a <code>DataSource</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetDataSourceOutput {
@@ -1000,14 +1847,29 @@ pub struct GetDataSourceOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetEvaluationInput {
     #[doc="<p>The ID of the <code>Evaluation</code> to retrieve. The evaluation of each <code>MLModel</code> is recorded and cataloged. The ID provides the means to access the information. </p>"]
     #[serde(rename="EvaluationId")]
     pub evaluation_id: String,
 }
-
+impl GetEvaluationInput {
+    /// Sets `evaluation_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetEvaluationInput.evaluation_id = value.into();`.
+    pub fn evaluation_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.evaluation_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetEvaluationInput with optional fields set to `None`.
+    pub fn new<EvaluationIdType: Into<String>>(evaluation_id: EvaluationIdType)
+                                               -> GetEvaluationInput {
+        GetEvaluationInput {
+            evaluation_id: evaluation_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a <code>GetEvaluation</code> operation and describes an <code>Evaluation</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetEvaluationOutput {
@@ -1072,7 +1934,6 @@ pub struct GetEvaluationOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetMLModelInput {
     #[doc="<p>The ID assigned to the <code>MLModel</code> at creation.</p>"]
@@ -1083,7 +1944,29 @@ pub struct GetMLModelInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub verbose: Option<bool>,
 }
-
+impl GetMLModelInput {
+    /// Sets `ml_model_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMLModelInput.ml_model_id = value.into();`.
+    pub fn ml_model_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ml_model_id = value.into();
+        self
+    }
+    /// Sets `verbose`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetMLModelInput.verbose = Some(value.into());`.
+    pub fn verbose<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.verbose = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetMLModelInput with optional fields set to `None`.
+    pub fn new<MLModelIdType: Into<String>>(ml_model_id: MLModelIdType) -> GetMLModelInput {
+        GetMLModelInput {
+            ml_model_id: ml_model_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of a <code>GetMLModel</code> operation, and provides detailed information about a <code>MLModel</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetMLModelOutput {
@@ -1171,7 +2054,6 @@ pub struct GetMLModelOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub training_parameters: Option<::std::collections::HashMap<String, String>>,
 }
-
 #[doc="<p> Represents the output of a <code>GetMLModel</code> operation. </p> <p>The content consists of the detailed metadata and the current status of the <code>MLModel</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MLModel {
@@ -1247,7 +2129,6 @@ pub struct MLModel {
     #[serde(skip_serializing_if="Option::is_none")]
     pub training_parameters: Option<::std::collections::HashMap<String, String>>,
 }
-
 #[doc="<p>Measurements of how well the <code>MLModel</code> performed on known observations. One of the following metrics is returned, based on the type of the <code>MLModel</code>: </p> <ul> <li> <p>BinaryAUC: The binary <code>MLModel</code> uses the Area Under the Curve (AUC) technique to measure performance. </p> </li> <li> <p>RegressionRMSE: The regression <code>MLModel</code> uses the Root Mean Square Error (RMSE) technique to measure performance. RMSE measures the difference between predicted and actual values for a single variable.</p> </li> <li> <p>MulticlassAvgFScore: The multiclass <code>MLModel</code> uses the F1 score technique to measure performance. </p> </li> </ul> <p> For more information about performance metrics, please see the <a href=\"http://docs.aws.amazon.com/machine-learning/latest/dg\">Amazon Machine Learning Developer Guide</a>. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PerformanceMetrics {
@@ -1255,7 +2136,6 @@ pub struct PerformanceMetrics {
     #[serde(skip_serializing_if="Option::is_none")]
     pub properties: Option<::std::collections::HashMap<String, String>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PredictInput {
     #[doc="<p>A unique identifier of the <code>MLModel</code>.</p>"]
@@ -1266,14 +2146,52 @@ pub struct PredictInput {
     #[serde(rename="Record")]
     pub record: ::std::collections::HashMap<String, String>,
 }
-
+impl PredictInput {
+    /// Sets `ml_model_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PredictInput.ml_model_id = value.into();`.
+    pub fn ml_model_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ml_model_id = value.into();
+        self
+    }
+    /// Sets `predict_endpoint`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PredictInput.predict_endpoint = value.into();`.
+    pub fn predict_endpoint<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.predict_endpoint = value.into();
+        self
+    }
+    /// Sets `record`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PredictInput.record = value.into();`.
+    pub fn record<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.record = value.into();
+        self
+    }
+    /// Returns a new instance of PredictInput with optional fields set to `None`.
+    pub fn new<MLModelIdType: Into<String>,
+               PredictEndpointType: Into<String>,
+               RecordType: Into<::std::collections::HashMap<String, String>>>
+        (ml_model_id: MLModelIdType,
+         predict_endpoint: PredictEndpointType,
+         record: RecordType)
+         -> PredictInput {
+        PredictInput {
+            ml_model_id: ml_model_id.into(),
+            predict_endpoint: predict_endpoint.into(),
+            record: record.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PredictOutput {
     #[serde(rename="Prediction")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub prediction: Option<Prediction>,
 }
-
 #[doc="<p>The output from a <code>Predict</code> operation: </p> <ul> <li> <p> <code>Details</code> - Contains the following attributes: <code>DetailsAttributes.PREDICTIVE_MODEL_TYPE - REGRESSION | BINARY | MULTICLASS</code> <code>DetailsAttributes.ALGORITHM - SGD</code> </p> </li> <li> <p> <code>PredictedLabel</code> - Present for either a <code>BINARY</code> or <code>MULTICLASS</code> <code>MLModel</code> request. </p> </li> <li> <p> <code>PredictedScores</code> - Contains the raw classification score corresponding to each label. </p> </li> <li> <p> <code>PredictedValue</code> - Present for a <code>REGRESSION</code> <code>MLModel</code> request. </p> </li> </ul>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Prediction {
@@ -1292,7 +2210,6 @@ pub struct Prediction {
     #[serde(skip_serializing_if="Option::is_none")]
     pub predicted_value: Option<f32>,
 }
-
 #[doc="<p>The data specification of an Amazon Relational Database Service (Amazon RDS) <code>DataSource</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RDSDataSpec {
@@ -1333,7 +2250,117 @@ pub struct RDSDataSpec {
     #[serde(rename="SubnetId")]
     pub subnet_id: String,
 }
-
+impl RDSDataSpec {
+    /// Sets `data_rearrangement`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RDSDataSpec.data_rearrangement = Some(value.into());`.
+    pub fn data_rearrangement<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_rearrangement = Some(value.into());
+        self
+    }
+    /// Sets `data_schema`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RDSDataSpec.data_schema = Some(value.into());`.
+    pub fn data_schema<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_schema = Some(value.into());
+        self
+    }
+    /// Sets `data_schema_uri`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RDSDataSpec.data_schema_uri = Some(value.into());`.
+    pub fn data_schema_uri<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_schema_uri = Some(value.into());
+        self
+    }
+    /// Sets `database_credentials`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RDSDataSpec.database_credentials = value.into();`.
+    pub fn database_credentials<ValueType: Into<RDSDatabaseCredentials>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.database_credentials = value.into();
+        self
+    }
+    /// Sets `database_information`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RDSDataSpec.database_information = value.into();`.
+    pub fn database_information<ValueType: Into<RDSDatabase>>(mut self, value: ValueType) -> Self {
+        self.database_information = value.into();
+        self
+    }
+    /// Sets `resource_role`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RDSDataSpec.resource_role = value.into();`.
+    pub fn resource_role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_role = value.into();
+        self
+    }
+    /// Sets `s3_staging_location`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RDSDataSpec.s3_staging_location = value.into();`.
+    pub fn s3_staging_location<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_staging_location = value.into();
+        self
+    }
+    /// Sets `security_group_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RDSDataSpec.security_group_ids = value.into();`.
+    pub fn security_group_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.security_group_ids = value.into();
+        self
+    }
+    /// Sets `select_sql_query`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RDSDataSpec.select_sql_query = value.into();`.
+    pub fn select_sql_query<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.select_sql_query = value.into();
+        self
+    }
+    /// Sets `service_role`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RDSDataSpec.service_role = value.into();`.
+    pub fn service_role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_role = value.into();
+        self
+    }
+    /// Sets `subnet_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RDSDataSpec.subnet_id = value.into();`.
+    pub fn subnet_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subnet_id = value.into();
+        self
+    }
+    /// Returns a new instance of RDSDataSpec with optional fields set to `None`.
+    pub fn new<DatabaseCredentialsType: Into<RDSDatabaseCredentials>,
+               DatabaseInformationType: Into<RDSDatabase>,
+               ResourceRoleType: Into<String>,
+               S3StagingLocationType: Into<String>,
+               SecurityGroupIdsType: Into<Vec<String>>,
+               SelectSqlQueryType: Into<String>,
+               ServiceRoleType: Into<String>,
+               SubnetIdType: Into<String>>
+        (database_credentials: DatabaseCredentialsType,
+         database_information: DatabaseInformationType,
+         resource_role: ResourceRoleType,
+         s3_staging_location: S3StagingLocationType,
+         security_group_ids: SecurityGroupIdsType,
+         select_sql_query: SelectSqlQueryType,
+         service_role: ServiceRoleType,
+         subnet_id: SubnetIdType)
+         -> RDSDataSpec {
+        RDSDataSpec {
+            database_credentials: database_credentials.into(),
+            database_information: database_information.into(),
+            resource_role: resource_role.into(),
+            s3_staging_location: s3_staging_location.into(),
+            security_group_ids: security_group_ids.into(),
+            select_sql_query: select_sql_query.into(),
+            service_role: service_role.into(),
+            subnet_id: subnet_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The database details of an Amazon RDS database.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct RDSDatabase {
@@ -1343,7 +2370,33 @@ pub struct RDSDatabase {
     #[serde(rename="InstanceIdentifier")]
     pub instance_identifier: String,
 }
-
+impl RDSDatabase {
+    /// Sets `database_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RDSDatabase.database_name = value.into();`.
+    pub fn database_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.database_name = value.into();
+        self
+    }
+    /// Sets `instance_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RDSDatabase.instance_identifier = value.into();`.
+    pub fn instance_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_identifier = value.into();
+        self
+    }
+    /// Returns a new instance of RDSDatabase with optional fields set to `None`.
+    pub fn new<DatabaseNameType: Into<String>, InstanceIdentifierType: Into<String>>
+        (database_name: DatabaseNameType,
+         instance_identifier: InstanceIdentifierType)
+         -> RDSDatabase {
+        RDSDatabase {
+            database_name: database_name.into(),
+            instance_identifier: instance_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The database credentials to connect to a database on an RDS DB instance.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RDSDatabaseCredentials {
@@ -1352,7 +2405,33 @@ pub struct RDSDatabaseCredentials {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl RDSDatabaseCredentials {
+    /// Sets `password`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RDSDatabaseCredentials.password = value.into();`.
+    pub fn password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.password = value.into();
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RDSDatabaseCredentials.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of RDSDatabaseCredentials with optional fields set to `None`.
+    pub fn new<PasswordType: Into<String>, UsernameType: Into<String>>
+        (password: PasswordType,
+         username: UsernameType)
+         -> RDSDatabaseCredentials {
+        RDSDatabaseCredentials {
+            password: password.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The datasource details that are specific to Amazon RDS.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RDSMetadata {
@@ -1380,7 +2459,6 @@ pub struct RDSMetadata {
     #[serde(skip_serializing_if="Option::is_none")]
     pub service_role: Option<String>,
 }
-
 #[doc="<p> Describes the real-time endpoint information for an <code>MLModel</code>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RealtimeEndpointInfo {
@@ -1401,7 +2479,6 @@ pub struct RealtimeEndpointInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub peak_requests_per_second: Option<i64>,
 }
-
 #[doc="<p>Describes the data specification of an Amazon Redshift <code>DataSource</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RedshiftDataSpec {
@@ -1430,7 +2507,79 @@ pub struct RedshiftDataSpec {
     #[serde(rename="SelectSqlQuery")]
     pub select_sql_query: String,
 }
-
+impl RedshiftDataSpec {
+    /// Sets `data_rearrangement`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDataSpec.data_rearrangement = Some(value.into());`.
+    pub fn data_rearrangement<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_rearrangement = Some(value.into());
+        self
+    }
+    /// Sets `data_schema`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDataSpec.data_schema = Some(value.into());`.
+    pub fn data_schema<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_schema = Some(value.into());
+        self
+    }
+    /// Sets `data_schema_uri`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDataSpec.data_schema_uri = Some(value.into());`.
+    pub fn data_schema_uri<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_schema_uri = Some(value.into());
+        self
+    }
+    /// Sets `database_credentials`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDataSpec.database_credentials = value.into();`.
+    pub fn database_credentials<ValueType: Into<RedshiftDatabaseCredentials>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.database_credentials = value.into();
+        self
+    }
+    /// Sets `database_information`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDataSpec.database_information = value.into();`.
+    pub fn database_information<ValueType: Into<RedshiftDatabase>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.database_information = value.into();
+        self
+    }
+    /// Sets `s3_staging_location`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDataSpec.s3_staging_location = value.into();`.
+    pub fn s3_staging_location<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_staging_location = value.into();
+        self
+    }
+    /// Sets `select_sql_query`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDataSpec.select_sql_query = value.into();`.
+    pub fn select_sql_query<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.select_sql_query = value.into();
+        self
+    }
+    /// Returns a new instance of RedshiftDataSpec with optional fields set to `None`.
+    pub fn new<DatabaseCredentialsType: Into<RedshiftDatabaseCredentials>,
+               DatabaseInformationType: Into<RedshiftDatabase>,
+               S3StagingLocationType: Into<String>,
+               SelectSqlQueryType: Into<String>>
+        (database_credentials: DatabaseCredentialsType,
+         database_information: DatabaseInformationType,
+         s3_staging_location: S3StagingLocationType,
+         select_sql_query: SelectSqlQueryType)
+         -> RedshiftDataSpec {
+        RedshiftDataSpec {
+            database_credentials: database_credentials.into(),
+            database_information: database_information.into(),
+            s3_staging_location: s3_staging_location.into(),
+            select_sql_query: select_sql_query.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes the database details required to connect to an Amazon Redshift database.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct RedshiftDatabase {
@@ -1439,7 +2588,33 @@ pub struct RedshiftDatabase {
     #[serde(rename="DatabaseName")]
     pub database_name: String,
 }
-
+impl RedshiftDatabase {
+    /// Sets `cluster_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDatabase.cluster_identifier = value.into();`.
+    pub fn cluster_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cluster_identifier = value.into();
+        self
+    }
+    /// Sets `database_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDatabase.database_name = value.into();`.
+    pub fn database_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.database_name = value.into();
+        self
+    }
+    /// Returns a new instance of RedshiftDatabase with optional fields set to `None`.
+    pub fn new<ClusterIdentifierType: Into<String>, DatabaseNameType: Into<String>>
+        (cluster_identifier: ClusterIdentifierType,
+         database_name: DatabaseNameType)
+         -> RedshiftDatabase {
+        RedshiftDatabase {
+            cluster_identifier: cluster_identifier.into(),
+            database_name: database_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> Describes the database credentials for connecting to a database on an Amazon Redshift cluster.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RedshiftDatabaseCredentials {
@@ -1448,7 +2623,33 @@ pub struct RedshiftDatabaseCredentials {
     #[serde(rename="Username")]
     pub username: String,
 }
-
+impl RedshiftDatabaseCredentials {
+    /// Sets `password`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDatabaseCredentials.password = value.into();`.
+    pub fn password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.password = value.into();
+        self
+    }
+    /// Sets `username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RedshiftDatabaseCredentials.username = value.into();`.
+    pub fn username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.username = value.into();
+        self
+    }
+    /// Returns a new instance of RedshiftDatabaseCredentials with optional fields set to `None`.
+    pub fn new<PasswordType: Into<String>, UsernameType: Into<String>>
+        (password: PasswordType,
+         username: UsernameType)
+         -> RedshiftDatabaseCredentials {
+        RedshiftDatabaseCredentials {
+            password: password.into(),
+            username: username.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes the <code>DataSource</code> details specific to Amazon Redshift.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RedshiftMetadata {
@@ -1463,7 +2664,6 @@ pub struct RedshiftMetadata {
     #[serde(skip_serializing_if="Option::is_none")]
     pub select_sql_query: Option<String>,
 }
-
 #[doc="<p> Describes the data specification of a <code>DataSource</code>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct S3DataSpec {
@@ -1483,7 +2683,44 @@ pub struct S3DataSpec {
     #[serde(skip_serializing_if="Option::is_none")]
     pub data_schema_location_s3: Option<String>,
 }
-
+impl S3DataSpec {
+    /// Sets `data_location_s3`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3DataSpec.data_location_s3 = value.into();`.
+    pub fn data_location_s3<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_location_s3 = value.into();
+        self
+    }
+    /// Sets `data_rearrangement`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3DataSpec.data_rearrangement = Some(value.into());`.
+    pub fn data_rearrangement<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_rearrangement = Some(value.into());
+        self
+    }
+    /// Sets `data_schema`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3DataSpec.data_schema = Some(value.into());`.
+    pub fn data_schema<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_schema = Some(value.into());
+        self
+    }
+    /// Sets `data_schema_location_s3`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3DataSpec.data_schema_location_s3 = Some(value.into());`.
+    pub fn data_schema_location_s3<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_schema_location_s3 = Some(value.into());
+        self
+    }
+    /// Returns a new instance of S3DataSpec with optional fields set to `None`.
+    pub fn new<DataLocationS3Type: Into<String>>(data_location_s3: DataLocationS3Type)
+                                                 -> S3DataSpec {
+        S3DataSpec {
+            data_location_s3: data_location_s3.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A custom key-value pair associated with an ML object, such as an ML model.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Tag {
@@ -1496,7 +2733,26 @@ pub struct Tag {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl Tag {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new() -> Tag {
+        Tag { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateBatchPredictionInput {
     #[doc="<p>The ID assigned to the <code>BatchPrediction</code> during creation.</p>"]
@@ -1506,7 +2762,33 @@ pub struct UpdateBatchPredictionInput {
     #[serde(rename="BatchPredictionName")]
     pub batch_prediction_name: String,
 }
-
+impl UpdateBatchPredictionInput {
+    /// Sets `batch_prediction_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateBatchPredictionInput.batch_prediction_id = value.into();`.
+    pub fn batch_prediction_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.batch_prediction_id = value.into();
+        self
+    }
+    /// Sets `batch_prediction_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateBatchPredictionInput.batch_prediction_name = value.into();`.
+    pub fn batch_prediction_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.batch_prediction_name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateBatchPredictionInput with optional fields set to `None`.
+    pub fn new<BatchPredictionIdType: Into<String>, BatchPredictionNameType: Into<String>>
+        (batch_prediction_id: BatchPredictionIdType,
+         batch_prediction_name: BatchPredictionNameType)
+         -> UpdateBatchPredictionInput {
+        UpdateBatchPredictionInput {
+            batch_prediction_id: batch_prediction_id.into(),
+            batch_prediction_name: batch_prediction_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of an <code>UpdateBatchPrediction</code> operation.</p> <p>You can see the updated content by using the <code>GetBatchPrediction</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateBatchPredictionOutput {
@@ -1515,7 +2797,6 @@ pub struct UpdateBatchPredictionOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub batch_prediction_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateDataSourceInput {
     #[doc="<p>The ID assigned to the <code>DataSource</code> during creation.</p>"]
@@ -1525,7 +2806,33 @@ pub struct UpdateDataSourceInput {
     #[serde(rename="DataSourceName")]
     pub data_source_name: String,
 }
-
+impl UpdateDataSourceInput {
+    /// Sets `data_source_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDataSourceInput.data_source_id = value.into();`.
+    pub fn data_source_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_source_id = value.into();
+        self
+    }
+    /// Sets `data_source_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDataSourceInput.data_source_name = value.into();`.
+    pub fn data_source_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_source_name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateDataSourceInput with optional fields set to `None`.
+    pub fn new<DataSourceIdType: Into<String>, DataSourceNameType: Into<String>>
+        (data_source_id: DataSourceIdType,
+         data_source_name: DataSourceNameType)
+         -> UpdateDataSourceInput {
+        UpdateDataSourceInput {
+            data_source_id: data_source_id.into(),
+            data_source_name: data_source_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of an <code>UpdateDataSource</code> operation.</p> <p>You can see the updated content by using the <code>GetBatchPrediction</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateDataSourceOutput {
@@ -1534,7 +2841,6 @@ pub struct UpdateDataSourceOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub data_source_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateEvaluationInput {
     #[doc="<p>The ID assigned to the <code>Evaluation</code> during creation.</p>"]
@@ -1544,7 +2850,33 @@ pub struct UpdateEvaluationInput {
     #[serde(rename="EvaluationName")]
     pub evaluation_name: String,
 }
-
+impl UpdateEvaluationInput {
+    /// Sets `evaluation_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateEvaluationInput.evaluation_id = value.into();`.
+    pub fn evaluation_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.evaluation_id = value.into();
+        self
+    }
+    /// Sets `evaluation_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateEvaluationInput.evaluation_name = value.into();`.
+    pub fn evaluation_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.evaluation_name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateEvaluationInput with optional fields set to `None`.
+    pub fn new<EvaluationIdType: Into<String>, EvaluationNameType: Into<String>>
+        (evaluation_id: EvaluationIdType,
+         evaluation_name: EvaluationNameType)
+         -> UpdateEvaluationInput {
+        UpdateEvaluationInput {
+            evaluation_id: evaluation_id.into(),
+            evaluation_name: evaluation_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of an <code>UpdateEvaluation</code> operation.</p> <p>You can see the updated content by using the <code>GetEvaluation</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateEvaluationOutput {
@@ -1553,7 +2885,6 @@ pub struct UpdateEvaluationOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub evaluation_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateMLModelInput {
     #[doc="<p>The ID assigned to the <code>MLModel</code> during creation.</p>"]
@@ -1568,7 +2899,36 @@ pub struct UpdateMLModelInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub score_threshold: Option<f32>,
 }
-
+impl UpdateMLModelInput {
+    /// Sets `ml_model_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMLModelInput.ml_model_id = value.into();`.
+    pub fn ml_model_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ml_model_id = value.into();
+        self
+    }
+    /// Sets `ml_model_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMLModelInput.ml_model_name = Some(value.into());`.
+    pub fn ml_model_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ml_model_name = Some(value.into());
+        self
+    }
+    /// Sets `score_threshold`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateMLModelInput.score_threshold = Some(value.into());`.
+    pub fn score_threshold<ValueType: Into<f32>>(mut self, value: ValueType) -> Self {
+        self.score_threshold = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateMLModelInput with optional fields set to `None`.
+    pub fn new<MLModelIdType: Into<String>>(ml_model_id: MLModelIdType) -> UpdateMLModelInput {
+        UpdateMLModelInput {
+            ml_model_id: ml_model_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the output of an <code>UpdateMLModel</code> operation.</p> <p>You can see the updated content by using the <code>GetMLModel</code> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateMLModelOutput {
@@ -1577,7 +2937,6 @@ pub struct UpdateMLModelOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ml_model_id: Option<String>,
 }
-
 /// Errors returned by AddTags
 #[derive(Debug, PartialEq)]
 pub enum AddTagsError {

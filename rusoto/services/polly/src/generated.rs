@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -35,7 +36,22 @@ pub struct DeleteLexiconInput {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl DeleteLexiconInput {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteLexiconInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteLexiconInput with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> DeleteLexiconInput {
+        DeleteLexiconInput {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteLexiconOutput;
 
@@ -50,7 +66,26 @@ pub struct DescribeVoicesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeVoicesInput {
+    /// Sets `language_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVoicesInput.language_code = Some(value.into());`.
+    pub fn language_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.language_code = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeVoicesInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeVoicesInput with optional fields set to `None`.
+    pub fn new() -> DescribeVoicesInput {
+        DescribeVoicesInput { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeVoicesOutput {
     #[doc="<p>The pagination token to use in the next request to continue the listing of voices. <code>NextToken</code> is returned only if the response is truncated.</p>"]
@@ -62,14 +97,28 @@ pub struct DescribeVoicesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub voices: Option<Vec<Voice>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetLexiconInput {
     #[doc="<p>Name of the lexicon.</p>"]
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl GetLexiconInput {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetLexiconInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of GetLexiconInput with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> GetLexiconInput {
+        GetLexiconInput {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetLexiconOutput {
     #[doc="<p>Lexicon object that provides name and the string content of the lexicon. </p>"]
@@ -81,7 +130,6 @@ pub struct GetLexiconOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub lexicon_attributes: Option<LexiconAttributes>,
 }
-
 #[doc="<p>Provides lexicon name and lexicon content in string format. For more information, see <a href=\"https://www.w3.org/TR/pronunciation-lexicon/\">Pronunciation Lexicon Specification (PLS) Version 1.0</a>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Lexicon {
@@ -94,7 +142,6 @@ pub struct Lexicon {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p>Contains metadata describing the lexicon such as the number of lexemes, language code, and so on. For more information, see <a href=\"http://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html\">Managing Lexicons</a>.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LexiconAttributes {
@@ -123,7 +170,6 @@ pub struct LexiconAttributes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub size: Option<i64>,
 }
-
 #[doc="<p>Describes the content of the lexicon.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LexiconDescription {
@@ -136,7 +182,6 @@ pub struct LexiconDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListLexiconsInput {
     #[doc="<p>An opaque pagination token returned from previous <code>ListLexicons</code> operation. If present, indicates where to continue the list of lexicons.</p>"]
@@ -144,7 +189,19 @@ pub struct ListLexiconsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListLexiconsInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListLexiconsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListLexiconsInput with optional fields set to `None`.
+    pub fn new() -> ListLexiconsInput {
+        ListLexiconsInput { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListLexiconsOutput {
     #[doc="<p>A list of lexicon names and attributes.</p>"]
@@ -156,7 +213,6 @@ pub struct ListLexiconsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutLexiconInput {
     #[doc="<p>Content of the PLS lexicon as string data.</p>"]
@@ -166,7 +222,32 @@ pub struct PutLexiconInput {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl PutLexiconInput {
+    /// Sets `content`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutLexiconInput.content = value.into();`.
+    pub fn content<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutLexiconInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of PutLexiconInput with optional fields set to `None`.
+    pub fn new<ContentType: Into<String>, NameType: Into<String>>(content: ContentType,
+                                                                  name: NameType)
+                                                                  -> PutLexiconInput {
+        PutLexiconInput {
+            content: content.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutLexiconOutput;
 
@@ -198,7 +279,70 @@ pub struct SynthesizeSpeechInput {
     #[serde(rename="VoiceId")]
     pub voice_id: String,
 }
-
+impl SynthesizeSpeechInput {
+    /// Sets `lexicon_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SynthesizeSpeechInput.lexicon_names = Some(value.into());`.
+    pub fn lexicon_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.lexicon_names = Some(value.into());
+        self
+    }
+    /// Sets `output_format`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SynthesizeSpeechInput.output_format = value.into();`.
+    pub fn output_format<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.output_format = value.into();
+        self
+    }
+    /// Sets `sample_rate`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SynthesizeSpeechInput.sample_rate = Some(value.into());`.
+    pub fn sample_rate<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sample_rate = Some(value.into());
+        self
+    }
+    /// Sets `speech_mark_types`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SynthesizeSpeechInput.speech_mark_types = Some(value.into());`.
+    pub fn speech_mark_types<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.speech_mark_types = Some(value.into());
+        self
+    }
+    /// Sets `text`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SynthesizeSpeechInput.text = value.into();`.
+    pub fn text<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.text = value.into();
+        self
+    }
+    /// Sets `text_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SynthesizeSpeechInput.text_type = Some(value.into());`.
+    pub fn text_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.text_type = Some(value.into());
+        self
+    }
+    /// Sets `voice_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SynthesizeSpeechInput.voice_id = value.into();`.
+    pub fn voice_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.voice_id = value.into();
+        self
+    }
+    /// Returns a new instance of SynthesizeSpeechInput with optional fields set to `None`.
+    pub fn new<OutputFormatType: Into<String>, TextType: Into<String>, VoiceIdType: Into<String>>
+        (output_format: OutputFormatType,
+         text: TextType,
+         voice_id: VoiceIdType)
+         -> SynthesizeSpeechInput {
+        SynthesizeSpeechInput {
+            output_format: output_format.into(),
+            text: text.into(),
+            voice_id: voice_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone)]
 pub struct SynthesizeSpeechOutput {
     #[doc="<p> Stream containing the synthesized speech. </p>"]
@@ -208,7 +352,6 @@ pub struct SynthesizeSpeechOutput {
     #[doc="<p>Number of characters synthesized.</p>"]
     pub request_characters: Option<i64>,
 }
-
 #[doc="<p>Description of the voice.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Voice {
@@ -233,7 +376,6 @@ pub struct Voice {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 /// Errors returned by DeleteLexicon
 #[derive(Debug, PartialEq)]
 pub enum DeleteLexiconError {

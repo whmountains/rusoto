@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -40,7 +41,48 @@ pub struct AddApplicationCloudWatchLoggingOptionRequest {
     #[serde(rename="CurrentApplicationVersionId")]
     pub current_application_version_id: i64,
 }
-
+impl AddApplicationCloudWatchLoggingOptionRequest {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddApplicationCloudWatchLoggingOptionRequest.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `cloud_watch_logging_option`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddApplicationCloudWatchLoggingOptionRequest.cloud_watch_logging_option = value.into();`.
+    pub fn cloud_watch_logging_option<ValueType: Into<CloudWatchLoggingOption>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.cloud_watch_logging_option = value.into();
+        self
+    }
+    /// Sets `current_application_version_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddApplicationCloudWatchLoggingOptionRequest.current_application_version_id = value.into();`.
+    pub fn current_application_version_id<ValueType: Into<i64>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.current_application_version_id = value.into();
+        self
+    }
+    /// Returns a new instance of AddApplicationCloudWatchLoggingOptionRequest with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>,
+               CloudWatchLoggingOptionType: Into<CloudWatchLoggingOption>,
+               CurrentApplicationVersionIdType: Into<i64>>
+        (application_name: ApplicationNameType,
+         cloud_watch_logging_option: CloudWatchLoggingOptionType,
+         current_application_version_id: CurrentApplicationVersionIdType)
+         -> AddApplicationCloudWatchLoggingOptionRequest {
+        AddApplicationCloudWatchLoggingOptionRequest {
+            application_name: application_name.into(),
+            cloud_watch_logging_option: cloud_watch_logging_option.into(),
+            current_application_version_id: current_application_version_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddApplicationCloudWatchLoggingOptionResponse;
 
@@ -57,7 +99,46 @@ pub struct AddApplicationInputRequest {
     #[serde(rename="Input")]
     pub input: Input,
 }
-
+impl AddApplicationInputRequest {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddApplicationInputRequest.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `current_application_version_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddApplicationInputRequest.current_application_version_id = value.into();`.
+    pub fn current_application_version_id<ValueType: Into<i64>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.current_application_version_id = value.into();
+        self
+    }
+    /// Sets `input`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddApplicationInputRequest.input = value.into();`.
+    pub fn input<ValueType: Into<Input>>(mut self, value: ValueType) -> Self {
+        self.input = value.into();
+        self
+    }
+    /// Returns a new instance of AddApplicationInputRequest with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>,
+               CurrentApplicationVersionIdType: Into<i64>,
+               InputType: Into<Input>>
+        (application_name: ApplicationNameType,
+         current_application_version_id: CurrentApplicationVersionIdType,
+         input: InputType)
+         -> AddApplicationInputRequest {
+        AddApplicationInputRequest {
+            application_name: application_name.into(),
+            current_application_version_id: current_application_version_id.into(),
+            input: input.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddApplicationInputResponse;
@@ -75,7 +156,46 @@ pub struct AddApplicationOutputRequest {
     #[serde(rename="Output")]
     pub output: Output,
 }
-
+impl AddApplicationOutputRequest {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddApplicationOutputRequest.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `current_application_version_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddApplicationOutputRequest.current_application_version_id = value.into();`.
+    pub fn current_application_version_id<ValueType: Into<i64>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.current_application_version_id = value.into();
+        self
+    }
+    /// Sets `output`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddApplicationOutputRequest.output = value.into();`.
+    pub fn output<ValueType: Into<Output>>(mut self, value: ValueType) -> Self {
+        self.output = value.into();
+        self
+    }
+    /// Returns a new instance of AddApplicationOutputRequest with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>,
+               CurrentApplicationVersionIdType: Into<i64>,
+               OutputType: Into<Output>>
+        (application_name: ApplicationNameType,
+         current_application_version_id: CurrentApplicationVersionIdType,
+         output: OutputType)
+         -> AddApplicationOutputRequest {
+        AddApplicationOutputRequest {
+            application_name: application_name.into(),
+            current_application_version_id: current_application_version_id.into(),
+            output: output.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddApplicationOutputResponse;
@@ -93,7 +213,48 @@ pub struct AddApplicationReferenceDataSourceRequest {
     #[serde(rename="ReferenceDataSource")]
     pub reference_data_source: ReferenceDataSource,
 }
-
+impl AddApplicationReferenceDataSourceRequest {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddApplicationReferenceDataSourceRequest.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `current_application_version_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddApplicationReferenceDataSourceRequest.current_application_version_id = value.into();`.
+    pub fn current_application_version_id<ValueType: Into<i64>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.current_application_version_id = value.into();
+        self
+    }
+    /// Sets `reference_data_source`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddApplicationReferenceDataSourceRequest.reference_data_source = value.into();`.
+    pub fn reference_data_source<ValueType: Into<ReferenceDataSource>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.reference_data_source = value.into();
+        self
+    }
+    /// Returns a new instance of AddApplicationReferenceDataSourceRequest with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>,
+               CurrentApplicationVersionIdType: Into<i64>,
+               ReferenceDataSourceType: Into<ReferenceDataSource>>
+        (application_name: ApplicationNameType,
+         current_application_version_id: CurrentApplicationVersionIdType,
+         reference_data_source: ReferenceDataSourceType)
+         -> AddApplicationReferenceDataSourceRequest {
+        AddApplicationReferenceDataSourceRequest {
+            application_name: application_name.into(),
+            current_application_version_id: current_application_version_id.into(),
+            reference_data_source: reference_data_source.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddApplicationReferenceDataSourceResponse;
@@ -147,7 +308,6 @@ pub struct ApplicationDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub reference_data_source_descriptions: Option<Vec<ReferenceDataSourceDescription>>,
 }
-
 #[doc="<p>Provides application summary information, including the application Amazon Resource Name (ARN), name, and status.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ApplicationSummary {
@@ -161,7 +321,6 @@ pub struct ApplicationSummary {
     #[serde(rename="ApplicationStatus")]
     pub application_status: String,
 }
-
 #[doc="<p>Describes updates to apply to an existing Amazon Kinesis Analytics application.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ApplicationUpdate {
@@ -186,7 +345,53 @@ pub struct ApplicationUpdate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub reference_data_source_updates: Option<Vec<ReferenceDataSourceUpdate>>,
 }
-
+impl ApplicationUpdate {
+    /// Sets `application_code_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ApplicationUpdate.application_code_update = Some(value.into());`.
+    pub fn application_code_update<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_code_update = Some(value.into());
+        self
+    }
+    /// Sets `cloud_watch_logging_option_updates`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ApplicationUpdate.cloud_watch_logging_option_updates = Some(value.into());`.
+    pub fn cloud_watch_logging_option_updates<ValueType: Into<Vec<CloudWatchLoggingOptionUpdate>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.cloud_watch_logging_option_updates = Some(value.into());
+        self
+    }
+    /// Sets `input_updates`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ApplicationUpdate.input_updates = Some(value.into());`.
+    pub fn input_updates<ValueType: Into<Vec<InputUpdate>>>(mut self, value: ValueType) -> Self {
+        self.input_updates = Some(value.into());
+        self
+    }
+    /// Sets `output_updates`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ApplicationUpdate.output_updates = Some(value.into());`.
+    pub fn output_updates<ValueType: Into<Vec<OutputUpdate>>>(mut self, value: ValueType) -> Self {
+        self.output_updates = Some(value.into());
+        self
+    }
+    /// Sets `reference_data_source_updates`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ApplicationUpdate.reference_data_source_updates = Some(value.into());`.
+    pub fn reference_data_source_updates<ValueType: Into<Vec<ReferenceDataSourceUpdate>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.reference_data_source_updates = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ApplicationUpdate with optional fields set to `None`.
+    pub fn new() -> ApplicationUpdate {
+        ApplicationUpdate { ..Default::default() }
+    }
+}
 #[doc="<p>Provides additional mapping information when the record format uses delimiters, such as CSV. For example, the following sample records use CSV format, where the records use the <i>'\\n'</i> as the row delimiter and a comma (\",\") as the column delimiter: </p> <p> <code>\"name1\", \"address1\" </code> </p> <p> <code>\"name2, \"address2\"</code> </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct CSVMappingParameters {
@@ -197,7 +402,33 @@ pub struct CSVMappingParameters {
     #[serde(rename="RecordRowDelimiter")]
     pub record_row_delimiter: String,
 }
-
+impl CSVMappingParameters {
+    /// Sets `record_column_delimiter`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CSVMappingParameters.record_column_delimiter = value.into();`.
+    pub fn record_column_delimiter<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.record_column_delimiter = value.into();
+        self
+    }
+    /// Sets `record_row_delimiter`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CSVMappingParameters.record_row_delimiter = value.into();`.
+    pub fn record_row_delimiter<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.record_row_delimiter = value.into();
+        self
+    }
+    /// Returns a new instance of CSVMappingParameters with optional fields set to `None`.
+    pub fn new<RecordColumnDelimiterType: Into<String>, RecordRowDelimiterType: Into<String>>
+        (record_column_delimiter: RecordColumnDelimiterType,
+         record_row_delimiter: RecordRowDelimiterType)
+         -> CSVMappingParameters {
+        CSVMappingParameters {
+            record_column_delimiter: record_column_delimiter.into(),
+            record_row_delimiter: record_row_delimiter.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides a description of CloudWatch logging options, including the log stream Amazon Resource Name (ARN) and the role ARN.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CloudWatchLoggingOption {
@@ -208,7 +439,33 @@ pub struct CloudWatchLoggingOption {
     #[serde(rename="RoleARN")]
     pub role_arn: String,
 }
-
+impl CloudWatchLoggingOption {
+    /// Sets `log_stream_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchLoggingOption.log_stream_arn = value.into();`.
+    pub fn log_stream_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_stream_arn = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchLoggingOption.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Returns a new instance of CloudWatchLoggingOption with optional fields set to `None`.
+    pub fn new<LogStreamARNType: Into<String>, RoleARNType: Into<String>>
+        (log_stream_arn: LogStreamARNType,
+         role_arn: RoleARNType)
+         -> CloudWatchLoggingOption {
+        CloudWatchLoggingOption {
+            log_stream_arn: log_stream_arn.into(),
+            role_arn: role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Description of the CloudWatch logging option.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CloudWatchLoggingOptionDescription {
@@ -223,7 +480,6 @@ pub struct CloudWatchLoggingOptionDescription {
     #[serde(rename="RoleARN")]
     pub role_arn: String,
 }
-
 #[doc="<p>Describes CloudWatch logging option updates.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CloudWatchLoggingOptionUpdate {
@@ -239,7 +495,38 @@ pub struct CloudWatchLoggingOptionUpdate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub role_arn_update: Option<String>,
 }
-
+impl CloudWatchLoggingOptionUpdate {
+    /// Sets `cloud_watch_logging_option_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchLoggingOptionUpdate.cloud_watch_logging_option_id = value.into();`.
+    pub fn cloud_watch_logging_option_id<ValueType: Into<String>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.cloud_watch_logging_option_id = value.into();
+        self
+    }
+    /// Sets `log_stream_arn_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchLoggingOptionUpdate.log_stream_arn_update = Some(value.into());`.
+    pub fn log_stream_arn_update<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_stream_arn_update = Some(value.into());
+        self
+    }
+    /// Sets `role_arn_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CloudWatchLoggingOptionUpdate.role_arn_update = Some(value.into());`.
+    pub fn role_arn_update<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn_update = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CloudWatchLoggingOptionUpdate with optional fields set to `None`.
+pub fn new<CloudWatchLoggingOptionIdType: Into<String>>(cloud_watch_logging_option_id: CloudWatchLoggingOptionIdType) -> CloudWatchLoggingOptionUpdate{
+        CloudWatchLoggingOptionUpdate {
+            cloud_watch_logging_option_id: cloud_watch_logging_option_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>TBD</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateApplicationRequest {
@@ -267,7 +554,58 @@ pub struct CreateApplicationRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub outputs: Option<Vec<Output>>,
 }
-
+impl CreateApplicationRequest {
+    /// Sets `application_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApplicationRequest.application_code = Some(value.into());`.
+    pub fn application_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_code = Some(value.into());
+        self
+    }
+    /// Sets `application_description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApplicationRequest.application_description = Some(value.into());`.
+    pub fn application_description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_description = Some(value.into());
+        self
+    }
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApplicationRequest.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `cloud_watch_logging_options`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApplicationRequest.cloud_watch_logging_options = Some(value.into());`.
+pub fn cloud_watch_logging_options<ValueType: Into<Vec<CloudWatchLoggingOption>>>(mut self, value: ValueType) -> Self{
+        self.cloud_watch_logging_options = Some(value.into());
+        self
+    }
+    /// Sets `inputs`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApplicationRequest.inputs = Some(value.into());`.
+    pub fn inputs<ValueType: Into<Vec<Input>>>(mut self, value: ValueType) -> Self {
+        self.inputs = Some(value.into());
+        self
+    }
+    /// Sets `outputs`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateApplicationRequest.outputs = Some(value.into());`.
+    pub fn outputs<ValueType: Into<Vec<Output>>>(mut self, value: ValueType) -> Self {
+        self.outputs = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateApplicationRequest with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>>(application_name: ApplicationNameType)
+                                                  -> CreateApplicationRequest {
+        CreateApplicationRequest {
+            application_name: application_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>TBD</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateApplicationResponse {
@@ -275,7 +613,6 @@ pub struct CreateApplicationResponse {
     #[serde(rename="ApplicationSummary")]
     pub application_summary: ApplicationSummary,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteApplicationCloudWatchLoggingOptionRequest {
     #[doc="<p>The Kinesis Analytics application name.</p>"]
@@ -288,7 +625,48 @@ pub struct DeleteApplicationCloudWatchLoggingOptionRequest {
     #[serde(rename="CurrentApplicationVersionId")]
     pub current_application_version_id: i64,
 }
-
+impl DeleteApplicationCloudWatchLoggingOptionRequest {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteApplicationCloudWatchLoggingOptionRequest.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `cloud_watch_logging_option_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteApplicationCloudWatchLoggingOptionRequest.cloud_watch_logging_option_id = value.into();`.
+    pub fn cloud_watch_logging_option_id<ValueType: Into<String>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.cloud_watch_logging_option_id = value.into();
+        self
+    }
+    /// Sets `current_application_version_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteApplicationCloudWatchLoggingOptionRequest.current_application_version_id = value.into();`.
+    pub fn current_application_version_id<ValueType: Into<i64>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.current_application_version_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteApplicationCloudWatchLoggingOptionRequest with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>,
+               CloudWatchLoggingOptionIdType: Into<String>,
+               CurrentApplicationVersionIdType: Into<i64>>
+        (application_name: ApplicationNameType,
+         cloud_watch_logging_option_id: CloudWatchLoggingOptionIdType,
+         current_application_version_id: CurrentApplicationVersionIdType)
+         -> DeleteApplicationCloudWatchLoggingOptionRequest {
+        DeleteApplicationCloudWatchLoggingOptionRequest {
+            application_name: application_name.into(),
+            cloud_watch_logging_option_id: cloud_watch_logging_option_id.into(),
+            current_application_version_id: current_application_version_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteApplicationCloudWatchLoggingOptionResponse;
 
@@ -305,7 +683,46 @@ pub struct DeleteApplicationOutputRequest {
     #[serde(rename="OutputId")]
     pub output_id: String,
 }
-
+impl DeleteApplicationOutputRequest {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteApplicationOutputRequest.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `current_application_version_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteApplicationOutputRequest.current_application_version_id = value.into();`.
+    pub fn current_application_version_id<ValueType: Into<i64>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.current_application_version_id = value.into();
+        self
+    }
+    /// Sets `output_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteApplicationOutputRequest.output_id = value.into();`.
+    pub fn output_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.output_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteApplicationOutputRequest with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>,
+               CurrentApplicationVersionIdType: Into<i64>,
+               OutputIdType: Into<String>>
+        (application_name: ApplicationNameType,
+         current_application_version_id: CurrentApplicationVersionIdType,
+         output_id: OutputIdType)
+         -> DeleteApplicationOutputRequest {
+        DeleteApplicationOutputRequest {
+            application_name: application_name.into(),
+            current_application_version_id: current_application_version_id.into(),
+            output_id: output_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteApplicationOutputResponse;
@@ -322,7 +739,46 @@ pub struct DeleteApplicationReferenceDataSourceRequest {
     #[serde(rename="ReferenceId")]
     pub reference_id: String,
 }
-
+impl DeleteApplicationReferenceDataSourceRequest {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteApplicationReferenceDataSourceRequest.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `current_application_version_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteApplicationReferenceDataSourceRequest.current_application_version_id = value.into();`.
+    pub fn current_application_version_id<ValueType: Into<i64>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.current_application_version_id = value.into();
+        self
+    }
+    /// Sets `reference_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteApplicationReferenceDataSourceRequest.reference_id = value.into();`.
+    pub fn reference_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reference_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteApplicationReferenceDataSourceRequest with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>,
+               CurrentApplicationVersionIdType: Into<i64>,
+               ReferenceIdType: Into<String>>
+        (application_name: ApplicationNameType,
+         current_application_version_id: CurrentApplicationVersionIdType,
+         reference_id: ReferenceIdType)
+         -> DeleteApplicationReferenceDataSourceRequest {
+        DeleteApplicationReferenceDataSourceRequest {
+            application_name: application_name.into(),
+            current_application_version_id: current_application_version_id.into(),
+            reference_id: reference_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteApplicationReferenceDataSourceResponse;
 
@@ -336,7 +792,33 @@ pub struct DeleteApplicationRequest {
     #[serde(rename="CreateTimestamp")]
     pub create_timestamp: f64,
 }
-
+impl DeleteApplicationRequest {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteApplicationRequest.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `create_timestamp`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteApplicationRequest.create_timestamp = value.into();`.
+    pub fn create_timestamp<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.create_timestamp = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteApplicationRequest with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>, CreateTimestampType: Into<f64>>
+        (application_name: ApplicationNameType,
+         create_timestamp: CreateTimestampType)
+         -> DeleteApplicationRequest {
+        DeleteApplicationRequest {
+            application_name: application_name.into(),
+            create_timestamp: create_timestamp.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteApplicationResponse;
@@ -348,7 +830,23 @@ pub struct DescribeApplicationRequest {
     #[serde(rename="ApplicationName")]
     pub application_name: String,
 }
-
+impl DescribeApplicationRequest {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeApplicationRequest.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeApplicationRequest with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>>(application_name: ApplicationNameType)
+                                                  -> DescribeApplicationRequest {
+        DescribeApplicationRequest {
+            application_name: application_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeApplicationResponse {
@@ -356,7 +854,6 @@ pub struct DescribeApplicationResponse {
     #[serde(rename="ApplicationDetail")]
     pub application_detail: ApplicationDetail,
 }
-
 #[doc="<p>Describes the data format when records are written to the destination. For more information, see <a href=\"http://docs.aws.amazon.com/kinesisanalytics/latest/dev/how-it-works-output.html\">Configuring Application Output</a>. </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct DestinationSchema {
@@ -365,7 +862,19 @@ pub struct DestinationSchema {
     #[serde(skip_serializing_if="Option::is_none")]
     pub record_format_type: Option<String>,
 }
-
+impl DestinationSchema {
+    /// Sets `record_format_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DestinationSchema.record_format_type = Some(value.into());`.
+    pub fn record_format_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.record_format_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DestinationSchema with optional fields set to `None`.
+    pub fn new() -> DestinationSchema {
+        DestinationSchema { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DiscoverInputSchemaRequest {
@@ -379,7 +888,44 @@ pub struct DiscoverInputSchemaRequest {
     #[serde(rename="RoleARN")]
     pub role_arn: String,
 }
-
+impl DiscoverInputSchemaRequest {
+    /// Sets `input_starting_position_configuration`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DiscoverInputSchemaRequest.input_starting_position_configuration = value.into();`.
+pub fn input_starting_position_configuration<ValueType: Into<InputStartingPositionConfiguration>>(mut self, value: ValueType) -> Self{
+        self.input_starting_position_configuration = value.into();
+        self
+    }
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DiscoverInputSchemaRequest.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DiscoverInputSchemaRequest.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DiscoverInputSchemaRequest with optional fields set to `None`.
+    pub fn new<InputStartingPositionConfigurationType: Into<InputStartingPositionConfiguration>,
+               ResourceARNType: Into<String>,
+               RoleARNType: Into<String>>
+        (input_starting_position_configuration: InputStartingPositionConfigurationType,
+         resource_arn: ResourceARNType,
+         role_arn: RoleARNType)
+         -> DiscoverInputSchemaRequest {
+        DiscoverInputSchemaRequest {
+            input_starting_position_configuration: input_starting_position_configuration.into(),
+            resource_arn: resource_arn.into(),
+            role_arn: role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DiscoverInputSchemaResponse {
@@ -396,7 +942,6 @@ pub struct DiscoverInputSchemaResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub raw_input_records: Option<Vec<String>>,
 }
-
 #[doc="<p>When you configure the application input, you specify the streaming source, the in-application stream name that is created, and the mapping between the two. For more information, see <a href=\"http://docs.aws.amazon.com/kinesisanalytics/latest/dev/how-it-works-input.html\">Configuring Application Input</a>. </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct Input {
@@ -419,7 +964,57 @@ pub struct Input {
     #[serde(rename="NamePrefix")]
     pub name_prefix: String,
 }
-
+impl Input {
+    /// Sets `input_parallelism`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Input.input_parallelism = Some(value.into());`.
+    pub fn input_parallelism<ValueType: Into<InputParallelism>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.input_parallelism = Some(value.into());
+        self
+    }
+    /// Sets `input_schema`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Input.input_schema = value.into();`.
+    pub fn input_schema<ValueType: Into<SourceSchema>>(mut self, value: ValueType) -> Self {
+        self.input_schema = value.into();
+        self
+    }
+    /// Sets `kinesis_firehose_input`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Input.kinesis_firehose_input = Some(value.into());`.
+    pub fn kinesis_firehose_input<ValueType: Into<KinesisFirehoseInput>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.kinesis_firehose_input = Some(value.into());
+        self
+    }
+    /// Sets `kinesis_streams_input`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Input.kinesis_streams_input = Some(value.into());`.
+    pub fn kinesis_streams_input<ValueType: Into<KinesisStreamsInput>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.kinesis_streams_input = Some(value.into());
+        self
+    }
+    /// Sets `name_prefix`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Input.name_prefix = value.into();`.
+    pub fn name_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name_prefix = value.into();
+        self
+    }
+    /// Returns a new instance of Input with optional fields set to `None`.
+pub fn new<InputSchemaType: Into<SourceSchema>, NamePrefixType: Into<String>>(input_schema: InputSchemaType, name_prefix: NamePrefixType) -> Input{
+        Input {
+            input_schema: input_schema.into(),
+            name_prefix: name_prefix.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>When you start your application, you provide this configuration, which identifies the input source and the point in the input source at which you want the application to start processing records.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InputConfiguration {
@@ -430,7 +1025,34 @@ pub struct InputConfiguration {
     #[serde(rename="InputStartingPositionConfiguration")]
     pub input_starting_position_configuration: InputStartingPositionConfiguration,
 }
-
+impl InputConfiguration {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InputConfiguration.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `input_starting_position_configuration`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InputConfiguration.input_starting_position_configuration = value.into();`.
+pub fn input_starting_position_configuration<ValueType: Into<InputStartingPositionConfiguration>>(mut self, value: ValueType) -> Self{
+        self.input_starting_position_configuration = value.into();
+        self
+    }
+    /// Returns a new instance of InputConfiguration with optional fields set to `None`.
+    pub fn new<IdType: Into<String>,
+               InputStartingPositionConfigurationType: Into<InputStartingPositionConfiguration>>
+        (id: IdType,
+         input_starting_position_configuration: InputStartingPositionConfigurationType)
+         -> InputConfiguration {
+        InputConfiguration {
+            id: id.into(),
+            input_starting_position_configuration: input_starting_position_configuration.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes the application input configuration. For more information, see <a href=\"http://docs.aws.amazon.com/kinesisanalytics/latest/dev/how-it-works-input.html\">Configuring Application Input</a>. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InputDescription {
@@ -466,7 +1088,6 @@ pub struct InputDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name_prefix: Option<String>,
 }
-
 #[doc="<p>Describes the number of in-application streams to create for a given streaming source. For information about parallelism, see <a href=\"http://docs.aws.amazon.com/kinesisanalytics/latest/dev/how-it-works-input.html\">Configuring Application Input</a>. </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct InputParallelism {
@@ -475,7 +1096,19 @@ pub struct InputParallelism {
     #[serde(skip_serializing_if="Option::is_none")]
     pub count: Option<i64>,
 }
-
+impl InputParallelism {
+    /// Sets `count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InputParallelism.count = Some(value.into());`.
+    pub fn count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.count = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InputParallelism with optional fields set to `None`.
+    pub fn new() -> InputParallelism {
+        InputParallelism { ..Default::default() }
+    }
+}
 #[doc="<p>Provides updates to the parallelism count.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InputParallelismUpdate {
@@ -484,7 +1117,19 @@ pub struct InputParallelismUpdate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub count_update: Option<i64>,
 }
-
+impl InputParallelismUpdate {
+    /// Sets `count_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InputParallelismUpdate.count_update = Some(value.into());`.
+    pub fn count_update<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.count_update = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InputParallelismUpdate with optional fields set to `None`.
+    pub fn new() -> InputParallelismUpdate {
+        InputParallelismUpdate { ..Default::default() }
+    }
+}
 #[doc="<p> Describes updates for the application's input schema. </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InputSchemaUpdate {
@@ -501,7 +1146,35 @@ pub struct InputSchemaUpdate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub record_format_update: Option<RecordFormat>,
 }
-
+impl InputSchemaUpdate {
+    /// Sets `record_column_updates`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InputSchemaUpdate.record_column_updates = Some(value.into());`.
+    pub fn record_column_updates<ValueType: Into<Vec<RecordColumn>>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.record_column_updates = Some(value.into());
+        self
+    }
+    /// Sets `record_encoding_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InputSchemaUpdate.record_encoding_update = Some(value.into());`.
+    pub fn record_encoding_update<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.record_encoding_update = Some(value.into());
+        self
+    }
+    /// Sets `record_format_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InputSchemaUpdate.record_format_update = Some(value.into());`.
+    pub fn record_format_update<ValueType: Into<RecordFormat>>(mut self, value: ValueType) -> Self {
+        self.record_format_update = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InputSchemaUpdate with optional fields set to `None`.
+    pub fn new() -> InputSchemaUpdate {
+        InputSchemaUpdate { ..Default::default() }
+    }
+}
 #[doc="<p>Describes the point at which the application reads from the streaming source.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct InputStartingPositionConfiguration {
@@ -510,7 +1183,19 @@ pub struct InputStartingPositionConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub input_starting_position: Option<String>,
 }
-
+impl InputStartingPositionConfiguration {
+    /// Sets `input_starting_position`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InputStartingPositionConfiguration.input_starting_position = Some(value.into());`.
+    pub fn input_starting_position<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.input_starting_position = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InputStartingPositionConfiguration with optional fields set to `None`.
+    pub fn new() -> InputStartingPositionConfiguration {
+        InputStartingPositionConfiguration { ..Default::default() }
+    }
+}
 #[doc="<p>Describes updates to a specific input configuration (identified by the <code>InputId</code> of an application). </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InputUpdate {
@@ -538,7 +1223,61 @@ pub struct InputUpdate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name_prefix_update: Option<String>,
 }
-
+impl InputUpdate {
+    /// Sets `input_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InputUpdate.input_id = value.into();`.
+    pub fn input_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.input_id = value.into();
+        self
+    }
+    /// Sets `input_parallelism_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InputUpdate.input_parallelism_update = Some(value.into());`.
+    pub fn input_parallelism_update<ValueType: Into<InputParallelismUpdate>>(mut self,
+                                                                             value: ValueType)
+                                                                             -> Self {
+        self.input_parallelism_update = Some(value.into());
+        self
+    }
+    /// Sets `input_schema_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InputUpdate.input_schema_update = Some(value.into());`.
+    pub fn input_schema_update<ValueType: Into<InputSchemaUpdate>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.input_schema_update = Some(value.into());
+        self
+    }
+    /// Sets `kinesis_firehose_input_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InputUpdate.kinesis_firehose_input_update = Some(value.into());`.
+pub fn kinesis_firehose_input_update<ValueType: Into<KinesisFirehoseInputUpdate>>(mut self, value: ValueType) -> Self{
+        self.kinesis_firehose_input_update = Some(value.into());
+        self
+    }
+    /// Sets `kinesis_streams_input_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InputUpdate.kinesis_streams_input_update = Some(value.into());`.
+pub fn kinesis_streams_input_update<ValueType: Into<KinesisStreamsInputUpdate>>(mut self, value: ValueType) -> Self{
+        self.kinesis_streams_input_update = Some(value.into());
+        self
+    }
+    /// Sets `name_prefix_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InputUpdate.name_prefix_update = Some(value.into());`.
+    pub fn name_prefix_update<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name_prefix_update = Some(value.into());
+        self
+    }
+    /// Returns a new instance of InputUpdate with optional fields set to `None`.
+    pub fn new<InputIdType: Into<String>>(input_id: InputIdType) -> InputUpdate {
+        InputUpdate {
+            input_id: input_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides additional mapping information when JSON is the record format on the streaming source.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct JSONMappingParameters {
@@ -546,7 +1285,23 @@ pub struct JSONMappingParameters {
     #[serde(rename="RecordRowPath")]
     pub record_row_path: String,
 }
-
+impl JSONMappingParameters {
+    /// Sets `record_row_path`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JSONMappingParameters.record_row_path = value.into();`.
+    pub fn record_row_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.record_row_path = value.into();
+        self
+    }
+    /// Returns a new instance of JSONMappingParameters with optional fields set to `None`.
+    pub fn new<RecordRowPathType: Into<String>>(record_row_path: RecordRowPathType)
+                                                -> JSONMappingParameters {
+        JSONMappingParameters {
+            record_row_path: record_row_path.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> Identifies an Amazon Kinesis Firehose delivery stream as the streaming source. You provide the Firehose delivery stream's Amazon Resource Name (ARN) and an IAM role ARN that enables Amazon Kinesis Analytics to access the stream on your behalf.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct KinesisFirehoseInput {
@@ -557,7 +1312,33 @@ pub struct KinesisFirehoseInput {
     #[serde(rename="RoleARN")]
     pub role_arn: String,
 }
-
+impl KinesisFirehoseInput {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisFirehoseInput.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisFirehoseInput.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Returns a new instance of KinesisFirehoseInput with optional fields set to `None`.
+    pub fn new<ResourceARNType: Into<String>, RoleARNType: Into<String>>
+        (resource_arn: ResourceARNType,
+         role_arn: RoleARNType)
+         -> KinesisFirehoseInput {
+        KinesisFirehoseInput {
+            resource_arn: resource_arn.into(),
+            role_arn: role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> Describes the Amazon Kinesis Firehose delivery stream that is configured as the streaming source in the application input configuration. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct KinesisFirehoseInputDescription {
@@ -570,7 +1351,6 @@ pub struct KinesisFirehoseInputDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub role_arn: Option<String>,
 }
-
 #[doc="<p>When updating application input configuration, provides information about an Amazon Kinesis Firehose delivery stream as the streaming source.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct KinesisFirehoseInputUpdate {
@@ -583,7 +1363,26 @@ pub struct KinesisFirehoseInputUpdate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub role_arn_update: Option<String>,
 }
-
+impl KinesisFirehoseInputUpdate {
+    /// Sets `resource_arn_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisFirehoseInputUpdate.resource_arn_update = Some(value.into());`.
+    pub fn resource_arn_update<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn_update = Some(value.into());
+        self
+    }
+    /// Sets `role_arn_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisFirehoseInputUpdate.role_arn_update = Some(value.into());`.
+    pub fn role_arn_update<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn_update = Some(value.into());
+        self
+    }
+    /// Returns a new instance of KinesisFirehoseInputUpdate with optional fields set to `None`.
+    pub fn new() -> KinesisFirehoseInputUpdate {
+        KinesisFirehoseInputUpdate { ..Default::default() }
+    }
+}
 #[doc="<p>When configuring application output, identifies an Amazon Kinesis Firehose delivery stream as the destination. You provide the stream Amazon Resource Name (ARN) and an IAM role that enables Amazon Kinesis Analytics to write to the stream on your behalf.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct KinesisFirehoseOutput {
@@ -594,7 +1393,33 @@ pub struct KinesisFirehoseOutput {
     #[serde(rename="RoleARN")]
     pub role_arn: String,
 }
-
+impl KinesisFirehoseOutput {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisFirehoseOutput.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisFirehoseOutput.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Returns a new instance of KinesisFirehoseOutput with optional fields set to `None`.
+    pub fn new<ResourceARNType: Into<String>, RoleARNType: Into<String>>
+        (resource_arn: ResourceARNType,
+         role_arn: RoleARNType)
+         -> KinesisFirehoseOutput {
+        KinesisFirehoseOutput {
+            resource_arn: resource_arn.into(),
+            role_arn: role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> For an application output, describes the Amazon Kinesis Firehose delivery stream configured as its destination. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct KinesisFirehoseOutputDescription {
@@ -607,7 +1432,6 @@ pub struct KinesisFirehoseOutputDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub role_arn: Option<String>,
 }
-
 #[doc="<p> When updating an output configuration using the <a>UpdateApplication</a> operation, provides information about an Amazon Kinesis Firehose delivery stream configured as the destination. </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct KinesisFirehoseOutputUpdate {
@@ -620,7 +1444,26 @@ pub struct KinesisFirehoseOutputUpdate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub role_arn_update: Option<String>,
 }
-
+impl KinesisFirehoseOutputUpdate {
+    /// Sets `resource_arn_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisFirehoseOutputUpdate.resource_arn_update = Some(value.into());`.
+    pub fn resource_arn_update<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn_update = Some(value.into());
+        self
+    }
+    /// Sets `role_arn_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisFirehoseOutputUpdate.role_arn_update = Some(value.into());`.
+    pub fn role_arn_update<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn_update = Some(value.into());
+        self
+    }
+    /// Returns a new instance of KinesisFirehoseOutputUpdate with optional fields set to `None`.
+    pub fn new() -> KinesisFirehoseOutputUpdate {
+        KinesisFirehoseOutputUpdate { ..Default::default() }
+    }
+}
 #[doc="<p> Identifies an Amazon Kinesis stream as the streaming source. You provide the stream's ARN and an IAM role ARN that enables Amazon Kinesis Analytics to access the stream on your behalf.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct KinesisStreamsInput {
@@ -631,7 +1474,30 @@ pub struct KinesisStreamsInput {
     #[serde(rename="RoleARN")]
     pub role_arn: String,
 }
-
+impl KinesisStreamsInput {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisStreamsInput.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisStreamsInput.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Returns a new instance of KinesisStreamsInput with optional fields set to `None`.
+pub fn new<ResourceARNType: Into<String>, RoleARNType: Into<String>>(resource_arn: ResourceARNType, role_arn: RoleARNType) -> KinesisStreamsInput{
+        KinesisStreamsInput {
+            resource_arn: resource_arn.into(),
+            role_arn: role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> Describes the Amazon Kinesis stream that is configured as the streaming source in the application input configuration. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct KinesisStreamsInputDescription {
@@ -644,7 +1510,6 @@ pub struct KinesisStreamsInputDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub role_arn: Option<String>,
 }
-
 #[doc="<p>When updating application input configuration, provides information about an Amazon Kinesis stream as the streaming source.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct KinesisStreamsInputUpdate {
@@ -657,7 +1522,26 @@ pub struct KinesisStreamsInputUpdate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub role_arn_update: Option<String>,
 }
-
+impl KinesisStreamsInputUpdate {
+    /// Sets `resource_arn_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisStreamsInputUpdate.resource_arn_update = Some(value.into());`.
+    pub fn resource_arn_update<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn_update = Some(value.into());
+        self
+    }
+    /// Sets `role_arn_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisStreamsInputUpdate.role_arn_update = Some(value.into());`.
+    pub fn role_arn_update<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn_update = Some(value.into());
+        self
+    }
+    /// Returns a new instance of KinesisStreamsInputUpdate with optional fields set to `None`.
+    pub fn new() -> KinesisStreamsInputUpdate {
+        KinesisStreamsInputUpdate { ..Default::default() }
+    }
+}
 #[doc="<p>When configuring application output, identifies a Amazon Kinesis stream as the destination. You provide the stream Amazon Resource Name (ARN) and also an IAM role ARN that Amazon Kinesis Analytics can use to write to the stream on your behalf.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct KinesisStreamsOutput {
@@ -668,7 +1552,33 @@ pub struct KinesisStreamsOutput {
     #[serde(rename="RoleARN")]
     pub role_arn: String,
 }
-
+impl KinesisStreamsOutput {
+    /// Sets `resource_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisStreamsOutput.resource_arn = value.into();`.
+    pub fn resource_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisStreamsOutput.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Returns a new instance of KinesisStreamsOutput with optional fields set to `None`.
+    pub fn new<ResourceARNType: Into<String>, RoleARNType: Into<String>>
+        (resource_arn: ResourceARNType,
+         role_arn: RoleARNType)
+         -> KinesisStreamsOutput {
+        KinesisStreamsOutput {
+            resource_arn: resource_arn.into(),
+            role_arn: role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> For an application output, describes the Amazon Kinesis stream configured as its destination. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct KinesisStreamsOutputDescription {
@@ -681,7 +1591,6 @@ pub struct KinesisStreamsOutputDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub role_arn: Option<String>,
 }
-
 #[doc="<p> When updating an output configuration using the <a>UpdateApplication</a> operation, provides information about an Amazon Kinesis stream configured as the destination. </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct KinesisStreamsOutputUpdate {
@@ -694,7 +1603,26 @@ pub struct KinesisStreamsOutputUpdate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub role_arn_update: Option<String>,
 }
-
+impl KinesisStreamsOutputUpdate {
+    /// Sets `resource_arn_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisStreamsOutputUpdate.resource_arn_update = Some(value.into());`.
+    pub fn resource_arn_update<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_arn_update = Some(value.into());
+        self
+    }
+    /// Sets `role_arn_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KinesisStreamsOutputUpdate.role_arn_update = Some(value.into());`.
+    pub fn role_arn_update<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn_update = Some(value.into());
+        self
+    }
+    /// Returns a new instance of KinesisStreamsOutputUpdate with optional fields set to `None`.
+    pub fn new() -> KinesisStreamsOutputUpdate {
+        KinesisStreamsOutputUpdate { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListApplicationsRequest {
@@ -707,7 +1635,28 @@ pub struct ListApplicationsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub limit: Option<i64>,
 }
-
+impl ListApplicationsRequest {
+    /// Sets `exclusive_start_application_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListApplicationsRequest.exclusive_start_application_name = Some(value.into());`.
+    pub fn exclusive_start_application_name<ValueType: Into<String>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.exclusive_start_application_name = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListApplicationsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListApplicationsRequest with optional fields set to `None`.
+    pub fn new() -> ListApplicationsRequest {
+        ListApplicationsRequest { ..Default::default() }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListApplicationsResponse {
@@ -718,7 +1667,6 @@ pub struct ListApplicationsResponse {
     #[serde(rename="HasMoreApplications")]
     pub has_more_applications: bool,
 }
-
 #[doc="<p>When configuring application input at the time of creating or updating an application, provides additional mapping information specific to the record format (such as JSON, CSV, or record fields delimited by some delimiter) on the streaming source.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct MappingParameters {
@@ -731,7 +1679,30 @@ pub struct MappingParameters {
     #[serde(skip_serializing_if="Option::is_none")]
     pub json_mapping_parameters: Option<JSONMappingParameters>,
 }
-
+impl MappingParameters {
+    /// Sets `csv_mapping_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MappingParameters.csv_mapping_parameters = Some(value.into());`.
+    pub fn csv_mapping_parameters<ValueType: Into<CSVMappingParameters>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.csv_mapping_parameters = Some(value.into());
+        self
+    }
+    /// Sets `json_mapping_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MappingParameters.json_mapping_parameters = Some(value.into());`.
+    pub fn json_mapping_parameters<ValueType: Into<JSONMappingParameters>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.json_mapping_parameters = Some(value.into());
+        self
+    }
+    /// Returns a new instance of MappingParameters with optional fields set to `None`.
+    pub fn new() -> MappingParameters {
+        MappingParameters { ..Default::default() }
+    }
+}
 #[doc="<p> Describes application output configuration in which you identify an in-application stream and a destination where you want the in-application stream data to be written. The destination can be an Amazon Kinesis stream or an Amazon Kinesis Firehose delivery stream. </p> <p/> <p>For limits on how many destinations an application can write and other limitations, see <a href=\"http://docs.aws.amazon.com/kinesisanalytics/latest/dev/limits.html\">Limits</a>. </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct Output {
@@ -749,7 +1720,53 @@ pub struct Output {
     #[serde(rename="Name")]
     pub name: String,
 }
-
+impl Output {
+    /// Sets `destination_schema`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Output.destination_schema = value.into();`.
+    pub fn destination_schema<ValueType: Into<DestinationSchema>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.destination_schema = value.into();
+        self
+    }
+    /// Sets `kinesis_firehose_output`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Output.kinesis_firehose_output = Some(value.into());`.
+    pub fn kinesis_firehose_output<ValueType: Into<KinesisFirehoseOutput>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.kinesis_firehose_output = Some(value.into());
+        self
+    }
+    /// Sets `kinesis_streams_output`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Output.kinesis_streams_output = Some(value.into());`.
+    pub fn kinesis_streams_output<ValueType: Into<KinesisStreamsOutput>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.kinesis_streams_output = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Output.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of Output with optional fields set to `None`.
+    pub fn new<DestinationSchemaType: Into<DestinationSchema>, NameType: Into<String>>
+        (destination_schema: DestinationSchemaType,
+         name: NameType)
+         -> Output {
+        Output {
+            destination_schema: destination_schema.into(),
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes the application output configuration, which includes the in-application stream name and the destination where the stream data is written. The destination can be an Amazon Kinesis stream or an Amazon Kinesis Firehose delivery stream. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct OutputDescription {
@@ -774,7 +1791,6 @@ pub struct OutputDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub output_id: Option<String>,
 }
-
 #[doc="<p> Describes updates to the output configuration identified by the <code>OutputId</code>. </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct OutputUpdate {
@@ -797,7 +1813,52 @@ pub struct OutputUpdate {
     #[serde(rename="OutputId")]
     pub output_id: String,
 }
-
+impl OutputUpdate {
+    /// Sets `destination_schema_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OutputUpdate.destination_schema_update = Some(value.into());`.
+    pub fn destination_schema_update<ValueType: Into<DestinationSchema>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.destination_schema_update = Some(value.into());
+        self
+    }
+    /// Sets `kinesis_firehose_output_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OutputUpdate.kinesis_firehose_output_update = Some(value.into());`.
+pub fn kinesis_firehose_output_update<ValueType: Into<KinesisFirehoseOutputUpdate>>(mut self, value: ValueType) -> Self{
+        self.kinesis_firehose_output_update = Some(value.into());
+        self
+    }
+    /// Sets `kinesis_streams_output_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OutputUpdate.kinesis_streams_output_update = Some(value.into());`.
+pub fn kinesis_streams_output_update<ValueType: Into<KinesisStreamsOutputUpdate>>(mut self, value: ValueType) -> Self{
+        self.kinesis_streams_output_update = Some(value.into());
+        self
+    }
+    /// Sets `name_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OutputUpdate.name_update = Some(value.into());`.
+    pub fn name_update<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name_update = Some(value.into());
+        self
+    }
+    /// Sets `output_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OutputUpdate.output_id = value.into();`.
+    pub fn output_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.output_id = value.into();
+        self
+    }
+    /// Returns a new instance of OutputUpdate with optional fields set to `None`.
+    pub fn new<OutputIdType: Into<String>>(output_id: OutputIdType) -> OutputUpdate {
+        OutputUpdate {
+            output_id: output_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes the mapping of each data element in the streaming source to the corresponding column in the in-application stream.</p> <p>Also used to describe the format of the reference data source.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct RecordColumn {
@@ -812,7 +1873,39 @@ pub struct RecordColumn {
     #[serde(rename="SqlType")]
     pub sql_type: String,
 }
-
+impl RecordColumn {
+    /// Sets `mapping`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecordColumn.mapping = Some(value.into());`.
+    pub fn mapping<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.mapping = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecordColumn.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `sql_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecordColumn.sql_type = value.into();`.
+    pub fn sql_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sql_type = value.into();
+        self
+    }
+    /// Returns a new instance of RecordColumn with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, SqlTypeType: Into<String>>(name: NameType,
+                                                                  sql_type: SqlTypeType)
+                                                                  -> RecordColumn {
+        RecordColumn {
+            name: name.into(),
+            sql_type: sql_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> Describes the record format and relevant mapping information that should be applied to schematize the records on the stream. </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct RecordFormat {
@@ -823,7 +1916,32 @@ pub struct RecordFormat {
     #[serde(rename="RecordFormatType")]
     pub record_format_type: String,
 }
-
+impl RecordFormat {
+    /// Sets `mapping_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecordFormat.mapping_parameters = Some(value.into());`.
+    pub fn mapping_parameters<ValueType: Into<MappingParameters>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.mapping_parameters = Some(value.into());
+        self
+    }
+    /// Sets `record_format_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RecordFormat.record_format_type = value.into();`.
+    pub fn record_format_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.record_format_type = value.into();
+        self
+    }
+    /// Returns a new instance of RecordFormat with optional fields set to `None`.
+    pub fn new<RecordFormatTypeType: Into<String>>(record_format_type: RecordFormatTypeType)
+                                                   -> RecordFormat {
+        RecordFormat {
+            record_format_type: record_format_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes the reference data source by providing the source information (S3 bucket name and object key name), the resulting in-application table name that is created, and the necessary schema to map the data elements in the Amazon S3 object to the in-application table.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ReferenceDataSource {
@@ -836,7 +1954,42 @@ pub struct ReferenceDataSource {
     #[serde(rename="TableName")]
     pub table_name: String,
 }
-
+impl ReferenceDataSource {
+    /// Sets `reference_schema`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReferenceDataSource.reference_schema = value.into();`.
+    pub fn reference_schema<ValueType: Into<SourceSchema>>(mut self, value: ValueType) -> Self {
+        self.reference_schema = value.into();
+        self
+    }
+    /// Sets `s3_reference_data_source`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReferenceDataSource.s3_reference_data_source = Some(value.into());`.
+    pub fn s3_reference_data_source<ValueType: Into<S3ReferenceDataSource>>(mut self,
+                                                                            value: ValueType)
+                                                                            -> Self {
+        self.s3_reference_data_source = Some(value.into());
+        self
+    }
+    /// Sets `table_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReferenceDataSource.table_name = value.into();`.
+    pub fn table_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.table_name = value.into();
+        self
+    }
+    /// Returns a new instance of ReferenceDataSource with optional fields set to `None`.
+    pub fn new<ReferenceSchemaType: Into<SourceSchema>, TableNameType: Into<String>>
+        (reference_schema: ReferenceSchemaType,
+         table_name: TableNameType)
+         -> ReferenceDataSource {
+        ReferenceDataSource {
+            reference_schema: reference_schema.into(),
+            table_name: table_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes the reference data source configured for an application.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ReferenceDataSourceDescription {
@@ -853,7 +2006,6 @@ pub struct ReferenceDataSourceDescription {
     #[serde(rename="TableName")]
     pub table_name: String,
 }
-
 #[doc="<p>When you update a reference data source configuration for an application, this object provides all the updated values (such as the source bucket name and object key name), the in-application table name that is created, and updated mapping information that maps the data in the Amazon S3 object to the in-application reference table that is created.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ReferenceDataSourceUpdate {
@@ -872,7 +2024,49 @@ pub struct ReferenceDataSourceUpdate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub table_name_update: Option<String>,
 }
-
+impl ReferenceDataSourceUpdate {
+    /// Sets `reference_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReferenceDataSourceUpdate.reference_id = value.into();`.
+    pub fn reference_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reference_id = value.into();
+        self
+    }
+    /// Sets `reference_schema_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReferenceDataSourceUpdate.reference_schema_update = Some(value.into());`.
+    pub fn reference_schema_update<ValueType: Into<SourceSchema>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.reference_schema_update = Some(value.into());
+        self
+    }
+    /// Sets `s3_reference_data_source_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReferenceDataSourceUpdate.s3_reference_data_source_update = Some(value.into());`.
+    pub fn s3_reference_data_source_update<ValueType: Into<S3ReferenceDataSourceUpdate>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.s3_reference_data_source_update = Some(value.into());
+        self
+    }
+    /// Sets `table_name_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReferenceDataSourceUpdate.table_name_update = Some(value.into());`.
+    pub fn table_name_update<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.table_name_update = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ReferenceDataSourceUpdate with optional fields set to `None`.
+    pub fn new<ReferenceIdType: Into<String>>(reference_id: ReferenceIdType)
+                                              -> ReferenceDataSourceUpdate {
+        ReferenceDataSourceUpdate {
+            reference_id: reference_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Identifies the S3 bucket and object that contains the reference data. Also identifies the IAM role Amazon Kinesis Analytics can assume to read this object on your behalf.</p> <p>An Amazon Kinesis Analytics application loads reference data only once. If the data changes, you call the <a>UpdateApplication</a> operation to trigger reloading of data into your application.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct S3ReferenceDataSource {
@@ -886,7 +2080,44 @@ pub struct S3ReferenceDataSource {
     #[serde(rename="ReferenceRoleARN")]
     pub reference_role_arn: String,
 }
-
+impl S3ReferenceDataSource {
+    /// Sets `bucket_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3ReferenceDataSource.bucket_arn = value.into();`.
+    pub fn bucket_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket_arn = value.into();
+        self
+    }
+    /// Sets `file_key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3ReferenceDataSource.file_key = value.into();`.
+    pub fn file_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.file_key = value.into();
+        self
+    }
+    /// Sets `reference_role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3ReferenceDataSource.reference_role_arn = value.into();`.
+    pub fn reference_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reference_role_arn = value.into();
+        self
+    }
+    /// Returns a new instance of S3ReferenceDataSource with optional fields set to `None`.
+    pub fn new<BucketARNType: Into<String>,
+               FileKeyType: Into<String>,
+               ReferenceRoleARNType: Into<String>>
+        (bucket_arn: BucketARNType,
+         file_key: FileKeyType,
+         reference_role_arn: ReferenceRoleARNType)
+         -> S3ReferenceDataSource {
+        S3ReferenceDataSource {
+            bucket_arn: bucket_arn.into(),
+            file_key: file_key.into(),
+            reference_role_arn: reference_role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Provides the bucket name and object key name that stores the reference data.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct S3ReferenceDataSourceDescription {
@@ -900,7 +2131,6 @@ pub struct S3ReferenceDataSourceDescription {
     #[serde(rename="ReferenceRoleARN")]
     pub reference_role_arn: String,
 }
-
 #[doc="<p>Describes the S3 bucket name, object key name, and IAM role that Amazon Kinesis Analytics can assume to read the Amazon S3 object on your behalf and populate the in-application reference table.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct S3ReferenceDataSourceUpdate {
@@ -917,7 +2147,33 @@ pub struct S3ReferenceDataSourceUpdate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub reference_role_arn_update: Option<String>,
 }
-
+impl S3ReferenceDataSourceUpdate {
+    /// Sets `bucket_arn_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3ReferenceDataSourceUpdate.bucket_arn_update = Some(value.into());`.
+    pub fn bucket_arn_update<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bucket_arn_update = Some(value.into());
+        self
+    }
+    /// Sets `file_key_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3ReferenceDataSourceUpdate.file_key_update = Some(value.into());`.
+    pub fn file_key_update<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.file_key_update = Some(value.into());
+        self
+    }
+    /// Sets `reference_role_arn_update`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `S3ReferenceDataSourceUpdate.reference_role_arn_update = Some(value.into());`.
+    pub fn reference_role_arn_update<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reference_role_arn_update = Some(value.into());
+        self
+    }
+    /// Returns a new instance of S3ReferenceDataSourceUpdate with optional fields set to `None`.
+    pub fn new() -> S3ReferenceDataSourceUpdate {
+        S3ReferenceDataSourceUpdate { ..Default::default() }
+    }
+}
 #[doc="<p>Describes the format of the data in the streaming source, and how each data element maps to corresponding columns created in the in-application stream.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct SourceSchema {
@@ -932,7 +2188,40 @@ pub struct SourceSchema {
     #[serde(rename="RecordFormat")]
     pub record_format: RecordFormat,
 }
-
+impl SourceSchema {
+    /// Sets `record_columns`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SourceSchema.record_columns = value.into();`.
+    pub fn record_columns<ValueType: Into<Vec<RecordColumn>>>(mut self, value: ValueType) -> Self {
+        self.record_columns = value.into();
+        self
+    }
+    /// Sets `record_encoding`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SourceSchema.record_encoding = Some(value.into());`.
+    pub fn record_encoding<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.record_encoding = Some(value.into());
+        self
+    }
+    /// Sets `record_format`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SourceSchema.record_format = value.into();`.
+    pub fn record_format<ValueType: Into<RecordFormat>>(mut self, value: ValueType) -> Self {
+        self.record_format = value.into();
+        self
+    }
+    /// Returns a new instance of SourceSchema with optional fields set to `None`.
+    pub fn new<RecordColumnsType: Into<Vec<RecordColumn>>, RecordFormatType: Into<RecordFormat>>
+        (record_columns: RecordColumnsType,
+         record_format: RecordFormatType)
+         -> SourceSchema {
+        SourceSchema {
+            record_columns: record_columns.into(),
+            record_format: record_format.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartApplicationRequest {
@@ -943,7 +2232,36 @@ pub struct StartApplicationRequest {
     #[serde(rename="InputConfigurations")]
     pub input_configurations: Vec<InputConfiguration>,
 }
-
+impl StartApplicationRequest {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartApplicationRequest.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `input_configurations`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartApplicationRequest.input_configurations = value.into();`.
+    pub fn input_configurations<ValueType: Into<Vec<InputConfiguration>>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.input_configurations = value.into();
+        self
+    }
+    /// Returns a new instance of StartApplicationRequest with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>,
+               InputConfigurationsType: Into<Vec<InputConfiguration>>>
+        (application_name: ApplicationNameType,
+         input_configurations: InputConfigurationsType)
+         -> StartApplicationRequest {
+        StartApplicationRequest {
+            application_name: application_name.into(),
+            input_configurations: input_configurations.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartApplicationResponse;
@@ -955,7 +2273,23 @@ pub struct StopApplicationRequest {
     #[serde(rename="ApplicationName")]
     pub application_name: String,
 }
-
+impl StopApplicationRequest {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopApplicationRequest.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Returns a new instance of StopApplicationRequest with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>>(application_name: ApplicationNameType)
+                                                  -> StopApplicationRequest {
+        StopApplicationRequest {
+            application_name: application_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StopApplicationResponse;
@@ -972,7 +2306,48 @@ pub struct UpdateApplicationRequest {
     #[serde(rename="CurrentApplicationVersionId")]
     pub current_application_version_id: i64,
 }
-
+impl UpdateApplicationRequest {
+    /// Sets `application_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateApplicationRequest.application_name = value.into();`.
+    pub fn application_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.application_name = value.into();
+        self
+    }
+    /// Sets `application_update`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateApplicationRequest.application_update = value.into();`.
+    pub fn application_update<ValueType: Into<ApplicationUpdate>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.application_update = value.into();
+        self
+    }
+    /// Sets `current_application_version_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateApplicationRequest.current_application_version_id = value.into();`.
+    pub fn current_application_version_id<ValueType: Into<i64>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.current_application_version_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateApplicationRequest with optional fields set to `None`.
+    pub fn new<ApplicationNameType: Into<String>,
+               ApplicationUpdateType: Into<ApplicationUpdate>,
+               CurrentApplicationVersionIdType: Into<i64>>
+        (application_name: ApplicationNameType,
+         application_update: ApplicationUpdateType,
+         current_application_version_id: CurrentApplicationVersionIdType)
+         -> UpdateApplicationRequest {
+        UpdateApplicationRequest {
+            application_name: application_name.into(),
+            application_update: application_update.into(),
+            current_application_version_id: current_application_version_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateApplicationResponse;
 

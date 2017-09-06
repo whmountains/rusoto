@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -34,7 +35,22 @@ pub struct CancelExportTaskRequest {
     #[serde(rename="taskId")]
     pub task_id: String,
 }
-
+impl CancelExportTaskRequest {
+    /// Sets `task_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelExportTaskRequest.task_id = value.into();`.
+    pub fn task_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_id = value.into();
+        self
+    }
+    /// Returns a new instance of CancelExportTaskRequest with optional fields set to `None`.
+    pub fn new<taskIdType: Into<String>>(task_id: taskIdType) -> CancelExportTaskRequest {
+        CancelExportTaskRequest {
+            task_id: task_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateExportTaskRequest {
     #[doc="<p>The name of S3 bucket for the exported log data. The bucket must be in the same AWS region.</p>"]
@@ -62,7 +78,75 @@ pub struct CreateExportTaskRequest {
     #[serde(rename="to")]
     pub to: i64,
 }
-
+impl CreateExportTaskRequest {
+    /// Sets `destination`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateExportTaskRequest.destination = value.into();`.
+    pub fn destination<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination = value.into();
+        self
+    }
+    /// Sets `destination_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateExportTaskRequest.destination_prefix = Some(value.into());`.
+    pub fn destination_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination_prefix = Some(value.into());
+        self
+    }
+    /// Sets `from`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateExportTaskRequest.from = value.into();`.
+    pub fn from<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.from = value.into();
+        self
+    }
+    /// Sets `log_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateExportTaskRequest.log_group_name = value.into();`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = value.into();
+        self
+    }
+    /// Sets `log_stream_name_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateExportTaskRequest.log_stream_name_prefix = Some(value.into());`.
+    pub fn log_stream_name_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_stream_name_prefix = Some(value.into());
+        self
+    }
+    /// Sets `task_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateExportTaskRequest.task_name = Some(value.into());`.
+    pub fn task_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_name = Some(value.into());
+        self
+    }
+    /// Sets `to`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateExportTaskRequest.to = value.into();`.
+    pub fn to<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.to = value.into();
+        self
+    }
+    /// Returns a new instance of CreateExportTaskRequest with optional fields set to `None`.
+    pub fn new<destinationType: Into<String>,
+               fromType: Into<i64>,
+               logGroupNameType: Into<String>,
+               toType: Into<i64>>
+        (destination: destinationType,
+         from: fromType,
+         log_group_name: logGroupNameType,
+         to: toType)
+         -> CreateExportTaskRequest {
+        CreateExportTaskRequest {
+            destination: destination.into(),
+            from: from.into(),
+            log_group_name: log_group_name.into(),
+            to: to.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateExportTaskResponse {
     #[doc="<p>The ID of the export task.</p>"]
@@ -70,7 +154,6 @@ pub struct CreateExportTaskResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub task_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateLogGroupRequest {
     #[doc="<p>The name of the log group.</p>"]
@@ -81,7 +164,32 @@ pub struct CreateLogGroupRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<::std::collections::HashMap<String, String>>,
 }
-
+impl CreateLogGroupRequest {
+    /// Sets `log_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLogGroupRequest.log_group_name = value.into();`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLogGroupRequest.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateLogGroupRequest with optional fields set to `None`.
+    pub fn new<logGroupNameType: Into<String>>(log_group_name: logGroupNameType)
+                                               -> CreateLogGroupRequest {
+        CreateLogGroupRequest {
+            log_group_name: log_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateLogStreamRequest {
     #[doc="<p>The name of the log group.</p>"]
@@ -91,21 +199,79 @@ pub struct CreateLogStreamRequest {
     #[serde(rename="logStreamName")]
     pub log_stream_name: String,
 }
-
+impl CreateLogStreamRequest {
+    /// Sets `log_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLogStreamRequest.log_group_name = value.into();`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = value.into();
+        self
+    }
+    /// Sets `log_stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateLogStreamRequest.log_stream_name = value.into();`.
+    pub fn log_stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_stream_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateLogStreamRequest with optional fields set to `None`.
+    pub fn new<logGroupNameType: Into<String>, logStreamNameType: Into<String>>
+        (log_group_name: logGroupNameType,
+         log_stream_name: logStreamNameType)
+         -> CreateLogStreamRequest {
+        CreateLogStreamRequest {
+            log_group_name: log_group_name.into(),
+            log_stream_name: log_stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteDestinationRequest {
     #[doc="<p>The name of the destination.</p>"]
     #[serde(rename="destinationName")]
     pub destination_name: String,
 }
-
+impl DeleteDestinationRequest {
+    /// Sets `destination_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDestinationRequest.destination_name = value.into();`.
+    pub fn destination_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDestinationRequest with optional fields set to `None`.
+    pub fn new<destinationNameType: Into<String>>(destination_name: destinationNameType)
+                                                  -> DeleteDestinationRequest {
+        DeleteDestinationRequest {
+            destination_name: destination_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteLogGroupRequest {
     #[doc="<p>The name of the log group.</p>"]
     #[serde(rename="logGroupName")]
     pub log_group_name: String,
 }
-
+impl DeleteLogGroupRequest {
+    /// Sets `log_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteLogGroupRequest.log_group_name = value.into();`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteLogGroupRequest with optional fields set to `None`.
+    pub fn new<logGroupNameType: Into<String>>(log_group_name: logGroupNameType)
+                                               -> DeleteLogGroupRequest {
+        DeleteLogGroupRequest {
+            log_group_name: log_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteLogStreamRequest {
     #[doc="<p>The name of the log group.</p>"]
@@ -115,7 +281,33 @@ pub struct DeleteLogStreamRequest {
     #[serde(rename="logStreamName")]
     pub log_stream_name: String,
 }
-
+impl DeleteLogStreamRequest {
+    /// Sets `log_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteLogStreamRequest.log_group_name = value.into();`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = value.into();
+        self
+    }
+    /// Sets `log_stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteLogStreamRequest.log_stream_name = value.into();`.
+    pub fn log_stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_stream_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteLogStreamRequest with optional fields set to `None`.
+    pub fn new<logGroupNameType: Into<String>, logStreamNameType: Into<String>>
+        (log_group_name: logGroupNameType,
+         log_stream_name: logStreamNameType)
+         -> DeleteLogStreamRequest {
+        DeleteLogStreamRequest {
+            log_group_name: log_group_name.into(),
+            log_stream_name: log_stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteMetricFilterRequest {
     #[doc="<p>The name of the metric filter.</p>"]
@@ -125,14 +317,56 @@ pub struct DeleteMetricFilterRequest {
     #[serde(rename="logGroupName")]
     pub log_group_name: String,
 }
-
+impl DeleteMetricFilterRequest {
+    /// Sets `filter_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteMetricFilterRequest.filter_name = value.into();`.
+    pub fn filter_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter_name = value.into();
+        self
+    }
+    /// Sets `log_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteMetricFilterRequest.log_group_name = value.into();`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteMetricFilterRequest with optional fields set to `None`.
+    pub fn new<filterNameType: Into<String>, logGroupNameType: Into<String>>
+        (filter_name: filterNameType,
+         log_group_name: logGroupNameType)
+         -> DeleteMetricFilterRequest {
+        DeleteMetricFilterRequest {
+            filter_name: filter_name.into(),
+            log_group_name: log_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteRetentionPolicyRequest {
     #[doc="<p>The name of the log group.</p>"]
     #[serde(rename="logGroupName")]
     pub log_group_name: String,
 }
-
+impl DeleteRetentionPolicyRequest {
+    /// Sets `log_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRetentionPolicyRequest.log_group_name = value.into();`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteRetentionPolicyRequest with optional fields set to `None`.
+    pub fn new<logGroupNameType: Into<String>>(log_group_name: logGroupNameType)
+                                               -> DeleteRetentionPolicyRequest {
+        DeleteRetentionPolicyRequest {
+            log_group_name: log_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteSubscriptionFilterRequest {
     #[doc="<p>The name of the subscription filter.</p>"]
@@ -142,7 +376,33 @@ pub struct DeleteSubscriptionFilterRequest {
     #[serde(rename="logGroupName")]
     pub log_group_name: String,
 }
-
+impl DeleteSubscriptionFilterRequest {
+    /// Sets `filter_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSubscriptionFilterRequest.filter_name = value.into();`.
+    pub fn filter_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter_name = value.into();
+        self
+    }
+    /// Sets `log_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSubscriptionFilterRequest.log_group_name = value.into();`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteSubscriptionFilterRequest with optional fields set to `None`.
+    pub fn new<filterNameType: Into<String>, logGroupNameType: Into<String>>
+        (filter_name: filterNameType,
+         log_group_name: logGroupNameType)
+         -> DeleteSubscriptionFilterRequest {
+        DeleteSubscriptionFilterRequest {
+            filter_name: filter_name.into(),
+            log_group_name: log_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeDestinationsRequest {
     #[doc="<p>The prefix to match. If you don't specify a value, no prefix filter is applied.</p>"]
@@ -158,7 +418,33 @@ pub struct DescribeDestinationsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeDestinationsRequest {
+    /// Sets `destination_name_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDestinationsRequest.destination_name_prefix = Some(value.into());`.
+    pub fn destination_name_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination_name_prefix = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDestinationsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDestinationsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDestinationsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeDestinationsRequest {
+        DescribeDestinationsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeDestinationsResponse {
     #[doc="<p>The destinations.</p>"]
@@ -169,7 +455,6 @@ pub struct DescribeDestinationsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeExportTasksRequest {
     #[doc="<p>The maximum number of items returned. If you don't specify a value, the default is up to 50 items.</p>"]
@@ -189,7 +474,40 @@ pub struct DescribeExportTasksRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub task_id: Option<String>,
 }
-
+impl DescribeExportTasksRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeExportTasksRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeExportTasksRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `status_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeExportTasksRequest.status_code = Some(value.into());`.
+    pub fn status_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status_code = Some(value.into());
+        self
+    }
+    /// Sets `task_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeExportTasksRequest.task_id = Some(value.into());`.
+    pub fn task_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.task_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeExportTasksRequest with optional fields set to `None`.
+    pub fn new() -> DescribeExportTasksRequest {
+        DescribeExportTasksRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeExportTasksResponse {
     #[doc="<p>The export tasks.</p>"]
@@ -200,7 +518,6 @@ pub struct DescribeExportTasksResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeLogGroupsRequest {
     #[doc="<p>The maximum number of items returned. If you don't specify a value, the default is up to 50 items.</p>"]
@@ -216,7 +533,33 @@ pub struct DescribeLogGroupsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeLogGroupsRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLogGroupsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `log_group_name_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLogGroupsRequest.log_group_name_prefix = Some(value.into());`.
+    pub fn log_group_name_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name_prefix = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLogGroupsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeLogGroupsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeLogGroupsRequest {
+        DescribeLogGroupsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeLogGroupsResponse {
     #[doc="<p>The log groups.</p>"]
@@ -227,7 +570,6 @@ pub struct DescribeLogGroupsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeLogStreamsRequest {
     #[doc="<p>If the value is true, results are returned in descending order. If the value is to false, results are returned in ascending order. The default value is false.</p>"]
@@ -254,7 +596,58 @@ pub struct DescribeLogStreamsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub order_by: Option<String>,
 }
-
+impl DescribeLogStreamsRequest {
+    /// Sets `descending`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLogStreamsRequest.descending = Some(value.into());`.
+    pub fn descending<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.descending = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLogStreamsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `log_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLogStreamsRequest.log_group_name = value.into();`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = value.into();
+        self
+    }
+    /// Sets `log_stream_name_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLogStreamsRequest.log_stream_name_prefix = Some(value.into());`.
+    pub fn log_stream_name_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_stream_name_prefix = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLogStreamsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `order_by`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeLogStreamsRequest.order_by = Some(value.into());`.
+    pub fn order_by<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.order_by = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeLogStreamsRequest with optional fields set to `None`.
+    pub fn new<logGroupNameType: Into<String>>(log_group_name: logGroupNameType)
+                                               -> DescribeLogStreamsRequest {
+        DescribeLogStreamsRequest {
+            log_group_name: log_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeLogStreamsResponse {
     #[doc="<p>The log streams.</p>"]
@@ -265,7 +658,6 @@ pub struct DescribeLogStreamsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeMetricFiltersRequest {
     #[doc="<p>The prefix to match.</p>"]
@@ -293,7 +685,54 @@ pub struct DescribeMetricFiltersRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeMetricFiltersRequest {
+    /// Sets `filter_name_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMetricFiltersRequest.filter_name_prefix = Some(value.into());`.
+    pub fn filter_name_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter_name_prefix = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMetricFiltersRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `log_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMetricFiltersRequest.log_group_name = Some(value.into());`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = Some(value.into());
+        self
+    }
+    /// Sets `metric_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMetricFiltersRequest.metric_name = Some(value.into());`.
+    pub fn metric_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_name = Some(value.into());
+        self
+    }
+    /// Sets `metric_namespace`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMetricFiltersRequest.metric_namespace = Some(value.into());`.
+    pub fn metric_namespace<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_namespace = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeMetricFiltersRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeMetricFiltersRequest with optional fields set to `None`.
+    pub fn new() -> DescribeMetricFiltersRequest {
+        DescribeMetricFiltersRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeMetricFiltersResponse {
     #[doc="<p>The metric filters.</p>"]
@@ -304,7 +743,6 @@ pub struct DescribeMetricFiltersResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeSubscriptionFiltersRequest {
     #[doc="<p>The prefix to match. If you don't specify a value, no prefix filter is applied.</p>"]
@@ -323,7 +761,44 @@ pub struct DescribeSubscriptionFiltersRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeSubscriptionFiltersRequest {
+    /// Sets `filter_name_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSubscriptionFiltersRequest.filter_name_prefix = Some(value.into());`.
+    pub fn filter_name_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter_name_prefix = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSubscriptionFiltersRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `log_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSubscriptionFiltersRequest.log_group_name = value.into();`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSubscriptionFiltersRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeSubscriptionFiltersRequest with optional fields set to `None`.
+    pub fn new<logGroupNameType: Into<String>>(log_group_name: logGroupNameType)
+                                               -> DescribeSubscriptionFiltersRequest {
+        DescribeSubscriptionFiltersRequest {
+            log_group_name: log_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeSubscriptionFiltersResponse {
     #[serde(rename="nextToken")]
@@ -334,7 +809,6 @@ pub struct DescribeSubscriptionFiltersResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub subscription_filters: Option<Vec<SubscriptionFilter>>,
 }
-
 #[doc="<p>Represents a cross-account destination that receives subscription log events.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Destination {
@@ -363,7 +837,6 @@ pub struct Destination {
     #[serde(skip_serializing_if="Option::is_none")]
     pub target_arn: Option<String>,
 }
-
 #[doc="<p>Represents an export task.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ExportTask {
@@ -404,7 +877,6 @@ pub struct ExportTask {
     #[serde(skip_serializing_if="Option::is_none")]
     pub to: Option<i64>,
 }
-
 #[doc="<p>Represents the status of an export task.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ExportTaskExecutionInfo {
@@ -417,7 +889,6 @@ pub struct ExportTaskExecutionInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub creation_time: Option<i64>,
 }
-
 #[doc="<p>Represents the status of an export task.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ExportTaskStatus {
@@ -430,7 +901,6 @@ pub struct ExportTaskStatus {
     #[serde(skip_serializing_if="Option::is_none")]
     pub message: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct FilterLogEventsRequest {
     #[doc="<p>The end of the time range, expressed as the number of milliseconds since Jan 1, 1970 00:00:00 UTC. Events with a timestamp later than this time are not returned.</p>"]
@@ -465,7 +935,72 @@ pub struct FilterLogEventsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub start_time: Option<i64>,
 }
-
+impl FilterLogEventsRequest {
+    /// Sets `end_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FilterLogEventsRequest.end_time = Some(value.into());`.
+    pub fn end_time<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.end_time = Some(value.into());
+        self
+    }
+    /// Sets `filter_pattern`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FilterLogEventsRequest.filter_pattern = Some(value.into());`.
+    pub fn filter_pattern<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter_pattern = Some(value.into());
+        self
+    }
+    /// Sets `interleaved`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FilterLogEventsRequest.interleaved = Some(value.into());`.
+    pub fn interleaved<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.interleaved = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FilterLogEventsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `log_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FilterLogEventsRequest.log_group_name = value.into();`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = value.into();
+        self
+    }
+    /// Sets `log_stream_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FilterLogEventsRequest.log_stream_names = Some(value.into());`.
+    pub fn log_stream_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.log_stream_names = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FilterLogEventsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `start_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FilterLogEventsRequest.start_time = Some(value.into());`.
+    pub fn start_time<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.start_time = Some(value.into());
+        self
+    }
+    /// Returns a new instance of FilterLogEventsRequest with optional fields set to `None`.
+    pub fn new<logGroupNameType: Into<String>>(log_group_name: logGroupNameType)
+                                               -> FilterLogEventsRequest {
+        FilterLogEventsRequest {
+            log_group_name: log_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct FilterLogEventsResponse {
     #[doc="<p>The matched events.</p>"]
@@ -481,7 +1016,6 @@ pub struct FilterLogEventsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub searched_log_streams: Option<Vec<SearchedLogStream>>,
 }
-
 #[doc="<p>Represents a matched event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct FilteredLogEvent {
@@ -506,7 +1040,6 @@ pub struct FilteredLogEvent {
     #[serde(skip_serializing_if="Option::is_none")]
     pub timestamp: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetLogEventsRequest {
     #[doc="<p>The end of the time range, expressed as the number of milliseconds since Jan 1, 1970 00:00:00 UTC. Events with a timestamp later than this time are not included.</p>"]
@@ -536,7 +1069,68 @@ pub struct GetLogEventsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub start_time: Option<i64>,
 }
-
+impl GetLogEventsRequest {
+    /// Sets `end_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetLogEventsRequest.end_time = Some(value.into());`.
+    pub fn end_time<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.end_time = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetLogEventsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `log_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetLogEventsRequest.log_group_name = value.into();`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = value.into();
+        self
+    }
+    /// Sets `log_stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetLogEventsRequest.log_stream_name = value.into();`.
+    pub fn log_stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_stream_name = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetLogEventsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `start_from_head`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetLogEventsRequest.start_from_head = Some(value.into());`.
+    pub fn start_from_head<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.start_from_head = Some(value.into());
+        self
+    }
+    /// Sets `start_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetLogEventsRequest.start_time = Some(value.into());`.
+    pub fn start_time<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.start_time = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetLogEventsRequest with optional fields set to `None`.
+    pub fn new<logGroupNameType: Into<String>, logStreamNameType: Into<String>>
+        (log_group_name: logGroupNameType,
+         log_stream_name: logStreamNameType)
+         -> GetLogEventsRequest {
+        GetLogEventsRequest {
+            log_group_name: log_group_name.into(),
+            log_stream_name: log_stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetLogEventsResponse {
     #[doc="<p>The events.</p>"]
@@ -552,7 +1146,6 @@ pub struct GetLogEventsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_forward_token: Option<String>,
 }
-
 #[doc="<p>Represents a log event, which is a record of activity that was recorded by the application or resource being monitored.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InputLogEvent {
@@ -563,14 +1156,55 @@ pub struct InputLogEvent {
     #[serde(rename="timestamp")]
     pub timestamp: i64,
 }
-
+impl InputLogEvent {
+    /// Sets `message`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InputLogEvent.message = value.into();`.
+    pub fn message<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.message = value.into();
+        self
+    }
+    /// Sets `timestamp`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InputLogEvent.timestamp = value.into();`.
+    pub fn timestamp<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.timestamp = value.into();
+        self
+    }
+    /// Returns a new instance of InputLogEvent with optional fields set to `None`.
+    pub fn new<messageType: Into<String>, timestampType: Into<i64>>(message: messageType,
+                                                                    timestamp: timestampType)
+                                                                    -> InputLogEvent {
+        InputLogEvent {
+            message: message.into(),
+            timestamp: timestamp.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTagsLogGroupRequest {
     #[doc="<p>The name of the log group.</p>"]
     #[serde(rename="logGroupName")]
     pub log_group_name: String,
 }
-
+impl ListTagsLogGroupRequest {
+    /// Sets `log_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsLogGroupRequest.log_group_name = value.into();`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListTagsLogGroupRequest with optional fields set to `None`.
+    pub fn new<logGroupNameType: Into<String>>(log_group_name: logGroupNameType)
+                                               -> ListTagsLogGroupRequest {
+        ListTagsLogGroupRequest {
+            log_group_name: log_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTagsLogGroupResponse {
     #[doc="<p>The tags.</p>"]
@@ -578,7 +1212,6 @@ pub struct ListTagsLogGroupResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<::std::collections::HashMap<String, String>>,
 }
-
 #[doc="<p>Represents a log group.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LogGroup {
@@ -606,7 +1239,6 @@ pub struct LogGroup {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stored_bytes: Option<i64>,
 }
-
 #[doc="<p>Represents a log stream, which is a sequence of log events from a single emitter of logs.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct LogStream {
@@ -643,7 +1275,6 @@ pub struct LogStream {
     #[serde(skip_serializing_if="Option::is_none")]
     pub upload_sequence_token: Option<String>,
 }
-
 #[doc="<p>Metric filters express how CloudWatch Logs would extract metric observations from ingested log events and transform them into metric data in a CloudWatch metric.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MetricFilter {
@@ -667,7 +1298,6 @@ pub struct MetricFilter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub metric_transformations: Option<Vec<MetricTransformation>>,
 }
-
 #[doc="<p>Represents a matched event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MetricFilterMatchRecord {
@@ -684,7 +1314,6 @@ pub struct MetricFilterMatchRecord {
     #[serde(skip_serializing_if="Option::is_none")]
     pub extracted_values: Option<::std::collections::HashMap<String, String>>,
 }
-
 #[doc="<p>Indicates how to transform ingested log events into metric data in a CloudWatch metric.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct MetricTransformation {
@@ -702,7 +1331,51 @@ pub struct MetricTransformation {
     #[serde(rename="metricValue")]
     pub metric_value: String,
 }
-
+impl MetricTransformation {
+    /// Sets `default_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MetricTransformation.default_value = Some(value.into());`.
+    pub fn default_value<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.default_value = Some(value.into());
+        self
+    }
+    /// Sets `metric_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MetricTransformation.metric_name = value.into();`.
+    pub fn metric_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_name = value.into();
+        self
+    }
+    /// Sets `metric_namespace`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MetricTransformation.metric_namespace = value.into();`.
+    pub fn metric_namespace<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_namespace = value.into();
+        self
+    }
+    /// Sets `metric_value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MetricTransformation.metric_value = value.into();`.
+    pub fn metric_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.metric_value = value.into();
+        self
+    }
+    /// Returns a new instance of MetricTransformation with optional fields set to `None`.
+    pub fn new<metricNameType: Into<String>,
+               metricNamespaceType: Into<String>,
+               metricValueType: Into<String>>
+        (metric_name: metricNameType,
+         metric_namespace: metricNamespaceType,
+         metric_value: metricValueType)
+         -> MetricTransformation {
+        MetricTransformation {
+            metric_name: metric_name.into(),
+            metric_namespace: metric_namespace.into(),
+            metric_value: metric_value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents a log event.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct OutputLogEvent {
@@ -719,7 +1392,6 @@ pub struct OutputLogEvent {
     #[serde(skip_serializing_if="Option::is_none")]
     pub timestamp: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutDestinationPolicyRequest {
     #[doc="<p>An IAM policy document that authorizes cross-account users to deliver their log events to the associated destination.</p>"]
@@ -729,7 +1401,33 @@ pub struct PutDestinationPolicyRequest {
     #[serde(rename="destinationName")]
     pub destination_name: String,
 }
-
+impl PutDestinationPolicyRequest {
+    /// Sets `access_policy`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutDestinationPolicyRequest.access_policy = value.into();`.
+    pub fn access_policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.access_policy = value.into();
+        self
+    }
+    /// Sets `destination_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutDestinationPolicyRequest.destination_name = value.into();`.
+    pub fn destination_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination_name = value.into();
+        self
+    }
+    /// Returns a new instance of PutDestinationPolicyRequest with optional fields set to `None`.
+    pub fn new<accessPolicyType: Into<String>, destinationNameType: Into<String>>
+        (access_policy: accessPolicyType,
+         destination_name: destinationNameType)
+         -> PutDestinationPolicyRequest {
+        PutDestinationPolicyRequest {
+            access_policy: access_policy.into(),
+            destination_name: destination_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutDestinationRequest {
     #[doc="<p>A name for the destination.</p>"]
@@ -742,7 +1440,44 @@ pub struct PutDestinationRequest {
     #[serde(rename="targetArn")]
     pub target_arn: String,
 }
-
+impl PutDestinationRequest {
+    /// Sets `destination_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutDestinationRequest.destination_name = value.into();`.
+    pub fn destination_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination_name = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutDestinationRequest.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Sets `target_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutDestinationRequest.target_arn = value.into();`.
+    pub fn target_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_arn = value.into();
+        self
+    }
+    /// Returns a new instance of PutDestinationRequest with optional fields set to `None`.
+    pub fn new<destinationNameType: Into<String>,
+               roleArnType: Into<String>,
+               targetArnType: Into<String>>
+        (destination_name: destinationNameType,
+         role_arn: roleArnType,
+         target_arn: targetArnType)
+         -> PutDestinationRequest {
+        PutDestinationRequest {
+            destination_name: destination_name.into(),
+            role_arn: role_arn.into(),
+            target_arn: target_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutDestinationResponse {
     #[doc="<p>The destination.</p>"]
@@ -750,7 +1485,6 @@ pub struct PutDestinationResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub destination: Option<Destination>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutLogEventsRequest {
     #[doc="<p>The log events.</p>"]
@@ -767,7 +1501,51 @@ pub struct PutLogEventsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sequence_token: Option<String>,
 }
-
+impl PutLogEventsRequest {
+    /// Sets `log_events`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutLogEventsRequest.log_events = value.into();`.
+    pub fn log_events<ValueType: Into<Vec<InputLogEvent>>>(mut self, value: ValueType) -> Self {
+        self.log_events = value.into();
+        self
+    }
+    /// Sets `log_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutLogEventsRequest.log_group_name = value.into();`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = value.into();
+        self
+    }
+    /// Sets `log_stream_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutLogEventsRequest.log_stream_name = value.into();`.
+    pub fn log_stream_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_stream_name = value.into();
+        self
+    }
+    /// Sets `sequence_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutLogEventsRequest.sequence_token = Some(value.into());`.
+    pub fn sequence_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sequence_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PutLogEventsRequest with optional fields set to `None`.
+    pub fn new<logEventsType: Into<Vec<InputLogEvent>>,
+               logGroupNameType: Into<String>,
+               logStreamNameType: Into<String>>
+        (log_events: logEventsType,
+         log_group_name: logGroupNameType,
+         log_stream_name: logStreamNameType)
+         -> PutLogEventsRequest {
+        PutLogEventsRequest {
+            log_events: log_events.into(),
+            log_group_name: log_group_name.into(),
+            log_stream_name: log_stream_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PutLogEventsResponse {
     #[doc="<p>The next sequence token.</p>"]
@@ -779,7 +1557,6 @@ pub struct PutLogEventsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rejected_log_events_info: Option<RejectedLogEventsInfo>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutMetricFilterRequest {
     #[doc="<p>A name for the metric filter.</p>"]
@@ -795,7 +1572,56 @@ pub struct PutMetricFilterRequest {
     #[serde(rename="metricTransformations")]
     pub metric_transformations: Vec<MetricTransformation>,
 }
-
+impl PutMetricFilterRequest {
+    /// Sets `filter_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricFilterRequest.filter_name = value.into();`.
+    pub fn filter_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter_name = value.into();
+        self
+    }
+    /// Sets `filter_pattern`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricFilterRequest.filter_pattern = value.into();`.
+    pub fn filter_pattern<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter_pattern = value.into();
+        self
+    }
+    /// Sets `log_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricFilterRequest.log_group_name = value.into();`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = value.into();
+        self
+    }
+    /// Sets `metric_transformations`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutMetricFilterRequest.metric_transformations = value.into();`.
+    pub fn metric_transformations<ValueType: Into<Vec<MetricTransformation>>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.metric_transformations = value.into();
+        self
+    }
+    /// Returns a new instance of PutMetricFilterRequest with optional fields set to `None`.
+    pub fn new<filterNameType: Into<String>,
+               filterPatternType: Into<String>,
+               logGroupNameType: Into<String>,
+               metricTransformationsType: Into<Vec<MetricTransformation>>>
+        (filter_name: filterNameType,
+         filter_pattern: filterPatternType,
+         log_group_name: logGroupNameType,
+         metric_transformations: metricTransformationsType)
+         -> PutMetricFilterRequest {
+        PutMetricFilterRequest {
+            filter_name: filter_name.into(),
+            filter_pattern: filter_pattern.into(),
+            log_group_name: log_group_name.into(),
+            metric_transformations: metric_transformations.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutRetentionPolicyRequest {
     #[doc="<p>The name of the log group.</p>"]
@@ -804,7 +1630,33 @@ pub struct PutRetentionPolicyRequest {
     #[serde(rename="retentionInDays")]
     pub retention_in_days: i64,
 }
-
+impl PutRetentionPolicyRequest {
+    /// Sets `log_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRetentionPolicyRequest.log_group_name = value.into();`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = value.into();
+        self
+    }
+    /// Sets `retention_in_days`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutRetentionPolicyRequest.retention_in_days = value.into();`.
+    pub fn retention_in_days<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.retention_in_days = value.into();
+        self
+    }
+    /// Returns a new instance of PutRetentionPolicyRequest with optional fields set to `None`.
+    pub fn new<logGroupNameType: Into<String>, retentionInDaysType: Into<i64>>
+        (log_group_name: logGroupNameType,
+         retention_in_days: retentionInDaysType)
+         -> PutRetentionPolicyRequest {
+        PutRetentionPolicyRequest {
+            log_group_name: log_group_name.into(),
+            retention_in_days: retention_in_days.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutSubscriptionFilterRequest {
     #[doc="<p>The ARN of the destination to deliver matching log events to. Currently, the supported destinations are:</p> <ul> <li> <p>An Amazon Kinesis stream belonging to the same account as the subscription filter, for same-account delivery.</p> </li> <li> <p>A logical destination (specified using an ARN) belonging to a different account, for cross-account delivery.</p> </li> <li> <p>An Amazon Kinesis Firehose stream belonging to the same account as the subscription filter, for same-account delivery.</p> </li> <li> <p>An AWS Lambda function belonging to the same account as the subscription filter, for same-account delivery.</p> </li> </ul>"]
@@ -828,7 +1680,68 @@ pub struct PutSubscriptionFilterRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub role_arn: Option<String>,
 }
-
+impl PutSubscriptionFilterRequest {
+    /// Sets `destination_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutSubscriptionFilterRequest.destination_arn = value.into();`.
+    pub fn destination_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination_arn = value.into();
+        self
+    }
+    /// Sets `distribution`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutSubscriptionFilterRequest.distribution = Some(value.into());`.
+    pub fn distribution<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.distribution = Some(value.into());
+        self
+    }
+    /// Sets `filter_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutSubscriptionFilterRequest.filter_name = value.into();`.
+    pub fn filter_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter_name = value.into();
+        self
+    }
+    /// Sets `filter_pattern`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutSubscriptionFilterRequest.filter_pattern = value.into();`.
+    pub fn filter_pattern<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter_pattern = value.into();
+        self
+    }
+    /// Sets `log_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutSubscriptionFilterRequest.log_group_name = value.into();`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = value.into();
+        self
+    }
+    /// Sets `role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutSubscriptionFilterRequest.role_arn = Some(value.into());`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PutSubscriptionFilterRequest with optional fields set to `None`.
+    pub fn new<destinationArnType: Into<String>,
+               filterNameType: Into<String>,
+               filterPatternType: Into<String>,
+               logGroupNameType: Into<String>>
+        (destination_arn: destinationArnType,
+         filter_name: filterNameType,
+         filter_pattern: filterPatternType,
+         log_group_name: logGroupNameType)
+         -> PutSubscriptionFilterRequest {
+        PutSubscriptionFilterRequest {
+            destination_arn: destination_arn.into(),
+            filter_name: filter_name.into(),
+            filter_pattern: filter_pattern.into(),
+            log_group_name: log_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the rejected events.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RejectedLogEventsInfo {
@@ -845,7 +1758,6 @@ pub struct RejectedLogEventsInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub too_old_log_event_end_index: Option<i64>,
 }
-
 #[doc="<p>Represents the search status of a log stream.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SearchedLogStream {
@@ -858,7 +1770,6 @@ pub struct SearchedLogStream {
     #[serde(skip_serializing_if="Option::is_none")]
     pub searched_completely: Option<bool>,
 }
-
 #[doc="<p>Represents a subscription filter.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SubscriptionFilter {
@@ -890,7 +1801,6 @@ pub struct SubscriptionFilter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub role_arn: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TagLogGroupRequest {
     #[doc="<p>The name of the log group.</p>"]
@@ -900,7 +1810,36 @@ pub struct TagLogGroupRequest {
     #[serde(rename="tags")]
     pub tags: ::std::collections::HashMap<String, String>,
 }
-
+impl TagLogGroupRequest {
+    /// Sets `log_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TagLogGroupRequest.log_group_name = value.into();`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TagLogGroupRequest.tags = value.into();`.
+    pub fn tags<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of TagLogGroupRequest with optional fields set to `None`.
+    pub fn new<logGroupNameType: Into<String>,
+               tagsType: Into<::std::collections::HashMap<String, String>>>
+        (log_group_name: logGroupNameType,
+         tags: tagsType)
+         -> TagLogGroupRequest {
+        TagLogGroupRequest {
+            log_group_name: log_group_name.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TestMetricFilterRequest {
     #[serde(rename="filterPattern")]
@@ -909,7 +1848,33 @@ pub struct TestMetricFilterRequest {
     #[serde(rename="logEventMessages")]
     pub log_event_messages: Vec<String>,
 }
-
+impl TestMetricFilterRequest {
+    /// Sets `filter_pattern`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestMetricFilterRequest.filter_pattern = value.into();`.
+    pub fn filter_pattern<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter_pattern = value.into();
+        self
+    }
+    /// Sets `log_event_messages`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TestMetricFilterRequest.log_event_messages = value.into();`.
+    pub fn log_event_messages<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.log_event_messages = value.into();
+        self
+    }
+    /// Returns a new instance of TestMetricFilterRequest with optional fields set to `None`.
+    pub fn new<filterPatternType: Into<String>, logEventMessagesType: Into<Vec<String>>>
+        (filter_pattern: filterPatternType,
+         log_event_messages: logEventMessagesType)
+         -> TestMetricFilterRequest {
+        TestMetricFilterRequest {
+            filter_pattern: filter_pattern.into(),
+            log_event_messages: log_event_messages.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TestMetricFilterResponse {
     #[doc="<p>The matched events.</p>"]
@@ -917,7 +1882,6 @@ pub struct TestMetricFilterResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub matches: Option<Vec<MetricFilterMatchRecord>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UntagLogGroupRequest {
     #[doc="<p>The name of the log group.</p>"]
@@ -927,7 +1891,33 @@ pub struct UntagLogGroupRequest {
     #[serde(rename="tags")]
     pub tags: Vec<String>,
 }
-
+impl UntagLogGroupRequest {
+    /// Sets `log_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UntagLogGroupRequest.log_group_name = value.into();`.
+    pub fn log_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_group_name = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UntagLogGroupRequest.tags = value.into();`.
+    pub fn tags<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of UntagLogGroupRequest with optional fields set to `None`.
+    pub fn new<logGroupNameType: Into<String>, tagsType: Into<Vec<String>>>
+        (log_group_name: logGroupNameType,
+         tags: tagsType)
+         -> UntagLogGroupRequest {
+        UntagLogGroupRequest {
+            log_group_name: log_group_name.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 /// Errors returned by CancelExportTask
 #[derive(Debug, PartialEq)]
 pub enum CancelExportTaskError {

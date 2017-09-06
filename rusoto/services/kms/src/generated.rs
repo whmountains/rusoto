@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -44,14 +45,28 @@ pub struct AliasListEntry {
     #[serde(skip_serializing_if="Option::is_none")]
     pub target_key_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CancelKeyDeletionRequest {
     #[doc="<p>The unique identifier for the customer master key (CMK) for which to cancel deletion.</p> <p>To specify this value, use the unique key ID or the Amazon Resource Name (ARN) of the CMK. Examples:</p> <ul> <li> <p>Unique key ID: 1234abcd-12ab-34cd-56ef-1234567890ab</p> </li> <li> <p>Key ARN: arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</p> </li> </ul> <p>To obtain the unique key ID and key ARN for a given CMK, use <a>ListKeys</a> or <a>DescribeKey</a>.</p>"]
     #[serde(rename="KeyId")]
     pub key_id: String,
 }
-
+impl CancelKeyDeletionRequest {
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelKeyDeletionRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Returns a new instance of CancelKeyDeletionRequest with optional fields set to `None`.
+    pub fn new<KeyIdType: Into<String>>(key_id: KeyIdType) -> CancelKeyDeletionRequest {
+        CancelKeyDeletionRequest {
+            key_id: key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CancelKeyDeletionResponse {
     #[doc="<p>The unique identifier of the master key for which deletion is canceled.</p>"]
@@ -59,7 +74,6 @@ pub struct CancelKeyDeletionResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub key_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateAliasRequest {
     #[doc="<p>String that contains the display name. The name must start with the word \"alias\" followed by a forward slash (alias/). Aliases that begin with \"alias/AWS\" are reserved.</p>"]
@@ -69,7 +83,33 @@ pub struct CreateAliasRequest {
     #[serde(rename="TargetKeyId")]
     pub target_key_id: String,
 }
-
+impl CreateAliasRequest {
+    /// Sets `alias_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAliasRequest.alias_name = value.into();`.
+    pub fn alias_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.alias_name = value.into();
+        self
+    }
+    /// Sets `target_key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAliasRequest.target_key_id = value.into();`.
+    pub fn target_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_key_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateAliasRequest with optional fields set to `None`.
+    pub fn new<AliasNameType: Into<String>, TargetKeyIdType: Into<String>>
+        (alias_name: AliasNameType,
+         target_key_id: TargetKeyIdType)
+         -> CreateAliasRequest {
+        CreateAliasRequest {
+            alias_name: alias_name.into(),
+            target_key_id: target_key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateGrantRequest {
     #[doc="<p>A structure that you can use to allow certain operations in the grant only when the desired encryption context is present. For more information about encryption context, see <a href=\"http://docs.aws.amazon.com/kms/latest/developerguide/encryption-context.html\">Encryption Context</a> in the <i>AWS Key Management Service Developer Guide</i>.</p>"]
@@ -99,7 +139,68 @@ pub struct CreateGrantRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub retiring_principal: Option<String>,
 }
-
+impl CreateGrantRequest {
+    /// Sets `constraints`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGrantRequest.constraints = Some(value.into());`.
+    pub fn constraints<ValueType: Into<GrantConstraints>>(mut self, value: ValueType) -> Self {
+        self.constraints = Some(value.into());
+        self
+    }
+    /// Sets `grant_tokens`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGrantRequest.grant_tokens = Some(value.into());`.
+    pub fn grant_tokens<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.grant_tokens = Some(value.into());
+        self
+    }
+    /// Sets `grantee_principal`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGrantRequest.grantee_principal = value.into();`.
+    pub fn grantee_principal<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grantee_principal = value.into();
+        self
+    }
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGrantRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGrantRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `operations`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGrantRequest.operations = Some(value.into());`.
+    pub fn operations<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.operations = Some(value.into());
+        self
+    }
+    /// Sets `retiring_principal`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateGrantRequest.retiring_principal = Some(value.into());`.
+    pub fn retiring_principal<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.retiring_principal = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateGrantRequest with optional fields set to `None`.
+    pub fn new<GranteePrincipalType: Into<String>, KeyIdType: Into<String>>
+        (grantee_principal: GranteePrincipalType,
+         key_id: KeyIdType)
+         -> CreateGrantRequest {
+        CreateGrantRequest {
+            grantee_principal: grantee_principal.into(),
+            key_id: key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateGrantResponse {
     #[doc="<p>The unique identifier for the grant.</p> <p>You can use the <code>GrantId</code> in a subsequent <a>RetireGrant</a> or <a>RevokeGrant</a> operation.</p>"]
@@ -111,7 +212,6 @@ pub struct CreateGrantResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub grant_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateKeyRequest {
     #[doc="<p>A flag to indicate whether to bypass the key policy lockout safety check.</p> <important> <p>Setting this value to true increases the likelihood that the CMK becomes unmanageable. Do not set this value to true indiscriminately.</p> <p>For more information, refer to the scenario in the <a href=\"http://docs.aws.amazon.com/kms/latest/developerguide/key-policies.html#key-policy-default-allow-root-enable-iam\">Default Key Policy</a> section in the <i>AWS Key Management Service Developer Guide</i>.</p> </important> <p>Use this parameter only when you include a policy in the request and you intend to prevent the principal that is making the request from making a subsequent <a>PutKeyPolicy</a> request on the CMK.</p> <p>The default value is false.</p>"]
@@ -139,7 +239,56 @@ pub struct CreateKeyRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
+impl CreateKeyRequest {
+    /// Sets `bypass_policy_lockout_safety_check`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateKeyRequest.bypass_policy_lockout_safety_check = Some(value.into());`.
+    pub fn bypass_policy_lockout_safety_check<ValueType: Into<bool>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.bypass_policy_lockout_safety_check = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateKeyRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `key_usage`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateKeyRequest.key_usage = Some(value.into());`.
+    pub fn key_usage<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_usage = Some(value.into());
+        self
+    }
+    /// Sets `origin`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateKeyRequest.origin = Some(value.into());`.
+    pub fn origin<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.origin = Some(value.into());
+        self
+    }
+    /// Sets `policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateKeyRequest.policy = Some(value.into());`.
+    pub fn policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateKeyRequest.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateKeyRequest with optional fields set to `None`.
+    pub fn new() -> CreateKeyRequest {
+        CreateKeyRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateKeyResponse {
     #[doc="<p>Metadata associated with the CMK.</p>"]
@@ -147,7 +296,6 @@ pub struct CreateKeyResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub key_metadata: Option<KeyMetadata>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DecryptRequest {
     #[doc="<p>Ciphertext to be decrypted. The blob includes metadata.</p>"]
@@ -167,7 +315,40 @@ pub struct DecryptRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub grant_tokens: Option<Vec<String>>,
 }
-
+impl DecryptRequest {
+    /// Sets `ciphertext_blob`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DecryptRequest.ciphertext_blob = value.into();`.
+    pub fn ciphertext_blob<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.ciphertext_blob = value.into();
+        self
+    }
+    /// Sets `encryption_context`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DecryptRequest.encryption_context = Some(value.into());`.
+    pub fn encryption_context<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.encryption_context = Some(value.into());
+        self
+    }
+    /// Sets `grant_tokens`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DecryptRequest.grant_tokens = Some(value.into());`.
+    pub fn grant_tokens<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.grant_tokens = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DecryptRequest with optional fields set to `None`.
+    pub fn new<CiphertextBlobType: Into<Vec<u8>>>(ciphertext_blob: CiphertextBlobType)
+                                                  -> DecryptRequest {
+        DecryptRequest {
+            ciphertext_blob: ciphertext_blob.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DecryptResponse {
     #[doc="<p>ARN of the key used to perform the decryption. This value is returned if no errors are encountered during the operation.</p>"]
@@ -183,21 +364,50 @@ pub struct DecryptResponse {
                         )]
     pub plaintext: Option<Vec<u8>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteAliasRequest {
     #[doc="<p>The alias to be deleted. The name must start with the word \"alias\" followed by a forward slash (alias/). Aliases that begin with \"alias/AWS\" are reserved.</p>"]
     #[serde(rename="AliasName")]
     pub alias_name: String,
 }
-
+impl DeleteAliasRequest {
+    /// Sets `alias_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteAliasRequest.alias_name = value.into();`.
+    pub fn alias_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.alias_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteAliasRequest with optional fields set to `None`.
+    pub fn new<AliasNameType: Into<String>>(alias_name: AliasNameType) -> DeleteAliasRequest {
+        DeleteAliasRequest {
+            alias_name: alias_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteImportedKeyMaterialRequest {
     #[doc="<p>The identifier of the CMK whose key material to delete. The CMK's <code>Origin</code> must be <code>EXTERNAL</code>.</p> <p>A valid identifier is the unique key ID or the Amazon Resource Name (ARN) of the CMK. Examples:</p> <ul> <li> <p>Unique key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code> </p> </li> <li> <p>Key ARN: <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code> </p> </li> </ul>"]
     #[serde(rename="KeyId")]
     pub key_id: String,
 }
-
+impl DeleteImportedKeyMaterialRequest {
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteImportedKeyMaterialRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteImportedKeyMaterialRequest with optional fields set to `None`.
+    pub fn new<KeyIdType: Into<String>>(key_id: KeyIdType) -> DeleteImportedKeyMaterialRequest {
+        DeleteImportedKeyMaterialRequest {
+            key_id: key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeKeyRequest {
     #[doc="<p>A list of grant tokens.</p> <p>For more information, see <a href=\"http://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#grant_token\">Grant Tokens</a> in the <i>AWS Key Management Service Developer Guide</i>.</p>"]
@@ -208,7 +418,29 @@ pub struct DescribeKeyRequest {
     #[serde(rename="KeyId")]
     pub key_id: String,
 }
-
+impl DescribeKeyRequest {
+    /// Sets `grant_tokens`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeKeyRequest.grant_tokens = Some(value.into());`.
+    pub fn grant_tokens<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.grant_tokens = Some(value.into());
+        self
+    }
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeKeyRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeKeyRequest with optional fields set to `None`.
+    pub fn new<KeyIdType: Into<String>>(key_id: KeyIdType) -> DescribeKeyRequest {
+        DescribeKeyRequest {
+            key_id: key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeKeyResponse {
     #[doc="<p>Metadata associated with the key.</p>"]
@@ -216,35 +448,94 @@ pub struct DescribeKeyResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub key_metadata: Option<KeyMetadata>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DisableKeyRequest {
     #[doc="<p>A unique identifier for the CMK.</p> <p>Use the CMK's unique identifier or its Amazon Resource Name (ARN). For example:</p> <ul> <li> <p>Unique ID: 1234abcd-12ab-34cd-56ef-1234567890ab</p> </li> <li> <p>ARN: arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</p> </li> </ul>"]
     #[serde(rename="KeyId")]
     pub key_id: String,
 }
-
+impl DisableKeyRequest {
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableKeyRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Returns a new instance of DisableKeyRequest with optional fields set to `None`.
+    pub fn new<KeyIdType: Into<String>>(key_id: KeyIdType) -> DisableKeyRequest {
+        DisableKeyRequest {
+            key_id: key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DisableKeyRotationRequest {
     #[doc="<p>A unique identifier for the customer master key. This value can be a globally unique identifier or the fully specified ARN to a key.</p> <ul> <li> <p>Key ARN Example - arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234-1234-123456789012</p> </li> <li> <p>Globally Unique Key ID Example - 12345678-1234-1234-1234-123456789012</p> </li> </ul>"]
     #[serde(rename="KeyId")]
     pub key_id: String,
 }
-
+impl DisableKeyRotationRequest {
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableKeyRotationRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Returns a new instance of DisableKeyRotationRequest with optional fields set to `None`.
+    pub fn new<KeyIdType: Into<String>>(key_id: KeyIdType) -> DisableKeyRotationRequest {
+        DisableKeyRotationRequest {
+            key_id: key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct EnableKeyRequest {
     #[doc="<p>A unique identifier for the customer master key. This value can be a globally unique identifier or the fully specified ARN to a key.</p> <ul> <li> <p>Key ARN Example - arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234-1234-123456789012</p> </li> <li> <p>Globally Unique Key ID Example - 12345678-1234-1234-1234-123456789012</p> </li> </ul>"]
     #[serde(rename="KeyId")]
     pub key_id: String,
 }
-
+impl EnableKeyRequest {
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableKeyRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Returns a new instance of EnableKeyRequest with optional fields set to `None`.
+    pub fn new<KeyIdType: Into<String>>(key_id: KeyIdType) -> EnableKeyRequest {
+        EnableKeyRequest {
+            key_id: key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct EnableKeyRotationRequest {
     #[doc="<p>A unique identifier for the customer master key. This value can be a globally unique identifier or the fully specified ARN to a key.</p> <ul> <li> <p>Key ARN Example - arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234-1234-123456789012</p> </li> <li> <p>Globally Unique Key ID Example - 12345678-1234-1234-1234-123456789012</p> </li> </ul>"]
     #[serde(rename="KeyId")]
     pub key_id: String,
 }
-
+impl EnableKeyRotationRequest {
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableKeyRotationRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Returns a new instance of EnableKeyRotationRequest with optional fields set to `None`.
+    pub fn new<KeyIdType: Into<String>>(key_id: KeyIdType) -> EnableKeyRotationRequest {
+        EnableKeyRotationRequest {
+            key_id: key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct EncryptRequest {
     #[doc="<p>Name-value pair that specifies the encryption context to be used for authenticated encryption. If used here, the same value must be supplied to the <code>Decrypt</code> API or decryption will fail. For more information, see <a href=\"http://docs.aws.amazon.com/kms/latest/developerguide/encryption-context.html\">Encryption Context</a>.</p>"]
@@ -267,7 +558,49 @@ pub struct EncryptRequest {
                         )]
     pub plaintext: Vec<u8>,
 }
-
+impl EncryptRequest {
+    /// Sets `encryption_context`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EncryptRequest.encryption_context = Some(value.into());`.
+    pub fn encryption_context<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.encryption_context = Some(value.into());
+        self
+    }
+    /// Sets `grant_tokens`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EncryptRequest.grant_tokens = Some(value.into());`.
+    pub fn grant_tokens<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.grant_tokens = Some(value.into());
+        self
+    }
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EncryptRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Sets `plaintext`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EncryptRequest.plaintext = value.into();`.
+    pub fn plaintext<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.plaintext = value.into();
+        self
+    }
+    /// Returns a new instance of EncryptRequest with optional fields set to `None`.
+    pub fn new<KeyIdType: Into<String>, PlaintextType: Into<Vec<u8>>>(key_id: KeyIdType,
+                                                                      plaintext: PlaintextType)
+                                                                      -> EncryptRequest {
+        EncryptRequest {
+            key_id: key_id.into(),
+            plaintext: plaintext.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EncryptResponse {
     #[doc="<p>The encrypted plaintext. If you are using the CLI, the value is Base64 encoded. Otherwise, it is not encoded.</p>"]
@@ -283,7 +616,6 @@ pub struct EncryptResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub key_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GenerateDataKeyRequest {
     #[doc="<p>A set of key-value pairs that represents additional authenticated data.</p> <p>For more information, see <a href=\"http://docs.aws.amazon.com/kms/latest/developerguide/encryption-context.html\">Encryption Context</a> in the <i>AWS Key Management Service Developer Guide</i>.</p>"]
@@ -306,7 +638,53 @@ pub struct GenerateDataKeyRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub number_of_bytes: Option<i64>,
 }
-
+impl GenerateDataKeyRequest {
+    /// Sets `encryption_context`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GenerateDataKeyRequest.encryption_context = Some(value.into());`.
+    pub fn encryption_context<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.encryption_context = Some(value.into());
+        self
+    }
+    /// Sets `grant_tokens`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GenerateDataKeyRequest.grant_tokens = Some(value.into());`.
+    pub fn grant_tokens<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.grant_tokens = Some(value.into());
+        self
+    }
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GenerateDataKeyRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Sets `key_spec`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GenerateDataKeyRequest.key_spec = Some(value.into());`.
+    pub fn key_spec<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_spec = Some(value.into());
+        self
+    }
+    /// Sets `number_of_bytes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GenerateDataKeyRequest.number_of_bytes = Some(value.into());`.
+    pub fn number_of_bytes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.number_of_bytes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GenerateDataKeyRequest with optional fields set to `None`.
+    pub fn new<KeyIdType: Into<String>>(key_id: KeyIdType) -> GenerateDataKeyRequest {
+        GenerateDataKeyRequest {
+            key_id: key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GenerateDataKeyResponse {
     #[doc="<p>The encrypted data encryption key.</p>"]
@@ -330,7 +708,6 @@ pub struct GenerateDataKeyResponse {
                         )]
     pub plaintext: Option<Vec<u8>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GenerateDataKeyWithoutPlaintextRequest {
     #[doc="<p>A set of key-value pairs that represents additional authenticated data.</p> <p>For more information, see <a href=\"http://docs.aws.amazon.com/kms/latest/developerguide/encryption-context.html\">Encryption Context</a> in the <i>AWS Key Management Service Developer Guide</i>.</p>"]
@@ -353,7 +730,54 @@ pub struct GenerateDataKeyWithoutPlaintextRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub number_of_bytes: Option<i64>,
 }
-
+impl GenerateDataKeyWithoutPlaintextRequest {
+    /// Sets `encryption_context`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GenerateDataKeyWithoutPlaintextRequest.encryption_context = Some(value.into());`.
+    pub fn encryption_context<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.encryption_context = Some(value.into());
+        self
+    }
+    /// Sets `grant_tokens`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GenerateDataKeyWithoutPlaintextRequest.grant_tokens = Some(value.into());`.
+    pub fn grant_tokens<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.grant_tokens = Some(value.into());
+        self
+    }
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GenerateDataKeyWithoutPlaintextRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Sets `key_spec`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GenerateDataKeyWithoutPlaintextRequest.key_spec = Some(value.into());`.
+    pub fn key_spec<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_spec = Some(value.into());
+        self
+    }
+    /// Sets `number_of_bytes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GenerateDataKeyWithoutPlaintextRequest.number_of_bytes = Some(value.into());`.
+    pub fn number_of_bytes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.number_of_bytes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GenerateDataKeyWithoutPlaintextRequest with optional fields set to `None`.
+    pub fn new<KeyIdType: Into<String>>(key_id: KeyIdType)
+                                        -> GenerateDataKeyWithoutPlaintextRequest {
+        GenerateDataKeyWithoutPlaintextRequest {
+            key_id: key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GenerateDataKeyWithoutPlaintextResponse {
     #[doc="<p>The encrypted data encryption key.</p>"]
@@ -369,7 +793,6 @@ pub struct GenerateDataKeyWithoutPlaintextResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub key_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GenerateRandomRequest {
     #[doc="<p>The length of the byte string.</p>"]
@@ -377,7 +800,19 @@ pub struct GenerateRandomRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub number_of_bytes: Option<i64>,
 }
-
+impl GenerateRandomRequest {
+    /// Sets `number_of_bytes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GenerateRandomRequest.number_of_bytes = Some(value.into());`.
+    pub fn number_of_bytes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.number_of_bytes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GenerateRandomRequest with optional fields set to `None`.
+    pub fn new() -> GenerateRandomRequest {
+        GenerateRandomRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GenerateRandomResponse {
     #[doc="<p>The random byte string.</p>"]
@@ -389,7 +824,6 @@ pub struct GenerateRandomResponse {
                         )]
     pub plaintext: Option<Vec<u8>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetKeyPolicyRequest {
     #[doc="<p>A unique identifier for the customer master key. This value can be a globally unique identifier or the fully specified ARN to a key.</p> <ul> <li> <p>Key ARN Example - arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234-1234-123456789012</p> </li> <li> <p>Globally Unique Key ID Example - 12345678-1234-1234-1234-123456789012</p> </li> </ul>"]
@@ -399,7 +833,32 @@ pub struct GetKeyPolicyRequest {
     #[serde(rename="PolicyName")]
     pub policy_name: String,
 }
-
+impl GetKeyPolicyRequest {
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetKeyPolicyRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetKeyPolicyRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Returns a new instance of GetKeyPolicyRequest with optional fields set to `None`.
+    pub fn new<KeyIdType: Into<String>, PolicyNameType: Into<String>>(key_id: KeyIdType,
+                                                                      policy_name: PolicyNameType)
+                                                                      -> GetKeyPolicyRequest {
+        GetKeyPolicyRequest {
+            key_id: key_id.into(),
+            policy_name: policy_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetKeyPolicyResponse {
     #[doc="<p>A policy document in JSON format.</p>"]
@@ -407,14 +866,28 @@ pub struct GetKeyPolicyResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policy: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetKeyRotationStatusRequest {
     #[doc="<p>A unique identifier for the customer master key. This value can be a globally unique identifier or the fully specified ARN to a key.</p> <ul> <li> <p>Key ARN Example - arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234-1234-123456789012</p> </li> <li> <p>Globally Unique Key ID Example - 12345678-1234-1234-1234-123456789012</p> </li> </ul>"]
     #[serde(rename="KeyId")]
     pub key_id: String,
 }
-
+impl GetKeyRotationStatusRequest {
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetKeyRotationStatusRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetKeyRotationStatusRequest with optional fields set to `None`.
+    pub fn new<KeyIdType: Into<String>>(key_id: KeyIdType) -> GetKeyRotationStatusRequest {
+        GetKeyRotationStatusRequest {
+            key_id: key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetKeyRotationStatusResponse {
     #[doc="<p>A Boolean value that specifies whether key rotation is enabled.</p>"]
@@ -422,7 +895,6 @@ pub struct GetKeyRotationStatusResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub key_rotation_enabled: Option<bool>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetParametersForImportRequest {
     #[doc="<p>The identifier of the CMK into which you will import key material. The CMK's <code>Origin</code> must be <code>EXTERNAL</code>.</p> <p>A valid identifier is the unique key ID or the Amazon Resource Name (ARN) of the CMK. Examples:</p> <ul> <li> <p>Unique key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code> </p> </li> <li> <p>Key ARN: <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code> </p> </li> </ul>"]
@@ -435,7 +907,44 @@ pub struct GetParametersForImportRequest {
     #[serde(rename="WrappingKeySpec")]
     pub wrapping_key_spec: String,
 }
-
+impl GetParametersForImportRequest {
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetParametersForImportRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Sets `wrapping_algorithm`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetParametersForImportRequest.wrapping_algorithm = value.into();`.
+    pub fn wrapping_algorithm<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.wrapping_algorithm = value.into();
+        self
+    }
+    /// Sets `wrapping_key_spec`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetParametersForImportRequest.wrapping_key_spec = value.into();`.
+    pub fn wrapping_key_spec<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.wrapping_key_spec = value.into();
+        self
+    }
+    /// Returns a new instance of GetParametersForImportRequest with optional fields set to `None`.
+    pub fn new<KeyIdType: Into<String>,
+               WrappingAlgorithmType: Into<String>,
+               WrappingKeySpecType: Into<String>>
+        (key_id: KeyIdType,
+         wrapping_algorithm: WrappingAlgorithmType,
+         wrapping_key_spec: WrappingKeySpecType)
+         -> GetParametersForImportRequest {
+        GetParametersForImportRequest {
+            key_id: key_id.into(),
+            wrapping_algorithm: wrapping_algorithm.into(),
+            wrapping_key_spec: wrapping_key_spec.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetParametersForImportResponse {
     #[doc="<p>The import token to send in a subsequent <a>ImportKeyMaterial</a> request.</p>"]
@@ -463,7 +972,6 @@ pub struct GetParametersForImportResponse {
                         )]
     pub public_key: Option<Vec<u8>>,
 }
-
 #[doc="<p>A structure that you can use to allow certain operations in the grant only when the desired encryption context is present. For more information about encryption context, see <a href=\"http://docs.aws.amazon.com/kms/latest/developerguide/encryption-context.html\">Encryption Context</a> in the <i>AWS Key Management Service Developer Guide</i>.</p> <p>Grant constraints apply only to operations that accept encryption context as input. For example, the <code> <a>DescribeKey</a> </code> operation does not accept encryption context as input. A grant that allows the <code>DescribeKey</code> operation does so regardless of the grant constraints. In constrast, the <code> <a>Encrypt</a> </code> operation accepts encryption context as input. A grant that allows the <code>Encrypt</code> operation does so only when the encryption context of the <code>Encrypt</code> operation satisfies the grant constraints.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct GrantConstraints {
@@ -476,7 +984,32 @@ pub struct GrantConstraints {
     #[serde(skip_serializing_if="Option::is_none")]
     pub encryption_context_subset: Option<::std::collections::HashMap<String, String>>,
 }
-
+impl GrantConstraints {
+    /// Sets `encryption_context_equals`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GrantConstraints.encryption_context_equals = Some(value.into());`.
+    pub fn encryption_context_equals<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.encryption_context_equals = Some(value.into());
+        self
+    }
+    /// Sets `encryption_context_subset`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GrantConstraints.encryption_context_subset = Some(value.into());`.
+    pub fn encryption_context_subset<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.encryption_context_subset = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GrantConstraints with optional fields set to `None`.
+    pub fn new() -> GrantConstraints {
+        GrantConstraints { ..Default::default() }
+    }
+}
 #[doc="<p>Contains information about an entry in a list of grants.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GrantListEntry {
@@ -517,7 +1050,6 @@ pub struct GrantListEntry {
     #[serde(skip_serializing_if="Option::is_none")]
     pub retiring_principal: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ImportKeyMaterialRequest {
     #[doc="<p>The encrypted key material to import. It must be encrypted with the public key that you received in the response to a previous <a>GetParametersForImport</a> request, using the wrapping algorithm that you specified in that request.</p>"]
@@ -548,7 +1080,58 @@ pub struct ImportKeyMaterialRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub valid_to: Option<f64>,
 }
-
+impl ImportKeyMaterialRequest {
+    /// Sets `encrypted_key_material`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportKeyMaterialRequest.encrypted_key_material = value.into();`.
+    pub fn encrypted_key_material<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.encrypted_key_material = value.into();
+        self
+    }
+    /// Sets `expiration_model`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportKeyMaterialRequest.expiration_model = Some(value.into());`.
+    pub fn expiration_model<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.expiration_model = Some(value.into());
+        self
+    }
+    /// Sets `import_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportKeyMaterialRequest.import_token = value.into();`.
+    pub fn import_token<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.import_token = value.into();
+        self
+    }
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportKeyMaterialRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Sets `valid_to`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ImportKeyMaterialRequest.valid_to = Some(value.into());`.
+    pub fn valid_to<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.valid_to = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ImportKeyMaterialRequest with optional fields set to `None`.
+    pub fn new<EncryptedKeyMaterialType: Into<Vec<u8>>,
+               ImportTokenType: Into<Vec<u8>>,
+               KeyIdType: Into<String>>
+        (encrypted_key_material: EncryptedKeyMaterialType,
+         import_token: ImportTokenType,
+         key_id: KeyIdType)
+         -> ImportKeyMaterialRequest {
+        ImportKeyMaterialRequest {
+            encrypted_key_material: encrypted_key_material.into(),
+            import_token: import_token.into(),
+            key_id: key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ImportKeyMaterialResponse;
 
@@ -564,7 +1147,6 @@ pub struct KeyListEntry {
     #[serde(skip_serializing_if="Option::is_none")]
     pub key_id: Option<String>,
 }
-
 #[doc="<p>Contains metadata about a customer master key (CMK).</p> <p>This data type is used as a response element for the <a>CreateKey</a> and <a>DescribeKey</a> operations.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct KeyMetadata {
@@ -620,7 +1202,6 @@ pub struct KeyMetadata {
     #[serde(skip_serializing_if="Option::is_none")]
     pub valid_to: Option<f64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListAliasesRequest {
     #[doc="<p>Use this parameter to specify the maximum number of items to return. When this value is present, AWS KMS does not return more than the specified number of items, but it might return fewer.</p> <p>This value is optional. If you include a value, it must be between 1 and 100, inclusive. If you do not include a value, it defaults to 50.</p>"]
@@ -632,7 +1213,26 @@ pub struct ListAliasesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
+impl ListAliasesRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAliasesRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAliasesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListAliasesRequest with optional fields set to `None`.
+    pub fn new() -> ListAliasesRequest {
+        ListAliasesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListAliasesResponse {
     #[doc="<p>A list of key aliases in the user's account.</p>"]
@@ -648,7 +1248,6 @@ pub struct ListAliasesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub truncated: Option<bool>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListGrantsRequest {
     #[doc="<p>A unique identifier for the customer master key. This value can be a globally unique identifier or the fully specified ARN to a key.</p> <ul> <li> <p>Key ARN Example - arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234-1234-123456789012</p> </li> <li> <p>Globally Unique Key ID Example - 12345678-1234-1234-1234-123456789012</p> </li> </ul>"]
@@ -663,7 +1262,36 @@ pub struct ListGrantsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
+impl ListGrantsRequest {
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListGrantsRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListGrantsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListGrantsRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListGrantsRequest with optional fields set to `None`.
+    pub fn new<KeyIdType: Into<String>>(key_id: KeyIdType) -> ListGrantsRequest {
+        ListGrantsRequest {
+            key_id: key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListGrantsResponse {
     #[doc="<p>A list of grants.</p>"]
@@ -679,7 +1307,6 @@ pub struct ListGrantsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub truncated: Option<bool>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListKeyPoliciesRequest {
     #[doc="<p>A unique identifier for the customer master key (CMK). You can use the unique key ID or the Amazon Resource Name (ARN) of the CMK. Examples:</p> <ul> <li> <p>Unique key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code> </p> </li> <li> <p>Key ARN: <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code> </p> </li> </ul>"]
@@ -694,7 +1321,36 @@ pub struct ListKeyPoliciesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
+impl ListKeyPoliciesRequest {
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListKeyPoliciesRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListKeyPoliciesRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListKeyPoliciesRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListKeyPoliciesRequest with optional fields set to `None`.
+    pub fn new<KeyIdType: Into<String>>(key_id: KeyIdType) -> ListKeyPoliciesRequest {
+        ListKeyPoliciesRequest {
+            key_id: key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListKeyPoliciesResponse {
     #[doc="<p>When <code>Truncated</code> is true, this element is present and contains the value to use for the <code>Marker</code> parameter in a subsequent request.</p>"]
@@ -710,7 +1366,6 @@ pub struct ListKeyPoliciesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub truncated: Option<bool>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListKeysRequest {
     #[doc="<p>Use this parameter to specify the maximum number of items to return. When this value is present, AWS KMS does not return more than the specified number of items, but it might return fewer.</p> <p>This value is optional. If you include a value, it must be between 1 and 1000, inclusive. If you do not include a value, it defaults to 100.</p>"]
@@ -722,7 +1377,26 @@ pub struct ListKeysRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
+impl ListKeysRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListKeysRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListKeysRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListKeysRequest with optional fields set to `None`.
+    pub fn new() -> ListKeysRequest {
+        ListKeysRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListKeysResponse {
     #[doc="<p>A list of keys.</p>"]
@@ -738,7 +1412,6 @@ pub struct ListKeysResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub truncated: Option<bool>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListResourceTagsRequest {
     #[doc="<p>A unique identifier for the CMK whose tags you are listing. You can use the unique key ID or the Amazon Resource Name (ARN) of the CMK. Examples:</p> <ul> <li> <p>Unique key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code> </p> </li> <li> <p>Key ARN: <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code> </p> </li> </ul>"]
@@ -753,7 +1426,36 @@ pub struct ListResourceTagsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub marker: Option<String>,
 }
-
+impl ListResourceTagsRequest {
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListResourceTagsRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListResourceTagsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListResourceTagsRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListResourceTagsRequest with optional fields set to `None`.
+    pub fn new<KeyIdType: Into<String>>(key_id: KeyIdType) -> ListResourceTagsRequest {
+        ListResourceTagsRequest {
+            key_id: key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListResourceTagsResponse {
     #[doc="<p>When <code>Truncated</code> is true, this element is present and contains the value to use for the <code>Marker</code> parameter in a subsequent request.</p> <p>Do not assume or infer any information from this value.</p>"]
@@ -769,7 +1471,6 @@ pub struct ListResourceTagsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub truncated: Option<bool>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListRetirableGrantsRequest {
     #[doc="<p>Use this parameter to specify the maximum number of items to return. When this value is present, AWS KMS does not return more than the specified number of items, but it might return fewer.</p> <p>This value is optional. If you include a value, it must be between 1 and 100, inclusive. If you do not include a value, it defaults to 50.</p>"]
@@ -784,7 +1485,37 @@ pub struct ListRetirableGrantsRequest {
     #[serde(rename="RetiringPrincipal")]
     pub retiring_principal: String,
 }
-
+impl ListRetirableGrantsRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRetirableGrantsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRetirableGrantsRequest.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `retiring_principal`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRetirableGrantsRequest.retiring_principal = value.into();`.
+    pub fn retiring_principal<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.retiring_principal = value.into();
+        self
+    }
+    /// Returns a new instance of ListRetirableGrantsRequest with optional fields set to `None`.
+    pub fn new<RetiringPrincipalType: Into<String>>(retiring_principal: RetiringPrincipalType)
+                                                    -> ListRetirableGrantsRequest {
+        ListRetirableGrantsRequest {
+            retiring_principal: retiring_principal.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PutKeyPolicyRequest {
     #[doc="<p>A flag to indicate whether to bypass the key policy lockout safety check.</p> <important> <p>Setting this value to true increases the likelihood that the CMK becomes unmanageable. Do not set this value to true indiscriminately.</p> <p>For more information, refer to the scenario in the <a href=\"http://docs.aws.amazon.com/kms/latest/developerguide/key-policies.html#key-policy-default-allow-root-enable-iam\">Default Key Policy</a> section in the <i>AWS Key Management Service Developer Guide</i>.</p> </important> <p>Use this parameter only when you intend to prevent the principal that is making the request from making a subsequent <code>PutKeyPolicy</code> request on the CMK.</p> <p>The default value is false.</p>"]
@@ -801,7 +1532,51 @@ pub struct PutKeyPolicyRequest {
     #[serde(rename="PolicyName")]
     pub policy_name: String,
 }
-
+impl PutKeyPolicyRequest {
+    /// Sets `bypass_policy_lockout_safety_check`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutKeyPolicyRequest.bypass_policy_lockout_safety_check = Some(value.into());`.
+    pub fn bypass_policy_lockout_safety_check<ValueType: Into<bool>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.bypass_policy_lockout_safety_check = Some(value.into());
+        self
+    }
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutKeyPolicyRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Sets `policy`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutKeyPolicyRequest.policy = value.into();`.
+    pub fn policy<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy = value.into();
+        self
+    }
+    /// Sets `policy_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PutKeyPolicyRequest.policy_name = value.into();`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = value.into();
+        self
+    }
+    /// Returns a new instance of PutKeyPolicyRequest with optional fields set to `None`.
+    pub fn new<KeyIdType: Into<String>, PolicyType: Into<String>, PolicyNameType: Into<String>>
+        (key_id: KeyIdType,
+         policy: PolicyType,
+         policy_name: PolicyNameType)
+         -> PutKeyPolicyRequest {
+        PutKeyPolicyRequest {
+            key_id: key_id.into(),
+            policy: policy.into(),
+            policy_name: policy_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ReEncryptRequest {
     #[doc="<p>Ciphertext of the data to reencrypt.</p>"]
@@ -828,7 +1603,57 @@ pub struct ReEncryptRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub source_encryption_context: Option<::std::collections::HashMap<String, String>>,
 }
-
+impl ReEncryptRequest {
+    /// Sets `ciphertext_blob`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReEncryptRequest.ciphertext_blob = value.into();`.
+    pub fn ciphertext_blob<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.ciphertext_blob = value.into();
+        self
+    }
+    /// Sets `destination_encryption_context`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReEncryptRequest.destination_encryption_context = Some(value.into());`.
+pub fn destination_encryption_context<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.destination_encryption_context = Some(value.into());
+        self
+    }
+    /// Sets `destination_key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReEncryptRequest.destination_key_id = value.into();`.
+    pub fn destination_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination_key_id = value.into();
+        self
+    }
+    /// Sets `grant_tokens`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReEncryptRequest.grant_tokens = Some(value.into());`.
+    pub fn grant_tokens<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.grant_tokens = Some(value.into());
+        self
+    }
+    /// Sets `source_encryption_context`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReEncryptRequest.source_encryption_context = Some(value.into());`.
+    pub fn source_encryption_context<ValueType: Into<::std::collections::HashMap<String, String>>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.source_encryption_context = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ReEncryptRequest with optional fields set to `None`.
+    pub fn new<CiphertextBlobType: Into<Vec<u8>>, DestinationKeyIdType: Into<String>>
+        (ciphertext_blob: CiphertextBlobType,
+         destination_key_id: DestinationKeyIdType)
+         -> ReEncryptRequest {
+        ReEncryptRequest {
+            ciphertext_blob: ciphertext_blob.into(),
+            destination_key_id: destination_key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ReEncryptResponse {
     #[doc="<p>The reencrypted data.</p>"]
@@ -848,7 +1673,6 @@ pub struct ReEncryptResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub source_key_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RetireGrantRequest {
     #[doc="<p>Unique identifier of the grant to retire. The grant ID is returned in the response to a <code>CreateGrant</code> operation.</p> <ul> <li> <p>Grant ID Example - 0123456789012345678901234567890123456789012345678901234567890123</p> </li> </ul>"]
@@ -864,7 +1688,33 @@ pub struct RetireGrantRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub key_id: Option<String>,
 }
-
+impl RetireGrantRequest {
+    /// Sets `grant_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RetireGrantRequest.grant_id = Some(value.into());`.
+    pub fn grant_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_id = Some(value.into());
+        self
+    }
+    /// Sets `grant_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RetireGrantRequest.grant_token = Some(value.into());`.
+    pub fn grant_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_token = Some(value.into());
+        self
+    }
+    /// Sets `key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RetireGrantRequest.key_id = Some(value.into());`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RetireGrantRequest with optional fields set to `None`.
+    pub fn new() -> RetireGrantRequest {
+        RetireGrantRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RevokeGrantRequest {
     #[doc="<p>Identifier of the grant to be revoked.</p>"]
@@ -874,7 +1724,32 @@ pub struct RevokeGrantRequest {
     #[serde(rename="KeyId")]
     pub key_id: String,
 }
-
+impl RevokeGrantRequest {
+    /// Sets `grant_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeGrantRequest.grant_id = value.into();`.
+    pub fn grant_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.grant_id = value.into();
+        self
+    }
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeGrantRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Returns a new instance of RevokeGrantRequest with optional fields set to `None`.
+    pub fn new<GrantIdType: Into<String>, KeyIdType: Into<String>>(grant_id: GrantIdType,
+                                                                   key_id: KeyIdType)
+                                                                   -> RevokeGrantRequest {
+        RevokeGrantRequest {
+            grant_id: grant_id.into(),
+            key_id: key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ScheduleKeyDeletionRequest {
     #[doc="<p>The unique identifier for the customer master key (CMK) to delete.</p> <p>To specify this value, use the unique key ID or the Amazon Resource Name (ARN) of the CMK. Examples:</p> <ul> <li> <p>Unique key ID: 1234abcd-12ab-34cd-56ef-1234567890ab</p> </li> <li> <p>Key ARN: arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</p> </li> </ul> <p>To obtain the unique key ID and key ARN for a given CMK, use <a>ListKeys</a> or <a>DescribeKey</a>.</p>"]
@@ -885,7 +1760,29 @@ pub struct ScheduleKeyDeletionRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub pending_window_in_days: Option<i64>,
 }
-
+impl ScheduleKeyDeletionRequest {
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleKeyDeletionRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Sets `pending_window_in_days`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleKeyDeletionRequest.pending_window_in_days = Some(value.into());`.
+    pub fn pending_window_in_days<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.pending_window_in_days = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ScheduleKeyDeletionRequest with optional fields set to `None`.
+    pub fn new<KeyIdType: Into<String>>(key_id: KeyIdType) -> ScheduleKeyDeletionRequest {
+        ScheduleKeyDeletionRequest {
+            key_id: key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ScheduleKeyDeletionResponse {
     #[doc="<p>The date and time after which AWS KMS deletes the customer master key (CMK).</p>"]
@@ -897,7 +1794,6 @@ pub struct ScheduleKeyDeletionResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub key_id: Option<String>,
 }
-
 #[doc="<p>A key-value pair. A tag consists of a tag key and a tag value. Tag keys and tag values are both required, but tag values can be empty (null) strings.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Tag {
@@ -908,7 +1804,32 @@ pub struct Tag {
     #[serde(rename="TagValue")]
     pub tag_value: String,
 }
-
+impl Tag {
+    /// Sets `tag_key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.tag_key = value.into();`.
+    pub fn tag_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tag_key = value.into();
+        self
+    }
+    /// Sets `tag_value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.tag_value = value.into();`.
+    pub fn tag_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tag_value = value.into();
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new<TagKeyType: Into<String>, TagValueType: Into<String>>(tag_key: TagKeyType,
+                                                                     tag_value: TagValueType)
+                                                                     -> Tag {
+        Tag {
+            tag_key: tag_key.into(),
+            tag_value: tag_value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TagResourceRequest {
     #[doc="<p>A unique identifier for the CMK you are tagging. You can use the unique key ID or the Amazon Resource Name (ARN) of the CMK. Examples:</p> <ul> <li> <p>Unique key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code> </p> </li> <li> <p>Key ARN: <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code> </p> </li> </ul>"]
@@ -918,7 +1839,32 @@ pub struct TagResourceRequest {
     #[serde(rename="Tags")]
     pub tags: Vec<Tag>,
 }
-
+impl TagResourceRequest {
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TagResourceRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TagResourceRequest.tags = value.into();`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of TagResourceRequest with optional fields set to `None`.
+    pub fn new<KeyIdType: Into<String>, TagsType: Into<Vec<Tag>>>(key_id: KeyIdType,
+                                                                  tags: TagsType)
+                                                                  -> TagResourceRequest {
+        TagResourceRequest {
+            key_id: key_id.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UntagResourceRequest {
     #[doc="<p>A unique identifier for the CMK from which you are removing tags. You can use the unique key ID or the Amazon Resource Name (ARN) of the CMK. Examples:</p> <ul> <li> <p>Unique key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code> </p> </li> <li> <p>Key ARN: <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code> </p> </li> </ul>"]
@@ -928,7 +1874,32 @@ pub struct UntagResourceRequest {
     #[serde(rename="TagKeys")]
     pub tag_keys: Vec<String>,
 }
-
+impl UntagResourceRequest {
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UntagResourceRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Sets `tag_keys`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UntagResourceRequest.tag_keys = value.into();`.
+    pub fn tag_keys<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tag_keys = value.into();
+        self
+    }
+    /// Returns a new instance of UntagResourceRequest with optional fields set to `None`.
+    pub fn new<KeyIdType: Into<String>, TagKeysType: Into<Vec<String>>>(key_id: KeyIdType,
+                                                                        tag_keys: TagKeysType)
+                                                                        -> UntagResourceRequest {
+        UntagResourceRequest {
+            key_id: key_id.into(),
+            tag_keys: tag_keys.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateAliasRequest {
     #[doc="<p>String that contains the name of the alias to be modified. The name must start with the word \"alias\" followed by a forward slash (alias/). Aliases that begin with \"alias/aws\" are reserved.</p>"]
@@ -938,7 +1909,33 @@ pub struct UpdateAliasRequest {
     #[serde(rename="TargetKeyId")]
     pub target_key_id: String,
 }
-
+impl UpdateAliasRequest {
+    /// Sets `alias_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAliasRequest.alias_name = value.into();`.
+    pub fn alias_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.alias_name = value.into();
+        self
+    }
+    /// Sets `target_key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateAliasRequest.target_key_id = value.into();`.
+    pub fn target_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_key_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateAliasRequest with optional fields set to `None`.
+    pub fn new<AliasNameType: Into<String>, TargetKeyIdType: Into<String>>
+        (alias_name: AliasNameType,
+         target_key_id: TargetKeyIdType)
+         -> UpdateAliasRequest {
+        UpdateAliasRequest {
+            alias_name: alias_name.into(),
+            target_key_id: target_key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateKeyDescriptionRequest {
     #[doc="<p>New description for the CMK.</p>"]
@@ -948,7 +1945,33 @@ pub struct UpdateKeyDescriptionRequest {
     #[serde(rename="KeyId")]
     pub key_id: String,
 }
-
+impl UpdateKeyDescriptionRequest {
+    /// Sets `description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateKeyDescriptionRequest.description = value.into();`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = value.into();
+        self
+    }
+    /// Sets `key_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateKeyDescriptionRequest.key_id = value.into();`.
+    pub fn key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateKeyDescriptionRequest with optional fields set to `None`.
+    pub fn new<DescriptionType: Into<String>, KeyIdType: Into<String>>
+        (description: DescriptionType,
+         key_id: KeyIdType)
+         -> UpdateKeyDescriptionRequest {
+        UpdateKeyDescriptionRequest {
+            description: description.into(),
+            key_id: key_id.into(),
+            ..Default::default()
+        }
+    }
+}
 /// Errors returned by CancelKeyDeletion
 #[derive(Debug, PartialEq)]
 pub enum CancelKeyDeletionError {

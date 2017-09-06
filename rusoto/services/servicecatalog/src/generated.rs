@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -38,7 +39,30 @@ pub struct AcceptPortfolioShareInput {
     #[serde(rename="PortfolioId")]
     pub portfolio_id: String,
 }
-
+impl AcceptPortfolioShareInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AcceptPortfolioShareInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `portfolio_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AcceptPortfolioShareInput.portfolio_id = value.into();`.
+    pub fn portfolio_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.portfolio_id = value.into();
+        self
+    }
+    /// Returns a new instance of AcceptPortfolioShareInput with optional fields set to `None`.
+    pub fn new<PortfolioIdType: Into<String>>(portfolio_id: PortfolioIdType)
+                                              -> AcceptPortfolioShareInput {
+        AcceptPortfolioShareInput {
+            portfolio_id: portfolio_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AcceptPortfolioShareOutput;
 
@@ -54,7 +78,26 @@ pub struct AccessLevelFilter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl AccessLevelFilter {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AccessLevelFilter.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AccessLevelFilter.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AccessLevelFilter with optional fields set to `None`.
+    pub fn new() -> AccessLevelFilter {
+        AccessLevelFilter { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AssociatePrincipalWithPortfolioInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -71,7 +114,51 @@ pub struct AssociatePrincipalWithPortfolioInput {
     #[serde(rename="PrincipalType")]
     pub principal_type: String,
 }
-
+impl AssociatePrincipalWithPortfolioInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociatePrincipalWithPortfolioInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `portfolio_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociatePrincipalWithPortfolioInput.portfolio_id = value.into();`.
+    pub fn portfolio_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.portfolio_id = value.into();
+        self
+    }
+    /// Sets `principal_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociatePrincipalWithPortfolioInput.principal_arn = value.into();`.
+    pub fn principal_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.principal_arn = value.into();
+        self
+    }
+    /// Sets `principal_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociatePrincipalWithPortfolioInput.principal_type = value.into();`.
+    pub fn principal_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.principal_type = value.into();
+        self
+    }
+    /// Returns a new instance of AssociatePrincipalWithPortfolioInput with optional fields set to `None`.
+    pub fn new<PortfolioIdType: Into<String>,
+               PrincipalARNType: Into<String>,
+               PrincipalTypeType: Into<String>>
+        (portfolio_id: PortfolioIdType,
+         principal_arn: PrincipalARNType,
+         principal_type: PrincipalTypeType)
+         -> AssociatePrincipalWithPortfolioInput {
+        AssociatePrincipalWithPortfolioInput {
+            portfolio_id: portfolio_id.into(),
+            principal_arn: principal_arn.into(),
+            principal_type: principal_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AssociatePrincipalWithPortfolioOutput;
 
@@ -92,7 +179,47 @@ pub struct AssociateProductWithPortfolioInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub source_portfolio_id: Option<String>,
 }
-
+impl AssociateProductWithPortfolioInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateProductWithPortfolioInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `portfolio_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateProductWithPortfolioInput.portfolio_id = value.into();`.
+    pub fn portfolio_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.portfolio_id = value.into();
+        self
+    }
+    /// Sets `product_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateProductWithPortfolioInput.product_id = value.into();`.
+    pub fn product_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_id = value.into();
+        self
+    }
+    /// Sets `source_portfolio_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateProductWithPortfolioInput.source_portfolio_id = Some(value.into());`.
+    pub fn source_portfolio_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_portfolio_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AssociateProductWithPortfolioInput with optional fields set to `None`.
+    pub fn new<PortfolioIdType: Into<String>, ProductIdType: Into<String>>
+        (portfolio_id: PortfolioIdType,
+         product_id: ProductIdType)
+         -> AssociateProductWithPortfolioInput {
+        AssociateProductWithPortfolioInput {
+            portfolio_id: portfolio_id.into(),
+            product_id: product_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AssociateProductWithPortfolioOutput;
 
@@ -105,7 +232,33 @@ pub struct AssociateTagOptionWithResourceInput {
     #[serde(rename="TagOptionId")]
     pub tag_option_id: String,
 }
-
+impl AssociateTagOptionWithResourceInput {
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateTagOptionWithResourceInput.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `tag_option_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateTagOptionWithResourceInput.tag_option_id = value.into();`.
+    pub fn tag_option_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tag_option_id = value.into();
+        self
+    }
+    /// Returns a new instance of AssociateTagOptionWithResourceInput with optional fields set to `None`.
+    pub fn new<ResourceIdType: Into<String>, TagOptionIdType: Into<String>>
+        (resource_id: ResourceIdType,
+         tag_option_id: TagOptionIdType)
+         -> AssociateTagOptionWithResourceInput {
+        AssociateTagOptionWithResourceInput {
+            resource_id: resource_id.into(),
+            tag_option_id: tag_option_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AssociateTagOptionWithResourceOutput;
 
@@ -129,7 +282,6 @@ pub struct ConstraintDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>An administrator-specified constraint to apply when provisioning a product.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ConstraintSummary {
@@ -142,7 +294,6 @@ pub struct ConstraintSummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateConstraintInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -169,7 +320,78 @@ pub struct CreateConstraintInput {
     #[serde(rename="Type")]
     pub type_: String,
 }
-
+impl CreateConstraintInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConstraintInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConstraintInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `idempotency_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConstraintInput.idempotency_token = value.into();`.
+    pub fn idempotency_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.idempotency_token = value.into();
+        self
+    }
+    /// Sets `parameters`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConstraintInput.parameters = value.into();`.
+    pub fn parameters<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.parameters = value.into();
+        self
+    }
+    /// Sets `portfolio_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConstraintInput.portfolio_id = value.into();`.
+    pub fn portfolio_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.portfolio_id = value.into();
+        self
+    }
+    /// Sets `product_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConstraintInput.product_id = value.into();`.
+    pub fn product_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_id = value.into();
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConstraintInput.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of CreateConstraintInput with optional fields set to `None`.
+    pub fn new<IdempotencyTokenType: Into<String>,
+               ParametersType: Into<String>,
+               PortfolioIdType: Into<String>,
+               ProductIdType: Into<String>,
+               TypeType: Into<String>>
+        (idempotency_token: IdempotencyTokenType,
+         parameters: ParametersType,
+         portfolio_id: PortfolioIdType,
+         product_id: ProductIdType,
+         type_: TypeType)
+         -> CreateConstraintInput {
+        CreateConstraintInput {
+            idempotency_token: idempotency_token.into(),
+            parameters: parameters.into(),
+            portfolio_id: portfolio_id.into(),
+            product_id: product_id.into(),
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateConstraintOutput {
     #[doc="<p>The resulting detailed constraint information.</p>"]
@@ -185,7 +407,6 @@ pub struct CreateConstraintOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreatePortfolioInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -210,7 +431,65 @@ pub struct CreatePortfolioInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
+impl CreatePortfolioInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePortfolioInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePortfolioInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `display_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePortfolioInput.display_name = value.into();`.
+    pub fn display_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.display_name = value.into();
+        self
+    }
+    /// Sets `idempotency_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePortfolioInput.idempotency_token = value.into();`.
+    pub fn idempotency_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.idempotency_token = value.into();
+        self
+    }
+    /// Sets `provider_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePortfolioInput.provider_name = value.into();`.
+    pub fn provider_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provider_name = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePortfolioInput.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreatePortfolioInput with optional fields set to `None`.
+    pub fn new<DisplayNameType: Into<String>,
+               IdempotencyTokenType: Into<String>,
+               ProviderNameType: Into<String>>
+        (display_name: DisplayNameType,
+         idempotency_token: IdempotencyTokenType,
+         provider_name: ProviderNameType)
+         -> CreatePortfolioInput {
+        CreatePortfolioInput {
+            display_name: display_name.into(),
+            idempotency_token: idempotency_token.into(),
+            provider_name: provider_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreatePortfolioOutput {
     #[doc="<p>The resulting detailed portfolio information.</p>"]
@@ -222,7 +501,6 @@ pub struct CreatePortfolioOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreatePortfolioShareInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -236,7 +514,40 @@ pub struct CreatePortfolioShareInput {
     #[serde(rename="PortfolioId")]
     pub portfolio_id: String,
 }
-
+impl CreatePortfolioShareInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePortfolioShareInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePortfolioShareInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `portfolio_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePortfolioShareInput.portfolio_id = value.into();`.
+    pub fn portfolio_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.portfolio_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreatePortfolioShareInput with optional fields set to `None`.
+    pub fn new<AccountIdType: Into<String>, PortfolioIdType: Into<String>>
+        (account_id: AccountIdType,
+         portfolio_id: PortfolioIdType)
+         -> CreatePortfolioShareInput {
+        CreatePortfolioShareInput {
+            account_id: account_id.into(),
+            portfolio_id: portfolio_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreatePortfolioShareOutput;
 
@@ -286,7 +597,116 @@ pub struct CreateProductInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
+impl CreateProductInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProductInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProductInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `distributor`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProductInput.distributor = Some(value.into());`.
+    pub fn distributor<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.distributor = Some(value.into());
+        self
+    }
+    /// Sets `idempotency_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProductInput.idempotency_token = value.into();`.
+    pub fn idempotency_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.idempotency_token = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProductInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `owner`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProductInput.owner = value.into();`.
+    pub fn owner<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.owner = value.into();
+        self
+    }
+    /// Sets `product_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProductInput.product_type = value.into();`.
+    pub fn product_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_type = value.into();
+        self
+    }
+    /// Sets `provisioning_artifact_parameters`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProductInput.provisioning_artifact_parameters = value.into();`.
+    pub fn provisioning_artifact_parameters<ValueType: Into<ProvisioningArtifactProperties>>
+        (mut self,
+         value: ValueType)
+         -> Self {
+        self.provisioning_artifact_parameters = value.into();
+        self
+    }
+    /// Sets `support_description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProductInput.support_description = Some(value.into());`.
+    pub fn support_description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.support_description = Some(value.into());
+        self
+    }
+    /// Sets `support_email`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProductInput.support_email = Some(value.into());`.
+    pub fn support_email<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.support_email = Some(value.into());
+        self
+    }
+    /// Sets `support_url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProductInput.support_url = Some(value.into());`.
+    pub fn support_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.support_url = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProductInput.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateProductInput with optional fields set to `None`.
+    pub fn new<IdempotencyTokenType: Into<String>,
+               NameType: Into<String>,
+               OwnerType: Into<String>,
+               ProductTypeType: Into<String>,
+               ProvisioningArtifactParametersType: Into<ProvisioningArtifactProperties>>
+        (idempotency_token: IdempotencyTokenType,
+         name: NameType,
+         owner: OwnerType,
+         product_type: ProductTypeType,
+         provisioning_artifact_parameters: ProvisioningArtifactParametersType)
+         -> CreateProductInput {
+        CreateProductInput {
+            idempotency_token: idempotency_token.into(),
+            name: name.into(),
+            owner: owner.into(),
+            product_type: product_type.into(),
+            provisioning_artifact_parameters: provisioning_artifact_parameters.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateProductOutput {
     #[doc="<p>The resulting detailed product view information.</p>"]
@@ -302,7 +722,6 @@ pub struct CreateProductOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateProvisioningArtifactInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -319,7 +738,53 @@ pub struct CreateProvisioningArtifactInput {
     #[serde(rename="ProductId")]
     pub product_id: String,
 }
-
+impl CreateProvisioningArtifactInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProvisioningArtifactInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `idempotency_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProvisioningArtifactInput.idempotency_token = value.into();`.
+    pub fn idempotency_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.idempotency_token = value.into();
+        self
+    }
+    /// Sets `parameters`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProvisioningArtifactInput.parameters = value.into();`.
+    pub fn parameters<ValueType: Into<ProvisioningArtifactProperties>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.parameters = value.into();
+        self
+    }
+    /// Sets `product_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProvisioningArtifactInput.product_id = value.into();`.
+    pub fn product_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateProvisioningArtifactInput with optional fields set to `None`.
+    pub fn new<IdempotencyTokenType: Into<String>,
+               ParametersType: Into<ProvisioningArtifactProperties>,
+               ProductIdType: Into<String>>
+        (idempotency_token: IdempotencyTokenType,
+         parameters: ParametersType,
+         product_id: ProductIdType)
+         -> CreateProvisioningArtifactInput {
+        CreateProvisioningArtifactInput {
+            idempotency_token: idempotency_token.into(),
+            parameters: parameters.into(),
+            product_id: product_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateProvisioningArtifactOutput {
     #[doc="<p>Additional information about the creation request for the provisioning artifact.</p>"]
@@ -335,7 +800,6 @@ pub struct CreateProvisioningArtifactOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateTagOptionInput {
     #[doc="<p>The TagOption key.</p>"]
@@ -345,7 +809,32 @@ pub struct CreateTagOptionInput {
     #[serde(rename="Value")]
     pub value: String,
 }
-
+impl CreateTagOptionInput {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTagOptionInput.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTagOptionInput.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of CreateTagOptionInput with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>, ValueType: Into<String>>(key: KeyType,
+                                                               value: ValueType)
+                                                               -> CreateTagOptionInput {
+        CreateTagOptionInput {
+            key: key.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateTagOptionOutput {
     #[doc="<p>The resulting detailed TagOption information.</p>"]
@@ -353,7 +842,6 @@ pub struct CreateTagOptionOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tag_option_detail: Option<TagOptionDetail>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteConstraintInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -364,7 +852,29 @@ pub struct DeleteConstraintInput {
     #[serde(rename="Id")]
     pub id: String,
 }
-
+impl DeleteConstraintInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteConstraintInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteConstraintInput.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteConstraintInput with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> DeleteConstraintInput {
+        DeleteConstraintInput {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteConstraintOutput;
 
@@ -378,7 +888,29 @@ pub struct DeletePortfolioInput {
     #[serde(rename="Id")]
     pub id: String,
 }
-
+impl DeletePortfolioInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePortfolioInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePortfolioInput.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of DeletePortfolioInput with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> DeletePortfolioInput {
+        DeletePortfolioInput {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeletePortfolioOutput;
 
@@ -395,7 +927,40 @@ pub struct DeletePortfolioShareInput {
     #[serde(rename="PortfolioId")]
     pub portfolio_id: String,
 }
-
+impl DeletePortfolioShareInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePortfolioShareInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePortfolioShareInput.account_id = value.into();`.
+    pub fn account_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.account_id = value.into();
+        self
+    }
+    /// Sets `portfolio_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePortfolioShareInput.portfolio_id = value.into();`.
+    pub fn portfolio_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.portfolio_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeletePortfolioShareInput with optional fields set to `None`.
+    pub fn new<AccountIdType: Into<String>, PortfolioIdType: Into<String>>
+        (account_id: AccountIdType,
+         portfolio_id: PortfolioIdType)
+         -> DeletePortfolioShareInput {
+        DeletePortfolioShareInput {
+            account_id: account_id.into(),
+            portfolio_id: portfolio_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeletePortfolioShareOutput;
 
@@ -409,7 +974,29 @@ pub struct DeleteProductInput {
     #[serde(rename="Id")]
     pub id: String,
 }
-
+impl DeleteProductInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteProductInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteProductInput.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteProductInput with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> DeleteProductInput {
+        DeleteProductInput {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteProductOutput;
 
@@ -426,7 +1013,40 @@ pub struct DeleteProvisioningArtifactInput {
     #[serde(rename="ProvisioningArtifactId")]
     pub provisioning_artifact_id: String,
 }
-
+impl DeleteProvisioningArtifactInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteProvisioningArtifactInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `product_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteProvisioningArtifactInput.product_id = value.into();`.
+    pub fn product_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_id = value.into();
+        self
+    }
+    /// Sets `provisioning_artifact_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteProvisioningArtifactInput.provisioning_artifact_id = value.into();`.
+    pub fn provisioning_artifact_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provisioning_artifact_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteProvisioningArtifactInput with optional fields set to `None`.
+    pub fn new<ProductIdType: Into<String>, ProvisioningArtifactIdType: Into<String>>
+        (product_id: ProductIdType,
+         provisioning_artifact_id: ProvisioningArtifactIdType)
+         -> DeleteProvisioningArtifactInput {
+        DeleteProvisioningArtifactInput {
+            product_id: product_id.into(),
+            provisioning_artifact_id: provisioning_artifact_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteProvisioningArtifactOutput;
 
@@ -440,7 +1060,29 @@ pub struct DescribeConstraintInput {
     #[serde(rename="Id")]
     pub id: String,
 }
-
+impl DescribeConstraintInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConstraintInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConstraintInput.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeConstraintInput with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> DescribeConstraintInput {
+        DescribeConstraintInput {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeConstraintOutput {
     #[doc="<p>Detailed constraint information.</p>"]
@@ -456,7 +1098,6 @@ pub struct DescribeConstraintOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribePortfolioInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -467,7 +1108,29 @@ pub struct DescribePortfolioInput {
     #[serde(rename="Id")]
     pub id: String,
 }
-
+impl DescribePortfolioInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePortfolioInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePortfolioInput.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribePortfolioInput with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> DescribePortfolioInput {
+        DescribePortfolioInput {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribePortfolioOutput {
     #[doc="<p>Detailed portfolio information.</p>"]
@@ -483,7 +1146,6 @@ pub struct DescribePortfolioOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeProductAsAdminInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -494,7 +1156,29 @@ pub struct DescribeProductAsAdminInput {
     #[serde(rename="Id")]
     pub id: String,
 }
-
+impl DescribeProductAsAdminInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeProductAsAdminInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeProductAsAdminInput.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeProductAsAdminInput with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> DescribeProductAsAdminInput {
+        DescribeProductAsAdminInput {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeProductAsAdminOutput {
     #[doc="<p>Detailed product view information.</p>"]
@@ -514,7 +1198,6 @@ pub struct DescribeProductAsAdminOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeProductInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -525,7 +1208,29 @@ pub struct DescribeProductInput {
     #[serde(rename="Id")]
     pub id: String,
 }
-
+impl DescribeProductInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeProductInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeProductInput.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeProductInput with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> DescribeProductInput {
+        DescribeProductInput {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeProductOutput {
     #[doc="<p>The summary metadata about the specified product.</p>"]
@@ -537,7 +1242,6 @@ pub struct DescribeProductOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub provisioning_artifacts: Option<Vec<ProvisioningArtifact>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeProductViewInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -548,7 +1252,29 @@ pub struct DescribeProductViewInput {
     #[serde(rename="Id")]
     pub id: String,
 }
-
+impl DescribeProductViewInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeProductViewInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeProductViewInput.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeProductViewInput with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> DescribeProductViewInput {
+        DescribeProductViewInput {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeProductViewOutput {
     #[doc="<p>The summary metadata about the specified product.</p>"]
@@ -560,7 +1286,6 @@ pub struct DescribeProductViewOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub provisioning_artifacts: Option<Vec<ProvisioningArtifact>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeProvisionedProductInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -571,7 +1296,29 @@ pub struct DescribeProvisionedProductInput {
     #[serde(rename="Id")]
     pub id: String,
 }
-
+impl DescribeProvisionedProductInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeProvisionedProductInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeProvisionedProductInput.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeProvisionedProductInput with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> DescribeProvisionedProductInput {
+        DescribeProvisionedProductInput {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeProvisionedProductOutput {
     #[doc="<p>Detailed provisioned product information.</p>"]
@@ -579,7 +1326,6 @@ pub struct DescribeProvisionedProductOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub provisioned_product_detail: Option<ProvisionedProductDetail>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeProvisioningArtifactInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -597,7 +1343,47 @@ pub struct DescribeProvisioningArtifactInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub verbose: Option<bool>,
 }
-
+impl DescribeProvisioningArtifactInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeProvisioningArtifactInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `product_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeProvisioningArtifactInput.product_id = value.into();`.
+    pub fn product_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_id = value.into();
+        self
+    }
+    /// Sets `provisioning_artifact_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeProvisioningArtifactInput.provisioning_artifact_id = value.into();`.
+    pub fn provisioning_artifact_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provisioning_artifact_id = value.into();
+        self
+    }
+    /// Sets `verbose`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeProvisioningArtifactInput.verbose = Some(value.into());`.
+    pub fn verbose<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.verbose = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeProvisioningArtifactInput with optional fields set to `None`.
+    pub fn new<ProductIdType: Into<String>, ProvisioningArtifactIdType: Into<String>>
+        (product_id: ProductIdType,
+         provisioning_artifact_id: ProvisioningArtifactIdType)
+         -> DescribeProvisioningArtifactInput {
+        DescribeProvisioningArtifactInput {
+            product_id: product_id.into(),
+            provisioning_artifact_id: provisioning_artifact_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeProvisioningArtifactOutput {
     #[doc="<p>Additional information about the provisioning artifact.</p>"]
@@ -613,7 +1399,6 @@ pub struct DescribeProvisioningArtifactOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeProvisioningParametersInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -631,7 +1416,47 @@ pub struct DescribeProvisioningParametersInput {
     #[serde(rename="ProvisioningArtifactId")]
     pub provisioning_artifact_id: String,
 }
-
+impl DescribeProvisioningParametersInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeProvisioningParametersInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `path_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeProvisioningParametersInput.path_id = Some(value.into());`.
+    pub fn path_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path_id = Some(value.into());
+        self
+    }
+    /// Sets `product_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeProvisioningParametersInput.product_id = value.into();`.
+    pub fn product_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_id = value.into();
+        self
+    }
+    /// Sets `provisioning_artifact_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeProvisioningParametersInput.provisioning_artifact_id = value.into();`.
+    pub fn provisioning_artifact_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provisioning_artifact_id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeProvisioningParametersInput with optional fields set to `None`.
+    pub fn new<ProductIdType: Into<String>, ProvisioningArtifactIdType: Into<String>>
+        (product_id: ProductIdType,
+         provisioning_artifact_id: ProvisioningArtifactIdType)
+         -> DescribeProvisioningParametersInput {
+        DescribeProvisioningParametersInput {
+            product_id: product_id.into(),
+            provisioning_artifact_id: provisioning_artifact_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeProvisioningParametersOutput {
     #[doc="<p>The list of constraint summaries that apply to provisioning this product.</p>"]
@@ -651,7 +1476,6 @@ pub struct DescribeProvisioningParametersOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub usage_instructions: Option<Vec<UsageInstruction>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeRecordInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -670,7 +1494,43 @@ pub struct DescribeRecordInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub page_token: Option<String>,
 }
-
+impl DescribeRecordInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRecordInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRecordInput.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRecordInput.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeRecordInput.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeRecordInput with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> DescribeRecordInput {
+        DescribeRecordInput {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeRecordOutput {
     #[doc="<p>The page token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.</p>"]
@@ -686,14 +1546,28 @@ pub struct DescribeRecordOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub record_outputs: Option<Vec<RecordOutput>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeTagOptionInput {
     #[doc="<p>The identifier of the TagOption.</p>"]
     #[serde(rename="Id")]
     pub id: String,
 }
-
+impl DescribeTagOptionInput {
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTagOptionInput.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeTagOptionInput with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> DescribeTagOptionInput {
+        DescribeTagOptionInput {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeTagOptionOutput {
     #[doc="<p>The resulting detailed TagOption information.</p>"]
@@ -701,7 +1575,6 @@ pub struct DescribeTagOptionOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tag_option_detail: Option<TagOptionDetail>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DisassociatePrincipalFromPortfolioInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -715,7 +1588,40 @@ pub struct DisassociatePrincipalFromPortfolioInput {
     #[serde(rename="PrincipalARN")]
     pub principal_arn: String,
 }
-
+impl DisassociatePrincipalFromPortfolioInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociatePrincipalFromPortfolioInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `portfolio_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociatePrincipalFromPortfolioInput.portfolio_id = value.into();`.
+    pub fn portfolio_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.portfolio_id = value.into();
+        self
+    }
+    /// Sets `principal_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociatePrincipalFromPortfolioInput.principal_arn = value.into();`.
+    pub fn principal_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.principal_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DisassociatePrincipalFromPortfolioInput with optional fields set to `None`.
+    pub fn new<PortfolioIdType: Into<String>, PrincipalARNType: Into<String>>
+        (portfolio_id: PortfolioIdType,
+         principal_arn: PrincipalARNType)
+         -> DisassociatePrincipalFromPortfolioInput {
+        DisassociatePrincipalFromPortfolioInput {
+            portfolio_id: portfolio_id.into(),
+            principal_arn: principal_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DisassociatePrincipalFromPortfolioOutput;
 
@@ -732,7 +1638,40 @@ pub struct DisassociateProductFromPortfolioInput {
     #[serde(rename="ProductId")]
     pub product_id: String,
 }
-
+impl DisassociateProductFromPortfolioInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateProductFromPortfolioInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `portfolio_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateProductFromPortfolioInput.portfolio_id = value.into();`.
+    pub fn portfolio_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.portfolio_id = value.into();
+        self
+    }
+    /// Sets `product_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateProductFromPortfolioInput.product_id = value.into();`.
+    pub fn product_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_id = value.into();
+        self
+    }
+    /// Returns a new instance of DisassociateProductFromPortfolioInput with optional fields set to `None`.
+    pub fn new<PortfolioIdType: Into<String>, ProductIdType: Into<String>>
+        (portfolio_id: PortfolioIdType,
+         product_id: ProductIdType)
+         -> DisassociateProductFromPortfolioInput {
+        DisassociateProductFromPortfolioInput {
+            portfolio_id: portfolio_id.into(),
+            product_id: product_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DisassociateProductFromPortfolioOutput;
 
@@ -745,7 +1684,33 @@ pub struct DisassociateTagOptionFromResourceInput {
     #[serde(rename="TagOptionId")]
     pub tag_option_id: String,
 }
-
+impl DisassociateTagOptionFromResourceInput {
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateTagOptionFromResourceInput.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `tag_option_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateTagOptionFromResourceInput.tag_option_id = value.into();`.
+    pub fn tag_option_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tag_option_id = value.into();
+        self
+    }
+    /// Returns a new instance of DisassociateTagOptionFromResourceInput with optional fields set to `None`.
+    pub fn new<ResourceIdType: Into<String>, TagOptionIdType: Into<String>>
+        (resource_id: ResourceIdType,
+         tag_option_id: TagOptionIdType)
+         -> DisassociateTagOptionFromResourceInput {
+        DisassociateTagOptionFromResourceInput {
+            resource_id: resource_id.into(),
+            tag_option_id: tag_option_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DisassociateTagOptionFromResourceOutput;
 
@@ -769,7 +1734,6 @@ pub struct LaunchPathSummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListAcceptedPortfolioSharesInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -785,7 +1749,33 @@ pub struct ListAcceptedPortfolioSharesInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub page_token: Option<String>,
 }
-
+impl ListAcceptedPortfolioSharesInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAcceptedPortfolioSharesInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAcceptedPortfolioSharesInput.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAcceptedPortfolioSharesInput.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListAcceptedPortfolioSharesInput with optional fields set to `None`.
+    pub fn new() -> ListAcceptedPortfolioSharesInput {
+        ListAcceptedPortfolioSharesInput { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListAcceptedPortfolioSharesOutput {
     #[doc="<p>The page token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.</p>"]
@@ -797,7 +1787,6 @@ pub struct ListAcceptedPortfolioSharesOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub portfolio_details: Option<Vec<PortfolioDetail>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListConstraintsForPortfolioInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -820,7 +1809,51 @@ pub struct ListConstraintsForPortfolioInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub product_id: Option<String>,
 }
-
+impl ListConstraintsForPortfolioInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListConstraintsForPortfolioInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListConstraintsForPortfolioInput.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListConstraintsForPortfolioInput.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Sets `portfolio_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListConstraintsForPortfolioInput.portfolio_id = value.into();`.
+    pub fn portfolio_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.portfolio_id = value.into();
+        self
+    }
+    /// Sets `product_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListConstraintsForPortfolioInput.product_id = Some(value.into());`.
+    pub fn product_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListConstraintsForPortfolioInput with optional fields set to `None`.
+    pub fn new<PortfolioIdType: Into<String>>(portfolio_id: PortfolioIdType)
+                                              -> ListConstraintsForPortfolioInput {
+        ListConstraintsForPortfolioInput {
+            portfolio_id: portfolio_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListConstraintsForPortfolioOutput {
     #[doc="<p>List of detailed constraint information objects.</p>"]
@@ -832,7 +1865,6 @@ pub struct ListConstraintsForPortfolioOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_page_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListLaunchPathsInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -851,7 +1883,43 @@ pub struct ListLaunchPathsInput {
     #[serde(rename="ProductId")]
     pub product_id: String,
 }
-
+impl ListLaunchPathsInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListLaunchPathsInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListLaunchPathsInput.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListLaunchPathsInput.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Sets `product_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListLaunchPathsInput.product_id = value.into();`.
+    pub fn product_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListLaunchPathsInput with optional fields set to `None`.
+    pub fn new<ProductIdType: Into<String>>(product_id: ProductIdType) -> ListLaunchPathsInput {
+        ListLaunchPathsInput {
+            product_id: product_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListLaunchPathsOutput {
     #[doc="<p>List of launch path information summaries for the specified <code>PageToken</code>.</p>"]
@@ -863,7 +1931,6 @@ pub struct ListLaunchPathsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_page_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListPortfolioAccessInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -874,7 +1941,30 @@ pub struct ListPortfolioAccessInput {
     #[serde(rename="PortfolioId")]
     pub portfolio_id: String,
 }
-
+impl ListPortfolioAccessInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPortfolioAccessInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `portfolio_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPortfolioAccessInput.portfolio_id = value.into();`.
+    pub fn portfolio_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.portfolio_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListPortfolioAccessInput with optional fields set to `None`.
+    pub fn new<PortfolioIdType: Into<String>>(portfolio_id: PortfolioIdType)
+                                              -> ListPortfolioAccessInput {
+        ListPortfolioAccessInput {
+            portfolio_id: portfolio_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListPortfolioAccessOutput {
     #[doc="<p>List of account IDs associated with access to the portfolio.</p>"]
@@ -886,7 +1976,6 @@ pub struct ListPortfolioAccessOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_page_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListPortfoliosForProductInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -905,7 +1994,44 @@ pub struct ListPortfoliosForProductInput {
     #[serde(rename="ProductId")]
     pub product_id: String,
 }
-
+impl ListPortfoliosForProductInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPortfoliosForProductInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPortfoliosForProductInput.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPortfoliosForProductInput.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Sets `product_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPortfoliosForProductInput.product_id = value.into();`.
+    pub fn product_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListPortfoliosForProductInput with optional fields set to `None`.
+    pub fn new<ProductIdType: Into<String>>(product_id: ProductIdType)
+                                            -> ListPortfoliosForProductInput {
+        ListPortfoliosForProductInput {
+            product_id: product_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListPortfoliosForProductOutput {
     #[doc="<p>The page token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.</p>"]
@@ -917,7 +2043,6 @@ pub struct ListPortfoliosForProductOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub portfolio_details: Option<Vec<PortfolioDetail>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListPortfoliosInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -933,7 +2058,33 @@ pub struct ListPortfoliosInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub page_token: Option<String>,
 }
-
+impl ListPortfoliosInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPortfoliosInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPortfoliosInput.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPortfoliosInput.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListPortfoliosInput with optional fields set to `None`.
+    pub fn new() -> ListPortfoliosInput {
+        ListPortfoliosInput { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListPortfoliosOutput {
     #[doc="<p>The page token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.</p>"]
@@ -945,7 +2096,6 @@ pub struct ListPortfoliosOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub portfolio_details: Option<Vec<PortfolioDetail>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListPrincipalsForPortfolioInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -964,7 +2114,44 @@ pub struct ListPrincipalsForPortfolioInput {
     #[serde(rename="PortfolioId")]
     pub portfolio_id: String,
 }
-
+impl ListPrincipalsForPortfolioInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPrincipalsForPortfolioInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPrincipalsForPortfolioInput.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPrincipalsForPortfolioInput.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Sets `portfolio_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPrincipalsForPortfolioInput.portfolio_id = value.into();`.
+    pub fn portfolio_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.portfolio_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListPrincipalsForPortfolioInput with optional fields set to `None`.
+    pub fn new<PortfolioIdType: Into<String>>(portfolio_id: PortfolioIdType)
+                                              -> ListPrincipalsForPortfolioInput {
+        ListPrincipalsForPortfolioInput {
+            portfolio_id: portfolio_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListPrincipalsForPortfolioOutput {
     #[doc="<p>The page token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.</p>"]
@@ -976,7 +2163,6 @@ pub struct ListPrincipalsForPortfolioOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub principals: Option<Vec<Principal>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListProvisioningArtifactsInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -987,7 +2173,30 @@ pub struct ListProvisioningArtifactsInput {
     #[serde(rename="ProductId")]
     pub product_id: String,
 }
-
+impl ListProvisioningArtifactsInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListProvisioningArtifactsInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `product_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListProvisioningArtifactsInput.product_id = value.into();`.
+    pub fn product_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListProvisioningArtifactsInput with optional fields set to `None`.
+    pub fn new<ProductIdType: Into<String>>(product_id: ProductIdType)
+                                            -> ListProvisioningArtifactsInput {
+        ListProvisioningArtifactsInput {
+            product_id: product_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListProvisioningArtifactsOutput {
     #[doc="<p>The page token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.</p>"]
@@ -999,7 +2208,6 @@ pub struct ListProvisioningArtifactsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub provisioning_artifact_details: Option<Vec<ProvisioningArtifactDetail>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListRecordHistoryInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -1023,7 +2231,51 @@ pub struct ListRecordHistoryInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub search_filter: Option<ListRecordHistorySearchFilter>,
 }
-
+impl ListRecordHistoryInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRecordHistoryInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `access_level_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRecordHistoryInput.access_level_filter = Some(value.into());`.
+    pub fn access_level_filter<ValueType: Into<AccessLevelFilter>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.access_level_filter = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRecordHistoryInput.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRecordHistoryInput.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Sets `search_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRecordHistoryInput.search_filter = Some(value.into());`.
+    pub fn search_filter<ValueType: Into<ListRecordHistorySearchFilter>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.search_filter = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListRecordHistoryInput with optional fields set to `None`.
+    pub fn new() -> ListRecordHistoryInput {
+        ListRecordHistoryInput { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListRecordHistoryOutput {
     #[doc="<p>The page token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.</p>"]
@@ -1035,7 +2287,6 @@ pub struct ListRecordHistoryOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub record_details: Option<Vec<RecordDetail>>,
 }
-
 #[doc="<p>The search filter to limit results when listing request history records.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListRecordHistorySearchFilter {
@@ -1048,7 +2299,26 @@ pub struct ListRecordHistorySearchFilter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl ListRecordHistorySearchFilter {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRecordHistorySearchFilter.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRecordHistorySearchFilter.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListRecordHistorySearchFilter with optional fields set to `None`.
+    pub fn new() -> ListRecordHistorySearchFilter {
+        ListRecordHistorySearchFilter { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListResourcesForTagOptionInput {
     #[doc="<p>The maximum number of items to return in the results. If more results exist than fit in the specified <code>PageSize</code>, the value of <code>NextPageToken</code> in the response is non-null.</p>"]
@@ -1067,7 +2337,44 @@ pub struct ListResourcesForTagOptionInput {
     #[serde(rename="TagOptionId")]
     pub tag_option_id: String,
 }
-
+impl ListResourcesForTagOptionInput {
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListResourcesForTagOptionInput.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListResourcesForTagOptionInput.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Sets `resource_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListResourcesForTagOptionInput.resource_type = Some(value.into());`.
+    pub fn resource_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_type = Some(value.into());
+        self
+    }
+    /// Sets `tag_option_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListResourcesForTagOptionInput.tag_option_id = value.into();`.
+    pub fn tag_option_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tag_option_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListResourcesForTagOptionInput with optional fields set to `None`.
+    pub fn new<TagOptionIdType: Into<String>>(tag_option_id: TagOptionIdType)
+                                              -> ListResourcesForTagOptionInput {
+        ListResourcesForTagOptionInput {
+            tag_option_id: tag_option_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListResourcesForTagOptionOutput {
     #[doc="<p>The page token of the first page retrieved. If null, this retrieves the first page of size <code>PageSize</code>.</p>"]
@@ -1079,7 +2386,6 @@ pub struct ListResourcesForTagOptionOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resource_details: Option<Vec<ResourceDetail>>,
 }
-
 #[doc="<p>The ListTagOptions filters.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTagOptionsFilters {
@@ -1096,7 +2402,33 @@ pub struct ListTagOptionsFilters {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl ListTagOptionsFilters {
+    /// Sets `active`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagOptionsFilters.active = Some(value.into());`.
+    pub fn active<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.active = Some(value.into());
+        self
+    }
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagOptionsFilters.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagOptionsFilters.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListTagOptionsFilters with optional fields set to `None`.
+    pub fn new() -> ListTagOptionsFilters {
+        ListTagOptionsFilters { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTagOptionsInput {
     #[doc="<p>The list of filters with which to limit search results. If no search filters are specified, the output is all TagOptions. </p>"]
@@ -1112,7 +2444,33 @@ pub struct ListTagOptionsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub page_token: Option<String>,
 }
-
+impl ListTagOptionsInput {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagOptionsInput.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<ListTagOptionsFilters>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagOptionsInput.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagOptionsInput.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListTagOptionsInput with optional fields set to `None`.
+    pub fn new() -> ListTagOptionsInput {
+        ListTagOptionsInput { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTagOptionsOutput {
     #[doc="<p>The page token of the first page retrieved. If null, this retrieves the first page of size <code>PageSize</code>.</p>"]
@@ -1124,7 +2482,6 @@ pub struct ListTagOptionsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tag_option_details: Option<Vec<TagOptionDetail>>,
 }
-
 #[doc="<p>The constraints that the administrator has put on the parameter.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ParameterConstraints {
@@ -1133,7 +2490,6 @@ pub struct ParameterConstraints {
     #[serde(skip_serializing_if="Option::is_none")]
     pub allowed_values: Option<Vec<String>>,
 }
-
 #[doc="<p>Detailed portfolio information.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PortfolioDetail {
@@ -1162,7 +2518,6 @@ pub struct PortfolioDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub provider_name: Option<String>,
 }
-
 #[doc="<p>A principal's ARN and type.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Principal {
@@ -1175,7 +2530,6 @@ pub struct Principal {
     #[serde(skip_serializing_if="Option::is_none")]
     pub principal_type: Option<String>,
 }
-
 #[doc="<p>A single product view aggregation value/count pair, containing metadata about each product to which the calling user has access.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ProductViewAggregationValue {
@@ -1188,7 +2542,6 @@ pub struct ProductViewAggregationValue {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
 #[doc="<p>Detailed product view information.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ProductViewDetail {
@@ -1209,7 +2562,6 @@ pub struct ProductViewDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[doc="<p>The summary metadata about the specified product.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ProductViewSummary {
@@ -1258,7 +2610,6 @@ pub struct ProductViewSummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ProvisionProductInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -1294,7 +2645,91 @@ pub struct ProvisionProductInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
+impl ProvisionProductInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProvisionProductInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `notification_arns`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProvisionProductInput.notification_arns = Some(value.into());`.
+    pub fn notification_arns<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.notification_arns = Some(value.into());
+        self
+    }
+    /// Sets `path_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProvisionProductInput.path_id = Some(value.into());`.
+    pub fn path_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path_id = Some(value.into());
+        self
+    }
+    /// Sets `product_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProvisionProductInput.product_id = value.into();`.
+    pub fn product_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_id = value.into();
+        self
+    }
+    /// Sets `provision_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProvisionProductInput.provision_token = value.into();`.
+    pub fn provision_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provision_token = value.into();
+        self
+    }
+    /// Sets `provisioned_product_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProvisionProductInput.provisioned_product_name = value.into();`.
+    pub fn provisioned_product_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provisioned_product_name = value.into();
+        self
+    }
+    /// Sets `provisioning_artifact_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProvisionProductInput.provisioning_artifact_id = value.into();`.
+    pub fn provisioning_artifact_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provisioning_artifact_id = value.into();
+        self
+    }
+    /// Sets `provisioning_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProvisionProductInput.provisioning_parameters = Some(value.into());`.
+    pub fn provisioning_parameters<ValueType: Into<Vec<ProvisioningParameter>>>(mut self,
+                                                                                value: ValueType)
+                                                                                -> Self {
+        self.provisioning_parameters = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProvisionProductInput.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ProvisionProductInput with optional fields set to `None`.
+    pub fn new<ProductIdType: Into<String>,
+               ProvisionTokenType: Into<String>,
+               ProvisionedProductNameType: Into<String>,
+               ProvisioningArtifactIdType: Into<String>>
+        (product_id: ProductIdType,
+         provision_token: ProvisionTokenType,
+         provisioned_product_name: ProvisionedProductNameType,
+         provisioning_artifact_id: ProvisioningArtifactIdType)
+         -> ProvisionProductInput {
+        ProvisionProductInput {
+            product_id: product_id.into(),
+            provision_token: provision_token.into(),
+            provisioned_product_name: provisioned_product_name.into(),
+            provisioning_artifact_id: provisioning_artifact_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ProvisionProductOutput {
     #[doc="<p>The detailed result of the <a>ProvisionProduct</a> request, containing the inputs made to that request, the current state of the request, a pointer to the ProvisionedProduct object of the request, and a list of any errors that the request encountered. </p>"]
@@ -1302,7 +2737,6 @@ pub struct ProvisionProductOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub record_detail: Option<RecordDetail>,
 }
-
 #[doc="<p>Detailed information about a ProvisionedProduct object.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ProvisionedProductDetail {
@@ -1343,7 +2777,6 @@ pub struct ProvisionedProductDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>Contains information indicating the ways in which a product can be provisioned.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ProvisioningArtifact {
@@ -1364,7 +2797,6 @@ pub struct ProvisioningArtifact {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p>Detailed provisioning artifact information.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ProvisioningArtifactDetail {
@@ -1389,7 +2821,6 @@ pub struct ProvisioningArtifactDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>A parameter used to successfully provision the product. This value includes a list of allowable values and additional metadata. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ProvisioningArtifactParameter {
@@ -1418,7 +2849,6 @@ pub struct ProvisioningArtifactParameter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub parameter_type: Option<String>,
 }
-
 #[doc="<p>Provisioning artifact properties. For example request JSON, see <a>CreateProvisioningArtifact</a>.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ProvisioningArtifactProperties {
@@ -1438,7 +2868,47 @@ pub struct ProvisioningArtifactProperties {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
+impl ProvisioningArtifactProperties {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProvisioningArtifactProperties.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `info`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProvisioningArtifactProperties.info = value.into();`.
+    pub fn info<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.info = value.into();
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProvisioningArtifactProperties.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProvisioningArtifactProperties.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ProvisioningArtifactProperties with optional fields set to `None`.
+    pub fn new<InfoType: Into<::std::collections::HashMap<String, String>>>
+        (info: InfoType)
+         -> ProvisioningArtifactProperties {
+        ProvisioningArtifactProperties {
+            info: info.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Stores summary information about a provisioning artifact.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ProvisioningArtifactSummary {
@@ -1463,7 +2933,6 @@ pub struct ProvisioningArtifactSummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub provisioning_artifact_metadata: Option<::std::collections::HashMap<String, String>>,
 }
-
 #[doc="<p>The parameter key-value pairs used to provision a product.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ProvisioningParameter {
@@ -1476,7 +2945,26 @@ pub struct ProvisioningParameter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl ProvisioningParameter {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProvisioningParameter.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ProvisioningParameter.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ProvisioningParameter with optional fields set to `None`.
+    pub fn new() -> ProvisioningParameter {
+        ProvisioningParameter { ..Default::default() }
+    }
+}
 #[doc="<p>The full details of a specific ProvisionedProduct object.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RecordDetail {
@@ -1533,7 +3021,6 @@ pub struct RecordDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub updated_time: Option<f64>,
 }
-
 #[doc="<p>The error code and description resulting from an operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RecordError {
@@ -1546,7 +3033,6 @@ pub struct RecordError {
     #[serde(skip_serializing_if="Option::is_none")]
     pub description: Option<String>,
 }
-
 #[doc="<p>An output for the specified Product object created as the result of a request. For example, a CloudFormation-backed product that creates an S3 bucket would have an output for the S3 bucket URL.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RecordOutput {
@@ -1563,7 +3049,6 @@ pub struct RecordOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub output_value: Option<String>,
 }
-
 #[doc="<p>A tag associated with the record, stored as a key-value pair.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RecordTag {
@@ -1576,7 +3061,6 @@ pub struct RecordTag {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RejectPortfolioShareInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -1587,7 +3071,30 @@ pub struct RejectPortfolioShareInput {
     #[serde(rename="PortfolioId")]
     pub portfolio_id: String,
 }
-
+impl RejectPortfolioShareInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RejectPortfolioShareInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `portfolio_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RejectPortfolioShareInput.portfolio_id = value.into();`.
+    pub fn portfolio_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.portfolio_id = value.into();
+        self
+    }
+    /// Returns a new instance of RejectPortfolioShareInput with optional fields set to `None`.
+    pub fn new<PortfolioIdType: Into<String>>(portfolio_id: PortfolioIdType)
+                                              -> RejectPortfolioShareInput {
+        RejectPortfolioShareInput {
+            portfolio_id: portfolio_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RejectPortfolioShareOutput;
 
@@ -1615,7 +3122,6 @@ pub struct ResourceDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ScanProvisionedProductsInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -1635,7 +3141,42 @@ pub struct ScanProvisionedProductsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub page_token: Option<String>,
 }
-
+impl ScanProvisionedProductsInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScanProvisionedProductsInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `access_level_filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScanProvisionedProductsInput.access_level_filter = Some(value.into());`.
+    pub fn access_level_filter<ValueType: Into<AccessLevelFilter>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.access_level_filter = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScanProvisionedProductsInput.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScanProvisionedProductsInput.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ScanProvisionedProductsInput with optional fields set to `None`.
+    pub fn new() -> ScanProvisionedProductsInput {
+        ScanProvisionedProductsInput { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ScanProvisionedProductsOutput {
     #[doc="<p>The page token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.</p>"]
@@ -1647,7 +3188,6 @@ pub struct ScanProvisionedProductsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub provisioned_products: Option<Vec<ProvisionedProductDetail>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SearchProductsAsAdminInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -1683,7 +3223,68 @@ pub struct SearchProductsAsAdminInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sort_order: Option<String>,
 }
-
+impl SearchProductsAsAdminInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchProductsAsAdminInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchProductsAsAdminInput.filters = Some(value.into());`.
+pub fn filters<ValueType: Into<::std::collections::HashMap<String, Vec<String>>>>(mut self, value: ValueType) -> Self{
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchProductsAsAdminInput.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchProductsAsAdminInput.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Sets `portfolio_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchProductsAsAdminInput.portfolio_id = Some(value.into());`.
+    pub fn portfolio_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.portfolio_id = Some(value.into());
+        self
+    }
+    /// Sets `product_source`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchProductsAsAdminInput.product_source = Some(value.into());`.
+    pub fn product_source<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_source = Some(value.into());
+        self
+    }
+    /// Sets `sort_by`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchProductsAsAdminInput.sort_by = Some(value.into());`.
+    pub fn sort_by<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sort_by = Some(value.into());
+        self
+    }
+    /// Sets `sort_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchProductsAsAdminInput.sort_order = Some(value.into());`.
+    pub fn sort_order<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sort_order = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SearchProductsAsAdminInput with optional fields set to `None`.
+    pub fn new() -> SearchProductsAsAdminInput {
+        SearchProductsAsAdminInput { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SearchProductsAsAdminOutput {
     #[doc="<p>The page token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.</p>"]
@@ -1695,7 +3296,6 @@ pub struct SearchProductsAsAdminOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub product_view_details: Option<Vec<ProductViewDetail>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SearchProductsInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -1723,7 +3323,54 @@ pub struct SearchProductsInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub sort_order: Option<String>,
 }
-
+impl SearchProductsInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchProductsInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchProductsInput.filters = Some(value.into());`.
+pub fn filters<ValueType: Into<::std::collections::HashMap<String, Vec<String>>>>(mut self, value: ValueType) -> Self{
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `page_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchProductsInput.page_size = Some(value.into());`.
+    pub fn page_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.page_size = Some(value.into());
+        self
+    }
+    /// Sets `page_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchProductsInput.page_token = Some(value.into());`.
+    pub fn page_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.page_token = Some(value.into());
+        self
+    }
+    /// Sets `sort_by`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchProductsInput.sort_by = Some(value.into());`.
+    pub fn sort_by<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sort_by = Some(value.into());
+        self
+    }
+    /// Sets `sort_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SearchProductsInput.sort_order = Some(value.into());`.
+    pub fn sort_order<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sort_order = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SearchProductsInput with optional fields set to `None`.
+    pub fn new() -> SearchProductsInput {
+        SearchProductsInput { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SearchProductsOutput {
     #[doc="<p>The page token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.</p>"]
@@ -1740,7 +3387,6 @@ pub struct SearchProductsOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub product_view_summaries: Option<Vec<ProductViewSummary>>,
 }
-
 #[doc="<p>Key-value pairs to associate with this provisioning. These tags are entirely discretionary and are propagated to the resources created in the provisioning.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Tag {
@@ -1751,7 +3397,32 @@ pub struct Tag {
     #[serde(rename="Value")]
     pub value: String,
 }
-
+impl Tag {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>, ValueType: Into<String>>(key: KeyType,
+                                                               value: ValueType)
+                                                               -> Tag {
+        Tag {
+            key: key.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The TagOption details.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TagOptionDetail {
@@ -1772,7 +3443,6 @@ pub struct TagOptionDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
 #[doc="<p>The TagOption summary key-value pair.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TagOptionSummary {
@@ -1785,7 +3455,6 @@ pub struct TagOptionSummary {
     #[serde(skip_serializing_if="Option::is_none")]
     pub values: Option<Vec<String>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TerminateProvisionedProductInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -1808,7 +3477,51 @@ pub struct TerminateProvisionedProductInput {
     #[serde(rename="TerminateToken")]
     pub terminate_token: String,
 }
-
+impl TerminateProvisionedProductInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateProvisionedProductInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `ignore_errors`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateProvisionedProductInput.ignore_errors = Some(value.into());`.
+    pub fn ignore_errors<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.ignore_errors = Some(value.into());
+        self
+    }
+    /// Sets `provisioned_product_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateProvisionedProductInput.provisioned_product_id = Some(value.into());`.
+    pub fn provisioned_product_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provisioned_product_id = Some(value.into());
+        self
+    }
+    /// Sets `provisioned_product_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateProvisionedProductInput.provisioned_product_name = Some(value.into());`.
+    pub fn provisioned_product_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provisioned_product_name = Some(value.into());
+        self
+    }
+    /// Sets `terminate_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateProvisionedProductInput.terminate_token = value.into();`.
+    pub fn terminate_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.terminate_token = value.into();
+        self
+    }
+    /// Returns a new instance of TerminateProvisionedProductInput with optional fields set to `None`.
+    pub fn new<TerminateTokenType: Into<String>>(terminate_token: TerminateTokenType)
+                                                 -> TerminateProvisionedProductInput {
+        TerminateProvisionedProductInput {
+            terminate_token: terminate_token.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TerminateProvisionedProductOutput {
     #[doc="<p>The detailed result of the <a>TerminateProvisionedProduct</a> request, containing the inputs made to that request, the current state of the request, a pointer to the ProvisionedProduct object that the request is modifying, and a list of any errors that the request encountered.</p>"]
@@ -1816,7 +3529,6 @@ pub struct TerminateProvisionedProductOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub record_detail: Option<RecordDetail>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateConstraintInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -1831,7 +3543,36 @@ pub struct UpdateConstraintInput {
     #[serde(rename="Id")]
     pub id: String,
 }
-
+impl UpdateConstraintInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateConstraintInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateConstraintInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateConstraintInput.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateConstraintInput with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> UpdateConstraintInput {
+        UpdateConstraintInput {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateConstraintOutput {
     #[doc="<p>The resulting detailed constraint information.</p>"]
@@ -1847,7 +3588,6 @@ pub struct UpdateConstraintOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdatePortfolioInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -1878,7 +3618,64 @@ pub struct UpdatePortfolioInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub remove_tags: Option<Vec<String>>,
 }
-
+impl UpdatePortfolioInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePortfolioInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `add_tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePortfolioInput.add_tags = Some(value.into());`.
+    pub fn add_tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.add_tags = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePortfolioInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `display_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePortfolioInput.display_name = Some(value.into());`.
+    pub fn display_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.display_name = Some(value.into());
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePortfolioInput.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `provider_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePortfolioInput.provider_name = Some(value.into());`.
+    pub fn provider_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provider_name = Some(value.into());
+        self
+    }
+    /// Sets `remove_tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdatePortfolioInput.remove_tags = Some(value.into());`.
+    pub fn remove_tags<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.remove_tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdatePortfolioInput with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> UpdatePortfolioInput {
+        UpdatePortfolioInput {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdatePortfolioOutput {
     #[doc="<p>The resulting detailed portfolio information.</p>"]
@@ -1890,7 +3687,6 @@ pub struct UpdatePortfolioOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateProductInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -1937,7 +3733,92 @@ pub struct UpdateProductInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub support_url: Option<String>,
 }
-
+impl UpdateProductInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProductInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `add_tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProductInput.add_tags = Some(value.into());`.
+    pub fn add_tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.add_tags = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProductInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `distributor`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProductInput.distributor = Some(value.into());`.
+    pub fn distributor<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.distributor = Some(value.into());
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProductInput.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProductInput.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `owner`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProductInput.owner = Some(value.into());`.
+    pub fn owner<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.owner = Some(value.into());
+        self
+    }
+    /// Sets `remove_tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProductInput.remove_tags = Some(value.into());`.
+    pub fn remove_tags<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.remove_tags = Some(value.into());
+        self
+    }
+    /// Sets `support_description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProductInput.support_description = Some(value.into());`.
+    pub fn support_description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.support_description = Some(value.into());
+        self
+    }
+    /// Sets `support_email`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProductInput.support_email = Some(value.into());`.
+    pub fn support_email<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.support_email = Some(value.into());
+        self
+    }
+    /// Sets `support_url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProductInput.support_url = Some(value.into());`.
+    pub fn support_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.support_url = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateProductInput with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> UpdateProductInput {
+        UpdateProductInput {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateProductOutput {
     #[doc="<p>The resulting detailed product view information.</p>"]
@@ -1949,7 +3830,6 @@ pub struct UpdateProductOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateProvisionedProductInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -1984,7 +3864,72 @@ pub struct UpdateProvisionedProductInput {
     #[serde(rename="UpdateToken")]
     pub update_token: String,
 }
-
+impl UpdateProvisionedProductInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProvisionedProductInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `path_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProvisionedProductInput.path_id = Some(value.into());`.
+    pub fn path_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.path_id = Some(value.into());
+        self
+    }
+    /// Sets `product_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProvisionedProductInput.product_id = Some(value.into());`.
+    pub fn product_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_id = Some(value.into());
+        self
+    }
+    /// Sets `provisioned_product_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProvisionedProductInput.provisioned_product_id = Some(value.into());`.
+    pub fn provisioned_product_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provisioned_product_id = Some(value.into());
+        self
+    }
+    /// Sets `provisioned_product_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProvisionedProductInput.provisioned_product_name = Some(value.into());`.
+    pub fn provisioned_product_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provisioned_product_name = Some(value.into());
+        self
+    }
+    /// Sets `provisioning_artifact_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProvisionedProductInput.provisioning_artifact_id = Some(value.into());`.
+    pub fn provisioning_artifact_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provisioning_artifact_id = Some(value.into());
+        self
+    }
+    /// Sets `provisioning_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProvisionedProductInput.provisioning_parameters = Some(value.into());`.
+pub fn provisioning_parameters<ValueType: Into<Vec<UpdateProvisioningParameter>>>(mut self, value: ValueType) -> Self{
+        self.provisioning_parameters = Some(value.into());
+        self
+    }
+    /// Sets `update_token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProvisionedProductInput.update_token = value.into();`.
+    pub fn update_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.update_token = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateProvisionedProductInput with optional fields set to `None`.
+    pub fn new<UpdateTokenType: Into<String>>(update_token: UpdateTokenType)
+                                              -> UpdateProvisionedProductInput {
+        UpdateProvisionedProductInput {
+            update_token: update_token.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateProvisionedProductOutput {
     #[doc="<p>The detailed result of the <a>UpdateProvisionedProduct</a> request, containing the inputs made to that request, the current state of the request, a pointer to the ProvisionedProduct object that the request is modifying, and a list of any errors that the request encountered.</p>"]
@@ -1992,7 +3937,6 @@ pub struct UpdateProvisionedProductOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub record_detail: Option<RecordDetail>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateProvisioningArtifactInput {
     #[doc="<p>The language code to use for this operation. Supported language codes are as follows:</p> <p>\"en\" (English)</p> <p>\"jp\" (Japanese)</p> <p>\"zh\" (Chinese)</p> <p>If no code is specified, \"en\" is used as the default.</p>"]
@@ -2014,7 +3958,54 @@ pub struct UpdateProvisioningArtifactInput {
     #[serde(rename="ProvisioningArtifactId")]
     pub provisioning_artifact_id: String,
 }
-
+impl UpdateProvisioningArtifactInput {
+    /// Sets `accept_language`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProvisioningArtifactInput.accept_language = Some(value.into());`.
+    pub fn accept_language<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.accept_language = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProvisioningArtifactInput.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProvisioningArtifactInput.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `product_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProvisioningArtifactInput.product_id = value.into();`.
+    pub fn product_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_id = value.into();
+        self
+    }
+    /// Sets `provisioning_artifact_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProvisioningArtifactInput.provisioning_artifact_id = value.into();`.
+    pub fn provisioning_artifact_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.provisioning_artifact_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateProvisioningArtifactInput with optional fields set to `None`.
+    pub fn new<ProductIdType: Into<String>, ProvisioningArtifactIdType: Into<String>>
+        (product_id: ProductIdType,
+         provisioning_artifact_id: ProvisioningArtifactIdType)
+         -> UpdateProvisioningArtifactInput {
+        UpdateProvisioningArtifactInput {
+            product_id: product_id.into(),
+            provisioning_artifact_id: provisioning_artifact_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateProvisioningArtifactOutput {
     #[doc="<p>Additional information about the provisioning artifact update request.</p>"]
@@ -2030,7 +4021,6 @@ pub struct UpdateProvisioningArtifactOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
 #[doc="<p>The parameter key-value pair used to update a ProvisionedProduct object. If <code>UsePreviousValue</code> is set to true, <code>Value</code> is ignored and the value for <code>Key</code> is kept as previously set (current value).</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateProvisioningParameter {
@@ -2047,7 +4037,33 @@ pub struct UpdateProvisioningParameter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl UpdateProvisioningParameter {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProvisioningParameter.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `use_previous_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProvisioningParameter.use_previous_value = Some(value.into());`.
+    pub fn use_previous_value<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.use_previous_value = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProvisioningParameter.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateProvisioningParameter with optional fields set to `None`.
+    pub fn new() -> UpdateProvisioningParameter {
+        UpdateProvisioningParameter { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateTagOptionInput {
     #[doc="<p>The updated active state.</p>"]
@@ -2062,7 +4078,36 @@ pub struct UpdateTagOptionInput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl UpdateTagOptionInput {
+    /// Sets `active`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTagOptionInput.active = Some(value.into());`.
+    pub fn active<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.active = Some(value.into());
+        self
+    }
+    /// Sets `id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTagOptionInput.id = value.into();`.
+    pub fn id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.id = value.into();
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateTagOptionInput.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateTagOptionInput with optional fields set to `None`.
+    pub fn new<IdType: Into<String>>(id: IdType) -> UpdateTagOptionInput {
+        UpdateTagOptionInput {
+            id: id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateTagOptionOutput {
     #[doc="<p>The resulting detailed TagOption information.</p>"]
@@ -2070,7 +4115,6 @@ pub struct UpdateTagOptionOutput {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tag_option_detail: Option<TagOptionDetail>,
 }
-
 #[doc="<p>Additional information provided by the administrator.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UsageInstruction {
@@ -2083,7 +4127,6 @@ pub struct UsageInstruction {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
 /// Errors returned by AcceptPortfolioShare
 #[derive(Debug, PartialEq)]
 pub enum AcceptPortfolioShareError {

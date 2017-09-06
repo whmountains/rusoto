@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -45,7 +46,6 @@ pub struct AccountAttributesMessage {
     #[doc="<p>A list of <a>AccountQuota</a> objects. Within this list, each quota has a name, a count of usage toward the quota maximum, and a maximum value for the quota.</p>"]
     pub account_quotas: Option<Vec<AccountQuota>>,
 }
-
 struct AccountAttributesMessageDeserializer;
 impl AccountAttributesMessageDeserializer {
     #[allow(unused_variables)]
@@ -99,7 +99,6 @@ pub struct AccountQuota {
     #[doc="<p>The amount currently used toward the quota maximum.</p>"]
     pub used: Option<i64>,
 }
-
 struct AccountQuotaDeserializer;
 impl AccountQuotaDeserializer {
     #[allow(unused_variables)]
@@ -198,7 +197,33 @@ pub struct AddRoleToDBClusterMessage {
     #[doc="<p>The Amazon Resource Name (ARN) of the IAM role to associate with the Aurora DB cluster, for example <code>arn:aws:iam::123456789012:role/AuroraAccessRole</code>.</p>"]
     pub role_arn: String,
 }
-
+impl AddRoleToDBClusterMessage {
+    /// Sets `db_cluster_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddRoleToDBClusterMessage.db_cluster_identifier = value.into();`.
+    pub fn db_cluster_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_cluster_identifier = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddRoleToDBClusterMessage.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Returns a new instance of AddRoleToDBClusterMessage with optional fields set to `None`.
+    pub fn new<DBClusterIdentifierType: Into<String>, RoleArnType: Into<String>>
+        (db_cluster_identifier: DBClusterIdentifierType,
+         role_arn: RoleArnType)
+         -> AddRoleToDBClusterMessage {
+        AddRoleToDBClusterMessage {
+            db_cluster_identifier: db_cluster_identifier.into(),
+            role_arn: role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AddRoleToDBClusterMessage` contents to a `SignedRequest`.
 struct AddRoleToDBClusterMessageSerializer;
@@ -224,7 +249,33 @@ pub struct AddSourceIdentifierToSubscriptionMessage {
     #[doc="<p>The name of the RDS event notification subscription you want to add a source identifier to.</p>"]
     pub subscription_name: String,
 }
-
+impl AddSourceIdentifierToSubscriptionMessage {
+    /// Sets `source_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddSourceIdentifierToSubscriptionMessage.source_identifier = value.into();`.
+    pub fn source_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_identifier = value.into();
+        self
+    }
+    /// Sets `subscription_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddSourceIdentifierToSubscriptionMessage.subscription_name = value.into();`.
+    pub fn subscription_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subscription_name = value.into();
+        self
+    }
+    /// Returns a new instance of AddSourceIdentifierToSubscriptionMessage with optional fields set to `None`.
+    pub fn new<SourceIdentifierType: Into<String>, SubscriptionNameType: Into<String>>
+        (source_identifier: SourceIdentifierType,
+         subscription_name: SubscriptionNameType)
+         -> AddSourceIdentifierToSubscriptionMessage {
+        AddSourceIdentifierToSubscriptionMessage {
+            source_identifier: source_identifier.into(),
+            subscription_name: subscription_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AddSourceIdentifierToSubscriptionMessage` contents to a `SignedRequest`.
 struct AddSourceIdentifierToSubscriptionMessageSerializer;
@@ -247,7 +298,6 @@ impl AddSourceIdentifierToSubscriptionMessageSerializer {
 pub struct AddSourceIdentifierToSubscriptionResult {
     pub event_subscription: Option<EventSubscription>,
 }
-
 struct AddSourceIdentifierToSubscriptionResultDeserializer;
 impl AddSourceIdentifierToSubscriptionResultDeserializer {
     #[allow(unused_variables)]
@@ -300,7 +350,33 @@ pub struct AddTagsToResourceMessage {
     #[doc="<p>The tags to be assigned to the Amazon RDS resource.</p>"]
     pub tags: Vec<Tag>,
 }
-
+impl AddTagsToResourceMessage {
+    /// Sets `resource_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToResourceMessage.resource_name = value.into();`.
+    pub fn resource_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_name = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToResourceMessage.tags = value.into();`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of AddTagsToResourceMessage with optional fields set to `None`.
+    pub fn new<ResourceNameType: Into<String>, TagsType: Into<Vec<Tag>>>
+        (resource_name: ResourceNameType,
+         tags: TagsType)
+         -> AddTagsToResourceMessage {
+        AddTagsToResourceMessage {
+            resource_name: resource_name.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AddTagsToResourceMessage` contents to a `SignedRequest`.
 struct AddTagsToResourceMessageSerializer;
@@ -341,7 +417,44 @@ pub struct ApplyPendingMaintenanceActionMessage {
     #[doc="<p>The RDS Amazon Resource Name (ARN) of the resource that the pending maintenance action applies to. For information about creating an ARN, see <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Tagging.ARN.html#USER_Tagging.ARN.Constructing\"> Constructing an RDS Amazon Resource Name (ARN)</a>.</p>"]
     pub resource_identifier: String,
 }
-
+impl ApplyPendingMaintenanceActionMessage {
+    /// Sets `apply_action`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ApplyPendingMaintenanceActionMessage.apply_action = value.into();`.
+    pub fn apply_action<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.apply_action = value.into();
+        self
+    }
+    /// Sets `opt_in_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ApplyPendingMaintenanceActionMessage.opt_in_type = value.into();`.
+    pub fn opt_in_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.opt_in_type = value.into();
+        self
+    }
+    /// Sets `resource_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ApplyPendingMaintenanceActionMessage.resource_identifier = value.into();`.
+    pub fn resource_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_identifier = value.into();
+        self
+    }
+    /// Returns a new instance of ApplyPendingMaintenanceActionMessage with optional fields set to `None`.
+    pub fn new<ApplyActionType: Into<String>,
+               OptInTypeType: Into<String>,
+               ResourceIdentifierType: Into<String>>
+        (apply_action: ApplyActionType,
+         opt_in_type: OptInTypeType,
+         resource_identifier: ResourceIdentifierType)
+         -> ApplyPendingMaintenanceActionMessage {
+        ApplyPendingMaintenanceActionMessage {
+            apply_action: apply_action.into(),
+            opt_in_type: opt_in_type.into(),
+            resource_identifier: resource_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ApplyPendingMaintenanceActionMessage` contents to a `SignedRequest`.
 struct ApplyPendingMaintenanceActionMessageSerializer;
@@ -364,7 +477,6 @@ impl ApplyPendingMaintenanceActionMessageSerializer {
 pub struct ApplyPendingMaintenanceActionResult {
     pub resource_pending_maintenance_actions: Option<ResourcePendingMaintenanceActions>,
 }
-
 struct ApplyPendingMaintenanceActionResultDeserializer;
 impl ApplyPendingMaintenanceActionResultDeserializer {
     #[allow(unused_variables)]
@@ -474,7 +586,52 @@ pub struct AuthorizeDBSecurityGroupIngressMessage {
     #[doc="<p> AWS account number of the owner of the EC2 security group specified in the <code>EC2SecurityGroupName</code> parameter. The AWS Access Key ID is not an acceptable value. For VPC DB security groups, <code>EC2SecurityGroupId</code> must be provided. Otherwise, <code>EC2SecurityGroupOwnerId</code> and either <code>EC2SecurityGroupName</code> or <code>EC2SecurityGroupId</code> must be provided. </p>"]
     pub ec2_security_group_owner_id: Option<String>,
 }
-
+impl AuthorizeDBSecurityGroupIngressMessage {
+    /// Sets `cidrip`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeDBSecurityGroupIngressMessage.cidrip = Some(value.into());`.
+    pub fn cidrip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cidrip = Some(value.into());
+        self
+    }
+    /// Sets `db_security_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeDBSecurityGroupIngressMessage.db_security_group_name = value.into();`.
+    pub fn db_security_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_security_group_name = value.into();
+        self
+    }
+    /// Sets `ec2_security_group_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeDBSecurityGroupIngressMessage.ec2_security_group_id = Some(value.into());`.
+    pub fn ec2_security_group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ec2_security_group_id = Some(value.into());
+        self
+    }
+    /// Sets `ec2_security_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeDBSecurityGroupIngressMessage.ec2_security_group_name = Some(value.into());`.
+    pub fn ec2_security_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ec2_security_group_name = Some(value.into());
+        self
+    }
+    /// Sets `ec2_security_group_owner_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AuthorizeDBSecurityGroupIngressMessage.ec2_security_group_owner_id = Some(value.into());`.
+    pub fn ec2_security_group_owner_id<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.ec2_security_group_owner_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AuthorizeDBSecurityGroupIngressMessage with optional fields set to `None`.
+pub fn new<DBSecurityGroupNameType: Into<String>>(db_security_group_name: DBSecurityGroupNameType) -> AuthorizeDBSecurityGroupIngressMessage{
+        AuthorizeDBSecurityGroupIngressMessage {
+            db_security_group_name: db_security_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AuthorizeDBSecurityGroupIngressMessage` contents to a `SignedRequest`.
 struct AuthorizeDBSecurityGroupIngressMessageSerializer;
@@ -509,7 +666,6 @@ impl AuthorizeDBSecurityGroupIngressMessageSerializer {
 pub struct AuthorizeDBSecurityGroupIngressResult {
     pub db_security_group: Option<DBSecurityGroup>,
 }
-
 struct AuthorizeDBSecurityGroupIngressResultDeserializer;
 impl AuthorizeDBSecurityGroupIngressResultDeserializer {
     #[allow(unused_variables)]
@@ -560,7 +716,6 @@ pub struct AvailabilityZone {
     #[doc="<p>The name of the availability zone.</p>"]
     pub name: Option<String>,
 }
-
 struct AvailabilityZoneDeserializer;
 impl AvailabilityZoneDeserializer {
     #[allow(unused_variables)]
@@ -741,7 +896,6 @@ pub struct Certificate {
     #[doc="<p>The final date that the certificate continues to be valid.</p>"]
     pub valid_till: Option<String>,
 }
-
 struct CertificateDeserializer;
 impl CertificateDeserializer {
     #[allow(unused_variables)]
@@ -856,7 +1010,6 @@ pub struct CertificateMessage {
     #[doc="<p> An optional pagination token provided by a previous <a>DescribeCertificates</a> request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code> . </p>"]
     pub marker: Option<String>,
 }
-
 struct CertificateMessageDeserializer;
 impl CertificateMessageDeserializer {
     #[allow(unused_variables)]
@@ -912,7 +1065,6 @@ pub struct CharacterSet {
     #[doc="<p>The name of the character set.</p>"]
     pub character_set_name: Option<String>,
 }
-
 struct CharacterSetDeserializer;
 impl CharacterSetDeserializer {
     #[allow(unused_variables)]
@@ -971,7 +1123,52 @@ pub struct CopyDBClusterParameterGroupMessage {
     #[doc="<p>The identifier for the copied DB cluster parameter group.</p> <p>Constraints:</p> <ul> <li> <p>Cannot be null, empty, or blank</p> </li> <li> <p>Must contain from 1 to 255 alphanumeric characters or hyphens</p> </li> <li> <p>First character must be a letter</p> </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens</p> </li> </ul> <p>Example: <code>my-cluster-param-group1</code> </p>"]
     pub target_db_cluster_parameter_group_identifier: String,
 }
-
+impl CopyDBClusterParameterGroupMessage {
+    /// Sets `source_db_cluster_parameter_group_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyDBClusterParameterGroupMessage.source_db_cluster_parameter_group_identifier = value.into();`.
+    pub fn source_db_cluster_parameter_group_identifier<ValueType: Into<String>>(mut self,
+                                                                                 value: ValueType)
+                                                                                 -> Self {
+        self.source_db_cluster_parameter_group_identifier = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyDBClusterParameterGroupMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `target_db_cluster_parameter_group_description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyDBClusterParameterGroupMessage.target_db_cluster_parameter_group_description = value.into();`.
+pub fn target_db_cluster_parameter_group_description<ValueType: Into<String>>(mut self, value: ValueType) -> Self{
+        self.target_db_cluster_parameter_group_description = value.into();
+        self
+    }
+    /// Sets `target_db_cluster_parameter_group_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyDBClusterParameterGroupMessage.target_db_cluster_parameter_group_identifier = value.into();`.
+    pub fn target_db_cluster_parameter_group_identifier<ValueType: Into<String>>(mut self,
+                                                                                 value: ValueType)
+                                                                                 -> Self {
+        self.target_db_cluster_parameter_group_identifier = value.into();
+        self
+    }
+    /// Returns a new instance of CopyDBClusterParameterGroupMessage with optional fields set to `None`.
+pub fn new<SourceDBClusterParameterGroupIdentifierType: Into<String>, TargetDBClusterParameterGroupDescriptionType: Into<String>, TargetDBClusterParameterGroupIdentifierType: Into<String>>(source_db_cluster_parameter_group_identifier: SourceDBClusterParameterGroupIdentifierType, target_db_cluster_parameter_group_description: TargetDBClusterParameterGroupDescriptionType, target_db_cluster_parameter_group_identifier: TargetDBClusterParameterGroupIdentifierType) -> CopyDBClusterParameterGroupMessage{
+        CopyDBClusterParameterGroupMessage {
+            source_db_cluster_parameter_group_identifier:
+                source_db_cluster_parameter_group_identifier.into(),
+            target_db_cluster_parameter_group_description:
+                target_db_cluster_parameter_group_description.into(),
+            target_db_cluster_parameter_group_identifier:
+                target_db_cluster_parameter_group_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CopyDBClusterParameterGroupMessage` contents to a `SignedRequest`.
 struct CopyDBClusterParameterGroupMessageSerializer;
@@ -999,7 +1196,6 @@ impl CopyDBClusterParameterGroupMessageSerializer {
 pub struct CopyDBClusterParameterGroupResult {
     pub db_cluster_parameter_group: Option<DBClusterParameterGroup>,
 }
-
 struct CopyDBClusterParameterGroupResultDeserializer;
 impl CopyDBClusterParameterGroupResultDeserializer {
     #[allow(unused_variables)]
@@ -1059,7 +1255,66 @@ pub struct CopyDBClusterSnapshotMessage {
     #[doc="<p>The identifier of the new DB cluster snapshot to create from the source DB cluster snapshot. This parameter is not case-sensitive.</p> <p>Constraints:</p> <ul> <li> <p>Must contain from 1 to 63 alphanumeric characters or hyphens.</p> </li> <li> <p>First character must be a letter.</p> </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens.</p> </li> </ul> <p>Example: <code>my-cluster-snapshot2</code> </p>"]
     pub target_db_cluster_snapshot_identifier: String,
 }
-
+impl CopyDBClusterSnapshotMessage {
+    /// Sets `copy_tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyDBClusterSnapshotMessage.copy_tags = Some(value.into());`.
+    pub fn copy_tags<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.copy_tags = Some(value.into());
+        self
+    }
+    /// Sets `kms_key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyDBClusterSnapshotMessage.kms_key_id = Some(value.into());`.
+    pub fn kms_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kms_key_id = Some(value.into());
+        self
+    }
+    /// Sets `pre_signed_url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyDBClusterSnapshotMessage.pre_signed_url = Some(value.into());`.
+    pub fn pre_signed_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pre_signed_url = Some(value.into());
+        self
+    }
+    /// Sets `source_db_cluster_snapshot_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyDBClusterSnapshotMessage.source_db_cluster_snapshot_identifier = value.into();`.
+    pub fn source_db_cluster_snapshot_identifier<ValueType: Into<String>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.source_db_cluster_snapshot_identifier = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyDBClusterSnapshotMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `target_db_cluster_snapshot_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyDBClusterSnapshotMessage.target_db_cluster_snapshot_identifier = value.into();`.
+    pub fn target_db_cluster_snapshot_identifier<ValueType: Into<String>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.target_db_cluster_snapshot_identifier = value.into();
+        self
+    }
+    /// Returns a new instance of CopyDBClusterSnapshotMessage with optional fields set to `None`.
+    pub fn new<SourceDBClusterSnapshotIdentifierType: Into<String>,
+               TargetDBClusterSnapshotIdentifierType: Into<String>>
+        (source_db_cluster_snapshot_identifier: SourceDBClusterSnapshotIdentifierType,
+         target_db_cluster_snapshot_identifier: TargetDBClusterSnapshotIdentifierType)
+         -> CopyDBClusterSnapshotMessage {
+        CopyDBClusterSnapshotMessage {
+            source_db_cluster_snapshot_identifier: source_db_cluster_snapshot_identifier.into(),
+            target_db_cluster_snapshot_identifier: target_db_cluster_snapshot_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CopyDBClusterSnapshotMessage` contents to a `SignedRequest`.
 struct CopyDBClusterSnapshotMessageSerializer;
@@ -1095,7 +1350,6 @@ impl CopyDBClusterSnapshotMessageSerializer {
 pub struct CopyDBClusterSnapshotResult {
     pub db_cluster_snapshot: Option<DBClusterSnapshot>,
 }
-
 struct CopyDBClusterSnapshotResultDeserializer;
 impl CopyDBClusterSnapshotResultDeserializer {
     #[allow(unused_variables)]
@@ -1150,7 +1404,57 @@ pub struct CopyDBParameterGroupMessage {
     #[doc="<p>The identifier for the copied DB parameter group.</p> <p>Constraints:</p> <ul> <li> <p>Cannot be null, empty, or blank</p> </li> <li> <p>Must contain from 1 to 255 alphanumeric characters or hyphens</p> </li> <li> <p>First character must be a letter</p> </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens</p> </li> </ul> <p>Example: <code>my-db-parameter-group</code> </p>"]
     pub target_db_parameter_group_identifier: String,
 }
-
+impl CopyDBParameterGroupMessage {
+    /// Sets `source_db_parameter_group_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyDBParameterGroupMessage.source_db_parameter_group_identifier = value.into();`.
+    pub fn source_db_parameter_group_identifier<ValueType: Into<String>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.source_db_parameter_group_identifier = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyDBParameterGroupMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `target_db_parameter_group_description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyDBParameterGroupMessage.target_db_parameter_group_description = value.into();`.
+    pub fn target_db_parameter_group_description<ValueType: Into<String>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.target_db_parameter_group_description = value.into();
+        self
+    }
+    /// Sets `target_db_parameter_group_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyDBParameterGroupMessage.target_db_parameter_group_identifier = value.into();`.
+    pub fn target_db_parameter_group_identifier<ValueType: Into<String>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.target_db_parameter_group_identifier = value.into();
+        self
+    }
+    /// Returns a new instance of CopyDBParameterGroupMessage with optional fields set to `None`.
+    pub fn new<SourceDBParameterGroupIdentifierType: Into<String>,
+               TargetDBParameterGroupDescriptionType: Into<String>,
+               TargetDBParameterGroupIdentifierType: Into<String>>
+        (source_db_parameter_group_identifier: SourceDBParameterGroupIdentifierType,
+         target_db_parameter_group_description: TargetDBParameterGroupDescriptionType,
+         target_db_parameter_group_identifier: TargetDBParameterGroupIdentifierType)
+         -> CopyDBParameterGroupMessage {
+        CopyDBParameterGroupMessage {
+            source_db_parameter_group_identifier: source_db_parameter_group_identifier.into(),
+            target_db_parameter_group_description: target_db_parameter_group_description.into(),
+            target_db_parameter_group_identifier: target_db_parameter_group_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CopyDBParameterGroupMessage` contents to a `SignedRequest`.
 struct CopyDBParameterGroupMessageSerializer;
@@ -1178,7 +1482,6 @@ impl CopyDBParameterGroupMessageSerializer {
 pub struct CopyDBParameterGroupResult {
     pub db_parameter_group: Option<DBParameterGroup>,
 }
-
 struct CopyDBParameterGroupResultDeserializer;
 impl CopyDBParameterGroupResultDeserializer {
     #[allow(unused_variables)]
@@ -1239,7 +1542,73 @@ pub struct CopyDBSnapshotMessage {
     #[doc="<p>The identifier for the copy of the snapshot. </p> <p>Constraints:</p> <ul> <li> <p>Cannot be null, empty, or blank</p> </li> <li> <p>Must contain from 1 to 255 alphanumeric characters or hyphens</p> </li> <li> <p>First character must be a letter</p> </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens</p> </li> </ul> <p>Example: <code>my-db-snapshot</code> </p>"]
     pub target_db_snapshot_identifier: String,
 }
-
+impl CopyDBSnapshotMessage {
+    /// Sets `copy_tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyDBSnapshotMessage.copy_tags = Some(value.into());`.
+    pub fn copy_tags<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.copy_tags = Some(value.into());
+        self
+    }
+    /// Sets `kms_key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyDBSnapshotMessage.kms_key_id = Some(value.into());`.
+    pub fn kms_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kms_key_id = Some(value.into());
+        self
+    }
+    /// Sets `option_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyDBSnapshotMessage.option_group_name = Some(value.into());`.
+    pub fn option_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.option_group_name = Some(value.into());
+        self
+    }
+    /// Sets `pre_signed_url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyDBSnapshotMessage.pre_signed_url = Some(value.into());`.
+    pub fn pre_signed_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pre_signed_url = Some(value.into());
+        self
+    }
+    /// Sets `source_db_snapshot_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyDBSnapshotMessage.source_db_snapshot_identifier = value.into();`.
+    pub fn source_db_snapshot_identifier<ValueType: Into<String>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.source_db_snapshot_identifier = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyDBSnapshotMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `target_db_snapshot_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyDBSnapshotMessage.target_db_snapshot_identifier = value.into();`.
+    pub fn target_db_snapshot_identifier<ValueType: Into<String>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.target_db_snapshot_identifier = value.into();
+        self
+    }
+    /// Returns a new instance of CopyDBSnapshotMessage with optional fields set to `None`.
+    pub fn new<SourceDBSnapshotIdentifierType: Into<String>,
+               TargetDBSnapshotIdentifierType: Into<String>>
+        (source_db_snapshot_identifier: SourceDBSnapshotIdentifierType,
+         target_db_snapshot_identifier: TargetDBSnapshotIdentifierType)
+         -> CopyDBSnapshotMessage {
+        CopyDBSnapshotMessage {
+            source_db_snapshot_identifier: source_db_snapshot_identifier.into(),
+            target_db_snapshot_identifier: target_db_snapshot_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CopyDBSnapshotMessage` contents to a `SignedRequest`.
 struct CopyDBSnapshotMessageSerializer;
@@ -1278,7 +1647,6 @@ impl CopyDBSnapshotMessageSerializer {
 pub struct CopyDBSnapshotResult {
     pub db_snapshot: Option<DBSnapshot>,
 }
-
 struct CopyDBSnapshotResultDeserializer;
 impl CopyDBSnapshotResultDeserializer {
     #[allow(unused_variables)]
@@ -1333,7 +1701,57 @@ pub struct CopyOptionGroupMessage {
     #[doc="<p>The identifier for the copied option group.</p> <p>Constraints:</p> <ul> <li> <p>Cannot be null, empty, or blank</p> </li> <li> <p>Must contain from 1 to 255 alphanumeric characters or hyphens</p> </li> <li> <p>First character must be a letter</p> </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens</p> </li> </ul> <p>Example: <code>my-option-group</code> </p>"]
     pub target_option_group_identifier: String,
 }
-
+impl CopyOptionGroupMessage {
+    /// Sets `source_option_group_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyOptionGroupMessage.source_option_group_identifier = value.into();`.
+    pub fn source_option_group_identifier<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.source_option_group_identifier = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyOptionGroupMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `target_option_group_description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyOptionGroupMessage.target_option_group_description = value.into();`.
+    pub fn target_option_group_description<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.target_option_group_description = value.into();
+        self
+    }
+    /// Sets `target_option_group_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CopyOptionGroupMessage.target_option_group_identifier = value.into();`.
+    pub fn target_option_group_identifier<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.target_option_group_identifier = value.into();
+        self
+    }
+    /// Returns a new instance of CopyOptionGroupMessage with optional fields set to `None`.
+    pub fn new<SourceOptionGroupIdentifierType: Into<String>,
+               TargetOptionGroupDescriptionType: Into<String>,
+               TargetOptionGroupIdentifierType: Into<String>>
+        (source_option_group_identifier: SourceOptionGroupIdentifierType,
+         target_option_group_description: TargetOptionGroupDescriptionType,
+         target_option_group_identifier: TargetOptionGroupIdentifierType)
+         -> CopyOptionGroupMessage {
+        CopyOptionGroupMessage {
+            source_option_group_identifier: source_option_group_identifier.into(),
+            target_option_group_description: target_option_group_description.into(),
+            target_option_group_identifier: target_option_group_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CopyOptionGroupMessage` contents to a `SignedRequest`.
 struct CopyOptionGroupMessageSerializer;
@@ -1361,7 +1779,6 @@ impl CopyOptionGroupMessageSerializer {
 pub struct CopyOptionGroupResult {
     pub option_group: Option<OptionGroup>,
 }
-
 struct CopyOptionGroupResultDeserializer;
 impl CopyOptionGroupResultDeserializer {
     #[allow(unused_variables)]
@@ -1452,7 +1869,183 @@ pub struct CreateDBClusterMessage {
     #[doc="<p>A list of EC2 VPC security groups to associate with this DB cluster.</p>"]
     pub vpc_security_group_ids: Option<Vec<String>>,
 }
-
+impl CreateDBClusterMessage {
+    /// Sets `availability_zones`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterMessage.availability_zones = Some(value.into());`.
+    pub fn availability_zones<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.availability_zones = Some(value.into());
+        self
+    }
+    /// Sets `backup_retention_period`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterMessage.backup_retention_period = Some(value.into());`.
+    pub fn backup_retention_period<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.backup_retention_period = Some(value.into());
+        self
+    }
+    /// Sets `character_set_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterMessage.character_set_name = Some(value.into());`.
+    pub fn character_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.character_set_name = Some(value.into());
+        self
+    }
+    /// Sets `db_cluster_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterMessage.db_cluster_identifier = value.into();`.
+    pub fn db_cluster_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_cluster_identifier = value.into();
+        self
+    }
+    /// Sets `db_cluster_parameter_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterMessage.db_cluster_parameter_group_name = Some(value.into());`.
+    pub fn db_cluster_parameter_group_name<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.db_cluster_parameter_group_name = Some(value.into());
+        self
+    }
+    /// Sets `db_subnet_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterMessage.db_subnet_group_name = Some(value.into());`.
+    pub fn db_subnet_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_subnet_group_name = Some(value.into());
+        self
+    }
+    /// Sets `database_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterMessage.database_name = Some(value.into());`.
+    pub fn database_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.database_name = Some(value.into());
+        self
+    }
+    /// Sets `enable_iam_database_authentication`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterMessage.enable_iam_database_authentication = Some(value.into());`.
+    pub fn enable_iam_database_authentication<ValueType: Into<bool>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.enable_iam_database_authentication = Some(value.into());
+        self
+    }
+    /// Sets `engine`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterMessage.engine = value.into();`.
+    pub fn engine<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine = value.into();
+        self
+    }
+    /// Sets `engine_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterMessage.engine_version = Some(value.into());`.
+    pub fn engine_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine_version = Some(value.into());
+        self
+    }
+    /// Sets `kms_key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterMessage.kms_key_id = Some(value.into());`.
+    pub fn kms_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kms_key_id = Some(value.into());
+        self
+    }
+    /// Sets `master_user_password`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterMessage.master_user_password = Some(value.into());`.
+    pub fn master_user_password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.master_user_password = Some(value.into());
+        self
+    }
+    /// Sets `master_username`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterMessage.master_username = Some(value.into());`.
+    pub fn master_username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.master_username = Some(value.into());
+        self
+    }
+    /// Sets `option_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterMessage.option_group_name = Some(value.into());`.
+    pub fn option_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.option_group_name = Some(value.into());
+        self
+    }
+    /// Sets `port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterMessage.port = Some(value.into());`.
+    pub fn port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.port = Some(value.into());
+        self
+    }
+    /// Sets `pre_signed_url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterMessage.pre_signed_url = Some(value.into());`.
+    pub fn pre_signed_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pre_signed_url = Some(value.into());
+        self
+    }
+    /// Sets `preferred_backup_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterMessage.preferred_backup_window = Some(value.into());`.
+    pub fn preferred_backup_window<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.preferred_backup_window = Some(value.into());
+        self
+    }
+    /// Sets `preferred_maintenance_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterMessage.preferred_maintenance_window = Some(value.into());`.
+    pub fn preferred_maintenance_window<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.preferred_maintenance_window = Some(value.into());
+        self
+    }
+    /// Sets `replication_source_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterMessage.replication_source_identifier = Some(value.into());`.
+    pub fn replication_source_identifier<ValueType: Into<String>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.replication_source_identifier = Some(value.into());
+        self
+    }
+    /// Sets `storage_encrypted`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterMessage.storage_encrypted = Some(value.into());`.
+    pub fn storage_encrypted<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.storage_encrypted = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `vpc_security_group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterMessage.vpc_security_group_ids = Some(value.into());`.
+    pub fn vpc_security_group_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.vpc_security_group_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateDBClusterMessage with optional fields set to `None`.
+    pub fn new<DBClusterIdentifierType: Into<String>, EngineType: Into<String>>
+        (db_cluster_identifier: DBClusterIdentifierType,
+         engine: EngineType)
+         -> CreateDBClusterMessage {
+        CreateDBClusterMessage {
+            db_cluster_identifier: db_cluster_identifier.into(),
+            engine: engine.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateDBClusterMessage` contents to a `SignedRequest`.
 struct CreateDBClusterMessageSerializer;
@@ -1554,7 +2147,53 @@ pub struct CreateDBClusterParameterGroupMessage {
     pub description: String,
     pub tags: Option<Vec<Tag>>,
 }
-
+impl CreateDBClusterParameterGroupMessage {
+    /// Sets `db_cluster_parameter_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterParameterGroupMessage.db_cluster_parameter_group_name = value.into();`.
+    pub fn db_cluster_parameter_group_name<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.db_cluster_parameter_group_name = value.into();
+        self
+    }
+    /// Sets `db_parameter_group_family`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterParameterGroupMessage.db_parameter_group_family = value.into();`.
+    pub fn db_parameter_group_family<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_parameter_group_family = value.into();
+        self
+    }
+    /// Sets `description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterParameterGroupMessage.description = value.into();`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterParameterGroupMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateDBClusterParameterGroupMessage with optional fields set to `None`.
+    pub fn new<DBClusterParameterGroupNameType: Into<String>,
+               DBParameterGroupFamilyType: Into<String>,
+               DescriptionType: Into<String>>
+        (db_cluster_parameter_group_name: DBClusterParameterGroupNameType,
+         db_parameter_group_family: DBParameterGroupFamilyType,
+         description: DescriptionType)
+         -> CreateDBClusterParameterGroupMessage {
+        CreateDBClusterParameterGroupMessage {
+            db_cluster_parameter_group_name: db_cluster_parameter_group_name.into(),
+            db_parameter_group_family: db_parameter_group_family.into(),
+            description: description.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateDBClusterParameterGroupMessage` contents to a `SignedRequest`.
 struct CreateDBClusterParameterGroupMessageSerializer;
@@ -1581,7 +2220,6 @@ impl CreateDBClusterParameterGroupMessageSerializer {
 pub struct CreateDBClusterParameterGroupResult {
     pub db_cluster_parameter_group: Option<DBClusterParameterGroup>,
 }
-
 struct CreateDBClusterParameterGroupResultDeserializer;
 impl CreateDBClusterParameterGroupResultDeserializer {
     #[allow(unused_variables)]
@@ -1630,7 +2268,6 @@ impl CreateDBClusterParameterGroupResultDeserializer {
 pub struct CreateDBClusterResult {
     pub db_cluster: Option<DBCluster>,
 }
-
 struct CreateDBClusterResultDeserializer;
 impl CreateDBClusterResultDeserializer {
     #[allow(unused_variables)]
@@ -1683,7 +2320,42 @@ pub struct CreateDBClusterSnapshotMessage {
     #[doc="<p>The tags to be assigned to the DB cluster snapshot.</p>"]
     pub tags: Option<Vec<Tag>>,
 }
-
+impl CreateDBClusterSnapshotMessage {
+    /// Sets `db_cluster_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterSnapshotMessage.db_cluster_identifier = value.into();`.
+    pub fn db_cluster_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_cluster_identifier = value.into();
+        self
+    }
+    /// Sets `db_cluster_snapshot_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterSnapshotMessage.db_cluster_snapshot_identifier = value.into();`.
+    pub fn db_cluster_snapshot_identifier<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.db_cluster_snapshot_identifier = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBClusterSnapshotMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateDBClusterSnapshotMessage with optional fields set to `None`.
+    pub fn new<DBClusterIdentifierType: Into<String>, DBClusterSnapshotIdentifierType: Into<String>>
+        (db_cluster_identifier: DBClusterIdentifierType,
+         db_cluster_snapshot_identifier: DBClusterSnapshotIdentifierType)
+         -> CreateDBClusterSnapshotMessage {
+        CreateDBClusterSnapshotMessage {
+            db_cluster_identifier: db_cluster_identifier.into(),
+            db_cluster_snapshot_identifier: db_cluster_snapshot_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateDBClusterSnapshotMessage` contents to a `SignedRequest`.
 struct CreateDBClusterSnapshotMessageSerializer;
@@ -1709,7 +2381,6 @@ impl CreateDBClusterSnapshotMessageSerializer {
 pub struct CreateDBClusterSnapshotResult {
     pub db_cluster_snapshot: Option<DBClusterSnapshot>,
 }
-
 struct CreateDBClusterSnapshotResultDeserializer;
 impl CreateDBClusterSnapshotResultDeserializer {
     #[allow(unused_variables)]
@@ -1834,7 +2505,302 @@ pub struct CreateDBInstanceMessage {
     #[doc="<p>A list of EC2 VPC security groups to associate with this DB instance.</p> <p> <b>Amazon Aurora</b> </p> <p>Not applicable. The associated list of EC2 VPC security groups is managed by the DB cluster. For more information, see <a>CreateDBCluster</a>.</p> <p>Default: The default EC2 VPC security group for the DB subnet group's VPC.</p>"]
     pub vpc_security_group_ids: Option<Vec<String>>,
 }
-
+impl CreateDBInstanceMessage {
+    /// Sets `allocated_storage`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.allocated_storage = Some(value.into());`.
+    pub fn allocated_storage<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.allocated_storage = Some(value.into());
+        self
+    }
+    /// Sets `auto_minor_version_upgrade`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.auto_minor_version_upgrade = Some(value.into());`.
+    pub fn auto_minor_version_upgrade<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.auto_minor_version_upgrade = Some(value.into());
+        self
+    }
+    /// Sets `availability_zone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.availability_zone = Some(value.into());`.
+    pub fn availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.availability_zone = Some(value.into());
+        self
+    }
+    /// Sets `backup_retention_period`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.backup_retention_period = Some(value.into());`.
+    pub fn backup_retention_period<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.backup_retention_period = Some(value.into());
+        self
+    }
+    /// Sets `character_set_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.character_set_name = Some(value.into());`.
+    pub fn character_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.character_set_name = Some(value.into());
+        self
+    }
+    /// Sets `copy_tags_to_snapshot`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.copy_tags_to_snapshot = Some(value.into());`.
+    pub fn copy_tags_to_snapshot<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.copy_tags_to_snapshot = Some(value.into());
+        self
+    }
+    /// Sets `db_cluster_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.db_cluster_identifier = Some(value.into());`.
+    pub fn db_cluster_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_cluster_identifier = Some(value.into());
+        self
+    }
+    /// Sets `db_instance_class`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.db_instance_class = value.into();`.
+    pub fn db_instance_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_instance_class = value.into();
+        self
+    }
+    /// Sets `db_instance_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.db_instance_identifier = value.into();`.
+    pub fn db_instance_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_instance_identifier = value.into();
+        self
+    }
+    /// Sets `db_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.db_name = Some(value.into());`.
+    pub fn db_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_name = Some(value.into());
+        self
+    }
+    /// Sets `db_parameter_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.db_parameter_group_name = Some(value.into());`.
+    pub fn db_parameter_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_parameter_group_name = Some(value.into());
+        self
+    }
+    /// Sets `db_security_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.db_security_groups = Some(value.into());`.
+    pub fn db_security_groups<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.db_security_groups = Some(value.into());
+        self
+    }
+    /// Sets `db_subnet_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.db_subnet_group_name = Some(value.into());`.
+    pub fn db_subnet_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_subnet_group_name = Some(value.into());
+        self
+    }
+    /// Sets `domain`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.domain = Some(value.into());`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = Some(value.into());
+        self
+    }
+    /// Sets `domain_iam_role_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.domain_iam_role_name = Some(value.into());`.
+    pub fn domain_iam_role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_iam_role_name = Some(value.into());
+        self
+    }
+    /// Sets `enable_iam_database_authentication`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.enable_iam_database_authentication = Some(value.into());`.
+    pub fn enable_iam_database_authentication<ValueType: Into<bool>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.enable_iam_database_authentication = Some(value.into());
+        self
+    }
+    /// Sets `engine`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.engine = value.into();`.
+    pub fn engine<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine = value.into();
+        self
+    }
+    /// Sets `engine_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.engine_version = Some(value.into());`.
+    pub fn engine_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine_version = Some(value.into());
+        self
+    }
+    /// Sets `iops`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.iops = Some(value.into());`.
+    pub fn iops<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.iops = Some(value.into());
+        self
+    }
+    /// Sets `kms_key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.kms_key_id = Some(value.into());`.
+    pub fn kms_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kms_key_id = Some(value.into());
+        self
+    }
+    /// Sets `license_model`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.license_model = Some(value.into());`.
+    pub fn license_model<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.license_model = Some(value.into());
+        self
+    }
+    /// Sets `master_user_password`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.master_user_password = Some(value.into());`.
+    pub fn master_user_password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.master_user_password = Some(value.into());
+        self
+    }
+    /// Sets `master_username`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.master_username = Some(value.into());`.
+    pub fn master_username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.master_username = Some(value.into());
+        self
+    }
+    /// Sets `monitoring_interval`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.monitoring_interval = Some(value.into());`.
+    pub fn monitoring_interval<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.monitoring_interval = Some(value.into());
+        self
+    }
+    /// Sets `monitoring_role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.monitoring_role_arn = Some(value.into());`.
+    pub fn monitoring_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.monitoring_role_arn = Some(value.into());
+        self
+    }
+    /// Sets `multi_az`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.multi_az = Some(value.into());`.
+    pub fn multi_az<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.multi_az = Some(value.into());
+        self
+    }
+    /// Sets `option_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.option_group_name = Some(value.into());`.
+    pub fn option_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.option_group_name = Some(value.into());
+        self
+    }
+    /// Sets `port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.port = Some(value.into());`.
+    pub fn port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.port = Some(value.into());
+        self
+    }
+    /// Sets `preferred_backup_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.preferred_backup_window = Some(value.into());`.
+    pub fn preferred_backup_window<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.preferred_backup_window = Some(value.into());
+        self
+    }
+    /// Sets `preferred_maintenance_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.preferred_maintenance_window = Some(value.into());`.
+    pub fn preferred_maintenance_window<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.preferred_maintenance_window = Some(value.into());
+        self
+    }
+    /// Sets `promotion_tier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.promotion_tier = Some(value.into());`.
+    pub fn promotion_tier<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.promotion_tier = Some(value.into());
+        self
+    }
+    /// Sets `publicly_accessible`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.publicly_accessible = Some(value.into());`.
+    pub fn publicly_accessible<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.publicly_accessible = Some(value.into());
+        self
+    }
+    /// Sets `storage_encrypted`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.storage_encrypted = Some(value.into());`.
+    pub fn storage_encrypted<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.storage_encrypted = Some(value.into());
+        self
+    }
+    /// Sets `storage_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.storage_type = Some(value.into());`.
+    pub fn storage_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.storage_type = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `tde_credential_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.tde_credential_arn = Some(value.into());`.
+    pub fn tde_credential_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tde_credential_arn = Some(value.into());
+        self
+    }
+    /// Sets `tde_credential_password`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.tde_credential_password = Some(value.into());`.
+    pub fn tde_credential_password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tde_credential_password = Some(value.into());
+        self
+    }
+    /// Sets `timezone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.timezone = Some(value.into());`.
+    pub fn timezone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.timezone = Some(value.into());
+        self
+    }
+    /// Sets `vpc_security_group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceMessage.vpc_security_group_ids = Some(value.into());`.
+    pub fn vpc_security_group_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.vpc_security_group_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateDBInstanceMessage with optional fields set to `None`.
+    pub fn new<DBInstanceClassType: Into<String>,
+               DBInstanceIdentifierType: Into<String>,
+               EngineType: Into<String>>
+        (db_instance_class: DBInstanceClassType,
+         db_instance_identifier: DBInstanceIdentifierType,
+         engine: EngineType)
+         -> CreateDBInstanceMessage {
+        CreateDBInstanceMessage {
+            db_instance_class: db_instance_class.into(),
+            db_instance_identifier: db_instance_identifier.into(),
+            engine: engine.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateDBInstanceMessage` contents to a `SignedRequest`.
 struct CreateDBInstanceMessageSerializer;
@@ -2023,7 +2989,149 @@ pub struct CreateDBInstanceReadReplicaMessage {
     pub storage_type: Option<String>,
     pub tags: Option<Vec<Tag>>,
 }
-
+impl CreateDBInstanceReadReplicaMessage {
+    /// Sets `auto_minor_version_upgrade`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceReadReplicaMessage.auto_minor_version_upgrade = Some(value.into());`.
+    pub fn auto_minor_version_upgrade<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.auto_minor_version_upgrade = Some(value.into());
+        self
+    }
+    /// Sets `availability_zone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceReadReplicaMessage.availability_zone = Some(value.into());`.
+    pub fn availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.availability_zone = Some(value.into());
+        self
+    }
+    /// Sets `copy_tags_to_snapshot`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceReadReplicaMessage.copy_tags_to_snapshot = Some(value.into());`.
+    pub fn copy_tags_to_snapshot<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.copy_tags_to_snapshot = Some(value.into());
+        self
+    }
+    /// Sets `db_instance_class`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceReadReplicaMessage.db_instance_class = Some(value.into());`.
+    pub fn db_instance_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_instance_class = Some(value.into());
+        self
+    }
+    /// Sets `db_instance_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceReadReplicaMessage.db_instance_identifier = value.into();`.
+    pub fn db_instance_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_instance_identifier = value.into();
+        self
+    }
+    /// Sets `db_subnet_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceReadReplicaMessage.db_subnet_group_name = Some(value.into());`.
+    pub fn db_subnet_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_subnet_group_name = Some(value.into());
+        self
+    }
+    /// Sets `enable_iam_database_authentication`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceReadReplicaMessage.enable_iam_database_authentication = Some(value.into());`.
+    pub fn enable_iam_database_authentication<ValueType: Into<bool>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.enable_iam_database_authentication = Some(value.into());
+        self
+    }
+    /// Sets `iops`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceReadReplicaMessage.iops = Some(value.into());`.
+    pub fn iops<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.iops = Some(value.into());
+        self
+    }
+    /// Sets `kms_key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceReadReplicaMessage.kms_key_id = Some(value.into());`.
+    pub fn kms_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kms_key_id = Some(value.into());
+        self
+    }
+    /// Sets `monitoring_interval`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceReadReplicaMessage.monitoring_interval = Some(value.into());`.
+    pub fn monitoring_interval<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.monitoring_interval = Some(value.into());
+        self
+    }
+    /// Sets `monitoring_role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceReadReplicaMessage.monitoring_role_arn = Some(value.into());`.
+    pub fn monitoring_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.monitoring_role_arn = Some(value.into());
+        self
+    }
+    /// Sets `option_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceReadReplicaMessage.option_group_name = Some(value.into());`.
+    pub fn option_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.option_group_name = Some(value.into());
+        self
+    }
+    /// Sets `port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceReadReplicaMessage.port = Some(value.into());`.
+    pub fn port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.port = Some(value.into());
+        self
+    }
+    /// Sets `pre_signed_url`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceReadReplicaMessage.pre_signed_url = Some(value.into());`.
+    pub fn pre_signed_url<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.pre_signed_url = Some(value.into());
+        self
+    }
+    /// Sets `publicly_accessible`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceReadReplicaMessage.publicly_accessible = Some(value.into());`.
+    pub fn publicly_accessible<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.publicly_accessible = Some(value.into());
+        self
+    }
+    /// Sets `source_db_instance_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceReadReplicaMessage.source_db_instance_identifier = value.into();`.
+    pub fn source_db_instance_identifier<ValueType: Into<String>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.source_db_instance_identifier = value.into();
+        self
+    }
+    /// Sets `storage_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceReadReplicaMessage.storage_type = Some(value.into());`.
+    pub fn storage_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.storage_type = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBInstanceReadReplicaMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateDBInstanceReadReplicaMessage with optional fields set to `None`.
+    pub fn new<DBInstanceIdentifierType: Into<String>, SourceDBInstanceIdentifierType: Into<String>>
+        (db_instance_identifier: DBInstanceIdentifierType,
+         source_db_instance_identifier: SourceDBInstanceIdentifierType)
+         -> CreateDBInstanceReadReplicaMessage {
+        CreateDBInstanceReadReplicaMessage {
+            db_instance_identifier: db_instance_identifier.into(),
+            source_db_instance_identifier: source_db_instance_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateDBInstanceReadReplicaMessage` contents to a `SignedRequest`.
 struct CreateDBInstanceReadReplicaMessageSerializer;
@@ -2099,7 +3207,6 @@ impl CreateDBInstanceReadReplicaMessageSerializer {
 pub struct CreateDBInstanceReadReplicaResult {
     pub db_instance: Option<DBInstance>,
 }
-
 struct CreateDBInstanceReadReplicaResultDeserializer;
 impl CreateDBInstanceReadReplicaResultDeserializer {
     #[allow(unused_variables)]
@@ -2148,7 +3255,6 @@ impl CreateDBInstanceReadReplicaResultDeserializer {
 pub struct CreateDBInstanceResult {
     pub db_instance: Option<DBInstance>,
 }
-
 struct CreateDBInstanceResultDeserializer;
 impl CreateDBInstanceResultDeserializer {
     #[allow(unused_variables)]
@@ -2203,7 +3309,51 @@ pub struct CreateDBParameterGroupMessage {
     pub description: String,
     pub tags: Option<Vec<Tag>>,
 }
-
+impl CreateDBParameterGroupMessage {
+    /// Sets `db_parameter_group_family`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBParameterGroupMessage.db_parameter_group_family = value.into();`.
+    pub fn db_parameter_group_family<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_parameter_group_family = value.into();
+        self
+    }
+    /// Sets `db_parameter_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBParameterGroupMessage.db_parameter_group_name = value.into();`.
+    pub fn db_parameter_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_parameter_group_name = value.into();
+        self
+    }
+    /// Sets `description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBParameterGroupMessage.description = value.into();`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBParameterGroupMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateDBParameterGroupMessage with optional fields set to `None`.
+    pub fn new<DBParameterGroupFamilyType: Into<String>,
+               DBParameterGroupNameType: Into<String>,
+               DescriptionType: Into<String>>
+        (db_parameter_group_family: DBParameterGroupFamilyType,
+         db_parameter_group_name: DBParameterGroupNameType,
+         description: DescriptionType)
+         -> CreateDBParameterGroupMessage {
+        CreateDBParameterGroupMessage {
+            db_parameter_group_family: db_parameter_group_family.into(),
+            db_parameter_group_name: db_parameter_group_name.into(),
+            description: description.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateDBParameterGroupMessage` contents to a `SignedRequest`.
 struct CreateDBParameterGroupMessageSerializer;
@@ -2230,7 +3380,6 @@ impl CreateDBParameterGroupMessageSerializer {
 pub struct CreateDBParameterGroupResult {
     pub db_parameter_group: Option<DBParameterGroup>,
 }
-
 struct CreateDBParameterGroupResultDeserializer;
 impl CreateDBParameterGroupResultDeserializer {
     #[allow(unused_variables)]
@@ -2283,7 +3432,42 @@ pub struct CreateDBSecurityGroupMessage {
     pub db_security_group_name: String,
     pub tags: Option<Vec<Tag>>,
 }
-
+impl CreateDBSecurityGroupMessage {
+    /// Sets `db_security_group_description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBSecurityGroupMessage.db_security_group_description = value.into();`.
+    pub fn db_security_group_description<ValueType: Into<String>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.db_security_group_description = value.into();
+        self
+    }
+    /// Sets `db_security_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBSecurityGroupMessage.db_security_group_name = value.into();`.
+    pub fn db_security_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_security_group_name = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBSecurityGroupMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateDBSecurityGroupMessage with optional fields set to `None`.
+    pub fn new<DBSecurityGroupDescriptionType: Into<String>, DBSecurityGroupNameType: Into<String>>
+        (db_security_group_description: DBSecurityGroupDescriptionType,
+         db_security_group_name: DBSecurityGroupNameType)
+         -> CreateDBSecurityGroupMessage {
+        CreateDBSecurityGroupMessage {
+            db_security_group_description: db_security_group_description.into(),
+            db_security_group_name: db_security_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateDBSecurityGroupMessage` contents to a `SignedRequest`.
 struct CreateDBSecurityGroupMessageSerializer;
@@ -2309,7 +3493,6 @@ impl CreateDBSecurityGroupMessageSerializer {
 pub struct CreateDBSecurityGroupResult {
     pub db_security_group: Option<DBSecurityGroup>,
 }
-
 struct CreateDBSecurityGroupResultDeserializer;
 impl CreateDBSecurityGroupResultDeserializer {
     #[allow(unused_variables)]
@@ -2362,7 +3545,40 @@ pub struct CreateDBSnapshotMessage {
     pub db_snapshot_identifier: String,
     pub tags: Option<Vec<Tag>>,
 }
-
+impl CreateDBSnapshotMessage {
+    /// Sets `db_instance_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBSnapshotMessage.db_instance_identifier = value.into();`.
+    pub fn db_instance_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_instance_identifier = value.into();
+        self
+    }
+    /// Sets `db_snapshot_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBSnapshotMessage.db_snapshot_identifier = value.into();`.
+    pub fn db_snapshot_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_snapshot_identifier = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBSnapshotMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateDBSnapshotMessage with optional fields set to `None`.
+    pub fn new<DBInstanceIdentifierType: Into<String>, DBSnapshotIdentifierType: Into<String>>
+        (db_instance_identifier: DBInstanceIdentifierType,
+         db_snapshot_identifier: DBSnapshotIdentifierType)
+         -> CreateDBSnapshotMessage {
+        CreateDBSnapshotMessage {
+            db_instance_identifier: db_instance_identifier.into(),
+            db_snapshot_identifier: db_snapshot_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateDBSnapshotMessage` contents to a `SignedRequest`.
 struct CreateDBSnapshotMessageSerializer;
@@ -2388,7 +3604,6 @@ impl CreateDBSnapshotMessageSerializer {
 pub struct CreateDBSnapshotResult {
     pub db_snapshot: Option<DBSnapshot>,
 }
-
 struct CreateDBSnapshotResultDeserializer;
 impl CreateDBSnapshotResultDeserializer {
     #[allow(unused_variables)]
@@ -2443,7 +3658,53 @@ pub struct CreateDBSubnetGroupMessage {
     pub subnet_ids: Vec<String>,
     pub tags: Option<Vec<Tag>>,
 }
-
+impl CreateDBSubnetGroupMessage {
+    /// Sets `db_subnet_group_description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBSubnetGroupMessage.db_subnet_group_description = value.into();`.
+    pub fn db_subnet_group_description<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.db_subnet_group_description = value.into();
+        self
+    }
+    /// Sets `db_subnet_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBSubnetGroupMessage.db_subnet_group_name = value.into();`.
+    pub fn db_subnet_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_subnet_group_name = value.into();
+        self
+    }
+    /// Sets `subnet_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBSubnetGroupMessage.subnet_ids = value.into();`.
+    pub fn subnet_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.subnet_ids = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDBSubnetGroupMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateDBSubnetGroupMessage with optional fields set to `None`.
+    pub fn new<DBSubnetGroupDescriptionType: Into<String>,
+               DBSubnetGroupNameType: Into<String>,
+               SubnetIdsType: Into<Vec<String>>>
+        (db_subnet_group_description: DBSubnetGroupDescriptionType,
+         db_subnet_group_name: DBSubnetGroupNameType,
+         subnet_ids: SubnetIdsType)
+         -> CreateDBSubnetGroupMessage {
+        CreateDBSubnetGroupMessage {
+            db_subnet_group_description: db_subnet_group_description.into(),
+            db_subnet_group_name: db_subnet_group_name.into(),
+            subnet_ids: subnet_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateDBSubnetGroupMessage` contents to a `SignedRequest`.
 struct CreateDBSubnetGroupMessageSerializer;
@@ -2472,7 +3733,6 @@ impl CreateDBSubnetGroupMessageSerializer {
 pub struct CreateDBSubnetGroupResult {
     pub db_subnet_group: Option<DBSubnetGroup>,
 }
-
 struct CreateDBSubnetGroupResultDeserializer;
 impl CreateDBSubnetGroupResultDeserializer {
     #[allow(unused_variables)]
@@ -2533,7 +3793,68 @@ pub struct CreateEventSubscriptionMessage {
     pub subscription_name: String,
     pub tags: Option<Vec<Tag>>,
 }
-
+impl CreateEventSubscriptionMessage {
+    /// Sets `enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEventSubscriptionMessage.enabled = Some(value.into());`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = Some(value.into());
+        self
+    }
+    /// Sets `event_categories`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEventSubscriptionMessage.event_categories = Some(value.into());`.
+    pub fn event_categories<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.event_categories = Some(value.into());
+        self
+    }
+    /// Sets `sns_topic_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEventSubscriptionMessage.sns_topic_arn = value.into();`.
+    pub fn sns_topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sns_topic_arn = value.into();
+        self
+    }
+    /// Sets `source_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEventSubscriptionMessage.source_ids = Some(value.into());`.
+    pub fn source_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.source_ids = Some(value.into());
+        self
+    }
+    /// Sets `source_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEventSubscriptionMessage.source_type = Some(value.into());`.
+    pub fn source_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_type = Some(value.into());
+        self
+    }
+    /// Sets `subscription_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEventSubscriptionMessage.subscription_name = value.into();`.
+    pub fn subscription_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subscription_name = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateEventSubscriptionMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateEventSubscriptionMessage with optional fields set to `None`.
+    pub fn new<SnsTopicArnType: Into<String>, SubscriptionNameType: Into<String>>
+        (sns_topic_arn: SnsTopicArnType,
+         subscription_name: SubscriptionNameType)
+         -> CreateEventSubscriptionMessage {
+        CreateEventSubscriptionMessage {
+            sns_topic_arn: sns_topic_arn.into(),
+            subscription_name: subscription_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateEventSubscriptionMessage` contents to a `SignedRequest`.
 struct CreateEventSubscriptionMessageSerializer;
@@ -2575,7 +3896,6 @@ impl CreateEventSubscriptionMessageSerializer {
 pub struct CreateEventSubscriptionResult {
     pub event_subscription: Option<EventSubscription>,
 }
-
 struct CreateEventSubscriptionResultDeserializer;
 impl CreateEventSubscriptionResultDeserializer {
     #[allow(unused_variables)]
@@ -2632,7 +3952,61 @@ pub struct CreateOptionGroupMessage {
     pub option_group_name: String,
     pub tags: Option<Vec<Tag>>,
 }
-
+impl CreateOptionGroupMessage {
+    /// Sets `engine_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateOptionGroupMessage.engine_name = value.into();`.
+    pub fn engine_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine_name = value.into();
+        self
+    }
+    /// Sets `major_engine_version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateOptionGroupMessage.major_engine_version = value.into();`.
+    pub fn major_engine_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.major_engine_version = value.into();
+        self
+    }
+    /// Sets `option_group_description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateOptionGroupMessage.option_group_description = value.into();`.
+    pub fn option_group_description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.option_group_description = value.into();
+        self
+    }
+    /// Sets `option_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateOptionGroupMessage.option_group_name = value.into();`.
+    pub fn option_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.option_group_name = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateOptionGroupMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateOptionGroupMessage with optional fields set to `None`.
+    pub fn new<EngineNameType: Into<String>,
+               MajorEngineVersionType: Into<String>,
+               OptionGroupDescriptionType: Into<String>,
+               OptionGroupNameType: Into<String>>
+        (engine_name: EngineNameType,
+         major_engine_version: MajorEngineVersionType,
+         option_group_description: OptionGroupDescriptionType,
+         option_group_name: OptionGroupNameType)
+         -> CreateOptionGroupMessage {
+        CreateOptionGroupMessage {
+            engine_name: engine_name.into(),
+            major_engine_version: major_engine_version.into(),
+            option_group_description: option_group_description.into(),
+            option_group_name: option_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateOptionGroupMessage` contents to a `SignedRequest`.
 struct CreateOptionGroupMessageSerializer;
@@ -2661,7 +4035,6 @@ impl CreateOptionGroupMessageSerializer {
 pub struct CreateOptionGroupResult {
     pub option_group: Option<OptionGroup>,
 }
-
 struct CreateOptionGroupResultDeserializer;
 impl CreateOptionGroupResultDeserializer {
     #[allow(unused_variables)]
@@ -2779,7 +4152,6 @@ pub struct DBCluster {
     #[doc="<p>Provides a list of VPC security groups that the DB cluster belongs to.</p>"]
     pub vpc_security_groups: Option<Vec<VpcSecurityGroupMembership>>,
 }
-
 struct DBClusterDeserializer;
 impl DBClusterDeserializer {
     #[allow(unused_variables)]
@@ -3028,7 +4400,6 @@ pub struct DBClusterMember {
     #[doc="<p>A value that specifies the order in which an Aurora Replica is promoted to the primary instance after a failure of the existing primary instance. For more information, see <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Aurora.Managing.html#Aurora.Managing.FaultTolerance\"> Fault Tolerance for an Aurora DB Cluster</a>. </p>"]
     pub promotion_tier: Option<i64>,
 }
-
 struct DBClusterMemberDeserializer;
 impl DBClusterMemberDeserializer {
     #[allow(unused_variables)]
@@ -3137,7 +4508,6 @@ pub struct DBClusterMessage {
     #[doc="<p>A pagination token that can be used in a subsequent DescribeDBClusters request.</p>"]
     pub marker: Option<String>,
 }
-
 struct DBClusterMessageDeserializer;
 impl DBClusterMessageDeserializer {
     #[allow(unused_variables)]
@@ -3235,7 +4605,6 @@ pub struct DBClusterOptionGroupStatus {
     #[doc="<p>Specifies the status of the DB cluster option group.</p>"]
     pub status: Option<String>,
 }
-
 struct DBClusterOptionGroupStatusDeserializer;
 impl DBClusterOptionGroupStatusDeserializer {
     #[allow(unused_variables)]
@@ -3295,7 +4664,6 @@ pub struct DBClusterParameterGroup {
     #[doc="<p>Provides the customer-specified description for this DB cluster parameter group.</p>"]
     pub description: Option<String>,
 }
-
 struct DBClusterParameterGroupDeserializer;
 impl DBClusterParameterGroupDeserializer {
     #[allow(unused_variables)]
@@ -3361,7 +4729,6 @@ pub struct DBClusterParameterGroupDetails {
     #[doc="<p>Provides a list of parameters for the DB cluster parameter group.</p>"]
     pub parameters: Option<Vec<Parameter>>,
 }
-
 struct DBClusterParameterGroupDetailsDeserializer;
 impl DBClusterParameterGroupDetailsDeserializer {
     #[allow(unused_variables)]
@@ -3456,7 +4823,6 @@ pub struct DBClusterParameterGroupNameMessage {
     #[doc="<p>The name of the DB cluster parameter group.</p> <p>Constraints:</p> <ul> <li> <p>Must be 1 to 255 alphanumeric characters</p> </li> <li> <p>First character must be a letter</p> </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens</p> </li> </ul> <note> <p>This value is stored as a lowercase string.</p> </note>"]
     pub db_cluster_parameter_group_name: Option<String>,
 }
-
 struct DBClusterParameterGroupNameMessageDeserializer;
 impl DBClusterParameterGroupNameMessageDeserializer {
     #[allow(unused_variables)]
@@ -3509,7 +4875,6 @@ pub struct DBClusterParameterGroupsMessage {
     #[doc="<p> An optional pagination token provided by a previous <code>DescribeDBClusterParameterGroups</code> request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>. </p>"]
     pub marker: Option<String>,
 }
-
 struct DBClusterParameterGroupsMessageDeserializer;
 impl DBClusterParameterGroupsMessageDeserializer {
     #[allow(unused_variables)]
@@ -3564,7 +4929,6 @@ pub struct DBClusterRole {
     #[doc="<p>Describes the state of association between the IAM role and the DB cluster. The Status property returns one of the following values:</p> <ul> <li> <p> <code>ACTIVE</code> - the IAM role ARN is associated with the DB cluster and can be used to access other AWS services on your behalf.</p> </li> <li> <p> <code>PENDING</code> - the IAM role ARN is being associated with the DB cluster.</p> </li> <li> <p> <code>INVALID</code> - the IAM role ARN is associated with the DB cluster, but the DB cluster is unable to assume the IAM role in order to access other AWS services on your behalf.</p> </li> </ul>"]
     pub status: Option<String>,
 }
-
 struct DBClusterRoleDeserializer;
 impl DBClusterRoleDeserializer {
     #[allow(unused_variables)]
@@ -3697,7 +5061,6 @@ pub struct DBClusterSnapshot {
     #[doc="<p>Provides the VPC ID associated with the DB cluster snapshot.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct DBClusterSnapshotDeserializer;
 impl DBClusterSnapshotDeserializer {
     #[allow(unused_variables)]
@@ -3835,7 +5198,6 @@ pub struct DBClusterSnapshotAttribute {
     #[doc="<p>The value(s) for the manual DB cluster snapshot attribute.</p> <p>If the <code>AttributeName</code> field is set to <code>restore</code>, then this element returns a list of IDs of the AWS accounts that are authorized to copy or restore the manual DB cluster snapshot. If a value of <code>all</code> is in the list, then the manual DB cluster snapshot is public and available for any AWS account to copy or restore.</p>"]
     pub attribute_values: Option<Vec<String>>,
 }
-
 struct DBClusterSnapshotAttributeDeserializer;
 impl DBClusterSnapshotAttributeDeserializer {
     #[allow(unused_variables)]
@@ -3933,7 +5295,6 @@ pub struct DBClusterSnapshotAttributesResult {
     #[doc="<p>The identifier of the manual DB cluster snapshot that the attributes apply to.</p>"]
     pub db_cluster_snapshot_identifier: Option<String>,
 }
-
 struct DBClusterSnapshotAttributesResultDeserializer;
 impl DBClusterSnapshotAttributesResultDeserializer {
     #[allow(unused_variables)]
@@ -4030,7 +5391,6 @@ pub struct DBClusterSnapshotMessage {
     #[doc="<p> An optional pagination token provided by a previous <a>DescribeDBClusterSnapshots</a> request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>. </p>"]
     pub marker: Option<String>,
 }
-
 struct DBClusterSnapshotMessageDeserializer;
 impl DBClusterSnapshotMessageDeserializer {
     #[allow(unused_variables)]
@@ -4100,7 +5460,6 @@ pub struct DBEngineVersion {
     #[doc="<p>A list of engine versions that this database engine version can be upgraded to.</p>"]
     pub valid_upgrade_target: Option<Vec<UpgradeTarget>>,
 }
-
 struct DBEngineVersionDeserializer;
 impl DBEngineVersionDeserializer {
     #[allow(unused_variables)]
@@ -4230,7 +5589,6 @@ pub struct DBEngineVersionMessage {
     #[doc="<p> An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>. </p>"]
     pub marker: Option<String>,
 }
-
 struct DBEngineVersionMessageDeserializer;
 impl DBEngineVersionMessageDeserializer {
     #[allow(unused_variables)]
@@ -4380,7 +5738,6 @@ pub struct DBInstance {
     #[doc="<p>Provides a list of VPC security group elements that the DB instance belongs to.</p>"]
     pub vpc_security_groups: Option<Vec<VpcSecurityGroupMembership>>,
 }
-
 struct DBInstanceDeserializer;
 impl DBInstanceDeserializer {
     #[allow(unused_variables)]
@@ -4687,7 +6044,6 @@ pub struct DBInstanceMessage {
     #[doc="<p> An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code> . </p>"]
     pub marker: Option<String>,
 }
-
 struct DBInstanceMessageDeserializer;
 impl DBInstanceMessageDeserializer {
     #[allow(unused_variables)]
@@ -4747,7 +6103,6 @@ pub struct DBInstanceStatusInfo {
     #[doc="<p>This value is currently \"read replication.\"</p>"]
     pub status_type: Option<String>,
 }
-
 struct DBInstanceStatusInfoDeserializer;
 impl DBInstanceStatusInfoDeserializer {
     #[allow(unused_variables)]
@@ -4855,7 +6210,6 @@ pub struct DBParameterGroup {
     #[doc="<p>Provides the customer-specified description for this DB parameter group.</p>"]
     pub description: Option<String>,
 }
-
 struct DBParameterGroupDeserializer;
 impl DBParameterGroupDeserializer {
     #[allow(unused_variables)]
@@ -4921,7 +6275,6 @@ pub struct DBParameterGroupDetails {
     #[doc="<p> A list of <a>Parameter</a> values. </p>"]
     pub parameters: Option<Vec<Parameter>>,
 }
-
 struct DBParameterGroupDetailsDeserializer;
 impl DBParameterGroupDetailsDeserializer {
     #[allow(unused_variables)]
@@ -5017,7 +6370,6 @@ pub struct DBParameterGroupNameMessage {
     #[doc="<p>Provides the name of the DB parameter group.</p>"]
     pub db_parameter_group_name: Option<String>,
 }
-
 struct DBParameterGroupNameMessageDeserializer;
 impl DBParameterGroupNameMessageDeserializer {
     #[allow(unused_variables)]
@@ -5069,7 +6421,6 @@ pub struct DBParameterGroupStatus {
     #[doc="<p>The status of parameter updates.</p>"]
     pub parameter_apply_status: Option<String>,
 }
-
 struct DBParameterGroupStatusDeserializer;
 impl DBParameterGroupStatusDeserializer {
     #[allow(unused_variables)]
@@ -5167,7 +6518,6 @@ pub struct DBParameterGroupsMessage {
     #[doc="<p> An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>. </p>"]
     pub marker: Option<String>,
 }
-
 struct DBParameterGroupsMessageDeserializer;
 impl DBParameterGroupsMessageDeserializer {
     #[allow(unused_variables)]
@@ -5233,7 +6583,6 @@ pub struct DBSecurityGroup {
     #[doc="<p>Provides the VpcId of the DB security group.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct DBSecurityGroupDeserializer;
 impl DBSecurityGroupDeserializer {
     #[allow(unused_variables)]
@@ -5312,7 +6661,6 @@ pub struct DBSecurityGroupMembership {
     #[doc="<p>The status of the DB security group.</p>"]
     pub status: Option<String>,
 }
-
 struct DBSecurityGroupMembershipDeserializer;
 impl DBSecurityGroupMembershipDeserializer {
     #[allow(unused_variables)]
@@ -5409,7 +6757,6 @@ pub struct DBSecurityGroupMessage {
     #[doc="<p> An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>. </p>"]
     pub marker: Option<String>,
 }
-
 struct DBSecurityGroupMessageDeserializer;
 impl DBSecurityGroupMessageDeserializer {
     #[allow(unused_variables)]
@@ -5567,7 +6914,6 @@ pub struct DBSnapshot {
     #[doc="<p>Provides the VPC ID associated with the DB snapshot.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct DBSnapshotDeserializer;
 impl DBSnapshotDeserializer {
     #[allow(unused_variables)]
@@ -5729,7 +7075,6 @@ pub struct DBSnapshotAttribute {
     #[doc="<p>The value or values for the manual DB snapshot attribute.</p> <p>If the <code>AttributeName</code> field is set to <code>restore</code>, then this element returns a list of IDs of the AWS accounts that are authorized to copy or restore the manual DB snapshot. If a value of <code>all</code> is in the list, then the manual DB snapshot is public and available for any AWS account to copy or restore.</p>"]
     pub attribute_values: Option<Vec<String>>,
 }
-
 struct DBSnapshotAttributeDeserializer;
 impl DBSnapshotAttributeDeserializer {
     #[allow(unused_variables)]
@@ -5826,7 +7171,6 @@ pub struct DBSnapshotAttributesResult {
     #[doc="<p>The identifier of the manual DB snapshot that the attributes apply to.</p>"]
     pub db_snapshot_identifier: Option<String>,
 }
-
 struct DBSnapshotAttributesResultDeserializer;
 impl DBSnapshotAttributesResultDeserializer {
     #[allow(unused_variables)]
@@ -5924,7 +7268,6 @@ pub struct DBSnapshotMessage {
     #[doc="<p> An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>. </p>"]
     pub marker: Option<String>,
 }
-
 struct DBSnapshotMessageDeserializer;
 impl DBSnapshotMessageDeserializer {
     #[allow(unused_variables)]
@@ -5988,7 +7331,6 @@ pub struct DBSubnetGroup {
     #[doc="<p>Provides the VpcId of the DB subnet group.</p>"]
     pub vpc_id: Option<String>,
 }
-
 struct DBSubnetGroupDeserializer;
 impl DBSubnetGroupDeserializer {
     #[allow(unused_variables)]
@@ -6063,7 +7405,6 @@ pub struct DBSubnetGroupMessage {
     #[doc="<p> An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>. </p>"]
     pub marker: Option<String>,
 }
-
 struct DBSubnetGroupMessageDeserializer;
 impl DBSubnetGroupMessageDeserializer {
     #[allow(unused_variables)]
@@ -6163,7 +7504,38 @@ pub struct DeleteDBClusterMessage {
     #[doc="<p> Determines whether a final DB cluster snapshot is created before the DB cluster is deleted. If <code>true</code> is specified, no DB cluster snapshot is created. If <code>false</code> is specified, a DB cluster snapshot is created before the DB cluster is deleted. </p> <note> <p>You must specify a <code>FinalDBSnapshotIdentifier</code> parameter if <code>SkipFinalSnapshot</code> is <code>false</code>.</p> </note> <p>Default: <code>false</code> </p>"]
     pub skip_final_snapshot: Option<bool>,
 }
-
+impl DeleteDBClusterMessage {
+    /// Sets `db_cluster_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDBClusterMessage.db_cluster_identifier = value.into();`.
+    pub fn db_cluster_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_cluster_identifier = value.into();
+        self
+    }
+    /// Sets `final_db_snapshot_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDBClusterMessage.final_db_snapshot_identifier = Some(value.into());`.
+    pub fn final_db_snapshot_identifier<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.final_db_snapshot_identifier = Some(value.into());
+        self
+    }
+    /// Sets `skip_final_snapshot`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDBClusterMessage.skip_final_snapshot = Some(value.into());`.
+    pub fn skip_final_snapshot<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.skip_final_snapshot = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteDBClusterMessage with optional fields set to `None`.
+pub fn new<DBClusterIdentifierType: Into<String>>(db_cluster_identifier: DBClusterIdentifierType) -> DeleteDBClusterMessage{
+        DeleteDBClusterMessage {
+            db_cluster_identifier: db_cluster_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteDBClusterMessage` contents to a `SignedRequest`.
 struct DeleteDBClusterMessageSerializer;
@@ -6194,7 +7566,26 @@ pub struct DeleteDBClusterParameterGroupMessage {
     #[doc="<p>The name of the DB cluster parameter group.</p> <p>Constraints:</p> <ul> <li> <p>Must be the name of an existing DB cluster parameter group.</p> </li> <li> <p>You cannot delete a default DB cluster parameter group.</p> </li> <li> <p>Cannot be associated with any DB clusters.</p> </li> </ul>"]
     pub db_cluster_parameter_group_name: String,
 }
-
+impl DeleteDBClusterParameterGroupMessage {
+    /// Sets `db_cluster_parameter_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDBClusterParameterGroupMessage.db_cluster_parameter_group_name = value.into();`.
+    pub fn db_cluster_parameter_group_name<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.db_cluster_parameter_group_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDBClusterParameterGroupMessage with optional fields set to `None`.
+    pub fn new<DBClusterParameterGroupNameType: Into<String>>
+        (db_cluster_parameter_group_name: DBClusterParameterGroupNameType)
+         -> DeleteDBClusterParameterGroupMessage {
+        DeleteDBClusterParameterGroupMessage {
+            db_cluster_parameter_group_name: db_cluster_parameter_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteDBClusterParameterGroupMessage` contents to a `SignedRequest`.
 struct DeleteDBClusterParameterGroupMessageSerializer;
@@ -6215,7 +7606,6 @@ impl DeleteDBClusterParameterGroupMessageSerializer {
 pub struct DeleteDBClusterResult {
     pub db_cluster: Option<DBCluster>,
 }
-
 struct DeleteDBClusterResultDeserializer;
 impl DeleteDBClusterResultDeserializer {
     #[allow(unused_variables)]
@@ -6264,7 +7654,24 @@ pub struct DeleteDBClusterSnapshotMessage {
     #[doc="<p>The identifier of the DB cluster snapshot to delete.</p> <p>Constraints: Must be the name of an existing DB cluster snapshot in the <code>available</code> state.</p>"]
     pub db_cluster_snapshot_identifier: String,
 }
-
+impl DeleteDBClusterSnapshotMessage {
+    /// Sets `db_cluster_snapshot_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDBClusterSnapshotMessage.db_cluster_snapshot_identifier = value.into();`.
+    pub fn db_cluster_snapshot_identifier<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.db_cluster_snapshot_identifier = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDBClusterSnapshotMessage with optional fields set to `None`.
+pub fn new<DBClusterSnapshotIdentifierType: Into<String>>(db_cluster_snapshot_identifier: DBClusterSnapshotIdentifierType) -> DeleteDBClusterSnapshotMessage{
+        DeleteDBClusterSnapshotMessage {
+            db_cluster_snapshot_identifier: db_cluster_snapshot_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteDBClusterSnapshotMessage` contents to a `SignedRequest`.
 struct DeleteDBClusterSnapshotMessageSerializer;
@@ -6285,7 +7692,6 @@ impl DeleteDBClusterSnapshotMessageSerializer {
 pub struct DeleteDBClusterSnapshotResult {
     pub db_cluster_snapshot: Option<DBClusterSnapshot>,
 }
-
 struct DeleteDBClusterSnapshotResultDeserializer;
 impl DeleteDBClusterSnapshotResultDeserializer {
     #[allow(unused_variables)]
@@ -6339,7 +7745,38 @@ pub struct DeleteDBInstanceMessage {
     #[doc="<p> Determines whether a final DB snapshot is created before the DB instance is deleted. If <code>true</code> is specified, no DBSnapshot is created. If <code>false</code> is specified, a DB snapshot is created before the DB instance is deleted. </p> <p>Note that when a DB instance is in a failure state and has a status of 'failed', 'incompatible-restore', or 'incompatible-network', it can only be deleted when the SkipFinalSnapshot parameter is set to \"true\".</p> <p>Specify <code>true</code> when deleting a Read Replica.</p> <note> <p>The FinalDBSnapshotIdentifier parameter must be specified if SkipFinalSnapshot is <code>false</code>.</p> </note> <p>Default: <code>false</code> </p>"]
     pub skip_final_snapshot: Option<bool>,
 }
-
+impl DeleteDBInstanceMessage {
+    /// Sets `db_instance_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDBInstanceMessage.db_instance_identifier = value.into();`.
+    pub fn db_instance_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_instance_identifier = value.into();
+        self
+    }
+    /// Sets `final_db_snapshot_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDBInstanceMessage.final_db_snapshot_identifier = Some(value.into());`.
+    pub fn final_db_snapshot_identifier<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.final_db_snapshot_identifier = Some(value.into());
+        self
+    }
+    /// Sets `skip_final_snapshot`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDBInstanceMessage.skip_final_snapshot = Some(value.into());`.
+    pub fn skip_final_snapshot<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.skip_final_snapshot = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DeleteDBInstanceMessage with optional fields set to `None`.
+pub fn new<DBInstanceIdentifierType: Into<String>>(db_instance_identifier: DBInstanceIdentifierType) -> DeleteDBInstanceMessage{
+        DeleteDBInstanceMessage {
+            db_instance_identifier: db_instance_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteDBInstanceMessage` contents to a `SignedRequest`.
 struct DeleteDBInstanceMessageSerializer;
@@ -6368,7 +7805,6 @@ impl DeleteDBInstanceMessageSerializer {
 pub struct DeleteDBInstanceResult {
     pub db_instance: Option<DBInstance>,
 }
-
 struct DeleteDBInstanceResultDeserializer;
 impl DeleteDBInstanceResultDeserializer {
     #[allow(unused_variables)]
@@ -6418,7 +7854,22 @@ pub struct DeleteDBParameterGroupMessage {
     #[doc="<p>The name of the DB parameter group.</p> <p>Constraints:</p> <ul> <li> <p>Must be the name of an existing DB parameter group</p> </li> <li> <p>You cannot delete a default DB parameter group</p> </li> <li> <p>Cannot be associated with any DB instances</p> </li> </ul>"]
     pub db_parameter_group_name: String,
 }
-
+impl DeleteDBParameterGroupMessage {
+    /// Sets `db_parameter_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDBParameterGroupMessage.db_parameter_group_name = value.into();`.
+    pub fn db_parameter_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_parameter_group_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDBParameterGroupMessage with optional fields set to `None`.
+pub fn new<DBParameterGroupNameType: Into<String>>(db_parameter_group_name: DBParameterGroupNameType) -> DeleteDBParameterGroupMessage{
+        DeleteDBParameterGroupMessage {
+            db_parameter_group_name: db_parameter_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteDBParameterGroupMessage` contents to a `SignedRequest`.
 struct DeleteDBParameterGroupMessageSerializer;
@@ -6441,7 +7892,22 @@ pub struct DeleteDBSecurityGroupMessage {
     #[doc="<p>The name of the DB security group to delete.</p> <note> <p>You cannot delete the default DB security group.</p> </note> <p>Constraints:</p> <ul> <li> <p>Must be 1 to 255 alphanumeric characters</p> </li> <li> <p>First character must be a letter</p> </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens</p> </li> <li> <p>Must not be \"Default\"</p> </li> </ul>"]
     pub db_security_group_name: String,
 }
-
+impl DeleteDBSecurityGroupMessage {
+    /// Sets `db_security_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDBSecurityGroupMessage.db_security_group_name = value.into();`.
+    pub fn db_security_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_security_group_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDBSecurityGroupMessage with optional fields set to `None`.
+pub fn new<DBSecurityGroupNameType: Into<String>>(db_security_group_name: DBSecurityGroupNameType) -> DeleteDBSecurityGroupMessage{
+        DeleteDBSecurityGroupMessage {
+            db_security_group_name: db_security_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteDBSecurityGroupMessage` contents to a `SignedRequest`.
 struct DeleteDBSecurityGroupMessageSerializer;
@@ -6464,7 +7930,22 @@ pub struct DeleteDBSnapshotMessage {
     #[doc="<p>The DBSnapshot identifier.</p> <p>Constraints: Must be the name of an existing DB snapshot in the <code>available</code> state.</p>"]
     pub db_snapshot_identifier: String,
 }
-
+impl DeleteDBSnapshotMessage {
+    /// Sets `db_snapshot_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDBSnapshotMessage.db_snapshot_identifier = value.into();`.
+    pub fn db_snapshot_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_snapshot_identifier = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDBSnapshotMessage with optional fields set to `None`.
+pub fn new<DBSnapshotIdentifierType: Into<String>>(db_snapshot_identifier: DBSnapshotIdentifierType) -> DeleteDBSnapshotMessage{
+        DeleteDBSnapshotMessage {
+            db_snapshot_identifier: db_snapshot_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteDBSnapshotMessage` contents to a `SignedRequest`.
 struct DeleteDBSnapshotMessageSerializer;
@@ -6485,7 +7966,6 @@ impl DeleteDBSnapshotMessageSerializer {
 pub struct DeleteDBSnapshotResult {
     pub db_snapshot: Option<DBSnapshot>,
 }
-
 struct DeleteDBSnapshotResultDeserializer;
 impl DeleteDBSnapshotResultDeserializer {
     #[allow(unused_variables)]
@@ -6535,7 +8015,23 @@ pub struct DeleteDBSubnetGroupMessage {
     #[doc="<p>The name of the database subnet group to delete.</p> <note> <p>You cannot delete the default subnet group.</p> </note> <p>Constraints:</p> <p>Constraints: Must contain no more than 255 alphanumeric characters, periods, underscores, spaces, or hyphens. Must not be default.</p> <p>Example: <code>mySubnetgroup</code> </p>"]
     pub db_subnet_group_name: String,
 }
-
+impl DeleteDBSubnetGroupMessage {
+    /// Sets `db_subnet_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDBSubnetGroupMessage.db_subnet_group_name = value.into();`.
+    pub fn db_subnet_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_subnet_group_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDBSubnetGroupMessage with optional fields set to `None`.
+    pub fn new<DBSubnetGroupNameType: Into<String>>(db_subnet_group_name: DBSubnetGroupNameType)
+                                                    -> DeleteDBSubnetGroupMessage {
+        DeleteDBSubnetGroupMessage {
+            db_subnet_group_name: db_subnet_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteDBSubnetGroupMessage` contents to a `SignedRequest`.
 struct DeleteDBSubnetGroupMessageSerializer;
@@ -6558,7 +8054,23 @@ pub struct DeleteEventSubscriptionMessage {
     #[doc="<p>The name of the RDS event notification subscription you want to delete.</p>"]
     pub subscription_name: String,
 }
-
+impl DeleteEventSubscriptionMessage {
+    /// Sets `subscription_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteEventSubscriptionMessage.subscription_name = value.into();`.
+    pub fn subscription_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subscription_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteEventSubscriptionMessage with optional fields set to `None`.
+    pub fn new<SubscriptionNameType: Into<String>>(subscription_name: SubscriptionNameType)
+                                                   -> DeleteEventSubscriptionMessage {
+        DeleteEventSubscriptionMessage {
+            subscription_name: subscription_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteEventSubscriptionMessage` contents to a `SignedRequest`.
 struct DeleteEventSubscriptionMessageSerializer;
@@ -6579,7 +8091,6 @@ impl DeleteEventSubscriptionMessageSerializer {
 pub struct DeleteEventSubscriptionResult {
     pub event_subscription: Option<EventSubscription>,
 }
-
 struct DeleteEventSubscriptionResultDeserializer;
 impl DeleteEventSubscriptionResultDeserializer {
     #[allow(unused_variables)]
@@ -6629,7 +8140,23 @@ pub struct DeleteOptionGroupMessage {
     #[doc="<p>The name of the option group to be deleted.</p> <note> <p>You cannot delete default option groups.</p> </note>"]
     pub option_group_name: String,
 }
-
+impl DeleteOptionGroupMessage {
+    /// Sets `option_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteOptionGroupMessage.option_group_name = value.into();`.
+    pub fn option_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.option_group_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteOptionGroupMessage with optional fields set to `None`.
+    pub fn new<OptionGroupNameType: Into<String>>(option_group_name: OptionGroupNameType)
+                                                  -> DeleteOptionGroupMessage {
+        DeleteOptionGroupMessage {
+            option_group_name: option_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteOptionGroupMessage` contents to a `SignedRequest`.
 struct DeleteOptionGroupMessageSerializer;
@@ -6677,7 +8204,40 @@ pub struct DescribeCertificatesMessage {
     #[doc="<p> The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that the remaining results can be retrieved. </p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>"]
     pub max_records: Option<i64>,
 }
-
+impl DescribeCertificatesMessage {
+    /// Sets `certificate_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCertificatesMessage.certificate_identifier = Some(value.into());`.
+    pub fn certificate_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.certificate_identifier = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCertificatesMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCertificatesMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeCertificatesMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeCertificatesMessage with optional fields set to `None`.
+    pub fn new() -> DescribeCertificatesMessage {
+        DescribeCertificatesMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeCertificatesMessage` contents to a `SignedRequest`.
 struct DescribeCertificatesMessageSerializer;
@@ -6720,7 +8280,42 @@ pub struct DescribeDBClusterParameterGroupsMessage {
     #[doc="<p> The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that the remaining results can be retrieved. </p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>"]
     pub max_records: Option<i64>,
 }
-
+impl DescribeDBClusterParameterGroupsMessage {
+    /// Sets `db_cluster_parameter_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBClusterParameterGroupsMessage.db_cluster_parameter_group_name = Some(value.into());`.
+    pub fn db_cluster_parameter_group_name<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.db_cluster_parameter_group_name = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBClusterParameterGroupsMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBClusterParameterGroupsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBClusterParameterGroupsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDBClusterParameterGroupsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeDBClusterParameterGroupsMessage {
+        DescribeDBClusterParameterGroupsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeDBClusterParameterGroupsMessage` contents to a `SignedRequest`.
 struct DescribeDBClusterParameterGroupsMessageSerializer;
@@ -6765,7 +8360,54 @@ pub struct DescribeDBClusterParametersMessage {
     #[doc="<p> A value that indicates to return only parameters for a specific source. Parameter sources can be <code>engine</code>, <code>service</code>, or <code>customer</code>. </p>"]
     pub source: Option<String>,
 }
-
+impl DescribeDBClusterParametersMessage {
+    /// Sets `db_cluster_parameter_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBClusterParametersMessage.db_cluster_parameter_group_name = value.into();`.
+    pub fn db_cluster_parameter_group_name<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.db_cluster_parameter_group_name = value.into();
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBClusterParametersMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBClusterParametersMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBClusterParametersMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `source`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBClusterParametersMessage.source = Some(value.into());`.
+    pub fn source<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDBClusterParametersMessage with optional fields set to `None`.
+    pub fn new<DBClusterParameterGroupNameType: Into<String>>
+        (db_cluster_parameter_group_name: DBClusterParameterGroupNameType)
+         -> DescribeDBClusterParametersMessage {
+        DescribeDBClusterParametersMessage {
+            db_cluster_parameter_group_name: db_cluster_parameter_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeDBClusterParametersMessage` contents to a `SignedRequest`.
 struct DescribeDBClusterParametersMessageSerializer;
@@ -6803,7 +8445,26 @@ pub struct DescribeDBClusterSnapshotAttributesMessage {
     #[doc="<p>The identifier for the DB cluster snapshot to describe the attributes for.</p>"]
     pub db_cluster_snapshot_identifier: String,
 }
-
+impl DescribeDBClusterSnapshotAttributesMessage {
+    /// Sets `db_cluster_snapshot_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBClusterSnapshotAttributesMessage.db_cluster_snapshot_identifier = value.into();`.
+    pub fn db_cluster_snapshot_identifier<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.db_cluster_snapshot_identifier = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeDBClusterSnapshotAttributesMessage with optional fields set to `None`.
+    pub fn new<DBClusterSnapshotIdentifierType: Into<String>>
+        (db_cluster_snapshot_identifier: DBClusterSnapshotIdentifierType)
+         -> DescribeDBClusterSnapshotAttributesMessage {
+        DescribeDBClusterSnapshotAttributesMessage {
+            db_cluster_snapshot_identifier: db_cluster_snapshot_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeDBClusterSnapshotAttributesMessage` contents to a `SignedRequest`.
 struct DescribeDBClusterSnapshotAttributesMessageSerializer;
@@ -6826,7 +8487,6 @@ impl DescribeDBClusterSnapshotAttributesMessageSerializer {
 pub struct DescribeDBClusterSnapshotAttributesResult {
     pub db_cluster_snapshot_attributes_result: Option<DBClusterSnapshotAttributesResult>,
 }
-
 struct DescribeDBClusterSnapshotAttributesResultDeserializer;
 impl DescribeDBClusterSnapshotAttributesResultDeserializer {
     #[allow(unused_variables)]
@@ -6889,7 +8549,70 @@ pub struct DescribeDBClusterSnapshotsMessage {
     #[doc="<p>The type of DB cluster snapshots to be returned. You can specify one of the following values:</p> <ul> <li> <p> <code>automated</code> - Return all DB cluster snapshots that have been automatically taken by Amazon RDS for my AWS account.</p> </li> <li> <p> <code>manual</code> - Return all DB cluster snapshots that have been taken by my AWS account.</p> </li> <li> <p> <code>shared</code> - Return all manual DB cluster snapshots that have been shared to my AWS account.</p> </li> <li> <p> <code>public</code> - Return all DB cluster snapshots that have been marked as public.</p> </li> </ul> <p>If you don't specify a <code>SnapshotType</code> value, then both automated and manual DB cluster snapshots are returned. You can include shared DB cluster snapshots with these results by setting the <code>IncludeShared</code> parameter to <code>true</code>. You can include public DB cluster snapshots with these results by setting the <code>IncludePublic</code> parameter to <code>true</code>.</p> <p>The <code>IncludeShared</code> and <code>IncludePublic</code> parameters don't apply for <code>SnapshotType</code> values of <code>manual</code> or <code>automated</code>. The <code>IncludePublic</code> parameter doesn't apply when <code>SnapshotType</code> is set to <code>shared</code>. The <code>IncludeShared</code> parameter doesn't apply when <code>SnapshotType</code> is set to <code>public</code>.</p>"]
     pub snapshot_type: Option<String>,
 }
-
+impl DescribeDBClusterSnapshotsMessage {
+    /// Sets `db_cluster_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBClusterSnapshotsMessage.db_cluster_identifier = Some(value.into());`.
+    pub fn db_cluster_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_cluster_identifier = Some(value.into());
+        self
+    }
+    /// Sets `db_cluster_snapshot_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBClusterSnapshotsMessage.db_cluster_snapshot_identifier = Some(value.into());`.
+    pub fn db_cluster_snapshot_identifier<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.db_cluster_snapshot_identifier = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBClusterSnapshotsMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `include_public`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBClusterSnapshotsMessage.include_public = Some(value.into());`.
+    pub fn include_public<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.include_public = Some(value.into());
+        self
+    }
+    /// Sets `include_shared`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBClusterSnapshotsMessage.include_shared = Some(value.into());`.
+    pub fn include_shared<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.include_shared = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBClusterSnapshotsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBClusterSnapshotsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBClusterSnapshotsMessage.snapshot_type = Some(value.into());`.
+    pub fn snapshot_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDBClusterSnapshotsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeDBClusterSnapshotsMessage {
+        DescribeDBClusterSnapshotsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeDBClusterSnapshotsMessage` contents to a `SignedRequest`.
 struct DescribeDBClusterSnapshotsMessageSerializer;
@@ -6947,7 +8670,40 @@ pub struct DescribeDBClustersMessage {
     #[doc="<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that the remaining results can be retrieved. </p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>"]
     pub max_records: Option<i64>,
 }
-
+impl DescribeDBClustersMessage {
+    /// Sets `db_cluster_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBClustersMessage.db_cluster_identifier = Some(value.into());`.
+    pub fn db_cluster_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_cluster_identifier = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBClustersMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBClustersMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBClustersMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDBClustersMessage with optional fields set to `None`.
+    pub fn new() -> DescribeDBClustersMessage {
+        DescribeDBClustersMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeDBClustersMessage` contents to a `SignedRequest`.
 struct DescribeDBClustersMessageSerializer;
@@ -6999,7 +8755,77 @@ pub struct DescribeDBEngineVersionsMessage {
     #[doc="<p> The maximum number of records to include in the response. If more than the <code>MaxRecords</code> value is available, a pagination token called a marker is included in the response so that the following results can be retrieved. </p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>"]
     pub max_records: Option<i64>,
 }
-
+impl DescribeDBEngineVersionsMessage {
+    /// Sets `db_parameter_group_family`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBEngineVersionsMessage.db_parameter_group_family = Some(value.into());`.
+    pub fn db_parameter_group_family<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_parameter_group_family = Some(value.into());
+        self
+    }
+    /// Sets `default_only`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBEngineVersionsMessage.default_only = Some(value.into());`.
+    pub fn default_only<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.default_only = Some(value.into());
+        self
+    }
+    /// Sets `engine`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBEngineVersionsMessage.engine = Some(value.into());`.
+    pub fn engine<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine = Some(value.into());
+        self
+    }
+    /// Sets `engine_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBEngineVersionsMessage.engine_version = Some(value.into());`.
+    pub fn engine_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine_version = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBEngineVersionsMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `list_supported_character_sets`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBEngineVersionsMessage.list_supported_character_sets = Some(value.into());`.
+    pub fn list_supported_character_sets<ValueType: Into<bool>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.list_supported_character_sets = Some(value.into());
+        self
+    }
+    /// Sets `list_supported_timezones`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBEngineVersionsMessage.list_supported_timezones = Some(value.into());`.
+    pub fn list_supported_timezones<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.list_supported_timezones = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBEngineVersionsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBEngineVersionsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDBEngineVersionsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeDBEngineVersionsMessage {
+        DescribeDBEngineVersionsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeDBEngineVersionsMessage` contents to a `SignedRequest`.
 struct DescribeDBEngineVersionsMessageSerializer;
@@ -7060,7 +8886,40 @@ pub struct DescribeDBInstancesMessage {
     #[doc="<p> The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that the remaining results can be retrieved. </p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>"]
     pub max_records: Option<i64>,
 }
-
+impl DescribeDBInstancesMessage {
+    /// Sets `db_instance_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBInstancesMessage.db_instance_identifier = Some(value.into());`.
+    pub fn db_instance_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_instance_identifier = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBInstancesMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBInstancesMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBInstancesMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDBInstancesMessage with optional fields set to `None`.
+    pub fn new() -> DescribeDBInstancesMessage {
+        DescribeDBInstancesMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeDBInstancesMessage` contents to a `SignedRequest`.
 struct DescribeDBInstancesMessageSerializer;
@@ -7101,7 +8960,6 @@ pub struct DescribeDBLogFilesDetails {
     #[doc="<p>The size, in bytes, of the log file for the specified DB instance.</p>"]
     pub size: Option<i64>,
 }
-
 struct DescribeDBLogFilesDetailsDeserializer;
 impl DescribeDBLogFilesDetailsDeserializer {
     #[allow(unused_variables)]
@@ -7210,7 +9068,64 @@ pub struct DescribeDBLogFilesMessage {
     #[doc="<p>The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a pagination token called a marker is included in the response so that the remaining results can be retrieved.</p>"]
     pub max_records: Option<i64>,
 }
-
+impl DescribeDBLogFilesMessage {
+    /// Sets `db_instance_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBLogFilesMessage.db_instance_identifier = value.into();`.
+    pub fn db_instance_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_instance_identifier = value.into();
+        self
+    }
+    /// Sets `file_last_written`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBLogFilesMessage.file_last_written = Some(value.into());`.
+    pub fn file_last_written<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.file_last_written = Some(value.into());
+        self
+    }
+    /// Sets `file_size`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBLogFilesMessage.file_size = Some(value.into());`.
+    pub fn file_size<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.file_size = Some(value.into());
+        self
+    }
+    /// Sets `filename_contains`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBLogFilesMessage.filename_contains = Some(value.into());`.
+    pub fn filename_contains<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filename_contains = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBLogFilesMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBLogFilesMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBLogFilesMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDBLogFilesMessage with optional fields set to `None`.
+pub fn new<DBInstanceIdentifierType: Into<String>>(db_instance_identifier: DBInstanceIdentifierType) -> DescribeDBLogFilesMessage{
+        DescribeDBLogFilesMessage {
+            db_instance_identifier: db_instance_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeDBLogFilesMessage` contents to a `SignedRequest`.
 struct DescribeDBLogFilesMessageSerializer;
@@ -7258,7 +9173,6 @@ pub struct DescribeDBLogFilesResponse {
     #[doc="<p>A pagination token that can be used in a subsequent DescribeDBLogFiles request.</p>"]
     pub marker: Option<String>,
 }
-
 struct DescribeDBLogFilesResponseDeserializer;
 impl DescribeDBLogFilesResponseDeserializer {
     #[allow(unused_variables)]
@@ -7318,7 +9232,40 @@ pub struct DescribeDBParameterGroupsMessage {
     #[doc="<p> The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that the remaining results can be retrieved. </p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>"]
     pub max_records: Option<i64>,
 }
-
+impl DescribeDBParameterGroupsMessage {
+    /// Sets `db_parameter_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBParameterGroupsMessage.db_parameter_group_name = Some(value.into());`.
+    pub fn db_parameter_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_parameter_group_name = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBParameterGroupsMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBParameterGroupsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBParameterGroupsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDBParameterGroupsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeDBParameterGroupsMessage {
+        DescribeDBParameterGroupsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeDBParameterGroupsMessage` contents to a `SignedRequest`.
 struct DescribeDBParameterGroupsMessageSerializer;
@@ -7362,7 +9309,50 @@ pub struct DescribeDBParametersMessage {
     #[doc="<p>The parameter types to return.</p> <p>Default: All parameter types returned</p> <p>Valid Values: <code>user | system | engine-default</code> </p>"]
     pub source: Option<String>,
 }
-
+impl DescribeDBParametersMessage {
+    /// Sets `db_parameter_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBParametersMessage.db_parameter_group_name = value.into();`.
+    pub fn db_parameter_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_parameter_group_name = value.into();
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBParametersMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBParametersMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBParametersMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `source`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBParametersMessage.source = Some(value.into());`.
+    pub fn source<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDBParametersMessage with optional fields set to `None`.
+pub fn new<DBParameterGroupNameType: Into<String>>(db_parameter_group_name: DBParameterGroupNameType) -> DescribeDBParametersMessage{
+        DescribeDBParametersMessage {
+            db_parameter_group_name: db_parameter_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeDBParametersMessage` contents to a `SignedRequest`.
 struct DescribeDBParametersMessageSerializer;
@@ -7406,7 +9396,40 @@ pub struct DescribeDBSecurityGroupsMessage {
     #[doc="<p> The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that the remaining results can be retrieved. </p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>"]
     pub max_records: Option<i64>,
 }
-
+impl DescribeDBSecurityGroupsMessage {
+    /// Sets `db_security_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBSecurityGroupsMessage.db_security_group_name = Some(value.into());`.
+    pub fn db_security_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_security_group_name = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBSecurityGroupsMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBSecurityGroupsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBSecurityGroupsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDBSecurityGroupsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeDBSecurityGroupsMessage {
+        DescribeDBSecurityGroupsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeDBSecurityGroupsMessage` contents to a `SignedRequest`.
 struct DescribeDBSecurityGroupsMessageSerializer;
@@ -7443,7 +9466,22 @@ pub struct DescribeDBSnapshotAttributesMessage {
     #[doc="<p>The identifier for the DB snapshot to describe the attributes for.</p>"]
     pub db_snapshot_identifier: String,
 }
-
+impl DescribeDBSnapshotAttributesMessage {
+    /// Sets `db_snapshot_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBSnapshotAttributesMessage.db_snapshot_identifier = value.into();`.
+    pub fn db_snapshot_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_snapshot_identifier = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeDBSnapshotAttributesMessage with optional fields set to `None`.
+pub fn new<DBSnapshotIdentifierType: Into<String>>(db_snapshot_identifier: DBSnapshotIdentifierType) -> DescribeDBSnapshotAttributesMessage{
+        DescribeDBSnapshotAttributesMessage {
+            db_snapshot_identifier: db_snapshot_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeDBSnapshotAttributesMessage` contents to a `SignedRequest`.
 struct DescribeDBSnapshotAttributesMessageSerializer;
@@ -7464,7 +9502,6 @@ impl DescribeDBSnapshotAttributesMessageSerializer {
 pub struct DescribeDBSnapshotAttributesResult {
     pub db_snapshot_attributes_result: Option<DBSnapshotAttributesResult>,
 }
-
 struct DescribeDBSnapshotAttributesResultDeserializer;
 impl DescribeDBSnapshotAttributesResultDeserializer {
     #[allow(unused_variables)]
@@ -7527,7 +9564,68 @@ pub struct DescribeDBSnapshotsMessage {
     #[doc="<p>The type of snapshots to be returned. You can specify one of the following values:</p> <ul> <li> <p> <code>automated</code> - Return all DB snapshots that have been automatically taken by Amazon RDS for my AWS account.</p> </li> <li> <p> <code>manual</code> - Return all DB snapshots that have been taken by my AWS account.</p> </li> <li> <p> <code>shared</code> - Return all manual DB snapshots that have been shared to my AWS account.</p> </li> <li> <p> <code>public</code> - Return all DB snapshots that have been marked as public.</p> </li> </ul> <p>If you don't specify a <code>SnapshotType</code> value, then both automated and manual snapshots are returned. Shared and public DB snapshots are not included in the returned results by default. You can include shared snapshots with these results by setting the <code>IncludeShared</code> parameter to <code>true</code>. You can include public snapshots with these results by setting the <code>IncludePublic</code> parameter to <code>true</code>.</p> <p>The <code>IncludeShared</code> and <code>IncludePublic</code> parameters don't apply for <code>SnapshotType</code> values of <code>manual</code> or <code>automated</code>. The <code>IncludePublic</code> parameter doesn't apply when <code>SnapshotType</code> is set to <code>shared</code>. The <code>IncludeShared</code> parameter doesn't apply when <code>SnapshotType</code> is set to <code>public</code>.</p>"]
     pub snapshot_type: Option<String>,
 }
-
+impl DescribeDBSnapshotsMessage {
+    /// Sets `db_instance_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBSnapshotsMessage.db_instance_identifier = Some(value.into());`.
+    pub fn db_instance_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_instance_identifier = Some(value.into());
+        self
+    }
+    /// Sets `db_snapshot_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBSnapshotsMessage.db_snapshot_identifier = Some(value.into());`.
+    pub fn db_snapshot_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_snapshot_identifier = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBSnapshotsMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `include_public`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBSnapshotsMessage.include_public = Some(value.into());`.
+    pub fn include_public<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.include_public = Some(value.into());
+        self
+    }
+    /// Sets `include_shared`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBSnapshotsMessage.include_shared = Some(value.into());`.
+    pub fn include_shared<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.include_shared = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBSnapshotsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBSnapshotsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBSnapshotsMessage.snapshot_type = Some(value.into());`.
+    pub fn snapshot_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDBSnapshotsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeDBSnapshotsMessage {
+        DescribeDBSnapshotsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeDBSnapshotsMessage` contents to a `SignedRequest`.
 struct DescribeDBSnapshotsMessageSerializer;
@@ -7585,7 +9683,40 @@ pub struct DescribeDBSubnetGroupsMessage {
     #[doc="<p> The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that the remaining results can be retrieved. </p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>"]
     pub max_records: Option<i64>,
 }
-
+impl DescribeDBSubnetGroupsMessage {
+    /// Sets `db_subnet_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBSubnetGroupsMessage.db_subnet_group_name = Some(value.into());`.
+    pub fn db_subnet_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_subnet_group_name = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBSubnetGroupsMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBSubnetGroupsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDBSubnetGroupsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDBSubnetGroupsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeDBSubnetGroupsMessage {
+        DescribeDBSubnetGroupsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeDBSubnetGroupsMessage` contents to a `SignedRequest`.
 struct DescribeDBSubnetGroupsMessageSerializer;
@@ -7627,7 +9758,45 @@ pub struct DescribeEngineDefaultClusterParametersMessage {
     #[doc="<p> The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that the remaining results can be retrieved. </p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>"]
     pub max_records: Option<i64>,
 }
-
+impl DescribeEngineDefaultClusterParametersMessage {
+    /// Sets `db_parameter_group_family`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEngineDefaultClusterParametersMessage.db_parameter_group_family = value.into();`.
+    pub fn db_parameter_group_family<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_parameter_group_family = value.into();
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEngineDefaultClusterParametersMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEngineDefaultClusterParametersMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEngineDefaultClusterParametersMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEngineDefaultClusterParametersMessage with optional fields set to `None`.
+    pub fn new<DBParameterGroupFamilyType: Into<String>>
+        (db_parameter_group_family: DBParameterGroupFamilyType)
+         -> DescribeEngineDefaultClusterParametersMessage {
+        DescribeEngineDefaultClusterParametersMessage {
+            db_parameter_group_family: db_parameter_group_family.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeEngineDefaultClusterParametersMessage` contents to a `SignedRequest`.
 struct DescribeEngineDefaultClusterParametersMessageSerializer;
@@ -7662,7 +9831,6 @@ impl DescribeEngineDefaultClusterParametersMessageSerializer {
 pub struct DescribeEngineDefaultClusterParametersResult {
     pub engine_defaults: Option<EngineDefaults>,
 }
-
 struct DescribeEngineDefaultClusterParametersResultDeserializer;
 impl DescribeEngineDefaultClusterParametersResultDeserializer {
     #[allow(unused_variables)]
@@ -7719,7 +9887,45 @@ pub struct DescribeEngineDefaultParametersMessage {
     #[doc="<p> The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that the remaining results can be retrieved. </p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>"]
     pub max_records: Option<i64>,
 }
-
+impl DescribeEngineDefaultParametersMessage {
+    /// Sets `db_parameter_group_family`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEngineDefaultParametersMessage.db_parameter_group_family = value.into();`.
+    pub fn db_parameter_group_family<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_parameter_group_family = value.into();
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEngineDefaultParametersMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEngineDefaultParametersMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEngineDefaultParametersMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEngineDefaultParametersMessage with optional fields set to `None`.
+    pub fn new<DBParameterGroupFamilyType: Into<String>>
+        (db_parameter_group_family: DBParameterGroupFamilyType)
+         -> DescribeEngineDefaultParametersMessage {
+        DescribeEngineDefaultParametersMessage {
+            db_parameter_group_family: db_parameter_group_family.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeEngineDefaultParametersMessage` contents to a `SignedRequest`.
 struct DescribeEngineDefaultParametersMessageSerializer;
@@ -7752,7 +9958,6 @@ impl DescribeEngineDefaultParametersMessageSerializer {
 pub struct DescribeEngineDefaultParametersResult {
     pub engine_defaults: Option<EngineDefaults>,
 }
-
 struct DescribeEngineDefaultParametersResultDeserializer;
 impl DescribeEngineDefaultParametersResultDeserializer {
     #[allow(unused_variables)]
@@ -7805,7 +10010,26 @@ pub struct DescribeEventCategoriesMessage {
     #[doc="<p>The type of source that will be generating the events.</p> <p>Valid values: db-instance | db-parameter-group | db-security-group | db-snapshot</p>"]
     pub source_type: Option<String>,
 }
-
+impl DescribeEventCategoriesMessage {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventCategoriesMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `source_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventCategoriesMessage.source_type = Some(value.into());`.
+    pub fn source_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEventCategoriesMessage with optional fields set to `None`.
+    pub fn new() -> DescribeEventCategoriesMessage {
+        DescribeEventCategoriesMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeEventCategoriesMessage` contents to a `SignedRequest`.
 struct DescribeEventCategoriesMessageSerializer;
@@ -7840,7 +10064,40 @@ pub struct DescribeEventSubscriptionsMessage {
     #[doc="<p>The name of the RDS event notification subscription you want to describe.</p>"]
     pub subscription_name: Option<String>,
 }
-
+impl DescribeEventSubscriptionsMessage {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventSubscriptionsMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventSubscriptionsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventSubscriptionsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `subscription_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventSubscriptionsMessage.subscription_name = Some(value.into());`.
+    pub fn subscription_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subscription_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEventSubscriptionsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeEventSubscriptionsMessage {
+        DescribeEventSubscriptionsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeEventSubscriptionsMessage` contents to a `SignedRequest`.
 struct DescribeEventSubscriptionsMessageSerializer;
@@ -7892,7 +10149,75 @@ pub struct DescribeEventsMessage {
     #[doc="<p> The beginning of the time interval to retrieve events for, specified in ISO 8601 format. For more information about ISO 8601, go to the <a href=\"http://en.wikipedia.org/wiki/ISO_8601\">ISO8601 Wikipedia page.</a> </p> <p>Example: 2009-07-08T18:00Z</p>"]
     pub start_time: Option<String>,
 }
-
+impl DescribeEventsMessage {
+    /// Sets `duration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.duration = Some(value.into());`.
+    pub fn duration<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.duration = Some(value.into());
+        self
+    }
+    /// Sets `end_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.end_time = Some(value.into());`.
+    pub fn end_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.end_time = Some(value.into());
+        self
+    }
+    /// Sets `event_categories`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.event_categories = Some(value.into());`.
+    pub fn event_categories<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.event_categories = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `source_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.source_identifier = Some(value.into());`.
+    pub fn source_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_identifier = Some(value.into());
+        self
+    }
+    /// Sets `source_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.source_type = Some(value.into());`.
+    pub fn source_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_type = Some(value.into());
+        self
+    }
+    /// Sets `start_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventsMessage.start_time = Some(value.into());`.
+    pub fn start_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.start_time = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEventsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeEventsMessage {
+        DescribeEventsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeEventsMessage` contents to a `SignedRequest`.
 struct DescribeEventsMessageSerializer;
@@ -7954,7 +10279,51 @@ pub struct DescribeOptionGroupOptionsMessage {
     #[doc="<p> The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that the remaining results can be retrieved. </p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 100.</p>"]
     pub max_records: Option<i64>,
 }
-
+impl DescribeOptionGroupOptionsMessage {
+    /// Sets `engine_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeOptionGroupOptionsMessage.engine_name = value.into();`.
+    pub fn engine_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine_name = value.into();
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeOptionGroupOptionsMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `major_engine_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeOptionGroupOptionsMessage.major_engine_version = Some(value.into());`.
+    pub fn major_engine_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.major_engine_version = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeOptionGroupOptionsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeOptionGroupOptionsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeOptionGroupOptionsMessage with optional fields set to `None`.
+    pub fn new<EngineNameType: Into<String>>(engine_name: EngineNameType)
+                                             -> DescribeOptionGroupOptionsMessage {
+        DescribeOptionGroupOptionsMessage {
+            engine_name: engine_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeOptionGroupOptionsMessage` contents to a `SignedRequest`.
 struct DescribeOptionGroupOptionsMessageSerializer;
@@ -8001,7 +10370,54 @@ pub struct DescribeOptionGroupsMessage {
     #[doc="<p>The name of the option group to describe. Cannot be supplied together with EngineName or MajorEngineVersion.</p>"]
     pub option_group_name: Option<String>,
 }
-
+impl DescribeOptionGroupsMessage {
+    /// Sets `engine_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeOptionGroupsMessage.engine_name = Some(value.into());`.
+    pub fn engine_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine_name = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeOptionGroupsMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `major_engine_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeOptionGroupsMessage.major_engine_version = Some(value.into());`.
+    pub fn major_engine_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.major_engine_version = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeOptionGroupsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeOptionGroupsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `option_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeOptionGroupsMessage.option_group_name = Some(value.into());`.
+    pub fn option_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.option_group_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeOptionGroupsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeOptionGroupsMessage {
+        DescribeOptionGroupsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeOptionGroupsMessage` contents to a `SignedRequest`.
 struct DescribeOptionGroupsMessageSerializer;
@@ -8057,7 +10473,72 @@ pub struct DescribeOrderableDBInstanceOptionsMessage {
     #[doc="<p>The VPC filter value. Specify this parameter to show only the available VPC or non-VPC offerings.</p>"]
     pub vpc: Option<bool>,
 }
-
+impl DescribeOrderableDBInstanceOptionsMessage {
+    /// Sets `db_instance_class`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeOrderableDBInstanceOptionsMessage.db_instance_class = Some(value.into());`.
+    pub fn db_instance_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_instance_class = Some(value.into());
+        self
+    }
+    /// Sets `engine`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeOrderableDBInstanceOptionsMessage.engine = value.into();`.
+    pub fn engine<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine = value.into();
+        self
+    }
+    /// Sets `engine_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeOrderableDBInstanceOptionsMessage.engine_version = Some(value.into());`.
+    pub fn engine_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine_version = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeOrderableDBInstanceOptionsMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `license_model`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeOrderableDBInstanceOptionsMessage.license_model = Some(value.into());`.
+    pub fn license_model<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.license_model = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeOrderableDBInstanceOptionsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeOrderableDBInstanceOptionsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `vpc`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeOrderableDBInstanceOptionsMessage.vpc = Some(value.into());`.
+    pub fn vpc<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.vpc = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeOrderableDBInstanceOptionsMessage with optional fields set to `None`.
+    pub fn new<EngineType: Into<String>>(engine: EngineType)
+                                         -> DescribeOrderableDBInstanceOptionsMessage {
+        DescribeOrderableDBInstanceOptionsMessage {
+            engine: engine.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DescribeOrderableDBInstanceOptionsMessage` contents to a `SignedRequest`.
 struct DescribeOrderableDBInstanceOptionsMessageSerializer;
@@ -8111,7 +10592,40 @@ pub struct DescribePendingMaintenanceActionsMessage {
     #[doc="<p>The ARN of a resource to return pending maintenance actions for.</p>"]
     pub resource_identifier: Option<String>,
 }
-
+impl DescribePendingMaintenanceActionsMessage {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePendingMaintenanceActionsMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePendingMaintenanceActionsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePendingMaintenanceActionsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `resource_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribePendingMaintenanceActionsMessage.resource_identifier = Some(value.into());`.
+    pub fn resource_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_identifier = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribePendingMaintenanceActionsMessage with optional fields set to `None`.
+    pub fn new() -> DescribePendingMaintenanceActionsMessage {
+        DescribePendingMaintenanceActionsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribePendingMaintenanceActionsMessage` contents to a `SignedRequest`.
 struct DescribePendingMaintenanceActionsMessageSerializer;
@@ -8165,7 +10679,84 @@ pub struct DescribeReservedDBInstancesMessage {
     #[doc="<p>The offering identifier filter value. Specify this parameter to show only purchased reservations matching the specified offering identifier.</p>"]
     pub reserved_db_instances_offering_id: Option<String>,
 }
-
+impl DescribeReservedDBInstancesMessage {
+    /// Sets `db_instance_class`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedDBInstancesMessage.db_instance_class = Some(value.into());`.
+    pub fn db_instance_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_instance_class = Some(value.into());
+        self
+    }
+    /// Sets `duration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedDBInstancesMessage.duration = Some(value.into());`.
+    pub fn duration<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.duration = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedDBInstancesMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedDBInstancesMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedDBInstancesMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `multi_az`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedDBInstancesMessage.multi_az = Some(value.into());`.
+    pub fn multi_az<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.multi_az = Some(value.into());
+        self
+    }
+    /// Sets `offering_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedDBInstancesMessage.offering_type = Some(value.into());`.
+    pub fn offering_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.offering_type = Some(value.into());
+        self
+    }
+    /// Sets `product_description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedDBInstancesMessage.product_description = Some(value.into());`.
+    pub fn product_description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_description = Some(value.into());
+        self
+    }
+    /// Sets `reserved_db_instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedDBInstancesMessage.reserved_db_instance_id = Some(value.into());`.
+    pub fn reserved_db_instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reserved_db_instance_id = Some(value.into());
+        self
+    }
+    /// Sets `reserved_db_instances_offering_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedDBInstancesMessage.reserved_db_instances_offering_id = Some(value.into());`.
+    pub fn reserved_db_instances_offering_id<ValueType: Into<String>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.reserved_db_instances_offering_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeReservedDBInstancesMessage with optional fields set to `None`.
+    pub fn new() -> DescribeReservedDBInstancesMessage {
+        DescribeReservedDBInstancesMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeReservedDBInstancesMessage` contents to a `SignedRequest`.
 struct DescribeReservedDBInstancesMessageSerializer;
@@ -8238,7 +10829,77 @@ pub struct DescribeReservedDBInstancesOfferingsMessage {
     #[doc="<p>The offering identifier filter value. Specify this parameter to show only the available offering that matches the specified reservation identifier.</p> <p>Example: <code>438012d3-4052-4cc7-b2e3-8d3372e0e706</code> </p>"]
     pub reserved_db_instances_offering_id: Option<String>,
 }
-
+impl DescribeReservedDBInstancesOfferingsMessage {
+    /// Sets `db_instance_class`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedDBInstancesOfferingsMessage.db_instance_class = Some(value.into());`.
+    pub fn db_instance_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_instance_class = Some(value.into());
+        self
+    }
+    /// Sets `duration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedDBInstancesOfferingsMessage.duration = Some(value.into());`.
+    pub fn duration<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.duration = Some(value.into());
+        self
+    }
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedDBInstancesOfferingsMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedDBInstancesOfferingsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedDBInstancesOfferingsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `multi_az`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedDBInstancesOfferingsMessage.multi_az = Some(value.into());`.
+    pub fn multi_az<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.multi_az = Some(value.into());
+        self
+    }
+    /// Sets `offering_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedDBInstancesOfferingsMessage.offering_type = Some(value.into());`.
+    pub fn offering_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.offering_type = Some(value.into());
+        self
+    }
+    /// Sets `product_description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedDBInstancesOfferingsMessage.product_description = Some(value.into());`.
+    pub fn product_description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.product_description = Some(value.into());
+        self
+    }
+    /// Sets `reserved_db_instances_offering_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeReservedDBInstancesOfferingsMessage.reserved_db_instances_offering_id = Some(value.into());`.
+    pub fn reserved_db_instances_offering_id<ValueType: Into<String>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.reserved_db_instances_offering_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeReservedDBInstancesOfferingsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeReservedDBInstancesOfferingsMessage {
+        DescribeReservedDBInstancesOfferingsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeReservedDBInstancesOfferingsMessage` contents to a `SignedRequest`.
 struct DescribeReservedDBInstancesOfferingsMessageSerializer;
@@ -8299,7 +10960,40 @@ pub struct DescribeSourceRegionsMessage {
     #[doc="<p>The source AWS Region name. For example, <code>us-east-1</code>.</p> <p>Constraints:</p> <ul> <li> <p>Must specify a valid AWS Region name.</p> </li> </ul>"]
     pub region_name: Option<String>,
 }
-
+impl DescribeSourceRegionsMessage {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSourceRegionsMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSourceRegionsMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_records`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSourceRegionsMessage.max_records = Some(value.into());`.
+    pub fn max_records<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_records = Some(value.into());
+        self
+    }
+    /// Sets `region_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSourceRegionsMessage.region_name = Some(value.into());`.
+    pub fn region_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.region_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeSourceRegionsMessage with optional fields set to `None`.
+    pub fn new() -> DescribeSourceRegionsMessage {
+        DescribeSourceRegionsMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `DescribeSourceRegionsMessage` contents to a `SignedRequest`.
 struct DescribeSourceRegionsMessageSerializer;
@@ -8341,7 +11035,6 @@ pub struct DomainMembership {
     #[doc="<p>The status of the DB instance's Active Directory Domain membership, such as joined, pending-join, failed etc).</p>"]
     pub status: Option<String>,
 }
-
 struct DomainMembershipDeserializer;
 impl DomainMembershipDeserializer {
     #[allow(unused_variables)]
@@ -8461,7 +11154,6 @@ pub struct DownloadDBLogFilePortionDetails {
     #[doc="<p>A pagination token that can be used in a subsequent DownloadDBLogFilePortion request.</p>"]
     pub marker: Option<String>,
 }
-
 struct DownloadDBLogFilePortionDetailsDeserializer;
 impl DownloadDBLogFilePortionDetailsDeserializer {
     #[allow(unused_variables)]
@@ -8526,7 +11218,47 @@ pub struct DownloadDBLogFilePortionMessage {
     #[doc="<p>The number of lines to download. If the number of lines specified results in a file over 1 MB in size, the file will be truncated at 1 MB in size.</p> <p>If the NumberOfLines parameter is specified, then the block of lines returned can be from the beginning or the end of the log file, depending on the value of the Marker parameter.</p> <ul> <li> <p>If neither Marker or NumberOfLines are specified, the entire log file is returned up to a maximum of 10000 lines, starting with the most recent log entries first.</p> </li> <li> <p>If NumberOfLines is specified and Marker is not specified, then the most recent lines from the end of the log file are returned.</p> </li> <li> <p>If Marker is specified as \"0\", then the specified number of lines from the beginning of the log file are returned.</p> </li> <li> <p>You can download the log file in blocks of lines by specifying the size of the block using the NumberOfLines parameter, and by specifying a value of \"0\" for the Marker parameter in your first request. Include the Marker value returned in the response as the Marker value for the next request, continuing until the AdditionalDataPending response element returns false.</p> </li> </ul>"]
     pub number_of_lines: Option<i64>,
 }
-
+impl DownloadDBLogFilePortionMessage {
+    /// Sets `db_instance_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DownloadDBLogFilePortionMessage.db_instance_identifier = value.into();`.
+    pub fn db_instance_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_instance_identifier = value.into();
+        self
+    }
+    /// Sets `log_file_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DownloadDBLogFilePortionMessage.log_file_name = value.into();`.
+    pub fn log_file_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.log_file_name = value.into();
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DownloadDBLogFilePortionMessage.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `number_of_lines`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DownloadDBLogFilePortionMessage.number_of_lines = Some(value.into());`.
+    pub fn number_of_lines<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.number_of_lines = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DownloadDBLogFilePortionMessage with optional fields set to `None`.
+    pub fn new<DBInstanceIdentifierType: Into<String>, LogFileNameType: Into<String>>
+        (db_instance_identifier: DBInstanceIdentifierType,
+         log_file_name: LogFileNameType)
+         -> DownloadDBLogFilePortionMessage {
+        DownloadDBLogFilePortionMessage {
+            db_instance_identifier: db_instance_identifier.into(),
+            log_file_name: log_file_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DownloadDBLogFilePortionMessage` contents to a `SignedRequest`.
 struct DownloadDBLogFilePortionMessageSerializer;
@@ -8563,7 +11295,6 @@ pub struct EC2SecurityGroup {
     #[doc="<p>Provides the status of the EC2 security group. Status can be \"authorizing\", \"authorized\", \"revoking\", and \"revoked\".</p>"]
     pub status: Option<String>,
 }
-
 struct EC2SecurityGroupDeserializer;
 impl EC2SecurityGroupDeserializer {
     #[allow(unused_variables)]
@@ -8673,7 +11404,6 @@ pub struct Endpoint {
     #[doc="<p>Specifies the port that the database engine is listening on.</p>"]
     pub port: Option<i64>,
 }
-
 struct EndpointDeserializer;
 impl EndpointDeserializer {
     #[allow(unused_variables)]
@@ -8733,7 +11463,6 @@ pub struct EngineDefaults {
     #[doc="<p>Contains a list of engine default parameters.</p>"]
     pub parameters: Option<Vec<Parameter>>,
 }
-
 struct EngineDefaultsDeserializer;
 impl EngineDefaultsDeserializer {
     #[allow(unused_variables)]
@@ -8802,7 +11531,6 @@ pub struct Event {
     #[doc="<p>Specifies the source type for this event.</p>"]
     pub source_type: Option<String>,
 }
-
 struct EventDeserializer;
 impl EventDeserializer {
     #[allow(unused_variables)]
@@ -8928,7 +11656,6 @@ pub struct EventCategoriesMap {
     #[doc="<p>The source type that the returned categories belong to</p>"]
     pub source_type: Option<String>,
 }
-
 struct EventCategoriesMapDeserializer;
 impl EventCategoriesMapDeserializer {
     #[allow(unused_variables)]
@@ -9023,7 +11750,6 @@ pub struct EventCategoriesMessage {
     #[doc="<p>A list of EventCategoriesMap data types.</p>"]
     pub event_categories_map_list: Option<Vec<EventCategoriesMap>>,
 }
-
 struct EventCategoriesMessageDeserializer;
 impl EventCategoriesMessageDeserializer {
     #[allow(unused_variables)]
@@ -9132,7 +11858,6 @@ pub struct EventSubscription {
     #[doc="<p>The time the RDS event notification subscription was created.</p>"]
     pub subscription_creation_time: Option<String>,
 }
-
 struct EventSubscriptionDeserializer;
 impl EventSubscriptionDeserializer {
     #[allow(unused_variables)]
@@ -9265,7 +11990,6 @@ pub struct EventSubscriptionsMessage {
     #[doc="<p> An optional pagination token provided by a previous DescribeOrderableDBInstanceOptions request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>. </p>"]
     pub marker: Option<String>,
 }
-
 struct EventSubscriptionsMessageDeserializer;
 impl EventSubscriptionsMessageDeserializer {
     #[allow(unused_variables)]
@@ -9321,7 +12045,6 @@ pub struct EventsMessage {
     #[doc="<p> An optional pagination token provided by a previous Events request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code> . </p>"]
     pub marker: Option<String>,
 }
-
 struct EventsMessageDeserializer;
 impl EventsMessageDeserializer {
     #[allow(unused_variables)]
@@ -9376,7 +12099,28 @@ pub struct FailoverDBClusterMessage {
     #[doc="<p>The name of the instance to promote to the primary instance.</p> <p>You must specify the instance identifier for an Aurora Replica in the DB cluster. For example, <code>mydbcluster-replica1</code>.</p>"]
     pub target_db_instance_identifier: Option<String>,
 }
-
+impl FailoverDBClusterMessage {
+    /// Sets `db_cluster_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FailoverDBClusterMessage.db_cluster_identifier = Some(value.into());`.
+    pub fn db_cluster_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_cluster_identifier = Some(value.into());
+        self
+    }
+    /// Sets `target_db_instance_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `FailoverDBClusterMessage.target_db_instance_identifier = Some(value.into());`.
+    pub fn target_db_instance_identifier<ValueType: Into<String>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.target_db_instance_identifier = Some(value.into());
+        self
+    }
+    /// Returns a new instance of FailoverDBClusterMessage with optional fields set to `None`.
+    pub fn new() -> FailoverDBClusterMessage {
+        FailoverDBClusterMessage { ..Default::default() }
+    }
+}
 
 /// Serialize `FailoverDBClusterMessage` contents to a `SignedRequest`.
 struct FailoverDBClusterMessageSerializer;
@@ -9403,7 +12147,6 @@ impl FailoverDBClusterMessageSerializer {
 pub struct FailoverDBClusterResult {
     pub db_cluster: Option<DBCluster>,
 }
-
 struct FailoverDBClusterResultDeserializer;
 impl FailoverDBClusterResultDeserializer {
     #[allow(unused_variables)]
@@ -9454,7 +12197,32 @@ pub struct Filter {
     #[doc="<p>This parameter is not currently supported.</p>"]
     pub values: Vec<String>,
 }
-
+impl Filter {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Filter.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `values`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Filter.values = value.into();`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = value.into();
+        self
+    }
+    /// Returns a new instance of Filter with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, ValuesType: Into<Vec<String>>>(name: NameType,
+                                                                      values: ValuesType)
+                                                                      -> Filter {
+        Filter {
+            name: name.into(),
+            values: values.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `Filter` contents to a `SignedRequest`.
 struct FilterSerializer;
@@ -9505,7 +12273,6 @@ pub struct IPRange {
     #[doc="<p>Specifies the status of the IP range. Status can be \"authorizing\", \"authorized\", \"revoking\", and \"revoked\".</p>"]
     pub status: Option<String>,
 }
-
 struct IPRangeDeserializer;
 impl IPRangeDeserializer {
     #[allow(unused_variables)]
@@ -9641,7 +12408,30 @@ pub struct ListTagsForResourceMessage {
     #[doc="<p>The Amazon RDS resource with tags to be listed. This value is an Amazon Resource Name (ARN). For information about creating an ARN, see <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Tagging.ARN.html#USER_Tagging.ARN.Constructing\"> Constructing an RDS Amazon Resource Name (ARN)</a>.</p>"]
     pub resource_name: String,
 }
-
+impl ListTagsForResourceMessage {
+    /// Sets `filters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForResourceMessage.filters = Some(value.into());`.
+    pub fn filters<ValueType: Into<Vec<Filter>>>(mut self, value: ValueType) -> Self {
+        self.filters = Some(value.into());
+        self
+    }
+    /// Sets `resource_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForResourceMessage.resource_name = value.into();`.
+    pub fn resource_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_name = value.into();
+        self
+    }
+    /// Returns a new instance of ListTagsForResourceMessage with optional fields set to `None`.
+    pub fn new<ResourceNameType: Into<String>>(resource_name: ResourceNameType)
+                                               -> ListTagsForResourceMessage {
+        ListTagsForResourceMessage {
+            resource_name: resource_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ListTagsForResourceMessage` contents to a `SignedRequest`.
 struct ListTagsForResourceMessageSerializer;
@@ -9704,7 +12494,107 @@ pub struct ModifyDBClusterMessage {
     #[doc="<p>A list of VPC security groups that the DB cluster will belong to.</p>"]
     pub vpc_security_group_ids: Option<Vec<String>>,
 }
-
+impl ModifyDBClusterMessage {
+    /// Sets `apply_immediately`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBClusterMessage.apply_immediately = Some(value.into());`.
+    pub fn apply_immediately<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.apply_immediately = Some(value.into());
+        self
+    }
+    /// Sets `backup_retention_period`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBClusterMessage.backup_retention_period = Some(value.into());`.
+    pub fn backup_retention_period<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.backup_retention_period = Some(value.into());
+        self
+    }
+    /// Sets `db_cluster_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBClusterMessage.db_cluster_identifier = value.into();`.
+    pub fn db_cluster_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_cluster_identifier = value.into();
+        self
+    }
+    /// Sets `db_cluster_parameter_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBClusterMessage.db_cluster_parameter_group_name = Some(value.into());`.
+    pub fn db_cluster_parameter_group_name<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.db_cluster_parameter_group_name = Some(value.into());
+        self
+    }
+    /// Sets `enable_iam_database_authentication`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBClusterMessage.enable_iam_database_authentication = Some(value.into());`.
+    pub fn enable_iam_database_authentication<ValueType: Into<bool>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.enable_iam_database_authentication = Some(value.into());
+        self
+    }
+    /// Sets `master_user_password`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBClusterMessage.master_user_password = Some(value.into());`.
+    pub fn master_user_password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.master_user_password = Some(value.into());
+        self
+    }
+    /// Sets `new_db_cluster_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBClusterMessage.new_db_cluster_identifier = Some(value.into());`.
+    pub fn new_db_cluster_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.new_db_cluster_identifier = Some(value.into());
+        self
+    }
+    /// Sets `option_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBClusterMessage.option_group_name = Some(value.into());`.
+    pub fn option_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.option_group_name = Some(value.into());
+        self
+    }
+    /// Sets `port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBClusterMessage.port = Some(value.into());`.
+    pub fn port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.port = Some(value.into());
+        self
+    }
+    /// Sets `preferred_backup_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBClusterMessage.preferred_backup_window = Some(value.into());`.
+    pub fn preferred_backup_window<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.preferred_backup_window = Some(value.into());
+        self
+    }
+    /// Sets `preferred_maintenance_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBClusterMessage.preferred_maintenance_window = Some(value.into());`.
+    pub fn preferred_maintenance_window<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.preferred_maintenance_window = Some(value.into());
+        self
+    }
+    /// Sets `vpc_security_group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBClusterMessage.vpc_security_group_ids = Some(value.into());`.
+    pub fn vpc_security_group_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.vpc_security_group_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifyDBClusterMessage with optional fields set to `None`.
+pub fn new<DBClusterIdentifierType: Into<String>>(db_cluster_identifier: DBClusterIdentifierType) -> ModifyDBClusterMessage{
+        ModifyDBClusterMessage {
+            db_cluster_identifier: db_cluster_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyDBClusterMessage` contents to a `SignedRequest`.
 struct ModifyDBClusterMessageSerializer;
@@ -9773,7 +12663,35 @@ pub struct ModifyDBClusterParameterGroupMessage {
     #[doc="<p>A list of parameters in the DB cluster parameter group to modify.</p>"]
     pub parameters: Vec<Parameter>,
 }
-
+impl ModifyDBClusterParameterGroupMessage {
+    /// Sets `db_cluster_parameter_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBClusterParameterGroupMessage.db_cluster_parameter_group_name = value.into();`.
+    pub fn db_cluster_parameter_group_name<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.db_cluster_parameter_group_name = value.into();
+        self
+    }
+    /// Sets `parameters`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBClusterParameterGroupMessage.parameters = value.into();`.
+    pub fn parameters<ValueType: Into<Vec<Parameter>>>(mut self, value: ValueType) -> Self {
+        self.parameters = value.into();
+        self
+    }
+    /// Returns a new instance of ModifyDBClusterParameterGroupMessage with optional fields set to `None`.
+    pub fn new<DBClusterParameterGroupNameType: Into<String>, ParametersType: Into<Vec<Parameter>>>
+        (db_cluster_parameter_group_name: DBClusterParameterGroupNameType,
+         parameters: ParametersType)
+         -> ModifyDBClusterParameterGroupMessage {
+        ModifyDBClusterParameterGroupMessage {
+            db_cluster_parameter_group_name: db_cluster_parameter_group_name.into(),
+            parameters: parameters.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyDBClusterParameterGroupMessage` contents to a `SignedRequest`.
 struct ModifyDBClusterParameterGroupMessageSerializer;
@@ -9797,7 +12715,6 @@ impl ModifyDBClusterParameterGroupMessageSerializer {
 pub struct ModifyDBClusterResult {
     pub db_cluster: Option<DBCluster>,
 }
-
 struct ModifyDBClusterResultDeserializer;
 impl ModifyDBClusterResultDeserializer {
     #[allow(unused_variables)]
@@ -9852,7 +12769,49 @@ pub struct ModifyDBClusterSnapshotAttributeMessage {
     #[doc="<p>A list of DB cluster snapshot attributes to remove from the attribute specified by <code>AttributeName</code>.</p> <p>To remove authorization for other AWS accounts to copy or restore a manual DB cluster snapshot, set this list to include one or more AWS account identifiers, or <code>all</code> to remove authorization for any AWS account to copy or restore the DB cluster snapshot. If you specify <code>all</code>, an AWS account whose account ID is explicitly added to the <code>restore</code> attribute can still copy or restore a manual DB cluster snapshot.</p>"]
     pub values_to_remove: Option<Vec<String>>,
 }
-
+impl ModifyDBClusterSnapshotAttributeMessage {
+    /// Sets `attribute_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBClusterSnapshotAttributeMessage.attribute_name = value.into();`.
+    pub fn attribute_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute_name = value.into();
+        self
+    }
+    /// Sets `db_cluster_snapshot_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBClusterSnapshotAttributeMessage.db_cluster_snapshot_identifier = value.into();`.
+    pub fn db_cluster_snapshot_identifier<ValueType: Into<String>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.db_cluster_snapshot_identifier = value.into();
+        self
+    }
+    /// Sets `values_to_add`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBClusterSnapshotAttributeMessage.values_to_add = Some(value.into());`.
+    pub fn values_to_add<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values_to_add = Some(value.into());
+        self
+    }
+    /// Sets `values_to_remove`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBClusterSnapshotAttributeMessage.values_to_remove = Some(value.into());`.
+    pub fn values_to_remove<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values_to_remove = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifyDBClusterSnapshotAttributeMessage with optional fields set to `None`.
+    pub fn new<AttributeNameType: Into<String>, DBClusterSnapshotIdentifierType: Into<String>>
+        (attribute_name: AttributeNameType,
+         db_cluster_snapshot_identifier: DBClusterSnapshotIdentifierType)
+         -> ModifyDBClusterSnapshotAttributeMessage {
+        ModifyDBClusterSnapshotAttributeMessage {
+            attribute_name: attribute_name.into(),
+            db_cluster_snapshot_identifier: db_cluster_snapshot_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyDBClusterSnapshotAttributeMessage` contents to a `SignedRequest`.
 struct ModifyDBClusterSnapshotAttributeMessageSerializer;
@@ -9885,7 +12844,6 @@ impl ModifyDBClusterSnapshotAttributeMessageSerializer {
 pub struct ModifyDBClusterSnapshotAttributeResult {
     pub db_cluster_snapshot_attributes_result: Option<DBClusterSnapshotAttributesResult>,
 }
-
 struct ModifyDBClusterSnapshotAttributeResultDeserializer;
 impl ModifyDBClusterSnapshotAttributeResultDeserializer {
     #[allow(unused_variables)]
@@ -9998,7 +12956,252 @@ pub struct ModifyDBInstanceMessage {
     #[doc="<p>A list of EC2 VPC security groups to authorize on this DB instance. This change is asynchronously applied as soon as possible.</p> <p> <b>Amazon Aurora</b> </p> <p>Not applicable. The associated list of EC2 VPC security groups is managed by the DB cluster. For more information, see <a>ModifyDBCluster</a>.</p> <p>Constraints:</p> <ul> <li> <p>Must be 1 to 255 alphanumeric characters</p> </li> <li> <p>First character must be a letter</p> </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens</p> </li> </ul>"]
     pub vpc_security_group_ids: Option<Vec<String>>,
 }
-
+impl ModifyDBInstanceMessage {
+    /// Sets `allocated_storage`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.allocated_storage = Some(value.into());`.
+    pub fn allocated_storage<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.allocated_storage = Some(value.into());
+        self
+    }
+    /// Sets `allow_major_version_upgrade`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.allow_major_version_upgrade = Some(value.into());`.
+    pub fn allow_major_version_upgrade<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.allow_major_version_upgrade = Some(value.into());
+        self
+    }
+    /// Sets `apply_immediately`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.apply_immediately = Some(value.into());`.
+    pub fn apply_immediately<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.apply_immediately = Some(value.into());
+        self
+    }
+    /// Sets `auto_minor_version_upgrade`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.auto_minor_version_upgrade = Some(value.into());`.
+    pub fn auto_minor_version_upgrade<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.auto_minor_version_upgrade = Some(value.into());
+        self
+    }
+    /// Sets `backup_retention_period`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.backup_retention_period = Some(value.into());`.
+    pub fn backup_retention_period<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.backup_retention_period = Some(value.into());
+        self
+    }
+    /// Sets `ca_certificate_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.ca_certificate_identifier = Some(value.into());`.
+    pub fn ca_certificate_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ca_certificate_identifier = Some(value.into());
+        self
+    }
+    /// Sets `copy_tags_to_snapshot`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.copy_tags_to_snapshot = Some(value.into());`.
+    pub fn copy_tags_to_snapshot<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.copy_tags_to_snapshot = Some(value.into());
+        self
+    }
+    /// Sets `db_instance_class`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.db_instance_class = Some(value.into());`.
+    pub fn db_instance_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_instance_class = Some(value.into());
+        self
+    }
+    /// Sets `db_instance_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.db_instance_identifier = value.into();`.
+    pub fn db_instance_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_instance_identifier = value.into();
+        self
+    }
+    /// Sets `db_parameter_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.db_parameter_group_name = Some(value.into());`.
+    pub fn db_parameter_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_parameter_group_name = Some(value.into());
+        self
+    }
+    /// Sets `db_port_number`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.db_port_number = Some(value.into());`.
+    pub fn db_port_number<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.db_port_number = Some(value.into());
+        self
+    }
+    /// Sets `db_security_groups`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.db_security_groups = Some(value.into());`.
+    pub fn db_security_groups<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.db_security_groups = Some(value.into());
+        self
+    }
+    /// Sets `db_subnet_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.db_subnet_group_name = Some(value.into());`.
+    pub fn db_subnet_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_subnet_group_name = Some(value.into());
+        self
+    }
+    /// Sets `domain`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.domain = Some(value.into());`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = Some(value.into());
+        self
+    }
+    /// Sets `domain_iam_role_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.domain_iam_role_name = Some(value.into());`.
+    pub fn domain_iam_role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_iam_role_name = Some(value.into());
+        self
+    }
+    /// Sets `enable_iam_database_authentication`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.enable_iam_database_authentication = Some(value.into());`.
+    pub fn enable_iam_database_authentication<ValueType: Into<bool>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.enable_iam_database_authentication = Some(value.into());
+        self
+    }
+    /// Sets `engine_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.engine_version = Some(value.into());`.
+    pub fn engine_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine_version = Some(value.into());
+        self
+    }
+    /// Sets `iops`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.iops = Some(value.into());`.
+    pub fn iops<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.iops = Some(value.into());
+        self
+    }
+    /// Sets `license_model`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.license_model = Some(value.into());`.
+    pub fn license_model<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.license_model = Some(value.into());
+        self
+    }
+    /// Sets `master_user_password`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.master_user_password = Some(value.into());`.
+    pub fn master_user_password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.master_user_password = Some(value.into());
+        self
+    }
+    /// Sets `monitoring_interval`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.monitoring_interval = Some(value.into());`.
+    pub fn monitoring_interval<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.monitoring_interval = Some(value.into());
+        self
+    }
+    /// Sets `monitoring_role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.monitoring_role_arn = Some(value.into());`.
+    pub fn monitoring_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.monitoring_role_arn = Some(value.into());
+        self
+    }
+    /// Sets `multi_az`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.multi_az = Some(value.into());`.
+    pub fn multi_az<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.multi_az = Some(value.into());
+        self
+    }
+    /// Sets `new_db_instance_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.new_db_instance_identifier = Some(value.into());`.
+    pub fn new_db_instance_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.new_db_instance_identifier = Some(value.into());
+        self
+    }
+    /// Sets `option_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.option_group_name = Some(value.into());`.
+    pub fn option_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.option_group_name = Some(value.into());
+        self
+    }
+    /// Sets `preferred_backup_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.preferred_backup_window = Some(value.into());`.
+    pub fn preferred_backup_window<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.preferred_backup_window = Some(value.into());
+        self
+    }
+    /// Sets `preferred_maintenance_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.preferred_maintenance_window = Some(value.into());`.
+    pub fn preferred_maintenance_window<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.preferred_maintenance_window = Some(value.into());
+        self
+    }
+    /// Sets `promotion_tier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.promotion_tier = Some(value.into());`.
+    pub fn promotion_tier<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.promotion_tier = Some(value.into());
+        self
+    }
+    /// Sets `publicly_accessible`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.publicly_accessible = Some(value.into());`.
+    pub fn publicly_accessible<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.publicly_accessible = Some(value.into());
+        self
+    }
+    /// Sets `storage_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.storage_type = Some(value.into());`.
+    pub fn storage_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.storage_type = Some(value.into());
+        self
+    }
+    /// Sets `tde_credential_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.tde_credential_arn = Some(value.into());`.
+    pub fn tde_credential_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tde_credential_arn = Some(value.into());
+        self
+    }
+    /// Sets `tde_credential_password`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.tde_credential_password = Some(value.into());`.
+    pub fn tde_credential_password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tde_credential_password = Some(value.into());
+        self
+    }
+    /// Sets `vpc_security_group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBInstanceMessage.vpc_security_group_ids = Some(value.into());`.
+    pub fn vpc_security_group_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.vpc_security_group_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifyDBInstanceMessage with optional fields set to `None`.
+pub fn new<DBInstanceIdentifierType: Into<String>>(db_instance_identifier: DBInstanceIdentifierType) -> ModifyDBInstanceMessage{
+        ModifyDBInstanceMessage {
+            db_instance_identifier: db_instance_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyDBInstanceMessage` contents to a `SignedRequest`.
 struct ModifyDBInstanceMessageSerializer;
@@ -10141,7 +13344,6 @@ impl ModifyDBInstanceMessageSerializer {
 pub struct ModifyDBInstanceResult {
     pub db_instance: Option<DBInstance>,
 }
-
 struct ModifyDBInstanceResultDeserializer;
 impl ModifyDBInstanceResultDeserializer {
     #[allow(unused_variables)]
@@ -10193,7 +13395,33 @@ pub struct ModifyDBParameterGroupMessage {
     #[doc="<p>An array of parameter names, values, and the apply method for the parameter update. At least one parameter name, value, and apply method must be supplied; subsequent arguments are optional. A maximum of 20 parameters can be modified in a single request.</p> <p>Valid Values (for the application method): <code>immediate | pending-reboot</code> </p> <note> <p>You can use the immediate value with dynamic parameters only. You can use the pending-reboot value for both dynamic and static parameters, and changes are applied when you reboot the DB instance without failover.</p> </note>"]
     pub parameters: Vec<Parameter>,
 }
-
+impl ModifyDBParameterGroupMessage {
+    /// Sets `db_parameter_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBParameterGroupMessage.db_parameter_group_name = value.into();`.
+    pub fn db_parameter_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_parameter_group_name = value.into();
+        self
+    }
+    /// Sets `parameters`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBParameterGroupMessage.parameters = value.into();`.
+    pub fn parameters<ValueType: Into<Vec<Parameter>>>(mut self, value: ValueType) -> Self {
+        self.parameters = value.into();
+        self
+    }
+    /// Returns a new instance of ModifyDBParameterGroupMessage with optional fields set to `None`.
+    pub fn new<DBParameterGroupNameType: Into<String>, ParametersType: Into<Vec<Parameter>>>
+        (db_parameter_group_name: DBParameterGroupNameType,
+         parameters: ParametersType)
+         -> ModifyDBParameterGroupMessage {
+        ModifyDBParameterGroupMessage {
+            db_parameter_group_name: db_parameter_group_name.into(),
+            parameters: parameters.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyDBParameterGroupMessage` contents to a `SignedRequest`.
 struct ModifyDBParameterGroupMessageSerializer;
@@ -10225,7 +13453,47 @@ pub struct ModifyDBSnapshotAttributeMessage {
     #[doc="<p>A list of DB snapshot attributes to remove from the attribute specified by <code>AttributeName</code>.</p> <p>To remove authorization for other AWS accounts to copy or restore a manual snapshot, set this list to include one or more AWS account identifiers, or <code>all</code> to remove authorization for any AWS account to copy or restore the DB snapshot. If you specify <code>all</code>, an AWS account whose account ID is explicitly added to the <code>restore</code> attribute can still copy or restore the manual DB snapshot.</p>"]
     pub values_to_remove: Option<Vec<String>>,
 }
-
+impl ModifyDBSnapshotAttributeMessage {
+    /// Sets `attribute_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBSnapshotAttributeMessage.attribute_name = value.into();`.
+    pub fn attribute_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute_name = value.into();
+        self
+    }
+    /// Sets `db_snapshot_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBSnapshotAttributeMessage.db_snapshot_identifier = value.into();`.
+    pub fn db_snapshot_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_snapshot_identifier = value.into();
+        self
+    }
+    /// Sets `values_to_add`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBSnapshotAttributeMessage.values_to_add = Some(value.into());`.
+    pub fn values_to_add<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values_to_add = Some(value.into());
+        self
+    }
+    /// Sets `values_to_remove`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBSnapshotAttributeMessage.values_to_remove = Some(value.into());`.
+    pub fn values_to_remove<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values_to_remove = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifyDBSnapshotAttributeMessage with optional fields set to `None`.
+    pub fn new<AttributeNameType: Into<String>, DBSnapshotIdentifierType: Into<String>>
+        (attribute_name: AttributeNameType,
+         db_snapshot_identifier: DBSnapshotIdentifierType)
+         -> ModifyDBSnapshotAttributeMessage {
+        ModifyDBSnapshotAttributeMessage {
+            attribute_name: attribute_name.into(),
+            db_snapshot_identifier: db_snapshot_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyDBSnapshotAttributeMessage` contents to a `SignedRequest`.
 struct ModifyDBSnapshotAttributeMessageSerializer;
@@ -10258,7 +13526,6 @@ impl ModifyDBSnapshotAttributeMessageSerializer {
 pub struct ModifyDBSnapshotAttributeResult {
     pub db_snapshot_attributes_result: Option<DBSnapshotAttributesResult>,
 }
-
 struct ModifyDBSnapshotAttributeResultDeserializer;
 impl ModifyDBSnapshotAttributeResultDeserializer {
     #[allow(unused_variables)]
@@ -10308,7 +13575,29 @@ pub struct ModifyDBSnapshotMessage {
     #[doc="<p>The engine version to update the DB snapshot to. </p>"]
     pub engine_version: Option<String>,
 }
-
+impl ModifyDBSnapshotMessage {
+    /// Sets `db_snapshot_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBSnapshotMessage.db_snapshot_identifier = value.into();`.
+    pub fn db_snapshot_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_snapshot_identifier = value.into();
+        self
+    }
+    /// Sets `engine_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBSnapshotMessage.engine_version = Some(value.into());`.
+    pub fn engine_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine_version = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifyDBSnapshotMessage with optional fields set to `None`.
+pub fn new<DBSnapshotIdentifierType: Into<String>>(db_snapshot_identifier: DBSnapshotIdentifierType) -> ModifyDBSnapshotMessage{
+        ModifyDBSnapshotMessage {
+            db_snapshot_identifier: db_snapshot_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyDBSnapshotMessage` contents to a `SignedRequest`.
 struct ModifyDBSnapshotMessageSerializer;
@@ -10332,7 +13621,6 @@ impl ModifyDBSnapshotMessageSerializer {
 pub struct ModifyDBSnapshotResult {
     pub db_snapshot: Option<DBSnapshot>,
 }
-
 struct ModifyDBSnapshotResultDeserializer;
 impl ModifyDBSnapshotResultDeserializer {
     #[allow(unused_variables)]
@@ -10386,7 +13674,42 @@ pub struct ModifyDBSubnetGroupMessage {
     #[doc="<p>The EC2 subnet IDs for the DB subnet group.</p>"]
     pub subnet_ids: Vec<String>,
 }
-
+impl ModifyDBSubnetGroupMessage {
+    /// Sets `db_subnet_group_description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBSubnetGroupMessage.db_subnet_group_description = Some(value.into());`.
+    pub fn db_subnet_group_description<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.db_subnet_group_description = Some(value.into());
+        self
+    }
+    /// Sets `db_subnet_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBSubnetGroupMessage.db_subnet_group_name = value.into();`.
+    pub fn db_subnet_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_subnet_group_name = value.into();
+        self
+    }
+    /// Sets `subnet_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyDBSubnetGroupMessage.subnet_ids = value.into();`.
+    pub fn subnet_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.subnet_ids = value.into();
+        self
+    }
+    /// Returns a new instance of ModifyDBSubnetGroupMessage with optional fields set to `None`.
+    pub fn new<DBSubnetGroupNameType: Into<String>, SubnetIdsType: Into<Vec<String>>>
+        (db_subnet_group_name: DBSubnetGroupNameType,
+         subnet_ids: SubnetIdsType)
+         -> ModifyDBSubnetGroupMessage {
+        ModifyDBSubnetGroupMessage {
+            db_subnet_group_name: db_subnet_group_name.into(),
+            subnet_ids: subnet_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyDBSubnetGroupMessage` contents to a `SignedRequest`.
 struct ModifyDBSubnetGroupMessageSerializer;
@@ -10414,7 +13737,6 @@ impl ModifyDBSubnetGroupMessageSerializer {
 pub struct ModifyDBSubnetGroupResult {
     pub db_subnet_group: Option<DBSubnetGroup>,
 }
-
 struct ModifyDBSubnetGroupResultDeserializer;
 impl ModifyDBSubnetGroupResultDeserializer {
     #[allow(unused_variables)]
@@ -10472,7 +13794,51 @@ pub struct ModifyEventSubscriptionMessage {
     #[doc="<p>The name of the RDS event notification subscription.</p>"]
     pub subscription_name: String,
 }
-
+impl ModifyEventSubscriptionMessage {
+    /// Sets `enabled`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEventSubscriptionMessage.enabled = Some(value.into());`.
+    pub fn enabled<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.enabled = Some(value.into());
+        self
+    }
+    /// Sets `event_categories`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEventSubscriptionMessage.event_categories = Some(value.into());`.
+    pub fn event_categories<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.event_categories = Some(value.into());
+        self
+    }
+    /// Sets `sns_topic_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEventSubscriptionMessage.sns_topic_arn = Some(value.into());`.
+    pub fn sns_topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.sns_topic_arn = Some(value.into());
+        self
+    }
+    /// Sets `source_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEventSubscriptionMessage.source_type = Some(value.into());`.
+    pub fn source_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_type = Some(value.into());
+        self
+    }
+    /// Sets `subscription_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyEventSubscriptionMessage.subscription_name = value.into();`.
+    pub fn subscription_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subscription_name = value.into();
+        self
+    }
+    /// Returns a new instance of ModifyEventSubscriptionMessage with optional fields set to `None`.
+    pub fn new<SubscriptionNameType: Into<String>>(subscription_name: SubscriptionNameType)
+                                                   -> ModifyEventSubscriptionMessage {
+        ModifyEventSubscriptionMessage {
+            subscription_name: subscription_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyEventSubscriptionMessage` contents to a `SignedRequest`.
 struct ModifyEventSubscriptionMessageSerializer;
@@ -10508,7 +13874,6 @@ impl ModifyEventSubscriptionMessageSerializer {
 pub struct ModifyEventSubscriptionResult {
     pub event_subscription: Option<EventSubscription>,
 }
-
 struct ModifyEventSubscriptionResultDeserializer;
 impl ModifyEventSubscriptionResultDeserializer {
     #[allow(unused_variables)]
@@ -10564,7 +13929,46 @@ pub struct ModifyOptionGroupMessage {
     #[doc="<p>Options in this list are removed from the option group.</p>"]
     pub options_to_remove: Option<Vec<String>>,
 }
-
+impl ModifyOptionGroupMessage {
+    /// Sets `apply_immediately`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyOptionGroupMessage.apply_immediately = Some(value.into());`.
+    pub fn apply_immediately<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.apply_immediately = Some(value.into());
+        self
+    }
+    /// Sets `option_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyOptionGroupMessage.option_group_name = value.into();`.
+    pub fn option_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.option_group_name = value.into();
+        self
+    }
+    /// Sets `options_to_include`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyOptionGroupMessage.options_to_include = Some(value.into());`.
+    pub fn options_to_include<ValueType: Into<Vec<OptionConfiguration>>>(mut self,
+                                                                         value: ValueType)
+                                                                         -> Self {
+        self.options_to_include = Some(value.into());
+        self
+    }
+    /// Sets `options_to_remove`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ModifyOptionGroupMessage.options_to_remove = Some(value.into());`.
+    pub fn options_to_remove<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.options_to_remove = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ModifyOptionGroupMessage with optional fields set to `None`.
+    pub fn new<OptionGroupNameType: Into<String>>(option_group_name: OptionGroupNameType)
+                                                  -> ModifyOptionGroupMessage {
+        ModifyOptionGroupMessage {
+            option_group_name: option_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ModifyOptionGroupMessage` contents to a `SignedRequest`.
 struct ModifyOptionGroupMessageSerializer;
@@ -10601,7 +14005,6 @@ impl ModifyOptionGroupMessageSerializer {
 pub struct ModifyOptionGroupResult {
     pub option_group: Option<OptionGroup>,
 }
-
 struct ModifyOptionGroupResultDeserializer;
 impl ModifyOptionGroupResultDeserializer {
     #[allow(unused_variables)]
@@ -10667,7 +14070,6 @@ pub struct RDSOption {
     #[doc="<p>If the option requires access to a port, then this VPC security group allows access to the port.</p>"]
     pub vpc_security_group_memberships: Option<Vec<VpcSecurityGroupMembership>>,
 }
-
 struct RDSOptionDeserializer;
 impl RDSOptionDeserializer {
     #[allow(unused_variables)]
@@ -10756,7 +14158,63 @@ pub struct OptionConfiguration {
     #[doc="<p>A list of VpcSecurityGroupMemebrship name strings used for this option.</p>"]
     pub vpc_security_group_memberships: Option<Vec<String>>,
 }
-
+impl OptionConfiguration {
+    /// Sets `db_security_group_memberships`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OptionConfiguration.db_security_group_memberships = Some(value.into());`.
+    pub fn db_security_group_memberships<ValueType: Into<Vec<String>>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.db_security_group_memberships = Some(value.into());
+        self
+    }
+    /// Sets `option_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OptionConfiguration.option_name = value.into();`.
+    pub fn option_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.option_name = value.into();
+        self
+    }
+    /// Sets `option_settings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OptionConfiguration.option_settings = Some(value.into());`.
+    pub fn option_settings<ValueType: Into<Vec<OptionSetting>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.option_settings = Some(value.into());
+        self
+    }
+    /// Sets `option_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OptionConfiguration.option_version = Some(value.into());`.
+    pub fn option_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.option_version = Some(value.into());
+        self
+    }
+    /// Sets `port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OptionConfiguration.port = Some(value.into());`.
+    pub fn port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.port = Some(value.into());
+        self
+    }
+    /// Sets `vpc_security_group_memberships`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OptionConfiguration.vpc_security_group_memberships = Some(value.into());`.
+    pub fn vpc_security_group_memberships<ValueType: Into<Vec<String>>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.vpc_security_group_memberships = Some(value.into());
+        self
+    }
+    /// Returns a new instance of OptionConfiguration with optional fields set to `None`.
+    pub fn new<OptionNameType: Into<String>>(option_name: OptionNameType) -> OptionConfiguration {
+        OptionConfiguration {
+            option_name: option_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `OptionConfiguration` contents to a `SignedRequest`.
 struct OptionConfigurationSerializer;
@@ -10829,7 +14287,6 @@ pub struct OptionGroup {
     #[doc="<p>If <b>AllowsVpcAndNonVpcInstanceMemberships</b> is <code>false</code>, this field is blank. If <b>AllowsVpcAndNonVpcInstanceMemberships</b> is <code>true</code> and this field is blank, then this option group can be applied to both VPC and non-VPC instances. If this field contains a value, then this option group can only be applied to instances that are in the VPC indicated by this field. </p>"]
     pub vpc_id: Option<String>,
 }
-
 struct OptionGroupDeserializer;
 impl OptionGroupDeserializer {
     #[allow(unused_variables)]
@@ -10913,7 +14370,6 @@ pub struct OptionGroupMembership {
     #[doc="<p>The status of the DB instance's option group membership. Valid values are: <code>in-sync</code>, <code>pending-apply</code>, <code>pending-removal</code>, <code>pending-maintenance-apply</code>, <code>pending-maintenance-removal</code>, <code>applying</code>, <code>removing</code>, and <code>failed</code>. </p>"]
     pub status: Option<String>,
 }
-
 struct OptionGroupMembershipDeserializer;
 impl OptionGroupMembershipDeserializer {
     #[allow(unused_variables)]
@@ -11038,7 +14494,6 @@ pub struct OptionGroupOption {
     #[doc="<p>If true, you can only use this option with a DB instance that is in a VPC. </p>"]
     pub vpc_only: Option<bool>,
 }
-
 struct OptionGroupOptionDeserializer;
 impl OptionGroupOptionDeserializer {
     #[allow(unused_variables)]
@@ -11161,7 +14616,6 @@ pub struct OptionGroupOptionSetting {
     #[doc="<p>The name of the option group option.</p>"]
     pub setting_name: Option<String>,
 }
-
 struct OptionGroupOptionSettingDeserializer;
 impl OptionGroupOptionSettingDeserializer {
     #[allow(unused_variables)]
@@ -11356,7 +14810,6 @@ pub struct OptionGroupOptionsMessage {
     pub marker: Option<String>,
     pub option_group_options: Option<Vec<OptionGroupOption>>,
 }
-
 struct OptionGroupOptionsMessageDeserializer;
 impl OptionGroupOptionsMessageDeserializer {
     #[allow(unused_variables)]
@@ -11412,7 +14865,6 @@ pub struct OptionGroups {
     #[doc="<p>List of option groups.</p>"]
     pub option_groups_list: Option<Vec<OptionGroup>>,
 }
-
 struct OptionGroupsDeserializer;
 impl OptionGroupsDeserializer {
     #[allow(unused_variables)]
@@ -11535,7 +14987,75 @@ pub struct OptionSetting {
     #[doc="<p>The current value of the option setting.</p>"]
     pub value: Option<String>,
 }
-
+impl OptionSetting {
+    /// Sets `allowed_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OptionSetting.allowed_values = Some(value.into());`.
+    pub fn allowed_values<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.allowed_values = Some(value.into());
+        self
+    }
+    /// Sets `apply_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OptionSetting.apply_type = Some(value.into());`.
+    pub fn apply_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.apply_type = Some(value.into());
+        self
+    }
+    /// Sets `data_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OptionSetting.data_type = Some(value.into());`.
+    pub fn data_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_type = Some(value.into());
+        self
+    }
+    /// Sets `default_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OptionSetting.default_value = Some(value.into());`.
+    pub fn default_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.default_value = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OptionSetting.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `is_collection`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OptionSetting.is_collection = Some(value.into());`.
+    pub fn is_collection<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.is_collection = Some(value.into());
+        self
+    }
+    /// Sets `is_modifiable`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OptionSetting.is_modifiable = Some(value.into());`.
+    pub fn is_modifiable<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.is_modifiable = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OptionSetting.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OptionSetting.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of OptionSetting with optional fields set to `None`.
+    pub fn new() -> OptionSetting {
+        OptionSetting { ..Default::default() }
+    }
+}
 struct OptionSettingDeserializer;
 impl OptionSettingDeserializer {
     #[allow(unused_variables)]
@@ -11713,7 +15233,6 @@ pub struct OptionVersion {
     #[doc="<p>The version of the option.</p>"]
     pub version: Option<String>,
 }
-
 struct OptionVersionDeserializer;
 impl OptionVersionDeserializer {
     #[allow(unused_variables)]
@@ -11914,7 +15433,6 @@ pub struct OrderableDBInstanceOption {
     #[doc="<p>Indicates whether this is a VPC orderable DB instance.</p>"]
     pub vpc: Option<bool>,
 }
-
 struct OrderableDBInstanceOptionDeserializer;
 impl OrderableDBInstanceOptionDeserializer {
     #[allow(unused_variables)]
@@ -12060,7 +15578,6 @@ pub struct OrderableDBInstanceOptionsMessage {
     #[doc="<p>An <a>OrderableDBInstanceOption</a> structure containing information about orderable options for the DB instance.</p>"]
     pub orderable_db_instance_options: Option<Vec<OrderableDBInstanceOption>>,
 }
-
 struct OrderableDBInstanceOptionsMessageDeserializer;
 impl OrderableDBInstanceOptionsMessageDeserializer {
     #[allow(unused_variables)]
@@ -12131,7 +15648,82 @@ pub struct Parameter {
     #[doc="<p>Indicates the source of the parameter value.</p>"]
     pub source: Option<String>,
 }
-
+impl Parameter {
+    /// Sets `allowed_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Parameter.allowed_values = Some(value.into());`.
+    pub fn allowed_values<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.allowed_values = Some(value.into());
+        self
+    }
+    /// Sets `apply_method`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Parameter.apply_method = Some(value.into());`.
+    pub fn apply_method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.apply_method = Some(value.into());
+        self
+    }
+    /// Sets `apply_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Parameter.apply_type = Some(value.into());`.
+    pub fn apply_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.apply_type = Some(value.into());
+        self
+    }
+    /// Sets `data_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Parameter.data_type = Some(value.into());`.
+    pub fn data_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_type = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Parameter.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `is_modifiable`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Parameter.is_modifiable = Some(value.into());`.
+    pub fn is_modifiable<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.is_modifiable = Some(value.into());
+        self
+    }
+    /// Sets `minimum_engine_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Parameter.minimum_engine_version = Some(value.into());`.
+    pub fn minimum_engine_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.minimum_engine_version = Some(value.into());
+        self
+    }
+    /// Sets `parameter_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Parameter.parameter_name = Some(value.into());`.
+    pub fn parameter_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.parameter_name = Some(value.into());
+        self
+    }
+    /// Sets `parameter_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Parameter.parameter_value = Some(value.into());`.
+    pub fn parameter_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.parameter_value = Some(value.into());
+        self
+    }
+    /// Sets `source`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Parameter.source = Some(value.into());`.
+    pub fn source<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Parameter with optional fields set to `None`.
+    pub fn new() -> Parameter {
+        Parameter { ..Default::default() }
+    }
+}
 struct ParameterDeserializer;
 impl ParameterDeserializer {
     #[allow(unused_variables)]
@@ -12328,7 +15920,6 @@ pub struct PendingMaintenanceAction {
     #[doc="<p>Indicates the type of opt-in request that has been received for the resource.</p>"]
     pub opt_in_status: Option<String>,
 }
-
 struct PendingMaintenanceActionDeserializer;
 impl PendingMaintenanceActionDeserializer {
     #[allow(unused_variables)]
@@ -12485,7 +16076,6 @@ pub struct PendingMaintenanceActionsMessage {
     #[doc="<p>A list of the pending maintenance actions for the resource.</p>"]
     pub pending_maintenance_actions: Option<Vec<ResourcePendingMaintenanceActions>>,
 }
-
 struct PendingMaintenanceActionsMessageDeserializer;
 impl PendingMaintenanceActionsMessageDeserializer {
     #[allow(unused_variables)]
@@ -12562,7 +16152,6 @@ pub struct PendingModifiedValues {
     #[doc="<p>Specifies the storage type to be associated with the DB instance.</p>"]
     pub storage_type: Option<String>,
 }
-
 struct PendingModifiedValuesDeserializer;
 impl PendingModifiedValuesDeserializer {
     #[allow(unused_variables)]
@@ -12667,7 +16256,22 @@ pub struct PromoteReadReplicaDBClusterMessage {
     #[doc="<p>The identifier of the DB cluster Read Replica to promote. This parameter is not case-sensitive. </p> <p>Constraints:</p> <ul> <li> <p>Must contain from 1 to 63 alphanumeric characters or hyphens.</p> </li> <li> <p>First character must be a letter.</p> </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens.</p> </li> </ul> <p>Example: <code>my-cluster-replica1</code> </p>"]
     pub db_cluster_identifier: String,
 }
-
+impl PromoteReadReplicaDBClusterMessage {
+    /// Sets `db_cluster_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PromoteReadReplicaDBClusterMessage.db_cluster_identifier = value.into();`.
+    pub fn db_cluster_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_cluster_identifier = value.into();
+        self
+    }
+    /// Returns a new instance of PromoteReadReplicaDBClusterMessage with optional fields set to `None`.
+pub fn new<DBClusterIdentifierType: Into<String>>(db_cluster_identifier: DBClusterIdentifierType) -> PromoteReadReplicaDBClusterMessage{
+        PromoteReadReplicaDBClusterMessage {
+            db_cluster_identifier: db_cluster_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `PromoteReadReplicaDBClusterMessage` contents to a `SignedRequest`.
 struct PromoteReadReplicaDBClusterMessageSerializer;
@@ -12688,7 +16292,6 @@ impl PromoteReadReplicaDBClusterMessageSerializer {
 pub struct PromoteReadReplicaDBClusterResult {
     pub db_cluster: Option<DBCluster>,
 }
-
 struct PromoteReadReplicaDBClusterResultDeserializer;
 impl PromoteReadReplicaDBClusterResultDeserializer {
     #[allow(unused_variables)]
@@ -12742,7 +16345,36 @@ pub struct PromoteReadReplicaMessage {
     #[doc="<p> The daily time range during which automated backups are created if automated backups are enabled, using the <code>BackupRetentionPeriod</code> parameter. </p> <p> Default: A 30-minute window selected at random from an 8-hour block of time per AWS Region. To see the time blocks available, see <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/AdjustingTheMaintenanceWindow.html\"> Adjusting the Preferred Maintenance Window</a> in the <i>Amazon RDS User Guide.</i> </p> <p>Constraints:</p> <ul> <li> <p>Must be in the format <code>hh24:mi-hh24:mi</code>.</p> </li> <li> <p>Times should be in Universal Coordinated Time (UTC).</p> </li> <li> <p>Must not conflict with the preferred maintenance window.</p> </li> <li> <p>Must be at least 30 minutes.</p> </li> </ul>"]
     pub preferred_backup_window: Option<String>,
 }
-
+impl PromoteReadReplicaMessage {
+    /// Sets `backup_retention_period`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PromoteReadReplicaMessage.backup_retention_period = Some(value.into());`.
+    pub fn backup_retention_period<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.backup_retention_period = Some(value.into());
+        self
+    }
+    /// Sets `db_instance_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PromoteReadReplicaMessage.db_instance_identifier = value.into();`.
+    pub fn db_instance_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_instance_identifier = value.into();
+        self
+    }
+    /// Sets `preferred_backup_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PromoteReadReplicaMessage.preferred_backup_window = Some(value.into());`.
+    pub fn preferred_backup_window<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.preferred_backup_window = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PromoteReadReplicaMessage with optional fields set to `None`.
+pub fn new<DBInstanceIdentifierType: Into<String>>(db_instance_identifier: DBInstanceIdentifierType) -> PromoteReadReplicaMessage{
+        PromoteReadReplicaMessage {
+            db_instance_identifier: db_instance_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `PromoteReadReplicaMessage` contents to a `SignedRequest`.
 struct PromoteReadReplicaMessageSerializer;
@@ -12771,7 +16403,6 @@ impl PromoteReadReplicaMessageSerializer {
 pub struct PromoteReadReplicaResult {
     pub db_instance: Option<DBInstance>,
 }
-
 struct PromoteReadReplicaResultDeserializer;
 impl PromoteReadReplicaResultDeserializer {
     #[allow(unused_variables)]
@@ -12826,7 +16457,47 @@ pub struct PurchaseReservedDBInstancesOfferingMessage {
     pub reserved_db_instances_offering_id: String,
     pub tags: Option<Vec<Tag>>,
 }
-
+impl PurchaseReservedDBInstancesOfferingMessage {
+    /// Sets `db_instance_count`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseReservedDBInstancesOfferingMessage.db_instance_count = Some(value.into());`.
+    pub fn db_instance_count<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.db_instance_count = Some(value.into());
+        self
+    }
+    /// Sets `reserved_db_instance_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseReservedDBInstancesOfferingMessage.reserved_db_instance_id = Some(value.into());`.
+    pub fn reserved_db_instance_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reserved_db_instance_id = Some(value.into());
+        self
+    }
+    /// Sets `reserved_db_instances_offering_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseReservedDBInstancesOfferingMessage.reserved_db_instances_offering_id = value.into();`.
+    pub fn reserved_db_instances_offering_id<ValueType: Into<String>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.reserved_db_instances_offering_id = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseReservedDBInstancesOfferingMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PurchaseReservedDBInstancesOfferingMessage with optional fields set to `None`.
+    pub fn new<ReservedDBInstancesOfferingIdType: Into<String>>
+        (reserved_db_instances_offering_id: ReservedDBInstancesOfferingIdType)
+         -> PurchaseReservedDBInstancesOfferingMessage {
+        PurchaseReservedDBInstancesOfferingMessage {
+            reserved_db_instances_offering_id: reserved_db_instances_offering_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `PurchaseReservedDBInstancesOfferingMessage` contents to a `SignedRequest`.
 struct PurchaseReservedDBInstancesOfferingMessageSerializer;
@@ -12860,7 +16531,6 @@ impl PurchaseReservedDBInstancesOfferingMessageSerializer {
 pub struct PurchaseReservedDBInstancesOfferingResult {
     pub reserved_db_instance: Option<ReservedDBInstance>,
 }
-
 struct PurchaseReservedDBInstancesOfferingResultDeserializer;
 impl PurchaseReservedDBInstancesOfferingResultDeserializer {
     #[allow(unused_variables)]
@@ -13037,7 +16707,29 @@ pub struct RebootDBInstanceMessage {
     #[doc="<p> When <code>true</code>, the reboot will be conducted through a MultiAZ failover. </p> <p>Constraint: You cannot specify <code>true</code> if the instance is not configured for MultiAZ.</p>"]
     pub force_failover: Option<bool>,
 }
-
+impl RebootDBInstanceMessage {
+    /// Sets `db_instance_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RebootDBInstanceMessage.db_instance_identifier = value.into();`.
+    pub fn db_instance_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_instance_identifier = value.into();
+        self
+    }
+    /// Sets `force_failover`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RebootDBInstanceMessage.force_failover = Some(value.into());`.
+    pub fn force_failover<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.force_failover = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RebootDBInstanceMessage with optional fields set to `None`.
+pub fn new<DBInstanceIdentifierType: Into<String>>(db_instance_identifier: DBInstanceIdentifierType) -> RebootDBInstanceMessage{
+        RebootDBInstanceMessage {
+            db_instance_identifier: db_instance_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RebootDBInstanceMessage` contents to a `SignedRequest`.
 struct RebootDBInstanceMessageSerializer;
@@ -13062,7 +16754,6 @@ impl RebootDBInstanceMessageSerializer {
 pub struct RebootDBInstanceResult {
     pub db_instance: Option<DBInstance>,
 }
-
 struct RebootDBInstanceResultDeserializer;
 impl RebootDBInstanceResultDeserializer {
     #[allow(unused_variables)]
@@ -13114,7 +16805,6 @@ pub struct RecurringCharge {
     #[doc="<p>The frequency of the recurring charge.</p>"]
     pub recurring_charge_frequency: Option<String>,
 }
-
 struct RecurringChargeDeserializer;
 impl RecurringChargeDeserializer {
     #[allow(unused_variables)]
@@ -13212,7 +16902,33 @@ pub struct RemoveRoleFromDBClusterMessage {
     #[doc="<p>The Amazon Resource Name (ARN) of the IAM role to disassociate from the Aurora DB cluster, for example <code>arn:aws:iam::123456789012:role/AuroraAccessRole</code>.</p>"]
     pub role_arn: String,
 }
-
+impl RemoveRoleFromDBClusterMessage {
+    /// Sets `db_cluster_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveRoleFromDBClusterMessage.db_cluster_identifier = value.into();`.
+    pub fn db_cluster_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_cluster_identifier = value.into();
+        self
+    }
+    /// Sets `role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveRoleFromDBClusterMessage.role_arn = value.into();`.
+    pub fn role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.role_arn = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveRoleFromDBClusterMessage with optional fields set to `None`.
+    pub fn new<DBClusterIdentifierType: Into<String>, RoleArnType: Into<String>>
+        (db_cluster_identifier: DBClusterIdentifierType,
+         role_arn: RoleArnType)
+         -> RemoveRoleFromDBClusterMessage {
+        RemoveRoleFromDBClusterMessage {
+            db_cluster_identifier: db_cluster_identifier.into(),
+            role_arn: role_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RemoveRoleFromDBClusterMessage` contents to a `SignedRequest`.
 struct RemoveRoleFromDBClusterMessageSerializer;
@@ -13238,7 +16954,33 @@ pub struct RemoveSourceIdentifierFromSubscriptionMessage {
     #[doc="<p>The name of the RDS event notification subscription you want to remove a source identifier from.</p>"]
     pub subscription_name: String,
 }
-
+impl RemoveSourceIdentifierFromSubscriptionMessage {
+    /// Sets `source_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveSourceIdentifierFromSubscriptionMessage.source_identifier = value.into();`.
+    pub fn source_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_identifier = value.into();
+        self
+    }
+    /// Sets `subscription_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveSourceIdentifierFromSubscriptionMessage.subscription_name = value.into();`.
+    pub fn subscription_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subscription_name = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveSourceIdentifierFromSubscriptionMessage with optional fields set to `None`.
+    pub fn new<SourceIdentifierType: Into<String>, SubscriptionNameType: Into<String>>
+        (source_identifier: SourceIdentifierType,
+         subscription_name: SubscriptionNameType)
+         -> RemoveSourceIdentifierFromSubscriptionMessage {
+        RemoveSourceIdentifierFromSubscriptionMessage {
+            source_identifier: source_identifier.into(),
+            subscription_name: subscription_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RemoveSourceIdentifierFromSubscriptionMessage` contents to a `SignedRequest`.
 struct RemoveSourceIdentifierFromSubscriptionMessageSerializer;
@@ -13263,7 +17005,6 @@ impl RemoveSourceIdentifierFromSubscriptionMessageSerializer {
 pub struct RemoveSourceIdentifierFromSubscriptionResult {
     pub event_subscription: Option<EventSubscription>,
 }
-
 struct RemoveSourceIdentifierFromSubscriptionResultDeserializer;
 impl RemoveSourceIdentifierFromSubscriptionResultDeserializer {
     #[allow(unused_variables)]
@@ -13316,7 +17057,33 @@ pub struct RemoveTagsFromResourceMessage {
     #[doc="<p>The tag key (name) of the tag to be removed.</p>"]
     pub tag_keys: Vec<String>,
 }
-
+impl RemoveTagsFromResourceMessage {
+    /// Sets `resource_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromResourceMessage.resource_name = value.into();`.
+    pub fn resource_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_name = value.into();
+        self
+    }
+    /// Sets `tag_keys`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromResourceMessage.tag_keys = value.into();`.
+    pub fn tag_keys<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tag_keys = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveTagsFromResourceMessage with optional fields set to `None`.
+    pub fn new<ResourceNameType: Into<String>, TagKeysType: Into<Vec<String>>>
+        (resource_name: ResourceNameType,
+         tag_keys: TagKeysType)
+         -> RemoveTagsFromResourceMessage {
+        RemoveTagsFromResourceMessage {
+            resource_name: resource_name.into(),
+            tag_keys: tag_keys.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RemoveTagsFromResourceMessage` contents to a `SignedRequest`.
 struct RemoveTagsFromResourceMessageSerializer;
@@ -13367,7 +17134,6 @@ pub struct ReservedDBInstance {
     #[doc="<p>The hourly price charged for this reserved DB instance.</p>"]
     pub usage_price: Option<f64>,
 }
-
 struct ReservedDBInstanceDeserializer;
 impl ReservedDBInstanceDeserializer {
     #[allow(unused_variables)]
@@ -13521,7 +17287,6 @@ pub struct ReservedDBInstanceMessage {
     #[doc="<p>A list of reserved DB instances.</p>"]
     pub reserved_db_instances: Option<Vec<ReservedDBInstance>>,
 }
-
 struct ReservedDBInstanceMessageDeserializer;
 impl ReservedDBInstanceMessageDeserializer {
     #[allow(unused_variables)]
@@ -13593,7 +17358,6 @@ pub struct ReservedDBInstancesOffering {
     #[doc="<p>The hourly price charged for this offering.</p>"]
     pub usage_price: Option<f64>,
 }
-
 struct ReservedDBInstancesOfferingDeserializer;
 impl ReservedDBInstancesOfferingDeserializer {
     #[allow(unused_variables)]
@@ -13726,7 +17490,6 @@ pub struct ReservedDBInstancesOfferingMessage {
     #[doc="<p>A list of reserved DB instance offerings.</p>"]
     pub reserved_db_instances_offerings: Option<Vec<ReservedDBInstancesOffering>>,
 }
-
 struct ReservedDBInstancesOfferingMessageDeserializer;
 impl ReservedDBInstancesOfferingMessageDeserializer {
     #[allow(unused_variables)]
@@ -13783,7 +17546,40 @@ pub struct ResetDBClusterParameterGroupMessage {
     #[doc="<p>A value that is set to <code>true</code> to reset all parameters in the DB cluster parameter group to their default values, and <code>false</code> otherwise. You cannot use this parameter if there is a list of parameter names specified for the <code>Parameters</code> parameter.</p>"]
     pub reset_all_parameters: Option<bool>,
 }
-
+impl ResetDBClusterParameterGroupMessage {
+    /// Sets `db_cluster_parameter_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetDBClusterParameterGroupMessage.db_cluster_parameter_group_name = value.into();`.
+    pub fn db_cluster_parameter_group_name<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.db_cluster_parameter_group_name = value.into();
+        self
+    }
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetDBClusterParameterGroupMessage.parameters = Some(value.into());`.
+    pub fn parameters<ValueType: Into<Vec<Parameter>>>(mut self, value: ValueType) -> Self {
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Sets `reset_all_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetDBClusterParameterGroupMessage.reset_all_parameters = Some(value.into());`.
+    pub fn reset_all_parameters<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.reset_all_parameters = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ResetDBClusterParameterGroupMessage with optional fields set to `None`.
+    pub fn new<DBClusterParameterGroupNameType: Into<String>>
+        (db_cluster_parameter_group_name: DBClusterParameterGroupNameType)
+         -> ResetDBClusterParameterGroupMessage {
+        ResetDBClusterParameterGroupMessage {
+            db_cluster_parameter_group_name: db_cluster_parameter_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ResetDBClusterParameterGroupMessage` contents to a `SignedRequest`.
 struct ResetDBClusterParameterGroupMessageSerializer;
@@ -13819,7 +17615,36 @@ pub struct ResetDBParameterGroupMessage {
     #[doc="<p> Specifies whether (<code>true</code>) or not (<code>false</code>) to reset all parameters in the DB parameter group to default values. </p> <p>Default: <code>true</code> </p>"]
     pub reset_all_parameters: Option<bool>,
 }
-
+impl ResetDBParameterGroupMessage {
+    /// Sets `db_parameter_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetDBParameterGroupMessage.db_parameter_group_name = value.into();`.
+    pub fn db_parameter_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_parameter_group_name = value.into();
+        self
+    }
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetDBParameterGroupMessage.parameters = Some(value.into());`.
+    pub fn parameters<ValueType: Into<Vec<Parameter>>>(mut self, value: ValueType) -> Self {
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Sets `reset_all_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ResetDBParameterGroupMessage.reset_all_parameters = Some(value.into());`.
+    pub fn reset_all_parameters<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.reset_all_parameters = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ResetDBParameterGroupMessage with optional fields set to `None`.
+pub fn new<DBParameterGroupNameType: Into<String>>(db_parameter_group_name: DBParameterGroupNameType) -> ResetDBParameterGroupMessage{
+        ResetDBParameterGroupMessage {
+            db_parameter_group_name: db_parameter_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ResetDBParameterGroupMessage` contents to a `SignedRequest`.
 struct ResetDBParameterGroupMessageSerializer;
@@ -13853,7 +17678,6 @@ pub struct ResourcePendingMaintenanceActions {
     #[doc="<p>The ARN of the resource that has pending maintenance actions.</p>"]
     pub resource_identifier: Option<String>,
 }
-
 struct ResourcePendingMaintenanceActionsDeserializer;
 impl ResourcePendingMaintenanceActionsDeserializer {
     #[allow(unused_variables)]
@@ -13953,7 +17777,221 @@ pub struct RestoreDBClusterFromS3Message {
     #[doc="<p>A list of EC2 VPC security groups to associate with the restored DB cluster.</p>"]
     pub vpc_security_group_ids: Option<Vec<String>>,
 }
-
+impl RestoreDBClusterFromS3Message {
+    /// Sets `availability_zones`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.availability_zones = Some(value.into());`.
+    pub fn availability_zones<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.availability_zones = Some(value.into());
+        self
+    }
+    /// Sets `backup_retention_period`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.backup_retention_period = Some(value.into());`.
+    pub fn backup_retention_period<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.backup_retention_period = Some(value.into());
+        self
+    }
+    /// Sets `character_set_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.character_set_name = Some(value.into());`.
+    pub fn character_set_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.character_set_name = Some(value.into());
+        self
+    }
+    /// Sets `db_cluster_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.db_cluster_identifier = value.into();`.
+    pub fn db_cluster_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_cluster_identifier = value.into();
+        self
+    }
+    /// Sets `db_cluster_parameter_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.db_cluster_parameter_group_name = Some(value.into());`.
+    pub fn db_cluster_parameter_group_name<ValueType: Into<String>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.db_cluster_parameter_group_name = Some(value.into());
+        self
+    }
+    /// Sets `db_subnet_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.db_subnet_group_name = Some(value.into());`.
+    pub fn db_subnet_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_subnet_group_name = Some(value.into());
+        self
+    }
+    /// Sets `database_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.database_name = Some(value.into());`.
+    pub fn database_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.database_name = Some(value.into());
+        self
+    }
+    /// Sets `enable_iam_database_authentication`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.enable_iam_database_authentication = Some(value.into());`.
+    pub fn enable_iam_database_authentication<ValueType: Into<bool>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.enable_iam_database_authentication = Some(value.into());
+        self
+    }
+    /// Sets `engine`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.engine = value.into();`.
+    pub fn engine<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine = value.into();
+        self
+    }
+    /// Sets `engine_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.engine_version = Some(value.into());`.
+    pub fn engine_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine_version = Some(value.into());
+        self
+    }
+    /// Sets `kms_key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.kms_key_id = Some(value.into());`.
+    pub fn kms_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kms_key_id = Some(value.into());
+        self
+    }
+    /// Sets `master_user_password`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.master_user_password = value.into();`.
+    pub fn master_user_password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.master_user_password = value.into();
+        self
+    }
+    /// Sets `master_username`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.master_username = value.into();`.
+    pub fn master_username<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.master_username = value.into();
+        self
+    }
+    /// Sets `option_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.option_group_name = Some(value.into());`.
+    pub fn option_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.option_group_name = Some(value.into());
+        self
+    }
+    /// Sets `port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.port = Some(value.into());`.
+    pub fn port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.port = Some(value.into());
+        self
+    }
+    /// Sets `preferred_backup_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.preferred_backup_window = Some(value.into());`.
+    pub fn preferred_backup_window<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.preferred_backup_window = Some(value.into());
+        self
+    }
+    /// Sets `preferred_maintenance_window`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.preferred_maintenance_window = Some(value.into());`.
+    pub fn preferred_maintenance_window<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.preferred_maintenance_window = Some(value.into());
+        self
+    }
+    /// Sets `s3_bucket_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.s3_bucket_name = value.into();`.
+    pub fn s3_bucket_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_bucket_name = value.into();
+        self
+    }
+    /// Sets `s3_ingestion_role_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.s3_ingestion_role_arn = value.into();`.
+    pub fn s3_ingestion_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_ingestion_role_arn = value.into();
+        self
+    }
+    /// Sets `s3_prefix`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.s3_prefix = Some(value.into());`.
+    pub fn s3_prefix<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.s3_prefix = Some(value.into());
+        self
+    }
+    /// Sets `source_engine`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.source_engine = value.into();`.
+    pub fn source_engine<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_engine = value.into();
+        self
+    }
+    /// Sets `source_engine_version`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.source_engine_version = value.into();`.
+    pub fn source_engine_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_engine_version = value.into();
+        self
+    }
+    /// Sets `storage_encrypted`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.storage_encrypted = Some(value.into());`.
+    pub fn storage_encrypted<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.storage_encrypted = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `vpc_security_group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromS3Message.vpc_security_group_ids = Some(value.into());`.
+    pub fn vpc_security_group_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.vpc_security_group_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RestoreDBClusterFromS3Message with optional fields set to `None`.
+    pub fn new<DBClusterIdentifierType: Into<String>,
+               EngineType: Into<String>,
+               MasterUserPasswordType: Into<String>,
+               MasterUsernameType: Into<String>,
+               S3BucketNameType: Into<String>,
+               S3IngestionRoleArnType: Into<String>,
+               SourceEngineType: Into<String>,
+               SourceEngineVersionType: Into<String>>
+        (db_cluster_identifier: DBClusterIdentifierType,
+         engine: EngineType,
+         master_user_password: MasterUserPasswordType,
+         master_username: MasterUsernameType,
+         s3_bucket_name: S3BucketNameType,
+         s3_ingestion_role_arn: S3IngestionRoleArnType,
+         source_engine: SourceEngineType,
+         source_engine_version: SourceEngineVersionType)
+         -> RestoreDBClusterFromS3Message {
+        RestoreDBClusterFromS3Message {
+            db_cluster_identifier: db_cluster_identifier.into(),
+            engine: engine.into(),
+            master_user_password: master_user_password.into(),
+            master_username: master_username.into(),
+            s3_bucket_name: s3_bucket_name.into(),
+            s3_ingestion_role_arn: s3_ingestion_role_arn.into(),
+            source_engine: source_engine.into(),
+            source_engine_version: source_engine_version.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RestoreDBClusterFromS3Message` contents to a `SignedRequest`.
 struct RestoreDBClusterFromS3MessageSerializer;
@@ -14049,7 +18087,6 @@ impl RestoreDBClusterFromS3MessageSerializer {
 pub struct RestoreDBClusterFromS3Result {
     pub db_cluster: Option<DBCluster>,
 }
-
 struct RestoreDBClusterFromS3ResultDeserializer;
 impl RestoreDBClusterFromS3ResultDeserializer {
     #[allow(unused_variables)]
@@ -14122,7 +18159,118 @@ pub struct RestoreDBClusterFromSnapshotMessage {
     #[doc="<p>A list of VPC security groups that the new DB cluster will belong to.</p>"]
     pub vpc_security_group_ids: Option<Vec<String>>,
 }
-
+impl RestoreDBClusterFromSnapshotMessage {
+    /// Sets `availability_zones`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromSnapshotMessage.availability_zones = Some(value.into());`.
+    pub fn availability_zones<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.availability_zones = Some(value.into());
+        self
+    }
+    /// Sets `db_cluster_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromSnapshotMessage.db_cluster_identifier = value.into();`.
+    pub fn db_cluster_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_cluster_identifier = value.into();
+        self
+    }
+    /// Sets `db_subnet_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromSnapshotMessage.db_subnet_group_name = Some(value.into());`.
+    pub fn db_subnet_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_subnet_group_name = Some(value.into());
+        self
+    }
+    /// Sets `database_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromSnapshotMessage.database_name = Some(value.into());`.
+    pub fn database_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.database_name = Some(value.into());
+        self
+    }
+    /// Sets `enable_iam_database_authentication`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromSnapshotMessage.enable_iam_database_authentication = Some(value.into());`.
+    pub fn enable_iam_database_authentication<ValueType: Into<bool>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.enable_iam_database_authentication = Some(value.into());
+        self
+    }
+    /// Sets `engine`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromSnapshotMessage.engine = value.into();`.
+    pub fn engine<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine = value.into();
+        self
+    }
+    /// Sets `engine_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromSnapshotMessage.engine_version = Some(value.into());`.
+    pub fn engine_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine_version = Some(value.into());
+        self
+    }
+    /// Sets `kms_key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromSnapshotMessage.kms_key_id = Some(value.into());`.
+    pub fn kms_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kms_key_id = Some(value.into());
+        self
+    }
+    /// Sets `option_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromSnapshotMessage.option_group_name = Some(value.into());`.
+    pub fn option_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.option_group_name = Some(value.into());
+        self
+    }
+    /// Sets `port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromSnapshotMessage.port = Some(value.into());`.
+    pub fn port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.port = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromSnapshotMessage.snapshot_identifier = value.into();`.
+    pub fn snapshot_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_identifier = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromSnapshotMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `vpc_security_group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterFromSnapshotMessage.vpc_security_group_ids = Some(value.into());`.
+    pub fn vpc_security_group_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.vpc_security_group_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RestoreDBClusterFromSnapshotMessage with optional fields set to `None`.
+    pub fn new<DBClusterIdentifierType: Into<String>,
+               EngineType: Into<String>,
+               SnapshotIdentifierType: Into<String>>
+        (db_cluster_identifier: DBClusterIdentifierType,
+         engine: EngineType,
+         snapshot_identifier: SnapshotIdentifierType)
+         -> RestoreDBClusterFromSnapshotMessage {
+        RestoreDBClusterFromSnapshotMessage {
+            db_cluster_identifier: db_cluster_identifier.into(),
+            engine: engine.into(),
+            snapshot_identifier: snapshot_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RestoreDBClusterFromSnapshotMessage` contents to a `SignedRequest`.
 struct RestoreDBClusterFromSnapshotMessageSerializer;
@@ -14183,7 +18331,6 @@ impl RestoreDBClusterFromSnapshotMessageSerializer {
 pub struct RestoreDBClusterFromSnapshotResult {
     pub db_cluster: Option<DBCluster>,
 }
-
 struct RestoreDBClusterFromSnapshotResultDeserializer;
 impl RestoreDBClusterFromSnapshotResultDeserializer {
     #[allow(unused_variables)]
@@ -14254,7 +18401,109 @@ pub struct RestoreDBClusterToPointInTimeMessage {
     #[doc="<p>A list of VPC security groups that the new DB cluster belongs to.</p>"]
     pub vpc_security_group_ids: Option<Vec<String>>,
 }
-
+impl RestoreDBClusterToPointInTimeMessage {
+    /// Sets `db_cluster_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterToPointInTimeMessage.db_cluster_identifier = value.into();`.
+    pub fn db_cluster_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_cluster_identifier = value.into();
+        self
+    }
+    /// Sets `db_subnet_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterToPointInTimeMessage.db_subnet_group_name = Some(value.into());`.
+    pub fn db_subnet_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_subnet_group_name = Some(value.into());
+        self
+    }
+    /// Sets `enable_iam_database_authentication`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterToPointInTimeMessage.enable_iam_database_authentication = Some(value.into());`.
+    pub fn enable_iam_database_authentication<ValueType: Into<bool>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.enable_iam_database_authentication = Some(value.into());
+        self
+    }
+    /// Sets `kms_key_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterToPointInTimeMessage.kms_key_id = Some(value.into());`.
+    pub fn kms_key_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.kms_key_id = Some(value.into());
+        self
+    }
+    /// Sets `option_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterToPointInTimeMessage.option_group_name = Some(value.into());`.
+    pub fn option_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.option_group_name = Some(value.into());
+        self
+    }
+    /// Sets `port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterToPointInTimeMessage.port = Some(value.into());`.
+    pub fn port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.port = Some(value.into());
+        self
+    }
+    /// Sets `restore_to_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterToPointInTimeMessage.restore_to_time = Some(value.into());`.
+    pub fn restore_to_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.restore_to_time = Some(value.into());
+        self
+    }
+    /// Sets `restore_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterToPointInTimeMessage.restore_type = Some(value.into());`.
+    pub fn restore_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.restore_type = Some(value.into());
+        self
+    }
+    /// Sets `source_db_cluster_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterToPointInTimeMessage.source_db_cluster_identifier = value.into();`.
+    pub fn source_db_cluster_identifier<ValueType: Into<String>>(mut self,
+                                                                 value: ValueType)
+                                                                 -> Self {
+        self.source_db_cluster_identifier = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterToPointInTimeMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `use_latest_restorable_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterToPointInTimeMessage.use_latest_restorable_time = Some(value.into());`.
+    pub fn use_latest_restorable_time<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.use_latest_restorable_time = Some(value.into());
+        self
+    }
+    /// Sets `vpc_security_group_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBClusterToPointInTimeMessage.vpc_security_group_ids = Some(value.into());`.
+    pub fn vpc_security_group_ids<ValueType: Into<Vec<String>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.vpc_security_group_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RestoreDBClusterToPointInTimeMessage with optional fields set to `None`.
+    pub fn new<DBClusterIdentifierType: Into<String>, SourceDBClusterIdentifierType: Into<String>>
+        (db_cluster_identifier: DBClusterIdentifierType,
+         source_db_cluster_identifier: SourceDBClusterIdentifierType)
+         -> RestoreDBClusterToPointInTimeMessage {
+        RestoreDBClusterToPointInTimeMessage {
+            db_cluster_identifier: db_cluster_identifier.into(),
+            source_db_cluster_identifier: source_db_cluster_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RestoreDBClusterToPointInTimeMessage` contents to a `SignedRequest`.
 struct RestoreDBClusterToPointInTimeMessageSerializer;
@@ -14313,7 +18562,6 @@ impl RestoreDBClusterToPointInTimeMessageSerializer {
 pub struct RestoreDBClusterToPointInTimeResult {
     pub db_cluster: Option<DBCluster>,
 }
-
 struct RestoreDBClusterToPointInTimeResultDeserializer;
 impl RestoreDBClusterToPointInTimeResultDeserializer {
     #[allow(unused_variables)]
@@ -14404,7 +18652,175 @@ pub struct RestoreDBInstanceFromDBSnapshotMessage {
     #[doc="<p>The password for the given ARN from the Key Store in order to access the device.</p>"]
     pub tde_credential_password: Option<String>,
 }
-
+impl RestoreDBInstanceFromDBSnapshotMessage {
+    /// Sets `auto_minor_version_upgrade`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceFromDBSnapshotMessage.auto_minor_version_upgrade = Some(value.into());`.
+    pub fn auto_minor_version_upgrade<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.auto_minor_version_upgrade = Some(value.into());
+        self
+    }
+    /// Sets `availability_zone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceFromDBSnapshotMessage.availability_zone = Some(value.into());`.
+    pub fn availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.availability_zone = Some(value.into());
+        self
+    }
+    /// Sets `copy_tags_to_snapshot`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceFromDBSnapshotMessage.copy_tags_to_snapshot = Some(value.into());`.
+    pub fn copy_tags_to_snapshot<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.copy_tags_to_snapshot = Some(value.into());
+        self
+    }
+    /// Sets `db_instance_class`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceFromDBSnapshotMessage.db_instance_class = Some(value.into());`.
+    pub fn db_instance_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_instance_class = Some(value.into());
+        self
+    }
+    /// Sets `db_instance_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceFromDBSnapshotMessage.db_instance_identifier = value.into();`.
+    pub fn db_instance_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_instance_identifier = value.into();
+        self
+    }
+    /// Sets `db_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceFromDBSnapshotMessage.db_name = Some(value.into());`.
+    pub fn db_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_name = Some(value.into());
+        self
+    }
+    /// Sets `db_snapshot_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceFromDBSnapshotMessage.db_snapshot_identifier = value.into();`.
+    pub fn db_snapshot_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_snapshot_identifier = value.into();
+        self
+    }
+    /// Sets `db_subnet_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceFromDBSnapshotMessage.db_subnet_group_name = Some(value.into());`.
+    pub fn db_subnet_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_subnet_group_name = Some(value.into());
+        self
+    }
+    /// Sets `domain`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceFromDBSnapshotMessage.domain = Some(value.into());`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = Some(value.into());
+        self
+    }
+    /// Sets `domain_iam_role_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceFromDBSnapshotMessage.domain_iam_role_name = Some(value.into());`.
+    pub fn domain_iam_role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_iam_role_name = Some(value.into());
+        self
+    }
+    /// Sets `enable_iam_database_authentication`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceFromDBSnapshotMessage.enable_iam_database_authentication = Some(value.into());`.
+    pub fn enable_iam_database_authentication<ValueType: Into<bool>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.enable_iam_database_authentication = Some(value.into());
+        self
+    }
+    /// Sets `engine`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceFromDBSnapshotMessage.engine = Some(value.into());`.
+    pub fn engine<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine = Some(value.into());
+        self
+    }
+    /// Sets `iops`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceFromDBSnapshotMessage.iops = Some(value.into());`.
+    pub fn iops<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.iops = Some(value.into());
+        self
+    }
+    /// Sets `license_model`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceFromDBSnapshotMessage.license_model = Some(value.into());`.
+    pub fn license_model<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.license_model = Some(value.into());
+        self
+    }
+    /// Sets `multi_az`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceFromDBSnapshotMessage.multi_az = Some(value.into());`.
+    pub fn multi_az<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.multi_az = Some(value.into());
+        self
+    }
+    /// Sets `option_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceFromDBSnapshotMessage.option_group_name = Some(value.into());`.
+    pub fn option_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.option_group_name = Some(value.into());
+        self
+    }
+    /// Sets `port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceFromDBSnapshotMessage.port = Some(value.into());`.
+    pub fn port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.port = Some(value.into());
+        self
+    }
+    /// Sets `publicly_accessible`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceFromDBSnapshotMessage.publicly_accessible = Some(value.into());`.
+    pub fn publicly_accessible<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.publicly_accessible = Some(value.into());
+        self
+    }
+    /// Sets `storage_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceFromDBSnapshotMessage.storage_type = Some(value.into());`.
+    pub fn storage_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.storage_type = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceFromDBSnapshotMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `tde_credential_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceFromDBSnapshotMessage.tde_credential_arn = Some(value.into());`.
+    pub fn tde_credential_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tde_credential_arn = Some(value.into());
+        self
+    }
+    /// Sets `tde_credential_password`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceFromDBSnapshotMessage.tde_credential_password = Some(value.into());`.
+    pub fn tde_credential_password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tde_credential_password = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RestoreDBInstanceFromDBSnapshotMessage with optional fields set to `None`.
+    pub fn new<DBInstanceIdentifierType: Into<String>, DBSnapshotIdentifierType: Into<String>>
+        (db_instance_identifier: DBInstanceIdentifierType,
+         db_snapshot_identifier: DBSnapshotIdentifierType)
+         -> RestoreDBInstanceFromDBSnapshotMessage {
+        RestoreDBInstanceFromDBSnapshotMessage {
+            db_instance_identifier: db_instance_identifier.into(),
+            db_snapshot_identifier: db_snapshot_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RestoreDBInstanceFromDBSnapshotMessage` contents to a `SignedRequest`.
 struct RestoreDBInstanceFromDBSnapshotMessageSerializer;
@@ -14493,7 +18909,6 @@ impl RestoreDBInstanceFromDBSnapshotMessageSerializer {
 pub struct RestoreDBInstanceFromDBSnapshotResult {
     pub db_instance: Option<DBInstance>,
 }
-
 struct RestoreDBInstanceFromDBSnapshotResultDeserializer;
 impl RestoreDBInstanceFromDBSnapshotResultDeserializer {
     #[allow(unused_variables)]
@@ -14589,7 +19004,194 @@ pub struct RestoreDBInstanceToPointInTimeMessage {
     #[doc="<p> Specifies whether (<code>true</code>) or not (<code>false</code>) the DB instance is restored from the latest backup time. </p> <p>Default: <code>false</code> </p> <p>Constraints: Cannot be specified if RestoreTime parameter is provided.</p>"]
     pub use_latest_restorable_time: Option<bool>,
 }
-
+impl RestoreDBInstanceToPointInTimeMessage {
+    /// Sets `auto_minor_version_upgrade`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.auto_minor_version_upgrade = Some(value.into());`.
+    pub fn auto_minor_version_upgrade<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.auto_minor_version_upgrade = Some(value.into());
+        self
+    }
+    /// Sets `availability_zone`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.availability_zone = Some(value.into());`.
+    pub fn availability_zone<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.availability_zone = Some(value.into());
+        self
+    }
+    /// Sets `copy_tags_to_snapshot`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.copy_tags_to_snapshot = Some(value.into());`.
+    pub fn copy_tags_to_snapshot<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.copy_tags_to_snapshot = Some(value.into());
+        self
+    }
+    /// Sets `db_instance_class`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.db_instance_class = Some(value.into());`.
+    pub fn db_instance_class<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_instance_class = Some(value.into());
+        self
+    }
+    /// Sets `db_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.db_name = Some(value.into());`.
+    pub fn db_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_name = Some(value.into());
+        self
+    }
+    /// Sets `db_subnet_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.db_subnet_group_name = Some(value.into());`.
+    pub fn db_subnet_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_subnet_group_name = Some(value.into());
+        self
+    }
+    /// Sets `domain`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.domain = Some(value.into());`.
+    pub fn domain<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain = Some(value.into());
+        self
+    }
+    /// Sets `domain_iam_role_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.domain_iam_role_name = Some(value.into());`.
+    pub fn domain_iam_role_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.domain_iam_role_name = Some(value.into());
+        self
+    }
+    /// Sets `enable_iam_database_authentication`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.enable_iam_database_authentication = Some(value.into());`.
+    pub fn enable_iam_database_authentication<ValueType: Into<bool>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.enable_iam_database_authentication = Some(value.into());
+        self
+    }
+    /// Sets `engine`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.engine = Some(value.into());`.
+    pub fn engine<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.engine = Some(value.into());
+        self
+    }
+    /// Sets `iops`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.iops = Some(value.into());`.
+    pub fn iops<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.iops = Some(value.into());
+        self
+    }
+    /// Sets `license_model`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.license_model = Some(value.into());`.
+    pub fn license_model<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.license_model = Some(value.into());
+        self
+    }
+    /// Sets `multi_az`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.multi_az = Some(value.into());`.
+    pub fn multi_az<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.multi_az = Some(value.into());
+        self
+    }
+    /// Sets `option_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.option_group_name = Some(value.into());`.
+    pub fn option_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.option_group_name = Some(value.into());
+        self
+    }
+    /// Sets `port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.port = Some(value.into());`.
+    pub fn port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.port = Some(value.into());
+        self
+    }
+    /// Sets `publicly_accessible`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.publicly_accessible = Some(value.into());`.
+    pub fn publicly_accessible<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.publicly_accessible = Some(value.into());
+        self
+    }
+    /// Sets `restore_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.restore_time = Some(value.into());`.
+    pub fn restore_time<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.restore_time = Some(value.into());
+        self
+    }
+    /// Sets `source_db_instance_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.source_db_instance_identifier = value.into();`.
+    pub fn source_db_instance_identifier<ValueType: Into<String>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.source_db_instance_identifier = value.into();
+        self
+    }
+    /// Sets `storage_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.storage_type = Some(value.into());`.
+    pub fn storage_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.storage_type = Some(value.into());
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `target_db_instance_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.target_db_instance_identifier = value.into();`.
+    pub fn target_db_instance_identifier<ValueType: Into<String>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.target_db_instance_identifier = value.into();
+        self
+    }
+    /// Sets `tde_credential_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.tde_credential_arn = Some(value.into());`.
+    pub fn tde_credential_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tde_credential_arn = Some(value.into());
+        self
+    }
+    /// Sets `tde_credential_password`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.tde_credential_password = Some(value.into());`.
+    pub fn tde_credential_password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.tde_credential_password = Some(value.into());
+        self
+    }
+    /// Sets `use_latest_restorable_time`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreDBInstanceToPointInTimeMessage.use_latest_restorable_time = Some(value.into());`.
+    pub fn use_latest_restorable_time<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.use_latest_restorable_time = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RestoreDBInstanceToPointInTimeMessage with optional fields set to `None`.
+    pub fn new<SourceDBInstanceIdentifierType: Into<String>,
+               TargetDBInstanceIdentifierType: Into<String>>
+        (source_db_instance_identifier: SourceDBInstanceIdentifierType,
+         target_db_instance_identifier: TargetDBInstanceIdentifierType)
+         -> RestoreDBInstanceToPointInTimeMessage {
+        RestoreDBInstanceToPointInTimeMessage {
+            source_db_instance_identifier: source_db_instance_identifier.into(),
+            target_db_instance_identifier: target_db_instance_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RestoreDBInstanceToPointInTimeMessage` contents to a `SignedRequest`.
 struct RestoreDBInstanceToPointInTimeMessageSerializer;
@@ -14685,7 +19287,6 @@ impl RestoreDBInstanceToPointInTimeMessageSerializer {
 pub struct RestoreDBInstanceToPointInTimeResult {
     pub db_instance: Option<DBInstance>,
 }
-
 struct RestoreDBInstanceToPointInTimeResultDeserializer;
 impl RestoreDBInstanceToPointInTimeResultDeserializer {
     #[allow(unused_variables)]
@@ -14744,7 +19345,52 @@ pub struct RevokeDBSecurityGroupIngressMessage {
     #[doc="<p> The AWS Account Number of the owner of the EC2 security group specified in the <code>EC2SecurityGroupName</code> parameter. The AWS Access Key ID is not an acceptable value. For VPC DB security groups, <code>EC2SecurityGroupId</code> must be provided. Otherwise, EC2SecurityGroupOwnerId and either <code>EC2SecurityGroupName</code> or <code>EC2SecurityGroupId</code> must be provided. </p>"]
     pub ec2_security_group_owner_id: Option<String>,
 }
-
+impl RevokeDBSecurityGroupIngressMessage {
+    /// Sets `cidrip`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeDBSecurityGroupIngressMessage.cidrip = Some(value.into());`.
+    pub fn cidrip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cidrip = Some(value.into());
+        self
+    }
+    /// Sets `db_security_group_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeDBSecurityGroupIngressMessage.db_security_group_name = value.into();`.
+    pub fn db_security_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_security_group_name = value.into();
+        self
+    }
+    /// Sets `ec2_security_group_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeDBSecurityGroupIngressMessage.ec2_security_group_id = Some(value.into());`.
+    pub fn ec2_security_group_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ec2_security_group_id = Some(value.into());
+        self
+    }
+    /// Sets `ec2_security_group_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeDBSecurityGroupIngressMessage.ec2_security_group_name = Some(value.into());`.
+    pub fn ec2_security_group_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ec2_security_group_name = Some(value.into());
+        self
+    }
+    /// Sets `ec2_security_group_owner_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RevokeDBSecurityGroupIngressMessage.ec2_security_group_owner_id = Some(value.into());`.
+    pub fn ec2_security_group_owner_id<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.ec2_security_group_owner_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RevokeDBSecurityGroupIngressMessage with optional fields set to `None`.
+pub fn new<DBSecurityGroupNameType: Into<String>>(db_security_group_name: DBSecurityGroupNameType) -> RevokeDBSecurityGroupIngressMessage{
+        RevokeDBSecurityGroupIngressMessage {
+            db_security_group_name: db_security_group_name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RevokeDBSecurityGroupIngressMessage` contents to a `SignedRequest`.
 struct RevokeDBSecurityGroupIngressMessageSerializer;
@@ -14779,7 +19425,6 @@ impl RevokeDBSecurityGroupIngressMessageSerializer {
 pub struct RevokeDBSecurityGroupIngressResult {
     pub db_security_group: Option<DBSecurityGroup>,
 }
-
 struct RevokeDBSecurityGroupIngressResultDeserializer;
 impl RevokeDBSecurityGroupIngressResultDeserializer {
     #[allow(unused_variables)]
@@ -14887,7 +19532,6 @@ pub struct SourceRegion {
     #[doc="<p>The status of the source AWS Region.</p>"]
     pub status: Option<String>,
 }
-
 struct SourceRegionDeserializer;
 impl SourceRegionDeserializer {
     #[allow(unused_variables)]
@@ -14988,7 +19632,6 @@ pub struct SourceRegionMessage {
     #[doc="<p>A list of SourceRegion instances that contains each source AWS Region that the current AWS Region can get a Read Replica or a DB snapshot from.</p>"]
     pub source_regions: Option<Vec<SourceRegion>>,
 }
-
 struct SourceRegionMessageDeserializer;
 impl SourceRegionMessageDeserializer {
     #[allow(unused_variables)]
@@ -15055,7 +19698,22 @@ pub struct StartDBInstanceMessage {
     #[doc="<p> The user-supplied instance identifier. </p>"]
     pub db_instance_identifier: String,
 }
-
+impl StartDBInstanceMessage {
+    /// Sets `db_instance_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartDBInstanceMessage.db_instance_identifier = value.into();`.
+    pub fn db_instance_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_instance_identifier = value.into();
+        self
+    }
+    /// Returns a new instance of StartDBInstanceMessage with optional fields set to `None`.
+pub fn new<DBInstanceIdentifierType: Into<String>>(db_instance_identifier: DBInstanceIdentifierType) -> StartDBInstanceMessage{
+        StartDBInstanceMessage {
+            db_instance_identifier: db_instance_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `StartDBInstanceMessage` contents to a `SignedRequest`.
 struct StartDBInstanceMessageSerializer;
@@ -15076,7 +19734,6 @@ impl StartDBInstanceMessageSerializer {
 pub struct StartDBInstanceResult {
     pub db_instance: Option<DBInstance>,
 }
-
 struct StartDBInstanceResultDeserializer;
 impl StartDBInstanceResultDeserializer {
     #[allow(unused_variables)]
@@ -15127,7 +19784,29 @@ pub struct StopDBInstanceMessage {
     #[doc="<p> The user-supplied instance identifier of the DB Snapshot created immediately before the DB instance is stopped. </p>"]
     pub db_snapshot_identifier: Option<String>,
 }
-
+impl StopDBInstanceMessage {
+    /// Sets `db_instance_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopDBInstanceMessage.db_instance_identifier = value.into();`.
+    pub fn db_instance_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_instance_identifier = value.into();
+        self
+    }
+    /// Sets `db_snapshot_identifier`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopDBInstanceMessage.db_snapshot_identifier = Some(value.into());`.
+    pub fn db_snapshot_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.db_snapshot_identifier = Some(value.into());
+        self
+    }
+    /// Returns a new instance of StopDBInstanceMessage with optional fields set to `None`.
+pub fn new<DBInstanceIdentifierType: Into<String>>(db_instance_identifier: DBInstanceIdentifierType) -> StopDBInstanceMessage{
+        StopDBInstanceMessage {
+            db_instance_identifier: db_instance_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `StopDBInstanceMessage` contents to a `SignedRequest`.
 struct StopDBInstanceMessageSerializer;
@@ -15152,7 +19831,6 @@ impl StopDBInstanceMessageSerializer {
 pub struct StopDBInstanceResult {
     pub db_instance: Option<DBInstance>,
 }
-
 struct StopDBInstanceResultDeserializer;
 impl StopDBInstanceResultDeserializer {
     #[allow(unused_variables)]
@@ -15219,7 +19897,6 @@ pub struct Subnet {
     #[doc="<p>Specifies the status of the subnet.</p>"]
     pub subnet_status: Option<String>,
 }
-
 struct SubnetDeserializer;
 impl SubnetDeserializer {
     #[allow(unused_variables)]
@@ -15430,7 +20107,26 @@ pub struct Tag {
     #[doc="<p>A value is the optional value of the tag. The string value can be from 1 to 256 Unicode characters in length and cannot be prefixed with \"aws:\" or \"rds:\". The string can only contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', '-' (Java regex: \"^([\\\\p{L}\\\\p{Z}\\\\p{N}_.:/=+\\\\-]*)$\").</p>"]
     pub value: Option<String>,
 }
-
+impl Tag {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new() -> Tag {
+        Tag { ..Default::default() }
+    }
+}
 struct TagDeserializer;
 impl TagDeserializer {
     #[allow(unused_variables)]
@@ -15554,7 +20250,6 @@ pub struct TagListMessage {
     #[doc="<p>List of tags returned by the ListTagsForResource operation.</p>"]
     pub tag_list: Option<Vec<Tag>>,
 }
-
 struct TagListMessageDeserializer;
 impl TagListMessageDeserializer {
     #[allow(unused_variables)]
@@ -15603,7 +20298,6 @@ pub struct Timezone {
     #[doc="<p>The name of the time zone.</p>"]
     pub timezone_name: Option<String>,
 }
-
 struct TimezoneDeserializer;
 impl TimezoneDeserializer {
     #[allow(unused_variables)]
@@ -15660,7 +20354,6 @@ pub struct UpgradeTarget {
     #[doc="<p>A value that indicates whether a database engine will be upgraded to a major version.</p>"]
     pub is_major_version_upgrade: Option<bool>,
 }
-
 struct UpgradeTargetDeserializer;
 impl UpgradeTargetDeserializer {
     #[allow(unused_variables)]
@@ -15782,7 +20475,6 @@ pub struct VpcSecurityGroupMembership {
     #[doc="<p>The name of the VPC security group.</p>"]
     pub vpc_security_group_id: Option<String>,
 }
-
 struct VpcSecurityGroupMembershipDeserializer;
 impl VpcSecurityGroupMembershipDeserializer {
     #[allow(unused_variables)]

@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -41,7 +42,40 @@ pub struct AddIpRoutesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub update_security_group_for_directory_controllers: Option<bool>,
 }
-
+impl AddIpRoutesRequest {
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddIpRoutesRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Sets `ip_routes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddIpRoutesRequest.ip_routes = value.into();`.
+    pub fn ip_routes<ValueType: Into<Vec<IpRoute>>>(mut self, value: ValueType) -> Self {
+        self.ip_routes = value.into();
+        self
+    }
+    /// Sets `update_security_group_for_directory_controllers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddIpRoutesRequest.update_security_group_for_directory_controllers = Some(value.into());`.
+pub fn update_security_group_for_directory_controllers<ValueType: Into<bool>>(mut self, value: ValueType) -> Self{
+        self.update_security_group_for_directory_controllers = Some(value.into());
+        self
+    }
+    /// Returns a new instance of AddIpRoutesRequest with optional fields set to `None`.
+    pub fn new<DirectoryIdType: Into<String>, IpRoutesType: Into<Vec<IpRoute>>>
+        (directory_id: DirectoryIdType,
+         ip_routes: IpRoutesType)
+         -> AddIpRoutesRequest {
+        AddIpRoutesRequest {
+            directory_id: directory_id.into(),
+            ip_routes: ip_routes.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddIpRoutesResult;
 
@@ -54,7 +88,33 @@ pub struct AddTagsToResourceRequest {
     #[serde(rename="Tags")]
     pub tags: Vec<Tag>,
 }
-
+impl AddTagsToResourceRequest {
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToResourceRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `tags`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddTagsToResourceRequest.tags = value.into();`.
+    pub fn tags<ValueType: Into<Vec<Tag>>>(mut self, value: ValueType) -> Self {
+        self.tags = value.into();
+        self
+    }
+    /// Returns a new instance of AddTagsToResourceRequest with optional fields set to `None`.
+    pub fn new<ResourceIdType: Into<String>, TagsType: Into<Vec<Tag>>>
+        (resource_id: ResourceIdType,
+         tags: TagsType)
+         -> AddTagsToResourceRequest {
+        AddTagsToResourceRequest {
+            resource_id: resource_id.into(),
+            tags: tags.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AddTagsToResourceResult;
 
@@ -70,7 +130,26 @@ pub struct Attribute {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl Attribute {
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Attribute.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Attribute.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Attribute with optional fields set to `None`.
+    pub fn new() -> Attribute {
+        Attribute { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CancelSchemaExtensionRequest {
     #[doc="<p>The identifier of the directory whose schema extension will be canceled.</p>"]
@@ -80,7 +159,33 @@ pub struct CancelSchemaExtensionRequest {
     #[serde(rename="SchemaExtensionId")]
     pub schema_extension_id: String,
 }
-
+impl CancelSchemaExtensionRequest {
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelSchemaExtensionRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Sets `schema_extension_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelSchemaExtensionRequest.schema_extension_id = value.into();`.
+    pub fn schema_extension_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.schema_extension_id = value.into();
+        self
+    }
+    /// Returns a new instance of CancelSchemaExtensionRequest with optional fields set to `None`.
+    pub fn new<DirectoryIdType: Into<String>, SchemaExtensionIdType: Into<String>>
+        (directory_id: DirectoryIdType,
+         schema_extension_id: SchemaExtensionIdType)
+         -> CancelSchemaExtensionRequest {
+        CancelSchemaExtensionRequest {
+            directory_id: directory_id.into(),
+            schema_extension_id: schema_extension_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CancelSchemaExtensionResult;
 
@@ -100,7 +205,6 @@ pub struct Computer {
     #[serde(skip_serializing_if="Option::is_none")]
     pub computer_name: Option<String>,
 }
-
 #[doc="<p>Points to a remote domain with which you are setting up a trust relationship. Conditional forwarders are required in order to set up a trust relationship with another domain.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ConditionalForwarder {
@@ -117,7 +221,6 @@ pub struct ConditionalForwarder {
     #[serde(skip_serializing_if="Option::is_none")]
     pub replication_scope: Option<String>,
 }
-
 #[doc="<p>Contains the inputs for the <a>ConnectDirectory</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ConnectDirectoryRequest {
@@ -142,7 +245,70 @@ pub struct ConnectDirectoryRequest {
     #[serde(rename="Size")]
     pub size: String,
 }
-
+impl ConnectDirectoryRequest {
+    /// Sets `connect_settings`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConnectDirectoryRequest.connect_settings = value.into();`.
+    pub fn connect_settings<ValueType: Into<DirectoryConnectSettings>>(mut self,
+                                                                       value: ValueType)
+                                                                       -> Self {
+        self.connect_settings = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConnectDirectoryRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConnectDirectoryRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `password`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConnectDirectoryRequest.password = value.into();`.
+    pub fn password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.password = value.into();
+        self
+    }
+    /// Sets `short_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConnectDirectoryRequest.short_name = Some(value.into());`.
+    pub fn short_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.short_name = Some(value.into());
+        self
+    }
+    /// Sets `size`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConnectDirectoryRequest.size = value.into();`.
+    pub fn size<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.size = value.into();
+        self
+    }
+    /// Returns a new instance of ConnectDirectoryRequest with optional fields set to `None`.
+    pub fn new<ConnectSettingsType: Into<DirectoryConnectSettings>,
+               NameType: Into<String>,
+               PasswordType: Into<String>,
+               SizeType: Into<String>>
+        (connect_settings: ConnectSettingsType,
+         name: NameType,
+         password: PasswordType,
+         size: SizeType)
+         -> ConnectDirectoryRequest {
+        ConnectDirectoryRequest {
+            connect_settings: connect_settings.into(),
+            name: name.into(),
+            password: password.into(),
+            size: size.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the results of the <a>ConnectDirectory</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ConnectDirectoryResult {
@@ -151,7 +317,6 @@ pub struct ConnectDirectoryResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub directory_id: Option<String>,
 }
-
 #[doc="<p>Contains the inputs for the <a>CreateAlias</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateAliasRequest {
@@ -162,7 +327,30 @@ pub struct CreateAliasRequest {
     #[serde(rename="DirectoryId")]
     pub directory_id: String,
 }
-
+impl CreateAliasRequest {
+    /// Sets `alias`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAliasRequest.alias = value.into();`.
+    pub fn alias<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.alias = value.into();
+        self
+    }
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAliasRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateAliasRequest with optional fields set to `None`.
+pub fn new<AliasType: Into<String>, DirectoryIdType: Into<String>>(alias: AliasType, directory_id: DirectoryIdType) -> CreateAliasRequest{
+        CreateAliasRequest {
+            alias: alias.into(),
+            directory_id: directory_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the results of the <a>CreateAlias</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateAliasResult {
@@ -175,7 +363,6 @@ pub struct CreateAliasResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub directory_id: Option<String>,
 }
-
 #[doc="<p>Contains the inputs for the <a>CreateComputer</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateComputerRequest {
@@ -197,7 +384,62 @@ pub struct CreateComputerRequest {
     #[serde(rename="Password")]
     pub password: String,
 }
-
+impl CreateComputerRequest {
+    /// Sets `computer_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateComputerRequest.computer_attributes = Some(value.into());`.
+    pub fn computer_attributes<ValueType: Into<Vec<Attribute>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.computer_attributes = Some(value.into());
+        self
+    }
+    /// Sets `computer_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateComputerRequest.computer_name = value.into();`.
+    pub fn computer_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.computer_name = value.into();
+        self
+    }
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateComputerRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Sets `organizational_unit_distinguished_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateComputerRequest.organizational_unit_distinguished_name = Some(value.into());`.
+    pub fn organizational_unit_distinguished_name<ValueType: Into<String>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.organizational_unit_distinguished_name = Some(value.into());
+        self
+    }
+    /// Sets `password`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateComputerRequest.password = value.into();`.
+    pub fn password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.password = value.into();
+        self
+    }
+    /// Returns a new instance of CreateComputerRequest with optional fields set to `None`.
+    pub fn new<ComputerNameType: Into<String>,
+               DirectoryIdType: Into<String>,
+               PasswordType: Into<String>>
+        (computer_name: ComputerNameType,
+         directory_id: DirectoryIdType,
+         password: PasswordType)
+         -> CreateComputerRequest {
+        CreateComputerRequest {
+            computer_name: computer_name.into(),
+            directory_id: directory_id.into(),
+            password: password.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the results for the <a>CreateComputer</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateComputerResult {
@@ -206,7 +448,6 @@ pub struct CreateComputerResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub computer: Option<Computer>,
 }
-
 #[doc="<p>Initiates the creation of a conditional forwarder for your AWS Directory Service for Microsoft Active Directory. Conditional forwarders are required in order to set up a trust relationship with another domain.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateConditionalForwarderRequest {
@@ -220,7 +461,44 @@ pub struct CreateConditionalForwarderRequest {
     #[serde(rename="RemoteDomainName")]
     pub remote_domain_name: String,
 }
-
+impl CreateConditionalForwarderRequest {
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConditionalForwarderRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Sets `dns_ip_addrs`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConditionalForwarderRequest.dns_ip_addrs = value.into();`.
+    pub fn dns_ip_addrs<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.dns_ip_addrs = value.into();
+        self
+    }
+    /// Sets `remote_domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateConditionalForwarderRequest.remote_domain_name = value.into();`.
+    pub fn remote_domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.remote_domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateConditionalForwarderRequest with optional fields set to `None`.
+    pub fn new<DirectoryIdType: Into<String>,
+               DnsIpAddrsType: Into<Vec<String>>,
+               RemoteDomainNameType: Into<String>>
+        (directory_id: DirectoryIdType,
+         dns_ip_addrs: DnsIpAddrsType,
+         remote_domain_name: RemoteDomainNameType)
+         -> CreateConditionalForwarderRequest {
+        CreateConditionalForwarderRequest {
+            directory_id: directory_id.into(),
+            dns_ip_addrs: dns_ip_addrs.into(),
+            remote_domain_name: remote_domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The result of a CreateConditinalForwarder request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateConditionalForwarderResult;
@@ -250,7 +528,63 @@ pub struct CreateDirectoryRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vpc_settings: Option<DirectoryVpcSettings>,
 }
-
+impl CreateDirectoryRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDirectoryRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDirectoryRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `password`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDirectoryRequest.password = value.into();`.
+    pub fn password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.password = value.into();
+        self
+    }
+    /// Sets `short_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDirectoryRequest.short_name = Some(value.into());`.
+    pub fn short_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.short_name = Some(value.into());
+        self
+    }
+    /// Sets `size`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDirectoryRequest.size = value.into();`.
+    pub fn size<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.size = value.into();
+        self
+    }
+    /// Sets `vpc_settings`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDirectoryRequest.vpc_settings = Some(value.into());`.
+    pub fn vpc_settings<ValueType: Into<DirectoryVpcSettings>>(mut self, value: ValueType) -> Self {
+        self.vpc_settings = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateDirectoryRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>, PasswordType: Into<String>, SizeType: Into<String>>
+        (name: NameType,
+         password: PasswordType,
+         size: SizeType)
+         -> CreateDirectoryRequest {
+        CreateDirectoryRequest {
+            name: name.into(),
+            password: password.into(),
+            size: size.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the results of the <a>CreateDirectory</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateDirectoryResult {
@@ -259,7 +593,6 @@ pub struct CreateDirectoryResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub directory_id: Option<String>,
 }
-
 #[doc="<p>Creates a Microsoft AD in the AWS cloud.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateMicrosoftADRequest {
@@ -281,7 +614,58 @@ pub struct CreateMicrosoftADRequest {
     #[serde(rename="VpcSettings")]
     pub vpc_settings: DirectoryVpcSettings,
 }
-
+impl CreateMicrosoftADRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMicrosoftADRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMicrosoftADRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `password`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMicrosoftADRequest.password = value.into();`.
+    pub fn password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.password = value.into();
+        self
+    }
+    /// Sets `short_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMicrosoftADRequest.short_name = Some(value.into());`.
+    pub fn short_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.short_name = Some(value.into());
+        self
+    }
+    /// Sets `vpc_settings`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateMicrosoftADRequest.vpc_settings = value.into();`.
+    pub fn vpc_settings<ValueType: Into<DirectoryVpcSettings>>(mut self, value: ValueType) -> Self {
+        self.vpc_settings = value.into();
+        self
+    }
+    /// Returns a new instance of CreateMicrosoftADRequest with optional fields set to `None`.
+    pub fn new<NameType: Into<String>,
+               PasswordType: Into<String>,
+               VpcSettingsType: Into<DirectoryVpcSettings>>
+        (name: NameType,
+         password: PasswordType,
+         vpc_settings: VpcSettingsType)
+         -> CreateMicrosoftADRequest {
+        CreateMicrosoftADRequest {
+            name: name.into(),
+            password: password.into(),
+            vpc_settings: vpc_settings.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Result of a CreateMicrosoftAD request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateMicrosoftADResult {
@@ -290,7 +674,6 @@ pub struct CreateMicrosoftADResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub directory_id: Option<String>,
 }
-
 #[doc="<p>Contains the inputs for the <a>CreateSnapshot</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateSnapshotRequest {
@@ -302,7 +685,30 @@ pub struct CreateSnapshotRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
+impl CreateSnapshotRequest {
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSnapshotRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateSnapshotRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateSnapshotRequest with optional fields set to `None`.
+    pub fn new<DirectoryIdType: Into<String>>(directory_id: DirectoryIdType)
+                                              -> CreateSnapshotRequest {
+        CreateSnapshotRequest {
+            directory_id: directory_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the results of the <a>CreateSnapshot</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateSnapshotResult {
@@ -311,7 +717,6 @@ pub struct CreateSnapshotResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub snapshot_id: Option<String>,
 }
-
 #[doc="<p>AWS Directory Service for Microsoft Active Directory allows you to configure trust relationships. For example, you can establish a trust between your Microsoft AD in the AWS cloud, and your existing on-premises Microsoft Active Directory. This would allow you to provide users and groups access to resources in either domain, with a single set of credentials.</p> <p>This action initiates the creation of the AWS side of a trust relationship between a Microsoft AD in the AWS cloud and an external domain.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateTrustRequest {
@@ -336,7 +741,70 @@ pub struct CreateTrustRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub trust_type: Option<String>,
 }
-
+impl CreateTrustRequest {
+    /// Sets `conditional_forwarder_ip_addrs`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrustRequest.conditional_forwarder_ip_addrs = Some(value.into());`.
+    pub fn conditional_forwarder_ip_addrs<ValueType: Into<Vec<String>>>(mut self,
+                                                                        value: ValueType)
+                                                                        -> Self {
+        self.conditional_forwarder_ip_addrs = Some(value.into());
+        self
+    }
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrustRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Sets `remote_domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrustRequest.remote_domain_name = value.into();`.
+    pub fn remote_domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.remote_domain_name = value.into();
+        self
+    }
+    /// Sets `trust_direction`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrustRequest.trust_direction = value.into();`.
+    pub fn trust_direction<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.trust_direction = value.into();
+        self
+    }
+    /// Sets `trust_password`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrustRequest.trust_password = value.into();`.
+    pub fn trust_password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.trust_password = value.into();
+        self
+    }
+    /// Sets `trust_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTrustRequest.trust_type = Some(value.into());`.
+    pub fn trust_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.trust_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateTrustRequest with optional fields set to `None`.
+    pub fn new<DirectoryIdType: Into<String>,
+               RemoteDomainNameType: Into<String>,
+               TrustDirectionType: Into<String>,
+               TrustPasswordType: Into<String>>
+        (directory_id: DirectoryIdType,
+         remote_domain_name: RemoteDomainNameType,
+         trust_direction: TrustDirectionType,
+         trust_password: TrustPasswordType)
+         -> CreateTrustRequest {
+        CreateTrustRequest {
+            directory_id: directory_id.into(),
+            remote_domain_name: remote_domain_name.into(),
+            trust_direction: trust_direction.into(),
+            trust_password: trust_password.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The result of a CreateTrust request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateTrustResult {
@@ -345,7 +813,6 @@ pub struct CreateTrustResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub trust_id: Option<String>,
 }
-
 #[doc="<p>Deletes a conditional forwarder.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteConditionalForwarderRequest {
@@ -356,7 +823,33 @@ pub struct DeleteConditionalForwarderRequest {
     #[serde(rename="RemoteDomainName")]
     pub remote_domain_name: String,
 }
-
+impl DeleteConditionalForwarderRequest {
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteConditionalForwarderRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Sets `remote_domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteConditionalForwarderRequest.remote_domain_name = value.into();`.
+    pub fn remote_domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.remote_domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteConditionalForwarderRequest with optional fields set to `None`.
+    pub fn new<DirectoryIdType: Into<String>, RemoteDomainNameType: Into<String>>
+        (directory_id: DirectoryIdType,
+         remote_domain_name: RemoteDomainNameType)
+         -> DeleteConditionalForwarderRequest {
+        DeleteConditionalForwarderRequest {
+            directory_id: directory_id.into(),
+            remote_domain_name: remote_domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The result of a DeleteConditionalForwarder request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteConditionalForwarderResult;
@@ -368,7 +861,23 @@ pub struct DeleteDirectoryRequest {
     #[serde(rename="DirectoryId")]
     pub directory_id: String,
 }
-
+impl DeleteDirectoryRequest {
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDirectoryRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDirectoryRequest with optional fields set to `None`.
+    pub fn new<DirectoryIdType: Into<String>>(directory_id: DirectoryIdType)
+                                              -> DeleteDirectoryRequest {
+        DeleteDirectoryRequest {
+            directory_id: directory_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the results of the <a>DeleteDirectory</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteDirectoryResult {
@@ -377,7 +886,6 @@ pub struct DeleteDirectoryResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub directory_id: Option<String>,
 }
-
 #[doc="<p>Contains the inputs for the <a>DeleteSnapshot</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteSnapshotRequest {
@@ -385,7 +893,22 @@ pub struct DeleteSnapshotRequest {
     #[serde(rename="SnapshotId")]
     pub snapshot_id: String,
 }
-
+impl DeleteSnapshotRequest {
+    /// Sets `snapshot_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteSnapshotRequest.snapshot_id = value.into();`.
+    pub fn snapshot_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteSnapshotRequest with optional fields set to `None`.
+    pub fn new<SnapshotIdType: Into<String>>(snapshot_id: SnapshotIdType) -> DeleteSnapshotRequest {
+        DeleteSnapshotRequest {
+            snapshot_id: snapshot_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the results of the <a>DeleteSnapshot</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteSnapshotResult {
@@ -394,7 +917,6 @@ pub struct DeleteSnapshotResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub snapshot_id: Option<String>,
 }
-
 #[doc="<p>Deletes the local side of an existing trust relationship between the Microsoft AD in the AWS cloud and the external domain.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteTrustRequest {
@@ -406,7 +928,31 @@ pub struct DeleteTrustRequest {
     #[serde(rename="TrustId")]
     pub trust_id: String,
 }
-
+impl DeleteTrustRequest {
+    /// Sets `delete_associated_conditional_forwarder`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTrustRequest.delete_associated_conditional_forwarder = Some(value.into());`.
+    pub fn delete_associated_conditional_forwarder<ValueType: Into<bool>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.delete_associated_conditional_forwarder = Some(value.into());
+        self
+    }
+    /// Sets `trust_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTrustRequest.trust_id = value.into();`.
+    pub fn trust_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.trust_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteTrustRequest with optional fields set to `None`.
+    pub fn new<TrustIdType: Into<String>>(trust_id: TrustIdType) -> DeleteTrustRequest {
+        DeleteTrustRequest {
+            trust_id: trust_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The result of a DeleteTrust request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteTrustResult {
@@ -415,7 +961,6 @@ pub struct DeleteTrustResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub trust_id: Option<String>,
 }
-
 #[doc="<p>Removes the specified directory as a publisher to the specified SNS topic.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeregisterEventTopicRequest {
@@ -426,7 +971,33 @@ pub struct DeregisterEventTopicRequest {
     #[serde(rename="TopicName")]
     pub topic_name: String,
 }
-
+impl DeregisterEventTopicRequest {
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterEventTopicRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Sets `topic_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterEventTopicRequest.topic_name = value.into();`.
+    pub fn topic_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_name = value.into();
+        self
+    }
+    /// Returns a new instance of DeregisterEventTopicRequest with optional fields set to `None`.
+    pub fn new<DirectoryIdType: Into<String>, TopicNameType: Into<String>>
+        (directory_id: DirectoryIdType,
+         topic_name: TopicNameType)
+         -> DeregisterEventTopicRequest {
+        DeregisterEventTopicRequest {
+            directory_id: directory_id.into(),
+            topic_name: topic_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The result of a DeregisterEventTopic request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeregisterEventTopicResult;
@@ -442,7 +1013,30 @@ pub struct DescribeConditionalForwardersRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub remote_domain_names: Option<Vec<String>>,
 }
-
+impl DescribeConditionalForwardersRequest {
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConditionalForwardersRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Sets `remote_domain_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeConditionalForwardersRequest.remote_domain_names = Some(value.into());`.
+    pub fn remote_domain_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.remote_domain_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeConditionalForwardersRequest with optional fields set to `None`.
+    pub fn new<DirectoryIdType: Into<String>>(directory_id: DirectoryIdType)
+                                              -> DescribeConditionalForwardersRequest {
+        DescribeConditionalForwardersRequest {
+            directory_id: directory_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The result of a DescribeConditionalForwarder request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeConditionalForwardersResult {
@@ -451,7 +1045,6 @@ pub struct DescribeConditionalForwardersResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub conditional_forwarders: Option<Vec<ConditionalForwarder>>,
 }
-
 #[doc="<p>Contains the inputs for the <a>DescribeDirectories</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeDirectoriesRequest {
@@ -468,7 +1061,33 @@ pub struct DescribeDirectoriesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeDirectoriesRequest {
+    /// Sets `directory_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDirectoriesRequest.directory_ids = Some(value.into());`.
+    pub fn directory_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.directory_ids = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDirectoriesRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDirectoriesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDirectoriesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeDirectoriesRequest {
+        DescribeDirectoriesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the results of the <a>DescribeDirectories</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeDirectoriesResult {
@@ -481,7 +1100,6 @@ pub struct DescribeDirectoriesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeDomainControllersRequest {
     #[doc="<p>Identifier of the directory for which to retrieve the domain controller information.</p>"]
@@ -500,7 +1118,44 @@ pub struct DescribeDomainControllersRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeDomainControllersRequest {
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDomainControllersRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Sets `domain_controller_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDomainControllersRequest.domain_controller_ids = Some(value.into());`.
+    pub fn domain_controller_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.domain_controller_ids = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDomainControllersRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeDomainControllersRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeDomainControllersRequest with optional fields set to `None`.
+    pub fn new<DirectoryIdType: Into<String>>(directory_id: DirectoryIdType)
+                                              -> DescribeDomainControllersRequest {
+        DescribeDomainControllersRequest {
+            directory_id: directory_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeDomainControllersResult {
     #[doc="<p>List of the <a>DomainController</a> objects that were retrieved.</p>"]
@@ -512,7 +1167,6 @@ pub struct DescribeDomainControllersResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Describes event topics.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeEventTopicsRequest {
@@ -525,7 +1179,26 @@ pub struct DescribeEventTopicsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub topic_names: Option<Vec<String>>,
 }
-
+impl DescribeEventTopicsRequest {
+    /// Sets `directory_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventTopicsRequest.directory_id = Some(value.into());`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = Some(value.into());
+        self
+    }
+    /// Sets `topic_names`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeEventTopicsRequest.topic_names = Some(value.into());`.
+    pub fn topic_names<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.topic_names = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeEventTopicsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeEventTopicsRequest {
+        DescribeEventTopicsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The result of a DescribeEventTopic request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeEventTopicsResult {
@@ -534,7 +1207,6 @@ pub struct DescribeEventTopicsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub event_topics: Option<Vec<EventTopic>>,
 }
-
 #[doc="<p>Contains the inputs for the <a>DescribeSnapshots</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeSnapshotsRequest {
@@ -555,7 +1227,40 @@ pub struct DescribeSnapshotsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub snapshot_ids: Option<Vec<String>>,
 }
-
+impl DescribeSnapshotsRequest {
+    /// Sets `directory_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSnapshotsRequest.directory_id = Some(value.into());`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSnapshotsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSnapshotsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `snapshot_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeSnapshotsRequest.snapshot_ids = Some(value.into());`.
+    pub fn snapshot_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.snapshot_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeSnapshotsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeSnapshotsRequest {
+        DescribeSnapshotsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Contains the results of the <a>DescribeSnapshots</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeSnapshotsResult {
@@ -568,7 +1273,6 @@ pub struct DescribeSnapshotsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub snapshots: Option<Vec<Snapshot>>,
 }
-
 #[doc="<p>Describes the trust relationships for a particular Microsoft AD in the AWS cloud. If no input parameters are are provided, such as directory ID or trust ID, this request describes all the trust relationships.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeTrustsRequest {
@@ -589,7 +1293,40 @@ pub struct DescribeTrustsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub trust_ids: Option<Vec<String>>,
 }
-
+impl DescribeTrustsRequest {
+    /// Sets `directory_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTrustsRequest.directory_id = Some(value.into());`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = Some(value.into());
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTrustsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTrustsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `trust_ids`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeTrustsRequest.trust_ids = Some(value.into());`.
+    pub fn trust_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.trust_ids = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeTrustsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeTrustsRequest {
+        DescribeTrustsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The result of a DescribeTrust request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeTrustsResult {
@@ -602,7 +1339,6 @@ pub struct DescribeTrustsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub trusts: Option<Vec<Trust>>,
 }
-
 #[doc="<p>Contains information for the <a>ConnectDirectory</a> operation when an AD Connector directory is being created.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DirectoryConnectSettings {
@@ -619,7 +1355,54 @@ pub struct DirectoryConnectSettings {
     #[serde(rename="VpcId")]
     pub vpc_id: String,
 }
-
+impl DirectoryConnectSettings {
+    /// Sets `customer_dns_ips`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DirectoryConnectSettings.customer_dns_ips = value.into();`.
+    pub fn customer_dns_ips<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.customer_dns_ips = value.into();
+        self
+    }
+    /// Sets `customer_user_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DirectoryConnectSettings.customer_user_name = value.into();`.
+    pub fn customer_user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.customer_user_name = value.into();
+        self
+    }
+    /// Sets `subnet_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DirectoryConnectSettings.subnet_ids = value.into();`.
+    pub fn subnet_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.subnet_ids = value.into();
+        self
+    }
+    /// Sets `vpc_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DirectoryConnectSettings.vpc_id = value.into();`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = value.into();
+        self
+    }
+    /// Returns a new instance of DirectoryConnectSettings with optional fields set to `None`.
+    pub fn new<CustomerDnsIpsType: Into<Vec<String>>,
+               CustomerUserNameType: Into<String>,
+               SubnetIdsType: Into<Vec<String>>,
+               VpcIdType: Into<String>>
+        (customer_dns_ips: CustomerDnsIpsType,
+         customer_user_name: CustomerUserNameType,
+         subnet_ids: SubnetIdsType,
+         vpc_id: VpcIdType)
+         -> DirectoryConnectSettings {
+        DirectoryConnectSettings {
+            customer_dns_ips: customer_dns_ips.into(),
+            customer_user_name: customer_user_name.into(),
+            subnet_ids: subnet_ids.into(),
+            vpc_id: vpc_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains information about an AD Connector directory.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DirectoryConnectSettingsDescription {
@@ -648,7 +1431,6 @@ pub struct DirectoryConnectSettingsDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vpc_id: Option<String>,
 }
-
 #[doc="<p>Contains information about an AWS Directory Service directory.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DirectoryDescription {
@@ -729,7 +1511,6 @@ pub struct DirectoryDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vpc_settings: Option<DirectoryVpcSettingsDescription>,
 }
-
 #[doc="<p>Contains directory limit information for a region.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DirectoryLimits {
@@ -770,7 +1551,6 @@ pub struct DirectoryLimits {
     #[serde(skip_serializing_if="Option::is_none")]
     pub connected_directories_limit_reached: Option<bool>,
 }
-
 #[doc="<p>Contains VPC information for the <a>CreateDirectory</a> or <a>CreateMicrosoftAD</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DirectoryVpcSettings {
@@ -781,7 +1561,33 @@ pub struct DirectoryVpcSettings {
     #[serde(rename="VpcId")]
     pub vpc_id: String,
 }
-
+impl DirectoryVpcSettings {
+    /// Sets `subnet_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DirectoryVpcSettings.subnet_ids = value.into();`.
+    pub fn subnet_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.subnet_ids = value.into();
+        self
+    }
+    /// Sets `vpc_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DirectoryVpcSettings.vpc_id = value.into();`.
+    pub fn vpc_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.vpc_id = value.into();
+        self
+    }
+    /// Returns a new instance of DirectoryVpcSettings with optional fields set to `None`.
+    pub fn new<SubnetIdsType: Into<Vec<String>>, VpcIdType: Into<String>>
+        (subnet_ids: SubnetIdsType,
+         vpc_id: VpcIdType)
+         -> DirectoryVpcSettings {
+        DirectoryVpcSettings {
+            subnet_ids: subnet_ids.into(),
+            vpc_id: vpc_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains information about the directory.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DirectoryVpcSettingsDescription {
@@ -802,7 +1608,6 @@ pub struct DirectoryVpcSettingsDescription {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vpc_id: Option<String>,
 }
-
 #[doc="<p>Contains the inputs for the <a>DisableRadius</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DisableRadiusRequest {
@@ -810,7 +1615,23 @@ pub struct DisableRadiusRequest {
     #[serde(rename="DirectoryId")]
     pub directory_id: String,
 }
-
+impl DisableRadiusRequest {
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableRadiusRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Returns a new instance of DisableRadiusRequest with optional fields set to `None`.
+    pub fn new<DirectoryIdType: Into<String>>(directory_id: DirectoryIdType)
+                                              -> DisableRadiusRequest {
+        DisableRadiusRequest {
+            directory_id: directory_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the results of the <a>DisableRadius</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DisableRadiusResult;
@@ -830,7 +1651,36 @@ pub struct DisableSsoRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_name: Option<String>,
 }
-
+impl DisableSsoRequest {
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableSsoRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Sets `password`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableSsoRequest.password = Some(value.into());`.
+    pub fn password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.password = Some(value.into());
+        self
+    }
+    /// Sets `user_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisableSsoRequest.user_name = Some(value.into());`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DisableSsoRequest with optional fields set to `None`.
+    pub fn new<DirectoryIdType: Into<String>>(directory_id: DirectoryIdType) -> DisableSsoRequest {
+        DisableSsoRequest {
+            directory_id: directory_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the results of the <a>DisableSso</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DisableSsoResult;
@@ -879,7 +1729,6 @@ pub struct DomainController {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vpc_id: Option<String>,
 }
-
 #[doc="<p>Contains the inputs for the <a>EnableRadius</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct EnableRadiusRequest {
@@ -890,7 +1739,33 @@ pub struct EnableRadiusRequest {
     #[serde(rename="RadiusSettings")]
     pub radius_settings: RadiusSettings,
 }
-
+impl EnableRadiusRequest {
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableRadiusRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Sets `radius_settings`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableRadiusRequest.radius_settings = value.into();`.
+    pub fn radius_settings<ValueType: Into<RadiusSettings>>(mut self, value: ValueType) -> Self {
+        self.radius_settings = value.into();
+        self
+    }
+    /// Returns a new instance of EnableRadiusRequest with optional fields set to `None`.
+    pub fn new<DirectoryIdType: Into<String>, RadiusSettingsType: Into<RadiusSettings>>
+        (directory_id: DirectoryIdType,
+         radius_settings: RadiusSettingsType)
+         -> EnableRadiusRequest {
+        EnableRadiusRequest {
+            directory_id: directory_id.into(),
+            radius_settings: radius_settings.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the results of the <a>EnableRadius</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EnableRadiusResult;
@@ -910,7 +1785,36 @@ pub struct EnableSsoRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_name: Option<String>,
 }
-
+impl EnableSsoRequest {
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableSsoRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Sets `password`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableSsoRequest.password = Some(value.into());`.
+    pub fn password<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.password = Some(value.into());
+        self
+    }
+    /// Sets `user_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `EnableSsoRequest.user_name = Some(value.into());`.
+    pub fn user_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of EnableSsoRequest with optional fields set to `None`.
+    pub fn new<DirectoryIdType: Into<String>>(directory_id: DirectoryIdType) -> EnableSsoRequest {
+        EnableSsoRequest {
+            directory_id: directory_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the results of the <a>EnableSso</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct EnableSsoResult;
@@ -939,7 +1843,6 @@ pub struct EventTopic {
     #[serde(skip_serializing_if="Option::is_none")]
     pub topic_name: Option<String>,
 }
-
 #[doc="<p>Contains the inputs for the <a>GetDirectoryLimits</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDirectoryLimitsRequest;
@@ -952,7 +1855,6 @@ pub struct GetDirectoryLimitsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub directory_limits: Option<DirectoryLimits>,
 }
-
 #[doc="<p>Contains the inputs for the <a>GetSnapshotLimits</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetSnapshotLimitsRequest {
@@ -960,7 +1862,23 @@ pub struct GetSnapshotLimitsRequest {
     #[serde(rename="DirectoryId")]
     pub directory_id: String,
 }
-
+impl GetSnapshotLimitsRequest {
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSnapshotLimitsRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetSnapshotLimitsRequest with optional fields set to `None`.
+    pub fn new<DirectoryIdType: Into<String>>(directory_id: DirectoryIdType)
+                                              -> GetSnapshotLimitsRequest {
+        GetSnapshotLimitsRequest {
+            directory_id: directory_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the results of the <a>GetSnapshotLimits</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetSnapshotLimitsResult {
@@ -969,7 +1887,6 @@ pub struct GetSnapshotLimitsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub snapshot_limits: Option<SnapshotLimits>,
 }
-
 #[doc="<p>IP address block. This is often the address block of the DNS server used for your on-premises domain. </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct IpRoute {
@@ -982,7 +1899,26 @@ pub struct IpRoute {
     #[serde(skip_serializing_if="Option::is_none")]
     pub description: Option<String>,
 }
-
+impl IpRoute {
+    /// Sets `cidr_ip`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IpRoute.cidr_ip = Some(value.into());`.
+    pub fn cidr_ip<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.cidr_ip = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `IpRoute.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Returns a new instance of IpRoute with optional fields set to `None`.
+    pub fn new() -> IpRoute {
+        IpRoute { ..Default::default() }
+    }
+}
 #[doc="<p>Information about one or more IP address blocks.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct IpRouteInfo {
@@ -1011,7 +1947,6 @@ pub struct IpRouteInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub ip_route_status_reason: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListIpRoutesRequest {
     #[doc="<p>Identifier (ID) of the directory for which you want to retrieve the IP addresses.</p>"]
@@ -1026,7 +1961,37 @@ pub struct ListIpRoutesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListIpRoutesRequest {
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListIpRoutesRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListIpRoutesRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListIpRoutesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListIpRoutesRequest with optional fields set to `None`.
+    pub fn new<DirectoryIdType: Into<String>>(directory_id: DirectoryIdType)
+                                              -> ListIpRoutesRequest {
+        ListIpRoutesRequest {
+            directory_id: directory_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListIpRoutesResult {
     #[doc="<p>A list of <a>IpRoute</a>s.</p>"]
@@ -1038,7 +2003,6 @@ pub struct ListIpRoutesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListSchemaExtensionsRequest {
     #[doc="<p>The identifier of the directory from which to retrieve the schema extension information.</p>"]
@@ -1053,7 +2017,37 @@ pub struct ListSchemaExtensionsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListSchemaExtensionsRequest {
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListSchemaExtensionsRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListSchemaExtensionsRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListSchemaExtensionsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListSchemaExtensionsRequest with optional fields set to `None`.
+    pub fn new<DirectoryIdType: Into<String>>(directory_id: DirectoryIdType)
+                                              -> ListSchemaExtensionsRequest {
+        ListSchemaExtensionsRequest {
+            directory_id: directory_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListSchemaExtensionsResult {
     #[doc="<p>If not null, more results are available. Pass this value for the <code>NextToken</code> parameter in a subsequent call to <code>ListSchemaExtensions</code> to retrieve the next set of items.</p>"]
@@ -1065,7 +2059,6 @@ pub struct ListSchemaExtensionsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub schema_extensions_info: Option<Vec<SchemaExtensionInfo>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTagsForResourceRequest {
     #[doc="<p>Reserved for future use.</p>"]
@@ -1080,7 +2073,37 @@ pub struct ListTagsForResourceRequest {
     #[serde(rename="ResourceId")]
     pub resource_id: String,
 }
-
+impl ListTagsForResourceRequest {
+    /// Sets `limit`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForResourceRequest.limit = Some(value.into());`.
+    pub fn limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.limit = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForResourceRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTagsForResourceRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListTagsForResourceRequest with optional fields set to `None`.
+    pub fn new<ResourceIdType: Into<String>>(resource_id: ResourceIdType)
+                                             -> ListTagsForResourceRequest {
+        ListTagsForResourceRequest {
+            resource_id: resource_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTagsForResourceResult {
     #[doc="<p>Reserved for future use.</p>"]
@@ -1092,7 +2115,6 @@ pub struct ListTagsForResourceResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tags: Option<Vec<Tag>>,
 }
-
 #[doc="<p>Contains information about a Remote Authentication Dial In User Service (RADIUS) server.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct RadiusSettings {
@@ -1129,7 +2151,68 @@ pub struct RadiusSettings {
     #[serde(skip_serializing_if="Option::is_none")]
     pub use_same_username: Option<bool>,
 }
-
+impl RadiusSettings {
+    /// Sets `authentication_protocol`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RadiusSettings.authentication_protocol = Some(value.into());`.
+    pub fn authentication_protocol<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.authentication_protocol = Some(value.into());
+        self
+    }
+    /// Sets `display_label`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RadiusSettings.display_label = Some(value.into());`.
+    pub fn display_label<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.display_label = Some(value.into());
+        self
+    }
+    /// Sets `radius_port`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RadiusSettings.radius_port = Some(value.into());`.
+    pub fn radius_port<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.radius_port = Some(value.into());
+        self
+    }
+    /// Sets `radius_retries`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RadiusSettings.radius_retries = Some(value.into());`.
+    pub fn radius_retries<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.radius_retries = Some(value.into());
+        self
+    }
+    /// Sets `radius_servers`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RadiusSettings.radius_servers = Some(value.into());`.
+    pub fn radius_servers<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.radius_servers = Some(value.into());
+        self
+    }
+    /// Sets `radius_timeout`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RadiusSettings.radius_timeout = Some(value.into());`.
+    pub fn radius_timeout<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.radius_timeout = Some(value.into());
+        self
+    }
+    /// Sets `shared_secret`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RadiusSettings.shared_secret = Some(value.into());`.
+    pub fn shared_secret<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.shared_secret = Some(value.into());
+        self
+    }
+    /// Sets `use_same_username`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RadiusSettings.use_same_username = Some(value.into());`.
+    pub fn use_same_username<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.use_same_username = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RadiusSettings with optional fields set to `None`.
+    pub fn new() -> RadiusSettings {
+        RadiusSettings { ..Default::default() }
+    }
+}
 #[doc="<p>Registers a new event topic.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RegisterEventTopicRequest {
@@ -1140,7 +2223,33 @@ pub struct RegisterEventTopicRequest {
     #[serde(rename="TopicName")]
     pub topic_name: String,
 }
-
+impl RegisterEventTopicRequest {
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterEventTopicRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Sets `topic_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterEventTopicRequest.topic_name = value.into();`.
+    pub fn topic_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_name = value.into();
+        self
+    }
+    /// Returns a new instance of RegisterEventTopicRequest with optional fields set to `None`.
+    pub fn new<DirectoryIdType: Into<String>, TopicNameType: Into<String>>
+        (directory_id: DirectoryIdType,
+         topic_name: TopicNameType)
+         -> RegisterEventTopicRequest {
+        RegisterEventTopicRequest {
+            directory_id: directory_id.into(),
+            topic_name: topic_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The result of a RegisterEventTopic request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RegisterEventTopicResult;
@@ -1154,7 +2263,33 @@ pub struct RemoveIpRoutesRequest {
     #[serde(rename="DirectoryId")]
     pub directory_id: String,
 }
-
+impl RemoveIpRoutesRequest {
+    /// Sets `cidr_ips`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveIpRoutesRequest.cidr_ips = value.into();`.
+    pub fn cidr_ips<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.cidr_ips = value.into();
+        self
+    }
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveIpRoutesRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveIpRoutesRequest with optional fields set to `None`.
+    pub fn new<CidrIpsType: Into<Vec<String>>, DirectoryIdType: Into<String>>
+        (cidr_ips: CidrIpsType,
+         directory_id: DirectoryIdType)
+         -> RemoveIpRoutesRequest {
+        RemoveIpRoutesRequest {
+            cidr_ips: cidr_ips.into(),
+            directory_id: directory_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RemoveIpRoutesResult;
 
@@ -1167,7 +2302,33 @@ pub struct RemoveTagsFromResourceRequest {
     #[serde(rename="TagKeys")]
     pub tag_keys: Vec<String>,
 }
-
+impl RemoveTagsFromResourceRequest {
+    /// Sets `resource_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromResourceRequest.resource_id = value.into();`.
+    pub fn resource_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.resource_id = value.into();
+        self
+    }
+    /// Sets `tag_keys`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemoveTagsFromResourceRequest.tag_keys = value.into();`.
+    pub fn tag_keys<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.tag_keys = value.into();
+        self
+    }
+    /// Returns a new instance of RemoveTagsFromResourceRequest with optional fields set to `None`.
+    pub fn new<ResourceIdType: Into<String>, TagKeysType: Into<Vec<String>>>
+        (resource_id: ResourceIdType,
+         tag_keys: TagKeysType)
+         -> RemoveTagsFromResourceRequest {
+        RemoveTagsFromResourceRequest {
+            resource_id: resource_id.into(),
+            tag_keys: tag_keys.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RemoveTagsFromResourceResult;
 
@@ -1178,7 +2339,23 @@ pub struct RestoreFromSnapshotRequest {
     #[serde(rename="SnapshotId")]
     pub snapshot_id: String,
 }
-
+impl RestoreFromSnapshotRequest {
+    /// Sets `snapshot_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RestoreFromSnapshotRequest.snapshot_id = value.into();`.
+    pub fn snapshot_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.snapshot_id = value.into();
+        self
+    }
+    /// Returns a new instance of RestoreFromSnapshotRequest with optional fields set to `None`.
+    pub fn new<SnapshotIdType: Into<String>>(snapshot_id: SnapshotIdType)
+                                             -> RestoreFromSnapshotRequest {
+        RestoreFromSnapshotRequest {
+            snapshot_id: snapshot_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the results of the <a>RestoreFromSnapshot</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RestoreFromSnapshotResult;
@@ -1215,7 +2392,6 @@ pub struct SchemaExtensionInfo {
     #[serde(skip_serializing_if="Option::is_none")]
     pub start_date_time: Option<f64>,
 }
-
 #[doc="<p>Describes a directory snapshot.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Snapshot {
@@ -1244,7 +2420,6 @@ pub struct Snapshot {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>Contains manual snapshot limit information for a directory.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SnapshotLimits {
@@ -1261,7 +2436,6 @@ pub struct SnapshotLimits {
     #[serde(skip_serializing_if="Option::is_none")]
     pub manual_snapshots_limit_reached: Option<bool>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StartSchemaExtensionRequest {
     #[doc="<p>If true, creates a snapshot of the directory before applying the schema extension.</p>"]
@@ -1277,7 +2451,56 @@ pub struct StartSchemaExtensionRequest {
     #[serde(rename="LdifContent")]
     pub ldif_content: String,
 }
-
+impl StartSchemaExtensionRequest {
+    /// Sets `create_snapshot_before_schema_extension`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartSchemaExtensionRequest.create_snapshot_before_schema_extension = value.into();`.
+    pub fn create_snapshot_before_schema_extension<ValueType: Into<bool>>(mut self,
+                                                                          value: ValueType)
+                                                                          -> Self {
+        self.create_snapshot_before_schema_extension = value.into();
+        self
+    }
+    /// Sets `description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartSchemaExtensionRequest.description = value.into();`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = value.into();
+        self
+    }
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartSchemaExtensionRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Sets `ldif_content`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StartSchemaExtensionRequest.ldif_content = value.into();`.
+    pub fn ldif_content<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ldif_content = value.into();
+        self
+    }
+    /// Returns a new instance of StartSchemaExtensionRequest with optional fields set to `None`.
+    pub fn new<CreateSnapshotBeforeSchemaExtensionType: Into<bool>,
+               DescriptionType: Into<String>,
+               DirectoryIdType: Into<String>,
+               LdifContentType: Into<String>>
+        (create_snapshot_before_schema_extension: CreateSnapshotBeforeSchemaExtensionType,
+         description: DescriptionType,
+         directory_id: DirectoryIdType,
+         ldif_content: LdifContentType)
+         -> StartSchemaExtensionRequest {
+        StartSchemaExtensionRequest {
+            create_snapshot_before_schema_extension: create_snapshot_before_schema_extension.into(),
+            description: description.into(),
+            directory_id: directory_id.into(),
+            ldif_content: ldif_content.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StartSchemaExtensionResult {
     #[doc="<p>The identifier of the schema extension that will be applied.</p>"]
@@ -1285,7 +2508,6 @@ pub struct StartSchemaExtensionResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub schema_extension_id: Option<String>,
 }
-
 #[doc="<p>Metadata assigned to a directory consisting of a key-value pair.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Tag {
@@ -1296,7 +2518,32 @@ pub struct Tag {
     #[serde(rename="Value")]
     pub value: String,
 }
-
+impl Tag {
+    /// Sets `key`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.key = value.into();`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = value.into();
+        self
+    }
+    /// Sets `value`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Tag.value = value.into();`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = value.into();
+        self
+    }
+    /// Returns a new instance of Tag with optional fields set to `None`.
+    pub fn new<KeyType: Into<String>, ValueType: Into<String>>(key: KeyType,
+                                                               value: ValueType)
+                                                               -> Tag {
+        Tag {
+            key: key.into(),
+            value: value.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Describes a trust relationship between an Microsoft AD in the AWS cloud and an external domain.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Trust {
@@ -1341,7 +2588,6 @@ pub struct Trust {
     #[serde(skip_serializing_if="Option::is_none")]
     pub trust_type: Option<String>,
 }
-
 #[doc="<p>Updates a conditional forwarder.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateConditionalForwarderRequest {
@@ -1355,7 +2601,44 @@ pub struct UpdateConditionalForwarderRequest {
     #[serde(rename="RemoteDomainName")]
     pub remote_domain_name: String,
 }
-
+impl UpdateConditionalForwarderRequest {
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateConditionalForwarderRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Sets `dns_ip_addrs`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateConditionalForwarderRequest.dns_ip_addrs = value.into();`.
+    pub fn dns_ip_addrs<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.dns_ip_addrs = value.into();
+        self
+    }
+    /// Sets `remote_domain_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateConditionalForwarderRequest.remote_domain_name = value.into();`.
+    pub fn remote_domain_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.remote_domain_name = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateConditionalForwarderRequest with optional fields set to `None`.
+    pub fn new<DirectoryIdType: Into<String>,
+               DnsIpAddrsType: Into<Vec<String>>,
+               RemoteDomainNameType: Into<String>>
+        (directory_id: DirectoryIdType,
+         dns_ip_addrs: DnsIpAddrsType,
+         remote_domain_name: RemoteDomainNameType)
+         -> UpdateConditionalForwarderRequest {
+        UpdateConditionalForwarderRequest {
+            directory_id: directory_id.into(),
+            dns_ip_addrs: dns_ip_addrs.into(),
+            remote_domain_name: remote_domain_name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The result of an UpdateConditionalForwarder request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateConditionalForwarderResult;
@@ -1369,7 +2652,33 @@ pub struct UpdateNumberOfDomainControllersRequest {
     #[serde(rename="DirectoryId")]
     pub directory_id: String,
 }
-
+impl UpdateNumberOfDomainControllersRequest {
+    /// Sets `desired_number`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNumberOfDomainControllersRequest.desired_number = value.into();`.
+    pub fn desired_number<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.desired_number = value.into();
+        self
+    }
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNumberOfDomainControllersRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateNumberOfDomainControllersRequest with optional fields set to `None`.
+    pub fn new<DesiredNumberType: Into<i64>, DirectoryIdType: Into<String>>
+        (desired_number: DesiredNumberType,
+         directory_id: DirectoryIdType)
+         -> UpdateNumberOfDomainControllersRequest {
+        UpdateNumberOfDomainControllersRequest {
+            desired_number: desired_number.into(),
+            directory_id: directory_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateNumberOfDomainControllersResult;
 
@@ -1383,7 +2692,33 @@ pub struct UpdateRadiusRequest {
     #[serde(rename="RadiusSettings")]
     pub radius_settings: RadiusSettings,
 }
-
+impl UpdateRadiusRequest {
+    /// Sets `directory_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRadiusRequest.directory_id = value.into();`.
+    pub fn directory_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.directory_id = value.into();
+        self
+    }
+    /// Sets `radius_settings`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateRadiusRequest.radius_settings = value.into();`.
+    pub fn radius_settings<ValueType: Into<RadiusSettings>>(mut self, value: ValueType) -> Self {
+        self.radius_settings = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateRadiusRequest with optional fields set to `None`.
+    pub fn new<DirectoryIdType: Into<String>, RadiusSettingsType: Into<RadiusSettings>>
+        (directory_id: DirectoryIdType,
+         radius_settings: RadiusSettingsType)
+         -> UpdateRadiusRequest {
+        UpdateRadiusRequest {
+            directory_id: directory_id.into(),
+            radius_settings: radius_settings.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Contains the results of the <a>UpdateRadius</a> operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateRadiusResult;
@@ -1395,7 +2730,22 @@ pub struct VerifyTrustRequest {
     #[serde(rename="TrustId")]
     pub trust_id: String,
 }
-
+impl VerifyTrustRequest {
+    /// Sets `trust_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `VerifyTrustRequest.trust_id = value.into();`.
+    pub fn trust_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.trust_id = value.into();
+        self
+    }
+    /// Returns a new instance of VerifyTrustRequest with optional fields set to `None`.
+    pub fn new<TrustIdType: Into<String>>(trust_id: TrustIdType) -> VerifyTrustRequest {
+        VerifyTrustRequest {
+            trust_id: trust_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Result of a VerifyTrust request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct VerifyTrustResult {
@@ -1404,7 +2754,6 @@ pub struct VerifyTrustResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub trust_id: Option<String>,
 }
-
 /// Errors returned by AddIpRoutes
 #[derive(Debug, PartialEq)]
 pub enum AddIpRoutesError {

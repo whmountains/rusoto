@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -60,7 +61,6 @@ pub struct AccountSettings {
     #[serde(skip_serializing_if="Option::is_none")]
     pub unmetered_remote_access_devices: Option<::std::collections::HashMap<String, i64>>,
 }
-
 #[doc="<p>Represents the output of a test. Examples of artifacts include logs and screenshots.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Artifact {
@@ -85,7 +85,6 @@ pub struct Artifact {
     #[serde(skip_serializing_if="Option::is_none")]
     pub url: Option<String>,
 }
-
 #[doc="<p>Represents the amount of CPU that an app is using on a physical device.</p> <p>Note that this does not represent system-wide CPU usage.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CPU {
@@ -102,7 +101,6 @@ pub struct CPU {
     #[serde(skip_serializing_if="Option::is_none")]
     pub frequency: Option<String>,
 }
-
 #[doc="<p>Represents entity counters.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Counters {
@@ -135,7 +133,6 @@ pub struct Counters {
     #[serde(skip_serializing_if="Option::is_none")]
     pub warned: Option<i64>,
 }
-
 #[doc="<p>Represents a request to the create device pool operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateDevicePoolRequest {
@@ -153,7 +150,49 @@ pub struct CreateDevicePoolRequest {
     #[serde(rename="rules")]
     pub rules: Vec<Rule>,
 }
-
+impl CreateDevicePoolRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDevicePoolRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDevicePoolRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `project_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDevicePoolRequest.project_arn = value.into();`.
+    pub fn project_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.project_arn = value.into();
+        self
+    }
+    /// Sets `rules`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateDevicePoolRequest.rules = value.into();`.
+    pub fn rules<ValueType: Into<Vec<Rule>>>(mut self, value: ValueType) -> Self {
+        self.rules = value.into();
+        self
+    }
+    /// Returns a new instance of CreateDevicePoolRequest with optional fields set to `None`.
+    pub fn new<nameType: Into<String>, projectArnType: Into<String>, rulesType: Into<Vec<Rule>>>
+        (name: nameType,
+         project_arn: projectArnType,
+         rules: rulesType)
+         -> CreateDevicePoolRequest {
+        CreateDevicePoolRequest {
+            name: name.into(),
+            project_arn: project_arn.into(),
+            rules: rules.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a create device pool request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateDevicePoolResult {
@@ -162,7 +201,6 @@ pub struct CreateDevicePoolResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub device_pool: Option<DevicePool>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateNetworkProfileRequest {
     #[doc="<p>The description of the network profile.</p>"]
@@ -212,7 +250,103 @@ pub struct CreateNetworkProfileRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub uplink_loss_percent: Option<i64>,
 }
-
+impl CreateNetworkProfileRequest {
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkProfileRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `downlink_bandwidth_bits`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkProfileRequest.downlink_bandwidth_bits = Some(value.into());`.
+    pub fn downlink_bandwidth_bits<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.downlink_bandwidth_bits = Some(value.into());
+        self
+    }
+    /// Sets `downlink_delay_ms`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkProfileRequest.downlink_delay_ms = Some(value.into());`.
+    pub fn downlink_delay_ms<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.downlink_delay_ms = Some(value.into());
+        self
+    }
+    /// Sets `downlink_jitter_ms`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkProfileRequest.downlink_jitter_ms = Some(value.into());`.
+    pub fn downlink_jitter_ms<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.downlink_jitter_ms = Some(value.into());
+        self
+    }
+    /// Sets `downlink_loss_percent`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkProfileRequest.downlink_loss_percent = Some(value.into());`.
+    pub fn downlink_loss_percent<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.downlink_loss_percent = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkProfileRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `project_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkProfileRequest.project_arn = value.into();`.
+    pub fn project_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.project_arn = value.into();
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkProfileRequest.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Sets `uplink_bandwidth_bits`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkProfileRequest.uplink_bandwidth_bits = Some(value.into());`.
+    pub fn uplink_bandwidth_bits<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.uplink_bandwidth_bits = Some(value.into());
+        self
+    }
+    /// Sets `uplink_delay_ms`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkProfileRequest.uplink_delay_ms = Some(value.into());`.
+    pub fn uplink_delay_ms<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.uplink_delay_ms = Some(value.into());
+        self
+    }
+    /// Sets `uplink_jitter_ms`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkProfileRequest.uplink_jitter_ms = Some(value.into());`.
+    pub fn uplink_jitter_ms<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.uplink_jitter_ms = Some(value.into());
+        self
+    }
+    /// Sets `uplink_loss_percent`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateNetworkProfileRequest.uplink_loss_percent = Some(value.into());`.
+    pub fn uplink_loss_percent<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.uplink_loss_percent = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateNetworkProfileRequest with optional fields set to `None`.
+    pub fn new<nameType: Into<String>, projectArnType: Into<String>>
+        (name: nameType,
+         project_arn: projectArnType)
+         -> CreateNetworkProfileRequest {
+        CreateNetworkProfileRequest {
+            name: name.into(),
+            project_arn: project_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateNetworkProfileResult {
     #[doc="<p>The network profile that is returned by the create network profile request.</p>"]
@@ -220,7 +354,6 @@ pub struct CreateNetworkProfileResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub network_profile: Option<NetworkProfile>,
 }
-
 #[doc="<p>Represents a request to the create project operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateProjectRequest {
@@ -232,7 +365,29 @@ pub struct CreateProjectRequest {
     #[serde(rename="name")]
     pub name: String,
 }
-
+impl CreateProjectRequest {
+    /// Sets `default_job_timeout_minutes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProjectRequest.default_job_timeout_minutes = Some(value.into());`.
+    pub fn default_job_timeout_minutes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.default_job_timeout_minutes = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateProjectRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateProjectRequest with optional fields set to `None`.
+    pub fn new<nameType: Into<String>>(name: nameType) -> CreateProjectRequest {
+        CreateProjectRequest {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a create project request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateProjectResult {
@@ -241,7 +396,6 @@ pub struct CreateProjectResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub project: Option<Project>,
 }
-
 #[doc="<p>Creates the configuration settings for a remote access session, including the device model and type.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateRemoteAccessSessionConfiguration {
@@ -250,7 +404,19 @@ pub struct CreateRemoteAccessSessionConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub billing_method: Option<String>,
 }
-
+impl CreateRemoteAccessSessionConfiguration {
+    /// Sets `billing_method`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRemoteAccessSessionConfiguration.billing_method = Some(value.into());`.
+    pub fn billing_method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.billing_method = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateRemoteAccessSessionConfiguration with optional fields set to `None`.
+    pub fn new() -> CreateRemoteAccessSessionConfiguration {
+        CreateRemoteAccessSessionConfiguration { ..Default::default() }
+    }
+}
 #[doc="<p>Creates and submits a request to start a remote access session.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateRemoteAccessSessionRequest {
@@ -269,7 +435,47 @@ pub struct CreateRemoteAccessSessionRequest {
     #[serde(rename="projectArn")]
     pub project_arn: String,
 }
-
+impl CreateRemoteAccessSessionRequest {
+    /// Sets `configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRemoteAccessSessionRequest.configuration = Some(value.into());`.
+pub fn configuration<ValueType: Into<CreateRemoteAccessSessionConfiguration>>(mut self, value: ValueType) -> Self{
+        self.configuration = Some(value.into());
+        self
+    }
+    /// Sets `device_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRemoteAccessSessionRequest.device_arn = value.into();`.
+    pub fn device_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.device_arn = value.into();
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRemoteAccessSessionRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `project_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateRemoteAccessSessionRequest.project_arn = value.into();`.
+    pub fn project_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.project_arn = value.into();
+        self
+    }
+    /// Returns a new instance of CreateRemoteAccessSessionRequest with optional fields set to `None`.
+    pub fn new<deviceArnType: Into<String>, projectArnType: Into<String>>
+        (device_arn: deviceArnType,
+         project_arn: projectArnType)
+         -> CreateRemoteAccessSessionRequest {
+        CreateRemoteAccessSessionRequest {
+            device_arn: device_arn.into(),
+            project_arn: project_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the server response from a request to create a remote access session.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateRemoteAccessSessionResult {
@@ -278,7 +484,6 @@ pub struct CreateRemoteAccessSessionResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub remote_access_session: Option<RemoteAccessSession>,
 }
-
 #[doc="<p>Represents a request to the create upload operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateUploadRequest {
@@ -296,7 +501,49 @@ pub struct CreateUploadRequest {
     #[serde(rename="type")]
     pub type_: String,
 }
-
+impl CreateUploadRequest {
+    /// Sets `content_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUploadRequest.content_type = Some(value.into());`.
+    pub fn content_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.content_type = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUploadRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `project_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUploadRequest.project_arn = value.into();`.
+    pub fn project_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.project_arn = value.into();
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateUploadRequest.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of CreateUploadRequest with optional fields set to `None`.
+    pub fn new<nameType: Into<String>, projectArnType: Into<String>, typeType: Into<String>>
+        (name: nameType,
+         project_arn: projectArnType,
+         type_: typeType)
+         -> CreateUploadRequest {
+        CreateUploadRequest {
+            name: name.into(),
+            project_arn: project_arn.into(),
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a create upload request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateUploadResult {
@@ -305,7 +552,6 @@ pub struct CreateUploadResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub upload: Option<Upload>,
 }
-
 #[doc="<p>Represents a request to the delete device pool operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteDevicePoolRequest {
@@ -313,7 +559,22 @@ pub struct DeleteDevicePoolRequest {
     #[serde(rename="arn")]
     pub arn: String,
 }
-
+impl DeleteDevicePoolRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteDevicePoolRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteDevicePoolRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> DeleteDevicePoolRequest {
+        DeleteDevicePoolRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a delete device pool request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteDevicePoolResult;
@@ -324,7 +585,22 @@ pub struct DeleteNetworkProfileRequest {
     #[serde(rename="arn")]
     pub arn: String,
 }
-
+impl DeleteNetworkProfileRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteNetworkProfileRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteNetworkProfileRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> DeleteNetworkProfileRequest {
+        DeleteNetworkProfileRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteNetworkProfileResult;
 
@@ -335,7 +611,22 @@ pub struct DeleteProjectRequest {
     #[serde(rename="arn")]
     pub arn: String,
 }
-
+impl DeleteProjectRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteProjectRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteProjectRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> DeleteProjectRequest {
+        DeleteProjectRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a delete project request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteProjectResult;
@@ -347,7 +638,22 @@ pub struct DeleteRemoteAccessSessionRequest {
     #[serde(rename="arn")]
     pub arn: String,
 }
-
+impl DeleteRemoteAccessSessionRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRemoteAccessSessionRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteRemoteAccessSessionRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> DeleteRemoteAccessSessionRequest {
+        DeleteRemoteAccessSessionRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The response from the server when a request is made to delete the remote access session.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteRemoteAccessSessionResult;
@@ -359,7 +665,22 @@ pub struct DeleteRunRequest {
     #[serde(rename="arn")]
     pub arn: String,
 }
-
+impl DeleteRunRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteRunRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteRunRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> DeleteRunRequest {
+        DeleteRunRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a delete run request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteRunResult;
@@ -371,7 +692,22 @@ pub struct DeleteUploadRequest {
     #[serde(rename="arn")]
     pub arn: String,
 }
-
+impl DeleteUploadRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteUploadRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteUploadRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> DeleteUploadRequest {
+        DeleteUploadRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a delete upload request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteUploadResult;
@@ -448,7 +784,6 @@ pub struct Device {
     #[serde(skip_serializing_if="Option::is_none")]
     pub resolution: Option<Resolution>,
 }
-
 #[doc="<p>Represents the total (metered or unmetered) minutes used by the resource to run tests. Contains the sum of minutes consumed by all children.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeviceMinutes {
@@ -465,7 +800,6 @@ pub struct DeviceMinutes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub unmetered: Option<f64>,
 }
-
 #[doc="<p>Represents a collection of device types.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DevicePool {
@@ -490,7 +824,6 @@ pub struct DevicePool {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>Represents a device pool compatibility result.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DevicePoolCompatibilityResult {
@@ -507,7 +840,6 @@ pub struct DevicePoolCompatibilityResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub incompatibility_messages: Option<Vec<IncompatibilityMessage>>,
 }
-
 #[doc="<p>Represents configuration information about a test run, such as the execution timeout (in minutes).</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ExecutionConfiguration {
@@ -524,7 +856,33 @@ pub struct ExecutionConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub job_timeout_minutes: Option<i64>,
 }
-
+impl ExecutionConfiguration {
+    /// Sets `accounts_cleanup`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExecutionConfiguration.accounts_cleanup = Some(value.into());`.
+    pub fn accounts_cleanup<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.accounts_cleanup = Some(value.into());
+        self
+    }
+    /// Sets `app_packages_cleanup`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExecutionConfiguration.app_packages_cleanup = Some(value.into());`.
+    pub fn app_packages_cleanup<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.app_packages_cleanup = Some(value.into());
+        self
+    }
+    /// Sets `job_timeout_minutes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ExecutionConfiguration.job_timeout_minutes = Some(value.into());`.
+    pub fn job_timeout_minutes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.job_timeout_minutes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ExecutionConfiguration with optional fields set to `None`.
+    pub fn new() -> ExecutionConfiguration {
+        ExecutionConfiguration { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the request sent to retrieve the account settings.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetAccountSettingsRequest;
@@ -537,7 +895,6 @@ pub struct GetAccountSettingsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub account_settings: Option<AccountSettings>,
 }
-
 #[doc="<p>Represents a request to the get device pool compatibility operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDevicePoolCompatibilityRequest {
@@ -557,7 +914,44 @@ pub struct GetDevicePoolCompatibilityRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub test_type: Option<String>,
 }
-
+impl GetDevicePoolCompatibilityRequest {
+    /// Sets `app_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDevicePoolCompatibilityRequest.app_arn = Some(value.into());`.
+    pub fn app_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.app_arn = Some(value.into());
+        self
+    }
+    /// Sets `device_pool_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDevicePoolCompatibilityRequest.device_pool_arn = value.into();`.
+    pub fn device_pool_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.device_pool_arn = value.into();
+        self
+    }
+    /// Sets `test`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDevicePoolCompatibilityRequest.test = Some(value.into());`.
+    pub fn test<ValueType: Into<ScheduleRunTest>>(mut self, value: ValueType) -> Self {
+        self.test = Some(value.into());
+        self
+    }
+    /// Sets `test_type`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDevicePoolCompatibilityRequest.test_type = Some(value.into());`.
+    pub fn test_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.test_type = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetDevicePoolCompatibilityRequest with optional fields set to `None`.
+    pub fn new<devicePoolArnType: Into<String>>(device_pool_arn: devicePoolArnType)
+                                                -> GetDevicePoolCompatibilityRequest {
+        GetDevicePoolCompatibilityRequest {
+            device_pool_arn: device_pool_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of describe device pool compatibility request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetDevicePoolCompatibilityResult {
@@ -570,7 +964,6 @@ pub struct GetDevicePoolCompatibilityResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub incompatible_devices: Option<Vec<DevicePoolCompatibilityResult>>,
 }
-
 #[doc="<p>Represents a request to the get device pool operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDevicePoolRequest {
@@ -578,7 +971,22 @@ pub struct GetDevicePoolRequest {
     #[serde(rename="arn")]
     pub arn: String,
 }
-
+impl GetDevicePoolRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDevicePoolRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetDevicePoolRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> GetDevicePoolRequest {
+        GetDevicePoolRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a get device pool request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetDevicePoolResult {
@@ -587,7 +995,6 @@ pub struct GetDevicePoolResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub device_pool: Option<DevicePool>,
 }
-
 #[doc="<p>Represents a request to the get device request.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetDeviceRequest {
@@ -595,7 +1002,22 @@ pub struct GetDeviceRequest {
     #[serde(rename="arn")]
     pub arn: String,
 }
-
+impl GetDeviceRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetDeviceRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetDeviceRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> GetDeviceRequest {
+        GetDeviceRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a get device request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetDeviceResult {
@@ -604,7 +1026,6 @@ pub struct GetDeviceResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub device: Option<Device>,
 }
-
 #[doc="<p>Represents a request to the get job operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetJobRequest {
@@ -612,7 +1033,22 @@ pub struct GetJobRequest {
     #[serde(rename="arn")]
     pub arn: String,
 }
-
+impl GetJobRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetJobRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetJobRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> GetJobRequest {
+        GetJobRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a get job request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetJobResult {
@@ -621,14 +1057,28 @@ pub struct GetJobResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub job: Option<Job>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetNetworkProfileRequest {
     #[doc="<p>The Amazon Resource Name (ARN) of the network profile you want to return information about.</p>"]
     #[serde(rename="arn")]
     pub arn: String,
 }
-
+impl GetNetworkProfileRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetNetworkProfileRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetNetworkProfileRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> GetNetworkProfileRequest {
+        GetNetworkProfileRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetNetworkProfileResult {
     #[doc="<p>The network profile.</p>"]
@@ -636,7 +1086,6 @@ pub struct GetNetworkProfileResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub network_profile: Option<NetworkProfile>,
 }
-
 #[doc="<p>Represents the request to retrieve the offering status for the specified customer or account.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetOfferingStatusRequest {
@@ -645,7 +1094,19 @@ pub struct GetOfferingStatusRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl GetOfferingStatusRequest {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetOfferingStatusRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetOfferingStatusRequest with optional fields set to `None`.
+    pub fn new() -> GetOfferingStatusRequest {
+        GetOfferingStatusRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Returns the status result for a device offering.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetOfferingStatusResult {
@@ -662,7 +1123,6 @@ pub struct GetOfferingStatusResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Represents a request to the get project operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetProjectRequest {
@@ -670,7 +1130,22 @@ pub struct GetProjectRequest {
     #[serde(rename="arn")]
     pub arn: String,
 }
-
+impl GetProjectRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetProjectRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetProjectRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> GetProjectRequest {
+        GetProjectRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a get project request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetProjectResult {
@@ -679,7 +1154,6 @@ pub struct GetProjectResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub project: Option<Project>,
 }
-
 #[doc="<p>Represents the request to get information about the specified remote access session.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetRemoteAccessSessionRequest {
@@ -687,7 +1161,22 @@ pub struct GetRemoteAccessSessionRequest {
     #[serde(rename="arn")]
     pub arn: String,
 }
-
+impl GetRemoteAccessSessionRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRemoteAccessSessionRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetRemoteAccessSessionRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> GetRemoteAccessSessionRequest {
+        GetRemoteAccessSessionRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server that lists detailed information about the remote access session.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetRemoteAccessSessionResult {
@@ -696,7 +1185,6 @@ pub struct GetRemoteAccessSessionResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub remote_access_session: Option<RemoteAccessSession>,
 }
-
 #[doc="<p>Represents a request to the get run operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetRunRequest {
@@ -704,7 +1192,22 @@ pub struct GetRunRequest {
     #[serde(rename="arn")]
     pub arn: String,
 }
-
+impl GetRunRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetRunRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetRunRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> GetRunRequest {
+        GetRunRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a get run request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetRunResult {
@@ -713,7 +1216,6 @@ pub struct GetRunResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub run: Option<Run>,
 }
-
 #[doc="<p>Represents a request to the get suite operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetSuiteRequest {
@@ -721,7 +1223,22 @@ pub struct GetSuiteRequest {
     #[serde(rename="arn")]
     pub arn: String,
 }
-
+impl GetSuiteRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSuiteRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetSuiteRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> GetSuiteRequest {
+        GetSuiteRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a get suite request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetSuiteResult {
@@ -730,7 +1247,6 @@ pub struct GetSuiteResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub suite: Option<Suite>,
 }
-
 #[doc="<p>Represents a request to the get test operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetTestRequest {
@@ -738,7 +1254,22 @@ pub struct GetTestRequest {
     #[serde(rename="arn")]
     pub arn: String,
 }
-
+impl GetTestRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetTestRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetTestRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> GetTestRequest {
+        GetTestRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a get test request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetTestResult {
@@ -747,7 +1278,6 @@ pub struct GetTestResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub test: Option<Test>,
 }
-
 #[doc="<p>Represents a request to the get upload operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetUploadRequest {
@@ -755,7 +1285,22 @@ pub struct GetUploadRequest {
     #[serde(rename="arn")]
     pub arn: String,
 }
-
+impl GetUploadRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetUploadRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetUploadRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> GetUploadRequest {
+        GetUploadRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a get upload request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetUploadResult {
@@ -764,7 +1309,6 @@ pub struct GetUploadResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub upload: Option<Upload>,
 }
-
 #[doc="<p>Represents information about incompatibility.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct IncompatibilityMessage {
@@ -777,7 +1321,6 @@ pub struct IncompatibilityMessage {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>Represents the request to install an Android application (in .apk format) or an iOS application (in .ipa format) as part of a remote access session.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct InstallToRemoteAccessSessionRequest {
@@ -788,7 +1331,33 @@ pub struct InstallToRemoteAccessSessionRequest {
     #[serde(rename="remoteAccessSessionArn")]
     pub remote_access_session_arn: String,
 }
-
+impl InstallToRemoteAccessSessionRequest {
+    /// Sets `app_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstallToRemoteAccessSessionRequest.app_arn = value.into();`.
+    pub fn app_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.app_arn = value.into();
+        self
+    }
+    /// Sets `remote_access_session_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `InstallToRemoteAccessSessionRequest.remote_access_session_arn = value.into();`.
+    pub fn remote_access_session_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.remote_access_session_arn = value.into();
+        self
+    }
+    /// Returns a new instance of InstallToRemoteAccessSessionRequest with optional fields set to `None`.
+    pub fn new<appArnType: Into<String>, remoteAccessSessionArnType: Into<String>>
+        (app_arn: appArnType,
+         remote_access_session_arn: remoteAccessSessionArnType)
+         -> InstallToRemoteAccessSessionRequest {
+        InstallToRemoteAccessSessionRequest {
+            app_arn: app_arn.into(),
+            remote_access_session_arn: remote_access_session_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server after AWS Device Farm makes a request to install to a remote access session.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct InstallToRemoteAccessSessionResult {
@@ -797,7 +1366,6 @@ pub struct InstallToRemoteAccessSessionResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub app_upload: Option<Upload>,
 }
-
 #[doc="<p>Represents a device.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Job {
@@ -850,7 +1418,6 @@ pub struct Job {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>Represents a request to the list artifacts operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListArtifactsRequest {
@@ -865,7 +1432,39 @@ pub struct ListArtifactsRequest {
     #[serde(rename="type")]
     pub type_: String,
 }
-
+impl ListArtifactsRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListArtifactsRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListArtifactsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListArtifactsRequest.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of ListArtifactsRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>, typeType: Into<String>>(arn: arnType,
+                                                              type_: typeType)
+                                                              -> ListArtifactsRequest {
+        ListArtifactsRequest {
+            arn: arn.into(),
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a list artifacts operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListArtifactsResult {
@@ -878,7 +1477,6 @@ pub struct ListArtifactsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Represents the result of a list device pools request.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListDevicePoolsRequest {
@@ -894,7 +1492,36 @@ pub struct ListDevicePoolsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
+impl ListDevicePoolsRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDevicePoolsRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDevicePoolsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDevicePoolsRequest.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListDevicePoolsRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> ListDevicePoolsRequest {
+        ListDevicePoolsRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a list device pools request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListDevicePoolsResult {
@@ -907,7 +1534,6 @@ pub struct ListDevicePoolsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Represents the result of a list devices request.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListDevicesRequest {
@@ -920,7 +1546,26 @@ pub struct ListDevicesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListDevicesRequest {
+    /// Sets `arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDevicesRequest.arn = Some(value.into());`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListDevicesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListDevicesRequest with optional fields set to `None`.
+    pub fn new() -> ListDevicesRequest {
+        ListDevicesRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the result of a list devices operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListDevicesResult {
@@ -933,7 +1578,6 @@ pub struct ListDevicesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Represents a request to the list jobs operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListJobsRequest {
@@ -945,7 +1589,29 @@ pub struct ListJobsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListJobsRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListJobsRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> ListJobsRequest {
+        ListJobsRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a list jobs request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListJobsResult {
@@ -958,7 +1624,6 @@ pub struct ListJobsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListNetworkProfilesRequest {
     #[doc="<p>The Amazon Resource Name (ARN) of the project for which you want to list network profiles.</p>"]
@@ -973,7 +1638,36 @@ pub struct ListNetworkProfilesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
+impl ListNetworkProfilesRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListNetworkProfilesRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListNetworkProfilesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListNetworkProfilesRequest.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListNetworkProfilesRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> ListNetworkProfilesRequest {
+        ListNetworkProfilesRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListNetworkProfilesResult {
     #[doc="<p>A list of the available network profiles.</p>"]
@@ -985,7 +1679,6 @@ pub struct ListNetworkProfilesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListOfferingPromotionsRequest {
     #[doc="<p>An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list.</p>"]
@@ -993,7 +1686,19 @@ pub struct ListOfferingPromotionsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListOfferingPromotionsRequest {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListOfferingPromotionsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListOfferingPromotionsRequest with optional fields set to `None`.
+    pub fn new() -> ListOfferingPromotionsRequest {
+        ListOfferingPromotionsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListOfferingPromotionsResult {
     #[doc="<p>An identifier to be used in the next call to this operation, to return the next set of items in the list.</p>"]
@@ -1005,7 +1710,6 @@ pub struct ListOfferingPromotionsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub offering_promotions: Option<Vec<OfferingPromotion>>,
 }
-
 #[doc="<p>Represents the request to list the offering transaction history.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListOfferingTransactionsRequest {
@@ -1014,7 +1718,19 @@ pub struct ListOfferingTransactionsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListOfferingTransactionsRequest {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListOfferingTransactionsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListOfferingTransactionsRequest with optional fields set to `None`.
+    pub fn new() -> ListOfferingTransactionsRequest {
+        ListOfferingTransactionsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Returns the transaction log of the specified offerings.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListOfferingTransactionsResult {
@@ -1027,7 +1743,6 @@ pub struct ListOfferingTransactionsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub offering_transactions: Option<Vec<OfferingTransaction>>,
 }
-
 #[doc="<p>Represents the request to list all offerings.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListOfferingsRequest {
@@ -1036,7 +1751,19 @@ pub struct ListOfferingsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListOfferingsRequest {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListOfferingsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListOfferingsRequest with optional fields set to `None`.
+    pub fn new() -> ListOfferingsRequest {
+        ListOfferingsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the return values of the list of offerings.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListOfferingsResult {
@@ -1049,7 +1776,6 @@ pub struct ListOfferingsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub offerings: Option<Vec<Offering>>,
 }
-
 #[doc="<p>Represents a request to the list projects operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListProjectsRequest {
@@ -1062,7 +1788,26 @@ pub struct ListProjectsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListProjectsRequest {
+    /// Sets `arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListProjectsRequest.arn = Some(value.into());`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListProjectsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListProjectsRequest with optional fields set to `None`.
+    pub fn new() -> ListProjectsRequest {
+        ListProjectsRequest { ..Default::default() }
+    }
+}
 #[doc="<p>Represents the result of a list projects request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListProjectsResult {
@@ -1075,7 +1820,6 @@ pub struct ListProjectsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub projects: Option<Vec<Project>>,
 }
-
 #[doc="<p>Represents the request to return information about the remote access session.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListRemoteAccessSessionsRequest {
@@ -1087,7 +1831,29 @@ pub struct ListRemoteAccessSessionsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListRemoteAccessSessionsRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRemoteAccessSessionsRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRemoteAccessSessionsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListRemoteAccessSessionsRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> ListRemoteAccessSessionsRequest {
+        ListRemoteAccessSessionsRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server after AWS Device Farm makes a request to return information about the remote access session.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListRemoteAccessSessionsResult {
@@ -1100,7 +1866,6 @@ pub struct ListRemoteAccessSessionsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub remote_access_sessions: Option<Vec<RemoteAccessSession>>,
 }
-
 #[doc="<p>Represents a request to the list runs operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListRunsRequest {
@@ -1112,7 +1877,29 @@ pub struct ListRunsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListRunsRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRunsRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListRunsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListRunsRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> ListRunsRequest {
+        ListRunsRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a list runs request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListRunsResult {
@@ -1125,7 +1912,6 @@ pub struct ListRunsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub runs: Option<Vec<Run>>,
 }
-
 #[doc="<p>Represents a request to the list samples operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListSamplesRequest {
@@ -1137,7 +1923,29 @@ pub struct ListSamplesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListSamplesRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListSamplesRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListSamplesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListSamplesRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> ListSamplesRequest {
+        ListSamplesRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a list samples request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListSamplesResult {
@@ -1150,7 +1958,6 @@ pub struct ListSamplesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub samples: Option<Vec<Sample>>,
 }
-
 #[doc="<p>Represents a request to the list suites operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListSuitesRequest {
@@ -1162,7 +1969,29 @@ pub struct ListSuitesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListSuitesRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListSuitesRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListSuitesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListSuitesRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> ListSuitesRequest {
+        ListSuitesRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a list suites request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListSuitesResult {
@@ -1175,7 +2004,6 @@ pub struct ListSuitesResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub suites: Option<Vec<Suite>>,
 }
-
 #[doc="<p>Represents a request to the list tests operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListTestsRequest {
@@ -1187,7 +2015,29 @@ pub struct ListTestsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListTestsRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTestsRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTestsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListTestsRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> ListTestsRequest {
+        ListTestsRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a list tests request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListTestsResult {
@@ -1200,7 +2050,6 @@ pub struct ListTestsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub tests: Option<Vec<Test>>,
 }
-
 #[doc="<p>Represents a request to the list unique problems operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListUniqueProblemsRequest {
@@ -1212,7 +2061,29 @@ pub struct ListUniqueProblemsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListUniqueProblemsRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUniqueProblemsRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUniqueProblemsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListUniqueProblemsRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> ListUniqueProblemsRequest {
+        ListUniqueProblemsRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a list unique problems request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListUniqueProblemsResult {
@@ -1225,7 +2096,6 @@ pub struct ListUniqueProblemsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub unique_problems: Option<::std::collections::HashMap<String, Vec<UniqueProblem>>>,
 }
-
 #[doc="<p>Represents a request to the list uploads operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListUploadsRequest {
@@ -1237,7 +2107,29 @@ pub struct ListUploadsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListUploadsRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUploadsRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListUploadsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListUploadsRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> ListUploadsRequest {
+        ListUploadsRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a list uploads request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListUploadsResult {
@@ -1250,7 +2142,6 @@ pub struct ListUploadsResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub uploads: Option<Vec<Upload>>,
 }
-
 #[doc="<p>Represents a latitude and longitude pair, expressed in geographic coordinate system degrees (for example 47.6204, -122.3491).</p> <p>Elevation is currently not supported.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct Location {
@@ -1261,7 +2152,32 @@ pub struct Location {
     #[serde(rename="longitude")]
     pub longitude: f64,
 }
-
+impl Location {
+    /// Sets `latitude`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Location.latitude = value.into();`.
+    pub fn latitude<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.latitude = value.into();
+        self
+    }
+    /// Sets `longitude`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Location.longitude = value.into();`.
+    pub fn longitude<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.longitude = value.into();
+        self
+    }
+    /// Returns a new instance of Location with optional fields set to `None`.
+    pub fn new<latitudeType: Into<f64>, longitudeType: Into<f64>>(latitude: latitudeType,
+                                                                  longitude: longitudeType)
+                                                                  -> Location {
+        Location {
+            latitude: latitude.into(),
+            longitude: longitude.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>A number representing the monetary amount for an offering or transaction.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct MonetaryAmount {
@@ -1274,7 +2190,6 @@ pub struct MonetaryAmount {
     #[serde(skip_serializing_if="Option::is_none")]
     pub currency_code: Option<String>,
 }
-
 #[doc="<p>An array of settings that describes characteristics of a network profile.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct NetworkProfile {
@@ -1327,7 +2242,6 @@ pub struct NetworkProfile {
     #[serde(skip_serializing_if="Option::is_none")]
     pub uplink_loss_percent: Option<i64>,
 }
-
 #[doc="<p>Represents the metadata of a device offering.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Offering {
@@ -1352,7 +2266,6 @@ pub struct Offering {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>Represents information about an offering promotion.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct OfferingPromotion {
@@ -1365,7 +2278,6 @@ pub struct OfferingPromotion {
     #[serde(skip_serializing_if="Option::is_none")]
     pub id: Option<String>,
 }
-
 #[doc="<p>The status of the offering.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct OfferingStatus {
@@ -1386,7 +2298,6 @@ pub struct OfferingStatus {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>Represents the metadata of an offering transaction.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct OfferingTransaction {
@@ -1411,7 +2322,6 @@ pub struct OfferingTransaction {
     #[serde(skip_serializing_if="Option::is_none")]
     pub transaction_id: Option<String>,
 }
-
 #[doc="<p>Represents a specific warning or failure.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Problem {
@@ -1444,7 +2354,6 @@ pub struct Problem {
     #[serde(skip_serializing_if="Option::is_none")]
     pub test: Option<ProblemDetail>,
 }
-
 #[doc="<p>Information about a problem detail.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ProblemDetail {
@@ -1457,7 +2366,6 @@ pub struct ProblemDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p>Represents an operating-system neutral workspace for running and managing tests.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Project {
@@ -1478,7 +2386,6 @@ pub struct Project {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
 #[doc="<p>Represents a request for a purchase offering.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct PurchaseOfferingRequest {
@@ -1495,7 +2402,33 @@ pub struct PurchaseOfferingRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub quantity: Option<i64>,
 }
-
+impl PurchaseOfferingRequest {
+    /// Sets `offering_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseOfferingRequest.offering_id = Some(value.into());`.
+    pub fn offering_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.offering_id = Some(value.into());
+        self
+    }
+    /// Sets `offering_promotion_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseOfferingRequest.offering_promotion_id = Some(value.into());`.
+    pub fn offering_promotion_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.offering_promotion_id = Some(value.into());
+        self
+    }
+    /// Sets `quantity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PurchaseOfferingRequest.quantity = Some(value.into());`.
+    pub fn quantity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.quantity = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PurchaseOfferingRequest with optional fields set to `None`.
+    pub fn new() -> PurchaseOfferingRequest {
+        PurchaseOfferingRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The result of the purchase offering (e.g., success or failure).</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct PurchaseOfferingResult {
@@ -1504,7 +2437,6 @@ pub struct PurchaseOfferingResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub offering_transaction: Option<OfferingTransaction>,
 }
-
 #[doc="<p>Represents the set of radios and their states on a device. Examples of radios include Wi-Fi, GPS, Bluetooth, and NFC.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct Radios {
@@ -1525,7 +2457,40 @@ pub struct Radios {
     #[serde(skip_serializing_if="Option::is_none")]
     pub wifi: Option<bool>,
 }
-
+impl Radios {
+    /// Sets `bluetooth`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Radios.bluetooth = Some(value.into());`.
+    pub fn bluetooth<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.bluetooth = Some(value.into());
+        self
+    }
+    /// Sets `gps`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Radios.gps = Some(value.into());`.
+    pub fn gps<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.gps = Some(value.into());
+        self
+    }
+    /// Sets `nfc`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Radios.nfc = Some(value.into());`.
+    pub fn nfc<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.nfc = Some(value.into());
+        self
+    }
+    /// Sets `wifi`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Radios.wifi = Some(value.into());`.
+    pub fn wifi<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.wifi = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Radios with optional fields set to `None`.
+    pub fn new() -> Radios {
+        Radios { ..Default::default() }
+    }
+}
 #[doc="<p>Specifies whether charges for devices will be recurring.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RecurringCharge {
@@ -1538,7 +2503,6 @@ pub struct RecurringCharge {
     #[serde(skip_serializing_if="Option::is_none")]
     pub frequency: Option<String>,
 }
-
 #[doc="<p>Represents information about the remote access session.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RemoteAccessSession {
@@ -1591,7 +2555,6 @@ pub struct RemoteAccessSession {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stopped: Option<f64>,
 }
-
 #[doc="<p>A request representing an offering renewal.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RenewOfferingRequest {
@@ -1604,7 +2567,26 @@ pub struct RenewOfferingRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub quantity: Option<i64>,
 }
-
+impl RenewOfferingRequest {
+    /// Sets `offering_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RenewOfferingRequest.offering_id = Some(value.into());`.
+    pub fn offering_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.offering_id = Some(value.into());
+        self
+    }
+    /// Sets `quantity`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RenewOfferingRequest.quantity = Some(value.into());`.
+    pub fn quantity<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.quantity = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RenewOfferingRequest with optional fields set to `None`.
+    pub fn new() -> RenewOfferingRequest {
+        RenewOfferingRequest { ..Default::default() }
+    }
+}
 #[doc="<p>The result of a renewal offering.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RenewOfferingResult {
@@ -1613,7 +2595,6 @@ pub struct RenewOfferingResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub offering_transaction: Option<OfferingTransaction>,
 }
-
 #[doc="<p>Represents the screen resolution of a device in height and width, expressed in pixels.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Resolution {
@@ -1626,7 +2607,6 @@ pub struct Resolution {
     #[serde(skip_serializing_if="Option::is_none")]
     pub width: Option<i64>,
 }
-
 #[doc="<p>Represents a condition for a device pool.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Rule {
@@ -1643,7 +2623,33 @@ pub struct Rule {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl Rule {
+    /// Sets `attribute`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Rule.attribute = Some(value.into());`.
+    pub fn attribute<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute = Some(value.into());
+        self
+    }
+    /// Sets `operator`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Rule.operator = Some(value.into());`.
+    pub fn operator<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.operator = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Rule.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Rule with optional fields set to `None`.
+    pub fn new() -> Rule {
+        Rule { ..Default::default() }
+    }
+}
 #[doc="<p>Represents an app on a set of devices with a specific test and configuration.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Run {
@@ -1712,7 +2718,6 @@ pub struct Run {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>Represents a sample of performance data.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Sample {
@@ -1729,7 +2734,6 @@ pub struct Sample {
     #[serde(skip_serializing_if="Option::is_none")]
     pub url: Option<String>,
 }
-
 #[doc="<p>Represents the settings for a run. Includes things like location, radio states, auxiliary apps, and network profiles.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ScheduleRunConfiguration {
@@ -1762,7 +2766,61 @@ pub struct ScheduleRunConfiguration {
     #[serde(skip_serializing_if="Option::is_none")]
     pub radios: Option<Radios>,
 }
-
+impl ScheduleRunConfiguration {
+    /// Sets `auxiliary_apps`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleRunConfiguration.auxiliary_apps = Some(value.into());`.
+    pub fn auxiliary_apps<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.auxiliary_apps = Some(value.into());
+        self
+    }
+    /// Sets `billing_method`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleRunConfiguration.billing_method = Some(value.into());`.
+    pub fn billing_method<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.billing_method = Some(value.into());
+        self
+    }
+    /// Sets `extra_data_package_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleRunConfiguration.extra_data_package_arn = Some(value.into());`.
+    pub fn extra_data_package_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.extra_data_package_arn = Some(value.into());
+        self
+    }
+    /// Sets `locale`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleRunConfiguration.locale = Some(value.into());`.
+    pub fn locale<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.locale = Some(value.into());
+        self
+    }
+    /// Sets `location`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleRunConfiguration.location = Some(value.into());`.
+    pub fn location<ValueType: Into<Location>>(mut self, value: ValueType) -> Self {
+        self.location = Some(value.into());
+        self
+    }
+    /// Sets `network_profile_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleRunConfiguration.network_profile_arn = Some(value.into());`.
+    pub fn network_profile_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.network_profile_arn = Some(value.into());
+        self
+    }
+    /// Sets `radios`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleRunConfiguration.radios = Some(value.into());`.
+    pub fn radios<ValueType: Into<Radios>>(mut self, value: ValueType) -> Self {
+        self.radios = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ScheduleRunConfiguration with optional fields set to `None`.
+    pub fn new() -> ScheduleRunConfiguration {
+        ScheduleRunConfiguration { ..Default::default() }
+    }
+}
 #[doc="<p>Represents a request to the schedule run operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ScheduleRunRequest {
@@ -1792,7 +2850,76 @@ pub struct ScheduleRunRequest {
     #[serde(rename="test")]
     pub test: ScheduleRunTest,
 }
-
+impl ScheduleRunRequest {
+    /// Sets `app_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleRunRequest.app_arn = Some(value.into());`.
+    pub fn app_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.app_arn = Some(value.into());
+        self
+    }
+    /// Sets `configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleRunRequest.configuration = Some(value.into());`.
+    pub fn configuration<ValueType: Into<ScheduleRunConfiguration>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.configuration = Some(value.into());
+        self
+    }
+    /// Sets `device_pool_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleRunRequest.device_pool_arn = value.into();`.
+    pub fn device_pool_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.device_pool_arn = value.into();
+        self
+    }
+    /// Sets `execution_configuration`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleRunRequest.execution_configuration = Some(value.into());`.
+    pub fn execution_configuration<ValueType: Into<ExecutionConfiguration>>(mut self,
+                                                                            value: ValueType)
+                                                                            -> Self {
+        self.execution_configuration = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleRunRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `project_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleRunRequest.project_arn = value.into();`.
+    pub fn project_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.project_arn = value.into();
+        self
+    }
+    /// Sets `test`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleRunRequest.test = value.into();`.
+    pub fn test<ValueType: Into<ScheduleRunTest>>(mut self, value: ValueType) -> Self {
+        self.test = value.into();
+        self
+    }
+    /// Returns a new instance of ScheduleRunRequest with optional fields set to `None`.
+    pub fn new<devicePoolArnType: Into<String>,
+               projectArnType: Into<String>,
+               testType: Into<ScheduleRunTest>>
+        (device_pool_arn: devicePoolArnType,
+         project_arn: projectArnType,
+         test: testType)
+         -> ScheduleRunRequest {
+        ScheduleRunRequest {
+            device_pool_arn: device_pool_arn.into(),
+            project_arn: project_arn.into(),
+            test: test.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of a schedule run request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ScheduleRunResult {
@@ -1801,7 +2928,6 @@ pub struct ScheduleRunResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub run: Option<Run>,
 }
-
 #[doc="<p>Represents additional test settings.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ScheduleRunTest {
@@ -1821,7 +2947,43 @@ pub struct ScheduleRunTest {
     #[serde(rename="type")]
     pub type_: String,
 }
-
+impl ScheduleRunTest {
+    /// Sets `filter`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleRunTest.filter = Some(value.into());`.
+    pub fn filter<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.filter = Some(value.into());
+        self
+    }
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleRunTest.parameters = Some(value.into());`.
+pub fn parameters<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Sets `test_package_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleRunTest.test_package_arn = Some(value.into());`.
+    pub fn test_package_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.test_package_arn = Some(value.into());
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ScheduleRunTest.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of ScheduleRunTest with optional fields set to `None`.
+    pub fn new<typeType: Into<String>>(type_: typeType) -> ScheduleRunTest {
+        ScheduleRunTest {
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the request to stop the remote access session.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StopRemoteAccessSessionRequest {
@@ -1829,7 +2991,22 @@ pub struct StopRemoteAccessSessionRequest {
     #[serde(rename="arn")]
     pub arn: String,
 }
-
+impl StopRemoteAccessSessionRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopRemoteAccessSessionRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Returns a new instance of StopRemoteAccessSessionRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> StopRemoteAccessSessionRequest {
+        StopRemoteAccessSessionRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the response from the server that describes the remote access session when AWS Device Farm stops the session.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StopRemoteAccessSessionResult {
@@ -1838,7 +3015,6 @@ pub struct StopRemoteAccessSessionResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub remote_access_session: Option<RemoteAccessSession>,
 }
-
 #[doc="<p>Represents the request to stop a specific run.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct StopRunRequest {
@@ -1846,7 +3022,22 @@ pub struct StopRunRequest {
     #[serde(rename="arn")]
     pub arn: String,
 }
-
+impl StopRunRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `StopRunRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Returns a new instance of StopRunRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> StopRunRequest {
+        StopRunRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the results of your stop run attempt.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct StopRunResult {
@@ -1855,7 +3046,6 @@ pub struct StopRunResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub run: Option<Run>,
 }
-
 #[doc="<p>Represents a collection of one or more tests.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Suite {
@@ -1904,7 +3094,6 @@ pub struct Suite {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>Represents a condition that is evaluated.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Test {
@@ -1953,7 +3142,6 @@ pub struct Test {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>Represents information about free trial device minutes for an AWS account.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TrialMinutes {
@@ -1966,7 +3154,6 @@ pub struct TrialMinutes {
     #[serde(skip_serializing_if="Option::is_none")]
     pub total: Option<f64>,
 }
-
 #[doc="<p>A collection of one or more problems, grouped by their result.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UniqueProblem {
@@ -1979,7 +3166,6 @@ pub struct UniqueProblem {
     #[serde(skip_serializing_if="Option::is_none")]
     pub problems: Option<Vec<Problem>>,
 }
-
 #[doc="<p>Represents a request to the update device pool operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateDevicePoolRequest {
@@ -1999,7 +3185,43 @@ pub struct UpdateDevicePoolRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub rules: Option<Vec<Rule>>,
 }
-
+impl UpdateDevicePoolRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDevicePoolRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDevicePoolRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDevicePoolRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `rules`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateDevicePoolRequest.rules = Some(value.into());`.
+    pub fn rules<ValueType: Into<Vec<Rule>>>(mut self, value: ValueType) -> Self {
+        self.rules = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateDevicePoolRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> UpdateDevicePoolRequest {
+        UpdateDevicePoolRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of an update device pool request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateDevicePoolResult {
@@ -2008,7 +3230,6 @@ pub struct UpdateDevicePoolResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub device_pool: Option<DevicePool>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateNetworkProfileRequest {
     #[doc="<p>The Amazon Resource Name (ARN) of the project that you wish to update network profile settings.</p>"]
@@ -2059,7 +3280,99 @@ pub struct UpdateNetworkProfileRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub uplink_loss_percent: Option<i64>,
 }
-
+impl UpdateNetworkProfileRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNetworkProfileRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNetworkProfileRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `downlink_bandwidth_bits`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNetworkProfileRequest.downlink_bandwidth_bits = Some(value.into());`.
+    pub fn downlink_bandwidth_bits<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.downlink_bandwidth_bits = Some(value.into());
+        self
+    }
+    /// Sets `downlink_delay_ms`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNetworkProfileRequest.downlink_delay_ms = Some(value.into());`.
+    pub fn downlink_delay_ms<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.downlink_delay_ms = Some(value.into());
+        self
+    }
+    /// Sets `downlink_jitter_ms`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNetworkProfileRequest.downlink_jitter_ms = Some(value.into());`.
+    pub fn downlink_jitter_ms<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.downlink_jitter_ms = Some(value.into());
+        self
+    }
+    /// Sets `downlink_loss_percent`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNetworkProfileRequest.downlink_loss_percent = Some(value.into());`.
+    pub fn downlink_loss_percent<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.downlink_loss_percent = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNetworkProfileRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `type_`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNetworkProfileRequest.type_ = Some(value.into());`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = Some(value.into());
+        self
+    }
+    /// Sets `uplink_bandwidth_bits`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNetworkProfileRequest.uplink_bandwidth_bits = Some(value.into());`.
+    pub fn uplink_bandwidth_bits<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.uplink_bandwidth_bits = Some(value.into());
+        self
+    }
+    /// Sets `uplink_delay_ms`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNetworkProfileRequest.uplink_delay_ms = Some(value.into());`.
+    pub fn uplink_delay_ms<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.uplink_delay_ms = Some(value.into());
+        self
+    }
+    /// Sets `uplink_jitter_ms`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNetworkProfileRequest.uplink_jitter_ms = Some(value.into());`.
+    pub fn uplink_jitter_ms<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.uplink_jitter_ms = Some(value.into());
+        self
+    }
+    /// Sets `uplink_loss_percent`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNetworkProfileRequest.uplink_loss_percent = Some(value.into());`.
+    pub fn uplink_loss_percent<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.uplink_loss_percent = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateNetworkProfileRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> UpdateNetworkProfileRequest {
+        UpdateNetworkProfileRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateNetworkProfileResult {
     #[doc="<p>A list of the available network profiles.</p>"]
@@ -2067,7 +3380,6 @@ pub struct UpdateNetworkProfileResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub network_profile: Option<NetworkProfile>,
 }
-
 #[doc="<p>Represents a request to the update project operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateProjectRequest {
@@ -2083,7 +3395,36 @@ pub struct UpdateProjectRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
+impl UpdateProjectRequest {
+    /// Sets `arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProjectRequest.arn = value.into();`.
+    pub fn arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.arn = value.into();
+        self
+    }
+    /// Sets `default_job_timeout_minutes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProjectRequest.default_job_timeout_minutes = Some(value.into());`.
+    pub fn default_job_timeout_minutes<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.default_job_timeout_minutes = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateProjectRequest.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateProjectRequest with optional fields set to `None`.
+    pub fn new<arnType: Into<String>>(arn: arnType) -> UpdateProjectRequest {
+        UpdateProjectRequest {
+            arn: arn.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>Represents the result of an update project request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateProjectResult {
@@ -2092,7 +3433,6 @@ pub struct UpdateProjectResult {
     #[serde(skip_serializing_if="Option::is_none")]
     pub project: Option<Project>,
 }
-
 #[doc="<p>An app or a set of one or more tests to upload or that have been uploaded.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Upload {
@@ -2133,7 +3473,6 @@ pub struct Upload {
     #[serde(skip_serializing_if="Option::is_none")]
     pub url: Option<String>,
 }
-
 /// Errors returned by CreateDevicePool
 #[derive(Debug, PartialEq)]
 pub enum CreateDevicePoolError {

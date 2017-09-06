@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -51,7 +52,6 @@ pub struct AttemptContainerDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub task_arn: Option<String>,
 }
-
 #[doc="<p>An object representing a job attempt.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AttemptDetail {
@@ -72,7 +72,6 @@ pub struct AttemptDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stopped_at: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CancelJobRequest {
     #[doc="<p>A list of up to 100 job IDs to cancel.</p>"]
@@ -82,7 +81,32 @@ pub struct CancelJobRequest {
     #[serde(rename="reason")]
     pub reason: String,
 }
-
+impl CancelJobRequest {
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelJobRequest.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Sets `reason`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelJobRequest.reason = value.into();`.
+    pub fn reason<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reason = value.into();
+        self
+    }
+    /// Returns a new instance of CancelJobRequest with optional fields set to `None`.
+    pub fn new<jobIdType: Into<String>, reasonType: Into<String>>(job_id: jobIdType,
+                                                                  reason: reasonType)
+                                                                  -> CancelJobRequest {
+        CancelJobRequest {
+            job_id: job_id.into(),
+            reason: reason.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CancelJobResponse;
 
@@ -123,7 +147,6 @@ pub struct ComputeEnvironmentDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub type_: Option<String>,
 }
-
 #[doc="<p>The order in which compute environments are tried for job placement within a queue. Compute environments are tried in ascending order. For example, if two compute environments are associated with a job queue, the compute environment with a lower order integer value is tried for job placement first.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ComputeEnvironmentOrder {
@@ -134,7 +157,33 @@ pub struct ComputeEnvironmentOrder {
     #[serde(rename="order")]
     pub order: i64,
 }
-
+impl ComputeEnvironmentOrder {
+    /// Sets `compute_environment`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComputeEnvironmentOrder.compute_environment = value.into();`.
+    pub fn compute_environment<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.compute_environment = value.into();
+        self
+    }
+    /// Sets `order`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComputeEnvironmentOrder.order = value.into();`.
+    pub fn order<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.order = value.into();
+        self
+    }
+    /// Returns a new instance of ComputeEnvironmentOrder with optional fields set to `None`.
+    pub fn new<computeEnvironmentType: Into<String>, orderType: Into<i64>>
+        (compute_environment: computeEnvironmentType,
+         order: orderType)
+         -> ComputeEnvironmentOrder {
+        ComputeEnvironmentOrder {
+            compute_environment: compute_environment.into(),
+            order: order.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>An object representing an AWS Batch compute resource.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ComputeResource {
@@ -184,7 +233,128 @@ pub struct ComputeResource {
     #[serde(rename="type")]
     pub type_: String,
 }
-
+impl ComputeResource {
+    /// Sets `bid_percentage`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComputeResource.bid_percentage = Some(value.into());`.
+    pub fn bid_percentage<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.bid_percentage = Some(value.into());
+        self
+    }
+    /// Sets `desiredv_cpus`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComputeResource.desiredv_cpus = Some(value.into());`.
+    pub fn desiredv_cpus<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.desiredv_cpus = Some(value.into());
+        self
+    }
+    /// Sets `ec_2_key_pair`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComputeResource.ec_2_key_pair = Some(value.into());`.
+    pub fn ec_2_key_pair<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.ec_2_key_pair = Some(value.into());
+        self
+    }
+    /// Sets `image_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComputeResource.image_id = Some(value.into());`.
+    pub fn image_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.image_id = Some(value.into());
+        self
+    }
+    /// Sets `instance_role`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComputeResource.instance_role = value.into();`.
+    pub fn instance_role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.instance_role = value.into();
+        self
+    }
+    /// Sets `instance_types`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComputeResource.instance_types = value.into();`.
+    pub fn instance_types<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.instance_types = value.into();
+        self
+    }
+    /// Sets `maxv_cpus`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComputeResource.maxv_cpus = value.into();`.
+    pub fn maxv_cpus<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.maxv_cpus = value.into();
+        self
+    }
+    /// Sets `minv_cpus`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComputeResource.minv_cpus = value.into();`.
+    pub fn minv_cpus<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.minv_cpus = value.into();
+        self
+    }
+    /// Sets `security_group_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComputeResource.security_group_ids = value.into();`.
+    pub fn security_group_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.security_group_ids = value.into();
+        self
+    }
+    /// Sets `spot_iam_fleet_role`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComputeResource.spot_iam_fleet_role = Some(value.into());`.
+    pub fn spot_iam_fleet_role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.spot_iam_fleet_role = Some(value.into());
+        self
+    }
+    /// Sets `subnets`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComputeResource.subnets = value.into();`.
+    pub fn subnets<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.subnets = value.into();
+        self
+    }
+    /// Sets `tags`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComputeResource.tags = Some(value.into());`.
+    pub fn tags<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self,
+                                                                              value: ValueType)
+                                                                              -> Self {
+        self.tags = Some(value.into());
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComputeResource.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of ComputeResource with optional fields set to `None`.
+    pub fn new<instanceRoleType: Into<String>,
+               instanceTypesType: Into<Vec<String>>,
+               maxvCpusType: Into<i64>,
+               minvCpusType: Into<i64>,
+               securityGroupIdsType: Into<Vec<String>>,
+               subnetsType: Into<Vec<String>>,
+               typeType: Into<String>>
+        (instance_role: instanceRoleType,
+         instance_types: instanceTypesType,
+         maxv_cpus: maxvCpusType,
+         minv_cpus: minvCpusType,
+         security_group_ids: securityGroupIdsType,
+         subnets: subnetsType,
+         type_: typeType)
+         -> ComputeResource {
+        ComputeResource {
+            instance_role: instance_role.into(),
+            instance_types: instance_types.into(),
+            maxv_cpus: maxv_cpus.into(),
+            minv_cpus: minv_cpus.into(),
+            security_group_ids: security_group_ids.into(),
+            subnets: subnets.into(),
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>An object representing the attributes of a compute environment that can be updated.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ComputeResourceUpdate {
@@ -201,7 +371,33 @@ pub struct ComputeResourceUpdate {
     #[serde(skip_serializing_if="Option::is_none")]
     pub minv_cpus: Option<i64>,
 }
-
+impl ComputeResourceUpdate {
+    /// Sets `desiredv_cpus`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComputeResourceUpdate.desiredv_cpus = Some(value.into());`.
+    pub fn desiredv_cpus<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.desiredv_cpus = Some(value.into());
+        self
+    }
+    /// Sets `maxv_cpus`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComputeResourceUpdate.maxv_cpus = Some(value.into());`.
+    pub fn maxv_cpus<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.maxv_cpus = Some(value.into());
+        self
+    }
+    /// Sets `minv_cpus`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ComputeResourceUpdate.minv_cpus = Some(value.into());`.
+    pub fn minv_cpus<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.minv_cpus = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ComputeResourceUpdate with optional fields set to `None`.
+    pub fn new() -> ComputeResourceUpdate {
+        ComputeResourceUpdate { ..Default::default() }
+    }
+}
 #[doc="<p>An object representing the details of a container that is part of a job.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ContainerDetail {
@@ -273,7 +469,6 @@ pub struct ContainerDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volumes: Option<Vec<Volume>>,
 }
-
 #[doc="<p>The overrides that should be sent to a container.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ContainerOverrides {
@@ -294,7 +489,40 @@ pub struct ContainerOverrides {
     #[serde(skip_serializing_if="Option::is_none")]
     pub vcpus: Option<i64>,
 }
-
+impl ContainerOverrides {
+    /// Sets `command`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerOverrides.command = Some(value.into());`.
+    pub fn command<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.command = Some(value.into());
+        self
+    }
+    /// Sets `environment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerOverrides.environment = Some(value.into());`.
+    pub fn environment<ValueType: Into<Vec<KeyValuePair>>>(mut self, value: ValueType) -> Self {
+        self.environment = Some(value.into());
+        self
+    }
+    /// Sets `memory`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerOverrides.memory = Some(value.into());`.
+    pub fn memory<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.memory = Some(value.into());
+        self
+    }
+    /// Sets `vcpus`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerOverrides.vcpus = Some(value.into());`.
+    pub fn vcpus<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.vcpus = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ContainerOverrides with optional fields set to `None`.
+    pub fn new() -> ContainerOverrides {
+        ContainerOverrides { ..Default::default() }
+    }
+}
 #[doc="<p>Container properties are used in job definitions to describe the container that is launched as part of a job.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ContainerProperties {
@@ -344,7 +572,105 @@ pub struct ContainerProperties {
     #[serde(skip_serializing_if="Option::is_none")]
     pub volumes: Option<Vec<Volume>>,
 }
-
+impl ContainerProperties {
+    /// Sets `command`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerProperties.command = Some(value.into());`.
+    pub fn command<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.command = Some(value.into());
+        self
+    }
+    /// Sets `environment`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerProperties.environment = Some(value.into());`.
+    pub fn environment<ValueType: Into<Vec<KeyValuePair>>>(mut self, value: ValueType) -> Self {
+        self.environment = Some(value.into());
+        self
+    }
+    /// Sets `image`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerProperties.image = value.into();`.
+    pub fn image<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.image = value.into();
+        self
+    }
+    /// Sets `job_role_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerProperties.job_role_arn = Some(value.into());`.
+    pub fn job_role_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_role_arn = Some(value.into());
+        self
+    }
+    /// Sets `memory`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerProperties.memory = value.into();`.
+    pub fn memory<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.memory = value.into();
+        self
+    }
+    /// Sets `mount_points`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerProperties.mount_points = Some(value.into());`.
+    pub fn mount_points<ValueType: Into<Vec<MountPoint>>>(mut self, value: ValueType) -> Self {
+        self.mount_points = Some(value.into());
+        self
+    }
+    /// Sets `privileged`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerProperties.privileged = Some(value.into());`.
+    pub fn privileged<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.privileged = Some(value.into());
+        self
+    }
+    /// Sets `readonly_root_filesystem`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerProperties.readonly_root_filesystem = Some(value.into());`.
+    pub fn readonly_root_filesystem<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.readonly_root_filesystem = Some(value.into());
+        self
+    }
+    /// Sets `ulimits`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerProperties.ulimits = Some(value.into());`.
+    pub fn ulimits<ValueType: Into<Vec<Ulimit>>>(mut self, value: ValueType) -> Self {
+        self.ulimits = Some(value.into());
+        self
+    }
+    /// Sets `user`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerProperties.user = Some(value.into());`.
+    pub fn user<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.user = Some(value.into());
+        self
+    }
+    /// Sets `vcpus`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerProperties.vcpus = value.into();`.
+    pub fn vcpus<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.vcpus = value.into();
+        self
+    }
+    /// Sets `volumes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ContainerProperties.volumes = Some(value.into());`.
+    pub fn volumes<ValueType: Into<Vec<Volume>>>(mut self, value: ValueType) -> Self {
+        self.volumes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ContainerProperties with optional fields set to `None`.
+    pub fn new<imageType: Into<String>, memoryType: Into<i64>, vcpusType: Into<i64>>
+        (image: imageType,
+         memory: memoryType,
+         vcpus: vcpusType)
+         -> ContainerProperties {
+        ContainerProperties {
+            image: image.into(),
+            memory: memory.into(),
+            vcpus: vcpus.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateComputeEnvironmentRequest {
     #[doc="<p>The name for your compute environment. Up to 128 letters (uppercase and lowercase), numbers, and underscores are allowed.</p>"]
@@ -365,7 +691,58 @@ pub struct CreateComputeEnvironmentRequest {
     #[serde(rename="type")]
     pub type_: String,
 }
-
+impl CreateComputeEnvironmentRequest {
+    /// Sets `compute_environment_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateComputeEnvironmentRequest.compute_environment_name = value.into();`.
+    pub fn compute_environment_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.compute_environment_name = value.into();
+        self
+    }
+    /// Sets `compute_resources`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateComputeEnvironmentRequest.compute_resources = Some(value.into());`.
+    pub fn compute_resources<ValueType: Into<ComputeResource>>(mut self, value: ValueType) -> Self {
+        self.compute_resources = Some(value.into());
+        self
+    }
+    /// Sets `service_role`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateComputeEnvironmentRequest.service_role = value.into();`.
+    pub fn service_role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_role = value.into();
+        self
+    }
+    /// Sets `state`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateComputeEnvironmentRequest.state = Some(value.into());`.
+    pub fn state<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.state = Some(value.into());
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateComputeEnvironmentRequest.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of CreateComputeEnvironmentRequest with optional fields set to `None`.
+    pub fn new<computeEnvironmentNameType: Into<String>,
+               serviceRoleType: Into<String>,
+               typeType: Into<String>>
+        (compute_environment_name: computeEnvironmentNameType,
+         service_role: serviceRoleType,
+         type_: typeType)
+         -> CreateComputeEnvironmentRequest {
+        CreateComputeEnvironmentRequest {
+            compute_environment_name: compute_environment_name.into(),
+            service_role: service_role.into(),
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateComputeEnvironmentResponse {
     #[doc="<p>The Amazon Resource Name (ARN) of the compute environment. </p>"]
@@ -377,7 +754,6 @@ pub struct CreateComputeEnvironmentResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub compute_environment_name: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateJobQueueRequest {
     #[doc="<p>The set of compute environments mapped to a job queue and their order relative to each other. The job scheduler uses this parameter to determine which compute environment should execute a given job. Compute environments must be in the <code>VALID</code> state before you can associate them with a job queue. You can associate up to 3 compute environments with a job queue.</p>"]
@@ -394,7 +770,51 @@ pub struct CreateJobQueueRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub state: Option<String>,
 }
-
+impl CreateJobQueueRequest {
+    /// Sets `compute_environment_order`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobQueueRequest.compute_environment_order = value.into();`.
+pub fn compute_environment_order<ValueType: Into<Vec<ComputeEnvironmentOrder>>>(mut self, value: ValueType) -> Self{
+        self.compute_environment_order = value.into();
+        self
+    }
+    /// Sets `job_queue_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobQueueRequest.job_queue_name = value.into();`.
+    pub fn job_queue_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_queue_name = value.into();
+        self
+    }
+    /// Sets `priority`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobQueueRequest.priority = value.into();`.
+    pub fn priority<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.priority = value.into();
+        self
+    }
+    /// Sets `state`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobQueueRequest.state = Some(value.into());`.
+    pub fn state<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.state = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateJobQueueRequest with optional fields set to `None`.
+    pub fn new<computeEnvironmentOrderType: Into<Vec<ComputeEnvironmentOrder>>,
+               jobQueueNameType: Into<String>,
+               priorityType: Into<i64>>
+        (compute_environment_order: computeEnvironmentOrderType,
+         job_queue_name: jobQueueNameType,
+         priority: priorityType)
+         -> CreateJobQueueRequest {
+        CreateJobQueueRequest {
+            compute_environment_order: compute_environment_order.into(),
+            job_queue_name: job_queue_name.into(),
+            priority: priority.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateJobQueueResponse {
     #[doc="<p>The Amazon Resource Name (ARN) of the job queue.</p>"]
@@ -404,14 +824,29 @@ pub struct CreateJobQueueResponse {
     #[serde(rename="jobQueueName")]
     pub job_queue_name: String,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DeleteComputeEnvironmentRequest {
     #[doc="<p>The name or Amazon Resource Name (ARN) of the compute environment to delete. </p>"]
     #[serde(rename="computeEnvironment")]
     pub compute_environment: String,
 }
-
+impl DeleteComputeEnvironmentRequest {
+    /// Sets `compute_environment`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteComputeEnvironmentRequest.compute_environment = value.into();`.
+    pub fn compute_environment<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.compute_environment = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteComputeEnvironmentRequest with optional fields set to `None`.
+    pub fn new<computeEnvironmentType: Into<String>>(compute_environment: computeEnvironmentType)
+                                                     -> DeleteComputeEnvironmentRequest {
+        DeleteComputeEnvironmentRequest {
+            compute_environment: compute_environment.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteComputeEnvironmentResponse;
 
@@ -421,7 +856,22 @@ pub struct DeleteJobQueueRequest {
     #[serde(rename="jobQueue")]
     pub job_queue: String,
 }
-
+impl DeleteJobQueueRequest {
+    /// Sets `job_queue`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteJobQueueRequest.job_queue = value.into();`.
+    pub fn job_queue<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_queue = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteJobQueueRequest with optional fields set to `None`.
+    pub fn new<jobQueueType: Into<String>>(job_queue: jobQueueType) -> DeleteJobQueueRequest {
+        DeleteJobQueueRequest {
+            job_queue: job_queue.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteJobQueueResponse;
 
@@ -431,7 +881,23 @@ pub struct DeregisterJobDefinitionRequest {
     #[serde(rename="jobDefinition")]
     pub job_definition: String,
 }
-
+impl DeregisterJobDefinitionRequest {
+    /// Sets `job_definition`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeregisterJobDefinitionRequest.job_definition = value.into();`.
+    pub fn job_definition<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_definition = value.into();
+        self
+    }
+    /// Returns a new instance of DeregisterJobDefinitionRequest with optional fields set to `None`.
+    pub fn new<jobDefinitionType: Into<String>>(job_definition: jobDefinitionType)
+                                                -> DeregisterJobDefinitionRequest {
+        DeregisterJobDefinitionRequest {
+            job_definition: job_definition.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeregisterJobDefinitionResponse;
 
@@ -450,7 +916,33 @@ pub struct DescribeComputeEnvironmentsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeComputeEnvironmentsRequest {
+    /// Sets `compute_environments`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeComputeEnvironmentsRequest.compute_environments = Some(value.into());`.
+    pub fn compute_environments<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.compute_environments = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeComputeEnvironmentsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeComputeEnvironmentsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeComputeEnvironmentsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeComputeEnvironmentsRequest {
+        DescribeComputeEnvironmentsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeComputeEnvironmentsResponse {
     #[doc="<p>The list of compute environments.</p>"]
@@ -462,7 +954,6 @@ pub struct DescribeComputeEnvironmentsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeJobDefinitionsRequest {
     #[doc="<p>The name of the job definition to describe.</p>"]
@@ -486,7 +977,47 @@ pub struct DescribeJobDefinitionsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
+impl DescribeJobDefinitionsRequest {
+    /// Sets `job_definition_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeJobDefinitionsRequest.job_definition_name = Some(value.into());`.
+    pub fn job_definition_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_definition_name = Some(value.into());
+        self
+    }
+    /// Sets `job_definitions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeJobDefinitionsRequest.job_definitions = Some(value.into());`.
+    pub fn job_definitions<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.job_definitions = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeJobDefinitionsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeJobDefinitionsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeJobDefinitionsRequest.status = Some(value.into());`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeJobDefinitionsRequest with optional fields set to `None`.
+    pub fn new() -> DescribeJobDefinitionsRequest {
+        DescribeJobDefinitionsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeJobDefinitionsResponse {
     #[doc="<p>The list of job definitions. </p>"]
@@ -498,7 +1029,6 @@ pub struct DescribeJobDefinitionsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeJobQueuesRequest {
     #[doc="<p>A list of up to 100 queue names or full queue Amazon Resource Name (ARN) entries.</p>"]
@@ -514,7 +1044,33 @@ pub struct DescribeJobQueuesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl DescribeJobQueuesRequest {
+    /// Sets `job_queues`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeJobQueuesRequest.job_queues = Some(value.into());`.
+    pub fn job_queues<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.job_queues = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeJobQueuesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeJobQueuesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of DescribeJobQueuesRequest with optional fields set to `None`.
+    pub fn new() -> DescribeJobQueuesRequest {
+        DescribeJobQueuesRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeJobQueuesResponse {
     #[doc="<p>The list of job queues. </p>"]
@@ -526,14 +1082,28 @@ pub struct DescribeJobQueuesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct DescribeJobsRequest {
     #[doc="<p>A space-separated list of up to 100 job IDs.</p>"]
     #[serde(rename="jobs")]
     pub jobs: Vec<String>,
 }
-
+impl DescribeJobsRequest {
+    /// Sets `jobs`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DescribeJobsRequest.jobs = value.into();`.
+    pub fn jobs<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.jobs = value.into();
+        self
+    }
+    /// Returns a new instance of DescribeJobsRequest with optional fields set to `None`.
+    pub fn new<jobsType: Into<Vec<String>>>(jobs: jobsType) -> DescribeJobsRequest {
+        DescribeJobsRequest {
+            jobs: jobs.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeJobsResponse {
     #[doc="<p>The list of jobs. </p>"]
@@ -541,7 +1111,6 @@ pub struct DescribeJobsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub jobs: Option<Vec<JobDetail>>,
 }
-
 #[doc="<p>The contents of the <code>host</code> parameter determine whether your data volume persists on the host container instance and where it is stored. If the host parameter is empty, then the Docker daemon assigns a host path for your data volume, but the data is not guaranteed to persist after the containers associated with it stop running.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Host {
@@ -550,7 +1119,19 @@ pub struct Host {
     #[serde(skip_serializing_if="Option::is_none")]
     pub source_path: Option<String>,
 }
-
+impl Host {
+    /// Sets `source_path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Host.source_path = Some(value.into());`.
+    pub fn source_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_path = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Host with optional fields set to `None`.
+    pub fn new() -> Host {
+        Host { ..Default::default() }
+    }
+}
 #[doc="<p>An object representing an AWS Batch job definition.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct JobDefinition {
@@ -583,7 +1164,6 @@ pub struct JobDefinition {
     #[serde(rename="type")]
     pub type_: String,
 }
-
 #[doc="<p>An object representing an AWS Batch job dependency.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct JobDependency {
@@ -592,7 +1172,19 @@ pub struct JobDependency {
     #[serde(skip_serializing_if="Option::is_none")]
     pub job_id: Option<String>,
 }
-
+impl JobDependency {
+    /// Sets `job_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `JobDependency.job_id = Some(value.into());`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of JobDependency with optional fields set to `None`.
+    pub fn new() -> JobDependency {
+        JobDependency { ..Default::default() }
+    }
+}
 #[doc="<p>An object representing an AWS Batch job.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct JobDetail {
@@ -647,7 +1239,6 @@ pub struct JobDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub stopped_at: Option<i64>,
 }
-
 #[doc="<p>An object representing the details of an AWS Batch job queue.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct JobQueueDetail {
@@ -675,7 +1266,6 @@ pub struct JobQueueDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status_reason: Option<String>,
 }
-
 #[doc="<p>An object representing summary details of a job.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct JobSummary {
@@ -686,7 +1276,6 @@ pub struct JobSummary {
     #[serde(rename="jobName")]
     pub job_name: String,
 }
-
 #[doc="<p>A key-value pair object.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct KeyValuePair {
@@ -699,7 +1288,26 @@ pub struct KeyValuePair {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl KeyValuePair {
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KeyValuePair.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `KeyValuePair.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of KeyValuePair with optional fields set to `None`.
+    pub fn new() -> KeyValuePair {
+        KeyValuePair { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListJobsRequest {
     #[doc="<p>The name or full Amazon Resource Name (ARN) of the job queue with which to list jobs.</p>"]
@@ -718,7 +1326,43 @@ pub struct ListJobsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListJobsRequest {
+    /// Sets `job_queue`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsRequest.job_queue = value.into();`.
+    pub fn job_queue<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_queue = value.into();
+        self
+    }
+    /// Sets `job_status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsRequest.job_status = Some(value.into());`.
+    pub fn job_status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_status = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListJobsRequest with optional fields set to `None`.
+    pub fn new<jobQueueType: Into<String>>(job_queue: jobQueueType) -> ListJobsRequest {
+        ListJobsRequest {
+            job_queue: job_queue.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListJobsResponse {
     #[doc="<p>A list of job summaries that match the request.</p>"]
@@ -729,7 +1373,6 @@ pub struct ListJobsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[doc="<p>Details on a Docker volume mount point that is used in a job's container properties.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct MountPoint {
@@ -746,7 +1389,33 @@ pub struct MountPoint {
     #[serde(skip_serializing_if="Option::is_none")]
     pub source_volume: Option<String>,
 }
-
+impl MountPoint {
+    /// Sets `container_path`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MountPoint.container_path = Some(value.into());`.
+    pub fn container_path<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.container_path = Some(value.into());
+        self
+    }
+    /// Sets `read_only`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MountPoint.read_only = Some(value.into());`.
+    pub fn read_only<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.read_only = Some(value.into());
+        self
+    }
+    /// Sets `source_volume`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MountPoint.source_volume = Some(value.into());`.
+    pub fn source_volume<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.source_volume = Some(value.into());
+        self
+    }
+    /// Returns a new instance of MountPoint with optional fields set to `None`.
+    pub fn new() -> MountPoint {
+        MountPoint { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RegisterJobDefinitionRequest {
     #[doc="<p>An object with various properties specific for container-based jobs. This parameter is required if the <code>type</code> parameter is <code>container</code>.</p>"]
@@ -768,7 +1437,56 @@ pub struct RegisterJobDefinitionRequest {
     #[serde(rename="type")]
     pub type_: String,
 }
-
+impl RegisterJobDefinitionRequest {
+    /// Sets `container_properties`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterJobDefinitionRequest.container_properties = Some(value.into());`.
+    pub fn container_properties<ValueType: Into<ContainerProperties>>(mut self,
+                                                                      value: ValueType)
+                                                                      -> Self {
+        self.container_properties = Some(value.into());
+        self
+    }
+    /// Sets `job_definition_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterJobDefinitionRequest.job_definition_name = value.into();`.
+    pub fn job_definition_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_definition_name = value.into();
+        self
+    }
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterJobDefinitionRequest.parameters = Some(value.into());`.
+pub fn parameters<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Sets `retry_strategy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterJobDefinitionRequest.retry_strategy = Some(value.into());`.
+    pub fn retry_strategy<ValueType: Into<RetryStrategy>>(mut self, value: ValueType) -> Self {
+        self.retry_strategy = Some(value.into());
+        self
+    }
+    /// Sets `type_`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RegisterJobDefinitionRequest.type_ = value.into();`.
+    pub fn type_<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.type_ = value.into();
+        self
+    }
+    /// Returns a new instance of RegisterJobDefinitionRequest with optional fields set to `None`.
+    pub fn new<jobDefinitionNameType: Into<String>, typeType: Into<String>>
+        (job_definition_name: jobDefinitionNameType,
+         type_: typeType)
+         -> RegisterJobDefinitionRequest {
+        RegisterJobDefinitionRequest {
+            job_definition_name: job_definition_name.into(),
+            type_: type_.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RegisterJobDefinitionResponse {
     #[doc="<p>The Amazon Resource Name (ARN) of the job definition. </p>"]
@@ -781,7 +1499,6 @@ pub struct RegisterJobDefinitionResponse {
     #[serde(rename="revision")]
     pub revision: i64,
 }
-
 #[doc="<p>The retry strategy associated with a job.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct RetryStrategy {
@@ -790,7 +1507,19 @@ pub struct RetryStrategy {
     #[serde(skip_serializing_if="Option::is_none")]
     pub attempts: Option<i64>,
 }
-
+impl RetryStrategy {
+    /// Sets `attempts`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RetryStrategy.attempts = Some(value.into());`.
+    pub fn attempts<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.attempts = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RetryStrategy with optional fields set to `None`.
+    pub fn new() -> RetryStrategy {
+        RetryStrategy { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SubmitJobRequest {
     #[doc="<p>A list of container overrides in JSON format that specify the name of a container in the specified job definition and the overrides it should receive. You can override the default command for a container (that is specified in the job definition or the Docker image) with a <code>command</code> override. You can also override existing environment variables (that are specified in the job definition or Docker image) on a container or add new environment variables to it with an <code>environment</code> override.</p>"]
@@ -819,7 +1548,74 @@ pub struct SubmitJobRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub retry_strategy: Option<RetryStrategy>,
 }
-
+impl SubmitJobRequest {
+    /// Sets `container_overrides`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubmitJobRequest.container_overrides = Some(value.into());`.
+    pub fn container_overrides<ValueType: Into<ContainerOverrides>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.container_overrides = Some(value.into());
+        self
+    }
+    /// Sets `depends_on`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubmitJobRequest.depends_on = Some(value.into());`.
+    pub fn depends_on<ValueType: Into<Vec<JobDependency>>>(mut self, value: ValueType) -> Self {
+        self.depends_on = Some(value.into());
+        self
+    }
+    /// Sets `job_definition`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubmitJobRequest.job_definition = value.into();`.
+    pub fn job_definition<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_definition = value.into();
+        self
+    }
+    /// Sets `job_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubmitJobRequest.job_name = value.into();`.
+    pub fn job_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_name = value.into();
+        self
+    }
+    /// Sets `job_queue`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubmitJobRequest.job_queue = value.into();`.
+    pub fn job_queue<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_queue = value.into();
+        self
+    }
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubmitJobRequest.parameters = Some(value.into());`.
+pub fn parameters<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Sets `retry_strategy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubmitJobRequest.retry_strategy = Some(value.into());`.
+    pub fn retry_strategy<ValueType: Into<RetryStrategy>>(mut self, value: ValueType) -> Self {
+        self.retry_strategy = Some(value.into());
+        self
+    }
+    /// Returns a new instance of SubmitJobRequest with optional fields set to `None`.
+    pub fn new<jobDefinitionType: Into<String>,
+               jobNameType: Into<String>,
+               jobQueueType: Into<String>>
+        (job_definition: jobDefinitionType,
+         job_name: jobNameType,
+         job_queue: jobQueueType)
+         -> SubmitJobRequest {
+        SubmitJobRequest {
+            job_definition: job_definition.into(),
+            job_name: job_name.into(),
+            job_queue: job_queue.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SubmitJobResponse {
     #[doc="<p>The unique identifier for the job.</p>"]
@@ -829,7 +1625,6 @@ pub struct SubmitJobResponse {
     #[serde(rename="jobName")]
     pub job_name: String,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct TerminateJobRequest {
     #[doc="<p>Job IDs to be terminated. Up to 100 jobs can be specified.</p>"]
@@ -839,7 +1634,32 @@ pub struct TerminateJobRequest {
     #[serde(rename="reason")]
     pub reason: String,
 }
-
+impl TerminateJobRequest {
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateJobRequest.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Sets `reason`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `TerminateJobRequest.reason = value.into();`.
+    pub fn reason<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reason = value.into();
+        self
+    }
+    /// Returns a new instance of TerminateJobRequest with optional fields set to `None`.
+    pub fn new<jobIdType: Into<String>, reasonType: Into<String>>(job_id: jobIdType,
+                                                                  reason: reasonType)
+                                                                  -> TerminateJobRequest {
+        TerminateJobRequest {
+            job_id: job_id.into(),
+            reason: reason.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct TerminateJobResponse;
 
@@ -856,7 +1676,42 @@ pub struct Ulimit {
     #[serde(rename="softLimit")]
     pub soft_limit: i64,
 }
-
+impl Ulimit {
+    /// Sets `hard_limit`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Ulimit.hard_limit = value.into();`.
+    pub fn hard_limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.hard_limit = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Ulimit.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `soft_limit`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Ulimit.soft_limit = value.into();`.
+    pub fn soft_limit<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.soft_limit = value.into();
+        self
+    }
+    /// Returns a new instance of Ulimit with optional fields set to `None`.
+    pub fn new<hardLimitType: Into<i64>, nameType: Into<String>, softLimitType: Into<i64>>
+        (hard_limit: hardLimitType,
+         name: nameType,
+         soft_limit: softLimitType)
+         -> Ulimit {
+        Ulimit {
+            hard_limit: hard_limit.into(),
+            name: name.into(),
+            soft_limit: soft_limit.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateComputeEnvironmentRequest {
     #[doc="<p>The name or full Amazon Resource Name (ARN) of the compute environment to update.</p>"]
@@ -875,7 +1730,46 @@ pub struct UpdateComputeEnvironmentRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub state: Option<String>,
 }
-
+impl UpdateComputeEnvironmentRequest {
+    /// Sets `compute_environment`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateComputeEnvironmentRequest.compute_environment = value.into();`.
+    pub fn compute_environment<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.compute_environment = value.into();
+        self
+    }
+    /// Sets `compute_resources`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateComputeEnvironmentRequest.compute_resources = Some(value.into());`.
+    pub fn compute_resources<ValueType: Into<ComputeResourceUpdate>>(mut self,
+                                                                     value: ValueType)
+                                                                     -> Self {
+        self.compute_resources = Some(value.into());
+        self
+    }
+    /// Sets `service_role`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateComputeEnvironmentRequest.service_role = Some(value.into());`.
+    pub fn service_role<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.service_role = Some(value.into());
+        self
+    }
+    /// Sets `state`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateComputeEnvironmentRequest.state = Some(value.into());`.
+    pub fn state<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.state = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateComputeEnvironmentRequest with optional fields set to `None`.
+    pub fn new<computeEnvironmentType: Into<String>>(compute_environment: computeEnvironmentType)
+                                                     -> UpdateComputeEnvironmentRequest {
+        UpdateComputeEnvironmentRequest {
+            compute_environment: compute_environment.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateComputeEnvironmentResponse {
     #[doc="<p>The Amazon Resource Name (ARN) of the compute environment. </p>"]
@@ -887,7 +1781,6 @@ pub struct UpdateComputeEnvironmentResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub compute_environment_name: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct UpdateJobQueueRequest {
     #[doc="<p>Details the set of compute environments mapped to a job queue and their order relative to each other. This is one of the parameters used by the job scheduler to determine which compute environment should execute a given job. </p>"]
@@ -906,7 +1799,43 @@ pub struct UpdateJobQueueRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub state: Option<String>,
 }
-
+impl UpdateJobQueueRequest {
+    /// Sets `compute_environment_order`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateJobQueueRequest.compute_environment_order = Some(value.into());`.
+pub fn compute_environment_order<ValueType: Into<Vec<ComputeEnvironmentOrder>>>(mut self, value: ValueType) -> Self{
+        self.compute_environment_order = Some(value.into());
+        self
+    }
+    /// Sets `job_queue`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateJobQueueRequest.job_queue = value.into();`.
+    pub fn job_queue<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_queue = value.into();
+        self
+    }
+    /// Sets `priority`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateJobQueueRequest.priority = Some(value.into());`.
+    pub fn priority<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.priority = Some(value.into());
+        self
+    }
+    /// Sets `state`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateJobQueueRequest.state = Some(value.into());`.
+    pub fn state<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.state = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateJobQueueRequest with optional fields set to `None`.
+    pub fn new<jobQueueType: Into<String>>(job_queue: jobQueueType) -> UpdateJobQueueRequest {
+        UpdateJobQueueRequest {
+            job_queue: job_queue.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateJobQueueResponse {
     #[doc="<p>The Amazon Resource Name (ARN) of the job queue.</p>"]
@@ -918,7 +1847,6 @@ pub struct UpdateJobQueueResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub job_queue_name: Option<String>,
 }
-
 #[doc="<p>A data volume used in a job's container properties.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Volume {
@@ -931,7 +1859,26 @@ pub struct Volume {
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
 }
-
+impl Volume {
+    /// Sets `host`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Volume.host = Some(value.into());`.
+    pub fn host<ValueType: Into<Host>>(mut self, value: ValueType) -> Self {
+        self.host = Some(value.into());
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Volume.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Volume with optional fields set to `None`.
+    pub fn new() -> Volume {
+        Volume { ..Default::default() }
+    }
+}
 /// Errors returned by CancelJob
 #[derive(Debug, PartialEq)]
 pub enum CancelJobError {

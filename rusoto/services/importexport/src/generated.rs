@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -45,7 +46,6 @@ pub struct Artifact {
     pub description: Option<String>,
     pub url: Option<String>,
 }
-
 struct ArtifactDeserializer;
 impl ArtifactDeserializer {
     #[allow(unused_variables)]
@@ -139,7 +139,29 @@ pub struct CancelJobInput {
     pub api_version: Option<String>,
     pub job_id: String,
 }
-
+impl CancelJobInput {
+    /// Sets `api_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelJobInput.api_version = Some(value.into());`.
+    pub fn api_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.api_version = Some(value.into());
+        self
+    }
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CancelJobInput.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Returns a new instance of CancelJobInput with optional fields set to `None`.
+    pub fn new<JobIdType: Into<String>>(job_id: JobIdType) -> CancelJobInput {
+        CancelJobInput {
+            job_id: job_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CancelJobInput` contents to a `SignedRequest`.
 struct CancelJobInputSerializer;
@@ -163,7 +185,6 @@ impl CancelJobInputSerializer {
 pub struct CancelJobOutput {
     pub success: Option<bool>,
 }
-
 struct CancelJobOutputDeserializer;
 impl CancelJobOutputDeserializer {
     #[allow(unused_variables)]
@@ -229,7 +250,56 @@ pub struct CreateJobInput {
     pub manifest_addendum: Option<String>,
     pub validate_only: bool,
 }
-
+impl CreateJobInput {
+    /// Sets `api_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobInput.api_version = Some(value.into());`.
+    pub fn api_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.api_version = Some(value.into());
+        self
+    }
+    /// Sets `job_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobInput.job_type = value.into();`.
+    pub fn job_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_type = value.into();
+        self
+    }
+    /// Sets `manifest`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobInput.manifest = value.into();`.
+    pub fn manifest<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.manifest = value.into();
+        self
+    }
+    /// Sets `manifest_addendum`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobInput.manifest_addendum = Some(value.into());`.
+    pub fn manifest_addendum<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.manifest_addendum = Some(value.into());
+        self
+    }
+    /// Sets `validate_only`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateJobInput.validate_only = value.into();`.
+    pub fn validate_only<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.validate_only = value.into();
+        self
+    }
+    /// Returns a new instance of CreateJobInput with optional fields set to `None`.
+    pub fn new<JobTypeType: Into<String>, ManifestType: Into<String>, ValidateOnlyType: Into<bool>>
+        (job_type: JobTypeType,
+         manifest: ManifestType,
+         validate_only: ValidateOnlyType)
+         -> CreateJobInput {
+        CreateJobInput {
+            job_type: job_type.into(),
+            manifest: manifest.into(),
+            validate_only: validate_only.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateJobInput` contents to a `SignedRequest`.
 struct CreateJobInputSerializer;
@@ -264,7 +334,6 @@ pub struct CreateJobOutput {
     pub signature_file_contents: Option<String>,
     pub warning_message: Option<String>,
 }
-
 struct CreateJobOutputDeserializer;
 impl CreateJobOutputDeserializer {
     #[allow(unused_variables)]
@@ -414,7 +483,99 @@ pub struct GetShippingLabelInput {
     pub street_2: Option<String>,
     pub street_3: Option<String>,
 }
-
+impl GetShippingLabelInput {
+    /// Sets `api_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetShippingLabelInput.api_version = Some(value.into());`.
+    pub fn api_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.api_version = Some(value.into());
+        self
+    }
+    /// Sets `city`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetShippingLabelInput.city = Some(value.into());`.
+    pub fn city<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.city = Some(value.into());
+        self
+    }
+    /// Sets `company`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetShippingLabelInput.company = Some(value.into());`.
+    pub fn company<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.company = Some(value.into());
+        self
+    }
+    /// Sets `country`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetShippingLabelInput.country = Some(value.into());`.
+    pub fn country<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.country = Some(value.into());
+        self
+    }
+    /// Sets `job_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetShippingLabelInput.job_ids = value.into();`.
+    pub fn job_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.job_ids = value.into();
+        self
+    }
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetShippingLabelInput.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `phone_number`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetShippingLabelInput.phone_number = Some(value.into());`.
+    pub fn phone_number<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.phone_number = Some(value.into());
+        self
+    }
+    /// Sets `postal_code`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetShippingLabelInput.postal_code = Some(value.into());`.
+    pub fn postal_code<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.postal_code = Some(value.into());
+        self
+    }
+    /// Sets `state_or_province`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetShippingLabelInput.state_or_province = Some(value.into());`.
+    pub fn state_or_province<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.state_or_province = Some(value.into());
+        self
+    }
+    /// Sets `street_1`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetShippingLabelInput.street_1 = Some(value.into());`.
+    pub fn street_1<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.street_1 = Some(value.into());
+        self
+    }
+    /// Sets `street_2`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetShippingLabelInput.street_2 = Some(value.into());`.
+    pub fn street_2<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.street_2 = Some(value.into());
+        self
+    }
+    /// Sets `street_3`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetShippingLabelInput.street_3 = Some(value.into());`.
+    pub fn street_3<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.street_3 = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetShippingLabelInput with optional fields set to `None`.
+    pub fn new<jobIdsType: Into<Vec<String>>>(job_ids: jobIdsType) -> GetShippingLabelInput {
+        GetShippingLabelInput {
+            job_ids: job_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetShippingLabelInput` contents to a `SignedRequest`.
 struct GetShippingLabelInputSerializer;
@@ -468,7 +629,6 @@ pub struct GetShippingLabelOutput {
     pub shipping_label_url: Option<String>,
     pub warning: Option<String>,
 }
-
 struct GetShippingLabelOutputDeserializer;
 impl GetShippingLabelOutputDeserializer {
     #[allow(unused_variables)]
@@ -522,7 +682,29 @@ pub struct GetStatusInput {
     pub api_version: Option<String>,
     pub job_id: String,
 }
-
+impl GetStatusInput {
+    /// Sets `api_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetStatusInput.api_version = Some(value.into());`.
+    pub fn api_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.api_version = Some(value.into());
+        self
+    }
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetStatusInput.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetStatusInput with optional fields set to `None`.
+    pub fn new<JobIdType: Into<String>>(job_id: JobIdType) -> GetStatusInput {
+        GetStatusInput {
+            job_id: job_id.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetStatusInput` contents to a `SignedRequest`.
 struct GetStatusInputSerializer;
@@ -561,7 +743,6 @@ pub struct GetStatusOutput {
     pub signature_file_contents: Option<String>,
     pub tracking_number: Option<String>,
 }
-
 struct GetStatusOutputDeserializer;
 impl GetStatusOutputDeserializer {
     #[allow(unused_variables)]
@@ -709,7 +890,6 @@ pub struct Job {
     pub job_id: Option<String>,
     pub job_type: Option<String>,
 }
-
 struct JobDeserializer;
 impl JobDeserializer {
     #[allow(unused_variables)]
@@ -853,7 +1033,33 @@ pub struct ListJobsInput {
     pub marker: Option<String>,
     pub max_jobs: Option<i64>,
 }
-
+impl ListJobsInput {
+    /// Sets `api_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsInput.api_version = Some(value.into());`.
+    pub fn api_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.api_version = Some(value.into());
+        self
+    }
+    /// Sets `marker`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsInput.marker = Some(value.into());`.
+    pub fn marker<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.marker = Some(value.into());
+        self
+    }
+    /// Sets `max_jobs`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListJobsInput.max_jobs = Some(value.into());`.
+    pub fn max_jobs<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_jobs = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListJobsInput with optional fields set to `None`.
+    pub fn new() -> ListJobsInput {
+        ListJobsInput { ..Default::default() }
+    }
+}
 
 /// Serialize `ListJobsInput` contents to a `SignedRequest`.
 struct ListJobsInputSerializer;
@@ -884,7 +1090,6 @@ pub struct ListJobsOutput {
     pub is_truncated: Option<bool>,
     pub jobs: Option<Vec<Job>>,
 }
-
 struct ListJobsOutputDeserializer;
 impl ListJobsOutputDeserializer {
     #[allow(unused_variables)]
@@ -1094,7 +1299,61 @@ pub struct UpdateJobInput {
     pub manifest: String,
     pub validate_only: bool,
 }
-
+impl UpdateJobInput {
+    /// Sets `api_version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateJobInput.api_version = Some(value.into());`.
+    pub fn api_version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.api_version = Some(value.into());
+        self
+    }
+    /// Sets `job_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateJobInput.job_id = value.into();`.
+    pub fn job_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_id = value.into();
+        self
+    }
+    /// Sets `job_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateJobInput.job_type = value.into();`.
+    pub fn job_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.job_type = value.into();
+        self
+    }
+    /// Sets `manifest`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateJobInput.manifest = value.into();`.
+    pub fn manifest<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.manifest = value.into();
+        self
+    }
+    /// Sets `validate_only`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateJobInput.validate_only = value.into();`.
+    pub fn validate_only<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.validate_only = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateJobInput with optional fields set to `None`.
+    pub fn new<JobIdType: Into<String>,
+               JobTypeType: Into<String>,
+               ManifestType: Into<String>,
+               ValidateOnlyType: Into<bool>>
+        (job_id: JobIdType,
+         job_type: JobTypeType,
+         manifest: ManifestType,
+         validate_only: ValidateOnlyType)
+         -> UpdateJobInput {
+        UpdateJobInput {
+            job_id: job_id.into(),
+            job_type: job_type.into(),
+            manifest: manifest.into(),
+            validate_only: validate_only.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UpdateJobInput` contents to a `SignedRequest`.
 struct UpdateJobInputSerializer;
@@ -1124,7 +1383,6 @@ pub struct UpdateJobOutput {
     pub success: Option<bool>,
     pub warning_message: Option<String>,
 }
-
 struct UpdateJobOutputDeserializer;
 impl UpdateJobOutputDeserializer {
     #[allow(unused_variables)]

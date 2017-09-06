@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -38,7 +39,29 @@ pub struct AcceptQualificationRequestRequest {
     #[serde(rename="QualificationRequestId")]
     pub qualification_request_id: String,
 }
-
+impl AcceptQualificationRequestRequest {
+    /// Sets `integer_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AcceptQualificationRequestRequest.integer_value = Some(value.into());`.
+    pub fn integer_value<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.integer_value = Some(value.into());
+        self
+    }
+    /// Sets `qualification_request_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AcceptQualificationRequestRequest.qualification_request_id = value.into();`.
+    pub fn qualification_request_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.qualification_request_id = value.into();
+        self
+    }
+    /// Returns a new instance of AcceptQualificationRequestRequest with optional fields set to `None`.
+pub fn new<QualificationRequestIdType: Into<String>>(qualification_request_id: QualificationRequestIdType) -> AcceptQualificationRequestRequest{
+        AcceptQualificationRequestRequest {
+            qualification_request_id: qualification_request_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AcceptQualificationRequestResponse;
 
@@ -56,7 +79,37 @@ pub struct ApproveAssignmentRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub requester_feedback: Option<String>,
 }
-
+impl ApproveAssignmentRequest {
+    /// Sets `assignment_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ApproveAssignmentRequest.assignment_id = value.into();`.
+    pub fn assignment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.assignment_id = value.into();
+        self
+    }
+    /// Sets `override_rejection`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ApproveAssignmentRequest.override_rejection = Some(value.into());`.
+    pub fn override_rejection<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.override_rejection = Some(value.into());
+        self
+    }
+    /// Sets `requester_feedback`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ApproveAssignmentRequest.requester_feedback = Some(value.into());`.
+    pub fn requester_feedback<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.requester_feedback = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ApproveAssignmentRequest with optional fields set to `None`.
+    pub fn new<AssignmentIdType: Into<String>>(assignment_id: AssignmentIdType)
+                                               -> ApproveAssignmentRequest {
+        ApproveAssignmentRequest {
+            assignment_id: assignment_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ApproveAssignmentResponse;
 
@@ -112,7 +165,6 @@ pub struct Assignment {
     #[serde(skip_serializing_if="Option::is_none")]
     pub worker_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct AssociateQualificationWithWorkerRequest {
     #[doc="<p>The value of the Qualification to assign.</p>"]
@@ -130,7 +182,47 @@ pub struct AssociateQualificationWithWorkerRequest {
     #[serde(rename="WorkerId")]
     pub worker_id: String,
 }
-
+impl AssociateQualificationWithWorkerRequest {
+    /// Sets `integer_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateQualificationWithWorkerRequest.integer_value = Some(value.into());`.
+    pub fn integer_value<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.integer_value = Some(value.into());
+        self
+    }
+    /// Sets `qualification_type_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateQualificationWithWorkerRequest.qualification_type_id = value.into();`.
+    pub fn qualification_type_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.qualification_type_id = value.into();
+        self
+    }
+    /// Sets `send_notification`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateQualificationWithWorkerRequest.send_notification = Some(value.into());`.
+    pub fn send_notification<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.send_notification = Some(value.into());
+        self
+    }
+    /// Sets `worker_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AssociateQualificationWithWorkerRequest.worker_id = value.into();`.
+    pub fn worker_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.worker_id = value.into();
+        self
+    }
+    /// Returns a new instance of AssociateQualificationWithWorkerRequest with optional fields set to `None`.
+    pub fn new<QualificationTypeIdType: Into<String>, WorkerIdType: Into<String>>
+        (qualification_type_id: QualificationTypeIdType,
+         worker_id: WorkerIdType)
+         -> AssociateQualificationWithWorkerRequest {
+        AssociateQualificationWithWorkerRequest {
+            qualification_type_id: qualification_type_id.into(),
+            worker_id: worker_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct AssociateQualificationWithWorkerResponse;
 
@@ -157,7 +249,6 @@ pub struct BonusPayment {
     #[serde(skip_serializing_if="Option::is_none")]
     pub worker_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateAdditionalAssignmentsForHITRequest {
     #[doc="<p>The ID of the HIT to extend.</p>"]
@@ -172,7 +263,39 @@ pub struct CreateAdditionalAssignmentsForHITRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub unique_request_token: Option<String>,
 }
-
+impl CreateAdditionalAssignmentsForHITRequest {
+    /// Sets `hit_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAdditionalAssignmentsForHITRequest.hit_id = value.into();`.
+    pub fn hit_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hit_id = value.into();
+        self
+    }
+    /// Sets `number_of_additional_assignments`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAdditionalAssignmentsForHITRequest.number_of_additional_assignments = Some(value.into());`.
+    pub fn number_of_additional_assignments<ValueType: Into<i64>>(mut self,
+                                                                  value: ValueType)
+                                                                  -> Self {
+        self.number_of_additional_assignments = Some(value.into());
+        self
+    }
+    /// Sets `unique_request_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateAdditionalAssignmentsForHITRequest.unique_request_token = Some(value.into());`.
+    pub fn unique_request_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.unique_request_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateAdditionalAssignmentsForHITRequest with optional fields set to `None`.
+    pub fn new<HITIdType: Into<String>>(hit_id: HITIdType)
+                                        -> CreateAdditionalAssignmentsForHITRequest {
+        CreateAdditionalAssignmentsForHITRequest {
+            hit_id: hit_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateAdditionalAssignmentsForHITResponse;
 
@@ -238,7 +361,149 @@ pub struct CreateHITRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub unique_request_token: Option<String>,
 }
-
+impl CreateHITRequest {
+    /// Sets `assignment_duration_in_seconds`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITRequest.assignment_duration_in_seconds = value.into();`.
+    pub fn assignment_duration_in_seconds<ValueType: Into<i64>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.assignment_duration_in_seconds = value.into();
+        self
+    }
+    /// Sets `assignment_review_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITRequest.assignment_review_policy = Some(value.into());`.
+    pub fn assignment_review_policy<ValueType: Into<ReviewPolicy>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.assignment_review_policy = Some(value.into());
+        self
+    }
+    /// Sets `auto_approval_delay_in_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITRequest.auto_approval_delay_in_seconds = Some(value.into());`.
+    pub fn auto_approval_delay_in_seconds<ValueType: Into<i64>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.auto_approval_delay_in_seconds = Some(value.into());
+        self
+    }
+    /// Sets `description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITRequest.description = value.into();`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = value.into();
+        self
+    }
+    /// Sets `hit_layout_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITRequest.hit_layout_id = Some(value.into());`.
+    pub fn hit_layout_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hit_layout_id = Some(value.into());
+        self
+    }
+    /// Sets `hit_layout_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITRequest.hit_layout_parameters = Some(value.into());`.
+    pub fn hit_layout_parameters<ValueType: Into<Vec<HITLayoutParameter>>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.hit_layout_parameters = Some(value.into());
+        self
+    }
+    /// Sets `hit_review_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITRequest.hit_review_policy = Some(value.into());`.
+    pub fn hit_review_policy<ValueType: Into<ReviewPolicy>>(mut self, value: ValueType) -> Self {
+        self.hit_review_policy = Some(value.into());
+        self
+    }
+    /// Sets `keywords`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITRequest.keywords = Some(value.into());`.
+    pub fn keywords<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.keywords = Some(value.into());
+        self
+    }
+    /// Sets `lifetime_in_seconds`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITRequest.lifetime_in_seconds = value.into();`.
+    pub fn lifetime_in_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.lifetime_in_seconds = value.into();
+        self
+    }
+    /// Sets `max_assignments`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITRequest.max_assignments = Some(value.into());`.
+    pub fn max_assignments<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_assignments = Some(value.into());
+        self
+    }
+    /// Sets `qualification_requirements`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITRequest.qualification_requirements = Some(value.into());`.
+pub fn qualification_requirements<ValueType: Into<Vec<QualificationRequirement>>>(mut self, value: ValueType) -> Self{
+        self.qualification_requirements = Some(value.into());
+        self
+    }
+    /// Sets `question`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITRequest.question = Some(value.into());`.
+    pub fn question<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.question = Some(value.into());
+        self
+    }
+    /// Sets `requester_annotation`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITRequest.requester_annotation = Some(value.into());`.
+    pub fn requester_annotation<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.requester_annotation = Some(value.into());
+        self
+    }
+    /// Sets `reward`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITRequest.reward = value.into();`.
+    pub fn reward<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reward = value.into();
+        self
+    }
+    /// Sets `title`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITRequest.title = value.into();`.
+    pub fn title<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.title = value.into();
+        self
+    }
+    /// Sets `unique_request_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITRequest.unique_request_token = Some(value.into());`.
+    pub fn unique_request_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.unique_request_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateHITRequest with optional fields set to `None`.
+    pub fn new<AssignmentDurationInSecondsType: Into<i64>,
+               DescriptionType: Into<String>,
+               LifetimeInSecondsType: Into<i64>,
+               RewardType: Into<String>,
+               TitleType: Into<String>>
+        (assignment_duration_in_seconds: AssignmentDurationInSecondsType,
+         description: DescriptionType,
+         lifetime_in_seconds: LifetimeInSecondsType,
+         reward: RewardType,
+         title: TitleType)
+         -> CreateHITRequest {
+        CreateHITRequest {
+            assignment_duration_in_seconds: assignment_duration_in_seconds.into(),
+            description: description.into(),
+            lifetime_in_seconds: lifetime_in_seconds.into(),
+            reward: reward.into(),
+            title: title.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateHITResponse {
     #[doc="<p> Contains the newly created HIT data. For a description of the HIT data structure as it appears in responses, see the HIT Data Structure documentation. </p>"]
@@ -246,7 +511,6 @@ pub struct CreateHITResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub hit: Option<HIT>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateHITTypeRequest {
     #[doc="<p> The amount of time, in seconds, that a Worker has to complete the HIT after accepting it. If a Worker does not complete the assignment within the specified duration, the assignment is considered abandoned. If the HIT is still active (that is, its lifetime has not elapsed), the assignment becomes available for other users to find and accept. </p>"]
@@ -274,7 +538,79 @@ pub struct CreateHITTypeRequest {
     #[serde(rename="Title")]
     pub title: String,
 }
-
+impl CreateHITTypeRequest {
+    /// Sets `assignment_duration_in_seconds`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITTypeRequest.assignment_duration_in_seconds = value.into();`.
+    pub fn assignment_duration_in_seconds<ValueType: Into<i64>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.assignment_duration_in_seconds = value.into();
+        self
+    }
+    /// Sets `auto_approval_delay_in_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITTypeRequest.auto_approval_delay_in_seconds = Some(value.into());`.
+    pub fn auto_approval_delay_in_seconds<ValueType: Into<i64>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.auto_approval_delay_in_seconds = Some(value.into());
+        self
+    }
+    /// Sets `description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITTypeRequest.description = value.into();`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = value.into();
+        self
+    }
+    /// Sets `keywords`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITTypeRequest.keywords = Some(value.into());`.
+    pub fn keywords<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.keywords = Some(value.into());
+        self
+    }
+    /// Sets `qualification_requirements`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITTypeRequest.qualification_requirements = Some(value.into());`.
+pub fn qualification_requirements<ValueType: Into<Vec<QualificationRequirement>>>(mut self, value: ValueType) -> Self{
+        self.qualification_requirements = Some(value.into());
+        self
+    }
+    /// Sets `reward`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITTypeRequest.reward = value.into();`.
+    pub fn reward<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reward = value.into();
+        self
+    }
+    /// Sets `title`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITTypeRequest.title = value.into();`.
+    pub fn title<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.title = value.into();
+        self
+    }
+    /// Returns a new instance of CreateHITTypeRequest with optional fields set to `None`.
+    pub fn new<AssignmentDurationInSecondsType: Into<i64>,
+               DescriptionType: Into<String>,
+               RewardType: Into<String>,
+               TitleType: Into<String>>
+        (assignment_duration_in_seconds: AssignmentDurationInSecondsType,
+         description: DescriptionType,
+         reward: RewardType,
+         title: TitleType)
+         -> CreateHITTypeRequest {
+        CreateHITTypeRequest {
+            assignment_duration_in_seconds: assignment_duration_in_seconds.into(),
+            description: description.into(),
+            reward: reward.into(),
+            title: title.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateHITTypeResponse {
     #[doc="<p> The ID of the newly registered HIT type.</p>"]
@@ -282,7 +618,6 @@ pub struct CreateHITTypeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub hit_type_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateHITWithHITTypeRequest {
     #[doc="<p> The Assignment-level Review Policy applies to the assignments under the HIT. You can specify for Mechanical Turk to take various actions based on the policy. </p>"]
@@ -324,7 +659,93 @@ pub struct CreateHITWithHITTypeRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub unique_request_token: Option<String>,
 }
-
+impl CreateHITWithHITTypeRequest {
+    /// Sets `assignment_review_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITWithHITTypeRequest.assignment_review_policy = Some(value.into());`.
+    pub fn assignment_review_policy<ValueType: Into<ReviewPolicy>>(mut self,
+                                                                   value: ValueType)
+                                                                   -> Self {
+        self.assignment_review_policy = Some(value.into());
+        self
+    }
+    /// Sets `hit_layout_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITWithHITTypeRequest.hit_layout_id = Some(value.into());`.
+    pub fn hit_layout_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hit_layout_id = Some(value.into());
+        self
+    }
+    /// Sets `hit_layout_parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITWithHITTypeRequest.hit_layout_parameters = Some(value.into());`.
+    pub fn hit_layout_parameters<ValueType: Into<Vec<HITLayoutParameter>>>(mut self,
+                                                                           value: ValueType)
+                                                                           -> Self {
+        self.hit_layout_parameters = Some(value.into());
+        self
+    }
+    /// Sets `hit_review_policy`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITWithHITTypeRequest.hit_review_policy = Some(value.into());`.
+    pub fn hit_review_policy<ValueType: Into<ReviewPolicy>>(mut self, value: ValueType) -> Self {
+        self.hit_review_policy = Some(value.into());
+        self
+    }
+    /// Sets `hit_type_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITWithHITTypeRequest.hit_type_id = value.into();`.
+    pub fn hit_type_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hit_type_id = value.into();
+        self
+    }
+    /// Sets `lifetime_in_seconds`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITWithHITTypeRequest.lifetime_in_seconds = value.into();`.
+    pub fn lifetime_in_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.lifetime_in_seconds = value.into();
+        self
+    }
+    /// Sets `max_assignments`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITWithHITTypeRequest.max_assignments = Some(value.into());`.
+    pub fn max_assignments<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_assignments = Some(value.into());
+        self
+    }
+    /// Sets `question`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITWithHITTypeRequest.question = Some(value.into());`.
+    pub fn question<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.question = Some(value.into());
+        self
+    }
+    /// Sets `requester_annotation`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITWithHITTypeRequest.requester_annotation = Some(value.into());`.
+    pub fn requester_annotation<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.requester_annotation = Some(value.into());
+        self
+    }
+    /// Sets `unique_request_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateHITWithHITTypeRequest.unique_request_token = Some(value.into());`.
+    pub fn unique_request_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.unique_request_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateHITWithHITTypeRequest with optional fields set to `None`.
+    pub fn new<HITTypeIdType: Into<String>, LifetimeInSecondsType: Into<i64>>
+        (hit_type_id: HITTypeIdType,
+         lifetime_in_seconds: LifetimeInSecondsType)
+         -> CreateHITWithHITTypeRequest {
+        CreateHITWithHITTypeRequest {
+            hit_type_id: hit_type_id.into(),
+            lifetime_in_seconds: lifetime_in_seconds.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateHITWithHITTypeResponse {
     #[doc="<p> Contains the newly created HIT data. For a description of the HIT data structure as it appears in responses, see the HIT Data Structure documentation. </p>"]
@@ -332,7 +753,6 @@ pub struct CreateHITWithHITTypeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub hit: Option<HIT>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateQualificationTypeRequest {
     #[doc="<p>The answers to the Qualification test specified in the Test parameter, in the form of an AnswerKey data structure.</p> <p>Constraints: Must not be longer than 65535 bytes.</p> <p>Constraints: None. If not specified, you must process Qualification requests manually.</p>"]
@@ -373,7 +793,93 @@ pub struct CreateQualificationTypeRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub test_duration_in_seconds: Option<i64>,
 }
-
+impl CreateQualificationTypeRequest {
+    /// Sets `answer_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateQualificationTypeRequest.answer_key = Some(value.into());`.
+    pub fn answer_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.answer_key = Some(value.into());
+        self
+    }
+    /// Sets `auto_granted`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateQualificationTypeRequest.auto_granted = Some(value.into());`.
+    pub fn auto_granted<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.auto_granted = Some(value.into());
+        self
+    }
+    /// Sets `auto_granted_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateQualificationTypeRequest.auto_granted_value = Some(value.into());`.
+    pub fn auto_granted_value<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.auto_granted_value = Some(value.into());
+        self
+    }
+    /// Sets `description`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateQualificationTypeRequest.description = value.into();`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = value.into();
+        self
+    }
+    /// Sets `keywords`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateQualificationTypeRequest.keywords = Some(value.into());`.
+    pub fn keywords<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.keywords = Some(value.into());
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateQualificationTypeRequest.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `qualification_type_status`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateQualificationTypeRequest.qualification_type_status = value.into();`.
+    pub fn qualification_type_status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.qualification_type_status = value.into();
+        self
+    }
+    /// Sets `retry_delay_in_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateQualificationTypeRequest.retry_delay_in_seconds = Some(value.into());`.
+    pub fn retry_delay_in_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.retry_delay_in_seconds = Some(value.into());
+        self
+    }
+    /// Sets `test`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateQualificationTypeRequest.test = Some(value.into());`.
+    pub fn test<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.test = Some(value.into());
+        self
+    }
+    /// Sets `test_duration_in_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateQualificationTypeRequest.test_duration_in_seconds = Some(value.into());`.
+    pub fn test_duration_in_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.test_duration_in_seconds = Some(value.into());
+        self
+    }
+    /// Returns a new instance of CreateQualificationTypeRequest with optional fields set to `None`.
+    pub fn new<DescriptionType: Into<String>,
+               NameType: Into<String>,
+               QualificationTypeStatusType: Into<String>>
+        (description: DescriptionType,
+         name: NameType,
+         qualification_type_status: QualificationTypeStatusType)
+         -> CreateQualificationTypeRequest {
+        CreateQualificationTypeRequest {
+            description: description.into(),
+            name: name.into(),
+            qualification_type_status: qualification_type_status.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateQualificationTypeResponse {
     #[doc="<p>The created Qualification type, returned as a QualificationType data structure.</p>"]
@@ -381,7 +887,6 @@ pub struct CreateQualificationTypeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub qualification_type: Option<QualificationType>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct CreateWorkerBlockRequest {
     #[doc="<p>A message explaining the reason for blocking the Worker. This parameter enables you to keep track of your Workers. The Worker does not see this message.</p>"]
@@ -391,7 +896,33 @@ pub struct CreateWorkerBlockRequest {
     #[serde(rename="WorkerId")]
     pub worker_id: String,
 }
-
+impl CreateWorkerBlockRequest {
+    /// Sets `reason`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateWorkerBlockRequest.reason = value.into();`.
+    pub fn reason<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reason = value.into();
+        self
+    }
+    /// Sets `worker_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateWorkerBlockRequest.worker_id = value.into();`.
+    pub fn worker_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.worker_id = value.into();
+        self
+    }
+    /// Returns a new instance of CreateWorkerBlockRequest with optional fields set to `None`.
+    pub fn new<ReasonType: Into<String>, WorkerIdType: Into<String>>
+        (reason: ReasonType,
+         worker_id: WorkerIdType)
+         -> CreateWorkerBlockRequest {
+        CreateWorkerBlockRequest {
+            reason: reason.into(),
+            worker_id: worker_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct CreateWorkerBlockResponse;
 
@@ -401,7 +932,22 @@ pub struct DeleteHITRequest {
     #[serde(rename="HITId")]
     pub hit_id: String,
 }
-
+impl DeleteHITRequest {
+    /// Sets `hit_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteHITRequest.hit_id = value.into();`.
+    pub fn hit_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hit_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteHITRequest with optional fields set to `None`.
+    pub fn new<HITIdType: Into<String>>(hit_id: HITIdType) -> DeleteHITRequest {
+        DeleteHITRequest {
+            hit_id: hit_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteHITResponse;
 
@@ -411,7 +957,22 @@ pub struct DeleteQualificationTypeRequest {
     #[serde(rename="QualificationTypeId")]
     pub qualification_type_id: String,
 }
-
+impl DeleteQualificationTypeRequest {
+    /// Sets `qualification_type_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteQualificationTypeRequest.qualification_type_id = value.into();`.
+    pub fn qualification_type_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.qualification_type_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteQualificationTypeRequest with optional fields set to `None`.
+pub fn new<QualificationTypeIdType: Into<String>>(qualification_type_id: QualificationTypeIdType) -> DeleteQualificationTypeRequest{
+        DeleteQualificationTypeRequest {
+            qualification_type_id: qualification_type_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteQualificationTypeResponse;
 
@@ -425,7 +986,29 @@ pub struct DeleteWorkerBlockRequest {
     #[serde(rename="WorkerId")]
     pub worker_id: String,
 }
-
+impl DeleteWorkerBlockRequest {
+    /// Sets `reason`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteWorkerBlockRequest.reason = Some(value.into());`.
+    pub fn reason<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reason = Some(value.into());
+        self
+    }
+    /// Sets `worker_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteWorkerBlockRequest.worker_id = value.into();`.
+    pub fn worker_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.worker_id = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteWorkerBlockRequest with optional fields set to `None`.
+    pub fn new<WorkerIdType: Into<String>>(worker_id: WorkerIdType) -> DeleteWorkerBlockRequest {
+        DeleteWorkerBlockRequest {
+            worker_id: worker_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DeleteWorkerBlockResponse;
 
@@ -442,7 +1025,40 @@ pub struct DisassociateQualificationFromWorkerRequest {
     #[serde(rename="WorkerId")]
     pub worker_id: String,
 }
-
+impl DisassociateQualificationFromWorkerRequest {
+    /// Sets `qualification_type_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateQualificationFromWorkerRequest.qualification_type_id = value.into();`.
+    pub fn qualification_type_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.qualification_type_id = value.into();
+        self
+    }
+    /// Sets `reason`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateQualificationFromWorkerRequest.reason = Some(value.into());`.
+    pub fn reason<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reason = Some(value.into());
+        self
+    }
+    /// Sets `worker_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DisassociateQualificationFromWorkerRequest.worker_id = value.into();`.
+    pub fn worker_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.worker_id = value.into();
+        self
+    }
+    /// Returns a new instance of DisassociateQualificationFromWorkerRequest with optional fields set to `None`.
+    pub fn new<QualificationTypeIdType: Into<String>, WorkerIdType: Into<String>>
+        (qualification_type_id: QualificationTypeIdType,
+         worker_id: WorkerIdType)
+         -> DisassociateQualificationFromWorkerRequest {
+        DisassociateQualificationFromWorkerRequest {
+            qualification_type_id: qualification_type_id.into(),
+            worker_id: worker_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DisassociateQualificationFromWorkerResponse;
 
@@ -458,14 +1074,29 @@ pub struct GetAccountBalanceResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub on_hold_balance: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetAssignmentRequest {
     #[doc="<p>The ID of the Assignment to be retrieved.</p>"]
     #[serde(rename="AssignmentId")]
     pub assignment_id: String,
 }
-
+impl GetAssignmentRequest {
+    /// Sets `assignment_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetAssignmentRequest.assignment_id = value.into();`.
+    pub fn assignment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.assignment_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetAssignmentRequest with optional fields set to `None`.
+    pub fn new<AssignmentIdType: Into<String>>(assignment_id: AssignmentIdType)
+                                               -> GetAssignmentRequest {
+        GetAssignmentRequest {
+            assignment_id: assignment_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetAssignmentResponse {
     #[doc="<p> The assignment. The response includes one Assignment element. </p>"]
@@ -477,7 +1108,6 @@ pub struct GetAssignmentResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub hit: Option<HIT>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetFileUploadURLRequest {
     #[doc="<p>The ID of the assignment that contains the question with a FileUploadAnswer.</p>"]
@@ -487,7 +1117,33 @@ pub struct GetFileUploadURLRequest {
     #[serde(rename="QuestionIdentifier")]
     pub question_identifier: String,
 }
-
+impl GetFileUploadURLRequest {
+    /// Sets `assignment_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetFileUploadURLRequest.assignment_id = value.into();`.
+    pub fn assignment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.assignment_id = value.into();
+        self
+    }
+    /// Sets `question_identifier`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetFileUploadURLRequest.question_identifier = value.into();`.
+    pub fn question_identifier<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.question_identifier = value.into();
+        self
+    }
+    /// Returns a new instance of GetFileUploadURLRequest with optional fields set to `None`.
+    pub fn new<AssignmentIdType: Into<String>, QuestionIdentifierType: Into<String>>
+        (assignment_id: AssignmentIdType,
+         question_identifier: QuestionIdentifierType)
+         -> GetFileUploadURLRequest {
+        GetFileUploadURLRequest {
+            assignment_id: assignment_id.into(),
+            question_identifier: question_identifier.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetFileUploadURLResponse {
     #[doc="<p> A temporary URL for the file that the Worker uploaded for the answer. </p>"]
@@ -495,14 +1151,28 @@ pub struct GetFileUploadURLResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub file_upload_url: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetHITRequest {
     #[doc="<p>The ID of the HIT to be retrieved.</p>"]
     #[serde(rename="HITId")]
     pub hit_id: String,
 }
-
+impl GetHITRequest {
+    /// Sets `hit_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetHITRequest.hit_id = value.into();`.
+    pub fn hit_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hit_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetHITRequest with optional fields set to `None`.
+    pub fn new<HITIdType: Into<String>>(hit_id: HITIdType) -> GetHITRequest {
+        GetHITRequest {
+            hit_id: hit_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetHITResponse {
     #[doc="<p> Contains the requested HIT data.</p>"]
@@ -510,7 +1180,6 @@ pub struct GetHITResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub hit: Option<HIT>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetQualificationScoreRequest {
     #[doc="<p>The ID of the QualificationType.</p>"]
@@ -520,7 +1189,33 @@ pub struct GetQualificationScoreRequest {
     #[serde(rename="WorkerId")]
     pub worker_id: String,
 }
-
+impl GetQualificationScoreRequest {
+    /// Sets `qualification_type_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetQualificationScoreRequest.qualification_type_id = value.into();`.
+    pub fn qualification_type_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.qualification_type_id = value.into();
+        self
+    }
+    /// Sets `worker_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetQualificationScoreRequest.worker_id = value.into();`.
+    pub fn worker_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.worker_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetQualificationScoreRequest with optional fields set to `None`.
+    pub fn new<QualificationTypeIdType: Into<String>, WorkerIdType: Into<String>>
+        (qualification_type_id: QualificationTypeIdType,
+         worker_id: WorkerIdType)
+         -> GetQualificationScoreRequest {
+        GetQualificationScoreRequest {
+            qualification_type_id: qualification_type_id.into(),
+            worker_id: worker_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetQualificationScoreResponse {
     #[doc="<p> The Qualification data structure of the Qualification assigned to a user, including the Qualification type and the value (score). </p>"]
@@ -528,14 +1223,28 @@ pub struct GetQualificationScoreResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub qualification: Option<Qualification>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct GetQualificationTypeRequest {
     #[doc="<p>The ID of the QualificationType.</p>"]
     #[serde(rename="QualificationTypeId")]
     pub qualification_type_id: String,
 }
-
+impl GetQualificationTypeRequest {
+    /// Sets `qualification_type_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetQualificationTypeRequest.qualification_type_id = value.into();`.
+    pub fn qualification_type_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.qualification_type_id = value.into();
+        self
+    }
+    /// Returns a new instance of GetQualificationTypeRequest with optional fields set to `None`.
+pub fn new<QualificationTypeIdType: Into<String>>(qualification_type_id: QualificationTypeIdType) -> GetQualificationTypeRequest{
+        GetQualificationTypeRequest {
+            qualification_type_id: qualification_type_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct GetQualificationTypeResponse {
     #[doc="<p> The returned Qualification Type</p>"]
@@ -543,7 +1252,6 @@ pub struct GetQualificationTypeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub qualification_type: Option<QualificationType>,
 }
-
 #[doc="<p> The HIT data structure represents a single HIT, including all the information necessary for a Worker to accept and complete the HIT.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct HIT {
@@ -631,7 +1339,6 @@ pub struct HIT {
     #[serde(skip_serializing_if="Option::is_none")]
     pub title: Option<String>,
 }
-
 #[doc="<p> The HITLayoutParameter data structure defines parameter values used with a HITLayout. A HITLayout is a reusable Amazon Mechanical Turk project template used to provide Human Intelligence Task (HIT) question data for CreateHIT. </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct HITLayoutParameter {
@@ -644,7 +1351,26 @@ pub struct HITLayoutParameter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
+impl HITLayoutParameter {
+    /// Sets `name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HITLayoutParameter.name = Some(value.into());`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+    /// Sets `value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `HITLayoutParameter.value = Some(value.into());`.
+    pub fn value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of HITLayoutParameter with optional fields set to `None`.
+    pub fn new() -> HITLayoutParameter {
+        HITLayoutParameter { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListAssignmentsForHITRequest {
     #[doc="<p>The status of the assignments to return: Submitted | Approved | Rejected</p>"]
@@ -662,7 +1388,43 @@ pub struct ListAssignmentsForHITRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListAssignmentsForHITRequest {
+    /// Sets `assignment_statuses`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssignmentsForHITRequest.assignment_statuses = Some(value.into());`.
+    pub fn assignment_statuses<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.assignment_statuses = Some(value.into());
+        self
+    }
+    /// Sets `hit_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssignmentsForHITRequest.hit_id = value.into();`.
+    pub fn hit_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hit_id = value.into();
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssignmentsForHITRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListAssignmentsForHITRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListAssignmentsForHITRequest with optional fields set to `None`.
+    pub fn new<HITIdType: Into<String>>(hit_id: HITIdType) -> ListAssignmentsForHITRequest {
+        ListAssignmentsForHITRequest {
+            hit_id: hit_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListAssignmentsForHITResponse {
     #[doc="<p> The collection of Assignment data structures returned by this call.</p>"]
@@ -677,7 +1439,6 @@ pub struct ListAssignmentsForHITResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub num_results: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListBonusPaymentsRequest {
     #[doc="<p>The ID of the assignment associated with the bonus payments to retrieve. If specified, only bonus payments for the given assignment are returned. Either the HITId parameter or the AssignmentId parameter must be specified</p>"]
@@ -696,7 +1457,40 @@ pub struct ListBonusPaymentsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListBonusPaymentsRequest {
+    /// Sets `assignment_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListBonusPaymentsRequest.assignment_id = Some(value.into());`.
+    pub fn assignment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.assignment_id = Some(value.into());
+        self
+    }
+    /// Sets `hit_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListBonusPaymentsRequest.hit_id = Some(value.into());`.
+    pub fn hit_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hit_id = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListBonusPaymentsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListBonusPaymentsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListBonusPaymentsRequest with optional fields set to `None`.
+    pub fn new() -> ListBonusPaymentsRequest {
+        ListBonusPaymentsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListBonusPaymentsResponse {
     #[doc="<p>A successful request to the ListBonusPayments operation returns a list of BonusPayment objects. </p>"]
@@ -711,7 +1505,6 @@ pub struct ListBonusPaymentsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub num_results: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListHITsForQualificationTypeRequest {
     #[doc="<p> Limit the number of results returned. </p>"]
@@ -726,7 +1519,36 @@ pub struct ListHITsForQualificationTypeRequest {
     #[serde(rename="QualificationTypeId")]
     pub qualification_type_id: String,
 }
-
+impl ListHITsForQualificationTypeRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListHITsForQualificationTypeRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListHITsForQualificationTypeRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `qualification_type_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListHITsForQualificationTypeRequest.qualification_type_id = value.into();`.
+    pub fn qualification_type_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.qualification_type_id = value.into();
+        self
+    }
+    /// Returns a new instance of ListHITsForQualificationTypeRequest with optional fields set to `None`.
+pub fn new<QualificationTypeIdType: Into<String>>(qualification_type_id: QualificationTypeIdType) -> ListHITsForQualificationTypeRequest{
+        ListHITsForQualificationTypeRequest {
+            qualification_type_id: qualification_type_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListHITsForQualificationTypeResponse {
     #[doc="<p> The list of HIT elements returned by the query.</p>"]
@@ -741,7 +1563,6 @@ pub struct ListHITsForQualificationTypeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub num_results: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListHITsRequest {
     #[serde(rename="MaxResults")]
@@ -752,7 +1573,26 @@ pub struct ListHITsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListHITsRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListHITsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListHITsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListHITsRequest with optional fields set to `None`.
+    pub fn new() -> ListHITsRequest {
+        ListHITsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListHITsResponse {
     #[doc="<p> The list of HIT elements returned by the query.</p>"]
@@ -767,7 +1607,6 @@ pub struct ListHITsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub num_results: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListQualificationRequestsRequest {
     #[doc="<p> The maximum number of results to return in a single call. </p>"]
@@ -782,7 +1621,33 @@ pub struct ListQualificationRequestsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub qualification_type_id: Option<String>,
 }
-
+impl ListQualificationRequestsRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListQualificationRequestsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListQualificationRequestsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `qualification_type_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListQualificationRequestsRequest.qualification_type_id = Some(value.into());`.
+    pub fn qualification_type_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.qualification_type_id = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListQualificationRequestsRequest with optional fields set to `None`.
+    pub fn new() -> ListQualificationRequestsRequest {
+        ListQualificationRequestsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListQualificationRequestsResponse {
     #[serde(rename="NextToken")]
@@ -797,7 +1662,6 @@ pub struct ListQualificationRequestsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub qualification_requests: Option<Vec<QualificationRequest>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListQualificationTypesRequest {
     #[doc="<p> The maximum number of results to return in a single call. </p>"]
@@ -819,7 +1683,51 @@ pub struct ListQualificationTypesRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub query: Option<String>,
 }
-
+impl ListQualificationTypesRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListQualificationTypesRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `must_be_owned_by_caller`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListQualificationTypesRequest.must_be_owned_by_caller = Some(value.into());`.
+    pub fn must_be_owned_by_caller<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.must_be_owned_by_caller = Some(value.into());
+        self
+    }
+    /// Sets `must_be_requestable`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListQualificationTypesRequest.must_be_requestable = value.into();`.
+    pub fn must_be_requestable<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.must_be_requestable = value.into();
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListQualificationTypesRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `query`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListQualificationTypesRequest.query = Some(value.into());`.
+    pub fn query<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.query = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListQualificationTypesRequest with optional fields set to `None`.
+    pub fn new<MustBeRequestableType: Into<bool>>(must_be_requestable: MustBeRequestableType)
+                                                  -> ListQualificationTypesRequest {
+        ListQualificationTypesRequest {
+            must_be_requestable: must_be_requestable.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListQualificationTypesResponse {
     #[serde(rename="NextToken")]
@@ -834,7 +1742,6 @@ pub struct ListQualificationTypesResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub qualification_types: Option<Vec<QualificationType>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListReviewPolicyResultsForHITRequest {
     #[doc="<p>The unique identifier of the HIT to retrieve review results for.</p>"]
@@ -861,7 +1768,57 @@ pub struct ListReviewPolicyResultsForHITRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub retrieve_results: Option<bool>,
 }
-
+impl ListReviewPolicyResultsForHITRequest {
+    /// Sets `hit_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListReviewPolicyResultsForHITRequest.hit_id = value.into();`.
+    pub fn hit_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hit_id = value.into();
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListReviewPolicyResultsForHITRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListReviewPolicyResultsForHITRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `policy_levels`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListReviewPolicyResultsForHITRequest.policy_levels = Some(value.into());`.
+    pub fn policy_levels<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.policy_levels = Some(value.into());
+        self
+    }
+    /// Sets `retrieve_actions`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListReviewPolicyResultsForHITRequest.retrieve_actions = Some(value.into());`.
+    pub fn retrieve_actions<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.retrieve_actions = Some(value.into());
+        self
+    }
+    /// Sets `retrieve_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListReviewPolicyResultsForHITRequest.retrieve_results = Some(value.into());`.
+    pub fn retrieve_results<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.retrieve_results = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListReviewPolicyResultsForHITRequest with optional fields set to `None`.
+    pub fn new<HITIdType: Into<String>>(hit_id: HITIdType) -> ListReviewPolicyResultsForHITRequest {
+        ListReviewPolicyResultsForHITRequest {
+            hit_id: hit_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListReviewPolicyResultsForHITResponse {
     #[doc="<p> The name of the Assignment-level Review Policy. This contains only the PolicyName element. </p>"]
@@ -888,7 +1845,6 @@ pub struct ListReviewPolicyResultsForHITResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListReviewableHITsRequest {
     #[doc="<p> The ID of the HIT type of the HITs to consider for the query. If not specified, all HITs for the Reviewer are considered </p>"]
@@ -908,7 +1864,40 @@ pub struct ListReviewableHITsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
+impl ListReviewableHITsRequest {
+    /// Sets `hit_type_id`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListReviewableHITsRequest.hit_type_id = Some(value.into());`.
+    pub fn hit_type_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hit_type_id = Some(value.into());
+        self
+    }
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListReviewableHITsRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListReviewableHITsRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListReviewableHITsRequest.status = Some(value.into());`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListReviewableHITsRequest with optional fields set to `None`.
+    pub fn new() -> ListReviewableHITsRequest {
+        ListReviewableHITsRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListReviewableHITsResponse {
     #[doc="<p> The list of HIT elements returned by the query.</p>"]
@@ -923,7 +1912,6 @@ pub struct ListReviewableHITsResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub num_results: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListWorkerBlocksRequest {
     #[serde(rename="MaxResults")]
@@ -934,7 +1922,26 @@ pub struct ListWorkerBlocksRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub next_token: Option<String>,
 }
-
+impl ListWorkerBlocksRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListWorkerBlocksRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListWorkerBlocksRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListWorkerBlocksRequest with optional fields set to `None`.
+    pub fn new() -> ListWorkerBlocksRequest {
+        ListWorkerBlocksRequest { ..Default::default() }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListWorkerBlocksResponse {
     #[serde(rename="NextToken")]
@@ -949,7 +1956,6 @@ pub struct ListWorkerBlocksResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub worker_blocks: Option<Vec<WorkerBlock>>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct ListWorkersWithQualificationTypeRequest {
     #[doc="<p> Limit the number of results returned. </p>"]
@@ -968,7 +1974,45 @@ pub struct ListWorkersWithQualificationTypeRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
 }
-
+impl ListWorkersWithQualificationTypeRequest {
+    /// Sets `max_results`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListWorkersWithQualificationTypeRequest.max_results = Some(value.into());`.
+    pub fn max_results<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.max_results = Some(value.into());
+        self
+    }
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListWorkersWithQualificationTypeRequest.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `qualification_type_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListWorkersWithQualificationTypeRequest.qualification_type_id = value.into();`.
+    pub fn qualification_type_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.qualification_type_id = value.into();
+        self
+    }
+    /// Sets `status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListWorkersWithQualificationTypeRequest.status = Some(value.into());`.
+    pub fn status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.status = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListWorkersWithQualificationTypeRequest with optional fields set to `None`.
+    pub fn new<QualificationTypeIdType: Into<String>>
+        (qualification_type_id: QualificationTypeIdType)
+         -> ListWorkersWithQualificationTypeRequest {
+        ListWorkersWithQualificationTypeRequest {
+            qualification_type_id: qualification_type_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ListWorkersWithQualificationTypeResponse {
     #[serde(rename="NextToken")]
@@ -983,7 +2027,6 @@ pub struct ListWorkersWithQualificationTypeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub qualifications: Option<Vec<Qualification>>,
 }
-
 #[doc="<p>The Locale data structure represents a geographical region or location.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct Locale {
@@ -995,7 +2038,29 @@ pub struct Locale {
     #[serde(skip_serializing_if="Option::is_none")]
     pub subdivision: Option<String>,
 }
-
+impl Locale {
+    /// Sets `country`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Locale.country = value.into();`.
+    pub fn country<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.country = value.into();
+        self
+    }
+    /// Sets `subdivision`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `Locale.subdivision = Some(value.into());`.
+    pub fn subdivision<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subdivision = Some(value.into());
+        self
+    }
+    /// Returns a new instance of Locale with optional fields set to `None`.
+    pub fn new<CountryType: Into<String>>(country: CountryType) -> Locale {
+        Locale {
+            country: country.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p>The NotificationSpecification data structure describes a HIT event notification for a HIT type.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct NotificationSpecification {
@@ -1014,7 +2079,47 @@ pub struct NotificationSpecification {
     #[serde(skip_serializing_if="Option::is_none")]
     pub version: Option<String>,
 }
-
+impl NotificationSpecification {
+    /// Sets `destination`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NotificationSpecification.destination = value.into();`.
+    pub fn destination<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.destination = value.into();
+        self
+    }
+    /// Sets `event_types`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NotificationSpecification.event_types = Some(value.into());`.
+    pub fn event_types<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.event_types = Some(value.into());
+        self
+    }
+    /// Sets `transport`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NotificationSpecification.transport = value.into();`.
+    pub fn transport<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.transport = value.into();
+        self
+    }
+    /// Sets `version`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NotificationSpecification.version = Some(value.into());`.
+    pub fn version<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.version = Some(value.into());
+        self
+    }
+    /// Returns a new instance of NotificationSpecification with optional fields set to `None`.
+    pub fn new<DestinationType: Into<String>, TransportType: Into<String>>
+        (destination: DestinationType,
+         transport: TransportType)
+         -> NotificationSpecification {
+        NotificationSpecification {
+            destination: destination.into(),
+            transport: transport.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> When MTurk encounters an issue with notifying the Workers you specified, it returns back this object with failure details. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct NotifyWorkersFailureStatus {
@@ -1031,7 +2136,6 @@ pub struct NotifyWorkersFailureStatus {
     #[serde(skip_serializing_if="Option::is_none")]
     pub worker_id: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct NotifyWorkersRequest {
     #[doc="<p>The text of the email message to send. Can include up to 4,096 characters</p>"]
@@ -1044,7 +2148,44 @@ pub struct NotifyWorkersRequest {
     #[serde(rename="WorkerIds")]
     pub worker_ids: Vec<String>,
 }
-
+impl NotifyWorkersRequest {
+    /// Sets `message_text`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NotifyWorkersRequest.message_text = value.into();`.
+    pub fn message_text<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.message_text = value.into();
+        self
+    }
+    /// Sets `subject`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NotifyWorkersRequest.subject = value.into();`.
+    pub fn subject<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subject = value.into();
+        self
+    }
+    /// Sets `worker_ids`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `NotifyWorkersRequest.worker_ids = value.into();`.
+    pub fn worker_ids<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.worker_ids = value.into();
+        self
+    }
+    /// Returns a new instance of NotifyWorkersRequest with optional fields set to `None`.
+    pub fn new<MessageTextType: Into<String>,
+               SubjectType: Into<String>,
+               WorkerIdsType: Into<Vec<String>>>
+        (message_text: MessageTextType,
+         subject: SubjectType,
+         worker_ids: WorkerIdsType)
+         -> NotifyWorkersRequest {
+        NotifyWorkersRequest {
+            message_text: message_text.into(),
+            subject: subject.into(),
+            worker_ids: worker_ids.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct NotifyWorkersResponse {
     #[doc="<p> When MTurk sends notifications to the list of Workers, it returns back any failures it encounters in this list of NotifyWorkersFailureStatus objects. </p>"]
@@ -1052,7 +2193,6 @@ pub struct NotifyWorkersResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub notify_workers_failure_statuses: Option<Vec<NotifyWorkersFailureStatus>>,
 }
-
 #[doc="<p> This data structure is the data type for the AnswerKey parameter of the ScoreMyKnownAnswers/2011-09-01 Review Policy. </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ParameterMapEntry {
@@ -1065,7 +2205,26 @@ pub struct ParameterMapEntry {
     #[serde(skip_serializing_if="Option::is_none")]
     pub values: Option<Vec<String>>,
 }
-
+impl ParameterMapEntry {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ParameterMapEntry.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ParameterMapEntry.values = Some(value.into());`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ParameterMapEntry with optional fields set to `None`.
+    pub fn new() -> ParameterMapEntry {
+        ParameterMapEntry { ..Default::default() }
+    }
+}
 #[doc="<p> Name of the parameter from the Review policy. </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct PolicyParameter {
@@ -1082,7 +2241,35 @@ pub struct PolicyParameter {
     #[serde(skip_serializing_if="Option::is_none")]
     pub values: Option<Vec<String>>,
 }
-
+impl PolicyParameter {
+    /// Sets `key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PolicyParameter.key = Some(value.into());`.
+    pub fn key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.key = Some(value.into());
+        self
+    }
+    /// Sets `map_entries`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PolicyParameter.map_entries = Some(value.into());`.
+    pub fn map_entries<ValueType: Into<Vec<ParameterMapEntry>>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.map_entries = Some(value.into());
+        self
+    }
+    /// Sets `values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PolicyParameter.values = Some(value.into());`.
+    pub fn values<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.values = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PolicyParameter with optional fields set to `None`.
+    pub fn new() -> PolicyParameter {
+        PolicyParameter { ..Default::default() }
+    }
+}
 #[doc="<p>The Qualification data structure represents a Qualification assigned to a user, including the Qualification type and the value (score).</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct Qualification {
@@ -1110,7 +2297,6 @@ pub struct Qualification {
     #[serde(skip_serializing_if="Option::is_none")]
     pub worker_id: Option<String>,
 }
-
 #[doc="<p> The QualificationRequest data structure represents a request a Worker has made for a Qualification. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct QualificationRequest {
@@ -1139,7 +2325,6 @@ pub struct QualificationRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub worker_id: Option<String>,
 }
-
 #[doc="<p> The QualificationRequirement data structure describes a Qualification that a Worker must have before the Worker is allowed to accept a HIT. A requirement may optionally state that a Worker must have the Qualification in order to preview the HIT. </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct QualificationRequirement {
@@ -1162,7 +2347,54 @@ pub struct QualificationRequirement {
     #[serde(skip_serializing_if="Option::is_none")]
     pub required_to_preview: Option<bool>,
 }
-
+impl QualificationRequirement {
+    /// Sets `comparator`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QualificationRequirement.comparator = value.into();`.
+    pub fn comparator<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.comparator = value.into();
+        self
+    }
+    /// Sets `integer_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QualificationRequirement.integer_values = Some(value.into());`.
+    pub fn integer_values<ValueType: Into<Vec<i64>>>(mut self, value: ValueType) -> Self {
+        self.integer_values = Some(value.into());
+        self
+    }
+    /// Sets `locale_values`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QualificationRequirement.locale_values = Some(value.into());`.
+    pub fn locale_values<ValueType: Into<Vec<Locale>>>(mut self, value: ValueType) -> Self {
+        self.locale_values = Some(value.into());
+        self
+    }
+    /// Sets `qualification_type_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QualificationRequirement.qualification_type_id = value.into();`.
+    pub fn qualification_type_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.qualification_type_id = value.into();
+        self
+    }
+    /// Sets `required_to_preview`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `QualificationRequirement.required_to_preview = Some(value.into());`.
+    pub fn required_to_preview<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.required_to_preview = Some(value.into());
+        self
+    }
+    /// Returns a new instance of QualificationRequirement with optional fields set to `None`.
+    pub fn new<ComparatorType: Into<String>, QualificationTypeIdType: Into<String>>
+        (comparator: ComparatorType,
+         qualification_type_id: QualificationTypeIdType)
+         -> QualificationRequirement {
+        QualificationRequirement {
+            comparator: comparator.into(),
+            qualification_type_id: qualification_type_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[doc="<p> The QualificationType data structure represents a Qualification type, a description of a property of a Worker that must match the requirements of a HIT for the Worker to be able to accept the HIT. The type also describes how a Worker can obtain a Qualification of that type, such as through a Qualification test. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct QualificationType {
@@ -1219,7 +2451,6 @@ pub struct QualificationType {
     #[serde(skip_serializing_if="Option::is_none")]
     pub test_duration_in_seconds: Option<i64>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct RejectAssignmentRequest {
     #[doc="<p> The ID of the assignment. The assignment must correspond to a HIT created by the Requester. </p>"]
@@ -1230,7 +2461,30 @@ pub struct RejectAssignmentRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub requester_feedback: Option<String>,
 }
-
+impl RejectAssignmentRequest {
+    /// Sets `assignment_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RejectAssignmentRequest.assignment_id = value.into();`.
+    pub fn assignment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.assignment_id = value.into();
+        self
+    }
+    /// Sets `requester_feedback`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RejectAssignmentRequest.requester_feedback = Some(value.into());`.
+    pub fn requester_feedback<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.requester_feedback = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RejectAssignmentRequest with optional fields set to `None`.
+    pub fn new<AssignmentIdType: Into<String>>(assignment_id: AssignmentIdType)
+                                               -> RejectAssignmentRequest {
+        RejectAssignmentRequest {
+            assignment_id: assignment_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RejectAssignmentResponse;
 
@@ -1244,7 +2498,29 @@ pub struct RejectQualificationRequestRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub reason: Option<String>,
 }
-
+impl RejectQualificationRequestRequest {
+    /// Sets `qualification_request_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RejectQualificationRequestRequest.qualification_request_id = value.into();`.
+    pub fn qualification_request_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.qualification_request_id = value.into();
+        self
+    }
+    /// Sets `reason`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RejectQualificationRequestRequest.reason = Some(value.into());`.
+    pub fn reason<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reason = Some(value.into());
+        self
+    }
+    /// Returns a new instance of RejectQualificationRequestRequest with optional fields set to `None`.
+pub fn new<QualificationRequestIdType: Into<String>>(qualification_request_id: QualificationRequestIdType) -> RejectQualificationRequestRequest{
+        RejectQualificationRequestRequest {
+            qualification_request_id: qualification_request_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct RejectQualificationRequestResponse;
 
@@ -1284,7 +2560,6 @@ pub struct ReviewActionDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub target_type: Option<String>,
 }
-
 #[doc="<p> HIT Review Policy data structures represent HIT review policies, which you specify when you create a HIT. </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct ReviewPolicy {
@@ -1297,7 +2572,26 @@ pub struct ReviewPolicy {
     #[serde(skip_serializing_if="Option::is_none")]
     pub policy_name: Option<String>,
 }
-
+impl ReviewPolicy {
+    /// Sets `parameters`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReviewPolicy.parameters = Some(value.into());`.
+    pub fn parameters<ValueType: Into<Vec<PolicyParameter>>>(mut self, value: ValueType) -> Self {
+        self.parameters = Some(value.into());
+        self
+    }
+    /// Sets `policy_name`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ReviewPolicy.policy_name = Some(value.into());`.
+    pub fn policy_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.policy_name = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ReviewPolicy with optional fields set to `None`.
+    pub fn new() -> ReviewPolicy {
+        ReviewPolicy { ..Default::default() }
+    }
+}
 #[doc="<p> Contains both ReviewResult and ReviewAction elements for a particular HIT. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ReviewReport {
@@ -1310,7 +2604,6 @@ pub struct ReviewReport {
     #[serde(skip_serializing_if="Option::is_none")]
     pub review_results: Option<Vec<ReviewResultDetail>>,
 }
-
 #[doc="<p> This data structure is returned multiple times for each result specified in the Review Policy. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct ReviewResultDetail {
@@ -1339,7 +2632,6 @@ pub struct ReviewResultDetail {
     #[serde(skip_serializing_if="Option::is_none")]
     pub value: Option<String>,
 }
-
 #[derive(Default,Debug,Clone,Serialize)]
 pub struct SendBonusRequest {
     #[doc="<p>The ID of the assignment for which this bonus is paid.</p>"]
@@ -1360,7 +2652,58 @@ pub struct SendBonusRequest {
     #[serde(rename="WorkerId")]
     pub worker_id: String,
 }
-
+impl SendBonusRequest {
+    /// Sets `assignment_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendBonusRequest.assignment_id = value.into();`.
+    pub fn assignment_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.assignment_id = value.into();
+        self
+    }
+    /// Sets `bonus_amount`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendBonusRequest.bonus_amount = value.into();`.
+    pub fn bonus_amount<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.bonus_amount = value.into();
+        self
+    }
+    /// Sets `reason`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendBonusRequest.reason = Some(value.into());`.
+    pub fn reason<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.reason = Some(value.into());
+        self
+    }
+    /// Sets `unique_request_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendBonusRequest.unique_request_token = Some(value.into());`.
+    pub fn unique_request_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.unique_request_token = Some(value.into());
+        self
+    }
+    /// Sets `worker_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendBonusRequest.worker_id = value.into();`.
+    pub fn worker_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.worker_id = value.into();
+        self
+    }
+    /// Returns a new instance of SendBonusRequest with optional fields set to `None`.
+    pub fn new<AssignmentIdType: Into<String>,
+               BonusAmountType: Into<String>,
+               WorkerIdType: Into<String>>
+        (assignment_id: AssignmentIdType,
+         bonus_amount: BonusAmountType,
+         worker_id: WorkerIdType)
+         -> SendBonusRequest {
+        SendBonusRequest {
+            assignment_id: assignment_id.into(),
+            bonus_amount: bonus_amount.into(),
+            worker_id: worker_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SendBonusResponse;
 
@@ -1373,7 +2716,35 @@ pub struct SendTestEventNotificationRequest {
     #[serde(rename="TestEventType")]
     pub test_event_type: String,
 }
-
+impl SendTestEventNotificationRequest {
+    /// Sets `notification`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendTestEventNotificationRequest.notification = value.into();`.
+    pub fn notification<ValueType: Into<NotificationSpecification>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.notification = value.into();
+        self
+    }
+    /// Sets `test_event_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SendTestEventNotificationRequest.test_event_type = value.into();`.
+    pub fn test_event_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.test_event_type = value.into();
+        self
+    }
+    /// Returns a new instance of SendTestEventNotificationRequest with optional fields set to `None`.
+    pub fn new<NotificationType: Into<NotificationSpecification>, TestEventTypeType: Into<String>>
+        (notification: NotificationType,
+         test_event_type: TestEventTypeType)
+         -> SendTestEventNotificationRequest {
+        SendTestEventNotificationRequest {
+            notification: notification.into(),
+            test_event_type: test_event_type.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct SendTestEventNotificationResponse;
 
@@ -1387,7 +2758,29 @@ pub struct UpdateExpirationForHITRequest {
     #[serde(rename="HITId")]
     pub hit_id: String,
 }
-
+impl UpdateExpirationForHITRequest {
+    /// Sets `expire_at`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateExpirationForHITRequest.expire_at = Some(value.into());`.
+    pub fn expire_at<ValueType: Into<f64>>(mut self, value: ValueType) -> Self {
+        self.expire_at = Some(value.into());
+        self
+    }
+    /// Sets `hit_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateExpirationForHITRequest.hit_id = value.into();`.
+    pub fn hit_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hit_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateExpirationForHITRequest with optional fields set to `None`.
+    pub fn new<HITIdType: Into<String>>(hit_id: HITIdType) -> UpdateExpirationForHITRequest {
+        UpdateExpirationForHITRequest {
+            hit_id: hit_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateExpirationForHITResponse;
 
@@ -1401,7 +2794,29 @@ pub struct UpdateHITReviewStatusRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub revert: Option<bool>,
 }
-
+impl UpdateHITReviewStatusRequest {
+    /// Sets `hit_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateHITReviewStatusRequest.hit_id = value.into();`.
+    pub fn hit_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hit_id = value.into();
+        self
+    }
+    /// Sets `revert`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateHITReviewStatusRequest.revert = Some(value.into());`.
+    pub fn revert<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.revert = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateHITReviewStatusRequest with optional fields set to `None`.
+    pub fn new<HITIdType: Into<String>>(hit_id: HITIdType) -> UpdateHITReviewStatusRequest {
+        UpdateHITReviewStatusRequest {
+            hit_id: hit_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateHITReviewStatusResponse;
 
@@ -1414,7 +2829,33 @@ pub struct UpdateHITTypeOfHITRequest {
     #[serde(rename="HITTypeId")]
     pub hit_type_id: String,
 }
-
+impl UpdateHITTypeOfHITRequest {
+    /// Sets `hit_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateHITTypeOfHITRequest.hit_id = value.into();`.
+    pub fn hit_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hit_id = value.into();
+        self
+    }
+    /// Sets `hit_type_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateHITTypeOfHITRequest.hit_type_id = value.into();`.
+    pub fn hit_type_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hit_type_id = value.into();
+        self
+    }
+    /// Returns a new instance of UpdateHITTypeOfHITRequest with optional fields set to `None`.
+    pub fn new<HITIdType: Into<String>, HITTypeIdType: Into<String>>
+        (hit_id: HITIdType,
+         hit_type_id: HITTypeIdType)
+         -> UpdateHITTypeOfHITRequest {
+        UpdateHITTypeOfHITRequest {
+            hit_id: hit_id.into(),
+            hit_type_id: hit_type_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateHITTypeOfHITResponse;
 
@@ -1432,7 +2873,39 @@ pub struct UpdateNotificationSettingsRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub notification: Option<NotificationSpecification>,
 }
-
+impl UpdateNotificationSettingsRequest {
+    /// Sets `active`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNotificationSettingsRequest.active = Some(value.into());`.
+    pub fn active<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.active = Some(value.into());
+        self
+    }
+    /// Sets `hit_type_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNotificationSettingsRequest.hit_type_id = value.into();`.
+    pub fn hit_type_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.hit_type_id = value.into();
+        self
+    }
+    /// Sets `notification`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateNotificationSettingsRequest.notification = Some(value.into());`.
+    pub fn notification<ValueType: Into<NotificationSpecification>>(mut self,
+                                                                    value: ValueType)
+                                                                    -> Self {
+        self.notification = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateNotificationSettingsRequest with optional fields set to `None`.
+    pub fn new<HITTypeIdType: Into<String>>(hit_type_id: HITTypeIdType)
+                                            -> UpdateNotificationSettingsRequest {
+        UpdateNotificationSettingsRequest {
+            hit_type_id: hit_type_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateNotificationSettingsResponse;
 
@@ -1474,7 +2947,78 @@ pub struct UpdateQualificationTypeRequest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub test_duration_in_seconds: Option<i64>,
 }
-
+impl UpdateQualificationTypeRequest {
+    /// Sets `answer_key`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateQualificationTypeRequest.answer_key = Some(value.into());`.
+    pub fn answer_key<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.answer_key = Some(value.into());
+        self
+    }
+    /// Sets `auto_granted`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateQualificationTypeRequest.auto_granted = Some(value.into());`.
+    pub fn auto_granted<ValueType: Into<bool>>(mut self, value: ValueType) -> Self {
+        self.auto_granted = Some(value.into());
+        self
+    }
+    /// Sets `auto_granted_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateQualificationTypeRequest.auto_granted_value = Some(value.into());`.
+    pub fn auto_granted_value<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.auto_granted_value = Some(value.into());
+        self
+    }
+    /// Sets `description`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateQualificationTypeRequest.description = Some(value.into());`.
+    pub fn description<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.description = Some(value.into());
+        self
+    }
+    /// Sets `qualification_type_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateQualificationTypeRequest.qualification_type_id = value.into();`.
+    pub fn qualification_type_id<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.qualification_type_id = value.into();
+        self
+    }
+    /// Sets `qualification_type_status`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateQualificationTypeRequest.qualification_type_status = Some(value.into());`.
+    pub fn qualification_type_status<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.qualification_type_status = Some(value.into());
+        self
+    }
+    /// Sets `retry_delay_in_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateQualificationTypeRequest.retry_delay_in_seconds = Some(value.into());`.
+    pub fn retry_delay_in_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.retry_delay_in_seconds = Some(value.into());
+        self
+    }
+    /// Sets `test`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateQualificationTypeRequest.test = Some(value.into());`.
+    pub fn test<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.test = Some(value.into());
+        self
+    }
+    /// Sets `test_duration_in_seconds`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UpdateQualificationTypeRequest.test_duration_in_seconds = Some(value.into());`.
+    pub fn test_duration_in_seconds<ValueType: Into<i64>>(mut self, value: ValueType) -> Self {
+        self.test_duration_in_seconds = Some(value.into());
+        self
+    }
+    /// Returns a new instance of UpdateQualificationTypeRequest with optional fields set to `None`.
+pub fn new<QualificationTypeIdType: Into<String>>(qualification_type_id: QualificationTypeIdType) -> UpdateQualificationTypeRequest{
+        UpdateQualificationTypeRequest {
+            qualification_type_id: qualification_type_id.into(),
+            ..Default::default()
+        }
+    }
+}
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct UpdateQualificationTypeResponse {
     #[doc="<p> Contains a QualificationType data structure.</p>"]
@@ -1482,7 +3026,6 @@ pub struct UpdateQualificationTypeResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub qualification_type: Option<QualificationType>,
 }
-
 #[doc="<p> The WorkerBlock data structure represents a Worker who has been blocked. It has two elements: the WorkerId and the Reason for the block. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct WorkerBlock {
@@ -1495,7 +3038,6 @@ pub struct WorkerBlock {
     #[serde(skip_serializing_if="Option::is_none")]
     pub worker_id: Option<String>,
 }
-
 /// Errors returned by AcceptQualificationRequest
 #[derive(Debug, PartialEq)]
 pub enum AcceptQualificationRequestError {

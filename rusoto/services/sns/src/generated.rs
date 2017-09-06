@@ -21,6 +21,7 @@ use std::fmt;
 use std::error::Error;
 use std::io;
 use std::io::Read;
+use std::default::Default;
 use rusoto_core::request::HttpDispatchError;
 use rusoto_core::credential::{CredentialsError, ProvideAwsCredentials};
 
@@ -76,7 +77,54 @@ pub struct AddPermissionInput {
     #[doc="<p>The ARN of the topic whose access control policy you wish to modify.</p>"]
     pub topic_arn: String,
 }
-
+impl AddPermissionInput {
+    /// Sets `aws_account_id`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddPermissionInput.aws_account_id = value.into();`.
+    pub fn aws_account_id<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.aws_account_id = value.into();
+        self
+    }
+    /// Sets `action_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddPermissionInput.action_name = value.into();`.
+    pub fn action_name<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.action_name = value.into();
+        self
+    }
+    /// Sets `label`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddPermissionInput.label = value.into();`.
+    pub fn label<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.label = value.into();
+        self
+    }
+    /// Sets `topic_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `AddPermissionInput.topic_arn = value.into();`.
+    pub fn topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_arn = value.into();
+        self
+    }
+    /// Returns a new instance of AddPermissionInput with optional fields set to `None`.
+    pub fn new<AWSAccountIdType: Into<Vec<String>>,
+               ActionNameType: Into<Vec<String>>,
+               LabelType: Into<String>,
+               TopicArnType: Into<String>>
+        (aws_account_id: AWSAccountIdType,
+         action_name: ActionNameType,
+         label: LabelType,
+         topic_arn: TopicArnType)
+         -> AddPermissionInput {
+        AddPermissionInput {
+            aws_account_id: aws_account_id.into(),
+            action_name: action_name.into(),
+            label: label.into(),
+            topic_arn: topic_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `AddPermissionInput` contents to a `SignedRequest`.
 struct AddPermissionInputSerializer;
@@ -147,7 +195,23 @@ pub struct CheckIfPhoneNumberIsOptedOutInput {
     #[doc="<p>The phone number for which you want to check the opt out status.</p>"]
     pub phone_number: String,
 }
-
+impl CheckIfPhoneNumberIsOptedOutInput {
+    /// Sets `phone_number`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CheckIfPhoneNumberIsOptedOutInput.phone_number = value.into();`.
+    pub fn phone_number<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.phone_number = value.into();
+        self
+    }
+    /// Returns a new instance of CheckIfPhoneNumberIsOptedOutInput with optional fields set to `None`.
+    pub fn new<phoneNumberType: Into<String>>(phone_number: phoneNumberType)
+                                              -> CheckIfPhoneNumberIsOptedOutInput {
+        CheckIfPhoneNumberIsOptedOutInput {
+            phone_number: phone_number.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CheckIfPhoneNumberIsOptedOutInput` contents to a `SignedRequest`.
 struct CheckIfPhoneNumberIsOptedOutInputSerializer;
@@ -169,7 +233,6 @@ pub struct CheckIfPhoneNumberIsOptedOutResponse {
     #[doc="<p>Indicates whether the phone number is opted out:</p> <ul> <li> <p> <code>true</code> – The phone number is opted out, meaning you cannot publish SMS messages to it.</p> </li> <li> <p> <code>false</code> – The phone number is opted in, meaning you can publish SMS messages to it.</p> </li> </ul>"]
     pub is_opted_out: Option<bool>,
 }
-
 struct CheckIfPhoneNumberIsOptedOutResponseDeserializer;
 impl CheckIfPhoneNumberIsOptedOutResponseDeserializer {
     #[allow(unused_variables)]
@@ -223,7 +286,41 @@ pub struct ConfirmSubscriptionInput {
     #[doc="<p>The ARN of the topic for which you wish to confirm a subscription.</p>"]
     pub topic_arn: String,
 }
-
+impl ConfirmSubscriptionInput {
+    /// Sets `authenticate_on_unsubscribe`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmSubscriptionInput.authenticate_on_unsubscribe = Some(value.into());`.
+    pub fn authenticate_on_unsubscribe<ValueType: Into<String>>(mut self,
+                                                                value: ValueType)
+                                                                -> Self {
+        self.authenticate_on_unsubscribe = Some(value.into());
+        self
+    }
+    /// Sets `token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmSubscriptionInput.token = value.into();`.
+    pub fn token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.token = value.into();
+        self
+    }
+    /// Sets `topic_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ConfirmSubscriptionInput.topic_arn = value.into();`.
+    pub fn topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_arn = value.into();
+        self
+    }
+    /// Returns a new instance of ConfirmSubscriptionInput with optional fields set to `None`.
+    pub fn new<TokenType: Into<String>, TopicArnType: Into<String>>(token: TokenType,
+                                                                    topic_arn: TopicArnType)
+                                                                    -> ConfirmSubscriptionInput {
+        ConfirmSubscriptionInput {
+            token: token.into(),
+            topic_arn: topic_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ConfirmSubscriptionInput` contents to a `SignedRequest`.
 struct ConfirmSubscriptionInputSerializer;
@@ -250,7 +347,6 @@ pub struct ConfirmSubscriptionResponse {
     #[doc="<p>The ARN of the created subscription.</p>"]
     pub subscription_arn: Option<String>,
 }
-
 struct ConfirmSubscriptionResponseDeserializer;
 impl ConfirmSubscriptionResponseDeserializer {
     #[allow(unused_variables)]
@@ -300,7 +396,6 @@ pub struct CreateEndpointResponse {
     #[doc="<p>EndpointArn returned from CreateEndpoint action.</p>"]
     pub endpoint_arn: Option<String>,
 }
-
 struct CreateEndpointResponseDeserializer;
 impl CreateEndpointResponseDeserializer {
     #[allow(unused_variables)]
@@ -353,7 +448,44 @@ pub struct CreatePlatformApplicationInput {
     #[doc="<p>The following platforms are supported: ADM (Amazon Device Messaging), APNS (Apple Push Notification Service), APNS_SANDBOX, and GCM (Google Cloud Messaging).</p>"]
     pub platform: String,
 }
-
+impl CreatePlatformApplicationInput {
+    /// Sets `attributes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePlatformApplicationInput.attributes = value.into();`.
+pub fn attributes<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.attributes = value.into();
+        self
+    }
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePlatformApplicationInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Sets `platform`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePlatformApplicationInput.platform = value.into();`.
+    pub fn platform<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.platform = value.into();
+        self
+    }
+    /// Returns a new instance of CreatePlatformApplicationInput with optional fields set to `None`.
+    pub fn new<AttributesType: Into<::std::collections::HashMap<String, String>>,
+               NameType: Into<String>,
+               PlatformType: Into<String>>
+        (attributes: AttributesType,
+         name: NameType,
+         platform: PlatformType)
+         -> CreatePlatformApplicationInput {
+        CreatePlatformApplicationInput {
+            attributes: attributes.into(),
+            name: name.into(),
+            platform: platform.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreatePlatformApplicationInput` contents to a `SignedRequest`.
 struct CreatePlatformApplicationInputSerializer;
@@ -379,7 +511,6 @@ pub struct CreatePlatformApplicationResponse {
     #[doc="<p>PlatformApplicationArn is returned.</p>"]
     pub platform_application_arn: Option<String>,
 }
-
 struct CreatePlatformApplicationResponseDeserializer;
 impl CreatePlatformApplicationResponseDeserializer {
     #[allow(unused_variables)]
@@ -436,7 +567,47 @@ pub struct CreatePlatformEndpointInput {
     #[doc="<p>Unique identifier created by the notification service for an app on a device. The specific name for Token will vary, depending on which notification service is being used. For example, when using APNS as the notification service, you need the device token. Alternatively, when using GCM or ADM, the device token equivalent is called the registration ID.</p>"]
     pub token: String,
 }
-
+impl CreatePlatformEndpointInput {
+    /// Sets `attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePlatformEndpointInput.attributes = Some(value.into());`.
+pub fn attributes<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.attributes = Some(value.into());
+        self
+    }
+    /// Sets `custom_user_data`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePlatformEndpointInput.custom_user_data = Some(value.into());`.
+    pub fn custom_user_data<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.custom_user_data = Some(value.into());
+        self
+    }
+    /// Sets `platform_application_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePlatformEndpointInput.platform_application_arn = value.into();`.
+    pub fn platform_application_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.platform_application_arn = value.into();
+        self
+    }
+    /// Sets `token`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreatePlatformEndpointInput.token = value.into();`.
+    pub fn token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.token = value.into();
+        self
+    }
+    /// Returns a new instance of CreatePlatformEndpointInput with optional fields set to `None`.
+    pub fn new<PlatformApplicationArnType: Into<String>, TokenType: Into<String>>
+        (platform_application_arn: PlatformApplicationArnType,
+         token: TokenType)
+         -> CreatePlatformEndpointInput {
+        CreatePlatformEndpointInput {
+            platform_application_arn: platform_application_arn.into(),
+            token: token.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreatePlatformEndpointInput` contents to a `SignedRequest`.
 struct CreatePlatformEndpointInputSerializer;
@@ -468,7 +639,22 @@ pub struct CreateTopicInput {
     #[doc="<p>The name of the topic you want to create.</p> <p>Constraints: Topic names must be made up of only uppercase and lowercase ASCII letters, numbers, underscores, and hyphens, and must be between 1 and 256 characters long.</p>"]
     pub name: String,
 }
-
+impl CreateTopicInput {
+    /// Sets `name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `CreateTopicInput.name = value.into();`.
+    pub fn name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.name = value.into();
+        self
+    }
+    /// Returns a new instance of CreateTopicInput with optional fields set to `None`.
+    pub fn new<NameType: Into<String>>(name: NameType) -> CreateTopicInput {
+        CreateTopicInput {
+            name: name.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `CreateTopicInput` contents to a `SignedRequest`.
 struct CreateTopicInputSerializer;
@@ -490,7 +676,6 @@ pub struct CreateTopicResponse {
     #[doc="<p>The Amazon Resource Name (ARN) assigned to the created topic.</p>"]
     pub topic_arn: Option<String>,
 }
-
 struct CreateTopicResponseDeserializer;
 impl CreateTopicResponseDeserializer {
     #[allow(unused_variables)]
@@ -551,7 +736,23 @@ pub struct DeleteEndpointInput {
     #[doc="<p>EndpointArn of endpoint to delete.</p>"]
     pub endpoint_arn: String,
 }
-
+impl DeleteEndpointInput {
+    /// Sets `endpoint_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteEndpointInput.endpoint_arn = value.into();`.
+    pub fn endpoint_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.endpoint_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteEndpointInput with optional fields set to `None`.
+    pub fn new<EndpointArnType: Into<String>>(endpoint_arn: EndpointArnType)
+                                              -> DeleteEndpointInput {
+        DeleteEndpointInput {
+            endpoint_arn: endpoint_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteEndpointInput` contents to a `SignedRequest`.
 struct DeleteEndpointInputSerializer;
@@ -573,7 +774,22 @@ pub struct DeletePlatformApplicationInput {
     #[doc="<p>PlatformApplicationArn of platform application object to delete.</p>"]
     pub platform_application_arn: String,
 }
-
+impl DeletePlatformApplicationInput {
+    /// Sets `platform_application_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeletePlatformApplicationInput.platform_application_arn = value.into();`.
+    pub fn platform_application_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.platform_application_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeletePlatformApplicationInput with optional fields set to `None`.
+pub fn new<PlatformApplicationArnType: Into<String>>(platform_application_arn: PlatformApplicationArnType) -> DeletePlatformApplicationInput{
+        DeletePlatformApplicationInput {
+            platform_application_arn: platform_application_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeletePlatformApplicationInput` contents to a `SignedRequest`.
 struct DeletePlatformApplicationInputSerializer;
@@ -595,7 +811,22 @@ pub struct DeleteTopicInput {
     #[doc="<p>The ARN of the topic you want to delete.</p>"]
     pub topic_arn: String,
 }
-
+impl DeleteTopicInput {
+    /// Sets `topic_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `DeleteTopicInput.topic_arn = value.into();`.
+    pub fn topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_arn = value.into();
+        self
+    }
+    /// Returns a new instance of DeleteTopicInput with optional fields set to `None`.
+    pub fn new<TopicArnType: Into<String>>(topic_arn: TopicArnType) -> DeleteTopicInput {
+        DeleteTopicInput {
+            topic_arn: topic_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `DeleteTopicInput` contents to a `SignedRequest`.
 struct DeleteTopicInputSerializer;
@@ -631,7 +862,23 @@ pub struct GetEndpointAttributesInput {
     #[doc="<p>EndpointArn for GetEndpointAttributes input.</p>"]
     pub endpoint_arn: String,
 }
-
+impl GetEndpointAttributesInput {
+    /// Sets `endpoint_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetEndpointAttributesInput.endpoint_arn = value.into();`.
+    pub fn endpoint_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.endpoint_arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetEndpointAttributesInput with optional fields set to `None`.
+    pub fn new<EndpointArnType: Into<String>>(endpoint_arn: EndpointArnType)
+                                              -> GetEndpointAttributesInput {
+        GetEndpointAttributesInput {
+            endpoint_arn: endpoint_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetEndpointAttributesInput` contents to a `SignedRequest`.
 struct GetEndpointAttributesInputSerializer;
@@ -653,7 +900,6 @@ pub struct GetEndpointAttributesResponse {
     #[doc="<p>Attributes include the following:</p> <ul> <li> <p> <code>CustomUserData</code> -- arbitrary user data to associate with the endpoint. Amazon SNS does not use this data. The data must be in UTF-8 format and less than 2KB.</p> </li> <li> <p> <code>Enabled</code> -- flag that enables/disables delivery to the endpoint. Amazon SNS will set this to false when a notification service indicates to Amazon SNS that the endpoint is invalid. Users can set it back to true, typically after updating Token.</p> </li> <li> <p> <code>Token</code> -- device token, also referred to as a registration id, for an app and mobile device. This is returned from the notification service when an app and mobile device are registered with the notification service.</p> </li> </ul>"]
     pub attributes: Option<::std::collections::HashMap<String, String>>,
 }
-
 struct GetEndpointAttributesResponseDeserializer;
 impl GetEndpointAttributesResponseDeserializer {
     #[allow(unused_variables)]
@@ -703,7 +949,24 @@ pub struct GetPlatformApplicationAttributesInput {
     #[doc="<p>PlatformApplicationArn for GetPlatformApplicationAttributesInput.</p>"]
     pub platform_application_arn: String,
 }
-
+impl GetPlatformApplicationAttributesInput {
+    /// Sets `platform_application_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetPlatformApplicationAttributesInput.platform_application_arn = value.into();`.
+    pub fn platform_application_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.platform_application_arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetPlatformApplicationAttributesInput with optional fields set to `None`.
+    pub fn new<PlatformApplicationArnType: Into<String>>
+        (platform_application_arn: PlatformApplicationArnType)
+         -> GetPlatformApplicationAttributesInput {
+        GetPlatformApplicationAttributesInput {
+            platform_application_arn: platform_application_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetPlatformApplicationAttributesInput` contents to a `SignedRequest`.
 struct GetPlatformApplicationAttributesInputSerializer;
@@ -726,7 +989,6 @@ pub struct GetPlatformApplicationAttributesResponse {
     #[doc="<p>Attributes include the following:</p> <ul> <li> <p> <code>EventEndpointCreated</code> -- Topic ARN to which EndpointCreated event notifications should be sent.</p> </li> <li> <p> <code>EventEndpointDeleted</code> -- Topic ARN to which EndpointDeleted event notifications should be sent.</p> </li> <li> <p> <code>EventEndpointUpdated</code> -- Topic ARN to which EndpointUpdate event notifications should be sent.</p> </li> <li> <p> <code>EventDeliveryFailure</code> -- Topic ARN to which DeliveryFailure event notifications should be sent upon Direct Publish delivery failure (permanent) to one of the application's endpoints.</p> </li> </ul>"]
     pub attributes: Option<::std::collections::HashMap<String, String>>,
 }
-
 struct GetPlatformApplicationAttributesResponseDeserializer;
 impl GetPlatformApplicationAttributesResponseDeserializer {
     #[allow(unused_variables)]
@@ -777,7 +1039,19 @@ pub struct GetSMSAttributesInput {
     #[doc="<p>A list of the individual attribute names, such as <code>MonthlySpendLimit</code>, for which you want values.</p> <p>For all attribute names, see <a href=\"http://docs.aws.amazon.com/sns/latest/api/API_SetSMSAttributes.html\">SetSMSAttributes</a>.</p> <p>If you don't use this parameter, Amazon SNS returns all SMS attributes.</p>"]
     pub attributes: Option<Vec<String>>,
 }
-
+impl GetSMSAttributesInput {
+    /// Sets `attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSMSAttributesInput.attributes = Some(value.into());`.
+    pub fn attributes<ValueType: Into<Vec<String>>>(mut self, value: ValueType) -> Self {
+        self.attributes = Some(value.into());
+        self
+    }
+    /// Returns a new instance of GetSMSAttributesInput with optional fields set to `None`.
+    pub fn new() -> GetSMSAttributesInput {
+        GetSMSAttributesInput { ..Default::default() }
+    }
+}
 
 /// Serialize `GetSMSAttributesInput` contents to a `SignedRequest`.
 struct GetSMSAttributesInputSerializer;
@@ -803,7 +1077,6 @@ pub struct GetSMSAttributesResponse {
     #[doc="<p>The SMS attribute names and their values.</p>"]
     pub attributes: Option<::std::collections::HashMap<String, String>>,
 }
-
 struct GetSMSAttributesResponseDeserializer;
 impl GetSMSAttributesResponseDeserializer {
     #[allow(unused_variables)]
@@ -853,7 +1126,23 @@ pub struct GetSubscriptionAttributesInput {
     #[doc="<p>The ARN of the subscription whose properties you want to get.</p>"]
     pub subscription_arn: String,
 }
-
+impl GetSubscriptionAttributesInput {
+    /// Sets `subscription_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetSubscriptionAttributesInput.subscription_arn = value.into();`.
+    pub fn subscription_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subscription_arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetSubscriptionAttributesInput with optional fields set to `None`.
+    pub fn new<SubscriptionArnType: Into<String>>(subscription_arn: SubscriptionArnType)
+                                                  -> GetSubscriptionAttributesInput {
+        GetSubscriptionAttributesInput {
+            subscription_arn: subscription_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetSubscriptionAttributesInput` contents to a `SignedRequest`.
 struct GetSubscriptionAttributesInputSerializer;
@@ -876,7 +1165,6 @@ pub struct GetSubscriptionAttributesResponse {
     #[doc="<p>A map of the subscription's attributes. Attributes in this map include the following:</p> <ul> <li> <p> <code>SubscriptionArn</code> -- the subscription's ARN</p> </li> <li> <p> <code>TopicArn</code> -- the topic ARN that the subscription is associated with</p> </li> <li> <p> <code>Owner</code> -- the AWS account ID of the subscription's owner</p> </li> <li> <p> <code>ConfirmationWasAuthenticated</code> -- true if the subscription confirmation request was authenticated</p> </li> <li> <p> <code>DeliveryPolicy</code> -- the JSON serialization of the subscription's delivery policy</p> </li> <li> <p> <code>EffectiveDeliveryPolicy</code> -- the JSON serialization of the effective delivery policy that takes into account the topic delivery policy and account system defaults</p> </li> </ul>"]
     pub attributes: Option<::std::collections::HashMap<String, String>>,
 }
-
 struct GetSubscriptionAttributesResponseDeserializer;
 impl GetSubscriptionAttributesResponseDeserializer {
     #[allow(unused_variables)]
@@ -925,7 +1213,22 @@ pub struct GetTopicAttributesInput {
     #[doc="<p>The ARN of the topic whose properties you want to get.</p>"]
     pub topic_arn: String,
 }
-
+impl GetTopicAttributesInput {
+    /// Sets `topic_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `GetTopicAttributesInput.topic_arn = value.into();`.
+    pub fn topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_arn = value.into();
+        self
+    }
+    /// Returns a new instance of GetTopicAttributesInput with optional fields set to `None`.
+    pub fn new<TopicArnType: Into<String>>(topic_arn: TopicArnType) -> GetTopicAttributesInput {
+        GetTopicAttributesInput {
+            topic_arn: topic_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `GetTopicAttributesInput` contents to a `SignedRequest`.
 struct GetTopicAttributesInputSerializer;
@@ -947,7 +1250,6 @@ pub struct GetTopicAttributesResponse {
     #[doc="<p>A map of the topic's attributes. Attributes in this map include the following:</p> <ul> <li> <p> <code>TopicArn</code> -- the topic's ARN</p> </li> <li> <p> <code>Owner</code> -- the AWS account ID of the topic's owner</p> </li> <li> <p> <code>Policy</code> -- the JSON serialization of the topic's access control policy</p> </li> <li> <p> <code>DisplayName</code> -- the human-readable name used in the \"From\" field for notifications to email and email-json endpoints</p> </li> <li> <p> <code>SubscriptionsPending</code> -- the number of subscriptions pending confirmation on this topic</p> </li> <li> <p> <code>SubscriptionsConfirmed</code> -- the number of confirmed subscriptions on this topic</p> </li> <li> <p> <code>SubscriptionsDeleted</code> -- the number of deleted subscriptions on this topic</p> </li> <li> <p> <code>DeliveryPolicy</code> -- the JSON serialization of the topic's delivery policy</p> </li> <li> <p> <code>EffectiveDeliveryPolicy</code> -- the JSON serialization of the effective delivery policy that takes into account system defaults</p> </li> </ul>"]
     pub attributes: Option<::std::collections::HashMap<String, String>>,
 }
-
 struct GetTopicAttributesResponseDeserializer;
 impl GetTopicAttributesResponseDeserializer {
     #[allow(unused_variables)]
@@ -999,7 +1301,31 @@ pub struct ListEndpointsByPlatformApplicationInput {
     #[doc="<p>PlatformApplicationArn for ListEndpointsByPlatformApplicationInput action.</p>"]
     pub platform_application_arn: String,
 }
-
+impl ListEndpointsByPlatformApplicationInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListEndpointsByPlatformApplicationInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `platform_application_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListEndpointsByPlatformApplicationInput.platform_application_arn = value.into();`.
+    pub fn platform_application_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.platform_application_arn = value.into();
+        self
+    }
+    /// Returns a new instance of ListEndpointsByPlatformApplicationInput with optional fields set to `None`.
+    pub fn new<PlatformApplicationArnType: Into<String>>
+        (platform_application_arn: PlatformApplicationArnType)
+         -> ListEndpointsByPlatformApplicationInput {
+        ListEndpointsByPlatformApplicationInput {
+            platform_application_arn: platform_application_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ListEndpointsByPlatformApplicationInput` contents to a `SignedRequest`.
 struct ListEndpointsByPlatformApplicationInputSerializer;
@@ -1027,7 +1353,6 @@ pub struct ListEndpointsByPlatformApplicationResponse {
     #[doc="<p>NextToken string is returned when calling ListEndpointsByPlatformApplication action if additional records are available after the first page results.</p>"]
     pub next_token: Option<String>,
 }
-
 struct ListEndpointsByPlatformApplicationResponseDeserializer;
 impl ListEndpointsByPlatformApplicationResponseDeserializer {
     #[allow(unused_variables)]
@@ -1165,7 +1490,19 @@ pub struct ListPhoneNumbersOptedOutInput {
     #[doc="<p>A <code>NextToken</code> string is used when you call the <code>ListPhoneNumbersOptedOut</code> action to retrieve additional records that are available after the first page of results.</p>"]
     pub next_token: Option<String>,
 }
-
+impl ListPhoneNumbersOptedOutInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPhoneNumbersOptedOutInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListPhoneNumbersOptedOutInput with optional fields set to `None`.
+    pub fn new() -> ListPhoneNumbersOptedOutInput {
+        ListPhoneNumbersOptedOutInput { ..Default::default() }
+    }
+}
 
 /// Serialize `ListPhoneNumbersOptedOutInput` contents to a `SignedRequest`.
 struct ListPhoneNumbersOptedOutInputSerializer;
@@ -1191,7 +1528,6 @@ pub struct ListPhoneNumbersOptedOutResponse {
     #[doc="<p>A list of phone numbers that are opted out of receiving SMS messages. The list is paginated, and each page can contain up to 100 phone numbers.</p>"]
     pub phone_numbers: Option<Vec<String>>,
 }
-
 struct ListPhoneNumbersOptedOutResponseDeserializer;
 impl ListPhoneNumbersOptedOutResponseDeserializer {
     #[allow(unused_variables)]
@@ -1246,7 +1582,19 @@ pub struct ListPlatformApplicationsInput {
     #[doc="<p>NextToken string is used when calling ListPlatformApplications action to retrieve additional records that are available after the first page results.</p>"]
     pub next_token: Option<String>,
 }
-
+impl ListPlatformApplicationsInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListPlatformApplicationsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListPlatformApplicationsInput with optional fields set to `None`.
+    pub fn new() -> ListPlatformApplicationsInput {
+        ListPlatformApplicationsInput { ..Default::default() }
+    }
+}
 
 /// Serialize `ListPlatformApplicationsInput` contents to a `SignedRequest`.
 struct ListPlatformApplicationsInputSerializer;
@@ -1272,7 +1620,6 @@ pub struct ListPlatformApplicationsResponse {
     #[doc="<p>Platform applications returned when calling ListPlatformApplications action.</p>"]
     pub platform_applications: Option<Vec<PlatformApplication>>,
 }
-
 struct ListPlatformApplicationsResponseDeserializer;
 impl ListPlatformApplicationsResponseDeserializer {
     #[allow(unused_variables)]
@@ -1339,7 +1686,30 @@ pub struct ListSubscriptionsByTopicInput {
     #[doc="<p>The ARN of the topic for which you wish to find subscriptions.</p>"]
     pub topic_arn: String,
 }
-
+impl ListSubscriptionsByTopicInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListSubscriptionsByTopicInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Sets `topic_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListSubscriptionsByTopicInput.topic_arn = value.into();`.
+    pub fn topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_arn = value.into();
+        self
+    }
+    /// Returns a new instance of ListSubscriptionsByTopicInput with optional fields set to `None`.
+    pub fn new<TopicArnType: Into<String>>(topic_arn: TopicArnType)
+                                           -> ListSubscriptionsByTopicInput {
+        ListSubscriptionsByTopicInput {
+            topic_arn: topic_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `ListSubscriptionsByTopicInput` contents to a `SignedRequest`.
 struct ListSubscriptionsByTopicInputSerializer;
@@ -1366,7 +1736,6 @@ pub struct ListSubscriptionsByTopicResponse {
     #[doc="<p>A list of subscriptions.</p>"]
     pub subscriptions: Option<Vec<Subscription>>,
 }
-
 struct ListSubscriptionsByTopicResponseDeserializer;
 impl ListSubscriptionsByTopicResponseDeserializer {
     #[allow(unused_variables)]
@@ -1421,7 +1790,19 @@ pub struct ListSubscriptionsInput {
     #[doc="<p>Token returned by the previous <code>ListSubscriptions</code> request.</p>"]
     pub next_token: Option<String>,
 }
-
+impl ListSubscriptionsInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListSubscriptionsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListSubscriptionsInput with optional fields set to `None`.
+    pub fn new() -> ListSubscriptionsInput {
+        ListSubscriptionsInput { ..Default::default() }
+    }
+}
 
 /// Serialize `ListSubscriptionsInput` contents to a `SignedRequest`.
 struct ListSubscriptionsInputSerializer;
@@ -1447,7 +1828,6 @@ pub struct ListSubscriptionsResponse {
     #[doc="<p>A list of subscriptions.</p>"]
     pub subscriptions: Option<Vec<Subscription>>,
 }
-
 struct ListSubscriptionsResponseDeserializer;
 impl ListSubscriptionsResponseDeserializer {
     #[allow(unused_variables)]
@@ -1500,7 +1880,19 @@ pub struct ListTopicsInput {
     #[doc="<p>Token returned by the previous <code>ListTopics</code> request.</p>"]
     pub next_token: Option<String>,
 }
-
+impl ListTopicsInput {
+    /// Sets `next_token`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `ListTopicsInput.next_token = Some(value.into());`.
+    pub fn next_token<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.next_token = Some(value.into());
+        self
+    }
+    /// Returns a new instance of ListTopicsInput with optional fields set to `None`.
+    pub fn new() -> ListTopicsInput {
+        ListTopicsInput { ..Default::default() }
+    }
+}
 
 /// Serialize `ListTopicsInput` contents to a `SignedRequest`.
 struct ListTopicsInputSerializer;
@@ -1526,7 +1918,6 @@ pub struct ListTopicsResponse {
     #[doc="<p>A list of topic ARNs.</p>"]
     pub topics: Option<Vec<Topic>>,
 }
-
 struct ListTopicsResponseDeserializer;
 impl ListTopicsResponseDeserializer {
     #[allow(unused_variables)]
@@ -1639,7 +2030,36 @@ pub struct MessageAttributeValue {
     #[doc="<p>Strings are Unicode with UTF8 binary encoding. For a list of code values, see <a href=\"http://en.wikipedia.org/wiki/ASCII#ASCII_printable_characters\">http://en.wikipedia.org/wiki/ASCII#ASCII_printable_characters</a>.</p>"]
     pub string_value: Option<String>,
 }
-
+impl MessageAttributeValue {
+    /// Sets `binary_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MessageAttributeValue.binary_value = Some(value.into());`.
+    pub fn binary_value<ValueType: Into<Vec<u8>>>(mut self, value: ValueType) -> Self {
+        self.binary_value = Some(value.into());
+        self
+    }
+    /// Sets `data_type`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MessageAttributeValue.data_type = value.into();`.
+    pub fn data_type<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.data_type = value.into();
+        self
+    }
+    /// Sets `string_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `MessageAttributeValue.string_value = Some(value.into());`.
+    pub fn string_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.string_value = Some(value.into());
+        self
+    }
+    /// Returns a new instance of MessageAttributeValue with optional fields set to `None`.
+    pub fn new<DataTypeType: Into<String>>(data_type: DataTypeType) -> MessageAttributeValue {
+        MessageAttributeValue {
+            data_type: data_type.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `MessageAttributeValue` contents to a `SignedRequest`.
 struct MessageAttributeValueSerializer;
@@ -1696,7 +2116,23 @@ pub struct OptInPhoneNumberInput {
     #[doc="<p>The phone number to opt in.</p>"]
     pub phone_number: String,
 }
-
+impl OptInPhoneNumberInput {
+    /// Sets `phone_number`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `OptInPhoneNumberInput.phone_number = value.into();`.
+    pub fn phone_number<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.phone_number = value.into();
+        self
+    }
+    /// Returns a new instance of OptInPhoneNumberInput with optional fields set to `None`.
+    pub fn new<phoneNumberType: Into<String>>(phone_number: phoneNumberType)
+                                              -> OptInPhoneNumberInput {
+        OptInPhoneNumberInput {
+            phone_number: phone_number.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `OptInPhoneNumberInput` contents to a `SignedRequest`.
 struct OptInPhoneNumberInputSerializer;
@@ -1795,7 +2231,6 @@ pub struct PlatformApplication {
     #[doc="<p>PlatformApplicationArn for platform application object.</p>"]
     pub platform_application_arn: Option<String>,
 }
-
 struct PlatformApplicationDeserializer;
 impl PlatformApplicationDeserializer {
     #[allow(unused_variables)]
@@ -1876,7 +2311,64 @@ pub struct PublishInput {
     #[doc="<p>The topic you want to publish to.</p> <p>If you don't specify a value for the <code>TopicArn</code> parameter, you must specify a value for the <code>PhoneNumber</code> or <code>TargetArn</code> parameters.</p>"]
     pub topic_arn: Option<String>,
 }
-
+impl PublishInput {
+    /// Sets `message`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PublishInput.message = value.into();`.
+    pub fn message<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.message = value.into();
+        self
+    }
+    /// Sets `message_attributes`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PublishInput.message_attributes = Some(value.into());`.
+pub fn message_attributes<ValueType: Into<::std::collections::HashMap<String, MessageAttributeValue>>>(mut self, value: ValueType) -> Self{
+        self.message_attributes = Some(value.into());
+        self
+    }
+    /// Sets `message_structure`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PublishInput.message_structure = Some(value.into());`.
+    pub fn message_structure<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.message_structure = Some(value.into());
+        self
+    }
+    /// Sets `phone_number`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PublishInput.phone_number = Some(value.into());`.
+    pub fn phone_number<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.phone_number = Some(value.into());
+        self
+    }
+    /// Sets `subject`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PublishInput.subject = Some(value.into());`.
+    pub fn subject<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subject = Some(value.into());
+        self
+    }
+    /// Sets `target_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PublishInput.target_arn = Some(value.into());`.
+    pub fn target_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.target_arn = Some(value.into());
+        self
+    }
+    /// Sets `topic_arn`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `PublishInput.topic_arn = Some(value.into());`.
+    pub fn topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_arn = Some(value.into());
+        self
+    }
+    /// Returns a new instance of PublishInput with optional fields set to `None`.
+    pub fn new<MessageType: Into<String>>(message: MessageType) -> PublishInput {
+        PublishInput {
+            message: message.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `PublishInput` contents to a `SignedRequest`.
 struct PublishInputSerializer;
@@ -1918,7 +2410,6 @@ pub struct PublishResponse {
     #[doc="<p>Unique identifier assigned to the published message.</p> <p>Length Constraint: Maximum 100 characters</p>"]
     pub message_id: Option<String>,
 }
-
 struct PublishResponseDeserializer;
 impl PublishResponseDeserializer {
     #[allow(unused_variables)]
@@ -1969,7 +2460,32 @@ pub struct RemovePermissionInput {
     #[doc="<p>The ARN of the topic whose access control policy you wish to modify.</p>"]
     pub topic_arn: String,
 }
-
+impl RemovePermissionInput {
+    /// Sets `label`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemovePermissionInput.label = value.into();`.
+    pub fn label<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.label = value.into();
+        self
+    }
+    /// Sets `topic_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `RemovePermissionInput.topic_arn = value.into();`.
+    pub fn topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_arn = value.into();
+        self
+    }
+    /// Returns a new instance of RemovePermissionInput with optional fields set to `None`.
+    pub fn new<LabelType: Into<String>, TopicArnType: Into<String>>(label: LabelType,
+                                                                    topic_arn: TopicArnType)
+                                                                    -> RemovePermissionInput {
+        RemovePermissionInput {
+            label: label.into(),
+            topic_arn: topic_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `RemovePermissionInput` contents to a `SignedRequest`.
 struct RemovePermissionInputSerializer;
@@ -1994,7 +2510,34 @@ pub struct SetEndpointAttributesInput {
     #[doc="<p>EndpointArn used for SetEndpointAttributes action.</p>"]
     pub endpoint_arn: String,
 }
-
+impl SetEndpointAttributesInput {
+    /// Sets `attributes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetEndpointAttributesInput.attributes = value.into();`.
+pub fn attributes<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.attributes = value.into();
+        self
+    }
+    /// Sets `endpoint_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetEndpointAttributesInput.endpoint_arn = value.into();`.
+    pub fn endpoint_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.endpoint_arn = value.into();
+        self
+    }
+    /// Returns a new instance of SetEndpointAttributesInput with optional fields set to `None`.
+    pub fn new<AttributesType: Into<::std::collections::HashMap<String, String>>,
+               EndpointArnType: Into<String>>
+        (attributes: AttributesType,
+         endpoint_arn: EndpointArnType)
+         -> SetEndpointAttributesInput {
+        SetEndpointAttributesInput {
+            attributes: attributes.into(),
+            endpoint_arn: endpoint_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SetEndpointAttributesInput` contents to a `SignedRequest`.
 struct SetEndpointAttributesInputSerializer;
@@ -2021,7 +2564,34 @@ pub struct SetPlatformApplicationAttributesInput {
     #[doc="<p>PlatformApplicationArn for SetPlatformApplicationAttributes action.</p>"]
     pub platform_application_arn: String,
 }
-
+impl SetPlatformApplicationAttributesInput {
+    /// Sets `attributes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetPlatformApplicationAttributesInput.attributes = value.into();`.
+pub fn attributes<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.attributes = value.into();
+        self
+    }
+    /// Sets `platform_application_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetPlatformApplicationAttributesInput.platform_application_arn = value.into();`.
+    pub fn platform_application_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.platform_application_arn = value.into();
+        self
+    }
+    /// Returns a new instance of SetPlatformApplicationAttributesInput with optional fields set to `None`.
+    pub fn new<AttributesType: Into<::std::collections::HashMap<String, String>>,
+               PlatformApplicationArnType: Into<String>>
+        (attributes: AttributesType,
+         platform_application_arn: PlatformApplicationArnType)
+         -> SetPlatformApplicationAttributesInput {
+        SetPlatformApplicationAttributesInput {
+            attributes: attributes.into(),
+            platform_application_arn: platform_application_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SetPlatformApplicationAttributesInput` contents to a `SignedRequest`.
 struct SetPlatformApplicationAttributesInputSerializer;
@@ -2047,7 +2617,24 @@ pub struct SetSMSAttributesInput {
     #[doc="<p>The default settings for sending SMS messages from your account. You can set values for the following attribute names:</p> <p> <code>MonthlySpendLimit</code> – The maximum amount in USD that you are willing to spend each month to send SMS messages. When Amazon SNS determines that sending an SMS message would incur a cost that exceeds this limit, it stops sending SMS messages within minutes.</p> <important> <p>Amazon SNS stops sending SMS messages within minutes of the limit being crossed. During that interval, if you continue to send SMS messages, you will incur costs that exceed your limit.</p> </important> <p>By default, the spend limit is set to the maximum allowed by Amazon SNS. If you want to exceed the maximum, contact <a href=\"https://aws.amazon.com/premiumsupport/\">AWS Support</a> or your AWS sales representative for a service limit increase.</p> <p> <code>DeliveryStatusIAMRole</code> – The ARN of the IAM role that allows Amazon SNS to write logs about SMS deliveries in CloudWatch Logs. For each SMS message that you send, Amazon SNS writes a log that includes the message price, the success or failure status, the reason for failure (if the message failed), the message dwell time, and other information.</p> <p> <code>DeliveryStatusSuccessSamplingRate</code> – The percentage of successful SMS deliveries for which Amazon SNS will write logs in CloudWatch Logs. The value can be an integer from 0 - 100. For example, to write logs only for failed deliveries, set this value to <code>0</code>. To write logs for 10% of your successful deliveries, set it to <code>10</code>.</p> <p> <code>DefaultSenderID</code> – A string, such as your business brand, that is displayed as the sender on the receiving device. Support for sender IDs varies by country. The sender ID can be 1 - 11 alphanumeric characters, and it must contain at least one letter.</p> <p> <code>DefaultSMSType</code> – The type of SMS message that you will send by default. You can assign the following values:</p> <ul> <li> <p> <code>Promotional</code> – (Default) Noncritical messages, such as marketing messages. Amazon SNS optimizes the message delivery to incur the lowest cost.</p> </li> <li> <p> <code>Transactional</code> – Critical messages that support customer transactions, such as one-time passcodes for multi-factor authentication. Amazon SNS optimizes the message delivery to achieve the highest reliability.</p> </li> </ul> <p> <code>UsageReportS3Bucket</code> – The name of the Amazon S3 bucket to receive daily SMS usage reports from Amazon SNS. Each day, Amazon SNS will deliver a usage report as a CSV file to the bucket. The report includes the following information for each SMS message that was successfully delivered by your account:</p> <ul> <li> <p>Time that the message was published (in UTC)</p> </li> <li> <p>Message ID</p> </li> <li> <p>Destination phone number</p> </li> <li> <p>Message type</p> </li> <li> <p>Delivery status</p> </li> <li> <p>Message price (in USD)</p> </li> <li> <p>Part number (a message is split into multiple parts if it is too long for a single message)</p> </li> <li> <p>Total number of parts</p> </li> </ul> <p>To receive the report, the bucket must have a policy that allows the Amazon SNS service principle to perform the <code>s3:PutObject</code> and <code>s3:GetBucketLocation</code> actions.</p> <p>For an example bucket policy and usage report, see <a href=\"http://docs.aws.amazon.com/sns/latest/dg/sms_stats.html\">Monitoring SMS Activity</a> in the <i>Amazon SNS Developer Guide</i>.</p>"]
     pub attributes: ::std::collections::HashMap<String, String>,
 }
-
+impl SetSMSAttributesInput {
+    /// Sets `attributes`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetSMSAttributesInput.attributes = value.into();`.
+pub fn attributes<ValueType: Into<::std::collections::HashMap<String, String>>>(mut self, value: ValueType) -> Self{
+        self.attributes = value.into();
+        self
+    }
+    /// Returns a new instance of SetSMSAttributesInput with optional fields set to `None`.
+    pub fn new<attributesType: Into<::std::collections::HashMap<String, String>>>
+        (attributes: attributesType)
+         -> SetSMSAttributesInput {
+        SetSMSAttributesInput {
+            attributes: attributes.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SetSMSAttributesInput` contents to a `SignedRequest`.
 struct SetSMSAttributesInputSerializer;
@@ -2095,7 +2682,40 @@ pub struct SetSubscriptionAttributesInput {
     #[doc="<p>The ARN of the subscription to modify.</p>"]
     pub subscription_arn: String,
 }
-
+impl SetSubscriptionAttributesInput {
+    /// Sets `attribute_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetSubscriptionAttributesInput.attribute_name = value.into();`.
+    pub fn attribute_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute_name = value.into();
+        self
+    }
+    /// Sets `attribute_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetSubscriptionAttributesInput.attribute_value = Some(value.into());`.
+    pub fn attribute_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute_value = Some(value.into());
+        self
+    }
+    /// Sets `subscription_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetSubscriptionAttributesInput.subscription_arn = value.into();`.
+    pub fn subscription_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subscription_arn = value.into();
+        self
+    }
+    /// Returns a new instance of SetSubscriptionAttributesInput with optional fields set to `None`.
+    pub fn new<AttributeNameType: Into<String>, SubscriptionArnType: Into<String>>
+        (attribute_name: AttributeNameType,
+         subscription_arn: SubscriptionArnType)
+         -> SetSubscriptionAttributesInput {
+        SetSubscriptionAttributesInput {
+            attribute_name: attribute_name.into(),
+            subscription_arn: subscription_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SetSubscriptionAttributesInput` contents to a `SignedRequest`.
 struct SetSubscriptionAttributesInputSerializer;
@@ -2127,7 +2747,40 @@ pub struct SetTopicAttributesInput {
     #[doc="<p>The ARN of the topic to modify.</p>"]
     pub topic_arn: String,
 }
-
+impl SetTopicAttributesInput {
+    /// Sets `attribute_name`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetTopicAttributesInput.attribute_name = value.into();`.
+    pub fn attribute_name<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute_name = value.into();
+        self
+    }
+    /// Sets `attribute_value`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetTopicAttributesInput.attribute_value = Some(value.into());`.
+    pub fn attribute_value<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.attribute_value = Some(value.into());
+        self
+    }
+    /// Sets `topic_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SetTopicAttributesInput.topic_arn = value.into();`.
+    pub fn topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_arn = value.into();
+        self
+    }
+    /// Returns a new instance of SetTopicAttributesInput with optional fields set to `None`.
+    pub fn new<AttributeNameType: Into<String>, TopicArnType: Into<String>>
+        (attribute_name: AttributeNameType,
+         topic_arn: TopicArnType)
+         -> SetTopicAttributesInput {
+        SetTopicAttributesInput {
+            attribute_name: attribute_name.into(),
+            topic_arn: topic_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SetTopicAttributesInput` contents to a `SignedRequest`.
 struct SetTopicAttributesInputSerializer;
@@ -2172,7 +2825,39 @@ pub struct SubscribeInput {
     #[doc="<p>The ARN of the topic you want to subscribe to.</p>"]
     pub topic_arn: String,
 }
-
+impl SubscribeInput {
+    /// Sets `endpoint`, wrapping it with `Some()` and invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubscribeInput.endpoint = Some(value.into());`.
+    pub fn endpoint<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.endpoint = Some(value.into());
+        self
+    }
+    /// Sets `protocol`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubscribeInput.protocol = value.into();`.
+    pub fn protocol<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.protocol = value.into();
+        self
+    }
+    /// Sets `topic_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `SubscribeInput.topic_arn = value.into();`.
+    pub fn topic_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.topic_arn = value.into();
+        self
+    }
+    /// Returns a new instance of SubscribeInput with optional fields set to `None`.
+    pub fn new<ProtocolType: Into<String>, TopicArnType: Into<String>>(protocol: ProtocolType,
+                                                                       topic_arn: TopicArnType)
+                                                                       -> SubscribeInput {
+        SubscribeInput {
+            protocol: protocol.into(),
+            topic_arn: topic_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `SubscribeInput` contents to a `SignedRequest`.
 struct SubscribeInputSerializer;
@@ -2198,7 +2883,6 @@ pub struct SubscribeResponse {
     #[doc="<p>The ARN of the subscription, if the service was able to create a subscription immediately (without requiring endpoint owner confirmation).</p>"]
     pub subscription_arn: Option<String>,
 }
-
 struct SubscribeResponseDeserializer;
 impl SubscribeResponseDeserializer {
     #[allow(unused_variables)]
@@ -2256,7 +2940,6 @@ pub struct Subscription {
     #[doc="<p>The ARN of the subscription's topic.</p>"]
     pub topic_arn: Option<String>,
 }
-
 struct SubscriptionDeserializer;
 impl SubscriptionDeserializer {
     #[allow(unused_variables)]
@@ -2401,7 +3084,6 @@ pub struct Topic {
     #[doc="<p>The topic's ARN.</p>"]
     pub topic_arn: Option<String>,
 }
-
 struct TopicDeserializer;
 impl TopicDeserializer {
     #[allow(unused_variables)]
@@ -2529,7 +3211,23 @@ pub struct UnsubscribeInput {
     #[doc="<p>The ARN of the subscription to be deleted.</p>"]
     pub subscription_arn: String,
 }
-
+impl UnsubscribeInput {
+    /// Sets `subscription_arn`, invoking `.into()` to convert to the required type.
+    ///
+    /// Equivalent to `UnsubscribeInput.subscription_arn = value.into();`.
+    pub fn subscription_arn<ValueType: Into<String>>(mut self, value: ValueType) -> Self {
+        self.subscription_arn = value.into();
+        self
+    }
+    /// Returns a new instance of UnsubscribeInput with optional fields set to `None`.
+    pub fn new<SubscriptionArnType: Into<String>>(subscription_arn: SubscriptionArnType)
+                                                  -> UnsubscribeInput {
+        UnsubscribeInput {
+            subscription_arn: subscription_arn.into(),
+            ..Default::default()
+        }
+    }
+}
 
 /// Serialize `UnsubscribeInput` contents to a `SignedRequest`.
 struct UnsubscribeInputSerializer;
